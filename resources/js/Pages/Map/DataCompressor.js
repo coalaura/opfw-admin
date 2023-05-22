@@ -16,6 +16,8 @@ class DataCompressor {
                 viewers: data.v,
                 instance: data.i
             };
+        } else {
+            console.debug(data);
         }
 
         return false;
