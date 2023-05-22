@@ -280,7 +280,7 @@ export default {
         },
         async handleEdit() {
             const url = this.editingPicture.image_url.trim(),
-                description = this.editingPicture.description.trim();
+                description = this.editingPicture.description?.trim() || "";
 
             if (!url || !url.startsWith("https://")) {
                 alert("Please enter a valid URL");
