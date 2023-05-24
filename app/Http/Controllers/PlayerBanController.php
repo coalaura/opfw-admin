@@ -81,11 +81,12 @@ class PlayerBanController extends Controller
             ->where('license_identifier', $ban->creator_identifier)
             ->first();
 
-        $note = Warning::query()
+        $note = $creator ? Warning::query()
+            ->where('issuer_id', $creator->user_id)
             ->where('player_id', $ban->user_id)
             ->where('warning_type', Warning::TypeNote)
             ->orderBy('created_at', 'desc')
-            ->first();
+            ->first() : null;
 
         $data = [
             "player" => $ban->player_name,
