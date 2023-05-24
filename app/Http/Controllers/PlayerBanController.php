@@ -85,6 +85,7 @@ class PlayerBanController extends Controller
             ->where('issuer_id', $creator->user_id)
             ->where('player_id', $ban->user_id)
             ->where('warning_type', Warning::TypeNote)
+            ->where('can_be_deleted', '=', 1)
             ->orderBy('created_at', 'desc')
             ->first() : null;
 
