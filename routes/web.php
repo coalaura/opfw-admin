@@ -53,6 +53,7 @@ use Illuminate\Support\Facades\Route;
 // Authentication methods.
 Route::group(['prefix' => 'auth'], function () {
     Route::get('/login', [DiscordController::class, 'login']);
+    Route::get('/redirect', [DiscordController::class, 'redirect']);
     Route::get('/complete', [DiscordController::class, 'complete']);
 });
 
