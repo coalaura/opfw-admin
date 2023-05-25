@@ -27,7 +27,7 @@ if (!defined('CLUSTER')) {
 }
 
 $envDir = realpath(__DIR__ . '/../envs/' . CLUSTER);
-if (file_exists($envDir) && CLUSTER !== null) {
+if (file_exists($envDir) && CLUSTER !== null || in_array(CLUSTER, ['auth'])) {
     $app->useEnvironmentPath($envDir);
 
 	$app->loadEnvironmentFrom('.env');
