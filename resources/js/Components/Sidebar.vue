@@ -74,7 +74,7 @@
         <a
             class="px-5 py-3 mt-auto text-center text-black bg-yellow-400 rounded"
             target="_blank"
-            href="https://github.com/ExpDev07/legacy-rp-admin-v3/issues/new/choose"
+            href="https://github.com/coalaura/opfw-admin"
             v-if="!isMobile() && !collapsed"
         >
             <i class="mr-2 fas fa-bug"></i> {{ t("nav.report") }}

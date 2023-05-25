@@ -423,7 +423,33 @@
         "dark": "Dark",
         "light": "Light",
         "logout": "Logout",
-        "report": "Report a bug!"
+        "report": "Report a bug!",
+
+        "permissions": "Permissions",
+        "perm": "Permission",
+        "perm_level": "Level",
+
+        "level_0": "Guest",
+        "level_1": "Staff",
+        "level_2": "Senior Staff",
+        "level_3": "Super Admin",
+        "level_4": "Root",
+
+        "perms": {
+            "soft_ban": "Edit Soft Bans",
+            "livemap": "View Livemap",
+            "screenshot": "Take Screenshots",
+            "suspicious": "View Suspicious Things",
+            "advanced": "View Advanced Search",
+            "lock_ban": "Lock Bans",
+            "edit_tag": "Edit Tags",
+            "loading_screen": "Manage Loading Screen",
+            "view_queue": "View Queue",
+            "twitter": "Edit Twitter",
+            "linked": "Show Linked Accounts",
+            "announcement": "Post Announcement",
+            "damage_logs": "View Damage Logs"
+        }
     },
     "pagination": {
         "previous": "Previous",

@@ -16,6 +16,7 @@ const Permissions = {
             } else if (options.props.auth.player.isStaff) {
                 return 1;
             }
+
             return 0;
         }
 
@@ -35,6 +36,14 @@ const Permissions = {
             PERM_LINKED:         'linked',
             PERM_ANNOUNCEMENT:   'announcement',
             PERM_DAMAGE_LOGS:    'damage_logs',
+
+            level(permission) {
+                if (!(permission in permissions)) {
+                    return 0;
+                }
+
+                return permissions[permission];
+            },
 
             check(permission) {
                 if (!(permission in permissions)) {
