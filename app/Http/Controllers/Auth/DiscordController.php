@@ -77,8 +77,21 @@ class DiscordController extends Controller
             return redirect('/login')->with('error', 'No player with discord id "' . $user['id'] . '" found.');
         }
 
+        $info = $player->toArray();
+
+        // Unset bunch of unneeded data.
+        unset($info['player_tokens']);
+        unset($info['user_settings']);
+        unset($info['user_data']);
+        unset($info['staff_points']);
+        unset($info['weekly_playtime']);
+        unset($info['activity_points']);
+        unset($info['ips']);
+        unset($info['last_used_identifiers']);
+        unset($info['user_variables']);
+
         $session->put('user', [
-            'player' => $player->toArray()
+            'player' => $info
         ]);
 
         // Session lock update
