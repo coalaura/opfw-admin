@@ -65,6 +65,12 @@ class AppServiceProvider extends ServiceProvider
 
             'serverIp' => Server::getFirstServerIP(),
 
+            'discord' => function() {
+                $session = SessionHelper::getInstance();
+
+                return $session->get('discord') ?: null;
+            },
+
             // Authentication.
             'auth'  => function () {
                 $session = SessionHelper::getInstance();

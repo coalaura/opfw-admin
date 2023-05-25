@@ -62,7 +62,8 @@ module.exports = {
                 'map-icon':           '20px',
                 'ch-button':          '32px',
                 'xs-steam':           '150px',
-                'iframe':             '750px'
+                'iframe':             '750px',
+                'avatar':             '50px'
             },
             height: {
                 'side-close':      '40px',

@@ -35,23 +35,24 @@
                 </button>
 
                 <!-- Toggle Dark mode -->
-                <button class="px-4 py-1 focus:outline-none font-semibold text-white text-sm rounded bg-gray-700 hover:bg-gray-600 float-right" @click="toggleTheme" v-if="theme === 'light'">
+                <button class="px-4 py-1 focus:outline-none font-semibold text-white text-sm rounded border-2 border-gray-400 bg-gray-700 hover:bg-gray-600 float-right" @click="toggleTheme" v-if="theme === 'light'">
                     <i class="fas fa-moon"></i>
                     {{ t("nav.dark") }}
                 </button>
-                <button class="px-4 py-1 focus:outline-none font-semibold text-black text-sm rounded bg-gray-400 hover:bg-gray-300 float-right" @click="toggleTheme" v-else>
+                <button class="px-4 py-1 focus:outline-none font-semibold text-black text-sm rounded border-2 border-gray-700 bg-gray-400 hover:bg-gray-300 float-right" @click="toggleTheme" v-else>
                     <i class="fas fa-sun"></i>
                     {{ t("nav.light") }}
                 </button>
             </p>
 
             <!-- Right side -->
-            <div class="flex items-center space-x-6">
-                <inertia-link class="hover:text-gray-100" v-bind:href="'/players/' + $page.auth.player.licenseIdentifier">
-                    {{ $page.auth.player.playerName }}
-                </inertia-link>
-                <inertia-link class="px-4 py-1 text-white bg-red-500 rounded hover:bg-red-600" method="POST" href="/logout">
+            <div class="flex items-center space-x-4">
+                <inertia-link class="px-4 py-1 focus:outline-none font-semibold text-sm text-white rounded border-2 border-red-700 bg-red-500 hover:bg-red-400" method="POST" href="/logout">
                     {{ t("nav.logout") }}
+                </inertia-link>
+
+                <inertia-link class="hover:text-gray-100 w-avatar" v-bind:href="'/players/' + $page.auth.player.licenseIdentifier">
+                    <img :src="getDiscordAvatar()" :title="getDiscordTitle()" class="rounded shadow border-2 border-gray-300" />
                 </inertia-link>
             </div>
         </nav>
@@ -110,6 +111,20 @@ export default {
         this.updateTheme();
     },
     methods: {
+        getDiscordAvatar() {
+            const discord = this.$page.discord;
+
+            if (!discord || !discord.id) return '/images/discord.webp';
+
+            return `https://cdn.discordapp.com/avatars/${discord.id}/${discord.avatar}.png`;
+        },
+        getDiscordTitle() {
+            const discord = this.$page.discord;
+
+            if (!discord || !discord.id) return 'Missing discord info';
+
+            return `Logged in as ${discord.username}#${discord.discriminator}`;
+        },
         showPermissions() {
             if (!this.$page.auth.player.isSuperAdmin) return;
 

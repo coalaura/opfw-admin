@@ -94,6 +94,8 @@ class DiscordController extends Controller
             'player' => $info
         ]);
 
+        $session->put('discord', $user);
+
         // Session lock update
         $session->put('session_lock', StaffMiddleware::getSessionDetail());
         $session->put('session_detail', StaffMiddleware::getFingerprint());

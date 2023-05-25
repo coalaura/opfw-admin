@@ -253,7 +253,7 @@ export default {
                 {
                     label: this.t('sidebar.errors'),
                     icon: 'bug',
-                    hidden: !this.$page.auth.player.isDebugger,
+                    hidden: !this.$page.auth.player.isRoot,
                     sub: [
                         {
                             label: this.t('errors.client.title'),
