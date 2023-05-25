@@ -1117,8 +1117,8 @@
 		"no_server_data": "The server is currently unavailable."
     },
     "login": {
-        "title": "Login with your Steam account.",
-        "description": "Please login with the same Steam account that you have your staff permissions on. Using a different one will result in you not being able to access the server panel.",
-        "login": "Login with Steam"
+        "title": "Login with your Discord account.",
+        "description": "Please login with the same Discord account that is linked to the user you have your staff permissions on. Using a different one will result in you not being able to access the server panel.",
+        "login": "Login with Discord"
     }
 }

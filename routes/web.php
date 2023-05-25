@@ -15,7 +15,7 @@ use App\Helpers\SessionHelper;
 use App\Http\Controllers\AdvancedSearchController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\Auth\SteamController;
+use App\Http\Controllers\Auth\DiscordController;
 use App\Http\Controllers\BlacklistController;
 use App\Http\Controllers\CasinoLogController;
 use App\Http\Controllers\CronjobController;
@@ -49,11 +49,11 @@ use App\Http\Controllers\WeaponController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
-use kanalumaddela\LaravelSteamLogin\Facades\SteamLogin;
 
 // Authentication methods.
 Route::group(['prefix' => 'auth'], function () {
-    SteamLogin::routes(['controller' => SteamController::class]);
+    Route::get('/login', [DiscordController::class, 'login']);
+    Route::get('/complete', [DiscordController::class, 'complete']);
 });
 
 // Logging in and out.

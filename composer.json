@@ -18,7 +18,6 @@
         "fideloper/proxy": "^4.0",
         "fruitcake/laravel-cors": "^3.0",
         "inertiajs/inertia-laravel": "^0.2.5",
-        "kanalumaddela/laravel-steam-login": "^2.5.2",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.0"

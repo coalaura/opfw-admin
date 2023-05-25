@@ -12,7 +12,7 @@
 
             <!-- Content -->
             <div class="mb-8 text-center">
-                <span class="mb-6 text-6xl text-gray-800 fab fa-steam"></span>
+                <span class="mb-6 text-6xl text-gray-800 fab fa-discord"></span>
                 <h1 class="mb-6 text-3xl font-semibold">
                     {{ t('login.title') }}
                 </h1>
@@ -24,7 +24,7 @@
                 </p>
             </div>
 
-            <a class="block p-5 text-center text-white bg-indigo-600 hover:bg-orange-500" id="login-button" href="/auth/login/steam">
+            <a class="block p-5 text-center text-white bg-indigo-600 hover:bg-orange-500" id="login-button" href="/auth/login">
                 {{ t('login.login') }}
             </a>
 
