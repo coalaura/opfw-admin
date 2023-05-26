@@ -38,8 +38,10 @@
             <div class="flex items-center space-x-4">
                 <p v-if="$page.discord" class="italic font-semibold">{{ $page.discord.username }}#{{ $page.discord.discriminator }}</p>
 
-                <inertia-link class="hover:text-gray-100 w-avatar relative" v-bind:href="'/players/' + $page.auth.player.licenseIdentifier" @contextmenu="showContext" v-click-outside="hideContext">
-                    <img :src="getDiscordAvatar()" class="rounded shadow border-2 border-gray-300" />
+                <div class="w-avatar relative" @contextmenu="showContext" v-click-outside="hideContext">
+                    <inertia-link :href="'/players/' + $page.auth.player.licenseIdentifier">
+                        <img :src="getDiscordAvatar()" class="rounded shadow border-2 border-gray-300" />
+                    </inertia-link>
 
                     <div v-if="showingContext" class="absolute top-full right-0 bg-gray-700 rounded border-2 border-gray-500 min-w-context mt-1 shadow-md z-10 text-sm text-white">
                         <button class="px-2 py-1 text-left block w-full hover:bg-gray-600" v-if="$page.serverIp" @click="copyServerIp($page.serverIp)">
@@ -58,7 +60,7 @@
                             {{ t("nav.logout") }}
                         </inertia-link>
                     </div>
-                </inertia-link>
+                </div>
             </div>
         </nav>
 
