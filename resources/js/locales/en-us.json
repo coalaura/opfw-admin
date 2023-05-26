@@ -43,7 +43,7 @@
         "disabled": "Disabled",
         "filter": "Filter",
         "root": "Root",
-        "copy_ip": "Copy Connect",
+        "copy_ip": "Server-IP",
         "copied_ip": "Copied!",
         "do_search": "Search",
         "whitelisted": "On Whitelist",
@@ -141,7 +141,7 @@
         "toggle": "Toggle staff-chat",
         "failed": "Failed to connect!",
         "connecting": "Connecting..",
-        "title": "Staff Chat",
+        "title": "Chat",
         "no_messages": "No staff messages",
         "send_chat": "Send"
     },

@@ -15,12 +15,6 @@
         <nav class="flex items-center justify-between w-full px-12 py-4 text-white bg-gray-900 shadow">
             <!-- Left side -->
             <p class="italic">
-                <button class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-pink-700 bg-pink-400 rounded float-right" v-if="$page.serverIp" @click="copyServerIp($page.serverIp)">
-                    <i class="fas fa-server"></i>
-                    <span v-if="copiedIp">{{ t('global.copied_ip') }}</span>
-                    <span v-else>{{ t('global.copy_ip') }}</span>
-                </button>
-
                 <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-yellow-700 bg-warning rounded dark:bg-dark-warning float-right" :title="t('global.permission')" @click="showPermissions" :class="{'cursor-pointer' : $page.auth.player.isSuperAdmin}">
                     <i class="fas fa-tools"></i>
                     <span v-if="$page.auth.player.isRoot">{{ t('global.root') }}</span>
@@ -28,11 +22,6 @@
                     <span v-else-if="$page.auth.player.isSeniorStaff">{{ t('global.senior_staff') }}</span>
                     <span v-else>{{ t('global.staff') }}</span>
                 </span>
-
-                <button @click="showStaffChat" class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-green-700 bg-success rounded dark:bg-dark-success float-right">
-                    <i class="fas fa-comment"></i>
-                    {{ t('staff_chat.title') }}
-                </button>
 
                 <!-- Toggle Dark mode -->
                 <button class="px-4 py-1 focus:outline-none font-semibold text-white text-sm rounded border-2 border-gray-400 bg-gray-700 hover:bg-gray-600 float-right" @click="toggleTheme" v-if="theme === 'light'">
@@ -47,12 +36,28 @@
 
             <!-- Right side -->
             <div class="flex items-center space-x-4">
-                <inertia-link class="px-4 py-1 focus:outline-none font-semibold text-sm text-white rounded border-2 border-red-700 bg-red-500 hover:bg-red-400" method="POST" href="/logout">
-                    {{ t("nav.logout") }}
-                </inertia-link>
+                <p v-if="$page.discord" class="italic font-semibold">{{ $page.discord.username }}#{{ $page.discord.discriminator }}</p>
 
-                <inertia-link class="hover:text-gray-100 w-avatar" v-bind:href="'/players/' + $page.auth.player.licenseIdentifier">
-                    <img :src="getDiscordAvatar()" :title="getDiscordTitle()" class="rounded shadow border-2 border-gray-300" />
+                <inertia-link class="hover:text-gray-100 w-avatar relative" v-bind:href="'/players/' + $page.auth.player.licenseIdentifier" @contextmenu="showContext" v-click-outside="hideContext">
+                    <img :src="getDiscordAvatar()" class="rounded shadow border-2 border-gray-300" />
+
+                    <div v-if="showingContext" class="absolute top-full right-0 bg-gray-700 rounded border-2 border-gray-500 min-w-context mt-1 shadow-md z-10 text-sm text-white">
+                        <button class="px-2 py-1 text-left block w-full hover:bg-gray-600" v-if="$page.serverIp" @click="copyServerIp($page.serverIp)">
+                            <i class="fas fa-server mr-1"></i>
+                            <span v-if="copiedIp">{{ t('global.copied_ip') }}</span>
+                            <span v-else>{{ t('global.copy_ip') }}</span>
+                        </button>
+
+                        <button @click="showStaffChat" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500">
+                            <i class="fas fa-comment mr-1"></i>
+                            {{ t('staff_chat.title') }}
+                        </button>
+
+                        <inertia-link class="px-2 py-1 block w-full hover:bg-gray-600 border-t border-gray-500" method="POST" href="/logout">
+                            <i class="fas fa-sign-out-alt mr-1"></i>
+                            {{ t("nav.logout") }}
+                        </inertia-link>
+                    </div>
                 </inertia-link>
             </div>
         </nav>
@@ -104,7 +109,8 @@ export default {
             copiedIp: false,
             copyIpTimeout: false,
 
-            showingPermissions: false
+            showingPermissions: false,
+            showingContext: false
         }
     },
     beforeMount() {
@@ -118,12 +124,13 @@ export default {
 
             return `https://cdn.discordapp.com/avatars/${discord.id}/${discord.avatar}.png`;
         },
-        getDiscordTitle() {
-            const discord = this.$page.discord;
+        showContext($event) {
+            $event.preventDefault();
 
-            if (!discord || !discord.id) return 'Missing discord info';
-
-            return `Logged in as ${discord.username}#${discord.discriminator}`;
+            this.showingContext = true;
+        },
+        hideContext() {
+            this.showingContext = false;
         },
         showPermissions() {
             if (!this.$page.auth.player.isSuperAdmin) return;

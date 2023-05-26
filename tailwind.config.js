@@ -76,7 +76,8 @@ module.exports = {
                 'inventory_slot':  '100px'
             },
             minWidth: {
-                'input': '200px',
+                'input':   '200px',
+                'context': '140px',
             },
             minHeight: {
                 '50': '50px'
