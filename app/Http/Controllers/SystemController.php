@@ -229,15 +229,19 @@ class SystemController extends Controller
         }
 
 		for ($day = $min; $day <= $max; $day += 86400) {
-			$offset = $day - (86400 * $averageDays);
+            if ($averageDays === 1) {
+                $average = $graphDays[$day] ?? 0;
+            } else {
+                $offset = $day - (86400 * $averageDays);
 
-			$average = 0;
+                $average = 0;
 
-			for ($offset; $offset <= $day; $offset += 86400) {
-				$average += $graphDays[$offset] ?? 0;
-			}
+                for ($offset; $offset <= $day; $offset += 86400) {
+                    $average += $graphDays[$offset] ?? 0;
+                }
 
-			$average /= $averageDays;
+                $average /= $averageDays;
+            }
 
             if (!isset($existingData[$day])) {
                 $existingData[$day] = [];
