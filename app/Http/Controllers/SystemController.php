@@ -212,6 +212,8 @@ class SystemController extends Controller
 		foreach($graph as $ban) {
 			$day = strtotime(date("Y-m-d", $ban->timestamp));
 
+            var_dump($day);
+
 			if(!isset($graphDays[$day])) {
 				$graphDays[$day] = 0;
 			}
@@ -220,7 +222,7 @@ class SystemController extends Controller
 		}
 
 		$min = empty($graphDays) ? (time() - 86400 * 10) : min(array_keys($graphDays));
-		$max = strtotime(date("Y-m-d"));
+		$max = time();
 
         $min2 = !empty($existingData) ? min(array_keys($existingData)) : null;
 
@@ -229,14 +231,16 @@ class SystemController extends Controller
         }
 
 		for ($day = $min; $day <= $max; $day += 86400) {
+            $key = strtotime(date("Y-m-d", $day));
+
             if ($averageDays === 1) {
-                $average = $graphDays[$day] ?? 0;
+                $average = $graphDays[$key] ?? 0;
             } else {
-                $offset = $day - (86400 * $averageDays);
+                $offset = $key - (86400 * $averageDays);
 
                 $average = 0;
 
-                for ($offset; $offset <= $day; $offset += 86400) {
+                for ($offset; $offset <= $key; $offset += 86400) {
                     $average += $graphDays[$offset] ?? 0;
                 }
 
