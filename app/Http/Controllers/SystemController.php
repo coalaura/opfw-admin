@@ -35,6 +35,7 @@ class SystemController extends Controller
         "text_entry",
         "thermal_night_vision",
         "vehicle_modification",
+        "semi_godmode",
     ];
 
     const CrashTypes = [
