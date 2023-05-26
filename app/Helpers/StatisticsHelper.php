@@ -540,33 +540,4 @@ class StatisticsHelper
 
         return $data;
     }
-
-    private static function formatFinanceStatistics(array $stats): array
-    {
-        $data = [
-            'labels' => [],
-            'data'   => [],
-        ];
-        foreach ($stats as $row) {
-            $data['labels'][] = $row['day'];
-            $d = DateTime::createFromFormat(
-                'Y-m-d',
-                $row['day'],
-                new DateTimeZone('UTC')
-            );
-
-            if (!$d)
-                var_dump($row);
-
-            $data['data'][] = [
-                'x' => $d->getTimestamp() * 1000,
-                'o' => $row['opening'],
-                'h' => $row['high'],
-                'l' => $row['low'],
-                'c' => $row['closing'],
-            ];
-        }
-
-        return $data;
-    }
 }

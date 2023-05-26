@@ -212,8 +212,6 @@ class SystemController extends Controller
 		foreach($graph as $ban) {
 			$day = strtotime(date("Y-m-d", $ban->timestamp));
 
-            var_dump($day);
-
 			if(!isset($graphDays[$day])) {
 				$graphDays[$day] = 0;
 			}
