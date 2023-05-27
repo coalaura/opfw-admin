@@ -42,7 +42,7 @@ use App\Http\Controllers\StaffChatController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\SuspiciousController;
 use App\Http\Controllers\TestController;
-use App\Http\Controllers\SystemController;
+use App\Http\Controllers\GraphController;
 use App\Http\Controllers\TwitterController;
 use App\Http\Controllers\LoadingScreenController;
 use App\Http\Controllers\WeaponController;
@@ -234,11 +234,11 @@ Route::group(['middleware' => ['log', 'staff']], function () {
     Route::get('/test/staff', [TestController::class, 'staffPlaytime']);
     Route::get('/test/finance', [TestController::class, 'finance']);
 
-    Route::get('/system', [SystemController::class, 'systemBans']);
-    Route::get('/system/{type}', [SystemController::class, 'systemBansType']);
-
-    Route::get('/crashes', [SystemController::class, 'crashes']);
-    Route::get('/crashes/{type}', [SystemController::class, 'crashTypes']);
+    Route::get('/graph/bans', [GraphController::class, 'systemBans']);
+    Route::get('/graph/bans/{type}', [GraphController::class, 'systemBansType']);
+    Route::get('/graph/crashes', [GraphController::class, 'crashes']);
+    Route::get('/graph/crashes/{type}', [GraphController::class, 'crashTypes']);
+    Route::get('/graph/gems', [GraphController::class, 'minedGems']);
 
     Route::get('/test/test', [TestController::class, 'test']);
 

@@ -7,7 +7,7 @@ use App\Server;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
-class SystemController extends Controller
+class GraphController extends Controller
 {
     const AntiCheatTypes = [
         "bad_screen_word",
@@ -195,6 +195,25 @@ class SystemController extends Controller
         $max = max($keys);
 
 		$image = $this->renderGraph(array_values($graphData), $type . ': ' . date("m/d/Y", $min) . ' - ' . date("m/d/Y", $max), ["red"]);
+
+		$image = '<img src="' . $image . '" style="max-width: 100%; display: block; border: 1px solid #9CA3AF" />';
+
+		return $this->fakeText(200, $image);
+    }
+
+    public function minedGems(): Response
+    {
+		$graphData = $this->buildGraphData([], "select UNIX_TIMESTAMP(timestamp) as timestamp from user_logs WHERE action = 'Mined Gem'", 1);
+
+        if (empty($graphData)) {
+            return $this->fakeText(404, "No data available");
+        }
+
+        $keys = array_keys($graphData);
+        $min = min($keys);
+        $max = max($keys);
+
+		$image = $this->renderGraph(array_values($graphData), 'Gems mined: ' . date("m/d/Y", $min) . ' - ' . date("m/d/Y", $max), ["red"]);
 
 		$image = '<img src="' . $image . '" style="max-width: 100%; display: block; border: 1px solid #9CA3AF" />';
 
