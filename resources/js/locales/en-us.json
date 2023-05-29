@@ -1056,7 +1056,9 @@
         "description": "Who took a screenshot of whom.",
         "character": "Target Character",
         "target": "Target",
-        "screenshot": "Screenshot"
+        "from": "From",
+        "till": "Till",
+        "entries": "Taken Screenshots"
     },
     "phone": {
         "title": "Phone Logs",

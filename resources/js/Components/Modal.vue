@@ -11,7 +11,7 @@
         >
 
             <!-- Container -->
-            <div class="w-full max-w-3xl my-20 max-h-modal-max bg-white overflow-y-auto rounded-md shadow dark:bg-dark-secondary dark:text-white" role="document" v-bind="$attrs">
+            <div :class="{'w-full' : !small}" class="max-w-3xl my-20 max-h-modal-max bg-white overflow-y-auto rounded-md shadow dark:bg-dark-secondary dark:text-white" role="document" v-bind="$attrs">
 
                 <!-- Content part -->
                 <div class="px-10 py-8 space-y-10">
@@ -46,6 +46,7 @@ export default {
     inheritAttrs: false,
     props: {
         show: Boolean,
+        small: Boolean,
     },
     methods: {
         /**

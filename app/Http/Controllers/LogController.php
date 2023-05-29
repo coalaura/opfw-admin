@@ -352,12 +352,40 @@ class LogController extends Controller
 
         $page = Paginator::resolveCurrentPage('page');
 
-        $query->limit(15)->offset(($page - 1) * 15);
+        $logs = $query->get()->toArray();
 
-        $logs = $query->get();
+        $groupedLogs = [];
+        $lastKey = false;
+
+        foreach ($logs as $log) {
+            $key = $log->source_license . '_' . $log->target_license . '_' . $log->target_character;
+
+            if ($lastKey !== $key) {
+                $groupedLogs[] = [
+                    'source_license' => $log->source_license,
+                    'target_license' => $log->target_license,
+                    'target_character' => $log->target_character,
+                    'from' => $log->timestamp,
+                    'till' => $log->timestamp,
+                    'entries' => [],
+                ];
+            }
+
+            $index = sizeof($groupedLogs) - 1;
+
+            $groupedLogs[$index]['till'] = $log->timestamp;
+            $groupedLogs[$index]['entries'][] = [
+                "url" => $log->url,
+                "timestamp" => $log->timestamp
+            ];
+
+            $lastKey = $key;
+        }
+
+        $paginated = array_slice($groupedLogs, ($page - 1) * 15, 15);
 
         return Inertia::render('Logs/Screenshots', [
-            'logs' => $logs,
+            'logs' => $paginated,
             'filters' => $request->all(
                 'identifier',
 				'character',
@@ -365,8 +393,9 @@ class LogController extends Controller
 				'before'
             ),
             'links' => $this->getPageUrls($page),
-            'playerMap' => Player::fetchLicensePlayerNameMap($logs->toArray($request), ['source_license', 'target_license']),
+            'playerMap' => Player::fetchLicensePlayerNameMap($logs, ['source_license', 'target_license']),
             'page' => $page,
+            'maxPage' => ceil(sizeof($groupedLogs) / 15)
         ]);
     }
 

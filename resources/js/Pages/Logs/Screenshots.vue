@@ -104,24 +104,24 @@
                 <h2>
                     {{ t('logs.logs') }}
                 </h2>
-                <p class="text-muted dark:text-dark-muted text-xs">
-                    {{ t('global.results', time) }}
-                </p>
             </template>
 
             <template>
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left mobile:hidden">
+                        <th class="px-6 py-4">&nbsp;</th>
                         <th class="px-6 py-4">{{ t('logs.player') }}</th>
                         <th class="px-6 py-4">{{ t('screenshot_logs.target') }}</th>
                         <th class="px-6 py-4">{{ t('screenshot_logs.character') }}</th>
-                        <th class="px-6 py-4">{{ t('screenshot_logs.screenshot') }}</th>
                         <th class="px-6 py-4">
                             {{ t('logs.timestamp') }}
                         </th>
                     </tr>
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="(log, index) in logs"
                         :key="log.id">
+                        <td class="px-6 py-3 border-t mobile:block">
+                            {{ log.entries.length }}x
+                        </td>
                         <td class="px-6 py-3 border-t mobile:block">
                             <inertia-link
                                 class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400"
@@ -137,16 +137,23 @@
                             </inertia-link>
                         </td>
                         <td class="px-6 py-3 border-t mobile:block">
-                            <inertia-link
-                                class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                                :href="'/players/' + log.target_license + '/characters/' + log.target_character + '/edit'">
-                                {{ log.target_character }}
-                            </inertia-link>
+                            <a
+                                class="text-indigo-600 dark:text-indigo-300 hover:text-yellow-500 dark:hover:text-yellow-300"
+                                href="#"
+                                @click="showMetadata($event, log)"
+                            >
+                                #{{ log.target_character }}
+                            </a>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">
-                            <a :href="log.url" class="text-indigo-600 dark:text-indigo-300 hover:text-yellow-500 dark:hover:text-yellow-300">{{ log.url.split('/').pop() }}</a>
+                        <td class="px-6 py-3 border-t mobile:block text-sm">
+                            <span v-if="log.from === log.till">
+                                <i class="text-muted dark:text-dark-muted">{{ log.from * 1000 | formatTime(true) }}</i>
+                            </span>
+                            <span v-else>
+                                <span class="font-semibold">{{ t('screenshot_logs.from') }}</span> <i class="text-muted dark:text-dark-muted">{{ log.from * 1000 | formatTime(true) }}</i><br>
+                                <span class="font-semibold">{{ t('screenshot_logs.till') }}</span> <i class="text-muted dark:text-dark-muted">{{ log.till * 1000 | formatTime(true) }}</i>
+                            </span>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ log.timestamp * 1000 | formatTime(true) }}</td>
                     </tr>
                     <tr v-if="logs.length === 0">
                         <td class="px-4 py-6 text-center border-t" colspan="100%">
@@ -181,12 +188,33 @@
 
                     <!-- Meta -->
                     <div class="font-semibold">
-                        {{ t("pagination.page", page) }}
+                        {{ t("pagination.page", page) }} / {{ maxPage }}
                     </div>
 
                 </div>
             </template>
         </v-section>
+
+        <modal :show.sync="logMetadata" :small="true">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('screenshot_logs.entries') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="text-sm font-mono" :class="{'mb-1 pb-1 border-b' : index < logMetadata.length - 1}" v-for="(entry, index) in logMetadata" :key="index">
+                    <i class="text-muted dark:text-dark-muted">{{ entry.timestamp * 1000 | formatTime(true) }}:</i>
+                    <a :href="entry.url" target="_blank" class="ml-1 text-indigo-600 dark:text-indigo-300 hover:text-yellow-500 dark:hover:text-yellow-300">{{ entry.url.split('/').pop() }}</a>
+                </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="logMetadata = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
 
     </div>
 </template>
@@ -226,11 +254,17 @@ export default {
         page: {
             type: Number,
             required: true,
+        },
+        maxPage: {
+            type: Number,
+            required: true,
         }
     },
     data() {
         return {
-            isLoading: false
+            isLoading: false,
+
+            logMetadata: false
         };
     },
     methods: {
@@ -239,6 +273,11 @@ export default {
         },
         stamp(time) {
             return this.$moment.utc(time).unix();
+        },
+        showMetadata(e, log) {
+            e.preventDefault();
+
+            this.logMetadata = log.entries;
         },
         refresh: async function () {
             if (this.isLoading) {

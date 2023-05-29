@@ -104,9 +104,6 @@
                 <h2>
                     {{ t('logs.logs') }}
                 </h2>
-                <p class="text-muted dark:text-dark-muted text-xs">
-                    {{ t('global.results', time) }}
-                </p>
             </template>
 
             <template>
