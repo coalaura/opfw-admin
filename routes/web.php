@@ -171,6 +171,7 @@ Route::group(['middleware' => ['log', 'staff']], function () {
     // Logs.
     Route::resource('logs', LogController::class);
     Route::get('/searches', [LogController::class, 'searches']);
+    Route::get('/screenshot_logs', [LogController::class, 'screenshotLogs']);
     Route::get('/phoneLogs', [LogController::class, 'phoneLogs']);
 
     // Casino Logs.

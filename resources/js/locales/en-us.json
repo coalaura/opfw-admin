@@ -1051,6 +1051,13 @@
         "description": "Who searched what in the server logs.",
         "searches": "Search Query"
     },
+    "screenshot_logs": {
+        "title": "Screenshot Logs",
+        "description": "Who took a screenshot of whom.",
+        "character": "Target Character",
+        "target": "Target",
+        "screenshot": "Screenshot"
+    },
     "phone": {
         "title": "Phone Logs",
         "description": "On this page you can view and filter the phone message logs.",

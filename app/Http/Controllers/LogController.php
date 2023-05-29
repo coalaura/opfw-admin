@@ -308,6 +308,68 @@ class LogController extends Controller
         ]);
     }
 
+    public function screenshotLogs(Request $request): Response
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_ADVANCED)) {
+            abort(401);
+        }
+
+        $query = DB::table('panel_screenshot_logs')->orderByDesc('timestamp')->select();
+
+        // Filtering by identifier.
+        if ($identifier = $this->multiValues($request->input('identifier'))) {
+            /**
+             * @var $q Builder
+             */
+            $query->where(function ($q) use ($identifier) {
+                foreach ($identifier as $i) {
+                    $q->orWhere('source_license', $i);
+                }
+            });
+        }
+
+        // Filtering by character.
+        if ($character = $this->multiValues($request->input('character'))) {
+            /**
+             * @var $q Builder
+             */
+            $query->where(function ($q) use ($character) {
+                foreach ($character as $i) {
+                    $q->orWhere('target_character', $i);
+                }
+            });
+        }
+
+        // Filtering by before.
+        if ($before = $request->input('before')) {
+            $query->where('timestamp', '<', $before);
+        }
+
+        // Filtering by after.
+        if ($after = $request->input('after')) {
+            $query->where('timestamp', '>', $after);
+        }
+
+        $page = Paginator::resolveCurrentPage('page');
+
+        $query->limit(15)->offset(($page - 1) * 15);
+
+        $logs = $query->get();
+
+        return Inertia::render('Logs/Screenshots', [
+            'logs' => $logs,
+            'filters' => $request->all(
+                'identifier',
+				'character',
+				'after',
+				'before'
+            ),
+            'links' => $this->getPageUrls($page),
+            'playerMap' => Player::fetchLicensePlayerNameMap($logs->toArray($request), ['source_license', 'target_license']),
+            'page' => $page,
+        ]);
+    }
+
     private function multiValues(?string $val): ?array
     {
         if (!$val) {

@@ -3,10 +3,10 @@
 
         <portal to="title">
             <h1 class="dark:text-white">
-                {{ t('search_logs.title') }}
+                {{ t('screenshot_logs.title') }}
             </h1>
             <p>
-                {{ t('search_logs.description') }}
+                {{ t('screenshot_logs.description') }}
             </p>
         </portal>
 
@@ -29,13 +29,13 @@
                             <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
                                    id="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier">
                         </div>
-                        <!-- Details -->
+                        <!-- Character -->
                         <div class="w-1/2 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="details">
-                                {{ t('search_logs.searches') }} <sup class="text-muted dark:text-dark-muted">**, C</sup>
+                                {{ t('screenshot_logs.character') }} <sup class="text-muted dark:text-dark-muted">*, C</sup>
                             </label>
                             <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
-                                   id="details" placeholder="Oxy runs kekw" v-model="filters.details">
+                                   id="details" placeholder="1,2,3" v-model="filters.character">
                         </div>
                         <!-- After Date -->
                         <div class="w-1/4 px-3 pr-1 mobile:w-full mobile:mb-3">
@@ -113,11 +113,9 @@
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="px-6 py-4">{{ t('logs.player') }}</th>
-                        <th class="px-6 py-4">{{ t('logs.action') }}</th>
-                        <th class="px-6 py-4">{{ t('logs.details') }}</th>
-                        <th class="px-6 py-4">{{ t('logs.identifier') }}</th>
-                        <th class="px-6 py-4">{{ t('logs.server_id') }}</th>
-                        <th class="px-6 py-4">{{ t('logs.page') }}</th>
+                        <th class="px-6 py-4">{{ t('screenshot_logs.target') }}</th>
+                        <th class="px-6 py-4">{{ t('screenshot_logs.character') }}</th>
+                        <th class="px-6 py-4">{{ t('screenshot_logs.screenshot') }}</th>
                         <th class="px-6 py-4">
                             {{ t('logs.timestamp') }}
                         </th>
@@ -127,24 +125,26 @@
                         <td class="px-6 py-3 border-t mobile:block">
                             <inertia-link
                                 class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                                :href="'/players/' + log.license_identifier">
-                                {{ playerName(log.license_identifier) }}
+                                :href="'/players/' + log.source_license">
+                                {{ playerName(log.source_license) }}
                             </inertia-link>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block" :class="{'text-muted dark:text-dark-muted' : !log.action}">
-                            {{ log.action || '-' }}
+                        <td class="px-6 py-3 border-t mobile:block">
+                            <inertia-link
+                                class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400"
+                                :href="'/players/' + log.target_license">
+                                {{ playerName(log.target_license) }}
+                            </inertia-link>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block" :class="{'text-muted dark:text-dark-muted' : !log.details}">
-                            {{ log.details || '-' }}
+                        <td class="px-6 py-3 border-t mobile:block">
+                            <inertia-link
+                                class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400"
+                                :href="'/players/' + log.target_license + '/characters/' + log.target_character + '/edit'">
+                                {{ log.target_character }}
+                            </inertia-link>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block" :class="{'text-muted dark:text-dark-muted' : !log.identifier}">
-                            {{ log.identifier || '-' }}
-                        </td>
-                        <td class="px-6 py-3 border-t mobile:block" :class="{'text-muted dark:text-dark-muted' : !log.server}">
-                            {{ log.server || '-' }}
-                        </td>
-                        <td class="px-6 py-3 border-t mobile:block" :class="{'text-muted dark:text-dark-muted' : !log.page}">
-                            {{ log.page || '-' }}
+                        <td class="px-6 py-3 border-t mobile:block">
+                            <a :href="log.url" class="text-indigo-600 dark:text-indigo-300 hover:text-yellow-500 dark:hover:text-yellow-300">{{ log.url.split('/').pop() }}</a>
                         </td>
                         <td class="px-6 py-3 border-t mobile:block">{{ log.timestamp * 1000 | formatTime(true) }}</td>
                     </tr>
@@ -211,7 +211,7 @@ export default {
         },
         filters: {
             identifier: String,
-            details: String,
+            character: String,
             before: Number,
             after: Number,
         },
@@ -268,7 +268,7 @@ export default {
                     }
                 }
 
-                await this.$inertia.replace('/searches', {
+                await this.$inertia.replace('/screenshot_logs', {
                     data: this.filters,
                     preserveState: true,
                     preserveScroll: true,

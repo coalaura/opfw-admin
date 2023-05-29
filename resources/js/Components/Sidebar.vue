@@ -231,6 +231,12 @@ export default {
                             icon: 'binoculars',
                             url: '/searches',
                             hidden: !this.perm.check(this.perm.PERM_ADVANCED),
+                        },
+                        {
+                            label: this.t('screenshot_logs.title'),
+                            icon: 'portrait',
+                            url: '/screenshot_logs',
+                            hidden: !this.perm.check(this.perm.PERM_ADVANCED),
                         }
                     ]
                 },
