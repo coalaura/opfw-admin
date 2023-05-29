@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\LoggingHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
+use App\Helpers\CacheHelper;
 use App\Player;
 use App\WeaponDamageEvent;
 use App\Screenshot;
@@ -435,6 +436,10 @@ class PlayerRouteController extends Controller
                 'timestamp' => time()
             ]);
 
+            DB::table('panel_screenshot_logs')
+                ->where('timestamp', '<', time() - CacheHelper::YEAR)
+                ->delete();
+
             return self::json(true, [
                 'url'   => $data->data['screenshotURL'],
                 'license' => $license,
@@ -486,6 +491,10 @@ class PlayerRouteController extends Controller
                 'url' => $data->data['screenshotURL'],
                 'timestamp' => time()
             ]);
+
+            DB::table('panel_screenshot_logs')
+                ->where('timestamp', '<', time() - CacheHelper::YEAR)
+                ->delete();
 
             return self::json(true, [
                 'url'   => $data->data['screenshotURL'],
