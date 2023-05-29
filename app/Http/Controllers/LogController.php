@@ -376,7 +376,8 @@ class LogController extends Controller
             $groupedLogs[$index]['till'] = $log->timestamp;
             $groupedLogs[$index]['entries'][] = [
                 "url" => $log->url,
-                "timestamp" => $log->timestamp
+                "timestamp" => $log->timestamp,
+                "type" => $log->type
             ];
 
             $lastKey = $key;

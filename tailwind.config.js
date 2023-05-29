@@ -63,7 +63,8 @@ module.exports = {
                 'ch-button':          '32px',
                 'xs-steam':           '150px',
                 'iframe':             '750px',
-                'avatar':             '50px'
+                'avatar':             '50px',
+                'screenshot':         '540px'
             },
             height: {
                 'side-close':      '40px',

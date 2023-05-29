@@ -203,10 +203,35 @@
             </template>
 
             <template #default>
-                <div class="text-sm font-mono" :class="{'mb-1 pb-1 border-b' : index < logMetadata.length - 1}" v-for="(entry, index) in logMetadata" :key="index">
-                    <i class="text-muted dark:text-dark-muted">{{ entry.timestamp * 1000 | formatTime(true) }}:</i>
-                    <a :href="entry.url" target="_blank" class="ml-1 text-indigo-600 dark:text-indigo-300 hover:text-yellow-500 dark:hover:text-yellow-300">{{ entry.url.split('/').pop() }}</a>
+                <div class="relative mb-5">
+                    <video :src="logMetadata[logImageIndex].url" v-if="logMetadata[logImageIndex].url.endsWith('.webm')" class="block w-screenshot m-auto" controls></video>
+                    <img :src="logMetadata[logImageIndex].url" @error="failedImage($event)" v-else class="block w-screenshot m-auto" />
+
+                    <div class="top-1 right-1 absolute shadow p-1 bg-gray-200 dark:bg-gray-800 text-sm font-mono" v-if="logMetadata.length > 1">
+                        {{ logImageIndex + 1 }} / {{ logMetadata.length }}
+                    </div>
+
+                    <button class="top-1/2 left-1 absolute shadow transform -translate-y-1/2 px-2 py-1 bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-300" @click="prevImage()" v-if="logMetadata.length > 1">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="top-1/2 right-1 absolute shadow transform -translate-y-1/2 px-2 py-1 bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 hover:bg-gray-300" @click="nextImage()" v-if="logMetadata.length > 1">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
+
+                <table class="w-full text-sm font-mono">
+                    <tr v-for="(entry, index) in logMetadata" :key="index" :class="{'border-b' : index < logMetadata.length - 1, 'bg-gray-200 dark:bg-gray-800' : logImageIndex === index && logMetadata.length > 1}">
+                        <td class="p-1 pl-2">
+                            <i>{{ entry.timestamp * 1000 | formatTime(true) }}</i>
+                        </td>
+                        <td class="p-1">
+                            <a :href="entry.url" target="_blank" class="text-indigo-600 dark:text-indigo-300 hover:text-yellow-500 dark:hover:text-yellow-300">{{ entry.url.split('/').pop() }}</a>
+                        </td>
+                        <td class="p-1 pr-2 text-muted dark:text-dark-muted">
+                            {{ entry.type }}
+                        </td>
+                    </tr>
+                </table>
             </template>
 
             <template #actions>
@@ -264,7 +289,8 @@ export default {
         return {
             isLoading: false,
 
-            logMetadata: false
+            logMetadata: false,
+            logImageIndex: 0
         };
     },
     methods: {
@@ -274,9 +300,27 @@ export default {
         stamp(time) {
             return this.$moment.utc(time).unix();
         },
+        failedImage(e) {
+            e.target.src = '/images/not_found.png';
+        },
+        nextImage() {
+            this.logImageIndex++;
+
+            if (this.logImageIndex >= this.logMetadata.length) {
+                this.logImageIndex = 0;
+            }
+        },
+        prevImage() {
+            this.logImageIndex--;
+
+            if (this.logImageIndex < 0) {
+                this.logImageIndex = this.logMetadata.length - 1;
+            }
+        },
         showMetadata(e, log) {
             e.preventDefault();
 
+            this.logImageIndex = 0;
             this.logMetadata = log.entries;
         },
         refresh: async function () {
