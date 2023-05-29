@@ -431,7 +431,7 @@ class PlayerRouteController extends Controller
                 'source_license' => $request->user()->player->license_identifier,
                 'target_license' => $license,
                 'target_character' => $status->character,
-                'type' => 'screenshot',
+                'type' => $request->query('short') ? 'screenshot_short' : 'screenshot',
                 'url' => $data->data['screenshotURL'],
                 'timestamp' => time()
             ]);
