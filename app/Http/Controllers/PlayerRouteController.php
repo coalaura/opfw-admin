@@ -419,11 +419,22 @@ class PlayerRouteController extends Controller
             return self::json(false, null, 'Invalid server id (User is offline?)');
         }
 
+        $status = Player::getOnlineStatus($license, true);
+
 		$lifespan = $request->query('short') ? 3*60 : 60*60;
 
         $data = OPFWHelper::createScreenshot($api, $id, true, $lifespan);
 
         if ($data->status) {
+            DB::table('panel_screenshot_logs')->insert([
+                'source_license' => $request->user()->player->license_identifier,
+                'target_license' => $license,
+                'target_character' => $status->character,
+                'type' => 'screenshot',
+                'url' => $data->data['screenshotURL'],
+                'timestamp' => time()
+            ]);
+
             return self::json(true, [
                 'url'   => $data->data['screenshotURL'],
                 'license' => $license,
@@ -453,18 +464,29 @@ class PlayerRouteController extends Controller
             return self::json(false, null, 'Invalid server');
         }
 
+        if ($duration < 3 || $duration > 30) {
+            return self::json(false, null, 'Invalid duration');
+        }
+
         $license = Server::isServerIDValid($id);
         if (!$license) {
             return self::json(false, null, 'Invalid server id (User is offline?)');
         }
 
-        if ($duration < 3 || $duration > 30) {
-            return self::json(false, null, 'Invalid duration');
-        }
+        $status = Player::getOnlineStatus($license, true);
 
         $data = OPFWHelper::createScreenCapture($api, $id, $duration);
 
         if ($data->status) {
+            DB::table('panel_screenshot_logs')->insert([
+                'source_license' => $request->user()->player->license_identifier,
+                'target_license' => $license,
+                'target_character' => $status->character,
+                'type' => 'screencapture',
+                'url' => $data->data['screenshotURL'],
+                'timestamp' => time()
+            ]);
+
             return self::json(true, [
                 'url'   => $data->data['screenshotURL'],
                 'license' => $license,

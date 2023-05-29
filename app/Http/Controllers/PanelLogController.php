@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\LogResource;
-use App\Log;
 use App\PanelLog;
 use App\Player;
 use Illuminate\Http\Request;
