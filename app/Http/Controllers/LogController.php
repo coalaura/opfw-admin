@@ -358,29 +358,44 @@ class LogController extends Controller
         $lastKey = false;
 
         foreach ($logs as $log) {
-            $key = $log->source_license . '_' . $log->target_license . '_' . $log->target_character;
+            $entry = [
+                'source_license' => $log->source_license,
+                'target_license' => $log->target_license,
+                'target_character' => $log->target_character,
+                'from' => $log->timestamp,
+                'till' => $log->timestamp,
+                'entries' => [],
+            ];
 
-            if ($lastKey !== $key) {
-                $groupedLogs[] = [
-                    'source_license' => $log->source_license,
-                    'target_license' => $log->target_license,
-                    'target_character' => $log->target_character,
-                    'from' => $log->timestamp,
-                    'till' => $log->timestamp,
-                    'entries' => [],
+            $foundEntry = false;
+
+            foreach($groupedLogs as &$groupedLog) {
+                if ($groupedLog['source_license'] !== $entry['source_license'] || $groupedLog['target_license'] !== $entry['target_license'] || $groupedLog['target_character'] !== $entry['target_character']) {
+                    continue;
+                }
+
+                $diff = $entry['from'] - $groupedLog['till'];
+
+                if ($diff > 10*60) {
+                    continue;
+                }
+
+                $foundEntry = true;
+
+                $groupedLog['till'] = $log->timestamp;
+
+                $groupedLog['entries'][] = [
+                    "url" => $log->url,
+                    "timestamp" => $log->timestamp,
+                    "type" => $log->type
                 ];
             }
 
-            $index = sizeof($groupedLogs) - 1;
+            if ($foundEntry) {
+                continue;
+            }
 
-            $groupedLogs[$index]['till'] = $log->timestamp;
-            $groupedLogs[$index]['entries'][] = [
-                "url" => $log->url,
-                "timestamp" => $log->timestamp,
-                "type" => $log->type
-            ];
-
-            $lastKey = $key;
+            $groupedLogs[] = $entry;
         }
 
         $paginated = array_slice($groupedLogs, ($page - 1) * 15, 15);
