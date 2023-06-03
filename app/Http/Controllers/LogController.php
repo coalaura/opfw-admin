@@ -381,6 +381,8 @@ class LogController extends Controller
                 $groupedLog['till'] = $log->timestamp;
 
                 $groupedLog['entries'][] = $entry;
+
+                break;
             }
 
             if ($foundEntry) {
