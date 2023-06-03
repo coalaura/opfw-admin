@@ -355,26 +355,22 @@ class LogController extends Controller
         $logs = $query->get()->toArray();
 
         $groupedLogs = [];
-        $lastKey = false;
 
         foreach ($logs as $log) {
             $entry = [
-                'source_license' => $log->source_license,
-                'target_license' => $log->target_license,
-                'target_character' => $log->target_character,
-                'from' => $log->timestamp,
-                'till' => $log->timestamp,
-                'entries' => [],
+                "url" => $log->url,
+                "timestamp" => $log->timestamp,
+                "type" => $log->type
             ];
 
             $foundEntry = false;
 
             foreach($groupedLogs as &$groupedLog) {
-                if ($groupedLog['source_license'] !== $entry['source_license'] || $groupedLog['target_license'] !== $entry['target_license'] || $groupedLog['target_character'] !== $entry['target_character']) {
+                if ($groupedLog['source_license'] !== $log->source_license || $groupedLog['target_license'] !== $log->target_license || $groupedLog['target_character'] !== $log->target_character) {
                     continue;
                 }
 
-                $diff = $entry['from'] - $groupedLog['till'];
+                $diff = $log->timestamp - $groupedLog['till'];
 
                 if ($diff > 10*60) {
                     continue;
@@ -384,11 +380,7 @@ class LogController extends Controller
 
                 $groupedLog['till'] = $log->timestamp;
 
-                $groupedLog['entries'][] = [
-                    "url" => $log->url,
-                    "timestamp" => $log->timestamp,
-                    "type" => $log->type
-                ];
+                $groupedLog['entries'][] = $entry;
             }
 
             if ($foundEntry) {
