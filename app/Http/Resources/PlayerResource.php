@@ -55,6 +55,7 @@ class PlayerResource extends JsonResource
             'mute'            => $this->getActiveMute(),
 			'variables'       => $this->getUserVariables(),
             'countryName'     => $this->country_name,
+            'averagePing'     => $this->average_ping,
         ];
     }
 

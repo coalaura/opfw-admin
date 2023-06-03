@@ -12,9 +12,6 @@
                         <i class="fas fa-copy"></i>
                     </badge>
 
-                    <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale" v-if="player.isBanned">
-                        <span class="font-semibold">{{ t('global.banned') }}</span>
-                    </badge>
                     <badge class="border-pink-200 bg-pink-100 dark:bg-pink-700" :title="t('global.debugger_title')"
                            v-if="player.isDebugger && !player.isRoot">
                         <span class="font-semibold">{{ t('global.debugger') }}</span>
@@ -81,6 +78,12 @@
 
                     <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary"
                            :title="formatSecondDiff(player.playTime)" v-html="local.played"></badge>
+
+                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary italic" v-if="player.averagePing"
+                           :title="t('players.show.average_ping')">
+                           <i class="fas fa-table-tennis"></i>
+                           {{ player.averagePing }}ms
+                    </badge>
 
                     <badge class="border-pink-300 bg-pink-200 dark:bg-pink-700" v-if="player.tag">
                         <span class="font-semibold">{{ player.tag }}</span>

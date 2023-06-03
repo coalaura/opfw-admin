@@ -811,6 +811,7 @@
             "aliases": "Aliases",
 			"metadata": "Status Info",
             "enabled_commands": "Enabled Commands",
+            "average_ping": "Average ping to the server in milliseconds.",
 
             "country_name": "Country",
             "country_detail": "May not be entirely accurate",

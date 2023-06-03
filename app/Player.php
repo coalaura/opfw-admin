@@ -76,6 +76,7 @@ class Player extends Model
         'last_connection',
         'enabled_commands',
         'panel_tag',
+        'average_ping',
     ];
 
     /**
