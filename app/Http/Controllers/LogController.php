@@ -370,7 +370,7 @@ class LogController extends Controller
                     continue;
                 }
 
-                $diff = $log->timestamp - $groupedLog['till'];
+                $diff = $log->timestamp - $groupedLog['from'];
 
                 if ($diff > 10 * 60) {
                     continue;
@@ -378,7 +378,7 @@ class LogController extends Controller
 
                 $foundEntry = true;
 
-                $groupedLog['till'] = $log->timestamp;
+                $groupedLog['from'] = $log->timestamp;
 
                 $groupedLog['entries'][] = $entry;
 
