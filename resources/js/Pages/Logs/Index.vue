@@ -649,6 +649,10 @@ export default {
 				return `<span class="copy_title text-gray-700 dark:text-gray-300 cursor-pointer" title="${pMatch}">${start}...${end}</span>`;
 			});
 
+			details = details.replace(/URL `(.+?)`/gm, function(pMatch, pUrl) {
+				return pMatch.replace(pUrl, `<a href="${pUrl}" target="_blank" class="text-indigo-600 dark:text-indigo-400">${pUrl}</a>`);
+			});
+
 			return this.parseDisconnectLog(details, action, metadata);
 		},
 		playerName(licenseIdentifier) {
