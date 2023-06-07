@@ -370,7 +370,7 @@ class LogController extends Controller
                     continue;
                 }
 
-                $diff = $log->timestamp - $groupedLog['from'];
+                $diff = abs($log->timestamp - $groupedLog['from']);
 
                 if ($diff > 10 * 60) {
                     continue;
