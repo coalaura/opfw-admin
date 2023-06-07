@@ -634,7 +634,8 @@
             "content_title": "Slot {0} has {1} of {2}",
             "content_empty": "Slot {0} is empty",
             "empty_title": "Empty slot {0}",
-            "empty_confirm": "Are you sure you want to empty slot {0} in this inventory?"
+            "empty_confirm": "Are you sure you want to empty slot {0} in this inventory?",
+            "battle_royale": "This item is a Battle Royale item."
         },
         "logs": {
             "title": "Inventory Logs",

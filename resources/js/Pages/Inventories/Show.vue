@@ -381,7 +381,7 @@
                                     {{ item.amount }}
                                 </span>
 
-                                <span class="block absolute -top-3 left-5 bg-gray-800 py-1 px-2 text-xs rounded" v-if="item.battleRoyaleOnly">
+                                <span class="block absolute -top-3 -left-3 bg-gray-800 py-1 px-2 text-xs rounded" v-if="item.battleRoyaleOnly" :title="t('inventories.show.battle_royale')">
                                     BR
                                 </span>
 
@@ -459,7 +459,8 @@ export default {
             } else {
                 clean[key] = {
                     item: item.item_name,
-                    amount: 1
+                    amount: 1,
+                    battleRoyaleOnly: item.battleRoyaleOnly
                 };
             }
         });
