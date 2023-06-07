@@ -381,6 +381,10 @@
                                     {{ item.amount }}
                                 </span>
 
+                                <span class="block absolute -top-3 left-5 bg-gray-800 py-1 px-2 text-xs rounded" v-if="item.battleRoyaleOnly">
+                                    BR
+                                </span>
+
                                 <span class="block absolute bottom-0 left-1/2 transform -translate-x-1/2 py-1 px-2 text-xs w-full overflow-hidden overflow-ellipsis whitespace-nowrap" v-if="item.item">
                                     {{ item.item }}
                                 </span>

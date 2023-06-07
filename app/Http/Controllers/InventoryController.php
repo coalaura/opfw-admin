@@ -200,8 +200,18 @@ class InventoryController extends Controller
 
         $contents = DB::table('inventories')
             ->where('inventory_name', '=', $name)
-            ->select(['id', 'item_name', 'inventory_slot'])
+            ->select(['id', 'item_name', 'inventory_slot', 'item_metadata'])
             ->get()->toArray();
+
+        $contents = array_map(function ($item) {
+            $metadata = json_decode($item->item_metadata, true);
+
+            $item->battleRoyaleOnly = $metadata && isset($metadata['battleRoyaleOnly']) && $metadata['battleRoyaleOnly'];
+
+            unset($item->item_metadata);
+
+            return $item;
+        }, $contents);
 
         $snapshot = [
             'hash'           => Str::uuid()->toString(),
@@ -268,8 +278,18 @@ class InventoryController extends Controller
         if ($superAdmin) {
             $contents = DB::table('inventories')
                 ->where('inventory_name', '=', explode(':', $inventory->descriptor)[0])
-                ->select(['id', 'item_name', 'inventory_slot'])
+                ->select(['id', 'item_name', 'inventory_slot', 'item_metadata'])
                 ->get()->toArray();
+
+            $contents = array_map(function ($item) {
+                $metadata = json_decode($item->item_metadata, true);
+
+                $item->battleRoyaleOnly = $metadata && isset($metadata['battleRoyaleOnly']) && $metadata['battleRoyaleOnly'];
+
+                unset($item->item_metadata);
+
+                return $item;
+            }, $contents);
         } else {
             $contents = [];
         }
