@@ -186,7 +186,7 @@ class PlayerController extends Controller
                     'gender' => $character->gender == 1 ? 'female' : 'male',
                     'date_of_birth' => $character->date_of_birth,
                     'ped_model_hash' => $character->ped_model_hash,
-                    'danny' => GeneralHelper::dannyPercentageCreationTime(intval($character->character_creation_time)),
+                    'creationTime' => intval($character->character_creation_time),
                     'data' => $status->characterMetadata ?? [],
                 ] : null,
                 'playerName' => $player->player_name,

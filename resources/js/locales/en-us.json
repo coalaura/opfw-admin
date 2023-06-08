@@ -685,7 +685,7 @@
             "description": "Lists all new players with a playtime less than 12 hours who are currently online.",
             "character": "Loaded Character",
             "no_character": "N/A",
-            "danny_percentage": "Danny Percentage",
+            "creation_time": "Time spent creating character.",
             "prediction_loading": "Loading prediction...",
 			"prediction_negative": "Computer says: probably bad",
 			"prediction_positive": "Computer says: probably good",

@@ -956,8 +956,8 @@
                                     </h4>
                                     <h4 class="text-gray-700 dark:text-gray-300 text-sm italic font-mono mt-1">
                                         {{ pedModel(character.pedModelHash) }}
-                                        <span v-if="character.danny !== false" :title="t('players.new.danny_percentage')">
-                                            ({{ (character.danny * 100).toFixed(1) }}%)
+                                        <span v-if="character.creationTime" :title="t('players.new.creation_time')">
+                                            ({{ formatSecondDiff(character.creationTime) }})
                                         </span>
                                     </h4>
                                     <h4 class="text-gray-700 dark:text-gray-300 text-xs italic font-mono mt-1" v-if="character.playtime" :title="t('players.characters.playtime')">
