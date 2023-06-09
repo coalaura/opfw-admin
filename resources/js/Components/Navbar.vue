@@ -36,7 +36,8 @@
 
             <!-- Right side -->
             <div class="flex items-center space-x-4">
-                <p v-if="$page.discord" class="italic font-semibold">{{ $page.discord.username }}#{{ $page.discord.discriminator }}</p>
+                <p v-if="$page.discord && $page.discord.global_name" class="italic font-semibold" :title="$page.discord.username">{{ $page.discord.global_name }}</p>
+                <p v-else-if="$page.discord" class="italic font-semibold">{{ $page.discord.username }}#{{ $page.discord.discriminator }}</p>
 
                 <div class="w-avatar relative" @contextmenu="showContext" v-click-outside="hideContext">
                     <inertia-link :href="'/players/' + $page.auth.player.licenseIdentifier">
