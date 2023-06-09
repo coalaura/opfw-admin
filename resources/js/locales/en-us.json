@@ -686,6 +686,7 @@
             "character": "Loaded Character",
             "no_character": "N/A",
             "creation_time": "Time spent creating character.",
+            "danny_percentage": "Danny Percentage",
             "prediction_loading": "Loading prediction...",
 			"prediction_negative": "Computer says: probably bad",
 			"prediction_positive": "Computer says: probably good",
