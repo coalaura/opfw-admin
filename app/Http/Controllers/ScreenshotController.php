@@ -71,11 +71,17 @@ class ScreenshotController extends Controller
 			return $entry;
 		}, $system);
 
+        $reasons = Ban::getAutomatedReasons();
+
         return Inertia::render('Screenshots/AntiCheat', [
             'screenshots' => $system,
             'links' => $this->getPageUrls($page),
             'banMap' => Ban::getAllBans(false, $identifiers, true),
-            'page' => $page
+            'page' => $page,
+            'reasons' => [
+                'MODDING' => $reasons['MODDING'],
+                'INJECTION' => $reasons['INJECTION']
+            ]
         ]);
     }
 }

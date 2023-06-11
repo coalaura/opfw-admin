@@ -11,6 +11,11 @@
         </portal>
 
         <portal to="actions">
+            <button class="px-4 py-2 text-sm font-semibold text-white bg-rose-600 rounded dark:bg-rose-400 mr-3" type="button" @click="showingReasons = true">
+                <i class="mr-1 fas fa-info"></i>
+                {{ t('screenshot.anti_cheat_reasons') }}
+            </button>
+
             <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
                 <i class="mr-1 fa fa-refresh"></i>
                 {{ t('global.refresh') }}
@@ -137,6 +142,33 @@
             </template>
         </v-section>
 
+        <modal :show.sync="showingReasons">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('screenshot.anti_cheat_reasons') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <template v-for="(contents, category) in reasons">
+                    <h2 class="mt-5">{{ category }}</h2>
+
+                    <table class="w-full whitespace-no-wrap">
+                        <tr class="text-left hover:bg-gray-100 dark:hover:bg-gray-600" v-for="(value, key) in contents">
+                            <td class="font-semibold py-2 px-1 border-t">{{ key }}</td>
+                            <td class="py-2 px-1 italic border-t text-sm">{{ value }}</td>
+                        </tr>
+                    </table>
+                </template>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showingReasons = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
+
     </div>
 </template>
 
@@ -144,6 +176,7 @@
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
 import Pagination from './../../Components/Pagination';
+import Modal from './../../Components/Modal';
 
 const FalsePositives = {
     "Distance Taze":           "very unlikely",
@@ -171,6 +204,7 @@ export default {
     components: {
         Pagination,
         VSection,
+        Modal,
     },
     props: {
         screenshots: {
@@ -182,6 +216,10 @@ export default {
             required: true,
         },
         links: {
+            type: Object,
+            required: true,
+        },
+        reasons: {
             type: Object,
             required: true,
         },
@@ -203,6 +241,8 @@ export default {
         return {
             isLoading: false,
             showScuffInfo: false,
+
+            showingReasons: false,
 
             flashingScuffInfo: false,
             flashScuffTimeout: null,

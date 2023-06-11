@@ -75,6 +75,15 @@ class Ban extends Model
 
 	private static $automatedReasons = null;
 
+    public static function getAutomatedReasons()
+    {
+        if (self::$automatedReasons === null) {
+			self::$automatedReasons = json_decode(file_get_contents(__DIR__ . '/../helpers/automated-bans.json'), true);
+		}
+
+        return self::$automatedReasons;
+    }
+
     /**
      * Gets the date that the ban expires.
      *
@@ -155,17 +164,15 @@ class Ban extends Model
 
 	public static function resolveAutomatedReason(string $originalReason): string
 	{
-		if (self::$automatedReasons === null) {
-			self::$automatedReasons = json_decode(file_get_contents(__DIR__ . '/../helpers/automated-bans.json'), true);
-		}
+		$reasons = self::getAutomatedReasons();
 
 		$parts = explode('-', $originalReason);
 
 		$category = array_shift($parts);
 		$key = array_shift($parts);
 
-		if (self::$automatedReasons && $category && $key && isset(self::$automatedReasons[$category]) && isset(self::$automatedReasons[$category][$key])) {
-			$reason = self::$automatedReasons[$category][$key];
+		if ($reasons && $category && $key && isset($reasons[$category]) && isset($reasons[$category][$key])) {
+			$reason = $reasons[$category][$key];
 
 			return str_replace('${DATA}', implode('-', $parts), $reason) . " (" . $originalReason . ")";
 		}
