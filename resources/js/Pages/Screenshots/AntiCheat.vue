@@ -197,6 +197,7 @@ const FalsePositives = {
     "Freecam Detected":        "very unlikely",
     "Driving while Hotwire":   "very unlikely",
     "Fast Movement":           "likely",
+    "Semi Godmode":            "very unlikely",
 };
 
 export default {
