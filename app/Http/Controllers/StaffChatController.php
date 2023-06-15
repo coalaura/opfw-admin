@@ -74,7 +74,10 @@ class StaffChatController extends Controller
 
             $time = date('H:i', $log->timestamp);
 
-            $text[] = '[' . $time . '] <b>' . $log->player_name . '</b>: <i>' . $log->details . '</i>';
+            $re = '/(?<=staff chat: `).+?`$/m';
+            $message = preg_match($re, $log->details, $matches, PREG_OFFSET_CAPTURE, 0);
+
+            $text[] = '[' . $time . '] <b>' . $log->player_name . '</b>: <i>' . $message . '</i>';
         }
 
         return $this->fakeText(200, implode("\n", $text));
