@@ -432,7 +432,7 @@ class TestController extends Controller
     {
         $after = time() - (60 * 60 * 24 * 30);
 
-        $data = DB::select("SELECT player_name, creator_identifier, timestamp FROM user_bans LEFT JOIN users ON license_identifier = creator_identifier WHERE is_staff = 1 AND SUBSTRING(identifier, 1, 8) == 'license:' AND timestamp > $after");
+        $data = DB::select("SELECT player_name, creator_identifier, timestamp FROM user_bans LEFT JOIN users ON license_identifier = creator_identifier WHERE is_staff = 1 AND SUBSTRING(identifier, 1, 8) = 'license:' AND timestamp > $after");
 
 		$bans = [];
 
