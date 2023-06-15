@@ -428,6 +428,38 @@ class TestController extends Controller
 		]);
     }
 
+    public function staffActivity()
+    {
+        $after = time() - (60 * 60 * 24 * 30);
+
+        $data = DB::select("SELECT player_name, creator_identifier, timestamp FROM user_bans LEFT JOIN users ON license_identifier = creator_identifier WHERE is_staff = 1 AND SUBSTRING(identifier, 1, 8) == 'license:' AND timestamp > $after");
+
+		$bans = [];
+
+        foreach ($data as $item) {
+            $name = $item->player_name;
+            $timestamp = $item->timestamp;
+
+            if (!isset($bans[$name])) {
+                $bans[$name] = [
+                    'time' => 0,
+                    'count' => 0
+                ];
+            }
+
+            $bans[$name]['time'] = max($bans[$name]['time'], $timestamp);
+            $bans[$name]['count']++;
+        }
+
+        $list = [];
+
+        foreach ($bans as $name => $item) {
+            $list[] = $name . " had " . $item['count'] . " bans in the last 30 days. Last ban was " . date('m/d/Y', $item['time']);
+        }
+
+        return self::respond(implode("\n", $list));
+    }
+
     public function test(Request $request): Response
     {
 		$user = $request->user();
