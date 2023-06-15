@@ -67,6 +67,10 @@ class StaffChatController extends Controller
             $date = date('D, jS M Y', $log->timestamp);
 
             if ($date != $lastDay) {
+                if ($lastDay) {
+                    $text[] = '</table>';
+                }
+
                 $text[] = "\n<b style='border-bottom: 1px dashed #fff;margin: 10px 0 5px;display: inline-block;'>- - - " . $date . " - - -</b><table>";
 
                 $lastDay = $date;
