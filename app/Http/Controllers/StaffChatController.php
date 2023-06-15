@@ -57,7 +57,7 @@ class StaffChatController extends Controller
 
     public function staffChat()
     {
-        $logs = DB::select("SELECT player_name, details, UNIX_TIMESTAMP(timestamp) as timestamp FROM user_logs LEFT JOIN users ON identifier = license_identifier WHERE action = 'Staff Message' ORDER BY timestamp DESC");
+        $logs = DB::select("SELECT player_name, action, details, UNIX_TIMESTAMP(timestamp) as timestamp FROM user_logs LEFT JOIN users ON identifier = license_identifier WHERE (action = 'Staff Message' or action = 'Report') ORDER BY timestamp DESC");
 
         $text = [];
 
@@ -78,7 +78,16 @@ class StaffChatController extends Controller
 
             $time = date('H:i', $log->timestamp);
 
-            $re = '/(?<=staff chat: `).+?(?=`$)/m';
+            if ($log->action == 'Report') {
+                $class = 'report';
+
+                $re = '/(?<=following message: `).+?(?=`$)/m';
+            } else {
+                $class = 'staff';
+
+                $re = '/(?<=staff chat: `).+?(?=`$)/m';
+            }
+
             $message = preg_match_all($re, $log->details, $matches, PREG_SET_ORDER, 0);
 
             if (isset($matches[0][0])) {
@@ -87,10 +96,10 @@ class StaffChatController extends Controller
                 $message = $log->details;
             }
 
-            $text[] = '<tr><td>' . $time . '</td><td><b>' . $log->player_name . '</b></td><td><i>' . $message . '</i></td></tr>';
+            $text[] = '<tr class="' . $class . '"><td>' . $time . '</td><td><b>' . $log->player_name . '</b></td><td><i>' . $message . '</i></td></tr>';
         }
 
-        return $this->fakeText(200, implode("\n", $text) . '</table><style>td:not(:last-child){white-space:nowrap}td{padding:5px 7px;font-size:13px}tr:nth-child(odd){background:rgba(255,255,255,.05)}table{border-collapse:collapse}</style>');
+        return $this->fakeText(200, implode("\n", $text) . '</table><style>td:not(:last-child){white-space:nowrap}td{padding:5px 7px;font-size:13px}tr.staff{background:rgba(215,105,255,.2)}tr.staff:nth-child(odd){background:rgba(215,105,255,.15)}table{border-collapse:collapse}tr.report{background:rgba(105,255,121,.2)}tr.report:nth-child(odd){background:rgba(105,255,121,.15)}</style>');
     }
 
 }
