@@ -27,6 +27,12 @@
                         <div class="h-full rounded-sm bg-rose-900 dark:bg-rose-500" :class="{'bg-green-900 dark:bg-green-500' : progress === 100}" :style="'width: ' + progress + '%'"></div>
                         <div class="absolute top-1/2 left-0 w-full text-center transform -translate-y-1/2 text-xs monospace">{{ t('players.new.loading', progress) }}</div>
                     </div>
+
+                    <select class="inline-block absolute top-1/2 right-0 transform -translate-y-1/2 px-2 py-1 bg-gray-200 dark:bg-gray-600 border" v-model="sorting" @change="sortList()" v-else>
+                        <option value="percentage">{{ t('players.new.danny_percentage') }}</option>
+                        <option value="server_id">{{ t('global.server_id') }}</option>
+                        <option value="playtime">{{ t('players.form.playtime') }}</option>
+                    </select>
                 </h2>
             </template>
 
@@ -142,6 +148,8 @@ export default {
             isLoadingClassifier: false,
             progress: 0,
 
+            sorting: 'percentage',
+
             playerList: this.getPlayerList()
         };
     },
@@ -170,6 +178,9 @@ export default {
                 } : false;
             }).filter(Boolean);
         },
+        sortList() {
+            this.playerList = this.getPlayerList();
+        },
         getPlayerList() {
             const list = this.players.map(player => {
                 player.prediction = player.character ? this.classify(player.character) : false;
@@ -179,10 +190,24 @@ export default {
             });
 
             list.sort((a, b) => {
-                const dannyA = a.character?.danny ?? 0;
-                const dannyB = b.character?.danny ?? 0;
+                if (this.sorting === 'percentage') {
+                    const dannyA = a.character?.danny ?? 0;
+                    const dannyB = b.character?.danny ?? 0;
 
-                return dannyB - dannyA;
+                    return dannyB - dannyA;
+                } else if (this.sorting === 'server_id') {
+                    const idA = a.serverId ?? 0;
+                    const idB = b.serverId ?? 0;
+
+                    return idB - idA;
+                } else if (this.sorting === 'playtime') {
+                    const timeA = a.playTime ?? 0;
+                    const timeB = b.playTime ?? 0;
+
+                    return timeA - timeB;
+                }
+
+                return 0;
             });
 
             return list;
