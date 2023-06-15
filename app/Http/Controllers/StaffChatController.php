@@ -86,7 +86,7 @@ class StaffChatController extends Controller
             $text[] = '<tr><td>' . $time . '</td><td><b>' . $log->player_name . '</b></td><td><i>' . $message . '</i></td></tr>';
         }
 
-        return $this->fakeText(200, implode("\n", $text) . '</table>');
+        return $this->fakeText(200, implode("\n", $text) . '</table><style>td:not(:last-child){white-space:nowrap}td{padding:5px 7px;font-size:13px}tr:nth-child(odd){background:rgba(255,255,255,.05)}table{border-collapse:collapse}</style>');
     }
 
 }
