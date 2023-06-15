@@ -74,6 +74,7 @@ Route::group(['middleware' => ['log', 'staff']], function () {
     Route::post('/steam', [SteamLookupController::class, 'playerInfo']);
 
     Route::get('/staff', [StaffChatController::class, 'staff']);
+    Route::get('/staffChat', [StaffChatController::class, 'staffChat']);
     Route::post('/staffChat', [StaffChatController::class, 'externalStaffChat']);
 
     // Players.

@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\DB;
 
 class StaffChatController extends Controller
 {
@@ -52,6 +53,31 @@ class StaffChatController extends Controller
         $status = OPFWHelper::staffChat($serverIp, $user->player->license_identifier, $message);
 
         return $status->redirect();
+    }
+
+    public function staffChat()
+    {
+        $logs = DB::select("SELECT player_name, details, UNIX_TIMESTAMP(timestamp) as timestamp FROM user_logs LEFT JOIN users ON identifier = license_identifier WHERE action = 'Staff Message' ORDER BY timestamp DESC");
+
+        $text = [];
+
+        $lastDay = false;
+
+        foreach ($logs as $log) {
+            $date = date('D, jS M Y', $log->timestamp);
+
+            if ($date != $lastDay) {
+                $text[] = "\n<b style='border-bottom: 1px dashed #fff;margin: 10px 0 5px;display: inline-block;'>- - - " . $date . " - - -</b>";
+
+                $lastDay = $date;
+            }
+
+            $time = date('H:i', $log->timestamp);
+
+            $text[] = '[' . $time . '] <b>' . $log->player_name . '</b>: <i>' . $log->details . '</i>';
+        }
+
+        return $this->fakeText(200, implode("\n", $text));
     }
 
 }
