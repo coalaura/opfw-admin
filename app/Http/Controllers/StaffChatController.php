@@ -74,7 +74,7 @@ class StaffChatController extends Controller
 
             $time = date('H:i', $log->timestamp);
 
-            $re = '/(?<=staff chat: `).+?`$/m';
+            $re = '/(?<=staff chat: `).+?(?=`$)/m';
             $message = preg_match_all($re, $log->details, $matches, PREG_SET_ORDER, 0);
 
             if (isset($matches[0][0])) {
