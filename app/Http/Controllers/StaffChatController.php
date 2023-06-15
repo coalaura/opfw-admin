@@ -71,7 +71,7 @@ class StaffChatController extends Controller
                     $text[] = '</table>';
                 }
 
-                $text[] = "\n<b style='border-bottom: 1px dashed #fff;margin: 10px 0 5px;display: inline-block;'>- - - " . $date . " - - -</b><table>";
+                $text[] = "<b style='border-bottom: 1px dashed #fff;margin: 10px 0 5px;display: inline-block;'>- - - " . $date . " - - -</b><table>";
 
                 $lastDay = $date;
             }
