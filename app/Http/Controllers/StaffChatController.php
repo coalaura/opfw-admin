@@ -67,7 +67,7 @@ class StaffChatController extends Controller
             $date = date('D, jS M Y', $log->timestamp);
 
             if ($date != $lastDay) {
-                $text[] = "\n<b style='border-bottom: 1px dashed #fff;margin: 10px 0 5px;display: inline-block;'>- - - " . $date . " - - -</b>";
+                $text[] = "\n<b style='border-bottom: 1px dashed #fff;margin: 10px 0 5px;display: inline-block;'>- - - " . $date . " - - -</b><table>";
 
                 $lastDay = $date;
             }
@@ -83,10 +83,10 @@ class StaffChatController extends Controller
                 $message = $log->details;
             }
 
-            $text[] = '[' . $time . '] <b>' . $log->player_name . '</b>: <i>' . $message . '</i>';
+            $text[] = '<tr><td>' . $time . '</td><td><b>' . $log->player_name . '</b></td><td><i>' . $message . '</i></td></tr>';
         }
 
-        return $this->fakeText(200, implode("\n", $text));
+        return $this->fakeText(200, implode("\n", $text) . '</table>');
     }
 
 }
