@@ -171,12 +171,21 @@ export default {
             }).filter(Boolean);
         },
         getPlayerList() {
-            return this.players.map(player => {
+            const list = this.players.map(player => {
                 player.prediction = player.character ? this.classify(player.character) : false;
                 player.data = this.getCharacterData(player);
 
                 return player;
             });
+
+            list.sort((a, b) => {
+                const dannyA = a.character?.danny ?? 0;
+                const dannyB = b.character?.danny ?? 0;
+
+                return dannyB - dannyA;
+            });
+
+            return list;
         },
         formatSecondDiff(sec) {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
