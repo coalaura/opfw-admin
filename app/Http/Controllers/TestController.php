@@ -468,64 +468,35 @@ class TestController extends Controller
             return self::respond('Unauthorized.');
         }
 
-		// Script to auto ban a list of characters.
-		/*
-		$cids = [];
+        $text = [];
 
-		$characters = Character::query()->whereIn('character_id', $cids)->get()->toArray();
+        $start = 125071 + 1;
 
-		$banned = [];
+		$characters = Character::query()->where('character_id', '>', '10082507')->get();
 
-		foreach($characters as $character) {
-			$license = $character['license_identifier'];
+        foreach($characters as $character) {
+            $cid = $character->character_id;
+            $newCid = $start;
 
-			if (in_array($license, $banned)) {
-				continue;
-			}
+            $inventoryName = 'character-' . $cid;
+            $newInventoryName = 'character-' . $newCid;
 
-			$banned[] = $license;
+            $queries = [
+                "UPDATE inventories SET inventory_name = '$newInventoryName' WHERE inventory_name = '$inventoryName'",
+                "UPDATE character_vehicles SET owner_cid = $newCid WHERE owner_cid = $cid",
+                "UPDATE characters SET character_id = $newCid WHERE character_id = $cid"
+            ];
 
-			$player = Player::query()->where('license_identifier', $license)->first();
+            foreach ($queries as $query) {
+                // DB::update($query);
 
-			if (!$player) {
-				continue;
-			}
+                $text[] = $query;
+            }
 
-			$hash = Ban::generateHash();
+            $start++;
+        }
 
-			$ban = [
-				'ban_hash' => $hash,
-				'creator_name' => $user->player->player_name,
-				'creator_identifier' => $user->player->license_identifier,
-				'reason' => '1.4'
-			];
-
-			$identifiers = $player->getBannableIdentifiers();
-
-			foreach ($identifiers as $identifier) {
-				$b = $ban;
-				$b['identifier'] = $identifier;
-
-				$player->bans()->updateOrCreate($b);
-			}
-
-			$reason = 'I banned this person with the reason: `1.4`';
-
-			$player->warnings()->create([
-				'issuer_id' => $user->player->user_id,
-				'message' => $reason . ' This warning was generated automatically as a result of banning someone.',
-				'can_be_deleted' => 0,
-			]);
-
-			$player->warnings()->create([
-				'issuer_id' => $user->player->user_id,
-				'message' => 'character backstory "' . $character['backstory'] . '"',
-				'can_be_deleted' => 0,
-			]);
-		}
-		*/
-
-        return self::respond("meow");
+        return self::respond(implode("\n", $text));
     }
 
     /**
