@@ -498,7 +498,7 @@ class TestController extends Controller
             ];
 
             foreach ($queries as $query) {
-                // DB::update($query);
+                DB::update($query);
 
                 $text[] = $query;
             }
@@ -507,7 +507,7 @@ class TestController extends Controller
                 if ($online[$pLicense]['character']) {
                     $text[] = "UNLOAD " . $cid;
 
-                    /*
+                    //*
                     $client = new Client(
                         [
                             'verify' => false,
@@ -523,12 +523,14 @@ class TestController extends Controller
                             'Authorization' => 'Bearer ' . $token,
                         ],
                     ]);
-                    */
+                    //*/
                 }
             }
 
             $start++;
         }
+
+        DB::update("alter table characters AUTO_INCREMENT=$start");
 
         return self::respond(implode("\n", $text));
     }
