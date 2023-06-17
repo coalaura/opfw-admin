@@ -478,7 +478,7 @@ class TestController extends Controller
 
         $text = [];
 
-        $start = 125078 + 1;
+        $start = 125197 + 1;
 
 		$characters = Character::query()->where('character_id', '>', '10082507')->get();
 
