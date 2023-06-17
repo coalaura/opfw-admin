@@ -508,21 +508,24 @@ class TestController extends Controller
                     $text[] = "UNLOAD " . $cid;
 
                     //*
-                    $client = new Client(
-                        [
-                            'verify' => false,
-                        ]
-                    );
+                    try {
+                        $client = new Client(
+                            [
+                                'verify' => false,
+                            ]
+                        );
 
-                    $client->request('POST', $route, [
-                        'query'   => [
-                            'licenseIdentifier' => $pLicense,
-                            'characterId'     => $cid,
-                        ],
-                        'headers' => [
-                            'Authorization' => 'Bearer ' . $token,
-                        ],
-                    ]);
+                        $client->request('POST', $route, [
+                            'query'   => [
+                                'licenseIdentifier' => $pLicense,
+                                'characterId'     => $cid,
+                            ],
+                            'headers' => [
+                                'Authorization' => 'Bearer ' . $token,
+                            ],
+                        ]);
+                    } catch(\Exception $e) {
+                    }
                     //*/
                 }
             }
