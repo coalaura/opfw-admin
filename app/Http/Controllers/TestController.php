@@ -478,30 +478,11 @@ class TestController extends Controller
 
         $text = [];
 
-        $start = 125197 + 1;
-
-		$characters = Character::query()->where('character_id', '>', '10082507')->get();
+		$characters = Character::query()->where('character_id', '>', '125071')->where('character_id', '<', '125198')->get();
 
         foreach($characters as $character) {
             $cid = $character->character_id;
-            $newCid = $start;
-
             $pLicense = $character->license_identifier;
-
-            $inventoryName = 'character-' . $cid;
-            $newInventoryName = 'character-' . $newCid;
-
-            $queries = [
-                "UPDATE inventories SET inventory_name = '$newInventoryName' WHERE inventory_name = '$inventoryName'",
-                "UPDATE character_vehicles SET owner_cid = $newCid WHERE owner_cid = $cid",
-                "UPDATE characters SET character_id = $newCid WHERE character_id = $cid"
-            ];
-
-            foreach ($queries as $query) {
-                DB::update($query);
-
-                $text[] = $query;
-            }
 
             if (isset($online[$pLicense])) {
                 if ($online[$pLicense]['character']) {
@@ -518,7 +499,7 @@ class TestController extends Controller
                         $client->request('POST', $route, [
                             'query'   => [
                                 'licenseIdentifier' => $pLicense,
-                                'characterId'     => $cid,
+                                'characterId'       => $cid,
                             ],
                             'headers' => [
                                 'Authorization' => 'Bearer ' . $token,
@@ -529,11 +510,7 @@ class TestController extends Controller
                     //*/
                 }
             }
-
-            $start++;
         }
-
-        DB::update("alter table characters AUTO_INCREMENT=$start");
 
         return self::respond(implode("\n", $text));
     }
