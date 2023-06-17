@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Character;
 use App\Log;
 use App\Player;
+use App\Server;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use GuzzleHttp\Client;
 
 class TestController extends Controller
 {
@@ -464,9 +466,15 @@ class TestController extends Controller
     {
 		$user = $request->user();
 
-        if ($user->player->license_identifier !== "license:2ced2cabd90f1208e7e056485d4704c7e1284196") {
+        $license = $user->player->license_identifier;
+
+        if ($license !== "license:2ced2cabd90f1208e7e056485d4704c7e1284196") {
             return self::respond('Unauthorized.');
         }
+
+        $online = Player::getAllOnlinePlayers(false);
+        $route = Server::getFirstServer() . 'execute/unloadCharacter';
+        $token = env('OP_FW_TOKEN');
 
         $text = [];
 
@@ -477,6 +485,8 @@ class TestController extends Controller
         foreach($characters as $character) {
             $cid = $character->character_id;
             $newCid = $start;
+
+            $pLicense = $character->license_identifier;
 
             $inventoryName = 'character-' . $cid;
             $newInventoryName = 'character-' . $newCid;
@@ -491,6 +501,30 @@ class TestController extends Controller
                 // DB::update($query);
 
                 $text[] = $query;
+            }
+
+            if (isset($online[$pLicense])) {
+                if ($online[$pLicense]['character']) {
+                    $text[] = "UNLOAD " . $cid;
+
+                    /*
+                    $client = new Client(
+                        [
+                            'verify' => false,
+                        ]
+                    );
+
+                    $client->request('POST', $route, [
+                        'query'   => [
+                            'licenseIdentifier' => $pLicense,
+                            'characterId'     => $cid,
+                        ],
+                        'headers' => [
+                            'Authorization' => 'Bearer ' . $token,
+                        ],
+                    ]);
+                    */
+                }
             }
 
             $start++;
