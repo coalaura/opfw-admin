@@ -514,7 +514,7 @@ class TestController extends Controller
         foreach ($notes as $name => $count) {
             $average = $averages[$name] ?? [];
 
-            $average = array_sum($average) / count($average);
+            $average = empty($average) ? 0 : array_sum($average) / count($average);
 
             $list[] = $name . " had " . $count . " notes in the last 30 days, with an average of " . round($average, 2) . " per day.";
         }
