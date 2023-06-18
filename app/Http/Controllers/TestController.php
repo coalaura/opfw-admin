@@ -466,7 +466,7 @@ class TestController extends Controller
     {
         $after = time() - (60 * 60 * 24 * 30);
 
-        $data = DB::select("SELECT player_name, UNIX_TIMESTAMP(created_at) as timestamp FROM warnings LEFT JOIN users ON users.user_id = issuer_id WHERE is_staff = 1 AND warning_type != 'system' AND timestamp > $after");
+        $data = DB::select("SELECT player_name, UNIX_TIMESTAMP(created_at) as timestamp FROM warnings LEFT JOIN users ON users.user_id = issuer_id WHERE is_staff = 1 AND warning_type != 'system' AND created_at > $after");
 
         $daily = [];
         $averages = [];
