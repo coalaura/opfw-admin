@@ -495,8 +495,6 @@ class TestController extends Controller
             }
         }
 
-        $averages = [];
-
         for ($i = $after; $i < time(); $i += (60 * 60 * 24)) {
             $day = date('m/d/Y', $i);
 
