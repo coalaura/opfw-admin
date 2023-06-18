@@ -16,11 +16,15 @@ class BanResource extends JsonResource
      */
     public function toArray($request): array
     {
+        $reason = $this->getFormattedReason();
+
         return [
             'id'         => $this->id,
             'banHash'    => $this->ban_hash,
 			'smurfAccount' => $this->smurf_account,
-            'reason'     => $this->getFormattedReason(),
+            'reason'     => $reason['reason'],
+            'original'   => $this->reason,
+            'info'       => $reason['info'],
             'identifier' => $this->identifier,
             'expire'     => $this->expire,
             'expireAt'   => $this->expireAt,

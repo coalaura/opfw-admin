@@ -766,6 +766,10 @@
                     </p>
                 </div>
 
+                <div class="mt-4 text-sm pt-1 border-t border-dashed" v-if="player.ban.info">
+                    <b class="whitespace-nowrap">{{ player.ban.original }}:</b> <i>{{ player.ban.info }}</i>
+                </div>
+
             </alert>
             <!-- Issuing -->
             <div class="p-8 mb-10 bg-gray-100 rounded dark:bg-dark-secondary" v-if="isBanning">
