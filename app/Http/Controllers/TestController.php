@@ -462,6 +462,66 @@ class TestController extends Controller
         return self::respond(implode("\n", $list));
     }
 
+    public function staffActivity2()
+    {
+        $after = time() - (60 * 60 * 24 * 30);
+
+        $data = DB::select("SELECT player_name, UNIX_TIMESTAMP(created_at) as timestamp FROM warnings LEFT JOIN users ON users.user_id = issuer_id WHERE is_staff = 1 AND warning_type != 'system' AND timestamp > $after");
+
+        $daily = [];
+        $averages = [];
+		$notes = [];
+
+        foreach ($data as $item) {
+            $name = $item->player_name;
+            $timestamp = $item->timestamp;
+
+            $day = date('m/d/Y', $timestamp);
+
+            $count = $notes[$name] ?? 0;
+
+            $notes[$name] = $count + 1;
+
+            if (!isset($daily[$day])) {
+                $daily[$day] = [];
+            }
+
+            $dayCount = $daily[$day][$name] ?? 0;
+
+            $daily[$day][$name] = $dayCount + 1;
+
+            if (!isset($averages[$name])) {
+                $averages[$name] = [];
+            }
+        }
+
+        $averages = [];
+
+        for ($i = $after; $i < time(); $i += (60 * 60 * 24)) {
+            $day = date('m/d/Y', $i);
+
+            $count = $daily[$day] ?? [];
+
+            foreach ($averages as $name => $item) {
+                $total = $count[$name] ?? 0;
+
+                $averages[$name][] = $total;
+            }
+        }
+
+        $list = [];
+
+        foreach ($notes as $name => $count) {
+            $average = $averages[$name] ?? [];
+
+            $average = array_sum($average) / count($average);
+
+            $list[] = $name . " had " . $count . " notes in the last 30 days, with an average of " . round($average, 2) . " per day.";
+        }
+
+        return self::respond(implode("\n", $list));
+    }
+
     public function test(Request $request): Response
     {
 		$user = $request->user();
@@ -472,47 +532,7 @@ class TestController extends Controller
             return self::respond('Unauthorized.');
         }
 
-        $online = Player::getAllOnlinePlayers(false);
-        $route = Server::getFirstServer() . 'execute/unloadCharacter';
-        $token = env('OP_FW_TOKEN');
-
-        $text = [];
-
-		$characters = Character::query()->where('character_id', '>', '125071')->where('character_id', '<', '125198')->get();
-
-        foreach($characters as $character) {
-            $cid = $character->character_id;
-            $pLicense = $character->license_identifier;
-
-            if (isset($online[$pLicense])) {
-                if ($online[$pLicense]['character']) {
-                    $text[] = "UNLOAD " . $cid;
-
-                    //*
-                    try {
-                        $client = new Client(
-                            [
-                                'verify' => false,
-                            ]
-                        );
-
-                        $client->request('POST', $route, [
-                            'query'   => [
-                                'licenseIdentifier' => $pLicense,
-                                'characterId'       => $cid,
-                            ],
-                            'headers' => [
-                                'Authorization' => 'Bearer ' . $token,
-                            ],
-                        ]);
-                    } catch(\Exception $e) {
-                    }
-                    //*/
-                }
-            }
-        }
-
-        return self::respond(implode("\n", $text));
+        return self::respond("dick and balls");
     }
 
     /**
