@@ -116,7 +116,7 @@ class GeneralHelper
 			return false;
 		}
 
-		$creationTime = max(0, $creationTime - 15);
+		$creationTime = max(0, $creationTime - 25);
 
 		$percentage = 1.0 - ($creationTime / (15 * 60));
 
