@@ -266,13 +266,12 @@ class PlayerCharacterController extends Controller
 
         $character->update($data);
 
-        $info = '';
-        if ($request->query('jobUpdate')) {
-            $info = 'In-Game Job refresh failed, user has to softnap.';
-            $refresh = OPFWHelper::updateJob($player, $character->character_id);
-            if ($refresh->status) {
-                $info = 'In-Game Job refresh was successful too.';
-            }
+        $info = 'In-Game character refresh failed, user has to soft-nap.';
+
+        $refresh = OPFWHelper::updateCharacter($player, $character->character_id);
+
+        if ($refresh->status) {
+            $info = 'In-Game character refresh was successful too.';
         }
 
         $user = $request->user();
@@ -566,15 +565,23 @@ class PlayerCharacterController extends Controller
             'character_data' => json_encode($json),
         ]);
 
+        $info = 'In-Game character refresh failed, user has to soft-nap.';
+
+        $refresh = OPFWHelper::updateCharacter($player, $character->character_id);
+
+        if ($refresh->status) {
+            $info = 'In-Game character refresh was successful too.';
+        }
+
         $user = $request->user();
 
         if ($license === 'remove') {
             PanelLog::logLicenseRemove($user->player->license_identifier, $player->license_identifier, $character->character_id);
-            return back()->with('success', 'All Licenses were successfully removed.');
+            return back()->with('success', 'All Licenses were successfully removed. ' . $info);
         }
 
         PanelLog::logLicenseAdd($user->player->license_identifier, $player->license_identifier, $character->character_id, $license);
-        return back()->with('success', 'License was successfully added (License: ' . $license . ').');
+        return back()->with('success', 'License was successfully added (License: ' . $license . '). ' . $info);
     }
 
     /**

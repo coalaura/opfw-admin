@@ -188,13 +188,13 @@ class OPFWHelper
     }
 
     /**
-     * Updates job data for a player
+     * Updates character data for a player
      *
      * @param Player $player
      * @param string $character_id
      * @return OPFWResponse
      */
-    public static function updateJob(Player $player, string $character_id): OPFWResponse
+    public static function updateCharacter(Player $player, string $character_id): OPFWResponse
     {
         $license = $player->license_identifier;
 
@@ -203,13 +203,13 @@ class OPFWHelper
             return new OPFWResponse(true, 'Player is offline, no refresh needed.');
         }
 
-        $response = self::executeRoute($status->serverIp, $status->serverIp . 'execute/refreshJob', [
+        $response = self::executeRoute($status->serverIp, $status->serverIp . 'execute/refreshCharacter', [
             'licenseIdentifier' => $license,
-            'characterId'     => $character_id,
+            'characterId'       => $character_id,
         ]);
 
         if ($response->status) {
-            $response->message = 'Updated job data for player.';
+            $response->message = 'Updated character data for player.';
         }
 
         return $response;
