@@ -32,7 +32,7 @@ class OPFWResponse
 
     public static function didNotExecute(): OPFWResponse
     {
-        $response = new OPFWResponse(false, 'The request was not executed');
+        $response = new OPFWResponse(true, 'The request was not executed');
         $response->notExecuted = true;
 
         return $response;
