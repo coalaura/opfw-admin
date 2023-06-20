@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Player;
+use App\Helpers\GeneralHelper;
 use App\Helpers\SessionHelper;
 use Illuminate\Http\Request;
 use App\Http\Middleware\StaffMiddleware;
@@ -78,6 +79,15 @@ class DiscordController extends Controller
         }
 
         $info = $player->toArray();
+
+        $isRoot = GeneralHelper::isUserRoot($info['license_identifier']);
+        $isSuperAdmin = $info['is_super_admin'] || $isRoot;
+        $isSeniorStaff = $info['is_senior_staff'] || $isSuperAdmin;
+        $isStaff = $info['is_staff'] || $isSeniorStaff;
+
+        if (!$isStaff) {
+            return redirect('/login')->with('error', '"' . $info['player_name'] . '" is not a staff member.');
+        }
 
         // Unset bunch of unneeded data.
         unset($info['player_tokens']);
