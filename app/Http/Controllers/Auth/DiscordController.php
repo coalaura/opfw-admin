@@ -71,6 +71,7 @@ class DiscordController extends Controller
         $identifier = 'discord:' . $user['id'];
 
         $player = Player::query()
+            ->where('identifiers', 'LIKE', '%' . $identifier . '%')
             ->where('last_used_identifiers', 'LIKE', '%' . $identifier . '%')
             ->first();
 
