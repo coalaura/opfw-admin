@@ -271,7 +271,7 @@ class PlayerCharacterController extends Controller
         $refresh = OPFWHelper::updateCharacter($player, $character->character_id);
 
         if ($refresh->status) {
-            $info = 'In-Game character refresh was successful too.';
+            $info = $refresh->notExecuted ? '' : 'In-Game character refresh was successful too.';
         }
 
         $user = $request->user();
@@ -570,7 +570,7 @@ class PlayerCharacterController extends Controller
         $refresh = OPFWHelper::updateCharacter($player, $character->character_id);
 
         if ($refresh->status) {
-            $info = 'In-Game character refresh was successful too.';
+            $info = $refresh->notExecuted ? '' : 'In-Game character refresh was successful too.';
         }
 
         $user = $request->user();

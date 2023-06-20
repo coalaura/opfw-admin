@@ -25,6 +25,20 @@ class OPFWResponse
     public $data = null;
 
     /**
+     * If the request was not executed
+     * @var bool
+     */
+    public $notExecuted = false;
+
+    public static function didNotExecute(): OPFWResponse
+    {
+        $response = new OPFWResponse(false, 'The request was not executed');
+        $response->notExecuted = true;
+
+        return $response;
+    }
+
+    /**
      * OPFWResponse constructor.
      * @param bool $status
      * @param string $message

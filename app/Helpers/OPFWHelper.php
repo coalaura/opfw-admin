@@ -200,7 +200,7 @@ class OPFWHelper
 
         $status = Player::getOnlineStatus($license, false);
         if (!$status->isOnline()) {
-            return new OPFWResponse(true, 'Player is offline, no refresh needed.');
+            return OPFWResponse::didNotExecute();
         }
 
         $response = self::executeRoute($status->serverIp, $status->serverIp . 'execute/refreshCharacter', [
