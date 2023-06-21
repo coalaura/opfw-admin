@@ -194,8 +194,8 @@ const FalsePositives = {
     "Invincible":              "impossible",
     "Runtime Texture":         "impossible",
     "Bad Screen Word":         "unlikely",
-    "Freecam Detected":        "very unlikely",
-    "Driving while Hotwire":   "very unlikely",
+    "Freecam Detected":        "impossible",
+    "Driving while Hotwire":   "impossible",
     "Fast Movement":           "likely",
     "Semi Godmode":            "very unlikely",
 };
