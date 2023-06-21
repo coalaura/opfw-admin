@@ -21,7 +21,9 @@ class DiscordController extends Controller
     {
         $clientId = env('DISCORD_OAUTH_ID');
 
-        $url = 'https://discord.com/api/oauth2/authorize?client_id=' . $clientId . '&redirect_uri=' . urlencode($this->redirectUrl($request)) . '&response_type=code&scope=identify&state=' . CLUSTER;
+        $host = $request->getHttpHost();
+
+        $url = 'https://discord.com/api/oauth2/authorize?client_id=' . $clientId . '&redirect_uri=' . urlencode($this->redirectUrl($request)) . '&response_type=code&scope=identify&state=' . $host;
 
         return redirect($url);
     }
@@ -34,11 +36,7 @@ class DiscordController extends Controller
             return $this->text(400, 'Missing oauth2 state.');
         }
 
-        $url = 'http://localhost';
-
-        if ($state !== 'c1') {
-            $url = 'https://' . $state . '.legacy-roleplay.com';
-        }
+        $url = 'https://' . $state;
 
         $url .= '/auth/complete?code=' . $request->get('code');
 
