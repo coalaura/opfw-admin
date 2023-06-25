@@ -3,9 +3,8 @@
 namespace App\Helpers;
 
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use App\Player;
 
 class GeneralHelper
 {
@@ -77,6 +76,30 @@ class GeneralHelper
         $users = self::getRootUsers();
 
         return in_array($license_identifier, $users);
+    }
+
+    public static function getAllStaff(): array
+    {
+        $key = "all_staff_list";
+
+        if (CacheHelper::exists($key)) {
+            return CacheHelper::read($key, []);
+        }
+
+        $staff = Player::query()
+            ->select(["license_identifier", "player_name"])
+            ->orWhere("is_staff", "=", 1)
+            ->orWhere("is_senior_staff", "=", 1)
+            ->orWhere("is_super_admin", "=", 1)
+            ->get()->toArray();
+
+        usort($staff, function ($a, $b) {
+            return strcasecmp($a['player_name'], $b['player_name']);
+        });
+
+        CacheHelper::write($key, $staff, CacheHelper::HOUR * 2);
+
+        return $staff;
     }
 
     public static function ipInfo(string $ip): ?array

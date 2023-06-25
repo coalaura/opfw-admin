@@ -132,6 +132,11 @@ class PlayerBanController extends Controller
             }
         }
 
+		// Filtering by creator.
+		if ($creator = $request->input('creator')) {
+            $query->where('creator_identifier', $creator);
+        }
+
         $query->leftJoin('user_bans', 'identifier', '=', 'license_identifier');
 
         if ($showMine) {
@@ -160,13 +165,17 @@ class PlayerBanController extends Controller
 
         $players = $query->get();
 
+        $staff = GeneralHelper::getAllStaff();
+
         return Inertia::render('Players/Bans', [
             'players' => $players->toArray(),
+            'staff' => $staff,
             'links' => $this->getPageUrls($page),
             'page' => $page,
 			'filters' => [
                 'banHash' => $request->input('banHash'),
                 'reason' => $request->input('reason'),
+                'creator' => $request->input('creator') ?: "",
             ],
         ]);
     }

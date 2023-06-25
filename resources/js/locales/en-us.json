@@ -712,6 +712,7 @@
             "temporary": "This is a temporary ban",
             "expiration": "Expiration",
             "reason": "Reason",
+            "creator": "Creator",
             "do_ban": "Ban player",
             "update_ban": "Update Ban",
             "banned_for": "Banned for about {0}",
