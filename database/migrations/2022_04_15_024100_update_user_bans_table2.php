@@ -14,7 +14,7 @@ class UpdateUserBansTable2 extends Migration
      */
     public function up()
     {
-        if (!Schema::hasColumn('user_bans', 'panel_drug_department')) {
+        if (!Schema::hasColumn('user_bans', 'locked')) {
             Schema::table('user_bans', function (Blueprint $table) {
                 $table->tinyInteger('locked')->default(0);
             });
