@@ -77,6 +77,7 @@ class Player extends Model
         'enabled_commands',
         'panel_tag',
         'average_ping',
+        'average_fps',
     ];
 
     /**

@@ -56,6 +56,7 @@ class PlayerResource extends JsonResource
 			'variables'       => $this->getUserVariables(),
             'countryName'     => $this->country_name,
             'averagePing'     => $this->average_ping,
+            'averageFps'      => $this->average_fps,
         ];
     }
 

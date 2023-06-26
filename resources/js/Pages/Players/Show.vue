@@ -85,6 +85,12 @@
                            {{ player.averagePing }}ms
                     </badge>
 
+                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary italic" v-if="player.averageFps"
+                           :title="t('players.show.average_fps')">
+                           <i class="fas fa-stopwatch"></i>
+                           {{ player.averageFps }}fps
+                    </badge>
+
                     <badge class="border-pink-300 bg-pink-200 dark:bg-pink-700" v-if="player.tag">
                         <span class="font-semibold">{{ player.tag }}</span>
                     </badge>
