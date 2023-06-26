@@ -46,3 +46,14 @@ function fileVersion($file)
 
     return substr(md5($time), 0, 8);
 }
+
+function extraHeader()
+{
+    $header = env('EXTRA_HEADER', '');
+
+    if (empty($header)) {
+        return '';
+    }
+
+    return $header;
+}
