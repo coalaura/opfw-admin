@@ -11,7 +11,7 @@
                 <form class="mb-6 flex w-full" @submit.prevent="sendChat">
                     <input class="w-full px-4 py-2 mr-3 bg-gray-200 dark:bg-gray-600 border rounded !outline-none" maxlength="250" required placeholder="Hey gang!" v-model="staffMessage" @keypress="chatKeyPress($event)" :disabled="isSendingChat">
 
-                    <button class="px-4 py-2 font-semibold text-white bg-primary dark:bg-dark-primary rounded hover:shadow-lg flex-shrink-0" type="submit" :class="{'bg-success dark:bg-dark-success' : sentChatFlash, 'bg-warning dark:bg-dark-warning' : isSendingChat}">
+                    <button class="px-4 py-2 font-semibold text-white rounded hover:shadow-lg flex-shrink-0" type="submit" :class="{'bg-success dark:bg-dark-success' : sentChatFlash, 'bg-warning dark:bg-dark-warning' : isSendingChat, 'bg-primary dark:bg-dark-primary' : !sentChatFlash && !isSendingChat}">
                         <span v-if="sentChatFlash">
                             <i class="fas fa-check"></i>
                         </span>
