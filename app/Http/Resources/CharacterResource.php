@@ -53,6 +53,7 @@ class CharacterResource extends JsonResource
             'danny'                      => GeneralHelper::isDefaultDanny(intval($this->ped_model_hash), $this->ped_model_data),
             'mugshot'                    => $this->mugshot_url ?? null,
             'playtime'                   => $this->playtime,
+            'lastLoaded'                 => $this->last_loaded,
         ];
     }
 }

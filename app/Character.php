@@ -62,6 +62,7 @@ class Character extends Model
         'character_deletion_timestamp',
 
 		'character_creation_time',
+        'last_loaded',
 
         'ped_model_hash',
 

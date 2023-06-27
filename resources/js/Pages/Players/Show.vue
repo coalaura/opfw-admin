@@ -973,6 +973,9 @@
                                     <h4 class="text-gray-700 dark:text-gray-300 text-xs italic font-mono mt-1" v-if="character.playtime" :title="t('players.characters.playtime')">
                                         {{ formatSecondDiff(character.playtime) }}
                                     </h4>
+                                    <h4 class="text-gray-700 dark:text-gray-300 text-xs italic font-mono mt-1" v-if="character.last_loaded">
+                                        {{ t('players.characters.last_loaded') }} {{ formatSecondDiff(Math.floor(Date.now() / 1000) - character.last_loaded) }}
+                                    </h4>
                                 </div>
                             </div>
                         </template>
