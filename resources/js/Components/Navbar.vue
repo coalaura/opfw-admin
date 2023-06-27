@@ -41,7 +41,7 @@
 
                 <div class="w-avatar relative" @contextmenu="showContext" v-click-outside="hideContext">
                     <inertia-link :href="'/players/' + $page.auth.player.licenseIdentifier">
-                        <img :src="getDiscordAvatar()" class="rounded shadow border-2 border-gray-300" />
+                        <img :src="getDiscordAvatar()" class="rounded shadow border-2 border-gray-300" @error="failedDiscordAvatar" />
                     </inertia-link>
 
                     <div v-if="showingContext" class="absolute top-full right-0 bg-gray-700 rounded border-2 border-gray-500 min-w-context mt-1 shadow-md z-10 text-sm text-white">
@@ -113,7 +113,9 @@ export default {
             copyIpTimeout: false,
 
             showingPermissions: false,
-            showingContext: false
+            showingContext: false,
+
+            failedAvatarLoad: false
         }
     },
     beforeMount() {
@@ -121,11 +123,16 @@ export default {
     },
     methods: {
         getDiscordAvatar() {
+            if (this.failedAvatarLoad) return '/images/discord_failed.png';
+
             const discord = this.$page.discord;
 
             if (!discord || !discord.id) return '/images/discord.webp';
 
             return `https://cdn.discordapp.com/avatars/${discord.id}/${discord.avatar}.png`;
+        },
+        failedDiscordAvatar() {
+            this.failedAvatarLoad = true;
         },
         showContext($event) {
             $event.preventDefault();
