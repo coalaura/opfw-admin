@@ -2360,6 +2360,12 @@ export default {
                 img.onload = resolve;
                 img.onerror = reject;
 
+                setTimeout(() => {
+                    if (!img.complete || !img.naturalWidth) {
+                        reject();
+                    }
+                }, 5000);
+
                 img.src = url;
             });
         }
