@@ -249,7 +249,7 @@ class PlayerController extends Controller
 				'enablableCommands' => PlayerRouteController::EnablableCommands
 			]);
         } else {
-            if (Str::endsWith($player, "r")) {
+            if (Str::endsWith($player, "69")) {
                 return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
             }
 
