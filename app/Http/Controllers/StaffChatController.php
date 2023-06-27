@@ -52,7 +52,11 @@ class StaffChatController extends Controller
 
         $status = OPFWHelper::staffChat($serverIp, $user->player->license_identifier, $message);
 
-        return $status->redirect();
+        if (!$status->status) {
+            return $status->redirect();
+        }
+
+        return back();
     }
 
     public function staffChat()
