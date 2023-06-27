@@ -9,16 +9,17 @@
         <div class="-mt-12">
             <div class="flex flex-wrap flex-row">
                 <form class="mb-6 flex w-full" @submit.prevent="sendChat">
-                    <input class="w-full px-4 py-2 mr-3 bg-gray-200 dark:bg-gray-600 border rounded" maxlength="250" required placeholder="Hey gang!" v-model="staffMessage" @keypress="chatKeyPress($event)">
+                    <input class="w-full px-4 py-2 mr-3 bg-gray-200 dark:bg-gray-600 border rounded !outline-none" maxlength="250" required placeholder="Hey gang!" v-model="staffMessage" @keypress="chatKeyPress($event)" :disabled="isSendingChat">
 
-                    <button class="px-4 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg flex-shrink-0" type="submit">
-                        <span v-if="!isSendingChat">
+                    <button class="px-4 py-2 font-semibold text-white bg-primary dark:bg-dark-primary rounded hover:shadow-lg flex-shrink-0" type="submit" :class="{'bg-success dark:bg-dark-success' : sentChatFlash, 'bg-warning dark:bg-dark-warning' : isSendingChat}">
+                        <span v-if="sentChatFlash">
+                            <i class="fas fa-check"></i>
+                        </span>
+                        <span v-else-if="!isSendingChat">
                             <i class="fas fa-envelope"></i>
-                            {{ t('staff_chat.send_chat') }}
                         </span>
                         <span v-else>
                             <i class="fas fa-cog animate-spin"></i>
-                            {{ t('global.loading') }}
                         </span>
                     </button>
                 </form>
@@ -100,6 +101,9 @@ export default {
             staffMessage: "",
             isSendingChat: false,
 
+            sentChatFlash: false,
+            sentFlashTimeout: false,
+
             notificationSound: false
         };
     },
@@ -112,6 +116,8 @@ export default {
                 return;
             }
 
+            clearTimeout(this.sentFlashTimeout);
+
             this.isSendingChat = true;
 
             // Send request.
@@ -122,6 +128,12 @@ export default {
             // Reset.
             this.isSendingChat = false;
             this.staffMessage = "";
+
+            this.sentChatFlash = true;
+
+            this.sentFlashTimeout = setTimeout(() => {
+                this.sentChatFlash = false;
+            }, 5000);
         },
         chatKeyPress(event) {
             if (event.key === 'Enter') {
