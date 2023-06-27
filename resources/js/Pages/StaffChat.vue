@@ -1,21 +1,15 @@
 <template>
     <div>
 
-        <portal to="title">
-            <h1 class="dark:text-white">
-                {{ t("staff_chat.title") }}
-            </h1>
-
-            <button @click="notificationSound = !notificationSound" class="text-lg text-white absolute top-4 right-4">
-                <i class="fas fa-volume-up text-green-200" v-if="notificationSound"></i>
-                <i class="fas fa-volume-mute text-red-200" v-else></i>
-            </button>
-        </portal>
+        <button @click="notificationSound = !notificationSound" class="text-lg text-white absolute top-4 right-4">
+            <i class="fas fa-volume-up text-green-200" v-if="notificationSound"></i>
+            <i class="fas fa-volume-mute text-red-200" v-else></i>
+        </button>
 
         <div class="-mt-12">
             <div class="flex flex-wrap flex-row">
                 <form class="mb-6 flex w-full" @submit.prevent="sendChat">
-                    <input class="w-full px-4 py-2 mr-3 bg-gray-200 dark:bg-gray-600 border rounded" maxlength="250" required placeholder="Hey gang!" v-model="staffMessage">
+                    <input class="w-full px-4 py-2 mr-3 bg-gray-200 dark:bg-gray-600 border rounded" maxlength="250" required placeholder="Hey gang!" v-model="staffMessage" @keypress="chatKeyPress($event)">
 
                     <button class="px-4 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg flex-shrink-0" type="submit">
                         <span v-if="!isSendingChat">
@@ -117,6 +111,7 @@ export default {
             if (this.isSendingChat) {
                 return;
             }
+
             this.isSendingChat = true;
 
             // Send request.
@@ -127,6 +122,11 @@ export default {
             // Reset.
             this.isSendingChat = false;
             this.staffMessage = "";
+        },
+        chatKeyPress(event) {
+            if (event.key === 'Enter') {
+                this.sendChat();
+            }
         },
         initChat() {
             if (this.isInitialized) {

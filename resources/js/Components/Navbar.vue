@@ -159,7 +159,9 @@ export default {
             });
         },
         showStaffChat() {
-            window.open('/staff','Staff Chat','directories=no,titlebar=no,toolbar=no,menubar=no,location=no,status=no,width=550,height=700');
+            window.open('/staff', 'Staff Chat', 'directories=no,titlebar=no,toolbar=no,menubar=no,location=no,status=no,width=550,height=700');
+
+            this.hideContext();
         },
         updateTheme() {
             const cachedTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : false;
