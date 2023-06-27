@@ -175,11 +175,15 @@ class PlayerController extends Controller
                 }
             }
 
+            if (!$character) {
+                continue;
+            }
+
             $status = Player::getOnlineStatus($player->license_identifier, true);
 
             $playerList[] = [
                 'serverId' => $status && $status->serverId ? $status->serverId : null,
-                'character' => $character ? [
+                'character' => [
                     'name' => $character->first_name . ' ' . $character->last_name,
                     'backstory' => $character->backstory,
                     'character_creation_time' => $character->character_creation_time,
@@ -189,7 +193,7 @@ class PlayerController extends Controller
                     'creationTime' => intval($character->character_creation_time),
                     'danny' => GeneralHelper::dannyPercentageCreationTime(intval($character->character_creation_time)),
                     'data' => $status->characterMetadata ?? [],
-                ] : null,
+                ],
                 'playerName' => $player->player_name,
                 'playTime' => $player->playtime,
                 'licenseIdentifier' => $player->license_identifier,
