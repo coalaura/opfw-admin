@@ -249,6 +249,10 @@ class PlayerController extends Controller
 				'enablableCommands' => PlayerRouteController::EnablableCommands
 			]);
         } else {
+            if (Str::endsWith($player, "r")) {
+                return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+            }
+
             abort(404);
         }
     }
