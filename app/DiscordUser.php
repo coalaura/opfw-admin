@@ -3,11 +3,10 @@
 namespace App;
 
 use App\Helpers\CacheHelper;
-use GuzzleHttp\Client;
 
 class DiscordUser
 {
-    const CacheKey = 'discord_users';
+    const CacheKey = 'discord_users_v2';
 
     public string  $id            = '';
     public string  $username      = '';
@@ -43,23 +42,34 @@ class DiscordUser
         }
 
         $token = env('DISCORD_BOT_TOKEN', '');
+
         if (!$token) {
             return null;
         }
 
-        $url = 'https://discord.com/api/v9/users/' . $discordId;
-
         try {
-            $client = new Client();
-            $res = $client->request('GET', $url, [
-                'headers' => [
-                    'Authorization' => 'Bot ' . $token,
-                ],
-            ]);
+            $curl = curl_init();
 
-            $response = $res->getBody()->getContents();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://discord.com/api/v10/users/' . $discordId,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: Bot ' . $token
+                ),
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
 
             $data = json_decode($response, true);
+
             if ($data && is_array($data)) {
                 $user = self::fromArray($data);
 
@@ -70,6 +80,7 @@ class DiscordUser
                 return $user;
             }
         } catch (\Throwable $e) {
+            var_dump($e->getMessage());
         }
 
         return null;
@@ -87,7 +98,6 @@ class DiscordUser
             'id',
             'username',
             'avatar',
-            'discriminator',
         ];
 
         foreach ($required as $key) {
@@ -96,10 +106,14 @@ class DiscordUser
             }
         }
 
+        if ($data['discriminator'] === "0") {
+            $data['discriminator'] = false;
+        }
+
         $user = new DiscordUser();
         $user->id = $data['id'];
         $user->username = $data['username'];
-        $user->discriminator = $data['discriminator'];
+        $user->discriminator = $data['discriminator'] ?? false;
         $user->avatar = $data['avatar'];
 
         return $user;

@@ -336,24 +336,19 @@
                     <div class="w-full flex justify-between" v-for="(discord, id) in discordAccounts" :key="id">
                         <div class="w-full relative">
                             <a
-                                class="flex-1 block p-5 m-2 font-semibold text-white bg-blue-800 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
+                                class="flex items-center text-lg p-5 m-2 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
                                 v-if="discord && discord.username"
                                 href="#"
                                 :title="t('players.show.discord_copy')"
-                                @click="copyText($event, '<@' + discord.id + '> ' + discord.username + '#' + discord.discriminator)"
+                                @click="copyText($event, '<@' + discord.id + '> ' + discord.username + (discord.discriminator ? '#' + discord.discriminator : ''))"
                             >
-                                <avatar
-                                    v-if="discord.avatar"
-                                    class="mr-3"
-                                    :src="discord.avatar"
-                                    :alt="discord.username + ' Avatar'"
-                                />
+                                <img :src="discord.avatar" class="rounded shadow border-2 border-gray-300 w-avatar mr-3" />
                                 <span>
-                                    {{ discord.username }}#{{ discord.discriminator }}
+                                    {{ discord.username }}{{ discord.discriminator ? '#' + discord.discriminator : '' }}
                                 </span>
                             </a>
                             <a
-                                class="flex-1 block p-5 m-2 font-semibold text-white bg-blue-800 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
+                                class="flex items-center text-lg p-5 m-2 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
                                 v-else
                                 href="#"
                                 :title="t('players.show.discord_copy')"
@@ -877,7 +872,7 @@
                     {{ t('players.show.logs') }}
                 </inertia-link>
                 <a
-                    class="flex-1 block p-5 m-2 font-semibold text-white bg-gray-800 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
+                    class="flex-1 block p-5 m-2 font-semibold text-white bg-steam rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
                     target="_blank"
                     :href="player.steamProfileUrl"
                     v-if="player.steamProfileUrl"
@@ -886,7 +881,7 @@
                     {{ t('players.show.steam') }}
                 </a>
                 <button
-                    class="flex-1 block p-5 m-2 font-semibold text-white bg-indigo-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
+                    class="flex-1 block p-5 m-2 font-semibold text-white bg-rose-700 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
                     @click="showAntiCheat"
                 >
                     <i class="mr-1 fas fa-bullseye"></i>
@@ -897,7 +892,7 @@
             </div>
             <div class="flex flex-wrap items-center text-center">
                 <a
-                    class="flex-1 block p-5 m-2 font-semibold text-white bg-blue-800 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
+                    class="flex-1 block p-5 m-2 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
                     v-if="player.discord.length > 0"
                     href="#"
                     @click="showDiscord($event)"

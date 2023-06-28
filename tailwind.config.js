@@ -106,6 +106,9 @@ module.exports = {
                 'map-ems':       '#FF5959',
                 'map-highlight': '#FF6400',
 
+                'discord': '#6C82CE',
+                'steam': '#171A21',
+
                 // Rose
                 'rose-100': 'rgb(255, 228, 230)',
                 'rose-200': 'rgb(254, 205, 211)',
