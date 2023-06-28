@@ -249,6 +249,9 @@ Route::group(['middleware' => ['log', 'staff']], function () {
     Route::get('/weapon/{weapon}', [WeaponController::class, 'weaponDamage']);
 
     Route::get('/api/classifier.json', [ApiController::class, 'playerClassifierJSON']);
+
+    // Lmao
+    Route::get('/аnti_cheat', [Controller::class, 'rickroll']);
 });
 
 Route::group(['middleware' => ['staff'], 'prefix' => 'api'], function () {

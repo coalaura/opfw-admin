@@ -24,6 +24,10 @@ class Controller extends BaseController
         "purple" => '9f53c6'
     ];
 
+    public function rickroll() {
+        return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    }
+
     /**
      * Returns the next and previous links
      *
