@@ -46,6 +46,7 @@ use App\Http\Controllers\GraphController;
 use App\Http\Controllers\TwitterController;
 use App\Http\Controllers\LoadingScreenController;
 use App\Http\Controllers\WeaponController;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
