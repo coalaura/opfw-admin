@@ -188,7 +188,7 @@ Artisan::command("migrate-trunks", function() {
 	$size = sizeof($update);
 
 	if ($size > 0) {
-		if (!$this->confirm(CLUSTER . " Found $size affected inventories, continue?", true)) {
+		if (!$this->confirm(CLUSTER . " Found $size affected inventories, continue?", false)) {
 			$this->info(CLUSTER . " Aborted!");
 
 			return;
