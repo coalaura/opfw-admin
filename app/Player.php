@@ -157,6 +157,8 @@ class Player extends Model
 
         $name = preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $name);
 
+        $name = trim($name);
+
         return $name ?? 'Unknown';
     }
 
