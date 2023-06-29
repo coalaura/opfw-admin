@@ -99,7 +99,7 @@
             <div class="text-sm italic mt-4">
                 <span class="block" v-if="player.playerName !== player.safePlayerName">
                     <span class="font-bold">{{ t('players.show.original_name') }}:</span>
-                    <span class="bg-gray-200 dark:bg-gray-700 px-1">{{ player.playerName }}</span>
+                    <span class="bg-gray-200 dark:bg-gray-700 px-1 whitespace-pre">{{ player.playerName }}</span>
                 </span>
                 <span class="block" v-if="player.playerAliases && player.playerAliases.length > 0">
                     <span class="font-bold">{{ t('players.show.aliases') }}:</span>
