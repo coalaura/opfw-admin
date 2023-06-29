@@ -148,13 +148,13 @@ Artisan::command("migrate-trunks", function() {
 
 	$this->info(CLUSTER . " Skipped $npcs npc trunks...");
 
-	if (sizeof($ids) === 0) {
+	if (empty($ids)) {
 		$this->info(CLUSTER . " No inventories to migrate...");
 
 		return;
 	}
 
-	$this->info(CLUSTER . " Loading vehicles...");
+	$this->info(CLUSTER . " Loading " . sizeof($ids) . " vehicles...");
 
 	$vehicles = DB::table("character_vehicles")->whereIn("vehicle_id", $ids)->get();
 
@@ -171,11 +171,15 @@ Artisan::command("migrate-trunks", function() {
 
 	$update = [];
 
+	$skipped = 0;
+
 	foreach($vehicles as $vehicle) {
 		$id = intval($vehicle->vehicle_id);
 		$model = $vehicle->model_name;
 
 		if (!isset($vehicleInventories[$id])) {
+			$skipped++;
+
 			continue;
 		}
 
@@ -185,6 +189,8 @@ Artisan::command("migrate-trunks", function() {
 			$model = $alphaModels[$model] ?? null;
 
 			if (!$model) {
+				$skipped++;
+
 				continue;
 			}
 		}
@@ -199,10 +205,16 @@ Artisan::command("migrate-trunks", function() {
 		$isName = "trunk-" . $expected . "-" . $id;
 
 		if ($wasName === $isName) {
+			$skipped++;
+
 			continue;
 		}
 
 		$update[$wasName] = $isName;
+	}
+
+	if ($skipped > 0) {
+		$this->info(CLUSTER . " Skipped $skipped vehicles...");
 	}
 
 	$size = sizeof($update);
