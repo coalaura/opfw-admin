@@ -112,6 +112,8 @@ Artisan::command("migrate-trunks", function() {
 
 	$inventories = DB::select("SELECT * FROM inventories WHERE inventory_name LIKE 'trunk-%' GROUP BY inventory_name");
 
+	$this->info(CLUSTER . " Parsing " . sizeof($inventories) . " inventories...");
+
 	$ids = [];
 
 	$vehicleInventories = [];
@@ -137,6 +139,8 @@ Artisan::command("migrate-trunks", function() {
 	$vehicles = DB::table("character_vehicles")->whereIn("vehicle_id", $ids)->get();
 
 	$classes = json_decode(file_get_contents(__DIR__ . "/../helpers/vehicle_classes.json"), true);
+
+	$this->info(CLUSTER . " Parsing " . sizeof($vehicles) . " vehicles...");
 
 	$update = [];
 
