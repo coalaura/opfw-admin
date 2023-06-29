@@ -159,7 +159,7 @@ class Player extends Model
 
         $name = trim($name);
 
-        $alternate = substr($this->license_identifier, 8, 6);
+        $alternate = "~" . substr($this->license_identifier, 8, 6);
 
         return $name ?? $alternate;
     }
