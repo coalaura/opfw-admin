@@ -170,6 +170,7 @@ Artisan::command("migrate-trunks", function() {
 	$this->info(CLUSTER . " Parsing " . sizeof($vehicles) . " vehicles...");
 
 	$update = [];
+	$alpha = [];
 
 	$skipped = 0;
 
@@ -193,6 +194,8 @@ Artisan::command("migrate-trunks", function() {
 
 				continue;
 			}
+
+			$alpha[intval($vehicle->model_name)] = $model;
 		}
 
 		$expected = $classes[$model] ?? null;
@@ -213,6 +216,14 @@ Artisan::command("migrate-trunks", function() {
 
 	if ($skipped > 0) {
 		$this->info(CLUSTER . " Skipped $skipped vehicles...");
+	}
+
+	if (!empty($alpha)) {
+		foreach ($alpha as $old => $new) {
+			$this->info(CLUSTER . " Updating alpha hash $old to $new...");
+
+			DB::update("UPDATE character_vehicles SET model_name = ? WHERE model_name = ?", [$new, $old]);
+		}
 	}
 
 	$size = sizeof($update);
