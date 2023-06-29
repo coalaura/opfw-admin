@@ -160,7 +160,7 @@ class Player extends Model
         $name = trim($name);
 
         if (empty($name)) {
-            $name = "~" . substr($this->license_identifier, 8, 6);
+            $name = "L-" . substr($this->license_identifier, 8, 6);
         }
 
         return $name;
