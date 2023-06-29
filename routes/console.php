@@ -123,6 +123,14 @@ Artisan::command("migrate-trunks", function() {
 
 		$parts = explode("-", $name);
 
+		if (sizeof($parts) !== 3) {
+			continue;
+		}
+
+		if (preg_match('/[^0-9]/', $parts[2])) {
+			continue;
+		}
+
 		$class = intval($parts[1]);
 		$id = intval($parts[2]);
 
