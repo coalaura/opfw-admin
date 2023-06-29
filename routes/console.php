@@ -218,6 +218,16 @@ Artisan::command("migrate-trunks", function() {
 		$this->info(CLUSTER . " Skipped $skipped vehicles...");
 	}
 
+	if (!empty($alpha)) {
+		if ($this->confirm(CLUSTER . " Found " . sizeof($alpha) . " alpha model hashes, do you want to update them?", false)) {
+			foreach ($alpha as $old => $new) {
+				$this->info(CLUSTER . " Updating alpha hash $old to $new...");
+
+				DB::update("UPDATE character_vehicles SET model_name = ? WHERE model_name = ?", [$new, $old]);
+			}
+		}
+	}
+
 	$size = sizeof($update);
 
 	if ($size > 0) {
@@ -225,14 +235,6 @@ Artisan::command("migrate-trunks", function() {
 			$this->info(CLUSTER . " Aborted!");
 
 			return;
-		}
-
-		if (!empty($alpha)) {
-			foreach ($alpha as $old => $new) {
-				$this->info(CLUSTER . " Updating alpha hash $old to $new...");
-
-				DB::update("UPDATE character_vehicles SET model_name = ? WHERE model_name = ?", [$new, $old]);
-			}
 		}
 
 		$this->info(CLUSTER . " Updating $size inventories...");
