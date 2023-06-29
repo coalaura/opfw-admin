@@ -106,6 +106,60 @@ class Player extends Model
         'priority_level' => 'integer',
     ];
 
+    const PlayerNameFilter = [
+        "%^0",
+        "%^1",
+        "%^2",
+        "%^3",
+        "%^4",
+        "%^5",
+        "%^6",
+        "%^7",
+        "%^8",
+        "%^9",
+        "~a~",
+        "~b~",
+        "~c~",
+        "~d~",
+        "~e~",
+        "~f~",
+        "~g~",
+        "~h~",
+        "~i~",
+        "~j~",
+        "~k~",
+        "~l~",
+        "~m~",
+        "~n~",
+        "~o~",
+        "~p~",
+        "~q~",
+        "~r~",
+        "~s~",
+        "~t~",
+        "~u~",
+        "~v~",
+        "~w~",
+        "~x~",
+        "~y~",
+        "~z~",
+        "~italic~",
+        "~bold~"
+    ];
+
+    public function getFilteredPlayerName(): string
+    {
+        $name = $this->player_name;
+
+        foreach(self::PlayerNameFilter as $filter) {
+            $name = str_ireplace($filter, '', $name);
+        }
+
+        $name = preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $name);
+
+        return $name ?? 'Unknown';
+    }
+
     public static function resolveTags(bool $refreshCache = false): array
     {
         if ($refreshCache || !CacheHelper::exists('tags')) {

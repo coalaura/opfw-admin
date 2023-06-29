@@ -22,12 +22,12 @@ class PlayerIndexResource extends JsonResource
 
         return [
             'licenseIdentifier' => $this->license_identifier,
-            'playerName'      => $status && $status->fakeName ? $status->fakeName : $this->player_name,
-            'playTime'        => $this->playtime,
-            'warnings'        => $this->warning_count,
-            'isBanned'        => !!Ban::getBanForUser($this->license_identifier),
-            'status'          => $status,
-            'playtime'        => $this->playtime
+            'playerName'        => $status && $status->fakeName ? $status->fakeName : $this->getFilteredPlayerName(),
+            'playTime'          => $this->playtime,
+            'warnings'          => $this->warning_count,
+            'isBanned'          => !!Ban::getBanForUser($this->license_identifier),
+            'status'            => $status,
+            'playtime'          => $this->playtime
         ];
     }
 

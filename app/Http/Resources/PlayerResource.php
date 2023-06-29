@@ -33,6 +33,7 @@ class PlayerResource extends JsonResource
             'discord'         => $this->getDiscordIDs(),
             'licenseIdentifier' => $this->license_identifier,
             'playerName'      => $this->player_name,
+            'safePlayerName'  => $this->getFilteredPlayerName(),
             'playTime'        => $this->playtime,
             'lastConnection'  => $this->last_connection,
             'steamProfileUrl' => $this->getSteamProfileUrl(),

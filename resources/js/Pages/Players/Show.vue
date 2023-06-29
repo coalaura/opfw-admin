@@ -3,7 +3,7 @@
         <portal to="title">
             <div class="flex items-start space-x-10 mobile:flex-wrap mt-8">
                 <h1 class="dark:text-white">
-                    {{ player.playerName }}
+                    {{ player.safePlayerName }}
                 </h1>
                 <div
                     class="flex items-center space-x-5 mobile:flex-wrap mobile:w-full mobile:!mr-0 mobile:!ml-0 mobile:space-x-0">
@@ -97,6 +97,10 @@
                 </div>
             </div>
             <div class="text-sm italic mt-4">
+                <span class="block" v-if="player.playerName !== player.safePlayerName">
+                    <span class="font-bold">{{ t('players.show.original_name') }}:</span>
+                    <span class="bg-gray-200 dark:bg-gray-700 px-1">{{ player.playerName }}</span>
+                </span>
                 <span class="block" v-if="player.playerAliases && player.playerAliases.length > 0">
                     <span class="font-bold">{{ t('players.show.aliases') }}:</span>
                     {{ player.playerAliases.join(", ") }}
