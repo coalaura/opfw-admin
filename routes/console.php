@@ -169,7 +169,7 @@ Artisan::command("migrate-trunks", function() {
 			}
 		}
 
-		$expected = $classes[$model];
+		$expected = $classes[$model] ?? null;
 
 		if (!$expected && $expected !== 0) {
 			$expected = 22;
