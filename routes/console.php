@@ -148,6 +148,12 @@ Artisan::command("migrate-trunks", function() {
 
 	$this->info(CLUSTER . " Skipped $npcs npc trunks...");
 
+	if (sizeof($ids) === 0) {
+		$this->info(CLUSTER . " No inventories to migrate...");
+
+		return;
+	}
+
 	$this->info(CLUSTER . " Loading vehicles...");
 
 	$vehicles = DB::table("character_vehicles")->whereIn("vehicle_id", $ids)->get();
