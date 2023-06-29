@@ -12,14 +12,14 @@ use Illuminate\Support\Str;
 |
 | This file is where you may define all of your Closure based console
 | commands. Each Closure is bound to a command instance allowing a
-| simple approach to interacting with each command's IO methods.
+| simple approach to interacting with each command"s IO methods.
 |
 */
 
 function runQuery(string $cluster, string $query)
 {
-	$dir = realpath(__DIR__ . '/../envs/' . $cluster);
-	$env = $dir . '/.env';
+	$dir = realpath(__DIR__ . "/../envs/" . $cluster);
+	$env = $dir . "/.env";
 
 	if (empty($env) || !file_exists($env)) {
 		return [false, "Failed to read .env file"];
@@ -30,15 +30,15 @@ function runQuery(string $cluster, string $query)
 	$dotenv = Dotenv::createImmutable($dir, ".env");
 	$envData = $dotenv->parse($contents);
 
-	$dbName = 'cluster_' . $cluster;
+	$dbName = "cluster_" . $cluster;
 
-	Config::set('database.connections.' . $dbName, [
-		'driver' => $envData['DB_CONNECTION'],
-		'host' => $envData['DB_HOST'],
-		'port' => $envData['DB_PORT'],
-		'database' => $envData['DB_DATABASE'],
-		'username' => $envData['DB_USERNAME'],
-		'password' => $envData['DB_PASSWORD']
+	Config::set("database.connections." . $dbName, [
+		"driver" => $envData["DB_CONNECTION"],
+		"host" => $envData["DB_HOST"],
+		"port" => $envData["DB_PORT"],
+		"database" => $envData["DB_DATABASE"],
+		"username" => $envData["DB_USERNAME"],
+		"password" => $envData["DB_PASSWORD"]
 	]);
 
 	try {
@@ -49,15 +49,15 @@ function runQuery(string $cluster, string $query)
 
 	$affected = 0;
 
-	if (Str::startsWith($query, 'SELECT')) {
+	if (Str::startsWith($query, "SELECT")) {
 		$affected = DB::connection($dbName)->select($query);
 
 		$affected = count($affected);
-	} else if (Str::startsWith($query, 'UPDATE')) {
+	} else if (Str::startsWith($query, "UPDATE")) {
 		$affected = DB::connection($dbName)->update($query);
-	} else if (Str::startsWith($query, 'INSERT')) {
+	} else if (Str::startsWith($query, "INSERT")) {
 		$affected = DB::connection($dbName)->insert($query);
-	} else if (Str::startsWith($query, 'DELETE')) {
+	} else if (Str::startsWith($query, "DELETE")) {
 		$affected = DB::connection($dbName)->delete($query);
 	} else {
 		return [false, "Unknown query type"];
@@ -66,34 +66,34 @@ function runQuery(string $cluster, string $query)
 	return [true, "Affected " . $affected . " rows"];
 }
 
-// UPDATE `inventories` SET `item_name` = 'weapon_addon_hk416' WHERE `item_name` = 'weapon_addon_m4'
-Artisan::command('run-query', function() {
+// UPDATE `inventories` SET `item_name` = "weapon_addon_hk416" WHERE `item_name` = "weapon_addon_m4"
+Artisan::command("run-query", function() {
 	$query = trim($this->ask("SQL Query"));
 
 	if (empty($query)) {
-		$this->error('Query is empty');
+		$this->error("Query is empty");
 
 		return;
 	}
 
-	$this->info('Iterating through all clusters...');
+	$this->info("Iterating through all clusters...");
 
-	$dir = __DIR__ . '/../envs';
+	$dir = __DIR__ . "/../envs";
 
-	$clusters = array_diff(scandir($dir), ['.', '..']);
+	$clusters = array_diff(scandir($dir), [".", ".."]);
 
-	chdir(__DIR__ . '/..');
+	chdir(__DIR__ . "/..");
 
 	foreach ($clusters as $cluster) {
 		$cluster = trim($cluster);
 
-		$path = $dir . '/' . $cluster;
+		$path = $dir . "/" . $cluster;
 
 		if (empty($cluster) || !is_dir($path)) {
 			continue;
 		}
 
-		$this->info('Running query on cluster `' . $cluster . '`...');
+		$this->info("Running query on cluster `" . $cluster . "`...");
 
 		$result = runQuery($cluster, $query);
 
@@ -105,4 +105,90 @@ Artisan::command('run-query', function() {
 	}
 
 	return;
-})->describe('Runs a query on all clusters.');
+})->describe("Runs a query on all clusters.");
+
+Artisan::command("migrate-trunks", function() {
+	$this->info(CLUSTER . " Loading inventories...");
+
+	$inventories = DB::select("SELECT * FROM inventories WHERE inventory_name LIKE 'trunk-%' GROUP BY inventory_name");
+
+	$ids = [];
+
+	$vehicleInventories = [];
+
+	foreach ($inventories as $inventory) {
+		$name = $inventory->inventory_name;
+
+		$parts = explode("-", $name);
+
+		$class = intval($parts[1]);
+		$id = intval($parts[2]);
+
+		$vehicleInventories[$id] = [
+			"class" => $class,
+			"name" => $name
+		];
+
+		$ids[] = $id;
+	}
+
+	$this->info(CLUSTER . " Loading vehicles...");
+
+	$vehicles = DB::table("character_vehicles")->whereIn("vehicle_id", $ids)->get();
+
+	$classes = json_decode(file_get_contents(__DIR__ . "/../helpers/vehicle_classes.json"), true);
+
+	$update = [];
+
+	foreach($vehicles as $vehicle) {
+		$id = intval($vehicle->vehicle_id);
+		$model = $vehicle->model_name;
+
+		if (!isset($vehicleInventories[$id])) {
+			continue;
+		}
+
+		$expected = $classes[$model];
+
+		if (!$expected && $expected !== 0) {
+			$expected = 22;
+		}
+
+		$wasName = $vehicleInventories[$id]["name"];
+		$isName = "trunk-" . $expected . "-" . $id;
+
+		if ($wasName === $isName) {
+			continue;
+		}
+
+		$update[$wasName] = $isName;
+	}
+
+	$size = sizeof($update);
+
+	if ($size > 0) {
+		if (!$this->confirm(CLUSTER . " Found $size affected inventories, continue?", true)) {
+			$this->info(CLUSTER . " Aborted!");
+
+			return;
+		}
+
+		$this->info(CLUSTER . " Updating $size inventories...");
+
+		$index = 1;
+
+		foreach($update as $was => $is) {
+			echo "$index of $size          \r";
+
+			DB::update("UPDATE inventories SET inventory_name = ? WHERE inventory_name = ?", [$is, $was]);
+
+			$index++;
+		}
+
+		$this->info(CLUSTER . " Finished updating $size inventories.");
+	} else {
+		$this->info(CLUSTER . " No inventories to update.");
+	}
+
+	return;
+})->describe("Update all trunks to have the correct vehicle class.");
