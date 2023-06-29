@@ -199,14 +199,14 @@ Artisan::command("migrate-trunks", function() {
 		$index = 1;
 
 		foreach($update as $was => $is) {
-			echo "$index of $size          \r";
+			echo "$was ($index/$size)          \r";
 
 			DB::update("UPDATE inventories SET inventory_name = ? WHERE inventory_name = ?", [$is, $was]);
 
 			$index++;
 		}
 
-		$this->info(CLUSTER . " Finished updating $size inventories.");
+		$this->info(CLUSTER . " Finished updating $size inventories.                    ");
 	} else {
 		$this->info(CLUSTER . " No inventories to update.");
 	}
