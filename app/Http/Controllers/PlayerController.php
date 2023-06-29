@@ -43,7 +43,10 @@ class PlayerController extends Controller
 					$name = Str::substr($name, 1);
 					$query->where('player_name', $name);
 				} else {
-					$query->where('player_name', 'like', "%{$name}%");
+                    $query->where(function ($q) use ($name) {
+                        $q->where('player_name', 'like', "%{$name}%");
+                        $q->orWhere('player_aliases', 'like', "%{$name}%");
+                    });
 				}
 			}
 
