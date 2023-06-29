@@ -159,7 +159,9 @@ class Player extends Model
 
         $name = trim($name);
 
-        return $name ?? 'Unknown';
+        $alternate = substr($this->license_identifier, 8, 6);
+
+        return $name ?? $alternate;
     }
 
     public static function resolveTags(bool $refreshCache = false): array
