@@ -118,6 +118,8 @@ Artisan::command("migrate-trunks", function() {
 
 	$vehicleInventories = [];
 
+	$npcs = 0;
+
 	foreach ($inventories as $inventory) {
 		$name = $inventory->inventory_name;
 
@@ -128,6 +130,8 @@ Artisan::command("migrate-trunks", function() {
 		}
 
 		if (preg_match('/[^0-9]/', $parts[2])) {
+			$npcs++;
+
 			continue;
 		}
 
@@ -141,6 +145,8 @@ Artisan::command("migrate-trunks", function() {
 
 		$ids[] = $id;
 	}
+
+	$this->info(CLUSTER . " Skipped $npcs npc trunks...");
 
 	$this->info(CLUSTER . " Loading vehicles...");
 
