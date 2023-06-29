@@ -205,8 +205,6 @@ Artisan::command("migrate-trunks", function() {
 		$isName = "trunk-" . $expected . "-" . $id;
 
 		if ($wasName === $isName) {
-			$skipped++;
-
 			continue;
 		}
 
