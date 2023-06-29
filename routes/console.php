@@ -138,6 +138,13 @@ Artisan::command("migrate-trunks", function() {
 
 	$vehicles = DB::table("character_vehicles")->whereIn("vehicle_id", $ids)->get();
 
+	$alphaModels = [
+		-2137348917 => "phantom",
+		-956048545 => "taxi",
+		1162065741 => "rumpo",
+		1353720154 => "flatbed"
+	];
+
 	$classes = json_decode(file_get_contents(__DIR__ . "/../helpers/vehicle_classes.json"), true);
 
 	$this->info(CLUSTER . " Parsing " . sizeof($vehicles) . " vehicles...");
@@ -150,6 +157,16 @@ Artisan::command("migrate-trunks", function() {
 
 		if (!isset($vehicleInventories[$id])) {
 			continue;
+		}
+
+		if (is_numeric($model)) {
+			$model = intval($model);
+
+			$model = $alphaModels[$model] ?? null;
+
+			if (!$model) {
+				continue;
+			}
 		}
 
 		$expected = $classes[$model];
