@@ -17,7 +17,7 @@ class DataCompressor {
                 instance: data.i
             };
         } else {
-            console.debug(data);
+            console.debug("Failed decompress", data);
         }
 
         return false;
