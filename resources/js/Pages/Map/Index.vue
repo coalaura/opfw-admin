@@ -2207,6 +2207,8 @@ export default {
             } else {
                 this.data = this.t('map.error', this.activeServer);
 
+                console.log("Received:", data);
+
                 if (data && data.error) {
                     let error = data.error + "";
 
