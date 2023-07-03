@@ -491,7 +491,7 @@ class OPFWHelper
 
             $log = json_encode($response);
             if (strlen($log) > 300) {
-                $log = substr($log, 0, 300) . '...';
+                $log = substr($log, 0, 150) . '...';
             }
 
             LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Executed route "' . $route . '"');
