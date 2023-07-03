@@ -471,6 +471,8 @@ class OPFWHelper
             ]
         );
         for ($x = 0; $x < self::RetryAttempts; $x++) {
+            $statusCode = 0;
+
             try {
                 $res = $client->request($requestType, $route, [
                     'query'   => $data,
@@ -481,6 +483,8 @@ class OPFWHelper
                 ]);
 
                 $response = $res->getBody()->getContents();
+
+                $statusCode = $res->getStatusCode();
             } catch (Throwable $t) {
                 $response = $t->getMessage();
             }
@@ -491,7 +495,7 @@ class OPFWHelper
             }
             LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Executed route "' . $route . '"');
             LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Data: ' . json_encode($data));
-            LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Result: ' . $log);
+            LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Result: (' . $statusCode . ') ' . $log);
 
             $result = self::parseResponse($response);
             if (!$result->status) {
