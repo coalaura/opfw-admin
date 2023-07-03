@@ -495,9 +495,13 @@ class OPFWHelper
                 $log = substr($log, 0, 150) . '...';
             }
 
+            if (empty($log)) {
+                $log = '-empty-';
+            }
+
             LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Do ' . $requestType . ' to "' . $route . '"');
-            LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Request: ' . json_encode($data));
-            LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Response: (' . $statusCode . ') ' . $log);
+            LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Data: ' . json_encode($data));
+            LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), $statusCode . ': ' . $log);
 
             $result = self::parseResponse($response);
 
