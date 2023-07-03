@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Helpers\LoggingHelper;
 use App\OPFWResponse;
 use App\PanelLog;
 use App\Player;
@@ -283,6 +284,8 @@ class OPFWHelper
             if ($data->data) {
                 CacheHelper::write($cache, $data->data, 10);
             } else if (!$data->status) {
+                LoggingHelper::quickLog("Failed to load world.json for {$serverIp}: {$data->message}");
+
                 CacheHelper::write($cache, [], 10);
             }
 
