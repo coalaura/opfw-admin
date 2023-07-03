@@ -94,8 +94,8 @@ class OPFWHelper
         if ($response->status) {
             $response->message = 'Server Announcement has been posted successfully.';
         } else {
-			$response->message = 'Failed to post server announcement.';
-		}
+            $response->message = 'Failed to post server announcement.';
+        }
 
         return $response;
     }
@@ -501,7 +501,7 @@ class OPFWHelper
             $result = self::parseResponse($response);
 
             if (!$result->status) {
-                if ($x+1 < self::RetryAttempts) {
+                if ($x + 1 < self::RetryAttempts) {
                     sleep(2);
                 }
             } else {
