@@ -483,7 +483,7 @@ class OPFWHelper
                     'timeout' => $timeout,
                 ]);
 
-                $response = $res->getBody()->getContents();
+                $response = $res->getBody()->__toString();
 
                 $statusCode = $res->getStatusCode() . " " . $res->getReasonPhrase();
             } catch (Throwable $t) {
