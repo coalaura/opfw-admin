@@ -470,6 +470,7 @@ class OPFWHelper
                 'verify' => false,
             ]
         );
+
         for ($x = 0; $x < self::RetryAttempts; $x++) {
             $statusCode = 0;
 
