@@ -485,7 +485,7 @@ class OPFWHelper
 
                 $response = $res->getBody()->getContents();
 
-                $statusCode = $res->getStatusCode();
+                $statusCode = $res->getStatusCode() . " " . $res->getReasonPhrase();
             } catch (Throwable $t) {
                 $response = $t->getMessage();
             }
