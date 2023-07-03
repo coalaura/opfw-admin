@@ -493,11 +493,13 @@ class OPFWHelper
             if (strlen($log) > 300) {
                 $log = substr($log, 0, 300) . '...';
             }
+
             LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Executed route "' . $route . '"');
             LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Data: ' . json_encode($data));
             LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Result: (' . $statusCode . ') ' . $log);
 
             $result = self::parseResponse($response);
+
             if (!$result->status) {
                 if ($x+1 < self::RetryAttempts) {
                     sleep(2);
