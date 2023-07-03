@@ -494,7 +494,7 @@ class OPFWHelper
                 $log = substr($log, 0, 150) . '...';
             }
 
-            LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Executed ' . $requestType . ' route "' . $route . '"');
+            LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Do ' . $requestType . ' to "' . $route . '"');
             LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Request: ' . json_encode($data));
             LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Response: (' . $statusCode . ') ' . $log);
 
