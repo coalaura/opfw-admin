@@ -468,6 +468,10 @@ class OPFWHelper
         $client = new Client(
             [
                 'verify' => false,
+                'timeout' => $timeout,
+                'headers' => [
+                    'Authorization' => 'Bearer ' . $token,
+                ],
             ]
         );
 
@@ -479,20 +483,10 @@ class OPFWHelper
 
             try {
                 $res = $client->request($requestType, $route, [
-                    'query'   => $data,
-                    'headers' => [
-                        'Authorization' => 'Bearer ' . $token,
-                    ],
-                    'timeout' => $timeout,
+                    'query' => $data,
                 ]);
 
-                $body = $res->getBody();
-
-                LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Body was ' . $body->getSize() . ' bytes, at position ' . $body->tell());
-
-                $body->seek(0);
-
-                $response = $body->getContents();
+                $response = (string) $res->getBody();
 
                 $statusCode = $res->getStatusCode() . " " . $res->getReasonPhrase();
             } catch (Throwable $t) {
