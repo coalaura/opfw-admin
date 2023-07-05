@@ -473,6 +473,7 @@ class OPFWHelper
 
         for ($x = 0; $x < self::RetryAttempts; $x++) {
             $statusCode = 0;
+            $responseLength = 0;
 
             try {
                 $res = $client->request($requestType, $route, [
@@ -484,6 +485,8 @@ class OPFWHelper
                 ]);
 
                 $body = $res->getBody();
+
+                $responseLength = $body->getSize();
 
                 $body->rewind();
 
@@ -505,7 +508,7 @@ class OPFWHelper
 
             LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Do ' . $requestType . ' to "' . $route . '"');
             LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Data: ' . json_encode($data));
-            LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), $statusCode . ': ' . $log);
+            LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), $statusCode . ' (' . $responseLength . '): ' . $log);
 
             $result = self::parseResponse($response);
 
