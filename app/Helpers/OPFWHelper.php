@@ -525,6 +525,7 @@ class OPFWHelper
      */
     public static function parseResponse(string $response): OPFWResponse
     {
+        // Sometimes the server sends stupid json responses with invalid characters
         $response = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $response);
 
         $json = json_decode($response, true);
