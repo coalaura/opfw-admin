@@ -493,13 +493,14 @@ class OPFWHelper
                 $response = $t->getMessage();
             }
 
-            $log = json_encode($response);
-            if (strlen($log) > 300) {
-                $log = substr($log, 0, 150) . '...';
-            }
+            $log = $response;
 
             if (empty($log)) {
                 $log = '-empty-';
+            }
+
+            if (strlen($log) > 300) {
+                $log = substr($log, 0, 150) . '...';
             }
 
             LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), $statusCode . ': ' . $log);
