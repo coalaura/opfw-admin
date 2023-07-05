@@ -486,7 +486,7 @@ class OPFWHelper
                     'query' => $data,
                 ]);
 
-                $response = $res->getBody();
+                $response = (string) $res->getBody();
 
                 $statusCode = $res->getStatusCode() . " " . $res->getReasonPhrase();
             } catch (Throwable $t) {
