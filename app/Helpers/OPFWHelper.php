@@ -472,7 +472,6 @@ class OPFWHelper
                 'headers' => [
                     'Authorization' => 'Bearer ' . $token,
                 ],
-                'stream' => true
             ]
         );
 
@@ -487,13 +486,8 @@ class OPFWHelper
                     'query' => $data,
                 ]);
 
-                $bodyStream = $res->getBody();
-
-                $response = '';
-
-                while (!$bodyStream->eof()) {
-                    $response .= $bodyStream->read(1024);
-                }
+                $res->getBody()->rewind();
+                $response = $res->getBody()->getContents();
 
                 $statusCode = $res->getStatusCode() . " " . $res->getReasonPhrase();
             } catch (Throwable $t) {
