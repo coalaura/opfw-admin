@@ -488,7 +488,7 @@ class OPFWHelper
 
                 $responseLength = $body->getSize();
 
-                $body->rewind();
+                $body->seek(0);
 
                 $response = $body->getContents();
 
