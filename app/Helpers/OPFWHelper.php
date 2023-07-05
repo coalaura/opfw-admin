@@ -525,6 +525,8 @@ class OPFWHelper
      */
     public static function parseResponse(string $response): OPFWResponse
     {
+        $response = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $response);
+
         $json = json_decode($response, true);
 
         $code = 0;
@@ -550,6 +552,39 @@ class OPFWHelper
             return new OPFWResponse(false, 'Failed to execute route: "Unknown server response ' . $code . '"');
         }
 
+        $error = json_last_error();
+
+        if ($error !== JSON_ERROR_NONE) {
+            return new OPFWResponse(false, 'Failed to execute route: "Invalid response json: ' . self::jsonErrorToString($error) . '"');
+        }
+
         return new OPFWResponse(false, 'Failed to execute route: "Invalid server response ' . $code . '"');
+    }
+
+    private static function jsonErrorToString(int $error): string
+    {
+        switch ($error) {
+            case JSON_ERROR_NONE:
+                return 'No errors';
+                break;
+            case JSON_ERROR_DEPTH:
+                return 'Maximum stack depth exceeded';
+                break;
+            case JSON_ERROR_STATE_MISMATCH:
+                return 'Underflow or the modes mismatch';
+                break;
+            case JSON_ERROR_CTRL_CHAR:
+                return 'Unexpected control character found';
+                break;
+            case JSON_ERROR_SYNTAX:
+                return 'Syntax error, malformed JSON';
+                break;
+            case JSON_ERROR_UTF8:
+                return 'Malformed UTF-8 characters, possibly incorrectly encoded';
+                break;
+            default:
+                return 'Unknown error';
+                break;
+        }
     }
 }
