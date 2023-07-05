@@ -500,7 +500,7 @@ class OPFWHelper
             }
 
             if (strlen($log) > 300) {
-                //$log = substr($log, 0, 150) . '...';
+                $log = substr($log, 0, 150) . '...';
             }
 
             LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), $statusCode . ': ' . $log);
@@ -546,6 +546,8 @@ class OPFWHelper
                 case 2: // All 200 status codes
                     return new OPFWResponse(true, !empty($json['message']) ? 'Success: ' . $json['message'] : 'Successfully executed route', $json['data'] ?? null);
             }
+
+            return new OPFWResponse(false, 'Failed to execute route: "Unknown server response ' . $code . '"');
         }
 
         return new OPFWResponse(false, 'Failed to execute route: "Invalid server response ' . $code . '"');
