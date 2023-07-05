@@ -198,7 +198,9 @@ export default {
 
             isLoading: false,
             isServerAnnouncement: false,
-            announcementMessage: ''
+            announcementMessage: '',
+
+            refreshInterval: false
         };
     },
     methods: {
@@ -267,15 +269,18 @@ export default {
         }
     },
     mounted() {
-        const _this = this;
+        clearInterval(this.refreshInterval);
 
-        this.$nextTick(function () {
-            _this.refresh();
+        this.$nextTick(() => {
+            this.refresh();
 
-            setInterval(function() {
-                _this.refresh();
+            this.refreshInterval = setInterval(() => {
+                this.refresh();
             }, 30 * 1000);
         });
+    },
+    beforeDestroy() {
+        clearInterval(this.refreshInterval);
     },
     props: {
         quote: {
