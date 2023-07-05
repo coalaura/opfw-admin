@@ -500,7 +500,7 @@ class OPFWHelper
             }
 
             if (strlen($log) > 300) {
-                $log = substr($log, 0, 150) . '...';
+                //$log = substr($log, 0, 150) . '...';
             }
 
             LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), $statusCode . ': ' . $log);
@@ -528,6 +528,7 @@ class OPFWHelper
         $json = json_decode($response, true);
 
         $code = 0;
+
         if ($json && isset($json['statusCode'])) {
             $code = intval($json['statusCode']);
             $category = floor(intval($json['statusCode']) / 100);
