@@ -529,7 +529,7 @@ class TestController extends Controller
 
         $query = Character::query();
 
-        $query->select(['character_id', 'first_name', 'last_name', 'backstory', 'character_creation_time', 'user_bans.ban_hash']);
+        $query->select(['character_id', 'first_name', 'last_name', 'backstory', 'character_creation_time', 'user_bans.ban_hash', 'characters.license_identifier']);
 
         $query->leftJoin('users', 'users.license_identifier', '=', 'characters.license_identifier');
         $query->leftJoin('user_bans', 'user_bans.identifier', '=', 'characters.license_identifier');
@@ -545,6 +545,7 @@ class TestController extends Controller
         foreach ($characters as $character) {
             $list[] = [
                 'id' => $character->character_id,
+                'license' => $character->license_identifier,
                 'name' => $character->first_name . " " . $character->last_name,
                 'backstory' => $character->backstory,
                 'danny' => GeneralHelper::dannyPercentageCreationTime(intval($character->character_creation_time)),
