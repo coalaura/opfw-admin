@@ -535,6 +535,8 @@ class TestController extends Controller
         $query->leftJoin('user_bans', 'user_bans.identifier', '=', 'characters.license_identifier');
 
         $query->where('users.playtime', '<=', 60 * 60 * 12);
+        $query->whereNotNull('ped_model_hash');
+        $query->whereNotNull('character_creation_time');
 
         $characters = $query->get();
 
