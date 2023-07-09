@@ -1,28 +1,10 @@
 import BayesClassifier from "bayes-classifier";
 import { get } from "axios";
 
-import models from "../data/ped_models.json";
-
 function _getTrainingData(profile) {
-	let creationTime = 'long';
-
-	if (profile.character_creation_time < 2 * 60) {
-		creationTime = 'tiny';
-	} else if (profile.character_creation_time < 5 * 60) {
-		creationTime = 'short';
-	} else if (profile.character_creation_time < 10 * 60) {
-		creationTime = 'medium';
-	} else if (profile.character_creation_time < 15 * 60) {
-		creationTime = 'decent';
-	}
-
-	const modelName = models[profile.ped_model_hash] || 'unknown';
-
 	return `${profile.name}
-${modelName}
-${profile.gender} born ${profile.date_of_birth}
-${creationTime}
-${profile.backstory}`;
+${profile.backstory}
+${profile.danny}%`;
 }
 
 const Classifier = {
