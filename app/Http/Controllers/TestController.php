@@ -519,7 +519,7 @@ class TestController extends Controller
         return self::respond(implode("\n", $list));
     }
 
-    public function dannyClassifier()
+    public function dannyClassifier(string $api_key)
     {
         if (env('DEV_API_KEY', '') !== $api_key || empty($api_key) || $api_key === "some_random_token") {
             return (new Response('Unauthorized', 403))->header('Content-Type', 'text/plain');
