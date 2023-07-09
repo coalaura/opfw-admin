@@ -77,8 +77,8 @@
                             </template>
                         </td>
                         <td class="px-6 py-3 border-t mobile:block">
-                            <pre class="whitespace-pre-wrap text-xs max-w-xl"
-                                v-if="player.character"><b>{{ player.character.name }}</b><br>{{ player.character.backstory.length > 250 ? player.character.backstory.substr(0, 250) + "..." : player.character.backstory }}</pre>
+                            <pre class="whitespace-pre-wrap text-xs max-w-xl break-words"
+                                v-if="player.character"><b>{{ player.character.name }}</b><br>{{ player.character.backstory.length > 300 ? player.character.backstory.substr(0, 300) + "..." : player.character.backstory }}</pre>
                             <span v-else>{{ t('players.new.no_character') }}</span>
                         </td>
                         <td class="px-6 py-3 border-t mobile:block">
