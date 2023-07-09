@@ -5,31 +5,30 @@ namespace App\Http\Controllers;
 use App\Character;
 use App\Log;
 use App\Player;
-use App\Server;
+use App\Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use GuzzleHttp\Client;
 
 class TestController extends Controller
 {
-	const FinancialResources = [
-		"diamonds" => [5000, 6000],
-		"gold_watches" => [1250, 1500],
-		"necklaces" => [500, 600],
-		"silver_watches" => [300, 350],
-		"gold_bar" => 1000,
+    const FinancialResources = [
+        "diamonds" => [5000, 6000],
+        "gold_watches" => [1250, 1500],
+        "necklaces" => [500, 600],
+        "silver_watches" => [300, 350],
+        "gold_bar" => 1000,
 
-		"raw_emerald" => [50, 140],
-		"raw_sapphire" => [140, 260],
-		"raw_ruby" => [270, 530],
-		"raw_morganite" => [1400, 2320],
+        "raw_emerald" => [50, 140],
+        "raw_sapphire" => [140, 260],
+        "raw_ruby" => [270, 530],
+        "raw_morganite" => [1400, 2320],
 
-		"emerald" => [140, 230],
-		"sapphire" => [270, 520],
-		"ruby" => [540, 1000],
-		"morganite" => [2220, 5530],
-	];
+        "emerald" => [140, 230],
+        "sapphire" => [270, 520],
+        "ruby" => [540, 1000],
+        "morganite" => [2220, 5530],
+    ];
 
     public function logs(Request $request, string $action): Response
     {
@@ -188,9 +187,9 @@ class TestController extends Controller
             }
         }
 
-		if (strlen("System") > $max) {
-			$max = strlen("System");
-		}
+        if (strlen("System") > $max) {
+            $max = strlen("System");
+        }
 
         // What a chonker
         $query = "SELECT * FROM (SELECT identifier, creator_identifier, reason, (SELECT SUM(playtime) FROM characters WHERE license_identifier = identifier) as playtime FROM user_bans WHERE identifier LIKE 'license:%' AND creator_identifier IN ('" . implode("', '", array_keys($staffMap)) . "') AND timestamp >= UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 30 DAY))) bans WHERE playtime IS NOT NULL AND playtime > 0 ORDER BY playtime LIMIT 10";
@@ -212,28 +211,28 @@ class TestController extends Controller
 
         $leaderboard = [];
 
-		$banSystem = $banSystem[0];
-		$leaderboard[] = "00. " . str_pad("System", $max, " ") . "  " . $banSystem->identifier . "\t" . $fmt(intval($banSystem->playtime)) . "\t" . ($banSystem->reason ?? "No reason");
+        $banSystem = $banSystem[0];
+        $leaderboard[] = "00. " . str_pad("System", $max, " ") . "  " . $banSystem->identifier . "\t" . $fmt(intval($banSystem->playtime)) . "\t" . ($banSystem->reason ?? "No reason");
 
         for ($x = 0; $x < sizeof($bans) && $x < 10; $x++) {
             $ban = $bans[$x];
 
-			$name = $staffMap[$ban->creator_identifier] ?? "System";
+            $name = $staffMap[$ban->creator_identifier] ?? "System";
 
             $leaderboard[] = str_pad(($x + 1) . "", 2, "0", STR_PAD_LEFT) . ". " . str_pad($name, $max, " ") . "  " . $ban->identifier . "\t" . $fmt(intval($ban->playtime)) . "\t" . ($ban->reason ?? "No reason");
         }
 
         $bans = DB::select("SELECT COUNT(identifier) c, creator_identifier FROM user_bans WHERE SUBSTRING_INDEX(identifier, ':', 1) = 'license' AND timestamp >= " . (strtotime("-3 months")) . " AND (creator_identifier IN ('" . implode("', '", array_keys($staffMap)) . "') OR creator_name IS NULL) GROUP BY creator_identifier ORDER BY c DESC");
 
-		$days = round((time() - strtotime("-3 months")) / 86400);
+        $days = round((time() - strtotime("-3 months")) / 86400);
 
         $leaderboard2 = [];
         for ($x = 0; $x < sizeof($bans) && $x <= 10; $x++) {
             $ban = $bans[$x];
 
-			$perDay = round($ban->c / $days, 1);
+            $perDay = round($ban->c / $days, 1);
 
-			$name = $staffMap[$ban->creator_identifier] ?? "System";
+            $name = $staffMap[$ban->creator_identifier] ?? "System";
 
             $leaderboard2[] = str_pad($x . "", 2, "0", STR_PAD_LEFT) . ". " . str_pad($name, $max, " ") . "  " . str_pad($ban->c . " bans", 10, " ") . " (~" . $perDay . " per day)";
         }
@@ -245,7 +244,7 @@ class TestController extends Controller
 
             $leaderboard3 = [];
             foreach ($bans as $x => $ban) {
-				$name = $staffMap[$ban->creator_identifier] ?? "System";
+                $name = $staffMap[$ban->creator_identifier] ?? "System";
 
                 $leaderboard3[] = str_pad(($x + 1) . "", 2, "0", STR_PAD_LEFT) . ". " . str_pad($name, $max, " ") . "  " . $ban->c . " bans";
             }
@@ -375,59 +374,59 @@ class TestController extends Controller
     public function finance(Request $request): Response
     {
         $data = DB::select(DB::raw("SELECT SUM(cash + bank + stocks_balance) as total_money FROM characters"));
-		$money = floor($data[0]->total_money);
+        $money = floor($data[0]->total_money);
 
         $data = DB::select(DB::raw("SELECT SUM(amount) as total_shared from shared_accounts"));
-		$money += floor($data[0]->total_shared);
+        $money += floor($data[0]->total_shared);
 
         $data = DB::select(DB::raw("SELECT SUM(company_balance) as total_stocks FROM stocks_companies"));
-		$money += floor($data[0]->total_stocks);
+        $money += floor($data[0]->total_stocks);
 
         $data = DB::select(DB::raw("SELECT SUM(1) as count, item_name FROM inventories WHERE item_name IN ('" . implode("', '", array_keys(self::FinancialResources)) . "') GROUP BY item_name"));
-		$resources = 0;
+        $resources = 0;
 
-		foreach ($data as $item) {
-			$price = self::FinancialResources[$item->item_name];
+        foreach ($data as $item) {
+            $price = self::FinancialResources[$item->item_name];
 
-			if (is_array($price)) {
-				$price = ($price[0] + $price[1]) / 2;
-			}
+            if (is_array($price)) {
+                $price = ($price[0] + $price[1]) / 2;
+            }
 
-			$resources += $price * $item->count;
-		}
+            $resources += $price * $item->count;
+        }
 
-		$text = [
-			"In circulation: $" . number_format($money),
-			"In valuables:   $" . number_format($resources),
-			"",
-			"Total:          $" . number_format($money + $resources)
-		];
+        $text = [
+            "In circulation: $" . number_format($money),
+            "In valuables:   $" . number_format($resources),
+            "",
+            "Total:          $" . number_format($money + $resources)
+        ];
 
         return self::respond(implode("\n", $text));
     }
 
     public function badScreenText(Request $request, string $api_key): Response
     {
-		if (env('DEV_API_KEY', '') !== $api_key || empty($api_key) || $api_key === "some_random_token") {
+        if (env('DEV_API_KEY', '') !== $api_key || empty($api_key) || $api_key === "some_random_token") {
             return self::json(false, null, 'Unauthorized');
         }
 
         $data = DB::select(DB::raw("SELECT JSON_UNQUOTE(JSON_EXTRACT(metadata, '$.text')) as text FROM anti_cheat_events LEFT JOIN user_bans ON identifier = license_identifier WHERE type = 'bad_screen_word' AND JSON_EXTRACT(metadata, '$.text') IS NOT NULL AND ban_hash IS NOT NULL"));
 
-		$bad = array_values(array_map(function ($item) {
-			return $item->text;
-		}, $data));
+        $bad = array_values(array_map(function ($item) {
+            return $item->text;
+        }, $data));
 
         $data = DB::select(DB::raw("SELECT JSON_UNQUOTE(JSON_EXTRACT(metadata, '$.text')) as text FROM anti_cheat_events LEFT JOIN user_bans ON identifier = license_identifier WHERE type = 'bad_screen_word' AND JSON_EXTRACT(metadata, '$.text') IS NOT NULL AND ban_hash IS NULL"));
 
-		$good = array_values(array_map(function ($item) {
-			return $item->text;
-		}, $data));
+        $good = array_values(array_map(function ($item) {
+            return $item->text;
+        }, $data));
 
         return self::json(true, [
-			'bad' => $bad,
-			'good' => $good
-		]);
+            'bad' => $bad,
+            'good' => $good
+        ]);
     }
 
     public function staffActivity()
@@ -436,7 +435,7 @@ class TestController extends Controller
 
         $data = DB::select("SELECT player_name, creator_identifier, timestamp FROM user_bans LEFT JOIN users ON license_identifier = creator_identifier WHERE is_staff = 1 AND SUBSTRING(identifier, 1, 8) = 'license:' AND timestamp > $after");
 
-		$bans = [];
+        $bans = [];
 
         foreach ($data as $item) {
             $name = $item->player_name;
@@ -470,7 +469,7 @@ class TestController extends Controller
 
         $daily = [];
         $averages = [];
-		$notes = [];
+        $notes = [];
 
         foreach ($data as $item) {
             $name = $item->player_name;
@@ -520,9 +519,38 @@ class TestController extends Controller
         return self::respond(implode("\n", $list));
     }
 
+    public function dannyClassifier()
+    {
+        if (env('DEV_API_KEY', '') !== $api_key || empty($api_key) || $api_key === "some_random_token") {
+            return (new Response('Unauthorized', 403))->header('Content-Type', 'text/plain');
+        }
+
+        $query = Character::query();
+
+        $query->leftJoin('users', 'users.license_identifier', '=', 'characters.license_identifier');
+        $query->leftJoin('user_bans', 'user_bans.identifier', '=', 'characters.license_identifier');
+
+        $query->where('users.playtime', '<=', 60 * 60 * 12);
+
+        $characters = $query->get();
+
+        $list = [];
+
+        foreach ($characters as $character) {
+            $list[] = [
+                'name' => $character->first_name . " " . $character->last_name,
+                'backstory' => $character->backstory,
+                'danny' => GeneralHelper::dannyPercentageCreationTime(intval($character->character_creation_time)),
+                'banned' => $character->ban_hash !== null
+            ];
+        }
+
+        return self::json(true, $list, "");
+    }
+
     public function test(Request $request): Response
     {
-		$user = $request->user();
+        $user = $request->user();
 
         $license = $user->player->license_identifier;
 
