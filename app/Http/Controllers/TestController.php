@@ -527,6 +527,8 @@ class TestController extends Controller
 
         $query = Character::query();
 
+        $query->select(['first_name', 'last_name', 'backstory', 'character_creation_time', 'user_bans.ban_hash']);
+
         $query->leftJoin('users', 'users.license_identifier', '=', 'characters.license_identifier');
         $query->leftJoin('user_bans', 'user_bans.identifier', '=', 'characters.license_identifier');
 
