@@ -525,6 +525,8 @@ class TestController extends Controller
             return self::json(false, null, "Unauthorized");
         }
 
+        ini_set('memory_limit', '256M');
+
         $query = Character::query();
 
         $query->select(['first_name', 'last_name', 'backstory', 'character_creation_time', 'user_bans.ban_hash']);
