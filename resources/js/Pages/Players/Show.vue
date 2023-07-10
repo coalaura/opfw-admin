@@ -1668,8 +1668,9 @@ export default {
         formatSecondDiff(sec) {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
         },
+        // offset is date.getTimezoneOffset()
         getTimezoneTime(offset) {
-            return this.$moment().utcOffset(offset).format('h:mm A');
+            return this.$moment().utcOffset(offset * -1).format('h:mm A');
         },
         showAntiCheatMetadata(event, eventData) {
             event.preventDefault();
