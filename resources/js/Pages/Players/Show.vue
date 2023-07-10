@@ -124,7 +124,7 @@
 
                 <span class="block" v-if="player.variables && player.variables.timezone && player.variables.timezoneOffset">
                     <span class="font-bold">{{ t('players.show.timezone') }}:</span>
-                    {{ player.variables.timezone }} ({{ getTimezoneTime(player.variables.timezoneOffset) }})
+                    {{ player.variables.timezone }} - <span class="font-semibold">{{ playerTime }}</span>
                 </span>
 
                 <span class="block" v-if="player.variables && player.variables.screenWidth && player.variables.screenHeight">
@@ -1661,16 +1661,23 @@ export default {
             panelLogs: [],
 
             statusLoading: true,
-            status: {}
+            status: {},
+
+            playerTime: false
         }
     },
     methods: {
+        updatePlayerTime() {
+            const timezoneOffset = this.player.variables?.timezoneOffset;
+
+            if (!timezoneOffset) {
+                return;
+            }
+
+            this.playerTime = this.$moment().utcOffset(offset * -1).format('h:mm:ss A');
+        },
         formatSecondDiff(sec) {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
-        },
-        // offset is date.getTimezoneOffset()
-        getTimezoneTime(offset) {
-            return this.$moment().utcOffset(offset * -1).format('h:mm A');
         },
         showAntiCheatMetadata(event, eventData) {
             event.preventDefault();
@@ -2395,6 +2402,12 @@ export default {
         this.loadScreenshots();
         this.loadPanelLogs();
         this.loadStatus();
+
+        this.updatePlayerTime();
+
+        setInterval(() => {
+            this.updatePlayerTime();
+        }, 1000);
 
         const _this = this;
 
