@@ -1674,7 +1674,7 @@ export default {
                 return;
             }
 
-            this.playerTime = this.$moment().utcOffset(offset * -1).format('h:mm:ss A');
+            this.playerTime = this.$moment().utcOffset(timezoneOffset * -1).format('h:mm:ss A');
         },
         formatSecondDiff(sec) {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
