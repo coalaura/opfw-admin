@@ -11,10 +11,10 @@
         >
 
             <!-- Container -->
-            <div :class="{'w-full' : !small}" class="max-w-3xl my-20 max-h-modal-max bg-white overflow-y-auto rounded-md shadow dark:bg-dark-secondary dark:text-white" role="document" v-bind="$attrs">
+            <div :class="{'w-full' : !small}" class="max-w-3xl my-20 max-h-modal-max flex flex-col bg-white rounded-md shadow dark:bg-dark-secondary dark:text-white" role="document" v-bind="$attrs">
 
                 <!-- Content part -->
-                <div class="px-10 py-4">
+                <div class="px-10 py-4 flex flex-col overflow-hidden">
 
                     <!-- Header -->
                     <header class="max-w-full prose text-center pt-4 mb-6">
@@ -22,7 +22,7 @@
                     </header>
 
                     <!-- Main -->
-                    <main>
+                    <main class="overflow-y-auto">
                         <slot />
                     </main>
 
