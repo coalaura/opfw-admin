@@ -825,6 +825,7 @@
             "country_detail": "May not be entirely accurate",
 
 			"resolution": "Resolution",
+			"timezone": "Timezone",
 			"ofFingerprint": "OPF-Fingerprint",
 
 			"show_link_token": "Show accounts linked via tokens",

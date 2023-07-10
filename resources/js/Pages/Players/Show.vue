@@ -122,6 +122,11 @@
                     {{ player.countryName }}
                 </span>
 
+                <span class="block" v-if="player.variables && player.variables.timezone && player.variables.timezoneOffset">
+                    <span class="font-bold">{{ t('players.show.timezone') }}:</span>
+                    {{ player.variables.timezone }} ({{ getTimezoneTime(player.variables.timezoneOffset) }})
+                </span>
+
                 <span class="block" v-if="player.variables && player.variables.screenWidth && player.variables.screenHeight">
                     <span class="font-bold">{{ t('players.show.resolution') }}:</span>
                     {{ player.variables.screenWidth + "x" + player.variables.screenHeight }}
@@ -1662,6 +1667,9 @@ export default {
     methods: {
         formatSecondDiff(sec) {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
+        },
+        getTimezoneTime(offset) {
+            return this.$moment().utcOffset(offset).format('h:mm A');
         },
         showAntiCheatMetadata(event, eventData) {
             event.preventDefault();
