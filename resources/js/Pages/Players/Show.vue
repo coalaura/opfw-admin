@@ -460,7 +460,7 @@
                     </div>
                 </div>
                 <div v-else>
-                    <table class="w-full whitespace-no-wrap">
+                    <table class="w-full whitespace-no-wrap" v-if="antiCheatEvents.length > 0">
                         <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 border-t" v-for="event in antiCheatEvents" :key="event.id">
                             <td class="px-3 py-2">
                                 {{ event.type }}
@@ -475,6 +475,7 @@
                             <td class="px-3 py-2">{{ event.timestamp * 1000 | formatTime(true) }}</td>
                         </tr>
                     </table>
+                    <p v-else>{{ t("players.show.no_anti_cheat_events") }}</p>
                 </div>
             </template>
 
