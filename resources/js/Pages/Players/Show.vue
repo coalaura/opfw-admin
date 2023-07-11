@@ -1512,18 +1512,14 @@ import 'highlight.js/styles/github-dark-dimmed.css';
 
 const antiCheatMetadataKeys = [
     "actual", "affected", "allWords", "armor", "backstory", "changeTicks", "closestPed", "command",
-	"count", "current", "damage", "dateOfBirth", "distance", "eventName", "expected", "expectedValue",
+	"count", "damage", "dateOfBirth", "distance", "eventName", "expected", "expectedValue",
 	"explosionEvent", "fov", "frozen", "fullName", "gameplayCam", "headingError", "health", "immediately",
 	"invincible", "invisible", "maxAllowed", "maxArmor", "maxDamage", "maxHealth", "modelHash",
-	"modelName", "modifications", "modifierName", "modifierValue", "nativeName", "new", "newArmor",
+	"modelName", "modifications", "modifierName", "modifierValue", "nativeName", "newArmor",
 	"newHealth", "reason", "resourceName", "restoredArmor1", "restoredArmor2", "restoredHealth1",
 	"restoredHealth2", "score", "script", "speed", "suspicious", "suspiciousKeys", "text", "textEntry",
 	"textEntryValue", "textureDict", "textureName", "triggers", "variableName", "variableType",
 	"waypointDistance", "weaponLabel", "weaponName", "weaponType", "words"
-];
-
-const antiCheatMetadataSubKeys = [
-    "model", "modelHash"
 ];
 
 export default {
@@ -1726,18 +1722,16 @@ export default {
                 this.importantMetadata[key] = value;
             }
 
-            for (const key in eventData.metadata) {
-                const value = eventData.metadata[key];
+            if ('object' in eventData.metadata) {
+                const model = eventData.metadata.object.model;
 
-                if (typeof value !== "object" || key == "playerPed") continue;
+                this.importantMetadata['object.model'] = model;
+            }
 
-                for (const sub of antiCheatMetadataSubKeys) {
-                    const subValue = value[sub];
+            if ('vehicle' in eventData.metadata) {
+                const model = eventData.metadata.vehicle.model;
 
-                    if (subValue) {
-                        this.importantMetadata[key + '.' + sub] = subValue;
-                    }
-                }
+                this.importantMetadata['vehicle.model'] = model;
             }
         },
         getPlayerMetadata() {
