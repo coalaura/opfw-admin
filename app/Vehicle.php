@@ -52,6 +52,39 @@ class Vehicle extends Model
 		'last_garage_identifier'
     ];
 
+    const PublicGarages = [
+        1 => "Impound Lot",
+        2 => "Impound Lot",
+        3 => "Impound Lot",
+        4 => "Garage A",
+        5 => "Garage B",
+        6 => "Garage C",
+        7 => "Garage D",
+        8 => "Garage E",
+        9 => "Garage F",
+        10 => "Garage G",
+        11 => "Garage H",
+        12 => "Garage I",
+        13 => "Impound Lot",
+        14 => "Garage J",
+        15 => "Garage K",
+        16 => "La Fuente Blanca",
+        17 => "LSIA",
+        18 => "MRPD",
+        19 => "EMS",
+        20 => "Luxury Autos",
+        21 => "Garage L",
+        22 => "Garage M",
+        23 => "Garage N",
+        24 => "Garage O",
+        25 => "FIB",
+        26 => "Garage P",
+        27 => "Garage Q",
+        28 => "Sandy Shores",
+        29 => "DOC",
+        30 => "Garage R"
+    ];
+
     /**
      * Get the character that owns this vehicle.
      *
@@ -69,9 +102,7 @@ class Vehicle extends Model
      */
     public function garage(): string
     {
-        if (intval($this->garage_impound) === 1) {
-            return 'Impound Lot';
-        } else if (intval($this->garage_state) === 0) {
+        if (intval($this->garage_state) === 0) {
             return 'Out';
         }
 
@@ -84,41 +115,10 @@ class Vehicle extends Model
                 return 'EMS Garage';
             }
 
-            switch (intval($this->garage_identifier)) {
-                case 1:
-                case 2:
-                case 3:
-                    return 'Impound Lot';
-                case 4:
-                    return 'Garage A (near court house)';
-                case 5:
-                    return 'Garage B (near exclusive dealership)';
-                case 6:
-                    return 'Garage C (the big red building)';
-                case 7:
-                    return 'Garage D (southside garage)';
-                case 8:
-                    return 'Garage E (mirror park garage)';
-                case 9:
-                    return 'Garage F (vinewood garage)';
-                case 10:
-                    return 'Garage G (near great ocean highway)';
-                case 11:
-                    return 'Garage H (sandy shores garage)';
-                case 12:
-                    return 'Garage I (paleto garage)';
-                case 14:
-                    return 'Garage J (cayo compound)';
-                case 15:
-                    return 'Garage K (cayo airfield)';
-                case 17:
-                    return 'LSIA';
-                case 18:
-                    return 'MRPD';
-                case 19:
-                    return 'Mount Zonah Medical Center';
-                case 21:
-                    return 'Luxury Autos';
+            $garageId = intval($this->garage_identifier);
+
+            if (isset(self::PublicGarages[$garageId])) {
+                return self::PublicGarages[$garageId];
             }
         }
 
