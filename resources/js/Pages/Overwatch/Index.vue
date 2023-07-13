@@ -120,7 +120,7 @@ export default {
 
             this.isLoading = false;
 
-            for (this.autoRefreshTime = 5; this.autoRefreshTime > 0; this.autoRefreshTime -= 0.1) {
+            for (this.autoRefreshTime = 10; this.autoRefreshTime > 0; this.autoRefreshTime -= 0.1) {
                 if (!this.autoRefreshEnabled) return;
 
                 await this.wait(100);
