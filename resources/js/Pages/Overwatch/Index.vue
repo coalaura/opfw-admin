@@ -140,6 +140,12 @@ export default {
     },
     mounted() {
         this.refresh();
+
+        $(document).on("visibilitychange", e => {
+            if (document.visibilityState !== "visible") {
+                this.autoRefreshEnabled = false;
+            }
+        });
     }
 };
 </script>
