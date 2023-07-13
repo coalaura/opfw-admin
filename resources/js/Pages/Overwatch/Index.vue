@@ -29,22 +29,22 @@
                         </badge>
                     </div>
 
-                    <div class="flex">
-                        <button class="px-5 py-2 font-semibold text-white bg-primary rounded dark:bg-dark-primary mr-3" @click="isAttaching = true" v-if="screenshot">
-                            <i class="fas fa-paper-plane mr-1"></i>
-                            {{ t('overwatch.attach') }}
+                    <div class="flex gap-3">
+                        <button class="px-5 py-2 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" @click="isAttaching = true" v-if="screenshot" :title="t('overwatch.attach')">
+                            <i class="fas fa-paperclip"></i>
                         </button>
 
-                        <button class="px-5 py-2 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" @click="refresh">
-                            <span v-if="!isLoading">
-                                <i class="mr-1 fa fa-refresh"></i>
-                                {{ t('global.refresh') }}
-                            </span>
+                        <button class="px-5 py-2 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :class="{'bg-green-600 rounded dark:bg-green-400' : autoRefreshEnabled}" @click="autoRefresh" :title="t('overwatch.auto_refresh')">
+                            <template v-if="!isLoading || !autoRefreshEnabled">
+                                <i class="fa fa-magic mr-1"></i>
+                                <span v-if="autoRefreshEnabled" class="font-mono">{{ Math.floor(autoRefreshTime) }}s</span>
+                            </template>
+                            <i class="fa fa-refresh animate-spin" v-else></i>
+                        </button>
 
-                            <span v-else>
-                                <i class="mr-1 fa fa-refresh animate-spin"></i>
-                                {{ t('global.loading') }}
-                            </span>
+                        <button class="px-5 py-2 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" @click="refresh" :title="t('overwatch.refresh')" v-if="!autoRefreshEnabled">
+                            <i class="fa fa-redo-alt" v-if="!isLoading"></i>
+                            <i class="fa fa-refresh animate-spin" v-else></i>
                         </button>
                     </div>
                 </div>
@@ -78,10 +78,27 @@ export default {
             screenshot: null,
             screenshotError: null,
             isLoading: false,
-            isAttaching: false
+            isAttaching: false,
+
+            autoRefreshEnabled: false,
+            autoRefreshTime: 0
         };
     },
     methods: {
+        autoRefresh() {
+            this.autoRefreshEnabled = !this.autoRefreshEnabled;
+            this.autoRefreshTime = 0;
+
+            if (this.autoRefreshEnabled) this.refresh();
+        },
+        wait(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        },
+        tick() {
+            return new Promise(resolve => {
+                this.$nextTick(() => resolve());
+            });
+        },
         async refresh() {
             if (this.isLoading) {
                 return;
@@ -102,6 +119,16 @@ export default {
             } catch(e) {}
 
             this.isLoading = false;
+
+            for (this.autoRefreshTime = 5; this.autoRefreshTime > 0; this.autoRefreshTime -= 0.1) {
+                if (!this.autoRefreshEnabled) return;
+
+                await this.wait(100);
+            }
+
+            if (!this.autoRefreshEnabled) return;
+
+            this.refresh();
         },
         screenshotAttached(status, message) {
             this.isAttaching = false;

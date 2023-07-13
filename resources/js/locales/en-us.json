@@ -149,7 +149,9 @@
     "overwatch": {
         "title": "Overwatch",
         "description": "Look through random players' game renders to see if you can find anything out of the ordinary",
-		"attach": "Attach screenshot",
+		"attach": "Attach screenshot to players panel.",
+        "refresh": "Get a new screenshot.",
+        "auto_refresh": "Toggle the auto-refresh.",
         "profile": "{0} - {1} (#{2})",
         "server": "Server: {0}"
     },
