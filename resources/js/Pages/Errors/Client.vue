@@ -165,12 +165,12 @@
                 <pre class="text-lg block mb-4 pb-4 border-gray-500 border-dashed border-b-2 font-bold whitespace-pre-line">
                     {{ getErrorLocation(errorDetail) }}
                 </pre>
-                <pre class="text-lg block mb-4 pb-4 border-gray-500 border-dashed border-b-2 text-sm whitespace-pre-line break-words"
+                <pre class="block mb-4 pb-4 border-gray-500 border-dashed border-b-2 text-sm whitespace-pre-line break-words"
                     v-html="formatChatColors(errorDetail.error_trace)"></pre>
                 <div class="text-lg mb-4 pb-4 border-gray-500 border-dashed border-b-2" v-if="errorDetail.full_trace">
                     <pre class="block whitespace-pre-line break-words lines" v-html="lineNumbers(errorDetail.full_trace)"></pre>
                 </div>
-                <p class="m-0 mb-2 font-bold">{{ t('errors.feedback') }}:</p><pre class="text-lg block mb-4 text-sm whitespace-pre-line break-words">
+                <p class="m-0 mb-2 font-bold">{{ t('errors.feedback') }}:</p><pre class="block mb-4 text-sm whitespace-pre-line break-words">
                     {{ errorDetail.error_feedback || "N/A" }}
                 </pre>
             </template>
