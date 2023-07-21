@@ -59,6 +59,7 @@ class PlayerResource extends JsonResource
             'averagePing'     => $this->average_ping,
             'averageFps'      => $this->average_fps,
             'staffToggled'    => $this->isStaffToggled(),
+            'staffHidden'     => $this->isStaffHidden(),
         ];
     }
 

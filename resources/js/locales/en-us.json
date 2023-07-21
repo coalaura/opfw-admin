@@ -247,7 +247,11 @@
         "location_description": "Hidden locations around the city to avoid no-clipping long distances.",
         "staff_locations": "Staff locations",
         "staff_description": "Locations for staff to chill at without being seen by other players.",
-        "no_player_count": "Player count is not available at this time"
+        "no_player_count": "Player count is not available at this time",
+        "staff_toggled": "Has staff mode toggled on.",
+        "staff_toggled_off": "Has staff mode toggled off.",
+        "staff_hidden": "Has their staff status hidden.",
+        "staff_not_hidden": "Doesn't have their staff status hidden."
     },
     "blacklist": {
         "title": "Blacklist",

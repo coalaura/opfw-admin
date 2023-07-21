@@ -154,6 +154,13 @@ class Player extends Model
         return isset($data['staffToggled']) && $data['staffToggled'];
     }
 
+    public function isStaffHidden(): bool
+    {
+        $data = $this->user_data ?? [];
+
+        return isset($data['staffHidden']) && $data['staffHidden'];
+    }
+
     public function getFilteredPlayerName(): string
     {
         $name = $this->player_name;
