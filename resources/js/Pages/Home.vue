@@ -103,9 +103,9 @@
             <div class="flex flex-wrap -mx-3">
                 <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-green-600 rounded m-3" v-for="player in staff" :key="player.id" :href="'/players/' + player.licenseIdentifier">
                     <i class="fas fa-toggle-on mr-1 cursor-help" v-if="player.staffToggled" :title="t('home.staff_toggled')"></i>
-                    <i class="fas fa-toggle-off mr-1 text-red-200 cursor-help" v-else :title="t('home.staff_toggled_off')"></i>
+                    <i class="fas fa-toggle-off mr-1 text-red-300 cursor-help" v-else :title="t('home.staff_toggled_off')"></i>
 
-                    <i class="fas fa-eye-slash mr-1 text-yellow-200 cursor-help" v-if="player.staffHidden" :title="t('home.staff_hidden')"></i>
+                    <i class="fas fa-eye-slash mr-1 text-yellow-300 cursor-help" v-if="player.staffHidden" :title="t('home.staff_hidden')"></i>
                     <i class="fas fa-eye mr-1 cursor-help" v-else :title="t('home.staff_not_hidden')"></i>
 
                     {{ player.playerName }}
