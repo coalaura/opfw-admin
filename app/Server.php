@@ -136,7 +136,7 @@ class Server
             }
         }
 
-        CacheHelper::write($cacheKey, self::$onlineMap[$cacheKey], 5 * CacheHelper::MINUTE);
+        CacheHelper::write($cacheKey, self::$onlineMap[$cacheKey], 10);
 
         return self::$onlineMap[$cacheKey];
     }
