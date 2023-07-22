@@ -28,7 +28,7 @@
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="px-6 py-4 w-56">{{ t('screenshot.player') }}</th>
-                        <th class="px-6 py-4 w-56">{{ t('screenshot.screenshot') }}</th>
+                        <th class="px-6 py-4 w-40">{{ t('screenshot.screenshot') }}</th>
                         <th class="px-6 py-4">{{ t('screenshot.note') }}</th>
                         <th class="px-6 py-4 w-32">{{ t('screenshot.ban_status') }}</th>
                         <th class="px-6 py-4 w-56">{{ t('screenshot.created_at') }}</th>
@@ -54,7 +54,7 @@
                                     {{ screenshot.player_name }}
                                 </inertia-link>
                             </td>
-                            <td class="px-6 py-3 border-t mobile:block w-56">
+                            <td class="px-6 py-3 border-t mobile:block w-40">
                                 <a :href="screenshot.url" target="_blank" class="text-indigo-600 dark:text-indigo-400">{{ t('screenshot.view', screenshot.url.split(".").pop()) }}</a>
                             </td>
                             <td class="px-6 py-3 border-t mobile:block">
