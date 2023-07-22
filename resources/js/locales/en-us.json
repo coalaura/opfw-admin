@@ -238,7 +238,8 @@
         "staff_toggled": "Has staff mode toggled on.",
         "staff_toggled_off": "Has staff mode toggled off.",
         "staff_hidden": "Has their staff status hidden.",
-        "staff_not_hidden": "Doesn't have their staff status hidden."
+        "staff_not_hidden": "Doesn't have their staff status hidden.",
+        "no_character": "Does not have a character loaded."
     },
     "blacklist": {
         "title": "Blacklist",
