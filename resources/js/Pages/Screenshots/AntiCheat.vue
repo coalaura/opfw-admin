@@ -30,8 +30,8 @@
                         <th class="px-6 py-4">{{ t('screenshot.player') }}</th>
                         <th class="px-6 py-4">{{ t('screenshot.screenshot') }}</th>
                         <th class="px-6 py-4">{{ t('screenshot.note') }}</th>
-                        <th class="px-6 py-4">{{ t('screenshot.ban_status') }}</th>
-                        <th class="px-6 py-4">{{ t('screenshot.created_at') }}</th>
+                        <th class="px-6 py-4 w-32">{{ t('screenshot.ban_status') }}</th>
+                        <th class="px-6 py-4 w-56">{{ t('screenshot.created_at') }}</th>
                     </tr>
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600" :class="{'new-entry' : screenshot.new}" v-for="screenshot in formattedScreenshots"
                         :key="screenshot.url">
@@ -44,7 +44,7 @@
                             <td class="px-6 py-2 border-t mobile:block italic text-gray-600 dark:text-gray-400" colspan="3">
                                 Banned indefinitely for <span class="font-semibold">{{ screenshot.reason }}</span>
                             </td>
-                            <td class="px-6 py-2 border-t mobile:block italic text-gray-600 dark:text-gray-400">
+                            <td class="px-6 py-2 border-t mobile:block italic text-gray-600 dark:text-gray-400 w-56">
                                 {{ screenshot.timestamp * 1000 | formatTime(true) }}
                             </td>
                         </template>
@@ -60,16 +60,16 @@
                             <td class="px-6 py-3 border-t mobile:block">
                                 {{ screenshot.details || 'N/A' }}
                             </td>
-                            <td class="px-6 py-3 border-t mobile:block font-semibold">
+                            <td class="px-6 py-3 border-t mobile:block font-semibold w-32">
                                 <span class="text-red-600 dark:text-red-400" v-if="screenshot.ban">
                                     {{ t('global.banned') }}
                                 </span>
-                                <span class="text-green-600 dark:text-green-400" v-else>
+                                <span class="text-green-600 dark:text-green-400 whitespace-nowrap" v-else>
                                     {{ t('global.not_banned') }}
                                 </span>
                             </td>
-                            <td class="px-6 py-3 border-t mobile:block" v-if="screenshot.timestamp">{{ screenshot.timestamp * 1000 | formatTime(true) }}</td>
-                            <td class="px-6 py-3 border-t mobile:block" v-else>{{ t('global.unknown') }}</td>
+                            <td class="px-6 py-3 border-t mobile:block w-56" v-if="screenshot.timestamp">{{ screenshot.timestamp * 1000 | formatTime(true) }}</td>
+                            <td class="px-6 py-3 border-t mobile:block w-56" v-else>{{ t('global.unknown') }}</td>
                         </template>
                     </tr>
                     <tr v-if="screenshots.length === 0">
