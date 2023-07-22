@@ -161,10 +161,8 @@ class Player extends Model
         return isset($data['staffHidden']) && $data['staffHidden'];
     }
 
-    public function getFilteredPlayerName(): string
+    public static function filterPlayerName(string $name, string $license): string
     {
-        $name = $this->player_name;
-
         foreach(self::PlayerNameFilter as $filter) {
             $name = str_ireplace($filter, '', $name);
         }
@@ -174,10 +172,18 @@ class Player extends Model
         $name = trim($name);
 
         if (empty($name)) {
-            $name = "L-" . substr($this->license_identifier, 8, 6);
+            $name = "L-" . substr($license, 8, 6);
         }
 
         return $name;
+    }
+
+    public function getFilteredPlayerName(): string
+    {
+        $name = $this->player_name;
+        $license = $this->license_identifier;
+
+        return self::filterPlayerName($name, $license);
     }
 
     public static function resolveTags(bool $refreshCache = false): array

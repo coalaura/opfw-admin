@@ -7,7 +7,7 @@
                     {{ t("home.title") }}
                 </h1>
                 <p>
-                    {{ t("home.welcome", $page.auth.player.playerName) }}
+                    {{ t("home.welcome", $page.auth.player.safePlayerName) }}
                 </p>
             </div>
         </portal>
@@ -110,7 +110,7 @@
                     <i class="fas fa-eye-slash mr-1 text-red-300 cursor-help" v-if="player.staffHidden" :title="t('home.staff_hidden')"></i>
                     <i class="fas fa-eye mr-1 text-green-300 cursor-help" v-else :title="t('home.staff_not_hidden')"></i>
 
-                    {{ player.playerName }}
+                    {{ player.safePlayerName }}
                 </inertia-link>
             </div>
             <p class="italic" v-if="staff.length === 0">

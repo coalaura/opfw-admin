@@ -129,7 +129,7 @@
                             </span>
                         </td>
                         <td class="px-6 py-3 border-t mobile:block">{{ player.licenseIdentifier }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ player.playerName }}</td>
+                        <td class="px-6 py-3 border-t mobile:block">{{ player.safePlayerName }}</td>
                         <td class="px-6 py-3 border-t mobile:block">{{ player.playTime | humanizeSeconds }}</td>
                         <td class="px-6 py-3 border-t mobile:block">{{ player.warnings }}</td>
                         <td class="px-6 py-3 text-center border-t mobile:block">
