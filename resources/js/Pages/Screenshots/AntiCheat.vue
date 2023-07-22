@@ -30,8 +30,8 @@
                         <th class="px-6 py-4">{{ t('screenshot.player') }}</th>
                         <th class="px-6 py-4">{{ t('screenshot.screenshot') }}</th>
                         <th class="px-6 py-4">{{ t('screenshot.note') }}</th>
+                        <th class="px-6 py-4">{{ t('screenshot.ban_status') }}</th>
                         <th class="px-6 py-4">{{ t('screenshot.created_at') }}</th>
-                        <th class="w-64 px-6 py-4">{{ t('players.form.banned') }}?</th>
                     </tr>
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600" :class="{'new-entry' : screenshot.new}" v-for="screenshot in formattedScreenshots"
                         :key="screenshot.url">
@@ -47,7 +47,6 @@
                             <td class="px-6 py-2 border-t mobile:block italic text-gray-600 dark:text-gray-400">
                                 {{ screenshot.timestamp * 1000 | formatTime(true) }}
                             </td>
-                            <td class="px-6 py-2 border-t mobile:block">&nbsp;</td>
                         </template>
                         <template v-else>
                             <td class="px-6 py-3 border-t mobile:block">
@@ -61,24 +60,16 @@
                             <td class="px-6 py-3 border-t mobile:block">
                                 {{ screenshot.details || 'N/A' }}
                             </td>
-                            <td class="px-6 py-3 border-t mobile:block" v-if="screenshot.timestamp">{{ screenshot.timestamp * 1000 | formatTime(true) }}</td>
-                            <td class="px-6 py-3 border-t mobile:block" v-else>{{ t('global.unknown') }}</td>
-                            <td class="px-6 py-3 text-center border-t mobile:block">
-                                <span
-                                    class="block px-4 py-2 text-white rounded"
-                                    :class="screenshot.ban.reason ? 'bg-red-600 dark:bg-red-700' : 'bg-red-500 dark:bg-red-600'"
-                                    :title="screenshot.ban.reason ? screenshot.ban.reason : t('players.ban.no_reason')"
-                                    v-if="screenshot.ban"
-                                >
+                            <td class="px-6 py-3 border-t mobile:block font-semibold">
+                                <span class="text-red-600 dark:text-red-400" v-if="screenshot.ban">
                                     {{ t('global.banned') }}
-                                    <span class="block text-xxs">
-                                        {{ t('global.by', screenshot.ban.creator_name ? screenshot.ban.creator_name : 'System') }}
-                                    </span>
                                 </span>
-                                <span class="block px-4 py-2 text-white bg-green-500 rounded dark:bg-green-600" v-else>
+                                <span class="text-green-600 dark:text-green-400" v-else>
                                     {{ t('global.not_banned') }}
                                 </span>
                             </td>
+                            <td class="px-6 py-3 border-t mobile:block" v-if="screenshot.timestamp">{{ screenshot.timestamp * 1000 | formatTime(true) }}</td>
+                            <td class="px-6 py-3 border-t mobile:block" v-else>{{ t('global.unknown') }}</td>
                         </template>
                     </tr>
                     <tr v-if="screenshots.length === 0">
