@@ -46,10 +46,13 @@ class HomeController extends Controller
         $playerList = array_filter($playerList, function($player) {
             return !$player['fakeName'] && !$player['fakeDisconnected'];
         });
+
         $players = array_keys($playerList);
+
         usort($players, function ($a, $b) use ($playerList) {
             return $playerList[$a]['id'] <=> $playerList[$b]['id'];
         });
+
         $staff = Player::query()->where(function ($q) {
             $q->orWhere('is_staff', '=', 1)
                 ->orWhere('is_senior_staff', '=', 1)

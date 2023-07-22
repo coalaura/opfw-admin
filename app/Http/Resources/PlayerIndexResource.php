@@ -27,7 +27,10 @@ class PlayerIndexResource extends JsonResource
             'warnings'          => $this->warning_count,
             'isBanned'          => !!Ban::getBanForUser($this->license_identifier),
             'status'            => $status,
+            'character'         => $status && $status->character,
             'playtime'          => $this->playtime,
+			'staffToggled'      => $this->isStaffToggled(),
+			'staffHidden'       => $this->isStaffHidden(),
         ];
     }
 
