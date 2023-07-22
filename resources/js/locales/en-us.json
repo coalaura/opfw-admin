@@ -420,6 +420,7 @@
         "light": "Light",
         "logout": "Logout",
         "report": "Report a bug!",
+        "refresh_login": "Refresh Login",
 
         "permissions": "Permissions",
         "perm": "Permission",

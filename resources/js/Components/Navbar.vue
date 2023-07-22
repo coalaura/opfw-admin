@@ -56,6 +56,11 @@
                             {{ t('staff_chat.title') }}
                         </button>
 
+                        <a href="/auth/login" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500">
+                            <i class="fas fa-sync mr-1"></i>
+                            {{ t('nav.refresh_login') }}
+                        </a>
+
                         <inertia-link class="px-2 py-1 block w-full hover:bg-gray-600 border-t border-gray-500" method="POST" href="/logout">
                             <i class="fas fa-sign-out-alt mr-1"></i>
                             {{ t("nav.logout") }}
