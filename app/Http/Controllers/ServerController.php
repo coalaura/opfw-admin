@@ -2,12 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ServerStoreRequest;
-use App\Http\Resources\PlayerResource;
-use App\Http\Resources\ServerResource;
-use App\Player;
 use App\Server;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;

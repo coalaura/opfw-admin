@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\GeneralHelper;
 use App\Http\Requests\WarningStoreRequest;
 use App\Player;
 use App\Warning;

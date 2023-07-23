@@ -2,18 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Ban;
-use App\Character;
 use App\Helpers\CacheHelper;
 use App\Helpers\SessionHelper;
-use App\Player;
-use App\Statistics\Statistic;
-use App\Vehicle;
 use App\Server;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class CronjobController extends Controller
 {

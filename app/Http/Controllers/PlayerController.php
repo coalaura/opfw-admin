@@ -134,10 +134,9 @@ class PlayerController extends Controller
     /**
      * Display a listing of all online new players.
      *
-     * @param Request $request
      * @return Response
      */
-    public function newPlayers(Request $request): Response
+    public function newPlayers(): Response
     {
         $query = Player::query();
 
@@ -197,7 +196,7 @@ class PlayerController extends Controller
                     'danny' => GeneralHelper::dannyPercentageCreationTime(intval($character->character_creation_time)),
                     'data' => $status->characterMetadata ?? [],
                 ],
-                'playerName' => $player->player_name,
+                'playerName' => Player::filterPlayerName($player->player_name, $player->license_identifier),
                 'playTime' => $player->playtime,
                 'licenseIdentifier' => $player->license_identifier,
             ];

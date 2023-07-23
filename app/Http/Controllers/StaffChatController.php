@@ -2,13 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Ban;
-use App\Helpers\GeneralHelper;
 use App\Helpers\OPFWHelper;
-use App\Http\Resources\BanResource;
-use App\Http\Resources\PlayerIndexResource;
 use App\Server;
-use App\Player;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;

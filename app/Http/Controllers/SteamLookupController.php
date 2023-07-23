@@ -2,12 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Ban;
 use App\Helpers\GeneralHelper;
-use App\Http\Resources\BanResource;
-use App\Http\Resources\PlayerIndexResource;
-use App\Server;
-use App\Player;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -79,7 +74,7 @@ class SteamLookupController extends Controller
 					$id = new SteamID($search);
 
 					$steamId = $id->ConvertToUInt64();
-				} catch (Exception $ex) {
+				} catch (\Exception $ex) {
 					$error = "Invalid search value.";
 				}
 			}
@@ -103,7 +98,7 @@ class SteamLookupController extends Controller
 				$data['steam3'] = $id->RenderSteam3();
 
 				$data['invite'] = 'http://s.team/p/' . $id->RenderSteamInvite();
-			} catch (Exception $ex) {
+			} catch (\Exception $ex) {
 				$data['error'] = "Invalid steam id.";
 			}
 		}

@@ -3,22 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Character;
-use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
-use App\Http\Requests\CharacterUpdateRequest;
-use App\Http\Resources\CharacterResource;
-use App\Http\Resources\CharacterIndexResource;
-use App\Http\Resources\PlayerResource;
-use App\Motel;
-use App\PanelLog;
 use App\Player;
 use App\Property;
 use App\Vehicle;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;

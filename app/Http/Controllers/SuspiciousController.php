@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Helpers\PermissionHelper;
 use App\Helpers\SuspiciousChecker;
-use App\Http\Resources\LogResource;
-use App\Log;
 use App\Player;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 

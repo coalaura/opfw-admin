@@ -8,14 +8,12 @@ use App\Helpers\PermissionHelper;
 use App\Http\Resources\LogResource;
 use App\Log;
 use App\Player;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
-use WhichBrowser\Cache;
 
 class LogController extends Controller
 {

@@ -60,7 +60,7 @@
                                 {{ t('global.status.offline') }}
                             </span>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ player.safePlayerName }}</td>
+                        <td class="px-6 py-3 border-t mobile:block">{{ player.playerName }}</td>
                         <td class="px-6 py-3 border-t mobile:block">{{ formatSecondDiff(player.playTime) }}</td>
                         <td class="px-6 py-3 border-t mobile:block">
                             <span v-if="player.character && player.character.danny !== false">

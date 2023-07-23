@@ -7,7 +7,6 @@ use App\Helpers\PermissionHelper;
 use App\Http\Resources\CharacterResource;
 use App\Http\Resources\PlayerIndexResource;
 use App\Http\Resources\TwitterPostResource;
-use App\Player;
 use App\TwitterPost;
 use App\TwitterUser;
 use Illuminate\Http\RedirectResponse;
