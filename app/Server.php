@@ -127,7 +127,7 @@ class Server
                     $assoc[$player['licenseIdentifier']] = [
                         'source'    => $player['source'],
                         'character' => $character['id'] ?? null,
-                        'characterFlags' => $character['flags'] ?? 320, // 320 = "default" flags
+                        'characterFlags' => $character['flags'] ?? 256, // 256 = "default" flags
                         'flags'     => $player['flags'] ?? 0,
                         'name'      => $player['playerName'] ?? null
                     ];
