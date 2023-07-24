@@ -109,7 +109,7 @@ class Server
             $serverIp = self::fixApiUrl($serverIp);
 
             try {
-                $json = OPFWHelper::getWorldJSON($serverIp);
+                $json = OPFWHelper::getUsersJSON($serverIp);
 
                 if (!$json) {
                     return null;
@@ -120,13 +120,16 @@ class Server
 
             if (isset($json['players'])) {
                 $assoc = [];
+
                 foreach ($json['players'] as $player) {
+                    $character = $player['character'] ?? [];
+
                     $assoc[$player['licenseIdentifier']] = [
                         'source'    => $player['source'],
-                        'character' => $player['character'] ? $player['character']['id'] : null,
-                        'characterFlags' => $player['character'] ? $player['character']['flags'] : null,
+                        'character' => $character['id'] ?? null,
+                        'characterFlags' => $character['flags'] ?? 0,
                         'flags'     => $player['flags'] ?? 0,
-                        'name'      => $player['name'] ?? null
+                        'name'      => $player['playerName'] ?? null
                     ];
                 }
 

@@ -282,11 +282,39 @@ class OPFWHelper
             $data = self::executeRoute($serverIp, $serverIp . 'world.json', [], 'GET', 3);
 
             if ($data->data) {
-                CacheHelper::write($cache, $data->data, 10);
+                CacheHelper::write($cache, $data->data, 3);
             } else if (!$data->status) {
                 LoggingHelper::quickLog("Failed to load world.json for {$serverIp}: {$data->message}");
 
-                CacheHelper::write($cache, [], 10);
+                CacheHelper::write($cache, [], 3);
+            }
+
+            return $data->data;
+        }
+    }
+
+    /**
+     * Gets the users.json
+     *
+     * @param string $serverIp
+     * @return array|null
+     */
+    public static function getUsersJSON(string $serverIp): ?array
+    {
+        $serverIp = Server::fixApiUrl($serverIp);
+        $cache = 'users_json_' . md5($serverIp);
+
+        if (CacheHelper::exists($cache)) {
+            return CacheHelper::read($cache, []);
+        } else {
+            $data = self::executeRoute($serverIp, $serverIp . 'users.json', [], 'GET', 3);
+
+            if ($data->data) {
+                CacheHelper::write($cache, $data->data, 3);
+            } else if (!$data->status) {
+                LoggingHelper::quickLog("Failed to load users.json for {$serverIp}: {$data->message}");
+
+                CacheHelper::write($cache, [], 3);
             }
 
             return $data->data;
