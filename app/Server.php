@@ -118,10 +118,10 @@ class Server
                 return [];
             }
 
-            if (isset($json['players'])) {
+            if (!empty($json)) {
                 $assoc = [];
 
-                foreach ($json['players'] as $player) {
+                foreach ($json as $player) {
                     $character = $player['character'] ?? [];
 
                     $assoc[$player['licenseIdentifier']] = [
