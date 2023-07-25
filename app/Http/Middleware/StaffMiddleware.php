@@ -125,6 +125,12 @@ class StaffMiddleware
 				return false;
 			}
 
+			if (!isset($user['player']['panel_linked_discord'])) {
+                $this->error = 'Your account does not have a linked discord, please log-in again.';
+
+				return false;
+			}
+
             $request->setUserResolver(function () use ($user) {
                 return json_decode(json_encode($user), FALSE);
             });
