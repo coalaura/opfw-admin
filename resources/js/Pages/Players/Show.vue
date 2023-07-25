@@ -366,6 +366,8 @@
                                 <i class="mr-1 fab fa-discord"></i>
                                 {{ t('players.show.discord', id) }}
                             </a>
+
+                            <i class="fas fa-key absolute top-4 right-4 drop-shadow text-md" v-if="discord.linked" :title="t('players.show.discord_linked')"></i>
                         </div>
                     </div>
                 </div>

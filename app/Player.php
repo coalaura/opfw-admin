@@ -269,7 +269,13 @@ class Player extends Model
         foreach ($ids as $id) {
             $user = DiscordUser::getUser($id);
 
-            $users[$id] = $user ? $user->toArray() : null;
+            $info = $user ? $user->toArray() : null;
+
+            if ($info && $info['id'] === $this->panel_linked_discord) {
+                $info['linked'] = true;
+            }
+
+            $users[$id] = $info;
         }
 
         return $users;

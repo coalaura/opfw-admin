@@ -48,7 +48,8 @@
         "do_search": "Search",
         "whitelisted": "On Whitelist",
         "blacklisted": "Is Blacklisted",
-        "server_offline": "Server is offline",
+        "server_offline": "Server seems to be offline.",
+        "server_online": "Server seems to be online.",
         "permission": "Your current permission level",
         "status": {
             "online": "Online",
@@ -755,6 +756,7 @@
             "discord_accounts": "Show {0} Discord account(s)",
             "discord": "Copy Discord <@{0}>",
             "discord_copy": "Copy Discord Info to clipboard",
+            "discord_linked": "This discord account is locked to this user.",
             "linked": "Show linked accounts",
             "anti_cheat": "Anti-Cheat",
             "anti_cheat_title": "Anti-Cheat Events",
