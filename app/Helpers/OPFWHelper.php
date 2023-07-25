@@ -266,59 +266,22 @@ class OPFWHelper
     }
 
     /**
-     * Gets the world.json
-     *
-     * @param string $serverIp
-     * @return array|null
-     */
-    public static function getWorldJSON(string $serverIp): ?array
-    {
-        $serverIp = Server::fixApiUrl($serverIp);
-        $cache = 'world_json_' . md5($serverIp);
-
-        if (CacheHelper::exists($cache)) {
-            return CacheHelper::read($cache, []);
-        } else {
-            $data = self::executeRoute($serverIp, $serverIp . 'world.json', [], 'GET', 3);
-
-            if ($data->data) {
-                CacheHelper::write($cache, $data->data, 3);
-            } else if (!$data->status) {
-                LoggingHelper::quickLog("Failed to load world.json for {$serverIp}: {$data->message}");
-
-                CacheHelper::write($cache, [], 3);
-            }
-
-            return $data->data;
-        }
-    }
-
-    /**
-     * Gets the users.json
+     * Gets the users.json (from the socket)
      *
      * @param string $serverIp
      * @return array|null
      */
     public static function getUsersJSON(string $serverIp): ?array
     {
-        $serverIp = Server::fixApiUrl($serverIp);
-        $cache = 'users_json_' . md5($serverIp);
+        $server = Server::getServerName($serverIp);
 
-        if (CacheHelper::exists($cache)) {
-            return CacheHelper::read($cache, []);
-        } else {
-            $data = self::executeRoute($serverIp, $serverIp . 'users.json', [], 'GET', 3);
-
-            if ($data->data) {
-                CacheHelper::write($cache, $data->data, 3);
-            } else if (!$data->status) {
-                LoggingHelper::quickLog("Failed to load users.json for {$serverIp}: {$data->message}");
-
-                CacheHelper::write($cache, [], 3);
-            }
-
-            return $data->data;
+        if (!$server) {
+            return null;
         }
+
+        $data = self::executeSocketRoute("data/$server/players");
+
+        return $data ?? null;
     }
 
     /**
@@ -462,6 +425,70 @@ class OPFWHelper
             'fps' => 30,
             'duration' => $duration * 1000
         ], 'POST', $duration + 15);
+    }
+
+    /**
+     * Executes a socket route
+     *
+     * @param string $route
+     */
+    private static function executeSocketRoute(string $route)
+    {
+        $session = SessionHelper::getInstance();
+
+        $token = $session->getSessionKey();
+        $license = $session->getCurrentLicense();
+
+        if (!$token || !$license) {
+            return false;
+        }
+
+        $url = "http://localhost:9999/" . $route;
+
+        $client = new Client(
+            [
+                'verify' => false,
+                'timeout' => 2
+            ]
+        );
+
+        $statusCode = 0;
+
+        LoggingHelper::log($token, 'Do GET to "' . $url . '"');
+
+        try {
+            $res = $client->request("GET", $url, [
+                'query' => [
+                    'token' => $token,
+                ],
+            ]);
+
+            $response = (string) $res->getBody();
+
+            $statusCode = $res->getStatusCode() . " " . $res->getReasonPhrase();
+        } catch (Throwable $t) {
+            $response = $t->getMessage();
+        }
+
+        $log = $response;
+
+        if (empty($log)) {
+            $log = '-empty-';
+        }
+
+        if (strlen($log) > 300) {
+            $log = substr($log, 0, 150) . '...';
+        }
+
+        LoggingHelper::log($token, $statusCode . ': ' . $log);
+
+        $json = json_decode($response, true);
+
+        if (!$json || !$json['status']) {
+            return false;
+        }
+
+        return $json['data'];
     }
 
     /**

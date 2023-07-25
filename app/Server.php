@@ -124,12 +124,12 @@ class Server
                 foreach ($json as $player) {
                     $character = $player['character'] ?? [];
 
-                    $assoc[$player['licenseIdentifier']] = [
+                    $assoc[$player['license']] = [
                         'source'    => $player['source'],
                         'character' => $character['id'] ?? null,
                         'characterFlags' => $character['flags'] ?? 0,
                         'flags'     => $player['flags'] ?? 0,
-                        'name'      => $player['playerName'] ?? null
+                        'name'      => $player['name'] ?? null
                     ];
                 }
 

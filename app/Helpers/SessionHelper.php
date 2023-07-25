@@ -270,4 +270,15 @@ class SessionHelper
 
         return $str;
     }
+
+    public function getCurrentLicense(): ?string
+    {
+        $user = $this->get('user');
+
+        if (!$user || !isset($user['player']) || !isset($user['player']['license_identifier'])) {
+            return null;
+        }
+
+        return $user['player']['license_identifier'];
+    }
 }
