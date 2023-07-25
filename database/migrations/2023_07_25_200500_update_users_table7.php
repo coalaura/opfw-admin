@@ -16,7 +16,7 @@ class UpdateUsersTable7 extends Migration
     {
         if (!Schema::hasColumn('users', 'panel_linked_discord')) {
             Schema::table('users', function (Blueprint $table) {
-                $table->integer('panel_linked_discord')->nullable(true)->default(null);
+                $table->string('panel_linked_discord')->nullable(true)->default(null);
             });
         }
     }
