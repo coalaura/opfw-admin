@@ -15,6 +15,14 @@
         <nav class="flex items-center justify-between w-full px-12 py-4 text-white bg-gray-900 shadow">
             <!-- Left side -->
             <p class="italic">
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded float-right" :class="{'bg-green-500 border-green-700' : serverStatus, 'bg-red-500 border-red-700' : !serverStatus}" :title="!serverStatus ? t('global.server_offline') : ''">
+                    <i class="fas fa-sync-alt animate-spin" v-if="serverStatusLoading"></i>
+                    <i class="fas fa-server" v-else></i>
+
+                    <span v-if="serverStatus">{{ serverStatus }}</span>
+                    <span v-else>{{ $page.auth.server }}</span>
+                </span>
+
                 <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-yellow-700 bg-warning rounded dark:bg-dark-warning float-right" :title="t('global.permission')" @click="showPermissions" :class="{'cursor-pointer' : $page.auth.player.isSuperAdmin}">
                     <i class="fas fa-tools"></i>
                     <span v-if="$page.auth.player.isRoot">{{ t('global.root') }}</span>
@@ -120,11 +128,17 @@ export default {
             showingPermissions: false,
             showingContext: false,
 
-            failedAvatarLoad: false
+            failedAvatarLoad: false,
+
+            serverStatusLoading: false,
+            serverStatus: false
         }
     },
     beforeMount() {
         this.updateTheme();
+    },
+    mounted() {
+        this.updateServerStatus();
     },
     methods: {
         getDiscordAvatar() {
@@ -190,6 +204,32 @@ export default {
             }
 
             this.updateTheme();
+        },
+        async updateServerStatus() {
+            this.serverStatusLoading = true;
+
+            const isDev = window.location.hostname === 'localhost';
+
+            const token = this.$page.auth.token,
+                server = this.$page.auth.server,
+                host = isDev ? 'http://localhost:9999' : 'https://' + window.location.host;
+
+            const url = host + '/data/' + server + '/status?token=' + token;
+
+            try {
+                const data = await axios.get(url);
+
+                if (data.data && data.data.status) {
+                    this.serverStatus = data.data.data;
+                    this.serverStatusLoading = false;
+
+                    return;
+                }
+            } catch (e) {
+            }
+
+            this.serverStatus = false;
+            this.serverStatusLoading = false;
         }
     },
 }

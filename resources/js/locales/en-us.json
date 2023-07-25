@@ -48,6 +48,7 @@
         "do_search": "Search",
         "whitelisted": "On Whitelist",
         "blacklisted": "Is Blacklisted",
+        "server_offline": "Server is offline",
         "permission": "Your current permission level",
         "status": {
             "online": "Online",
