@@ -78,6 +78,7 @@ class Player extends Model
         'panel_tag',
         'average_ping',
         'average_fps',
+        'panel_linked_discord',
     ];
 
     /**
