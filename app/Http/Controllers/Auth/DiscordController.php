@@ -66,27 +66,35 @@ class DiscordController extends Controller
         // Process the user data.
         $session = SessionHelper::getInstance();
 
-        $identifier = 'discord:' . $user['id'];
+        $id = $user['id'];
+        $identifier = 'discord:' . $id;
 
         $player = Player::query()
-            ->where('identifiers', 'LIKE', '%' . $identifier . '%')
-            ->where('last_used_identifiers', 'LIKE', '%' . $identifier . '%')
+            ->where('panel_linked_discord', '=', $id)
             ->first();
 
-        if (!$player) {
-            return redirect('/login')->with('error', 'No player with discord id "' . $user['id'] . '" found.');
+        if ($player && !$player->isStaff()) {
+            return redirect('/login')->with('error', "Player with id $id linked is not a staff member.");
+        } else if (!$player) {
+            $unlinked = Player::query()
+                ->where('last_used_identifiers', 'LIKE', '%' . $identifier . '%')
+                ->whereNull('panel_linked_discord')
+                ->first();
+
+            if ($unlinked) {
+                $unlinked->update([
+                    'panel_linked_discord' => $id
+                ]);
+            }
+
+            if (!$unlinked || !$unlinked->isStaff()) {
+                return redirect('/login')->with('error', "Player with last-used id $id is not a staff member.");
+            }
+
+            $player = $unlinked;
         }
 
         $info = $player->toArray();
-
-        $isRoot = GeneralHelper::isUserRoot($info['license_identifier']);
-        $isSuperAdmin = $info['is_super_admin'] || $isRoot;
-        $isSeniorStaff = $info['is_senior_staff'] || $isSuperAdmin;
-        $isStaff = $info['is_staff'] || $isSeniorStaff;
-
-        if (!$isStaff) {
-            return redirect('/login')->with('error', '"' . $info['player_name'] . '" is not a staff member.');
-        }
 
         // Unset bunch of unneeded data.
         unset($info['player_tokens']);
