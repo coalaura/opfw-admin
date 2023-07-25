@@ -85,6 +85,8 @@ class DiscordController extends Controller
                 $unlinked->update([
                     'panel_linked_discord' => $id
                 ]);
+
+                $unlinked->save();
             }
 
             if (!$unlinked || !$unlinked->isStaff()) {

@@ -1,4 +1,4 @@
-
+<?php
 namespace App\Http\Controllers;
 
 use App\Helpers\GeneralHelper;
