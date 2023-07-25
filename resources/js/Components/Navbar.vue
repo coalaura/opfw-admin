@@ -15,8 +15,8 @@
         <nav class="flex items-center justify-between w-full px-12 py-4 text-white bg-gray-900 shadow">
             <!-- Left side -->
             <p class="italic">
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded float-right" :class="{'bg-green-500 border-green-700' : serverStatus, 'bg-red-500 border-red-700' : !serverStatus}" :title="!serverStatus ? t('global.server_offline') : ''">
-                    <i class="fas fa-sync-alt animate-spin" v-if="serverStatusLoading"></i>
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded float-right" :class="serverStatusLoading ? 'bg-gray-500 border-gray-700' : (serverStatus ? 'bg-green-500 border-green-700' : 'bg-red-500 border-red-700')" :title="!serverStatus ? t('global.server_offline') : ''">
+                    <i class="fas fa-sync-alt" v-if="serverStatusLoading"></i>
                     <i class="fas fa-server" v-else></i>
 
                     <span v-if="serverStatus">{{ serverStatus }}</span>
@@ -221,15 +221,18 @@ export default {
 
                 if (data.data && data.data.status) {
                     this.serverStatus = data.data.data;
-                    this.serverStatusLoading = false;
-
-                    return;
+                } else {
+                    this.serverStatus = false;
                 }
             } catch (e) {
+                this.serverStatus = false;
             }
 
-            this.serverStatus = false;
             this.serverStatusLoading = false;
+
+            setTimeout(() => {
+                this.updateServerStatus();
+            }, 20000);
         }
     },
 }
