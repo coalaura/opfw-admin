@@ -131,6 +131,14 @@ class StaffMiddleware
 				return false;
 			}
 
+            $discord = $session->get('discord');
+
+			if (!$discord || $user['player']['panel_linked_discord'] !== $discord['id']) {
+                $this->error = 'Your discord account does not match the linked discord, please log-in again.';
+
+				return false;
+			}
+
             $request->setUserResolver(function () use ($user) {
                 return json_decode(json_encode($user), FALSE);
             });
