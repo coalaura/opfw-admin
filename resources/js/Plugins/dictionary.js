@@ -8,8 +8,8 @@ const Dictionary = {
         const loadDictionaryFile = async (file, onProgress, offset, maxPercentage) => {
             const data = await get(file, {
                 onDownloadProgress: progressEvent => {
-                    const current = progressEvent.loaded / progressEvent.total,
-                        percentage = Math.floor((maxPercentage / (current + offset)) * 100);
+                    const current = (progressEvent.loaded / progressEvent.total) * 100,
+                        percentage = Math.floor((current + offset) / maxPercentage);
 
                     onProgress(percentage);
                 }
@@ -38,9 +38,9 @@ const Dictionary = {
         };
 
         Vue.prototype.loadDictionaries = async function (onProgress) {
-            dictionary = await loadDictionaryFile("/_data/dictionary.txt", onProgress, 0, 2);
+            dictionary = await loadDictionaryFile("/_data/dictionary.txt", onProgress, 0, 200);
 
-            badDictionary = await loadDictionaryFile("/_data/bad_words.txt", onProgress, 1, 2);
+            badDictionary = await loadDictionaryFile("/_data/bad_words.txt", onProgress, 100, 200);
         };
 
         Vue.prototype.checkCharacter = function (character) {
