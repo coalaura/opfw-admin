@@ -30,8 +30,8 @@ const Dictionary = {
         const findInDictionary = (words, map) => {
             const keys = map.keys();
 
-            return words.some(word => {
-                return keys.some(key => {
+            return words.find(word => {
+                return keys.find(key => {
                     return key.includes(word) || word.includes(key);
                 });
             });
@@ -48,7 +48,7 @@ const Dictionary = {
 
             const words = character.backstory.toLowerCase().split(/[^\w]+/g);
 
-            const hasExactBadWord = words.some(word => {
+            const hasExactBadWord = words.find(word => {
                 return dictionary.has(word);
             });
 
@@ -56,7 +56,7 @@ const Dictionary = {
 
             if (findInDictionary(words, badDictionary)) return "negative";
 
-            const hasEnglish = words.some(word => {
+            const hasEnglish = words.find(word => {
                 return dictionary.has(word);
             });
 
