@@ -50,7 +50,7 @@ class ErrorController extends Controller
 
         $page = Paginator::resolveCurrentPage('page');
 
-        $query->groupByRaw('CONCAT(error_location, error_trace, FLOOR(timestamp / 300))');
+        $query->groupByRaw("CONCAT(error_location, error_trace, IF(error_feedback IS NULL, '', error_feedback), FLOOR(timestamp / 300))");
 
         $query->selectRaw('error_id, license_identifier, error_location, error_trace, error_feedback, full_trace, player_ping, server_id, timestamp, server_version, COUNT(error_id) as `occurrences`');
         $query->orderBy('timestamp', 'desc');
