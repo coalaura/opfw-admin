@@ -89,6 +89,8 @@
                         </td>
                     </tr>
                 </table>
+
+                <p class="mt-3 text-xs italic">{{ t("players.new.prediction_info") }}</p>
             </template>
 
         </v-section>

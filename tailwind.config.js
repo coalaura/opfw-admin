@@ -153,7 +153,8 @@ module.exports = {
         },
         safelist: [
             {
-                pattern: /text-(green|yellow|red)-(800|200)/
+                pattern: /text-(green|yellow|red)-(800|200)/,
+                variants: ['dark']
             }
         ]
     },

@@ -60,7 +60,7 @@ const Dictionary = {
                     return word === key;
                 }
 
-                return key.includes(word) || word.includes(key);
+                return word === key || word.includes(key);
             });
         }
 

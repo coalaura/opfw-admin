@@ -689,7 +689,7 @@
             "danny_percentage": "Danny Percentage",
             "prediction_loading": "Loading prediction...",
 			"prediction_label": "Prediction: {0}",
-			"prediction": "AI prediction based on name and backstory.",
+            "prediction_info": "Prediction is based of a dictionary and word list. Bad words may not necessarily be bad, but sometimes used in a bad context. These are not 100% accurate predictions.",
             "loading": "Loading: {0}%",
 
             "data": {
