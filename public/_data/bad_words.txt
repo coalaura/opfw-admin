@@ -5,4 +5,5 @@ deported
 immigrant
 ethnicity
 addict
-mothertrucker
+disorder
+=ohio

@@ -99,20 +99,28 @@ const Dictionary = {
             });
 
             let color = "green",
-                prediction = "positive";
+                prediction = "positive",
+                reason = "seems fine";
 
-            if (hasBad || !hasAnyEnglish) {
+            if (hasBad) {
                 color = "red";
                 prediction = "negative";
+                reason = "contains bad words";
+            } else if (!hasAnyEnglish) {
+                color = "red";
+                prediction = "negative";
+                reason = "not a single english word";
             } else if (noEnglish) {
                 color = "yellow";
                 prediction = "neutral";
+                reason = "contains non-english words";
             }
 
             return {
                 text: text,
                 color: color,
-                prediction: prediction
+                prediction: prediction,
+                reason: reason
             };
         };
     },
