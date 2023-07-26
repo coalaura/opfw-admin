@@ -151,6 +151,11 @@ module.exports = {
                 'dark-success-pale':   defaultTheme.colors.green['700'],
             }
         },
+        safelist: [
+            {
+                pattern: /text-(green|yellow|red)-(800|200)/
+            }
+        ]
     },
     plugins: [
         require('@tailwindcss/typography'),

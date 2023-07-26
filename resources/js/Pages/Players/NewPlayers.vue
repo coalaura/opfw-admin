@@ -191,7 +191,7 @@ export default {
                     if (highlight) {
                         backstory = highlight.text;
 
-                        player.prediction = `<span class="text-${highlight.color}-800 dark:text-${highlight.color}-200">${highlight.prediction}</span>`;
+                        player.prediction = `<span class="text-${highlight.color}-800 dark:text-${highlight.color}-200">${this.t("players.new.prediction_label", highlight.prediction)}</span>`;
                     } else {
                         player.prediction = `<span class="text-blue-800 dark:text-blue-200">${this.t("players.new.prediction_loading")}</span>`;
                     }

@@ -5,6 +5,18 @@ const Dictionary = {
         let dictionary,
             badDictionary;
 
+        function skipWord(text, word) {
+            word = word.toLowerCase();
+
+            if (word.endsWith("n't")) return true;
+            if (word.endsWith("i'm")) return true;
+            if (word.endsWith("'s")) return true;
+
+            if (text.endsWith(word + "...")) return true;
+
+            return false;
+        }
+
         async function loadDictionaryFile(file, onProgress, offset, maxPercentage, noMap) {
             const data = await get(file, {
                 onDownloadProgress: progressEvent => {
@@ -46,8 +58,8 @@ const Dictionary = {
             });
         }
 
-        function highlight(text, color) {
-            return `<span class="text-${color}-800 dark:text-${color}-200">${text}</span>`;
+        function highlight(text, color, title) {
+            return `<span class="font-semibold text-${color}-800 dark:text-${color}-200" title="${title}">${text}</span>`;
         }
 
         Vue.prototype.highlightText = function (text) {
@@ -56,16 +68,20 @@ const Dictionary = {
             let hasBad, noEnglish;
 
             text = text.replace(/[\w']+/gi, word => {
+                if (word.length <= 3) return word;
+
                 if (isWordBad(word)) {
                     hasBad = true;
 
-                    return highlight(word, "red");
+                    return highlight(word, "red", "possibly bad word");
                 }
+
+                if (skipWord(text, word)) return word;
 
                 if (!isWordEnglish(word)) {
                     noEnglish = true;
 
-                    return highlight(word, "yellow");
+                    return highlight(word, "yellow", "not english");
                 }
 
                 return word;
