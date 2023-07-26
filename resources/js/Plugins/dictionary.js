@@ -46,7 +46,7 @@ const Dictionary = {
         Vue.prototype.checkCharacter = function (character) {
             if (!dictionary || !badDictionary) return false;
 
-            const words = character.backstory.toLowerCase().split(/[^\w]+/g);
+            const words = character.backstory.toLowerCase().split(/[^\w]+/g).filter(word => word.length > 3);
 
             const hasExactBadWord = words.find(word => {
                 return dictionary.has(word);
