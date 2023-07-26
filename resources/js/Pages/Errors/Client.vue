@@ -98,7 +98,7 @@
                         <th class="px-6 py-4">{{ t('errors.server_version') }}</th>
                         <th class="px-6 py-4">{{ t('errors.timestamp') }}</th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="error in parsedErrors"
+                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" :class="{'bg-pink-500 bg-opacity-20' : error.error_feedback}" v-for="error in parsedErrors"
                         :key="error.error_id">
                         <td class="px-6 py-3 border-t mobile:block">
                             <inertia-link
