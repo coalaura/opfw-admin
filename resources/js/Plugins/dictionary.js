@@ -72,7 +72,7 @@ const Dictionary = {
         Vue.prototype.highlightText = function (original, danny) {
             if (!dictionary || !badDictionary) return false;
 
-            danny = danny || 0;
+            danny = (danny || 0) * 100;
 
             let hasBad = 0,
                 noEnglish = 0,
