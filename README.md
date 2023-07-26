@@ -162,6 +162,12 @@ server {
         proxy_set_header Host $host;
     }
 
+    location ~ ^/_data {
+        expires 30d;
+        add_header Pragma "public";
+        add_header Cache-Control "public";
+    }
+
     # If you are not using php8.2 you need to replace "php8.2-fpm" with the correct version
     location ~ \.php$ {
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
