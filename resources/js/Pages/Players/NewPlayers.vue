@@ -23,7 +23,7 @@
                 <h2 class="relative">
                     {{ t('players.new.title') }}
 
-                    <div class="absolute top-1/2 right-0 transform -translate-y-1/2 h-7 w-48 rounded-sm bg-rose-800 dark:bg-rose-400 shadow-sm" v-if="isLoadingClassifier">
+                    <div class="absolute top-1/2 right-0 transform -translate-y-1/2 h-7 w-48 rounded-sm bg-rose-800 dark:bg-rose-400 shadow-sm" v-if="isLoadingDictionaries">
                         <div class="h-full rounded-sm bg-rose-900 dark:bg-rose-500" :class="{'bg-green-900 dark:bg-green-500' : progress === 100}" :style="'width: ' + progress + '%'"></div>
                         <div class="absolute top-1/2 left-0 w-full text-center transform -translate-y-1/2 text-xs monospace">{{ t('players.new.loading', progress) }}</div>
                     </div>
@@ -70,11 +70,14 @@
                                 {{ t('players.new.no_character') }}
                             </span>
 
-                            <template v-if="player.prediction">
-                                <span class="block text-xs italic text-blue-800 dark:text-blue-200" v-if="player.prediction === 'loading'" :title="t('players.new.prediction')">{{ t("players.new.prediction_loading") }}</span>
-                                <span class="block text-xs italic text-red-800 dark:text-red-200" v-else-if="player.prediction === 'negative'" :title="t('players.new.prediction')">{{ t("players.new.prediction_negative") }}</span>
-                                <span class="block text-xs italic text-green-800 dark:text-green-200" v-else :title="t('players.new.prediction')">{{ t("players.new.prediction_positive") }}</span>
-                            </template>
+                            <span class="block text-xs italic text-blue-800 dark:text-blue-200" v-if="isLoadingDictionaries">{{ t("players.new.prediction_loading") }}</span>
+                            <span
+                                class="block text-xs italic text-green-800 dark:text-green-200"
+                                :class="player.prediction === 'negative' ? 'text-red-800 dark:text-red-200' : 'text-green-800 dark:text-green-200'"
+                                v-else
+                            >
+                                {{ t("players.new.prediction_label", player.prediction) }}
+                            </span>
                         </td>
                         <td class="px-6 py-3 border-t mobile:block">
                             <pre class="whitespace-pre-wrap text-xs max-w-xl break-words"
@@ -145,7 +148,7 @@ export default {
         return {
             isLoading: false,
 
-            isLoadingClassifier: false,
+            isLoadingDictionaries: false,
             progress: 0,
 
             sorting: 'percentage',
@@ -245,9 +248,9 @@ export default {
         }
     },
     async mounted() {
-        this.isLoadingClassifier = true;
+        this.isLoadingDictionaries = true;
 
-        await this.loadClassifier(percentage => {
+        await this.loadDictionaries(percentage => {
             this.progress = percentage;
         });
 
@@ -255,7 +258,7 @@ export default {
 
         setTimeout(() => {
             this.progress = 100;
-            this.isLoadingClassifier = false;
+            this.isLoadingDictionaries = false;
         }, 1500);
     },
 }
