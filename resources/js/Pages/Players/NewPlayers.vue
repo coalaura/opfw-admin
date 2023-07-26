@@ -219,7 +219,7 @@ export default {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
         },
         classify(character) {
-            const prediction = this.classifyCharacter(character);
+            const prediction = this.checkCharacter(character);
 
             if (prediction === false) return 'loading';
 
