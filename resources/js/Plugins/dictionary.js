@@ -3,8 +3,7 @@ import { get } from "axios";
 const Dictionary = {
     async install(Vue, options) {
         let dictionary,
-            badDictionary,
-            badLongWords;
+            badDictionary;
 
         function skipWord(text, word) {
             word = word.toLowerCase();
@@ -44,9 +43,6 @@ const Dictionary = {
 
             badDictionary = await loadDictionaryFile("/_data/bad_words.txt?_=" + Date.now(), onProgress, 100, 200, true);
 
-            badLongWords = badDictionary.filter(word => word.includes(" "));
-            badDictionary = badDictionary.filter(word => !word.includes(" "));
-
             onProgress(100);
         };
 
@@ -58,6 +54,12 @@ const Dictionary = {
             word = word.toLowerCase();
 
             return badDictionary.find(key => {
+                if (key.startsWith("=")) {
+                    key = key.substr(1);
+
+                    return word === key;
+                }
+
                 return key.includes(word) || word.includes(key);
             });
         }
@@ -92,16 +94,6 @@ const Dictionary = {
 
                 return word;
             });
-
-            for (const word of badLongWords) {
-                const regex = new RegExp(word, "gi");
-
-                text = text.replace(regex, match => {
-                    hasBad = true;
-
-                    return highlight(match, "red", "possibly bad word");
-                });
-            }
 
             let color = "green",
                 prediction = "positive";
