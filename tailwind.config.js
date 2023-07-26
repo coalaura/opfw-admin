@@ -1,7 +1,14 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
+    mode: 'jit',
     darkMode: 'class',
+    content: [
+        './resources/js/**/*.{vue,js}'
+    ],
+    purge: [
+        './resources/js/**/*.{vue,js}'
+    ],
     future: {
         removeDeprecatedGapUtilities: true,
         purgeLayersByDefault: true,
@@ -150,16 +157,5 @@ module.exports = {
     plugins: [
         require('@tailwindcss/typography'),
         require('@tailwindcss/forms'),
-    ],
-    safelist: [
-        {
-            pattern: /text-(green|yellow|red)-(700|300)/,
-            variants: ['dark']
-        },
-        {
-            pattern: /h-side-open-(one|two|three|four|five)/,
-            variants: ['hover']
-        },
-        'h-side-close'
-    ],
+    ]
 }

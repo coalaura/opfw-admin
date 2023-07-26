@@ -64,6 +64,7 @@ const Dictionary = {
             });
         }
 
+        // text-red-700 dark:text-red-300 text-yellow-700 dark:text-yellow-300 text-green-700 dark:text-green-300
         function highlight(text, color, title) {
             return `<span class="font-semibold text-${color}-700 dark:text-${color}-300" title="${title}">${text}</span>`;
         }
