@@ -155,6 +155,11 @@ module.exports = {
         {
             pattern: /text-(green|yellow|red)-(700|300)/,
             variants: ['dark']
-        }
+        },
+        {
+            pattern: /h-side-open-(one|two|three|four|five)/,
+            variants: ['hover']
+        },
+        'h-side-close'
     ],
 }
