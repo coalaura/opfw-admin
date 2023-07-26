@@ -27,7 +27,7 @@ const Dictionary = {
                 }
             });
 
-            const words = data.data.split("\n").filter(word => word.length > 3).map(word => word.trim().toLowerCase());
+            const words = data.data.split("\n").map(word => word.trim());
 
             if (noMap) return words;
 
