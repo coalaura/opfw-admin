@@ -28,7 +28,7 @@ const Dictionary = {
         };
 
         const findInDictionary = (words, map) => {
-            const keys = map.keys();
+            const keys = Array.from(map.keys());
 
             return words.find(word => {
                 return keys.find(key => {
