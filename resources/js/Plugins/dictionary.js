@@ -5,11 +5,7 @@ const Dictionary = {
         let dictionary,
             badDictionary;
 
-        const cleanWords = words => {
-            return words.filter(word => word.length > 3).map(word => word.trim().toLowerCase());
-        };
-
-        const loadDictionaryFile = async (file, onProgress, offset, maxPercentage, noMap) => {
+        async function loadDictionaryFile(file, onProgress, offset, maxPercentage, noMap) {
             const data = await get(file, {
                 onDownloadProgress: progressEvent => {
                     const current = (progressEvent.loaded / progressEvent.total) * 100,
@@ -19,7 +15,7 @@ const Dictionary = {
                 }
             });
 
-            const words = cleanWords(data.data.split("\n"));
+            const words = data.data.split("\n").filter(word => word.length > 3).map(word => word.trim().toLowerCase());
 
             if (noMap) return words;
 
@@ -28,7 +24,7 @@ const Dictionary = {
 
                 return map;
             }, new Map());
-        };
+        }
 
         Vue.prototype.loadDictionaries = async function (onProgress) {
             dictionary = await loadDictionaryFile("/_data/dictionary.txt", onProgress, 0, 200, false);
@@ -38,26 +34,37 @@ const Dictionary = {
             onProgress(100);
         };
 
-        Vue.prototype.checkCharacter = function (character) {
+        function isWordEnglish(word) {
+            return dictionary.has(word.toLowerCase());
+        }
+
+        function isWordBad(word) {
+            word = word.toLowerCase();
+
+            return badDictionary.find(key => {
+                return key.includes(word) || word.includes(key);
+            });
+        }
+
+        function highlight(text, color) {
+            return `<span class="text-${color}-800 dark:text-${color}-200">${text}</span>`;
+        }
+
+        Vue.prototype.highlightText = function (text) {
             if (!dictionary || !badDictionary) return false;
 
-            const words = character.backstory.toLowerCase().split(/[^\w]+/g).filter(word => word.length > 3);
+            const highlighted = text.replace(/[\w']+/gi, word => {
+                if (isWordBad(word)) highlight(word, "red");
 
-            const hasBadWord = words.find(word => {
-                return badDictionary.find(key => {
-                    return key.includes(word) || word.includes(key);
-                });
+                if (!isWordEnglish(word)) highlight(word, "yellow");
+
+                return word;
             });
 
-            if (hasBadWord) return "negative";
-
-            const hasEnglish = words.find(word => {
-                return dictionary.has(word);
-            });
-
-            if (!hasEnglish) return "negative";
-
-            return "positive";
+            return {
+                text: text,
+                color: text !== highlighted ? "red" : "green"
+            };
         };
     },
 }

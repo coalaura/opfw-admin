@@ -70,19 +70,10 @@
                                 {{ t('players.new.no_character') }}
                             </span>
 
-                            <span class="block text-xs italic text-blue-800 dark:text-blue-200" v-if="isLoadingDictionaries">{{ t("players.new.prediction_loading") }}</span>
-                            <span
-                                class="block text-xs italic text-green-800 dark:text-green-200"
-                                :class="player.prediction === 'negative' ? 'text-red-800 dark:text-red-200' : 'text-green-800 dark:text-green-200'"
-                                v-else
-                            >
-                                {{ t("players.new.prediction_label", player.prediction) }}
-                            </span>
+                            <span class="block text-xs italic" v-html="player.prediction"></span>
                         </td>
                         <td class="px-6 py-3 border-t mobile:block">
-                            <pre class="whitespace-pre-wrap text-xs max-w-xl break-words"
-                                v-if="player.character"><b>{{ player.character.name }}</b><br>{{ player.character.backstory.length > 300 ? player.character.backstory.substr(0, 300) + "..." : player.character.backstory }}</pre>
-                            <span v-else>{{ t('players.new.no_character') }}</span>
+                            <pre class="whitespace-pre-wrap text-xs max-w-xl break-words" v-html="player.info"></pre>
                         </td>
                         <td class="px-6 py-3 border-t mobile:block">
                             <inertia-link
@@ -184,13 +175,33 @@ export default {
         sortList() {
             this.playerList = this.getPlayerList();
         },
+        escapeHTML(text) {
+            return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        },
         getPlayerList() {
-            const list = this.players.map(player => {
-                player.prediction = player.character ? this.classify(player.character) : false;
-                player.data = this.getCharacterData(player);
+            const list = this.players
+                .filter(player => player.character)
+                .map(player => {
+                    let backstory = this.escapeHTML(player.character.backstory);
 
-                return player;
-            });
+                    if (backstory.length > 300) backstory = backstory.substr(0, 300) + "...";
+
+                    const highlight = this.highlightText(backstory);
+
+                    if (highlight) {
+                        backstory = highlight.text;
+
+                        player.prediction = `<span class="text-${highlight.color}-800 dark:text-${highlight.color}-200">${highlight.color === "red" ? "negative" : "positive"}</span>`;
+                    } else {
+                        player.prediction = `<span class="text-blue-800 dark:text-blue-200">${this.t("players.new.prediction_loading")}</span>`;
+                    }
+
+                    player.info = `<b>${character.name}</b><br>${backstory}`;
+
+                    player.data = this.getCharacterData(player);
+
+                    return player;
+                });
 
             list.sort((a, b) => {
                 if (this.sorting === 'percentage') {
@@ -217,15 +228,6 @@ export default {
         },
         formatSecondDiff(sec) {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
-        },
-        classify(character) {
-            const prediction = this.checkCharacter(character);
-
-            if (prediction === false) return 'loading';
-
-            console.debug('Prediction', prediction);
-
-            return prediction;
         },
         refresh: async function () {
             if (this.isLoading) {
