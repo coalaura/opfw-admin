@@ -65,7 +65,7 @@ const Dictionary = {
         Vue.prototype.highlightText = function (text) {
             if (!dictionary || !badDictionary) return false;
 
-            let hasBad, noEnglish;
+            let hasBad, noEnglish, hasAnyEnglish;
 
             text = text.replace(/[\w']+/gi, word => {
                 if (word.length <= 3) return word;
@@ -84,13 +84,15 @@ const Dictionary = {
                     return highlight(word, "yellow", "not english");
                 }
 
+                hasAnyEnglish = true;
+
                 return word;
             });
 
             let color = "green",
                 prediction = "positive";
 
-            if (hasBad) {
+            if (hasBad || !hasAnyEnglish) {
                 color = "red";
                 prediction = "negative";
             } else if (noEnglish) {
