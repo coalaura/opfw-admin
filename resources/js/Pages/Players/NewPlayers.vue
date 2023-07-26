@@ -196,7 +196,7 @@ export default {
                         player.prediction = `<span class="text-blue-800 dark:text-blue-200">${this.t("players.new.prediction_loading")}</span>`;
                     }
 
-                    player.info = `<b>${character.name}</b><br>${backstory}`;
+                    player.info = `<b>${player.character.name}</b><br>${backstory}`;
 
                     player.data = this.getCharacterData(player);
 
