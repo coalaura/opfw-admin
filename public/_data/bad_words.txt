@@ -7,3 +7,9 @@ ethnicity
 addict
 disorder
 =ohio
+sexualy
+sexually
+harrast
+harassed
+molest
+=pow

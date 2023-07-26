@@ -69,10 +69,14 @@ const Dictionary = {
             return `<span class="font-semibold text-${color}-700 dark:text-${color}-300" title="${title}">${text}</span>`;
         }
 
-        Vue.prototype.highlightText = function (text) {
+        Vue.prototype.highlightText = function (text, danny) {
             if (!dictionary || !badDictionary) return false;
 
-            let hasBad, noEnglish, hasAnyEnglish;
+            danny = danny || 0;
+
+            let hasBad = 0,
+                noEnglish = 0,
+                hasAnyEnglish = 0;
 
             text = text.replace(/[\w']+/gi, word => {
                 const testAgainst = word.toLowerCase().replace(/^'|'$/g, "");
@@ -80,7 +84,7 @@ const Dictionary = {
                 if (testAgainst.length <= 3) return highlight(word, "blue", "short word (less than 4 characters)");
 
                 if (isWordBad(testAgainst)) {
-                    hasBad = true;
+                    hasBad++;
 
                     return highlight(word, "red", "possibly bad word");
                 }
@@ -88,12 +92,12 @@ const Dictionary = {
                 if (skipWord(text, testAgainst)) return word;
 
                 if (!isWordEnglish(testAgainst)) {
-                    noEnglish = true;
+                    noEnglish++;
 
                     return highlight(word, "yellow", "not english");
                 }
 
-                hasAnyEnglish = true;
+                hasAnyEnglish++;
 
                 return word;
             });
@@ -102,18 +106,28 @@ const Dictionary = {
                 prediction = "positive",
                 reason = "seems fine";
 
-            if (hasBad) {
+            if (hasBad > 0) {
                 color = "red";
                 prediction = "negative";
                 reason = "contains bad words";
-            } else if (!hasAnyEnglish) {
+            } else if (hasAnyEnglish === 0) {
                 color = "red";
                 prediction = "negative";
                 reason = "not a single english word";
-            } else if (noEnglish) {
+            } else if (noEnglish > 0) {
                 color = "yellow";
                 prediction = "neutral";
                 reason = "contains non-english words";
+
+                if (hasAnyEnglish <= 2 && danny >= 85) {
+                    color = "red";
+                    prediction = "negative";
+                    reason = "has barely any english words and high danny percentage";
+                } else if (text === text.toUpperCase()) {
+                    color = "red";
+                    prediction = "negative";
+                    reason = "all caps";
+                }
             }
 
             return {

@@ -188,7 +188,7 @@ export default {
 
                     if (backstory.length > 300) backstory = backstory.substr(0, 300) + "...";
 
-                    const highlight = this.highlightText(backstory);
+                    const highlight = this.highlightText(backstory, player.character.danny);
 
                     if (highlight) {
                         backstory = highlight.text;
@@ -209,8 +209,8 @@ export default {
 
             list.sort((a, b) => {
                 if (sortBy === 'percentage') {
-                    const dannyA = a.character?.danny ?? 0;
-                    const dannyB = b.character?.danny ?? 0;
+                    const dannyA = a.character.danny ?? 0;
+                    const dannyB = b.character.danny ?? 0;
 
                     return dannyB - dannyA;
                 } else if (sortBy === 'server_id') {
