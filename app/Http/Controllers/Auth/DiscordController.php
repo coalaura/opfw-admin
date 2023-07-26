@@ -74,7 +74,7 @@ class DiscordController extends Controller
             ->first();
 
         if ($player && !$player->isStaff()) {
-            return redirect('/login')->with('error', "Player with id $id linked is not a staff member.");
+            return redirect('/login')->with('error', "Player with discord-id $id linked is not a staff member.");
         } else if (!$player) {
             $unlinked = Player::query()
                 ->where('last_used_identifiers', 'LIKE', '%' . $identifier . '%')
@@ -87,10 +87,12 @@ class DiscordController extends Controller
                 ]);
 
                 $unlinked->save();
-            }
 
-            if (!$unlinked || !$unlinked->isStaff()) {
-                return redirect('/login')->with('error', "Player with last-used id $id is not a staff member.");
+                if (!$unlinked->isStaff()) {
+                    return redirect('/login')->with('error', "Player with last-used discord-id $id is not a staff member.");
+                }
+            } else {
+                return redirect('/login')->with('error', "No player with last-used discord-id $id not found.");
             }
 
             $player = $unlinked;
