@@ -1,12 +1,7 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-    mode: 'jit',
     darkMode: 'class',
-    purge: [
-        './resources/views/**/*.blade.php',
-        './resources/js/**/*.vue'
-    ],
     future: {
         removeDeprecatedGapUtilities: true,
         purgeLayersByDefault: true,
@@ -150,16 +145,16 @@ module.exports = {
                 'dark-warning-pale':   defaultTheme.colors.yellow['700'],
                 'dark-success-pale':   defaultTheme.colors.green['700'],
             }
-        },
-        safelist: [
-            {
-                pattern: /text-(green|yellow|red)-(800|200)/,
-                variants: ['dark']
-            }
-        ]
+        }
     },
     plugins: [
         require('@tailwindcss/typography'),
         require('@tailwindcss/forms'),
+    ],
+    safelist: [
+        {
+            pattern: /text-(green|yellow|red)-(700|300)/,
+            variants: ['dark']
+        }
     ],
 }

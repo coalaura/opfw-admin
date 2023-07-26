@@ -65,7 +65,7 @@ const Dictionary = {
         }
 
         function highlight(text, color, title) {
-            return `<span class="font-semibold text-${color}-800 dark:text-${color}-200" title="${title}">${text}</span>`;
+            return `<span class="font-semibold text-${color}-700 dark:text-${color}-300" title="${title}">${text}</span>`;
         }
 
         Vue.prototype.highlightText = function (text) {
@@ -76,15 +76,17 @@ const Dictionary = {
             text = text.replace(/[\w']+/gi, word => {
                 if (word.length <= 3) return word;
 
-                if (isWordBad(word)) {
+                const testAgainst = word.toLowerCase().replace(/^'|'$/g, "");
+
+                if (isWordBad(testAgainst)) {
                     hasBad = true;
 
                     return highlight(word, "red", "possibly bad word");
                 }
 
-                if (skipWord(text, word)) return word;
+                if (skipWord(text, testAgainst)) return word;
 
-                if (!isWordEnglish(word)) {
+                if (!isWordEnglish(testAgainst)) {
                     noEnglish = true;
 
                     return highlight(word, "yellow", "not english");
