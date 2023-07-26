@@ -218,6 +218,13 @@ export default {
 
             const uptime = await this.requestData("/uptime");
 
+            // We got a 404
+            if (uptime === null) {
+                this.serverStatus = false;
+
+                return;
+            }
+
             if (uptime) {
                 this.serverStatus = this.formatUptime(uptime);
             } else {

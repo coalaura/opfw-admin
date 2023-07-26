@@ -22,6 +22,10 @@ const Socket = {
             } catch (e) {
                 console.error(e);
 
+                if (e.response && e.response.status === 404) {
+                    return null;
+                }
+
                 return false;
             }
         };
