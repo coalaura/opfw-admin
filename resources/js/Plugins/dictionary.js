@@ -69,7 +69,7 @@ const Dictionary = {
             return `<span class="font-semibold text-${color}-700 dark:text-${color}-300" title="${title}">${text}</span>`;
         }
 
-        Vue.prototype.highlightText = function (text, danny) {
+        Vue.prototype.highlightText = function (original, danny) {
             if (!dictionary || !badDictionary) return false;
 
             danny = danny || 0;
@@ -78,7 +78,7 @@ const Dictionary = {
                 noEnglish = 0,
                 hasAnyEnglish = 0;
 
-            text = text.replace(/[\w']+/gi, word => {
+            const text = original.replace(/[\w']+/gi, word => {
                 const testAgainst = word.toLowerCase().replace(/^'|'$/g, "");
 
                 if (testAgainst.length <= 3) return highlight(word, "blue", "short word (less than 4 characters)");
@@ -89,7 +89,7 @@ const Dictionary = {
                     return highlight(word, "red", "possibly bad word");
                 }
 
-                if (skipWord(text, testAgainst)) return word;
+                if (skipWord(original, testAgainst)) return word;
 
                 if (!isWordEnglish(testAgainst)) {
                     noEnglish++;
@@ -123,7 +123,7 @@ const Dictionary = {
                     color = "red";
                     prediction = "negative";
                     reason = "has barely any english words and high danny percentage";
-                } else if (text === text.toUpperCase()) {
+                } else if (original === original.toUpperCase()) {
                     color = "red";
                     prediction = "negative";
                     reason = "all caps";
