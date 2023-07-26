@@ -64,7 +64,7 @@ const Dictionary = {
             });
         }
 
-        // text-red-700 dark:text-red-300 text-yellow-700 dark:text-yellow-300 text-green-700 dark:text-green-300
+        // text-red-700 dark:text-red-300 text-yellow-700 dark:text-yellow-300 text-green-700 dark:text-green-300 text-blue-700 dark:text-blue-300
         function highlight(text, color, title) {
             return `<span class="font-semibold text-${color}-700 dark:text-${color}-300" title="${title}">${text}</span>`;
         }
@@ -77,7 +77,7 @@ const Dictionary = {
             text = text.replace(/[\w']+/gi, word => {
                 const testAgainst = word.toLowerCase().replace(/^'|'$/g, "");
 
-                if (testAgainst.length <= 3) return word;
+                if (testAgainst.length <= 3) return highlight(word, "blue", "short word (less than 4 characters)");
 
                 if (isWordBad(testAgainst)) {
                     hasBad = true;
