@@ -74,9 +74,9 @@ const Dictionary = {
             let hasBad, noEnglish, hasAnyEnglish;
 
             text = text.replace(/[\w']+/gi, word => {
-                if (word.length <= 3) return word;
-
                 const testAgainst = word.toLowerCase().replace(/^'|'$/g, "");
+
+                if (testAgainst.length <= 3) return word;
 
                 if (isWordBad(testAgainst)) {
                     hasBad = true;
