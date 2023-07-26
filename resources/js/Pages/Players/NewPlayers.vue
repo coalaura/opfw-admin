@@ -144,7 +144,7 @@ export default {
             isLoadingDictionaries: false,
             progress: 0,
 
-            sorting: 'percentage',
+            sorting: 'playtime',
 
             playerList: this.getPlayerList()
         };
@@ -205,18 +205,20 @@ export default {
                     return player;
                 });
 
+            const sortBy = this.sorting || 'playtime';
+
             list.sort((a, b) => {
-                if (this.sorting === 'percentage') {
+                if (sortBy === 'percentage') {
                     const dannyA = a.character?.danny ?? 0;
                     const dannyB = b.character?.danny ?? 0;
 
                     return dannyB - dannyA;
-                } else if (this.sorting === 'server_id') {
+                } else if (sortBy === 'server_id') {
                     const idA = a.serverId ?? 0;
                     const idB = b.serverId ?? 0;
 
                     return idB - idA;
-                } else if (this.sorting === 'playtime') {
+                } else if (sortBy === 'playtime') {
                     const timeA = a.playTime ?? 0;
                     const timeB = b.playTime ?? 0;
 
