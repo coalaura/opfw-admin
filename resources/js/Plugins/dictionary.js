@@ -53,17 +53,39 @@ const Dictionary = {
         Vue.prototype.highlightText = function (text) {
             if (!dictionary || !badDictionary) return false;
 
-            const highlighted = text.replace(/[\w']+/gi, word => {
-                if (isWordBad(word)) highlight(word, "red");
+            let hasBad, noEnglish;
 
-                if (!isWordEnglish(word)) highlight(word, "yellow");
+            text = text.replace(/[\w']+/gi, word => {
+                if (isWordBad(word)) {
+                    hasBad = true;
+
+                    return highlight(word, "red");
+                }
+
+                if (!isWordEnglish(word)) {
+                    noEnglish = true;
+
+                    return highlight(word, "yellow");
+                }
 
                 return word;
             });
 
+            let color = "green",
+                prediction = "positive";
+
+            if (hasBad) {
+                color = "red";
+                prediction = "negative";
+            } else if (noEnglish) {
+                color = "yellow";
+                prediction = "neutral";
+            }
+
             return {
                 text: text,
-                color: text !== highlighted ? "red" : "green"
+                color: color,
+                prediction: prediction
             };
         };
     },
