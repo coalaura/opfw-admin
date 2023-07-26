@@ -687,6 +687,7 @@
             "no_character": "N/A",
             "creation_time": "Time spent creating character.",
             "danny_percentage": "Danny Percentage",
+            "prediction": "Prediction",
             "prediction_loading": "Loading prediction...",
 			"prediction_label": "Prediction: {0}",
             "prediction_info": "* Prediction is based of a dictionary and word list. Bad words may not necessarily be bad, but sometimes used in a bad context. These are not 100% accurate predictions.",

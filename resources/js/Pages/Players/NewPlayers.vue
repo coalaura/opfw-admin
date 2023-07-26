@@ -32,6 +32,7 @@
                         <option value="percentage">{{ t('players.new.danny_percentage') }}</option>
                         <option value="server_id">{{ t('global.server_id') }}</option>
                         <option value="playtime">{{ t('players.form.playtime') }}</option>
+                        <option value="prediction">{{ t('players.new.prediction') }}</option>
                     </select>
                 </h2>
             </template>
@@ -194,8 +195,10 @@ export default {
                         backstory = highlight.text;
 
                         player.prediction = `<span class="text-${highlight.color}-700 dark:text-${highlight.color}-300" title="${highlight.reason}">${this.t("players.new.prediction_label", highlight.prediction)}</span>`;
+                        player.sortPrediction = highlight.prediction === "positive" ? 1 : (highlight.prediction === "neutral" ? 2 : 3);
                     } else {
                         player.prediction = `<span class="text-blue-700 dark:text-blue-300">${this.t("players.new.prediction_loading")}</span>`;
+                        player.sortPrediction = 0;
                     }
 
                     player.info = `<b>${player.character.name}</b><br>${backstory}`;
@@ -223,6 +226,11 @@ export default {
                     const timeB = b.playTime ?? 0;
 
                     return timeA - timeB;
+                } else if (sortBy === 'prediction') {
+                    const predA = a.sortPrediction ?? 0;
+                    const predB = b.sortPrediction ?? 0;
+
+                    return predB - predA;
                 }
 
                 return 0;
