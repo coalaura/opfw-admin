@@ -15,7 +15,7 @@
         <nav class="flex items-center justify-between w-full px-12 py-4 text-white bg-gray-900 shadow">
             <!-- Left side -->
             <p class="italic">
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded float-right" :class="serverStatusLoading ? 'bg-gray-500 border-gray-700' : (serverStatus ? 'bg-green-500 border-green-700' : 'bg-red-500 border-red-700')" :title="!serverStatusLoading ? (!serverStatus ? t('global.server_offline') : t('global.server_online')) : ''">
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded float-right" :class="serverStatusLoading ? 'bg-gray-500 border-gray-700' : (serverStatus ? 'bg-green-500 border-green-700' : 'bg-red-500 border-red-700')" :title="!serverStatusLoading ? (!serverStatus ? t('global.server_offline') : t('global.server_online', serverStatus)) : ''">
                     <i class="fas fa-sync-alt" v-if="serverStatusLoading"></i>
                     <i class="fas fa-server" v-else></i>
 
@@ -110,6 +110,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import Icon from './Icon';
 import Modal from './Modal';
 
@@ -205,26 +206,21 @@ export default {
 
             this.updateTheme();
         },
+        formatUptime(pMilliseconds) {
+            if (pMilliseconds < 3600000) {
+                return moment.duration(pMilliseconds).format('m [minutes]');
+            }
+
+            return moment.duration(pMilliseconds).format('d [days], h [hours]');
+        },
         async updateServerStatus() {
             this.serverStatusLoading = true;
 
-            const isDev = window.location.hostname === 'localhost';
+            const uptime = await this.requestData("/uptime");
 
-            const token = this.$page.auth.token,
-                server = this.$page.auth.server,
-                host = isDev ? 'http://localhost:9999' : 'https://' + window.location.host;
-
-            const url = host + '/data/' + server + '/status?token=' + token;
-
-            try {
-                const data = await axios.get(url);
-
-                if (data.data && data.data.status) {
-                    this.serverStatus = data.data.data;
-                } else {
-                    this.serverStatus = false;
-                }
-            } catch (e) {
+            if (uptime) {
+                this.serverStatus = this.formatUptime(uptime);
+            } else {
                 this.serverStatus = false;
             }
 

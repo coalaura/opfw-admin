@@ -49,7 +49,7 @@
         "whitelisted": "On Whitelist",
         "blacklisted": "Is Blacklisted",
         "server_offline": "Server seems to be offline.",
-        "server_online": "Server seems to be online.",
+        "server_online": "Server has been online since {0}.",
         "permission": "Your current permission level",
         "status": {
             "online": "Online",
@@ -219,7 +219,7 @@
     "home": {
         "title": "Dashboard",
         "welcome": "Hello, {0}. Welcome to the dashboard!",
-        "player_count": "<b>{0}</b> of <b>{1}</b> players (<b>{2}</b> queued).",
+        "player_count": "Currently <b>{0}</b> players in the server.",
 		"server_announcement": "Server Announcement",
 		"announcement_message": "Message",
 		"send_announcement": "Send",
@@ -237,7 +237,7 @@
         "location_description": "Hidden locations around the city to avoid no-clipping long distances.",
         "staff_locations": "Staff locations",
         "staff_description": "Locations for staff to chill at without being seen by other players.",
-        "no_player_count": "Player count is not available at this time",
+        "no_player_count": "Player count is not available at this time.",
         "staff_toggled": "Has staff mode toggled on.",
         "staff_toggled_off": "Has staff mode toggled off.",
         "staff_hidden": "Has their staff status hidden.",

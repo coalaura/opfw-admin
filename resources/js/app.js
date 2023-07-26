@@ -5,6 +5,7 @@ import PortalVue from 'portal-vue';
 import moment from 'moment';
 import Localization from './Plugins/localization.js';
 import Copy from './Plugins/copy-text.js';
+import Socket from './Plugins/socket.js';
 import Classifier from './Plugins/classifier.js';
 import Permissions from './Plugins/permissions.js';
 import humanizeSeconds from './Filters/humanizeSeconds.js';
@@ -31,6 +32,7 @@ Vue.use(InertiaApp);
 Vue.use(PortalVue);
 Vue.use(Localization);
 Vue.use(Copy);
+Vue.use(Socket);
 Vue.use(Classifier);
 Vue.use(Permissions, page);
 Vue.use(Toast, {

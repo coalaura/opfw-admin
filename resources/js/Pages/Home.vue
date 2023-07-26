@@ -6,6 +6,10 @@
                 <h1 class="dark:text-white">
                     {{ t("home.title") }}
                 </h1>
+
+                <p class="text-xs italic" v-html="playerCount" v-if="playerCount"></p>
+                <p class="text-xs italic" v-else>{{ t('home.no_player_count') }}</p>
+
                 <p>
                     {{ t("home.welcome", $page.auth.player.safePlayerName) }}
                 </p>
@@ -30,28 +34,6 @@
                 <span class="text-xs">
                     - {{ quote.author }}
                 </span>
-            </div>
-
-            <div class="ml-8 mobile:w-full mobile:ml-0">
-                <div class="p-4 bg-gray-100 shadow-lg dark:bg-gray-700 dark:text-gray-100 flex justify-between" v-if="playerCount">
-                    <vue-circle ref="serverCount"
-                                :progress="playerCountPercentage()"
-                                :size="70"
-                                line-cap="square"
-                                :fill="{ color: '#5a56c2' }"
-                                empty-fill="rgba(0, 0, 0, .1)"
-                                :animation-start-value="0.0"
-                                :start-angle="1.57079633"
-                                insert-mode="append"
-                                :thickness="7"
-                                :show-percent="false">
-                        <p class="text-sm font-semibold mobile:-mt-12">{{ joinedPlayers }}</p>
-                    </vue-circle>
-                    <p class="ml-3 pt-5" v-html="playerCount"></p>
-                </div>
-                <div class="p-4 bg-gray-100 shadow-lg dark:bg-gray-700 dark:text-gray-100 flex justify-between" v-else>
-                    <p class="py-5 px-3">{{ t('home.no_player_count') }}</p>
-                </div>
             </div>
         </div>
 
@@ -169,14 +151,12 @@
 <script>
 import Layout from './../Layouts/App';
 import Modal from './../Components/Modal';
-import VueCircle from 'vue2-circle-progress';
-import "chart.js";
+
 const TPLocations = require('../data/tp_locations.json');
 
 export default {
     layout: Layout,
     components: {
-        VueCircle,
         Modal
     },
     data() {
@@ -196,7 +176,7 @@ export default {
         );
 
         return {
-            playerCount: 'N/A',
+            playerCount: false,
             totalPlayers: 1,
             joinedPlayers: 1,
             queuePlayers: 1,
@@ -235,11 +215,6 @@ export default {
         localizePlayerCount() {
             return this.t('home.player_count', this.joinedPlayers, this.totalPlayers, this.queuePlayers);
         },
-        playerCountPercentage() {
-            const percentage = Math.floor(100 * (this.joinedPlayers / this.totalPlayers));
-
-            return percentage > 100 ? 100 : percentage;
-        },
         copyCoords(e) {
             e.preventDefault();
 
@@ -252,22 +227,13 @@ export default {
             }, 750);
         },
         refresh: async function () {
-            try {
-                const data = await axios.get('/api/players');
+            const players = await this.requestData("/players/count");
 
-                if (data.data) {
-                    this.totalPlayers = data.data.totalPlayers;
-                    this.joinedPlayers = data.data.joinedPlayers;
-                    this.queuePlayers = data.data.queuePlayers;
-                    this.serverCount = data.data.serverCount;
-
-                    this.playerCount = this.localizePlayerCount()
-
-                    this.$refs.serverCount.updateProgress(this.playerCountPercentage());
-                } else {
-                    this.playerCount = null;
-                }
-            } catch(e) {}
+            if (typeof players === "number") {
+                this.playerCount = this.t('home.player_count', players);
+            } else {
+                this.playerCount = false;
+            }
         },
         banTime(ban) {
             return ban.expireAt ? this.$options.filters.humanizeSeconds(this.$moment(ban.expireAt).unix() - this.$moment(ban.timestamp).unix()) : this.t('players.ban.forever_edit');
