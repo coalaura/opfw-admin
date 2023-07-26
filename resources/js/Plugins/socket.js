@@ -20,11 +20,13 @@ const Socket = {
                     return false;
                 }
             } catch (e) {
-                console.error(e);
+                console.log(`Error fetching data from ${url}: ${e.message}`);
 
                 if (e.response && e.response.status === 404) {
                     return null;
                 }
+
+                if (isDev) return null;
 
                 return false;
             }

@@ -5,7 +5,11 @@ const Dictionary = {
         let dictionary,
             badDictionary;
 
-        const loadDictionaryFile = async (file, onProgress, offset, maxPercentage) => {
+        const cleanWords = words => {
+            return words.filter(word => word.length > 3).map(word => word.trim().toLowerCase());
+        };
+
+        const loadDictionaryFile = async (file, onProgress, offset, maxPercentage, noMap) => {
             const data = await get(file, {
                 onDownloadProgress: progressEvent => {
                     const current = (progressEvent.loaded / progressEvent.total) * 100,
@@ -15,32 +19,23 @@ const Dictionary = {
                 }
             });
 
+            const words = cleanWords(data.data.split("\n"));
 
-            const words = data.data.split("\n");
+            if (noMap) return words;
 
             return words.reduce((map, word) => {
-                if (word.length <= 3) return map;
-
                 map.set(word, true);
 
                 return map;
             }, new Map());
         };
 
-        const findInDictionary = (words, map) => {
-            const keys = Array.from(map.keys());
-
-            return words.find(word => {
-                return keys.find(key => {
-                    return key.includes(word) || word.includes(key);
-                });
-            });
-        };
-
         Vue.prototype.loadDictionaries = async function (onProgress) {
-            dictionary = await loadDictionaryFile("/_data/dictionary.txt", onProgress, 0, 200);
+            dictionary = await loadDictionaryFile("/_data/dictionary.txt", onProgress, 0, 200, false);
 
-            badDictionary = await loadDictionaryFile("/_data/bad_words.txt", onProgress, 100, 200);
+            badDictionary = await loadDictionaryFile("/_data/bad_words.txt?_=" + Date.now(), onProgress, 100, 200, true);
+
+            onProgress(100);
         };
 
         Vue.prototype.checkCharacter = function (character) {
@@ -48,13 +43,13 @@ const Dictionary = {
 
             const words = character.backstory.toLowerCase().split(/[^\w]+/g).filter(word => word.length > 3);
 
-            const hasExactBadWord = words.find(word => {
-                return dictionary.has(word);
+            const hasBadWord = words.find(word => {
+                return badDictionary.find(key => {
+                    return key.includes(word) || word.includes(key);
+                });
             });
 
-            if (hasExactBadWord) return "negative";
-
-            if (findInDictionary(words, badDictionary)) return "negative";
+            if (hasBadWord) return "negative";
 
             const hasEnglish = words.find(word => {
                 return dictionary.has(word);

@@ -259,7 +259,7 @@ export default {
         setTimeout(() => {
             this.progress = 100;
             this.isLoadingDictionaries = false;
-        }, 1500);
+        }, 1000);
     },
 }
 </script>
