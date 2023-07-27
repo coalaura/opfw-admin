@@ -72,8 +72,9 @@ const Dictionary = {
         }
 
         // text-red-700 dark:text-red-300 text-yellow-700 dark:text-yellow-300 text-green-700 dark:text-green-300 text-blue-700 dark:text-blue-300
+        // hover:text-red-600 dark:hover:text-red-400 hover:text-yellow-600 dark:hover:text-yellow-400 hover:text-green-600 dark:hover:text-green-400 hover:text-blue-600 dark:hover:text-blue-400
         function highlight(text, color, title) {
-            return `<span class="font-semibold text-${color}-700 dark:text-${color}-300" title="${title}">${text}</span>`;
+            return `<span class="font-semibold text-${color}-700 dark:text-${color}-300 hover:text-${color}-600 dark:hover:text-${color}-400" title="${title}">${text}</span>`;
         }
 
         Vue.prototype.highlightText = function (original, danny) {
