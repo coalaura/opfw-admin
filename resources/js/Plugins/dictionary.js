@@ -51,18 +51,31 @@ const Dictionary = {
             return dictionary.has(word.toLowerCase());
         }
 
-        function isWordBad(word) {
+        function isWordBad(word, nextText) {
             word = word.toLowerCase();
 
-            return badDictionary.find(key => {
+            let markNextBad = false;
+
+            const isBad = badDictionary.find(key => {
                 if (key.startsWith("=")) {
                     key = key.substr(1);
 
                     return word === key;
                 }
 
+                if (key.includes("+")) {
+                    const parts = key.split("+");
+
+                    return word === parts[0] && nextText.startsWith(parts[1]);
+                }
+
                 return word === key || word.includes(key);
             });
+
+            return {
+                isBad: isBad,
+                markNext: markNextBad
+            };
         }
 
         // text-red-700 dark:text-red-300 text-yellow-700 dark:text-yellow-300 text-green-700 dark:text-green-300 text-blue-700 dark:text-blue-300
@@ -79,12 +92,12 @@ const Dictionary = {
                 noEnglish = 0,
                 hasAnyEnglish = 0;
 
-            const text = original.replace(/[\w']+/gi, word => {
+            const text = original.replace(/[\w']+/gi, (word, index) => {
                 const testAgainst = word.toLowerCase().replace(/^'|'$/g, "");
 
                 if (testAgainst.length <= 3) return highlight(word, "blue", "short word (less than 4 characters)");
 
-                if (isWordBad(testAgainst)) {
+                if (isWordBad(testAgainst, text.substr(index))) {
                     hasBad++;
 
                     return highlight(word, "red", "possibly bad word");

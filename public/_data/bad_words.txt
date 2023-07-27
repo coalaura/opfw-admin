@@ -2,7 +2,7 @@ nazi
 monkey
 =tate
 deported
-immigrant
+illegal+immigrant
 ethnicity
 addict
 disorder
@@ -13,3 +13,4 @@ harrast
 harassed
 molest
 border
+sigma
