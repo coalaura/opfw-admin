@@ -11,6 +11,7 @@ const Dictionary = {
             if (word.endsWith("n't")) return true;
             if (word.endsWith("i'm")) return true;
             if (word.endsWith("'s")) return true;
+            if (word.endsWith("'d")) return true;
 
             if (text.endsWith(word + "...")) return true;
 
