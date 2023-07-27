@@ -54,9 +54,7 @@ const Dictionary = {
         function isWordBad(word, nextText) {
             word = word.toLowerCase();
 
-            let markNextBad = false;
-
-            const isBad = badDictionary.find(key => {
+            return badDictionary.find(key => {
                 if (key.startsWith("=")) {
                     key = key.substr(1);
 
@@ -71,11 +69,6 @@ const Dictionary = {
 
                 return word === key || word.includes(key);
             });
-
-            return {
-                isBad: isBad,
-                markNext: markNextBad
-            };
         }
 
         // text-red-700 dark:text-red-300 text-yellow-700 dark:text-yellow-300 text-green-700 dark:text-green-300 text-blue-700 dark:text-blue-300
@@ -97,7 +90,7 @@ const Dictionary = {
 
                 if (testAgainst.length <= 3) return highlight(word, "blue", "short word (less than 4 characters)");
 
-                if (isWordBad(testAgainst, text.substr(index))) {
+                if (isWordBad(testAgainst, original.substr(index))) {
                     hasBad++;
 
                     return highlight(word, "red", "possibly bad word");
