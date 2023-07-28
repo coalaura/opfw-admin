@@ -125,7 +125,7 @@ const Dictionary = {
                 });
             }
 
-            text = text.replace(/(\w{2,})\s*\1\s*\1/gmi, word => {
+            text = text.replace(/(\w{2,})(\s*\1)+/gmi, word => {
                 otherIssues = "spamming the same word";
 
                 return highlight(word, "red", "repeated word");
