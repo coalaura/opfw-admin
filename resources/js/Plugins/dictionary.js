@@ -3,7 +3,8 @@ import { get } from "axios";
 const Dictionary = {
     async install(Vue, options) {
         let dictionary,
-            badDictionary;
+            badDictionary,
+            badLongDictionary;
 
         function skipWord(text, word) {
             word = word.toLowerCase();
@@ -43,6 +44,9 @@ const Dictionary = {
             dictionary = await loadDictionaryFile("/_data/dictionary.txt", onProgress, 0, 200, false);
 
             badDictionary = await loadDictionaryFile("/_data/bad_words.txt?_=" + Date.now(), onProgress, 100, 200, true);
+
+            badLongDictionary = badDictionary.filter(word => word.includes(" "));
+            badDictionary = badDictionary.filter(word => !word.includes(" "));
 
             onProgress(100);
         };
@@ -113,6 +117,14 @@ const Dictionary = {
                 return word;
             });
 
+            for (const word of badLongDictionary) {
+                text = text.replace(new RegExp(word, "gmi"), word => {
+                    hasBad++;
+
+                    return highlight(word, "red", "possibly bad word")
+                });
+            }
+
             text = text.replace(/(\w{2,})\s*\1\s*\1/gmi, word => {
                 otherIssues = "spamming the same word";
 
@@ -130,7 +142,7 @@ const Dictionary = {
             } if (hasBad > 0) {
                 color = "red";
                 prediction = "negative";
-                reason = "contains bad words";
+                reason = "contains " + hasBad + " bad word(s)";
             } else if (hasAnyEnglish === 0) {
                 color = "red";
                 prediction = "negative";
