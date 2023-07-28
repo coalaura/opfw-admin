@@ -96,7 +96,7 @@ const Dictionary = {
 
                 if (testAgainst.match(/^\d+$/)) return word;
 
-                if (testAgainst.length <= 3) return highlight(word, "blue", "short word (less than 4 characters)");
+                if (testAgainst.length <= 3) return word;
 
                 if (isWordBad(testAgainst, original.substr(index))) {
                     hasBad++;
