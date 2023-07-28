@@ -427,7 +427,7 @@ class WeaponDamageEvent extends Model
 			->whereRaw("JSON_CONTAINS(hit_players, '\"" . $license . "\"', '$')");
 
 		if (!$includeNpcs) {
-			$query->where('parent_global_id', '=', '0');
+			$query->where('is_parent_self', '=', '1');
 		}
 
 		return $query->orderByDesc('timestamp')
@@ -443,7 +443,7 @@ class WeaponDamageEvent extends Model
 			->where('license_identifier', $license);
 
 		if (!$includeNpcs) {
-			$query->whereRaw("JSON_EXTRACT(hit_players, '$[0]') IS NOT NULL");
+			$query->where('is_parent_self', '=', '1');
 		}
 
 		return $query->orderByDesc('timestamp')
