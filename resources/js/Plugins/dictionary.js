@@ -64,7 +64,7 @@ const Dictionary = {
                 if (key.includes("+")) {
                     const parts = key.split("+");
 
-                    return word === parts[0] && nextText.startsWith(parts[1]);
+                    return word === parts[0] && nextText.toLowerCase().startsWith(parts[1]);
                 }
 
                 return word === key || word.includes(key);
@@ -122,10 +122,12 @@ const Dictionary = {
                 color = "red";
                 prediction = "negative";
                 reason = "not a single english word";
-            } else if (noEnglish > 0) {
-                color = "yellow";
-                prediction = "neutral";
-                reason = "contains non-english words";
+            } else {
+                if (noEnglish > 0) {
+                    color = "yellow";
+                    prediction = "neutral";
+                    reason = "contains non-english words";
+                }
 
                 if (hasAnyEnglish <= 2 && danny >= 85) {
                     color = "red";
