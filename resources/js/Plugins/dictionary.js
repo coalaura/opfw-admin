@@ -84,10 +84,13 @@ const Dictionary = {
 
             let hasBad = 0,
                 noEnglish = 0,
-                hasAnyEnglish = 0;
+                hasAnyEnglish = 0,
+                otherIssues = false;
 
-            const text = original.replace(/[\w']+/gi, (word, index) => {
+            let text = original.replace(/[\w']+/gi, (word, index) => {
                 const testAgainst = word.toLowerCase().replace(/^'|'$/g, "");
+
+                if (testAgainst.match(/^\d+$/)) return word;
 
                 if (testAgainst.length <= 3) return highlight(word, "blue", "short word (less than 4 characters)");
 
@@ -110,11 +113,21 @@ const Dictionary = {
                 return word;
             });
 
+            text = text.replace(/(\w{2,})\s*\1\s*\1/gmi, word => {
+                otherIssues = "spamming the same word";
+
+                return highlight(word, "red", "repeated word");
+            });
+
             let color = "green",
                 prediction = "positive",
                 reason = "seems fine";
 
-            if (hasBad > 0) {
+            if (otherIssues) {
+                color = "red";
+                prediction = "negative";
+                reason = otherIssues;
+            } if (hasBad > 0) {
                 color = "red";
                 prediction = "negative";
                 reason = "contains bad words";
