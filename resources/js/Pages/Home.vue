@@ -18,7 +18,17 @@
 
         <div class="flex -mt-6 justify-between max-w-screen-lg gap-3 mobile:flex-wrap">
             <div class="absolute top-2 right-2 flex">
-                <!-- Edit Role -->
+                <!-- View crafting recipes -->
+                <button
+                    class="py-1 px-2 ml-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary block"
+                    @click="showCrafting()"
+                    v-if="this.perm.check(this.perm.PERM_CRAFTING)"
+                    :title="t('home.view_crafting')"
+                >
+                    <i class="fas fa-pencil-ruler"></i>
+                </button>
+
+                <!-- Announcement -->
                 <button
                     class="py-1 px-2 ml-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger block"
                     @click="isServerAnnouncement = true"
@@ -36,6 +46,31 @@
                 </span>
             </div>
         </div>
+
+        <modal :show.sync="showingCrafting">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('home.crafting') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <p v-if="isLoading" class="py-2 text-center">{{ t("global.loading") }}</p>
+
+                <template v-else>
+                    <div class="mb-3" v-for="station in craftingRecipes" :key="station.id">
+                        <p class="font-semibold mb-1">Station {{ station.id }}</p>
+                        <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm">{{ station.data }}</pre>
+                    </div>
+                </template>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showingCrafting = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
 
         <div class="mt-6">
             <img :src="daysWithout" class="max-w-full h-60 shadow-md border border-gray-400 dark:border-gray-600" />
@@ -188,7 +223,10 @@ export default {
             isServerAnnouncement: false,
             announcementMessage: '',
 
-            refreshInterval: false
+            refreshInterval: false,
+
+            showingCrafting: false,
+            craftingRecipes: false
         };
     },
     methods: {
@@ -209,6 +247,33 @@ export default {
             await this.$inertia.post('/announcement', {
                 message: message,
             });
+
+            this.isLoading = false;
+        },
+        async showCrafting() {
+            if (this.isLoading) return;
+
+            this.isLoading = true;
+            this.showingCrafting = true;
+
+            if (!this.craftingRecipes) {
+                this.craftingRecipes = [];
+
+                const data = await axios.get('/api/crafting');
+
+                const rgx = /- - - Station (\d+) - - -\s+(.+?)(?=\s+- - -|$)/gs,
+                    text = data.data;
+
+                for (const match of text.matchAll(rgx)) {
+                    const station = match[1],
+                        recipes = match[2];
+
+                    this.craftingRecipes.push({
+                        id: station,
+                        data: recipes
+                    });
+                }
+            }
 
             this.isLoading = false;
         },

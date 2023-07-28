@@ -138,7 +138,7 @@ module.exports = {
                 'success-pale':   defaultTheme.colors.green['100'],
 
                 // Theme colors (dark mode)
-                'dark-primary':   defaultTheme.colors.indigo['300'],
+                'dark-primary':   defaultTheme.colors.indigo['400'],
                 'dark-secondary': defaultTheme.colors.gray['700'],
                 'dark-danger':    defaultTheme.colors.red['500'],
                 'dark-warning':   defaultTheme.colors.yellow['500'],

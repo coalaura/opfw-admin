@@ -221,6 +221,8 @@
         "welcome": "Hello, {0}. Welcome to the dashboard!",
         "player_count": "Currently <b>{0}</b> players in the server.",
 		"server_announcement": "Server Announcement",
+        "view_crafting": "Show crafting recipes",
+        "crafting": "Crafting Recipes",
 		"announcement_message": "Message",
 		"send_announcement": "Send",
 		"confirm_announcement": "Are you sure you want to post this server announcement?",

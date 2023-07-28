@@ -2,21 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\OPFWHelper;
+use App\Helpers\PermissionHelper;
+use App\Server;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
-    public function playerClassifierJSON(): Response
+    public function crafting(Request $request): Response
     {
-        $file = __DIR__ . '/../../../helpers/classifier.json';
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_CRAFTING)) {
+            abort(401);
+        }
 
-        $json = file_get_contents($file);
+        $data = OPFWHelper::getCraftingTxt(Server::getFirstServer() ?? '');
 
-        $size = filesize($file);
-
-        return (new Response($json, 200))
-            ->header('Content-Type', 'application/json')
-            ->header('Content-Length', $size)
-            ->header('Cache-Control', 'max-age=2592000');
+        return (new Response($data, 200))
+            ->header('Content-Type', 'text/plain');
     }
 }

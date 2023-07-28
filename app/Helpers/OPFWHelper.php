@@ -312,6 +312,32 @@ class OPFWHelper
     }
 
     /**
+     * Gets the crafting.txt
+     *
+     * @param string $serverIp
+     * @return array|null
+     */
+    public static function getCraftingTxt(string $serverIp): ?string
+    {
+        $serverIp = Server::fixApiUrl($serverIp);
+        $cache = 'crafting_' . md5($serverIp);
+
+        if (CacheHelper::exists($cache)) {
+            return CacheHelper::read($cache, "");
+        } else {
+            $data = self::executeRoute($serverIp, $serverIp . 'crafting.txt', [], 'GET', 3, true);
+
+            if ($data->status) {
+                CacheHelper::write($cache, $data->message, 12 * CacheHelper::HOUR);
+            } else {
+                CacheHelper::write($cache, "", 10);
+            }
+
+            return $data->message;
+        }
+    }
+
+    /**
      * Gets the jobs.json
      *
      * @param string $serverIp
@@ -500,7 +526,7 @@ class OPFWHelper
      * @param int $timeout
      * @return OPFWResponse
      */
-    private static function executeRoute(string $serverIp, string $route, array $data, string $requestType = 'POST', int $timeout = 10): OPFWResponse
+    private static function executeRoute(string $serverIp, string $route, array $data, string $requestType = 'POST', int $timeout = 10, bool $isText = false): OPFWResponse
     {
         $token = env('OP_FW_TOKEN');
 
@@ -559,6 +585,10 @@ class OPFWHelper
             }
 
             LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), $statusCode . ': ' . $log);
+
+            if ($isText) {
+                return new OPFWResponse(true, $response);
+            }
 
             $result = self::parseResponse($response);
 
