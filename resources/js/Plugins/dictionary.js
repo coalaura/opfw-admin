@@ -91,7 +91,7 @@ const Dictionary = {
                 hasAnyEnglish = 0,
                 otherIssues = false;
 
-            let text = original.replace(/[\w']+/gi, (word, index) => {
+            let text = original.replace(/[a-z']+/gi, (word, index) => {
                 const testAgainst = word.toLowerCase().replace(/^'|'$/g, "");
 
                 if (testAgainst.match(/^\d+$/)) return word;
