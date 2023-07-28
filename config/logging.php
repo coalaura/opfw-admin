@@ -16,7 +16,7 @@ return [
     |
     */
 
-    'default' => env('LOG_CHANNEL', 'stack'),
+    'default' => 'none',
 
     /*
     |--------------------------------------------------------------------------
@@ -95,6 +95,11 @@ return [
         'errorlog' => [
             'driver' => 'errorlog',
             'level' => 'debug',
+        ],
+
+        'none' => [
+            'driver' => 'monolog',
+            'handler' => \Monolog\Handler\NullHandler::class,
         ],
     ],
 
