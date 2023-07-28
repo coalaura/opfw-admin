@@ -64,7 +64,7 @@ class ScreenshotController extends Controller
 		$system = array_map(function ($entry) {
 			$entry->reason = Str::startsWith($entry->details, 'Anti-Cheat:') ? $entry->details : Ban::resolveAutomatedReason($entry->details)['reason'];
 
-            $entry->player_name = Player::filterPlayerName($entry->player_name, $entry->license_identifier);
+            $entry->player_name = Player::filterPlayerName($entry->player_name ?? "", $entry->license_identifier ?? "");
 
 			return $entry;
 		}, $system);
