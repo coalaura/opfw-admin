@@ -12,13 +12,6 @@ class SessionHelper
     const Lifetime = 60 * 60 * 24 * 30;
 
     /**
-     * Singleton instance
-     *
-     * @var SessionHelper|null
-     */
-    private static ?SessionHelper $instance = null;
-
-    /**
      * The current sessions key
      *
      * @var string|null
@@ -225,7 +218,7 @@ class SessionHelper
     {
         $cookie = CLUSTER . self::Cookie;
 
-        if (self::$instance === null) {
+        if (!defined('SESSION')) {
             $helper = new SessionHelper();
 
             $helper->sessionKey = !empty($_COOKIE[$cookie]) && is_string($_COOKIE[$cookie]) ? $_COOKIE[$cookie] : null;
@@ -252,10 +245,10 @@ class SessionHelper
             $helper->load();
             $helper->store();
 
-            self::$instance = $helper;
+            define('SESSION', $helper);
         }
 
-        return self::$instance;
+        return SESSION;
     }
 
     /**
