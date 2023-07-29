@@ -15,10 +15,8 @@ namespace App\Http\Middleware {
          */
         public function handle(Request $request, Closure $next)
         {
-            if (!env('NO_SESSION', false)) {
-                // Force initialization of the session
-                sessionHelper();
-            }
+            // Force initialization of the session
+            sessionHelper();
 
             return $next($request);
         }
@@ -30,8 +28,12 @@ namespace {
     use App\Player;
     use App\Helpers\SessionHelper;
 
-    function sessionHelper(): SessionHelper
+    function sessionHelper(): ?SessionHelper
     {
+        if (env('NO_SESSION', false)) {
+            return null;
+        }
+
         return SessionHelper::getInstance();
     }
 
@@ -46,11 +48,19 @@ namespace {
 
     function user(): ?Player
     {
+        if (env('NO_SESSION', false)) {
+            return null;
+        }
+
         return sessionHelper()->getPlayer();
     }
 
     function license(): ?string
     {
+        if (env('NO_SESSION', false)) {
+            return null;
+        }
+
         return sessionHelper()->getCurrentLicense();
     }
 }
