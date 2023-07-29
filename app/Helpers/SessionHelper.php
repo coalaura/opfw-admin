@@ -26,6 +26,13 @@ class SessionHelper
     private ?string $sessionKey = null;
 
     /**
+     * The last set cookie
+     *
+     * @var string|null
+     */
+    private ?string $lastCookie = null;
+
+    /**
      * The value of the current session
      *
      * @var array
@@ -186,7 +193,7 @@ class SessionHelper
             ]);
         }
 
-        self::updateCookie($this->sessionKey);
+        $this->updateCookie();
     }
 
     /**
@@ -194,11 +201,13 @@ class SessionHelper
      *
      * @param string $sessionKey
      */
-    public static function updateCookie(string $sessionKey)
+    public function updateCookie()
     {
+        if ($this->lastCookie === $this->sessionKey) return;
+
         $cookie = CLUSTER . self::Cookie;
 
-        setcookie($cookie, $sessionKey, [
+        setcookie($cookie, $this->sessionKey, [
             'expires'  => time() + self::Lifetime,
             'secure'   => false,
             'httponly' => true,
