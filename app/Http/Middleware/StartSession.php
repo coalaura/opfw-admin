@@ -6,7 +6,6 @@ namespace App\Http\Middleware {
 
     class StartSession
     {
-
         /**
          * Handle an incoming request.
          *
@@ -16,8 +15,10 @@ namespace App\Http\Middleware {
          */
         public function handle(Request $request, Closure $next)
         {
-            // Force initialization of the session
-            sessionHelper();
+            if (!env('NO_SESSION', false)) {
+                // Force initialization of the session
+                sessionHelper();
+            }
 
             return $next($request);
         }
@@ -36,6 +37,10 @@ namespace {
 
     function sessionKey(): ?string
     {
+        if (env('NO_SESSION', false)) {
+            return '-no_session-';
+        }
+
         return sessionHelper()->getSessionKey();
     }
 
