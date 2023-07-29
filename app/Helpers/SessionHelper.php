@@ -289,7 +289,7 @@ class SessionHelper
     {
         $userId = $this->get('user');
 
-        if (!$userId || is_numeric($userId)) {
+        if (!$userId || !is_numeric($userId)) {
             return null;
         }
 
