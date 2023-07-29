@@ -57,9 +57,9 @@ class OPFWResponse
     public function redirect(): RedirectResponse
     {
         if ($this->status) {
-            return back()->with('success', $this->message);
+            return backWith('success', $this->message);
         }
 
-        return back()->with('error', $this->message);
+        return backWith('error', $this->message);
     }
 }

@@ -85,6 +85,7 @@ class SessionHelper
         if (array_key_exists($key, $this->value)) {
             return $this->value[$key];
         }
+
         return null;
     }
 
@@ -109,6 +110,7 @@ class SessionHelper
     {
         if (array_key_exists($key, $this->value)) {
             unset($this->value[$key]);
+
             $this->store();
         }
     }

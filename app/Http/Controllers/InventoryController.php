@@ -349,7 +349,7 @@ class InventoryController extends Controller
         $inventory = Inventory::parseDescriptor($inventory)->get();
 
         if (!$this->isSuperAdmin($request)) {
-            return back()->with('error', 'You are not a super admin');
+            return backWith('error', 'You are not a super admin');
         }
 
         $name = explode(':', $inventory->descriptor)[0];
@@ -361,7 +361,7 @@ class InventoryController extends Controller
             ->first();
 
         if (!$content) {
-            return back()->with('error', 'Slot ' . $slot . ' in inventory ' . $name . ' is already empty');
+            return backWith('error', 'Slot ' . $slot . ' in inventory ' . $name . ' is already empty');
         }
 
         DB::table('inventories')
@@ -369,7 +369,7 @@ class InventoryController extends Controller
             ->where('inventory_slot', '=', $slot)
             ->delete();
 
-        return back()->with('success', 'Cleared slot ' . $slot . ' in inventory ' . $name);
+        return backWith('success', 'Cleared slot ' . $slot . ' in inventory ' . $name);
     }
 
     /**

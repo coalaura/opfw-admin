@@ -241,7 +241,7 @@ class PlayerCharacterController extends Controller
         if (!empty($data['date_of_birth'])) {
             $time = strtotime($data['date_of_birth']);
             if (!$time) {
-                return back()->with('error', 'Invalid date of birth');
+                return backWith('error', 'Invalid date of birth');
             }
 
             $data['date_of_birth'] = date('Y-m-d', $time);
@@ -275,7 +275,7 @@ class PlayerCharacterController extends Controller
         $user = user();
         PanelLog::logCharacterEdit($user->license_identifier, $player->license_identifier, $character->character_id, $changed);
 
-        return back()->with('success', 'Character was successfully updated. ' . $info);
+        return backWith('success', 'Character was successfully updated. ' . $info);
     }
 
     /**
@@ -289,18 +289,18 @@ class PlayerCharacterController extends Controller
     public function destroy(Request $request, Player $player, Character $character): RedirectResponse
     {
         if (!$this->isSuperAdmin($request)) {
-            return back()->with('error', 'Only super admins can delete characters.');
+            return backWith('error', 'Only super admins can delete characters.');
         }
 
         if ($character->character_deleted) {
-            return back()->with('error', 'Character is already deleted.');
+            return backWith('error', 'Character is already deleted.');
         }
 
         if (DB::statement('UPDATE `characters` SET `character_deleted` = 1, `character_deletion_timestamp`=' . time() . ' WHERE `character_id` = ' . $character->character_id)) {
-            return back()->with('success', 'Character was successfully deleted.');
+            return backWith('success', 'Character was successfully deleted.');
         }
 
-        return back()->with('error', 'Failed to delete character.');
+        return backWith('error', 'Failed to delete character.');
     }
 
     /**
@@ -318,11 +318,11 @@ class PlayerCharacterController extends Controller
         $map = json_decode(file_get_contents(__DIR__ . '/../../../helpers/tattoo-map.json'), true);
 
         if (!$map || !is_array($map)) {
-            return back()->with('error', 'Failed to load zone map');
+            return backWith('error', 'Failed to load zone map');
         }
 
         if (!$zone || !in_array($zone, self::ValidTattooZones)) {
-            return back()->with('error', 'Invalid or no zone provided');
+            return backWith('error', 'Invalid or no zone provided');
         }
 
 		$cleanedMap = [];
@@ -366,7 +366,7 @@ class PlayerCharacterController extends Controller
             $info = 'In-Game tattoo refresh was successful too.';
         }
 
-        return back()->with('success', 'Tattoos were removed successfully. ' . $info);
+        return backWith('success', 'Tattoos were removed successfully. ' . $info);
     }
 
     /**
@@ -383,11 +383,11 @@ class PlayerCharacterController extends Controller
         $resetCoords = json_decode(file_get_contents(__DIR__ . '/../../../helpers/coords_reset.json'), true);
 
         if (!$resetCoords || !is_array($resetCoords)) {
-            return back()->with('error', 'Failed to load spawn points');
+            return backWith('error', 'Failed to load spawn points');
         }
 
         if (!$spawn || (!isset($resetCoords[$spawn]) && $spawn !== "staff")) {
-            return back()->with('error', 'Invalid or no spawn provided');
+            return backWith('error', 'Invalid or no spawn provided');
         }
 
         $coords = $spawn === "staff" ? '{"w":262.6,"x":-77.6,"y":-817.2,"z":321.285}' : json_encode($resetCoords[$spawn]);
@@ -399,7 +399,7 @@ class PlayerCharacterController extends Controller
         $user = user();
         PanelLog::logSpawnReset($user->license_identifier, $player->license_identifier, $character->character_id, $spawn);
 
-        return back()->with('success', 'Spawn was reset successfully.');
+        return backWith('success', 'Spawn was reset successfully.');
     }
 
     /**
@@ -417,7 +417,7 @@ class PlayerCharacterController extends Controller
         $stocks = intval($request->post("stocks"));
 
         if (!$this->isSuperAdmin($request)) {
-            return back()->with('error', 'Only super admins can edit a characters balance.');
+            return backWith('error', 'Only super admins can edit a characters balance.');
         }
 
         $character->update([
@@ -426,7 +426,7 @@ class PlayerCharacterController extends Controller
             'stocks_balance' => $stocks,
         ]);
 
-        return back()->with('success', 'Balance has been updated successfully.');
+        return backWith('success', 'Balance has been updated successfully.');
     }
 
     /**
@@ -439,14 +439,14 @@ class PlayerCharacterController extends Controller
     public function deleteVehicle(Request $request, Vehicle $vehicle): RedirectResponse
     {
         if (!$this->isSuperAdmin($request)) {
-            return back()->with('error', 'Only super admins can delete vehicles.');
+            return backWith('error', 'Only super admins can delete vehicles.');
         }
 
         $vehicle->update([
             'vehicle_deleted' => '1',
         ]);
 
-        return back()->with('success', 'Vehicle was successfully deleted.');
+        return backWith('success', 'Vehicle was successfully deleted.');
     }
 
     /**
@@ -462,7 +462,7 @@ class PlayerCharacterController extends Controller
         $model = $request->post('model');
 
         if (!$this->isSuperAdmin($request)) {
-            return back()->with('error', 'Only super admins can add vehicles.');
+            return backWith('error', 'Only super admins can add vehicles.');
         }
 
         $genPlate = function () {
@@ -483,7 +483,7 @@ class PlayerCharacterController extends Controller
 
         $map = CacheHelper::getVehicleMap();
         if (!in_array($model, $map)) {
-            return back()->with('error', 'Unknown model name "' . $model . '".');
+            return backWith('error', 'Unknown model name "' . $model . '".');
         }
 
         $plate = $genPlate();
@@ -518,7 +518,7 @@ class PlayerCharacterController extends Controller
             ],
         ]);
 
-        return back()->with('success', 'Vehicle was successfully added (Model: ' . $model . ', Plate: ' . $plate . ').');
+        return backWith('success', 'Vehicle was successfully added (Model: ' . $model . ', Plate: ' . $plate . ').');
     }
 
     /**
@@ -534,7 +534,7 @@ class PlayerCharacterController extends Controller
         $license = $request->post('license');
 
         if (!in_array($license, self::Licenses) && $license !== 'remove') {
-            return back()->with('error', 'Invalid license "' . $license . '".');
+            return backWith('error', 'Invalid license "' . $license . '".');
         }
 
         $json = json_decode($character->character_data, true) ?? [];
@@ -543,14 +543,14 @@ class PlayerCharacterController extends Controller
         }
 
         if (in_array($license, $json['licenses'])) {
-            return back()->with('error', 'Character already has license "' . $license . '".');
+            return backWith('error', 'Character already has license "' . $license . '".');
         }
 
         if ($license !== 'remove') {
             $json['licenses'][] = $license;
             $json['licenses'] = array_values(array_unique($json['licenses']));
         } else if (empty($json['licenses'])) {
-            return back()->with('error', 'Character already has no licenses.');
+            return backWith('error', 'Character already has no licenses.');
         } else {
             $json['licenses'] = [];
         }
@@ -571,11 +571,11 @@ class PlayerCharacterController extends Controller
 
         if ($license === 'remove') {
             PanelLog::logLicenseRemove($user->license_identifier, $player->license_identifier, $character->character_id);
-            return back()->with('success', 'All Licenses were successfully removed. ' . $info);
+            return backWith('success', 'All Licenses were successfully removed. ' . $info);
         }
 
         PanelLog::logLicenseAdd($user->license_identifier, $player->license_identifier, $character->character_id, $license);
-        return back()->with('success', 'License was successfully added (License: ' . $license . '). ' . $info);
+        return backWith('success', 'License was successfully added (License: ' . $license . '). ' . $info);
     }
 
     /**
@@ -589,7 +589,7 @@ class PlayerCharacterController extends Controller
     public function resetGarage(Request $request, Vehicle $vehicle, bool $fullReset): RedirectResponse
     {
         if (!$this->isSuperAdmin($request)) {
-			return back()->with('error', 'Only super admins can reset vehicles garages.');
+			return backWith('error', 'Only super admins can reset vehicles garages.');
         }
 
 		$data = [];
@@ -608,7 +608,7 @@ class PlayerCharacterController extends Controller
 
         $vehicle->update($data);
 
-        return back()->with('success', 'Vehicle garage was successfully reset.');
+        return backWith('success', 'Vehicle garage was successfully reset.');
     }
 
 	/**

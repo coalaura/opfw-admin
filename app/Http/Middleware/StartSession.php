@@ -28,12 +28,12 @@ namespace {
     use App\Player;
     use App\Helpers\SessionHelper;
 
-    function sessionHelper(): ?SessionHelper
+    function sessionHelper(): SessionHelper
     {
         return SessionHelper::getInstance();
     }
 
-    function sessionKey(): ?string
+    function sessionKey(): string
     {
         return sessionHelper()->getSessionKey();
     }

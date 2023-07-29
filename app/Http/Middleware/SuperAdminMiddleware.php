@@ -25,7 +25,7 @@ class SuperAdminMiddleware
     {
         // Check for super admin status.
         if (!$this->isSuperAdmin($request)) {
-            return back()->with('error',
+            return backWith('error',
                 'You must be a Super Admin to do that! Contact a higher-up if you were shown this error by mistake.'
             );
         }

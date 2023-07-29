@@ -84,7 +84,7 @@ class HomeController extends Controller
 		$message = trim($request->input('message'));
 
         if (empty($message)) {
-            return back()->with('error', 'Message cannot be empty');
+            return backWith('error', 'Message cannot be empty');
         }
 
 		$response = OPFWHelper::serverAnnouncement(Server::getFirstServer() ?? '', $message);

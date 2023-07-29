@@ -45,7 +45,7 @@ class LoadingScreenController extends Controller
 
         DB::table('loading_screen_images')->where('id', $id)->delete();
 
-        return back()->with('success', 'The picture has successfully been deleted.');
+        return backWith('success', 'The picture has successfully been deleted.');
     }
 
     /**
@@ -63,7 +63,7 @@ class LoadingScreenController extends Controller
 		$url = trim($request->input('image_url'));
 
         if (!$url || !Str::startsWith($url, "https://")) {
-            return back()->with('error', 'Invalid url.');
+            return backWith('error', 'Invalid url.');
         }
 
 		$description = trim($request->input('description'));
@@ -73,7 +73,7 @@ class LoadingScreenController extends Controller
 			'description' => $description
 		]);
 
-        return back()->with('success', 'The picture has successfully been edited.');
+        return backWith('success', 'The picture has successfully been edited.');
     }
 
     /**
@@ -91,13 +91,13 @@ class LoadingScreenController extends Controller
         $url = trim($request->input('image_url'));
 
         if (!$url || !Str::startsWith($url, "https://")) {
-            return back()->with('error', 'Invalid url.');
+            return backWith('error', 'Invalid url.');
         }
 
         DB::table('loading_screen_images')-> insert([
             'image_url' => $url
         ]);
 
-        return back()->with('success', 'The picture has successfully been added.');
+        return backWith('success', 'The picture has successfully been added.');
     }
 }

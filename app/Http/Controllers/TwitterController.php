@@ -142,12 +142,12 @@ class TwitterController extends Controller
         $ids = $request->input('ids');
 
         if (empty($ids)) {
-            return back()->with('error', 'No tweets selected');
+            return backWith('error', 'No tweets selected');
         }
 
         TwitterPost::query()->whereIn('id', $ids)->delete();
 
-        return back()->with('success', 'Successfully deleted tweets');
+        return backWith('success', 'Successfully deleted tweets');
     }
 
 }

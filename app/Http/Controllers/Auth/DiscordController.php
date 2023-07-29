@@ -46,19 +46,19 @@ class DiscordController extends Controller
         $code = $request->get('code');
 
         if (!$code) {
-            return redirect('/login')->with('error', 'Missing oauth2 code.');
+            return redirectWith('/login', 'error', 'Missing oauth2 code.');
         }
 
         $token = $this->resolveAccessToken($request, $code);
 
         if (!$token) {
-            return redirect('/login')->with('error', 'Failed to resolve access token.');
+            return redirectWith('/login', 'error', 'Failed to resolve access token.');
         }
 
         $user = $this->resolveUser($token);
 
         if (!$user) {
-            return redirect('/login')->with('error', 'Failed to resolve user.');
+            return redirectWith('/login', 'error', 'Failed to resolve user.');
         }
 
         // Process the user data.
@@ -72,7 +72,7 @@ class DiscordController extends Controller
             ->first();
 
         if ($player && !$player->isStaff()) {
-            return redirect('/login')->with('error', "Player with discord-id $id linked is not a staff member.");
+            return redirectWith('/login', 'error', "Player with discord-id $id linked is not a staff member.");
         } else if (!$player) {
             $unlinked = Player::query()
                 ->where('last_used_identifiers', 'LIKE', '%' . $identifier . '%')
@@ -87,10 +87,10 @@ class DiscordController extends Controller
                 $unlinked->save();
 
                 if (!$unlinked->isStaff()) {
-                    return redirect('/login')->with('error', "Player with last-used discord-id $id is not a staff member.");
+                    return redirectWith('/login', 'error', "Player with last-used discord-id $id is not a staff member.");
                 }
             } else {
-                return redirect('/login')->with('error', "No player with last-used discord-id $id not found.");
+                return redirectWith('/login', 'error', "No player with last-used discord-id $id not found.");
             }
 
             $player = $unlinked;

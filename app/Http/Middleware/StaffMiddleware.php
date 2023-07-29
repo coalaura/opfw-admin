@@ -31,18 +31,19 @@ class StaffMiddleware
         $session = sessionHelper();
 
         if (!$this->checkSessionLock()) {
-            return redirect('/login')->with('error', $this->error);
+            return redirectWith('/login', 'error', $this->error);
         }
 
         // Check for staff status.
         $player = $session->getPlayer();
 
         if (!$player) {
-            return redirect('/login')->with('error', 'You have to have connected to the server at least once before trying to log-in (Player not found).');
+            return redirectWith('/login', 'error', 'You have to have connected to the server at least once before trying to log-in (Player not found).');
         }
 
         if (!$player->isStaff()) {
-            return redirect('/login')->with(
+            return redirectWith(
+                '/login',
                 'error',
                 'Your staff status has changed, please log in again.'
             );
@@ -51,7 +52,8 @@ class StaffMiddleware
         $discord = $session->get('discord');
 
         if (!$discord || $player->panel_linked_discord !== $discord['id']) {
-            return redirect('/login')->with(
+            return redirectWith(
+                '/login',
                 'error',
                 'Your discord account does not match the linked discord, please log-in again.'
             );

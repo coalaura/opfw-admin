@@ -57,3 +57,17 @@ function extraHeader()
 
     return $header;
 }
+
+function backWith(string $type, string $message)
+{
+    sessionHelper()->put('flash_' . $type, $message);
+
+    return back();
+}
+
+function redirectWith(string $path, string $type, string $message)
+{
+    sessionHelper()->put('flash_' . $type, $message);
+
+    return redirect($path);
+}

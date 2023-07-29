@@ -99,17 +99,17 @@ class BlacklistController extends Controller
         $identifier['identifier'] = strtolower($identifier['identifier']);
 
         if (!Player::isValidIdentifier($identifier['identifier'])) {
-            return back()->with('error', 'Invalid identifier.');
+            return backWith('error', 'Invalid identifier.');
         }
 
         $found = BlacklistedIdentifier::query()->where('identifier', '=', $identifier['identifier'])->get()->first();
         if ($found) {
-            return back()->with('error', 'Identifier is already blacklisted.');
+            return backWith('error', 'Identifier is already blacklisted.');
         }
 
         BlacklistedIdentifier::query()->updateOrCreate($identifier);
 
-        return back()->with('success', 'The identifier has successfully been blacklisted.');
+        return backWith('success', 'The identifier has successfully been blacklisted.');
     }
 
     public function import(Request $request): RedirectResponse
@@ -121,7 +121,7 @@ class BlacklistController extends Controller
         $lines = explode("\n", $text);
 
         if (empty($lines) || $lines[0] !== "license_identifier,reason") {
-            return back()->with('error', 'Invalid file submitted.');
+            return backWith('error', 'Invalid file submitted.');
         }
 
         unset($lines[0]);
@@ -166,7 +166,7 @@ class BlacklistController extends Controller
             BlacklistedIdentifier::query()->insert($insert);
         }
 
-        return back()->with('success', 'Imported ' . $imported . ' identifiers, skipped ' . $skipped . ' existing and ' . $invalid . ' invalid ones.');
+        return backWith('success', 'Imported ' . $imported . ' identifiers, skipped ' . $skipped . ' existing and ' . $invalid . ' invalid ones.');
     }
 
     /**
@@ -179,7 +179,7 @@ class BlacklistController extends Controller
     {
         $identifier->forceDelete();
 
-        return back()->with('success', 'The identifier has successfully been removed.');
+        return backWith('success', 'The identifier has successfully been removed.');
     }
 
 }

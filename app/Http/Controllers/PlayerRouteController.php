@@ -51,7 +51,7 @@ class PlayerRouteController extends Controller
     public function kick(Player $player, Request $request): RedirectResponse
     {
         if (empty(trim($request->input('reason')))) {
-            return back()->with('error', 'Reason cannot be empty');
+            return backWith('error', 'Reason cannot be empty');
         }
 
         $user = user();
@@ -80,7 +80,7 @@ class PlayerRouteController extends Controller
         $message = trim($request->input('message'));
 
         if (empty($message)) {
-            return back()->with('error', 'Message cannot be empty');
+            return backWith('error', 'Message cannot be empty');
         }
 
         return OPFWHelper::staffPM($user->license_identifier, $player, $message)->redirect();
@@ -99,7 +99,7 @@ class PlayerRouteController extends Controller
         $character = trim($request->input('character'));
 
         if (empty($character)) {
-            return back()->with('error', 'Character ID cannot be empty');
+            return backWith('error', 'Character ID cannot be empty');
         }
 
         $message = trim($request->input('message'));
@@ -261,18 +261,18 @@ class PlayerRouteController extends Controller
     public function removeIdentifier(Player $player, string $identifier, Request $request): RedirectResponse
     {
         if (!$this->isSuperAdmin($request)) {
-            return back()->with('error', 'Only super admins can remove identifiers.');
+            return backWith('error', 'Only super admins can remove identifiers.');
         }
 
         $identifiers = $player->getIdentifiers();
 
         if (!in_array($identifier, $identifiers)) {
-            return back()->with('error', 'That identifier doesn\'t belong to the player.');
+            return backWith('error', 'That identifier doesn\'t belong to the player.');
         }
 
         $type = explode(':', $identifier)[0];
         if (!in_array($type, self::AllowedIdentifiers)) {
-            return back()->with('error', 'You cannot remove the identifier of type "' . $type . '".');
+            return backWith('error', 'You cannot remove the identifier of type "' . $type . '".');
         }
 
         $filtered = array_values(array_filter($identifiers, function ($id) use ($identifier) {
@@ -283,7 +283,7 @@ class PlayerRouteController extends Controller
             'identifiers' => $filtered,
         ]);
 
-        return back()->with('success', 'Identifier has been removed successfully.');
+        return backWith('success', 'Identifier has been removed successfully.');
     }
 
     /**
@@ -297,7 +297,7 @@ class PlayerRouteController extends Controller
     public function updateSoftBanStatus(Player $player, int $status, Request $request): RedirectResponse
     {
         if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_SOFT_BAN)) {
-            return back()->with('error', 'You dont have permissions to do this.');
+            return backWith('error', 'You dont have permissions to do this.');
         }
 
         $status = $status ? 1 : 0;
@@ -306,7 +306,7 @@ class PlayerRouteController extends Controller
             'is_soft_banned' => $status,
         ]);
 
-        return back()->with('success', 'Soft ban status has been updated successfully.');
+        return backWith('success', 'Soft ban status has been updated successfully.');
     }
 
     /**
@@ -319,7 +319,7 @@ class PlayerRouteController extends Controller
     public function updateTag(Player $player, Request $request): RedirectResponse
     {
         if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_EDIT_TAG)) {
-            return back()->with('error', 'You dont have permissions to do this.');
+            return backWith('error', 'You dont have permissions to do this.');
         }
 
         $tag = $request->input('tag') ? trim($request->input('tag')) : null;
@@ -330,7 +330,7 @@ class PlayerRouteController extends Controller
 
         Player::resolveTags(true);
 
-        return back()->with('success', 'Tag has been updated successfully.');
+        return backWith('success', 'Tag has been updated successfully.');
     }
 
     /**
@@ -343,7 +343,7 @@ class PlayerRouteController extends Controller
     public function updateRole(Player $player, Request $request): RedirectResponse
     {
         if (!env('ALLOW_ROLE_EDITING', false) || !$this->isSuperAdmin($request)) {
-            return back()->with('error', 'You dont have permissions to do this.');
+            return backWith('error', 'You dont have permissions to do this.');
         }
 
         $role = $request->input('role') ? trim($request->input('role')) : null;
@@ -364,7 +364,7 @@ class PlayerRouteController extends Controller
 
         $player->update($data);
 
-        return back()->with('success', 'Role has been updated successfully.');
+        return backWith('success', 'Role has been updated successfully.');
     }
 
     /**
@@ -377,14 +377,14 @@ class PlayerRouteController extends Controller
     public function updateEnabledCommands(Player $player, Request $request): RedirectResponse
     {
         if (!$this->isSuperAdmin($request)) {
-            return back()->with('error', 'You dont have permissions to do this.');
+            return backWith('error', 'You dont have permissions to do this.');
         }
 
         $enabledCommands = $request->input('enabledCommands');
 
         foreach($enabledCommands as $command) {
             if (!in_array($command, self::EnablableCommands)) {
-                return back()->with('error', 'You cannot enable the command "' . $command . '".');
+                return backWith('error', 'You cannot enable the command "' . $command . '".');
             }
         }
 
@@ -392,7 +392,7 @@ class PlayerRouteController extends Controller
             "enabled_commands" => $enabledCommands
         ]);
 
-        return back()->with('success', 'Commands have been updated successfully.');
+        return backWith('success', 'Commands have been updated successfully.');
     }
 
     /**

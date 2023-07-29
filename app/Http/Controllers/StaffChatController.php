@@ -35,7 +35,7 @@ class StaffChatController extends Controller
         $message = trim($request->input('message'));
 
         if (!$message || strlen($message) > 250) {
-            return back()->with('error', 'Invalid or empty message.');
+            return backWith('error', 'Invalid or empty message.');
         }
 
         $serverIp = Server::getFirstServer();

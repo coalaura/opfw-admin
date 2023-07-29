@@ -190,7 +190,7 @@ class PlayerBanController extends Controller
     public function store(Player $player, BanStoreRequest $request): RedirectResponse
     {
         if ($player->isBanned()) {
-            return back()->with('error', 'Player is already banned');
+            return backWith('error', 'Player is already banned');
         }
 
         // Create a unique hash to go with this player's batch of bans.
@@ -241,7 +241,7 @@ class PlayerBanController extends Controller
 
         OPFWHelper::kickPlayer($user->license_identifier, $user->player_name, $player, $kickReason);
 
-        return back()->with('success', 'The player has successfully been banned.');
+        return backWith('success', 'The player has successfully been banned.');
     }
 
     /**
@@ -273,7 +273,7 @@ class PlayerBanController extends Controller
             'message' => 'I removed this players ban.',
         ]);
 
-        return back()->with('success', 'The player has successfully been unbanned.');
+        return backWith('success', 'The player has successfully been unbanned.');
     }
 
     public function lockBan(Player $player, Ban $ban, Request $request): RedirectResponse
@@ -286,7 +286,7 @@ class PlayerBanController extends Controller
             'locked' => 1
         ]);
 
-        return back()->with('success', 'The ban has been successfully locked.');
+        return backWith('success', 'The ban has been successfully locked.');
     }
 
     public function unlockBan(Player $player, Ban $ban, Request $request): RedirectResponse
@@ -299,7 +299,7 @@ class PlayerBanController extends Controller
             'locked' => 0
         ]);
 
-        return back()->with('success', 'The ban has been successfully unlocked.');
+        return backWith('success', 'The ban has been successfully unlocked.');
     }
 
     /**
@@ -348,7 +348,7 @@ class PlayerBanController extends Controller
         $message = '';
 
         if ($before === $after && $reason === $ban->reason) {
-            return back()->with('error', 'You did not change anything!');
+            return backWith('error', 'You did not change anything!');
         } else if ($before === $after) {
             $message = 'I changed this bans reason to be "' . $reason . '". ';
         } else if ($reason === $ban->reason) {
@@ -369,7 +369,7 @@ class PlayerBanController extends Controller
                 'This warning was generated automatically as a result of updating a ban.',
         ]);
 
-        return back()->with('success', 'Ban was successfully updated, redirecting back to player page...');
+        return backWith('success', 'Ban was successfully updated, redirecting back to player page...');
     }
 
     public function smurfBan(Request $request, string $hash): RedirectResponse

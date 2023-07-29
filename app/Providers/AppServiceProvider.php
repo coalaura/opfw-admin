@@ -54,9 +54,17 @@ class AppServiceProvider extends ServiceProvider
 
             // Flash messages.
             'flash' => function () {
+                $helper = sessionHelper();
+
+                $success = $helper->get('flash_success');
+                $error   = $helper->get('flash_error');
+
+                $helper->forget('flash_success');
+                $helper->forget('flash_error');
+
                 return [
-                    'success' => session('success'),
-                    'error'   => session('error'),
+                    'success' => $success,
+                    'error'   => $error,
                 ];
             },
 

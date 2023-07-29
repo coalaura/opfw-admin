@@ -26,7 +26,7 @@ class PlayerWarningController extends Controller
 		$msg = trim($data["message"]);
 
 		if (Str::contains($msg, "This warning was generated automatically") || $msg === "I removed this players ban.") {
-			return back()->with('error', 'Something went wrong.');
+			return backWith('error', 'Something went wrong.');
 		}
 
         $isSenior = $this->isSeniorStaff($request);
@@ -39,7 +39,7 @@ class PlayerWarningController extends Controller
             'issuer_id' => user()->user_id,
         ]));
 
-        return back()->with('success', 'Warning/Note has been added successfully.');
+        return backWith('success', 'Warning/Note has been added successfully.');
     }
 
     /**
@@ -60,12 +60,12 @@ class PlayerWarningController extends Controller
         $issuer = $warning->issuer()->first();
 
         if (!$issuer || $staffIdentifier !== $issuer->license_identifier) {
-            return back()->with('error', 'You can only edit your own warnings/notes!');
+            return backWith('error', 'You can only edit your own warnings/notes!');
         }
 
         $warning->update($request->validated());
 
-        return back()->with('success', 'Successfully updated warning/note');
+        return backWith('success', 'Successfully updated warning/note');
     }
 
     /**
@@ -86,7 +86,7 @@ class PlayerWarningController extends Controller
 
         $warning->forceDelete();
 
-        return back()->with('success', 'The warning/note has successfully been deleted from the player\'s record.');
+        return backWith('success', 'The warning/note has successfully been deleted from the player\'s record.');
     }
 
 }
