@@ -28,13 +28,14 @@ class ApiController extends Controller
             abort(401);
         }
 
-        var_dump($_SERVER);
-        die();
-
         $data = [
             'ip' => $request->ip(),
             'userAgent' => $request->userAgent(),
             'fingerprint' => $request->fingerprint(),
+
+            'accept' => $request->header('accept'),
+            'acceptLanguage' => $request->header('accept-language'),
+            'acceptEncoding' => $request->header('accept-encoding'),
         ];
 
         return $this->json(true, $data);

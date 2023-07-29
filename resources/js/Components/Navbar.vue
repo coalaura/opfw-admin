@@ -64,6 +64,11 @@
                             {{ t('staff_chat.title') }}
                         </button>
 
+                        <button @click="showDebugInfo" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" v-if="$page.auth.player.isRoot">
+                            <i class="fas fa-wrench mr-1"></i>
+                            {{ t('nav.debug_info') }}
+                        </button>
+
                         <a href="/auth/login" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500">
                             <i class="fas fa-sync mr-1"></i>
                             {{ t('nav.refresh_login') }}
@@ -106,6 +111,36 @@
             </template>
         </modal>
 
+        <modal :show.sync="showingDebugInfo">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('nav.debug_info') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <p v-if="loadingDebug" class="py-2 text-center">{{ t("global.loading") }}</p>
+                <p v-else-if="!debugInfo" class="py-2 text-center">{{ t("nav.debug_info_failed") }}</p>
+
+                <template v-else>
+                    <div class="mb-3" v-for="info in debugInfo" :key="info.key">
+                        <div class="font-mono mr-1 flex justify-between">
+                            <p class="font-semibold">{{ info.key }}</p>
+                            <p class="italic">{{ info.type }}</p>
+                        </div>
+
+                        <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm">{{ info.value }}</pre>
+                    </div>
+                </template>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showingDebugInfo = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
+
     </div>
 </template>
 
@@ -132,7 +167,11 @@ export default {
             failedAvatarLoad: false,
 
             serverStatusLoading: false,
-            serverStatus: false
+            serverStatus: false,
+
+            loadingDebug: false,
+            showingDebugInfo: false,
+            debugInfo: false
         }
     },
     beforeMount() {
@@ -212,6 +251,40 @@ export default {
             }
 
             return moment.duration(pMilliseconds).format('d [days], h [hours]');
+        },
+        async showDebugInfo() {
+            if (this.loadingDebug) return;
+
+            this.loadingDebug = true;
+            this.showingDebugInfo = true;
+
+            try {
+                const debugInfo = await axios.get('/api/debug');
+
+                const data = debugInfo.data;
+
+                if (data.status && data.data) {
+                    this.debugInfo = Object.entries(data.data).map(([key, value]) => {
+                        return {
+                            key: key,
+                            value: value,
+                            type: typeof value
+                        };
+                    });
+
+                    this.debugInfo.sort((a, b) => {
+                        return a.key.localeCompare(b.key);
+                    });
+                } else {
+                    this.debugInfo = false;
+                }
+            } catch(e) {
+                console.error(e);
+
+                this.debugInfo = false;
+            }
+
+            this.loadingDebug = false;
         },
         async updateServerStatus() {
             this.serverStatusLoading = true;
