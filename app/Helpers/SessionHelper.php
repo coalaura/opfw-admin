@@ -236,6 +236,7 @@ class SessionHelper
         $cookie = CLUSTER . self::Cookie;
 
         if (self::$instance === null) {
+            var_dump("no instance");
             $helper = new SessionHelper();
 
             $helper->sessionKey = !empty($_COOKIE[$cookie]) && is_string($_COOKIE[$cookie]) ? $_COOKIE[$cookie] : null;
