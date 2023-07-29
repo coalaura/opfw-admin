@@ -116,6 +116,20 @@ class SessionHelper
     }
 
     /**
+     * Clears all auth related data from the session
+     */
+    public function clearAuth()
+    {
+        if ($this->exists('user')) {
+            $this->forget('user');
+        }
+
+        if ($this->exists('discord')) {
+            $this->forget('discord');
+        }
+    }
+
+    /**
      * Drops the current session
      */
     public static function drop()

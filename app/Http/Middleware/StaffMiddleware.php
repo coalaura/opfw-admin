@@ -38,10 +38,14 @@ class StaffMiddleware
         $player = $session->getPlayer();
 
         if (!$player) {
+            $session->clearAuth();
+
             return redirectWith('/login', 'error', 'You have to have connected to the server at least once before trying to log-in (Player not found).');
         }
 
         if (!$player->isStaff()) {
+            $session->clearAuth();
+
             return redirectWith(
                 '/login',
                 'error',
@@ -52,11 +56,19 @@ class StaffMiddleware
         $discord = $session->get('discord');
 
         if (!$discord) {
+            $session->clearAuth();
+
             return redirectWith(
                 '/login',
                 'error',
                 'Missing discord in session.'
             );
+        }
+
+        $name = $player->getFilteredPlayerName();
+
+        if ($session->get('name') !== $name) {
+            $session->put('name', $name);
         }
 
         return $next($request);
