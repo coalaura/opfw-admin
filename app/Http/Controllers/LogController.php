@@ -40,6 +40,8 @@ class LogController extends Controller
         $canSearchDrugs = true;
         $page = 1;
 
+        $skipped = [];
+
         if (env('RESTRICT_DRUG_LOGS', false)) {
             $player = user();
 
@@ -53,6 +55,8 @@ class LogController extends Controller
 
             if (!$canSearchDrugs) {
                 $query->whereNotIn('action', self::DRUG_LOGS);
+
+                $skipped = ["action is not in " . implode(', ', self::DRUG_LOGS)];
             }
 
             // Filtering by identifier.
@@ -171,7 +175,8 @@ class LogController extends Controller
             'page' => $page,
             'drugActions' => self::DRUG_LOGS,
             'canSearchDrugs' => $canSearchDrugs,
-            'actions' => CacheHelper::getLogActions()
+            'actions' => CacheHelper::getLogActions(),
+            'skipped' => $skipped
         ]);
     }
 

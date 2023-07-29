@@ -157,6 +157,10 @@
 				<p class="text-muted dark:text-dark-muted text-xs">
 					{{ t('global.results', time) }}
 				</p>
+
+				<p class="text-xs italic mt-1" v-if="skipped && skipped.length > 0">
+					{{ t('logs.skipped', skipped.join(', ')) }}
+				</p>
 			</template>
 
 			<template>
@@ -379,6 +383,9 @@ export default {
 			required: true,
 		},
 		actions: {
+			type: Array
+		},
+		skipped: {
 			type: Array
 		}
 	},
