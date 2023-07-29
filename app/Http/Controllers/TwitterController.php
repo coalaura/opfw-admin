@@ -135,7 +135,6 @@ class TwitterController extends Controller
      */
     public function deleteTweets(Request $request): RedirectResponse
     {
-        $user = $request->user();
 		if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_TWITTER)) {
             abort(401);
         }

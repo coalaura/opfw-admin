@@ -317,7 +317,7 @@ class GeneralHelper
     public static function get(string $url, int $timeout = 3, int $connectTimeout = 1): string
     {
         if (isset(self::$GETCache[$url])) {
-            LoggingHelper::quickLog("Returning cached request '" . $url . "'");
+            LoggingHelper::log("Returning cached request '" . $url . "'");
             return self::$GETCache[$url];
         }
 
@@ -338,15 +338,15 @@ class GeneralHelper
             $body = $res->getBody()->getContents();
         } catch (\Throwable $t) {
             $taken = round(microtime(true) * 1000) - $start;
-            LoggingHelper::quickLog("Request error '" . $url . "' in " . $taken . "ms");
-            LoggingHelper::quickLog(get_class($t) . ': ' . $t->getMessage());
+            LoggingHelper::log("Request error '" . $url . "' in " . $taken . "ms");
+            LoggingHelper::log(get_class($t) . ': ' . $t->getMessage());
 
             self::$GETCache[$url] = '';
             return '';
         }
 
         $taken = round(microtime(true) * 1000) - $start;
-        LoggingHelper::quickLog("Completed request '" . $url . "' in " . $taken . "ms");
+        LoggingHelper::log("Completed request '" . $url . "' in " . $taken . "ms");
 
         self::$GETCache[$url] = $body;
 

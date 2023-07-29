@@ -3,7 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\Authenticate;
-use App\Http\Middleware\CheckForMaintenanceMode;
+use App\Http\Middleware\StartSession;
 use App\Http\Middleware\CloudflareMiddleware;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\LogMiddleware;
@@ -13,7 +13,6 @@ use App\Http\Middleware\SuperAdminMiddleware;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\UpdateMiddleware;
-use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
@@ -25,9 +24,6 @@ use Illuminate\Http\Middleware\SetCacheHeaders;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Routing\Middleware\ValidateSignature;
-use Illuminate\Session\Middleware\AuthenticateSession;
-use Illuminate\Session\Middleware\StartSession;
-use Illuminate\View\Middleware\ShareErrorsFromSession;
 
 class Kernel extends HttpKernel
 {
@@ -44,10 +40,10 @@ class Kernel extends HttpKernel
         UpdateMiddleware::class,
         CloudflareMiddleware::class,
         TrustProxies::class,
-        CheckForMaintenanceMode::class,
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
+        StartSession::class,
     ];
 
     /**
@@ -59,9 +55,6 @@ class Kernel extends HttpKernel
         'web' => [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,
-            StartSession::class,
-            ShareErrorsFromSession::class,
-            VerifyCsrfToken::class,
             SubstituteBindings::class,
         ],
 
@@ -101,11 +94,8 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewarePriority = [
-        StartSession::class,
-        ShareErrorsFromSession::class,
         Authenticate::class,
         StaffMiddleware::class,
-        AuthenticateSession::class,
         SubstituteBindings::class,
         Authorize::class,
     ];

@@ -53,19 +53,15 @@ class LoggingHelper
      */
     private static bool $isAccessLog = true;
 
-    public static function quickLog(string $msg)
-    {
-        self::log(SessionHelper::getInstance()->getSessionKey(), $msg);
-    }
-
     /**
      * Creates a log entry
      *
-     * @param string $sessionKey
      * @param string $msg
      */
-    public static function log(string $sessionKey, string $msg)
+    public static function log(string $msg)
     {
+        $sessionKey = sessionKey();
+
         self::init();
 
         if ($msg !== 'ACCEPTED') {

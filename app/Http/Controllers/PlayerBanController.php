@@ -140,7 +140,7 @@ class PlayerBanController extends Controller
         $query->leftJoin('user_bans', 'identifier', '=', 'license_identifier');
 
         if ($showMine) {
-            $player = $request->user()->player;
+            $player = user();
 
             $alias = is_array($player->player_aliases) ? $player->player_aliases : json_decode($player->player_aliases, true);
 
@@ -194,14 +194,14 @@ class PlayerBanController extends Controller
         }
 
         // Create a unique hash to go with this player's batch of bans.
-        $user = $request->user();
+        $user = user();
         $hash = Ban::generateHash();
 
         // Create ban.
         $ban = array_merge([
             'ban_hash' => $hash,
-            'creator_name' => $user->player->player_name,
-            'creator_identifier' => $user->player->license_identifier,
+            'creator_name' => $user->player_name,
+            'creator_identifier' => $user->license_identifier,
         ], $request->validated());
 
         // Get identifiers to ban.
@@ -224,12 +224,12 @@ class PlayerBanController extends Controller
 
         // Automatically log the ban as a warning.
         $player->warnings()->create([
-            'issuer_id' => $user->player->user_id,
+            'issuer_id' => $user->user_id,
             'message' => $reason . ' This warning was generated automatically as a result of banning someone.',
             'can_be_deleted' => 0,
         ]);
 
-        $staffName = $user->player->player_name;
+        $staffName = $user->player_name;
 
         if (env('HIDE_BAN_CREATOR')) {
             $staffName = "a staff member";
@@ -239,7 +239,7 @@ class PlayerBanController extends Controller
             ? 'You have been banned by ' . $staffName . ' for reason `' . $request->input('reason') . '`.'
             : 'You have been banned without a specified reason by ' . $staffName;
 
-        OPFWHelper::kickPlayer($user->player->license_identifier, $user->player->player_name, $player, $kickReason);
+        OPFWHelper::kickPlayer($user->license_identifier, $user->player_name, $player, $kickReason);
 
         return back()->with('success', 'The player has successfully been banned.');
     }
@@ -259,17 +259,17 @@ class PlayerBanController extends Controller
         }
 
         $player->bans()->forceDelete();
-        $user = $request->user();
+        $user = user();
 
 		Ban::query()->where('smurf_account', $ban->ban_hash)->delete();
 
 		if (!$ban->creator_name) {
-			PanelLog::logSystemBanRemove($user->player->license_identifier, $player->license_identifier);
+			PanelLog::logSystemBanRemove($user->license_identifier, $player->license_identifier);
 		}
 
         // Automatically log the ban update as a warning.
         $player->warnings()->create([
-            'issuer_id' => $user->player->user_id,
+            'issuer_id' => $user->user_id,
             'message' => 'I removed this players ban.',
         ]);
 
@@ -336,7 +336,7 @@ class PlayerBanController extends Controller
             abort(401);
         }
 
-        $user = $request->user();
+        $user = user();
         $reason = $request->input('reason') ?: 'No reason.';
 
         $expireBefore = $ban->getExpireTimeInSeconds() ? $this->formatSeconds($ban->getExpireTimeInSeconds()) : 'permanent';
@@ -364,7 +364,7 @@ class PlayerBanController extends Controller
 
         // Automatically log the ban update as a warning.
         $player->warnings()->create([
-            'issuer_id' => $user->player->user_id,
+            'issuer_id' => $user->user_id,
             'message' => $message .
                 'This warning was generated automatically as a result of updating a ban.',
         ]);

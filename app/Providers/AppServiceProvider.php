@@ -3,10 +3,7 @@
 namespace App\Providers;
 
 use App\Helpers\PermissionHelper;
-use App\Helpers\SessionHelper;
 use App\Http\Resources\PlayerResource;
-use App\Http\Resources\UserResource;
-use App\Player;
 use App\Server;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\URL;
@@ -66,22 +63,19 @@ class AppServiceProvider extends ServiceProvider
             'serverIp' => Server::getFirstServerIP(),
 
             'discord' => function() {
-                $session = SessionHelper::getInstance();
+                $session = sessionHelper();
 
                 return $session->get('discord') ?: null;
             },
 
             // Authentication.
             'auth'  => function () {
-                $session = SessionHelper::getInstance();
-
-                $user = $session->get('user') ?: null;
-                $player = $user['player'] ?? null;
+                $player = user();
 
                 return [
-                    'player'      => $player ? new PlayerResource(new Player($player)) : null,
+                    'player'      => $player ? new PlayerResource($player) : null,
                     'permissions' => PermissionHelper::getFrontendPermissions(),
-                    'token'       => SessionHelper::getInstance()->getSessionKey(),
+                    'token'       => sessionKey(),
                     'cluster'     => CLUSTER,
                     'server'      => Server::getServerName(Server::getFirstServer()),
                     'servers'     => Server::getAllServerNames(),

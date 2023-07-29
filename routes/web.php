@@ -11,7 +11,6 @@
 |
 */
 
-use App\Helpers\SessionHelper;
 use App\Http\Controllers\AdvancedSearchController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -46,7 +45,6 @@ use App\Http\Controllers\GraphController;
 use App\Http\Controllers\TwitterController;
 use App\Http\Controllers\LoadingScreenController;
 use App\Http\Controllers\WeaponController;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
@@ -282,10 +280,8 @@ Route::group(['prefix' => 'debug'], function () {
             abort(401);
         }
 
-        $session = SessionHelper::getInstance();
-
-        $user = $session->get('user') ?? abort(401);
-        $username = $user && !empty($user['player']) ? $user['player']['player_name'] : 'N/A';
+        $user = user() ?? abort(401);
+        $username = $user ? $user->player_name : 'N/A';
 
         $error = $request->json('entry');
         $href = $request->json('href');
@@ -295,7 +291,7 @@ Route::group(['prefix' => 'debug'], function () {
 
         $href = substr($href, 0, 150);
         $error = substr($error, 0, 500);
-        $key = $session->getSessionKey();
+        $key = sessionKey();
 
         $entry = '[' . $key . ' - ' . $username . '] ' . $href . ' - ' . $error;
         $file = storage_path('logs/' . CLUSTER . '_frontend.log');

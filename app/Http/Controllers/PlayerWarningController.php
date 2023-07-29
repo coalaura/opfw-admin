@@ -36,7 +36,7 @@ class PlayerWarningController extends Controller
         }
 
         $player->warnings()->create(array_merge($data, [
-            'issuer_id' => $request->user()->player->user_id,
+            'issuer_id' => user()->user_id,
         ]));
 
         return back()->with('success', 'Warning/Note has been added successfully.');
@@ -56,7 +56,7 @@ class PlayerWarningController extends Controller
             abort(401);
         }
 
-        $staffIdentifier = $request->user()->player->license_identifier;
+        $staffIdentifier = license();
         $issuer = $warning->issuer()->first();
 
         if (!$issuer || $staffIdentifier !== $issuer->license_identifier) {

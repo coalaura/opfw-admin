@@ -272,8 +272,8 @@ class PlayerCharacterController extends Controller
             $info = $refresh->notExecuted ? '' : 'In-Game character refresh was successful too.';
         }
 
-        $user = $request->user();
-        PanelLog::logCharacterEdit($user->player->license_identifier, $player->license_identifier, $character->character_id, $changed);
+        $user = user();
+        PanelLog::logCharacterEdit($user->license_identifier, $player->license_identifier, $character->character_id, $changed);
 
         return back()->with('success', 'Character was successfully updated. ' . $info);
     }
@@ -288,8 +288,7 @@ class PlayerCharacterController extends Controller
      */
     public function destroy(Request $request, Player $player, Character $character): RedirectResponse
     {
-        $user = $request->user();
-        if (!$user->player->is_super_admin) {
+        if (!$this->isSuperAdmin($request)) {
             return back()->with('error', 'Only super admins can delete characters.');
         }
 
@@ -358,8 +357,8 @@ class PlayerCharacterController extends Controller
             'tattoos_data' => json_encode($json),
         ]);
 
-        $user = $request->user();
-        PanelLog::logTattooRemoval($user->player->license_identifier, $player->license_identifier, $character->character_id, $zone);
+        $user = user();
+        PanelLog::logTattooRemoval($user->license_identifier, $player->license_identifier, $character->character_id, $zone);
 
         $info = 'In-Game Tattoo refresh failed, user has to softnap.';
         $refresh = OPFWHelper::updateTattoos($player, $character->character_id);
@@ -397,8 +396,8 @@ class PlayerCharacterController extends Controller
             'coords' => $coords,
         ]);
 
-        $user = $request->user();
-        PanelLog::logSpawnReset($user->player->license_identifier, $player->license_identifier, $character->character_id, $spawn);
+        $user = user();
+        PanelLog::logSpawnReset($user->license_identifier, $player->license_identifier, $character->character_id, $spawn);
 
         return back()->with('success', 'Spawn was reset successfully.');
     }
@@ -417,8 +416,7 @@ class PlayerCharacterController extends Controller
         $bank = intval($request->post("bank"));
         $stocks = intval($request->post("stocks"));
 
-        $user = $request->user();
-        if (!$user->player->is_super_admin) {
+        if (!$this->isSuperAdmin($request)) {
             return back()->with('error', 'Only super admins can edit a characters balance.');
         }
 
@@ -440,8 +438,7 @@ class PlayerCharacterController extends Controller
      */
     public function deleteVehicle(Request $request, Vehicle $vehicle): RedirectResponse
     {
-        $user = $request->user();
-        if (!$user->player->is_super_admin) {
+        if (!$this->isSuperAdmin($request)) {
             return back()->with('error', 'Only super admins can delete vehicles.');
         }
 
@@ -464,8 +461,7 @@ class PlayerCharacterController extends Controller
     {
         $model = $request->post('model');
 
-        $user = $request->user();
-        if (!$user->player->is_super_admin) {
+        if (!$this->isSuperAdmin($request)) {
             return back()->with('error', 'Only super admins can add vehicles.');
         }
 
@@ -571,14 +567,14 @@ class PlayerCharacterController extends Controller
             $info = $refresh->notExecuted ? '' : 'In-Game character refresh was successful too.';
         }
 
-        $user = $request->user();
+        $user = user();
 
         if ($license === 'remove') {
-            PanelLog::logLicenseRemove($user->player->license_identifier, $player->license_identifier, $character->character_id);
+            PanelLog::logLicenseRemove($user->license_identifier, $player->license_identifier, $character->character_id);
             return back()->with('success', 'All Licenses were successfully removed. ' . $info);
         }
 
-        PanelLog::logLicenseAdd($user->player->license_identifier, $player->license_identifier, $character->character_id, $license);
+        PanelLog::logLicenseAdd($user->license_identifier, $player->license_identifier, $character->character_id, $license);
         return back()->with('success', 'License was successfully added (License: ' . $license . '). ' . $info);
     }
 
@@ -592,8 +588,7 @@ class PlayerCharacterController extends Controller
      */
     public function resetGarage(Request $request, Vehicle $vehicle, bool $fullReset): RedirectResponse
     {
-        $user = $request->user();
-        if (!$user->player->is_super_admin) {
+        if (!$this->isSuperAdmin($request)) {
 			return back()->with('error', 'Only super admins can reset vehicles garages.');
         }
 
@@ -625,8 +620,7 @@ class PlayerCharacterController extends Controller
      */
     public function editVehicle(Request $request, Vehicle $vehicle): \Illuminate\Http\Response
     {
-        $user = $request->user();
-        if (!$user->player->is_super_admin) {
+        if (!$this->isSuperAdmin($request)) {
             return self::json(false, null, 'Only super admins can edit vehicles.');
         }
 

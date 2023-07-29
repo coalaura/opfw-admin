@@ -20,12 +20,11 @@ class LogoutController extends Controller
      */
     public function logout(): RedirectResponse
     {
-        $session = SessionHelper::getInstance();
-        LoggingHelper::log($session->getSessionKey(), 'Logout triggered, dropping session');
+        LoggingHelper::log('Logout triggered, dropping session');
 
         // Logout the user.
         SessionHelper::drop();
-        session()->put('isLogout', true);
+        sessionHelper()->put('isLogout', true);
 
         // Redirect them to base path.
         return redirect('/');

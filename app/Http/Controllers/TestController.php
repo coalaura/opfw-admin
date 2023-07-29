@@ -257,8 +257,7 @@ class TestController extends Controller
 
     public function moddingBans(Request $request): Response
     {
-        $user = $request->user();
-        if (!$user->player->is_super_admin) {
+        if (!$this->isSuperAdmin($request)) {
             return self::respond('Only super admins can export bans.');
         }
 
@@ -306,8 +305,7 @@ class TestController extends Controller
 
     public function staffPlaytime(Request $request): Response
     {
-        $user = $request->user();
-        if (!$user->player->is_super_admin) {
+        if (!$this->isSuperAdmin($request)) {
             return self::respond('Only super admins can do this.');
         }
 
@@ -558,9 +556,7 @@ class TestController extends Controller
 
     public function test(Request $request): Response
     {
-        $user = $request->user();
-
-        $license = $user->player->license_identifier;
+        $license = license();
 
         if ($license !== "license:2ced2cabd90f1208e7e056485d4704c7e1284196") {
             return self::respond('Unauthorized.');

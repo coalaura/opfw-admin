@@ -460,10 +460,8 @@ class OPFWHelper
      */
     private static function executeSocketRoute(string $route)
     {
-        $session = SessionHelper::getInstance();
-
-        $token = $session->getSessionKey();
-        $license = $session->getCurrentLicense();
+        $token = sessionKey();
+        $license = license();
 
         if (!$token || !$license) {
             return false;
@@ -480,7 +478,7 @@ class OPFWHelper
 
         $statusCode = 0;
 
-        LoggingHelper::log($token, 'Do GET to "' . $url . '"');
+        LoggingHelper::log('Do GET to "' . $url . '"');
 
         try {
             $res = $client->request("GET", $url, [
@@ -506,7 +504,7 @@ class OPFWHelper
             $log = substr($log, 0, 150) . '...';
         }
 
-        LoggingHelper::log($token, $statusCode . ': ' . $log);
+        LoggingHelper::log($statusCode . ': ' . $log);
 
         $json = json_decode($response, true);
 
@@ -559,8 +557,8 @@ class OPFWHelper
         for ($x = 0; $x < self::RetryAttempts; $x++) {
             $statusCode = 0;
 
-            LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Do ' . $requestType . ' to "' . $route . '"');
-            LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), 'Data: ' . json_encode($data));
+            LoggingHelper::log('Do ' . $requestType . ' to "' . $route . '"');
+            LoggingHelper::log('Data: ' . json_encode($data));
 
             try {
                 $res = $client->request($requestType, $route, [
@@ -584,7 +582,7 @@ class OPFWHelper
                 $log = substr($log, 0, 150) . '...';
             }
 
-            LoggingHelper::log(SessionHelper::getInstance()->getSessionKey(), $statusCode . ': ' . $log);
+            LoggingHelper::log($statusCode . ': ' . $log);
 
             if ($isText) {
                 return new OPFWResponse(true, $response);

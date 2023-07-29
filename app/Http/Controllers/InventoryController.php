@@ -218,7 +218,7 @@ class InventoryController extends Controller
             'contents'       => $contents,
             'created'        => time(),
             'expires'        => time() + (2 * 24 * 60 * 60),
-            'created_by'     => $request->user()->player->license_identifier,
+            'created_by'     => license(),
         ];
 
         CacheHelper::write('inv_snap_' . $snapshot['hash'], $snapshot, 2 * CacheHelper::DAY);
@@ -244,8 +244,7 @@ class InventoryController extends Controller
 
         $snapshot = CacheHelper::read($key);
 
-        $superAdmin = $request->user()->player->is_super_admin;
-        if (!$superAdmin) {
+        if (!$this->isSuperAdmin($request)) {
             $snapshot['contents'] = [];
         }
 
@@ -273,8 +272,7 @@ class InventoryController extends Controller
     {
         $inventory = Inventory::parseDescriptor($inventory)->get();
 
-        $superAdmin = $request->user()->player->is_super_admin;
-        if ($superAdmin) {
+        if ($this->isSuperAdmin($request)) {
             $contents = DB::table('inventories')
                 ->where('inventory_name', '=', explode(':', $inventory->descriptor)[0])
                 ->select(['id', 'item_name', 'inventory_slot', 'item_metadata'])
@@ -350,8 +348,7 @@ class InventoryController extends Controller
     {
         $inventory = Inventory::parseDescriptor($inventory)->get();
 
-        $superAdmin = $request->user()->player->is_super_admin;
-        if (!$superAdmin) {
+        if (!$this->isSuperAdmin($request)) {
             return back()->with('error', 'You are not a super admin');
         }
 

@@ -79,12 +79,10 @@ class PermissionHelper
 
     public static function hasPermission(Request $request, string $key): bool
     {
-        $player = $request->user();
+        $player = user();
         if (!$player) {
             return false;
         }
-
-        $player = $player->player;
 
         if (!isset(self::PERMISSIONS[$key])) {
             return true;

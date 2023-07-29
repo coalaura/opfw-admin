@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Player;
-use App\Helpers\GeneralHelper;
-use App\Helpers\SessionHelper;
 use Illuminate\Http\Request;
 use App\Http\Middleware\StaffMiddleware;
 use App\Http\Controllers\Controller;
@@ -64,7 +62,7 @@ class DiscordController extends Controller
         }
 
         // Process the user data.
-        $session = SessionHelper::getInstance();
+        $session = sessionHelper();
 
         $id = $user['id'];
         $identifier = 'discord:' . $id;
@@ -98,22 +96,7 @@ class DiscordController extends Controller
             $player = $unlinked;
         }
 
-        $info = $player->toArray();
-
-        // Unset bunch of unneeded data.
-        unset($info['player_tokens']);
-        unset($info['user_settings']);
-        unset($info['user_data']);
-        unset($info['staff_points']);
-        unset($info['weekly_playtime']);
-        unset($info['activity_points']);
-        unset($info['ips']);
-        unset($info['last_used_identifiers']);
-        unset($info['user_variables']);
-
-        $session->put('user', [
-            'player' => $info
-        ]);
+        $session->put('user', $player->user_id);
 
         $session->put('discord', $user);
 

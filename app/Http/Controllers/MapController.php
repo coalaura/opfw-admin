@@ -10,7 +10,6 @@ use App\Server;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Helpers\SessionHelper;
 
 class MapController extends Controller
 {
@@ -80,9 +79,9 @@ class MapController extends Controller
             }, $staff) : [],
             'staffMap' => $staff,
             'blips'    => GeneralHelper::parseMapFile(__DIR__ . '/../../../helpers/markers.map') ?? [],
-            'token'    => SessionHelper::getInstance()->getSessionKey(),
+            'token'    => sessionKey(),
             'cluster'  => CLUSTER,
-            'myself'   => $request->user()->player->license_identifier,
+            'myself'   => license(),
             'marker'   => $marker
         ]);
     }

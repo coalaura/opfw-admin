@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\CacheHelper;
-use App\Helpers\GeneralHelper;
 use App\Helpers\PermissionHelper;
 use App\Http\Resources\LogResource;
 use App\Log;
@@ -42,9 +41,9 @@ class LogController extends Controller
         $page = 1;
 
         if (env('RESTRICT_DRUG_LOGS', false)) {
-            $player = $request->user()->player;
+            $player = user();
 
-            if ((!isset($player->panel_drug_department) || !$player->panel_drug_department) && !GeneralHelper::isUserRoot($player->license_identifier)) {
+            if (!$player->panel_drug_department && !$player->isSuperAdmin()) {
                 $canSearchDrugs = false;
             }
         }
@@ -137,7 +136,7 @@ class LogController extends Controller
                         'identifier' => $identifier,
                         'server' => $server,
                         'page' => $page,
-                        'license_identifier' => $request->user()->player->license_identifier,
+                        'license_identifier' => license(),
                         'timestamp' => time()
                     ]);
 

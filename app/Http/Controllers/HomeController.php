@@ -29,9 +29,9 @@ class HomeController extends Controller
         $quote = GeneralHelper::inspiring();
         $quote['quote'] = nl2br($quote['quote']);
 
-        $user = $request->user();
-        $identifier = $user->player->license_identifier;
-        $name = $user->player->player_name;
+        $user = user();
+        $identifier = $user->license_identifier;
+        $name = $user->player_name;
 
         $bans = BanResource::collection(Ban::query()
             ->where(function ($query) use ($identifier, $name) {

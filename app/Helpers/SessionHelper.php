@@ -3,8 +3,7 @@
 namespace App\Helpers;
 
 use App\Session;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
+use App\Player;
 
 class SessionHelper
 {
@@ -37,6 +36,11 @@ class SessionHelper
      * Last retrieved session.
      */
     private ?Session $session = null;
+
+    /**
+     * Session player.
+     */
+    private ?Player $player = null;
 
     private function __construct()
     {
@@ -107,15 +111,15 @@ class SessionHelper
      */
     public static function drop()
     {
-        $helper = self::getInstance();
-        LoggingHelper::log($helper->sessionKey, 'Dropping session');
+        LoggingHelper::log('Dropping session');
 
+        $helper = self::getInstance();
         $session = $helper->getSession();
 
         if ($session) {
             $session->delete();
         } else {
-            LoggingHelper::log($helper->sessionKey, 'Session not found');
+            LoggingHelper::log('Session not found');
         }
 
         $helper->session = null;
@@ -143,7 +147,7 @@ class SessionHelper
         $session = $this->getSession();
 
         if (!$session) {
-            LoggingHelper::log($this->sessionKey, 'Session did not exist in DB while loading data');
+            LoggingHelper::log('Session did not exist in DB while loading data');
             $this->value = [];
 
             return;
@@ -152,7 +156,7 @@ class SessionHelper
         $data = json_decode($session->data, true);
 
         if (!$data) {
-            LoggingHelper::log($this->sessionKey, 'Failed to decode session data');
+            LoggingHelper::log('Failed to decode session data');
             $this->value = [];
 
             return;
@@ -236,7 +240,7 @@ class SessionHelper
 
                 $helper->sessionKey = self::uniqueId();
 
-                LoggingHelper::log($helper->sessionKey, $log);
+                LoggingHelper::log($log);
             }
 
             setcookie($cookie, $helper->sessionKey, [
@@ -271,14 +275,29 @@ class SessionHelper
         return $str;
     }
 
-    public function getCurrentLicense(): ?string
+    public function getPlayer(): ?Player
     {
-        $user = $this->get('user');
+        $userId = $this->get('user');
 
-        if (!$user || !isset($user['player']) || !isset($user['player']['license_identifier'])) {
+        if (!$userId || is_numeric($userId)) {
             return null;
         }
 
-        return $user['player']['license_identifier'];
+        if (!$this->player) {
+            $this->player = Player::query()->where('user_id', '=', $userId)->first();
+        }
+
+        return $this->player;
+    }
+
+    public function getCurrentLicense(): ?string
+    {
+        $player = $this->getPlayer();
+
+        if (!$player) {
+            return null;
+        }
+
+        return $player->license_identifier;
     }
 }

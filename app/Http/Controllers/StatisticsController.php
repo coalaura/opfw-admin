@@ -18,7 +18,7 @@ class StatisticsController extends Controller
      */
     public function render(Request $request): Response
     {
-        $license = $request->user()->player->license_identifier;
+        $license = license();
 
         return Inertia::render('Statistics/Index', [
             'bans'       => StatisticsHelper::getBanStats(),

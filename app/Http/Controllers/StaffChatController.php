@@ -32,11 +32,6 @@ class StaffChatController extends Controller
      */
     public function externalStaffChat(Request $request): RedirectResponse
     {
-        $user = $request->user();
-        if (!$user) {
-            return back()->with('error', 'Something went wrong.');
-        }
-
         $message = trim($request->input('message'));
 
         if (!$message || strlen($message) > 250) {
@@ -45,7 +40,7 @@ class StaffChatController extends Controller
 
         $serverIp = Server::getFirstServer();
 
-        $status = OPFWHelper::staffChat($serverIp, $user->player->license_identifier, $message);
+        $status = OPFWHelper::staffChat($serverIp, license(), $message);
 
         if (!$status->status) {
             return $status->redirect();

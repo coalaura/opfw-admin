@@ -92,10 +92,10 @@ class BlacklistController extends Controller
      */
     public function store(BlacklistedIdentifierStoreRequest $request): RedirectResponse
     {
-        $user = $request->user();
+        $user = user();
 
         $identifier = $request->validated();
-        $identifier['creator_identifier'] = $user->player->license_identifier;
+        $identifier['creator_identifier'] = $user->license_identifier;
         $identifier['identifier'] = strtolower($identifier['identifier']);
 
         if (!Player::isValidIdentifier($identifier['identifier'])) {
@@ -114,7 +114,7 @@ class BlacklistController extends Controller
 
     public function import(Request $request): RedirectResponse
     {
-        $user = $request->user();
+        $user = user();
 
         $text = str_replace("\r\n", "\n", $request->input('text', ''));
 
@@ -150,7 +150,7 @@ class BlacklistController extends Controller
                 if (Str::startsWith($identifier, "license:")) {
                     $insert[] = [
                         'identifier' => $identifier,
-                        'creator_identifier' => $user->player->license_identifier,
+                        'creator_identifier' => $user->license_identifier,
                         'reason' => 'Modding',
                         'note' => "IMPORTED-BANS (" . $date . ")"
                     ];

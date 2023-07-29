@@ -44,8 +44,7 @@ class QueueController extends Controller
      */
     public function skip(Request $request, string $server, string $licenseIdentifier): \Illuminate\Http\Response
     {
-        $user = $request->user();
-        if (!$user->player->is_super_admin) {
+        if (!$this->isSuperAdmin($request)) {
             return self::json(false, null, 'Only super admins can make players skip the queue.');
         }
 

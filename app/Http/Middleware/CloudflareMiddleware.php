@@ -2,8 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Helpers\LoggingHelper;
-use App\Helpers\SessionHelper;
 use Closure;
 use Illuminate\Http\Request;
 

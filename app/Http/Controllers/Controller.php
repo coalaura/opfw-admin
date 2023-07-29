@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\GeneralHelper;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -103,37 +102,23 @@ class Controller extends BaseController
 
     protected function isSeniorStaff(Request $request): bool
     {
-        $user = $request->user();
+        $player = user();
 
-        if ($user) {
-            $player = $user->player ?? false;
-
-            if ($player) {
-                $seniorStaff = $player->is_senior_staff ?? false;
-                $superAdmin = $player->is_super_admin ?? false;
-
-                return $seniorStaff || $superAdmin || GeneralHelper::isUserRoot($player->license_identifier);
-            }
-        }
-
-        return false;
+        return $player && $player->isSeniorStaff();
     }
 
     protected function isSuperAdmin(Request $request): bool
     {
-        $user = $request->user();
+        $player = user();
 
-        if ($user) {
-            $player = $user->player ?? false;
+        return $player && $player->isSuperAdmin();
+    }
 
-            if ($player) {
-                $superAdmin = $player->is_super_admin ?? false;
+    protected function isRoot(Request $request): bool
+    {
+        $player = user();
 
-                return $superAdmin || GeneralHelper::isUserRoot($player->license_identifier);
-            }
-        }
-
-        return false;
+        return $player && $player->isRoot();
     }
 
 	protected function formatTimestamp($timestamp)

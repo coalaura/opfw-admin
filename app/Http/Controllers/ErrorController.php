@@ -134,7 +134,7 @@ class ErrorController extends Controller
      */
     public function clientCycle(Request $request): \Illuminate\Http\Response
     {
-        if (!GeneralHelper::isUserRoot($request->user()->player->license_identifier)) {
+        if (!$this->isRoot($request)) {
             return self::json(false, null, 'Only root users can create a new cycle');
         }
 
@@ -166,7 +166,7 @@ class ErrorController extends Controller
      */
     public function serverCycle(Request $request): \Illuminate\Http\Response
     {
-        if (!GeneralHelper::isUserRoot($request->user()->player->license_identifier)) {
+        if (!$this->isRoot($request)) {
             return self::json(false, null, 'Only root users can create a new cycle');
         }
 

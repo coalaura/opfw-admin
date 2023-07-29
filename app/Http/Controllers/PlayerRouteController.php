@@ -54,9 +54,9 @@ class PlayerRouteController extends Controller
             return back()->with('error', 'Reason cannot be empty');
         }
 
-        $user = $request->user();
+        $user = user();
 
-        $staffName = $user->player->player_name;
+        $staffName = $user->player_name;
 
         if (env('HIDE_BAN_CREATOR')) {
             $staffName = "a staff member";
@@ -64,7 +64,7 @@ class PlayerRouteController extends Controller
 
         $reason = $request->input('reason') ?: 'You were kicked by ' . $staffName;
 
-        return OPFWHelper::kickPlayer($user->player->license_identifier, $user->player->player_name, $player, $reason)->redirect();
+        return OPFWHelper::kickPlayer($user->license_identifier, $user->player_name, $player, $reason)->redirect();
     }
 
     /**
@@ -76,14 +76,14 @@ class PlayerRouteController extends Controller
      */
     public function staffPM(Player $player, Request $request): RedirectResponse
     {
-        $user = $request->user();
+        $user = user();
         $message = trim($request->input('message'));
 
         if (empty($message)) {
             return back()->with('error', 'Message cannot be empty');
         }
 
-        return OPFWHelper::staffPM($user->player->license_identifier, $player, $message)->redirect();
+        return OPFWHelper::staffPM($user->license_identifier, $player, $message)->redirect();
     }
 
     /**
@@ -95,7 +95,7 @@ class PlayerRouteController extends Controller
      */
     public function unloadCharacter(Player $player, Request $request): RedirectResponse
     {
-        $user = $request->user();
+        $user = user();
         $character = trim($request->input('character'));
 
         if (empty($character)) {
@@ -104,7 +104,7 @@ class PlayerRouteController extends Controller
 
         $message = trim($request->input('message'));
 
-        return OPFWHelper::unloadCharacter($user->player->license_identifier, $player, $character, $message)->redirect();
+        return OPFWHelper::unloadCharacter($user->license_identifier, $player, $character, $message)->redirect();
     }
 
     /**
@@ -245,9 +245,9 @@ class PlayerRouteController extends Controller
      */
     public function revivePlayer(Player $player, Request $request): RedirectResponse
     {
-        $user = $request->user();
+        $user = user();
 
-        return OPFWHelper::revivePlayer($user->player->license_identifier, $player->license_identifier)->redirect();
+        return OPFWHelper::revivePlayer($user->license_identifier, $player->license_identifier)->redirect();
     }
 
     /**
@@ -260,8 +260,7 @@ class PlayerRouteController extends Controller
      */
     public function removeIdentifier(Player $player, string $identifier, Request $request): RedirectResponse
     {
-        $user = $request->user();
-        if (!$user->player->is_super_admin) {
+        if (!$this->isSuperAdmin($request)) {
             return back()->with('error', 'Only super admins can remove identifiers.');
         }
 
@@ -428,7 +427,7 @@ class PlayerRouteController extends Controller
 
         if ($data->status) {
             DB::table('panel_screenshot_logs')->insert([
-                'source_license' => $request->user()->player->license_identifier,
+                'source_license' => license(),
                 'target_license' => $license,
                 'target_character' => $status->character,
                 'type' => $request->query('short') ? 'screenshot_short' : 'screenshot',
@@ -484,7 +483,7 @@ class PlayerRouteController extends Controller
 
         if ($data->status) {
             DB::table('panel_screenshot_logs')->insert([
-                'source_license' => $request->user()->player->license_identifier,
+                'source_license' => license(),
                 'target_license' => $license,
                 'target_character' => $status->character,
                 'type' => 'screencapture',
@@ -553,8 +552,8 @@ class PlayerRouteController extends Controller
 
             $screenshot = $res->getBody()->getContents();
         } catch (\Throwable $t) {
-            LoggingHelper::quickLog("Failed to download screenshot from " . $screenshotUrl);
-            LoggingHelper::quickLog(get_class($t) . ': ' . $t->getMessage());
+            LoggingHelper::log("Failed to download screenshot from " . $screenshotUrl);
+            LoggingHelper::log(get_class($t) . ': ' . $t->getMessage());
         }
 
         if (!$screenshot) {

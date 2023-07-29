@@ -3,7 +3,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Helpers\GeneralHelper;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -42,12 +41,9 @@ class SuperAdminMiddleware
      */
     protected function isSuperAdmin(Request $request) : bool
     {
-        $user = $request->user();
-        if (!$user || !$user->player) {
-            return false;
-        }
+        $user = user();
 
-        return ($user->player->is_super_admin || GeneralHelper::isUserRoot($user->player->license_identifier));
+        return $user && $user->isSuperAdmin();
     }
 
 }

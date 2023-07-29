@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use App\Helpers\LoggingHelper;
-use App\Helpers\SessionHelper;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -24,16 +23,14 @@ class LogMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $session = SessionHelper::getInstance();
-
-        $user = $session->get('user');
+        $player = user();
         $name = "N/A";
 
-		if ($user && isset($user['player']) && isset($user['player']['player_name'])) {
-			$name = $user['player']['player_name'];
+		if ($player) {
+			$name = $player->getFilteredPlayerName();
 		}
 
-        LoggingHelper::log($session->getSessionKey(), 'ACCEPTED ' . $name);
+        LoggingHelper::log('ACCEPTED ' . $name);
 
         return $next($request);
     }
