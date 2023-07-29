@@ -298,6 +298,8 @@ class SessionHelper
             $this->player = Player::query()->where('user_id', '=', $userId)->first();
         }
 
+        var_dump($this->player);
+
         return $this->player;
     }
 
