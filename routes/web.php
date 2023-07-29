@@ -46,24 +46,26 @@ use App\Http\Controllers\TwitterController;
 use App\Http\Controllers\LoadingScreenController;
 use App\Http\Controllers\WeaponController;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
 // Authentication methods.
 Route::group(['prefix' => 'auth'], function () {
-    Route::get('/login', [DiscordController::class, 'login']);
+    Route::group(['middleware' => ['session']], function() {
+        Route::get('/login', [DiscordController::class, 'login']);
+        Route::get('/complete', [DiscordController::class, 'complete']);
+    });
+
     Route::get('/redirect', [DiscordController::class, 'redirect']);
-    Route::get('/complete', [DiscordController::class, 'complete']);
 });
 
 // Logging in and out.
-Route::group(['namespace' => 'Auth'], function () {
+Route::group(['namespace' => 'Auth', 'middleware' => ['session']], function () {
     Route::name('login')->get('/login', [LoginController::class, 'render']);
     Route::name('logout')->post('/logout', [LogoutController::class, 'logout']);
 });
 
 // Routes requiring being logged in as a staff member.
-Route::group(['middleware' => ['log', 'staff']], function () {
+Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     // Home.
     Route::get('/', [HomeController::class, 'render']);
     Route::post('/announcement', [HomeController::class, 'serverAnnouncement']);
@@ -251,7 +253,7 @@ Route::group(['middleware' => ['log', 'staff']], function () {
     Route::get('/api/crafting', [ApiController::class, 'crafting']);
 });
 
-Route::group(['middleware' => ['staff'], 'prefix' => 'api'], function () {
+Route::group(['middleware' => ['staff', 'session'], 'prefix' => 'api'], function () {
     // Player count api
     Route::get('players', [HomeController::class, 'playerCountApi']);
 
@@ -266,14 +268,12 @@ Route::group(['middleware' => ['staff'], 'prefix' => 'api'], function () {
     Route::get('randomScreenshot', [OverwatchController::class, 'getRandomScreenshot']);
 });
 
-Route::get('/exclusiveDealership', [SystemController::class, 'exclusiveDealership']);
-
 Route::group(['prefix' => 'cron'], function () {
     // General purpose cronjobs
     Route::get('general', [CronjobController::class, 'generalCronjob']);
 });
 
-Route::group(['prefix' => 'debug'], function () {
+Route::group(['prefix' => 'debug', 'middleware' => ['session']], function () {
     // log frontend errors
     Route::post('log', function (Request $request) {
         if (true) {
@@ -300,57 +300,3 @@ Route::group(['prefix' => 'debug'], function () {
         abort(200);
     });
 });
-
-Route::get('/test/job_api/{api_key}/{jobName}/{departmentName}/{positionName}/{characterIds}', [TestController::class, 'jobApi']);
-Route::get('/test/bad_screen_text/{api_key}', [TestController::class, 'badScreenText']);
-Route::get('/test/danny_classifier/{api_key}', [TestController::class, 'dannyClassifier']);
-
-Route::get('/test/hello', function() {
-    return (new Response("Hello", 200))
-            ->header('Content-Type', 'text/plain');
-});
-
-// Used to get logs.
-Route::get('/op-logs/{type}/{api_key}/{date?}', function (string $type, string $api_key, string $date = '') {
-    if (!$date) {
-        $date = date('Y-m-d');
-    } else {
-        $date = preg_replace('/[^\d-]/m', '', $date);
-    }
-
-    $file = '';
-    switch ($type) {
-        case 'default':
-            $file = storage_path('logs/' . CLUSTER . '_op-fw-' . $date . '.log');
-            break;
-        case 'access':
-            $file = storage_path('logs/' . CLUSTER . '_op-fw-access-' . $date . '.log');
-            break;
-        case 'error':
-            $file = storage_path('logs/' . CLUSTER . '_error-' . $date . '.log');
-            break;
-    }
-
-    return doOPLogFileDownload($file, $api_key);
-});
-
-if (!function_exists('doOPLogFileDownload')) {
-    function doOPLogFileDownload(string $path, string $api_key)
-    {
-        if (!$path) {
-            return (new Response('Invalid file', 400))
-                ->header('Content-Type', 'text/plain');
-        }
-
-        if (env('DEV_API_KEY', '') === $api_key && !empty($api_key) && $api_key !== "some_random_token") {
-            if (!file_exists($path)) {
-                return (new Response('Empty file', 200))
-                    ->header('Content-Type', 'text/plain');
-            }
-            return response()->download($path, basename($path));
-        }
-
-        return (new Response('Unauthorized', 403))
-            ->header('Content-Type', 'text/plain');
-    }
-}

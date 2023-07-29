@@ -3,7 +3,6 @@
 namespace App\Http\Middleware {
     use Closure;
     use Illuminate\Http\Request;
-    use Illuminate\Support\Str;
 
     class StartSession
     {
@@ -16,14 +15,6 @@ namespace App\Http\Middleware {
          */
         public function handle(Request $request, Closure $next)
         {
-            $path = $request->path();
-
-            var_dump($path);
-
-            if (Str::startsWith($path, 'auth/redirect')) {
-                return $next($request);
-            }
-
             // Force initialization of the session
             sessionHelper();
 

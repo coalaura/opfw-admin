@@ -43,7 +43,6 @@ class Kernel extends HttpKernel
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
-        StartSession::class,
     ];
 
     /**
@@ -84,6 +83,7 @@ class Kernel extends HttpKernel
         'signed'        => ValidateSignature::class,
         'throttle'      => ThrottleRequests::class,
         'verified'      => EnsureEmailIsVerified::class,
+        'session'       => StartSession::class,
     ];
 
     /**
@@ -94,6 +94,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewarePriority = [
+        StartSession::class,
         Authenticate::class,
         StaffMiddleware::class,
         SubstituteBindings::class,
