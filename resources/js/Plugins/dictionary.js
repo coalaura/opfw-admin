@@ -101,7 +101,7 @@ const Dictionary = {
                 if (isWordBad(testAgainst, original.substr(index))) {
                     hasBad++;
 
-                    return highlight(word, "red", "possibly bad word");
+                    return highlight(word, "red", "possibly bad word (commonly used by trolls)");
                 }
 
                 if (skipWord(original, testAgainst)) return word;
@@ -121,14 +121,14 @@ const Dictionary = {
                 text = text.replace(new RegExp(word, "gmi"), word => {
                     hasBad++;
 
-                    return highlight(word, "red", "possibly bad word")
+                    return highlight(word, "red", "possibly bad words (commonly used by trolls)")
                 });
             }
 
             text = text.replace(/(\w{2,})(\s*\1){2,}/gmi, word => {
-                otherIssues = "spamming the same word";
+                otherIssues = "spamming the same word/letters";
 
-                return highlight(word, "red", "repeated word");
+                return highlight(word, "red", "repeated words/letters");
             });
 
             let color = "green",
