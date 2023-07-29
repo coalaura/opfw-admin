@@ -56,7 +56,7 @@ class LogController extends Controller
             if (!$canSearchDrugs) {
                 $query->whereNotIn('action', self::DRUG_LOGS);
 
-                $skipped = ["action is '" . implode("', '", self::DRUG_LOGS) . "'"];
+                $skipped = ['action is "' . implode('", "', self::DRUG_LOGS) . '"'];
             }
 
             // Filtering by identifier.

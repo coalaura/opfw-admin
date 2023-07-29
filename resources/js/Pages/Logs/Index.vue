@@ -158,9 +158,13 @@
 					{{ t('global.results', time) }}
 				</p>
 
-				<p class="text-xs italic mt-1" v-if="skipped && skipped.length > 0">
-					{{ t('logs.skipped', skipped.join(', ')) }}
-				</p>
+				<div class="text-xs italic mt-1" v-if="skipped && skipped.length > 0">
+					{{ t('logs.skipped') }}
+
+					<li v-for="skip in skipped">
+						{{ skip }}
+					</li>
+				</div>
 			</template>
 
 			<template>
