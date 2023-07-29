@@ -3,6 +3,7 @@
 namespace App\Http\Middleware {
     use Closure;
     use Illuminate\Http\Request;
+    use Illuminate\Support\Str;
 
     class StartSession
     {
@@ -15,6 +16,12 @@ namespace App\Http\Middleware {
          */
         public function handle(Request $request, Closure $next)
         {
+            $path = $request->path();
+
+            if (Str::startsWith($path, 'auth/')) {
+                return $next($request);
+            }
+
             // Force initialization of the session
             sessionHelper();
 
@@ -30,37 +37,21 @@ namespace {
 
     function sessionHelper(): ?SessionHelper
     {
-        if (env('NO_SESSION', false)) {
-            return null;
-        }
-
         return SessionHelper::getInstance();
     }
 
     function sessionKey(): ?string
     {
-        if (env('NO_SESSION', false)) {
-            return '-no_session-';
-        }
-
         return sessionHelper()->getSessionKey();
     }
 
     function user(): ?Player
     {
-        if (env('NO_SESSION', false)) {
-            return null;
-        }
-
         return sessionHelper()->getPlayer();
     }
 
     function license(): ?string
     {
-        if (env('NO_SESSION', false)) {
-            return null;
-        }
-
         return sessionHelper()->getCurrentLicense();
     }
 }
