@@ -18,7 +18,9 @@ namespace App\Http\Middleware {
         {
             $path = $request->path();
 
-            if (Str::startsWith($path, 'auth/')) {
+            var_dump($path);
+
+            if (Str::startsWith($path, 'auth/redirect')) {
                 return $next($request);
             }
 
