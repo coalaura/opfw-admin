@@ -251,6 +251,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // API.
     Route::get('/api/crafting', [ApiController::class, 'crafting']);
+    Route::get('/api/debug', [ApiController::class, 'debug']);
 });
 
 Route::group(['middleware' => ['staff', 'session'], 'prefix' => 'api'], function () {

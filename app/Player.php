@@ -78,7 +78,6 @@ class Player extends Model
         'panel_tag',
         'average_ping',
         'average_fps',
-        'panel_linked_discord',
     ];
 
     /**
@@ -264,6 +263,8 @@ class Player extends Model
     {
         $ids = $this->getDiscordIDs();
 
+        $last = $this->getLastUsedIdentifiers();
+
         $users = [];
 
         foreach ($ids as $id) {
@@ -271,7 +272,7 @@ class Player extends Model
 
             $info = $user ? $user->toArray() : null;
 
-            if ($info && $info['id'] === $this->panel_linked_discord) {
+            if ($info && in_array('discord:' . $info['id'], $last)) {
                 $info['linked'] = true;
             }
 

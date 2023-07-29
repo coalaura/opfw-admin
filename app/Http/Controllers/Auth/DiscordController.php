@@ -68,32 +68,15 @@ class DiscordController extends Controller
         $identifier = 'discord:' . $id;
 
         $player = Player::query()
-            ->where('panel_linked_discord', '=', $id)
+            ->where('last_used_identifiers', 'LIKE', '%' . $identifier . '%')
             ->first();
 
-        if ($player && !$player->isStaff()) {
-            return redirectWith('/login', 'error', "Player with discord-id $id linked is not a staff member.");
-        } else if (!$player) {
-            $unlinked = Player::query()
-                ->where('last_used_identifiers', 'LIKE', '%' . $identifier . '%')
-                ->whereNull('panel_linked_discord')
-                ->first();
-
-            if ($unlinked) {
-                $unlinked->update([
-                    'panel_linked_discord' => $id
-                ]);
-
-                $unlinked->save();
-
-                if (!$unlinked->isStaff()) {
-                    return redirectWith('/login', 'error', "Player with last-used discord-id $id is not a staff member.");
-                }
-            } else {
-                return redirectWith('/login', 'error', "No player with last-used discord-id $id not found.");
+        if ($player) {
+            if (!$player->isStaff()) {
+                return redirectWith('/login', 'error', "Player with last-used discord-id $id is not a staff member.");
             }
-
-            $player = $unlinked;
+        } else {
+            return redirectWith('/login', 'error', "No player with last-used discord-id $id not found.");
         }
 
         $session->put('user', $player->user_id);

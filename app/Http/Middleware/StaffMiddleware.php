@@ -51,11 +51,11 @@ class StaffMiddleware
 
         $discord = $session->get('discord');
 
-        if (!$discord || $player->panel_linked_discord !== $discord['id']) {
+        if (!$discord) {
             return redirectWith(
                 '/login',
                 'error',
-                'Your discord account does not match the linked discord, please log-in again.'
+                'Missing discord in session.'
             );
         }
 

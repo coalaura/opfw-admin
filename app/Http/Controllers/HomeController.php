@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-
     /**
      * Renders the home page.
      *
