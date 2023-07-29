@@ -111,15 +111,16 @@ class SessionHelper
      */
     public static function drop()
     {
-        LoggingHelper::log('Dropping session');
-
         $helper = self::getInstance();
+
+        LoggingHelper::log('Dropping session', $helper->sessionKey);
+
         $session = $helper->getSession();
 
         if ($session) {
             $session->delete();
         } else {
-            LoggingHelper::log('Session not found');
+            LoggingHelper::log('Session not found', $helper->sessionKey);
         }
 
         $helper->session = null;
@@ -147,7 +148,7 @@ class SessionHelper
         $session = $this->getSession();
 
         if (!$session) {
-            LoggingHelper::log('Session did not exist in DB while loading data');
+            LoggingHelper::log('Session did not exist in DB while loading data', $this->sessionKey);
             $this->value = [];
 
             return;
@@ -156,7 +157,7 @@ class SessionHelper
         $data = json_decode($session->data, true);
 
         if (!$data) {
-            LoggingHelper::log('Failed to decode session data');
+            LoggingHelper::log('Failed to decode session data', $this->sessionKey);
             $this->value = [];
 
             return;
@@ -240,7 +241,7 @@ class SessionHelper
 
                 $helper->sessionKey = self::uniqueId();
 
-                LoggingHelper::log($log);
+                LoggingHelper::log($log, $helper->sessionKey);
             }
 
             setcookie($cookie, $helper->sessionKey, [

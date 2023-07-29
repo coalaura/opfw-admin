@@ -58,9 +58,11 @@ class LoggingHelper
      *
      * @param string $msg
      */
-    public static function log(string $msg)
+    public static function log(string $msg, ?string $sessionKey = null)
     {
-        $sessionKey = sessionKey();
+        if (!$sessionKey) {
+            $sessionKey = sessionKey();
+        }
 
         self::init();
 
