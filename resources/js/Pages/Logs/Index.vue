@@ -161,7 +161,7 @@
 				<div class="text-xs italic mt-1" v-if="skipped && skipped.length > 0">
 					{{ t('logs.skipped') }}
 
-					<li v-for="skip in skipped">
+					<li v-for="skip in skipped" class="list-inside pl-1 list-dash">
 						{{ skip }}
 					</li>
 				</div>

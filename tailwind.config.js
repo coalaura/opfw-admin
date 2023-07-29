@@ -91,7 +91,7 @@ module.exports = {
                 'modal-max': 'calc(100% - 10rem)'
             },
             listStyleType: {
-                'dash': "'-'"
+                'dash': "'–'"
             },
             inset: {
                 'attr':  '16.5px',
