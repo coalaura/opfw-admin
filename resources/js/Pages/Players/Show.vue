@@ -1512,16 +1512,11 @@ hljs.registerLanguage('json', json);
 
 import 'highlight.js/styles/github-dark-dimmed.css';
 
-const antiCheatMetadataKeys = [
-    "actual", "affected", "allWords", "armor", "backstory", "changeTicks", "closestPed", "command",
-	"count", "damage", "dateOfBirth", "distance", "eventName", "expected", "expectedValue",
-	"explosionEvent", "fov", "frozen", "fullName", "gameplayCam", "headingError", "health", "immediately",
-	"invincible", "invisible", "maxAllowed", "maxArmor", "maxDamage", "maxHealth", "modelHash",
-	"modelName", "modifications", "modifierName", "modifierValue", "nativeName", "newArmor",
-	"newHealth", "reason", "resourceName", "restoredArmor1", "restoredArmor2", "restoredHealth1",
-	"restoredHealth2", "score", "script", "speed", "suspicious", "suspiciousKeys", "text", "textEntry",
-	"textEntryValue", "textureDict", "textureName", "triggers", "variableName", "variableType",
-	"waypointDistance", "weaponLabel", "weaponName", "weaponType", "words"
+const ignoreMetadataKeys = [
+    "lastMessages",
+    "playerVehicle",
+    "playerPed",
+    "entity"
 ];
 
 export default {
@@ -1713,27 +1708,23 @@ export default {
             this.importantMetadata = {};
 
             for (const key in eventData.metadata) {
-                if (!antiCheatMetadataKeys.includes(key)) continue;
+                if (ignoreMetadataKeys.includes(key)) continue;
 
                 let value = eventData.metadata[key];
 
-                if (typeof value !== 'string') {
+                if (typeof value === 'number') {
+                    value = value.toFixed(2);
+                } else if (typeof value !== 'string') {
                     value = JSON.stringify(value);
                 }
 
                 this.importantMetadata[key] = value;
             }
 
-            if ('object' in eventData.metadata) {
+            if ('entity' in eventData.metadata) {
                 const model = eventData.metadata.object.model;
 
-                this.importantMetadata['object.model'] = model;
-            }
-
-            if ('vehicle' in eventData.metadata) {
-                const model = eventData.metadata.vehicle.model;
-
-                this.importantMetadata['vehicle.model'] = model;
+                this.importantMetadata['entity.model'] = model;
             }
         },
         getPlayerMetadata() {
