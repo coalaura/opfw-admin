@@ -1713,7 +1713,7 @@ export default {
                 let value = eventData.metadata[key];
 
                 if (typeof value === 'number') {
-                    value = value.toFixed(2);
+                    value = value.toFixed(2).replace(/(\.0)?0*$/gm, "");
                 } else if (typeof value !== 'string') {
                     value = JSON.stringify(value);
                 }
