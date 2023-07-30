@@ -148,16 +148,16 @@ const Dictionary = {
                 prediction = "negative";
                 reason = "not a single english word";
             } else {
-                if (noEnglish > 0) {
+                if (noEnglish > 3) {
                     color = "yellow";
                     prediction = "neutral";
-                    reason = "contains non-english words";
+                    reason = "contains a lot of non-english words";
                 }
 
-                if (hasAnyEnglish <= 2 && danny >= 85) {
+                if (hasAnyEnglish <= 2 && danny >= 90) {
                     color = "red";
                     prediction = "negative";
-                    reason = "has barely any english words and high danny percentage";
+                    reason = "very short/not a lot of english words and a high danny percentage";
                 } else if (original === original.toUpperCase()) {
                     color = "red";
                     prediction = "negative";
