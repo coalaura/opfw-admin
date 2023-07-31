@@ -106,6 +106,7 @@ class Ban extends Model
             "INVALID_HEALTH" => "Impossible to be scuff. This requires them to modify the maximum health of their ped. That can only be done through script and we set every peds health to be maximum 200.",
             "HONEYPOT" => "Impossible to be scuff. We have a bunch of so called 'honeypots' in the framework. They are functions that have lucrative names such as 'stealCash' or 'spawnItem' and when they are executed they will trigger a ban. That basically means someone inspected the code, searched for this function and then manually ran it, so its literally impossible to be scuff.",
             "CLEAR_TASKS" => "Impossible to be scuff. A bunch of mod menus clear other players tasks to kick them out of their vehicle for example. Clearing a peds tasks will make them stop doing what they are currently doing basically. This does not occur naturally and only happens through script. The framework will never attempt to clear another players tasks.",
+            "ILLEGAL_NATIVE" => "Impossible to be scuff. This detection listens for natives that are not supposed to be called by the client. Natives can only be called through script so this detection can't be triggered \"accidentally\". Metadata will show the native called and the arguments passed to it.",
         ]
     ];
 
