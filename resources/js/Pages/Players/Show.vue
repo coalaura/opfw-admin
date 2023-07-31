@@ -506,7 +506,10 @@
                     </tr>
                 </table>
 
-				<pre class="block text-xs whitespace-pre-wrap break-words hljs px-3 py-2 rounded" v-html="antiCheatMetadataJSON"></pre>
+                <div class="mt-3" v-for="metadata in antiCheatMetadataJSON">
+                    <p class="font-semibold mb-1">{{ metadata.key }}</p>
+                    <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm hljs" v-html="metadata.value"></pre>
+                </div>
 			</template>
 
 			<template #actions>
@@ -1698,34 +1701,48 @@ export default {
         formatSecondDiff(sec) {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
         },
+        cleanupObject(value) {
+            if (typeof value === "object") {
+                for (const key in value) {
+                    value[key] = this.cleanupObject(value[key]);
+                }
+
+                return value;
+            }
+
+            if (typeof value === "number") {
+                value = Math.round(value * 100) / 100;
+            }
+
+            return value;
+        },
         showAntiCheatMetadata(event, eventData) {
             event.preventDefault();
 
             this.antiCheatMetadata = true;
             this.antiCheatMetadataImage = eventData.screenshot_url;
-            this.antiCheatMetadataJSON = hljs.highlight(JSON.stringify(eventData.metadata, null, 4), {language: 'json'}).value;
 
-            this.importantMetadata = {};
+            this.antiCheatMetadataJSON = [];
 
-            for (const key in eventData.metadata) {
-                if (ignoreMetadataKeys.includes(key)) continue;
+            const metadata = this.cleanupObject(eventData.metadata);
 
-                let value = eventData.metadata[key];
+            for (const key in metadata) {
+                const value = metadata[key];
 
-                if (typeof value === 'number') {
-                    value = value.toFixed(2).replace(/(\.0)?0*$/gm, "");
-                } else if (typeof value !== 'string') {
-                    value = JSON.stringify(value);
+                if (typeof value === "object") {
+                    this.antiCheatMetadataJSON.push({
+                        key: key,
+                        value: hljs.highlight(JSON.stringify(value, null, 4), {language: 'json'}).value
+                    });
+
+                    delete metadata[key];
                 }
-
-                this.importantMetadata[key] = value;
             }
 
-            if ('entity' in eventData.metadata) {
-                const model = eventData.metadata.object.model;
-
-                this.importantMetadata['entity.model'] = model;
-            }
+            this.antiCheatMetadataJSON.unshift({
+                key: 'metadata',
+                value: hljs.highlight(JSON.stringify(metadata, null, 4), {language: 'json'}).value
+            });
         },
         getPlayerMetadata() {
             const statusMetadata = this.status?.metadata;
