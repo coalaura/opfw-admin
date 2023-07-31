@@ -506,8 +506,8 @@
                     </tr>
                 </table>
 
-                <div class="mt-3" v-for="metadata in antiCheatMetadataJSON">
-                    <p class="font-semibold mb-1">{{ metadata.key }}</p>
+                <div class="mt-4" v-for="metadata in antiCheatMetadataJSON">
+                    <p class="font-semibold mb-1 font-mono">{{ metadata.key }}</p>
                     <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm hljs" v-html="metadata.value"></pre>
                 </div>
 			</template>
@@ -1716,6 +1716,30 @@ export default {
 
             return value;
         },
+        highlightJSON(object) {
+            const isArray = Array.isArray(object),
+                maxLine = Object.keys(object).map(k => k.length).reduce((a, b) => Math.max(a, b), 0);
+
+            const lines = [];
+
+            for (let key in object) {
+                let value = JSON.stringify(object[key])
+                    .replace(/{"x":(-?\d+\.\d+),"y":(-?\d+\.\d+)}/gm, 'vector2($1, $2)') // vector2
+                    .replace(/{"x":(-?\d+\.\d+),"y":(-?\d+\.\d+),"z":(-?\d+\.\d+)}/gm, 'vector3($1, $2, $3)') // vector3
+                    .replace(/{"x":(-?\d+\.\d+),"y":(-?\d+\.\d+),"z":(-?\d+\.\d+),"w":(-?\d+\.\d+)}/gm, 'vector4($1, $2, $3, $4)') // vector4
+                    .replace(/(?<="):(?! |$)|,(?=")/gm, '$& ');
+
+                value = hljs.highlight(value, {language: 'json'}).value;
+
+                const line = isArray ? value : `<b>${key.padEnd(maxLine, " ")}</b>: ${value}`;
+
+                lines.push(`<span class="block hover:bg-black dark:hover:bg-white hover:!bg-opacity-10 py-xs px-1">${line}</span>`);
+            }
+
+            lines.sort();
+
+            return lines.join("");
+        },
         showAntiCheatMetadata(event, eventData) {
             event.preventDefault();
 
@@ -1731,8 +1755,8 @@ export default {
 
                 if (typeof value === "object") {
                     this.antiCheatMetadataJSON.push({
-                        key: key,
-                        value: hljs.highlight(JSON.stringify(value, null, 4), {language: 'json'}).value
+                        key: `metadata.${key}`,
+                        value: this.highlightJSON(value)
                     });
 
                     delete metadata[key];
@@ -1741,7 +1765,7 @@ export default {
 
             this.antiCheatMetadataJSON.unshift({
                 key: 'metadata',
-                value: hljs.highlight(JSON.stringify(metadata, null, 4), {language: 'json'}).value
+                value: this.highlightJSON(metadata)
             });
         },
         getPlayerMetadata() {
