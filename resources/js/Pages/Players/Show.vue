@@ -1703,8 +1703,14 @@ export default {
         },
         cleanupObject(value) {
             if (typeof value === "object") {
-                for (const key in value) {
-                    value[key] = this.cleanupObject(value[key]);
+                if (Array.isArray(value)) {
+                    for (let i = 0; i < value.length; i++) {
+                        value[i] = this.cleanupObject(value[i]);
+                    }
+                } else {
+                    for (const key in value) {
+                        value[key] = this.cleanupObject(value[key]);
+                    }
                 }
 
                 return value;
