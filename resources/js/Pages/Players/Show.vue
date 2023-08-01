@@ -1722,8 +1722,8 @@ export default {
 
             const lines = [];
 
-            for (let key in object) {
-                let value = JSON.stringify(object[key])
+            const addLine = (key, value) => {
+                value = JSON.stringify(value)
                     .replace(/{"x":(-?\d+\.\d+),"y":(-?\d+\.\d+)}/gm, 'vector2($1, $2)') // vector2
                     .replace(/{"x":(-?\d+\.\d+),"y":(-?\d+\.\d+),"z":(-?\d+\.\d+)}/gm, 'vector3($1, $2, $3)') // vector3
                     .replace(/{"x":(-?\d+\.\d+),"y":(-?\d+\.\d+),"z":(-?\d+\.\d+),"w":(-?\d+\.\d+)}/gm, 'vector4($1, $2, $3, $4)') // vector4
@@ -1734,6 +1734,16 @@ export default {
                 const line = isArray ? value : `<b>${key.padEnd(maxLine, " ")}</b>: ${value}`;
 
                 lines.push(`<span class="block hover:bg-black dark:hover:bg-white hover:!bg-opacity-10 py-xs px-1">${line}</span>`);
+            };
+
+            if (isArray) {
+                for (let index = 0; index < object.length; index++) {
+                    addLine(index, object[index]);
+                }
+            } else {
+                for (const key in object) {
+                    addLine(key, object[key]);
+                }
             }
 
             lines.sort();
