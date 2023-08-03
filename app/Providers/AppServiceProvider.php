@@ -52,6 +52,12 @@ class AppServiceProvider extends ServiceProvider
             $sql = $query->sql;
 
             foreach ($query->bindings as $binding) {
+                if (is_string($binding) && strlen($binding) > 65) {
+                    $binding = substr($binding, 0, 65) . '...';
+                }
+
+                $binding = is_numeric($binding) ? $binding : "'{$binding}'";
+
                 $sql = preg_replace('/\?/', "'{$binding}'", $sql, 1);
             }
 
