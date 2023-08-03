@@ -77,7 +77,7 @@ class AppServiceProvider extends ServiceProvider
             $sql = preg_replace_callback('/in \((.+?)\)/m', function($matches) {
                 $values = explode(',', $matches[1]);
 
-                return 'in (...' . count($values) . '-values...)';
+                return 'in (...' . count($values) . ' values...)';
             }, $sql);
 
             $sql = trim(str_replace("\n", ' ', $sql));
