@@ -22,7 +22,7 @@
                         </div>
 
                         <!-- Header -->
-                        <header class="flex flex-wrap items-start justify-between flex-grow mb-8">
+                        <header class="flex flex-wrap items-start justify-between flex-grow mb-8 relative">
 
                             <!-- Title -->
                             <div class="max-w-full w-full prose dark:text-white">
@@ -30,7 +30,7 @@
                             </div>
 
                             <!-- Actions -->
-                            <div>
+                            <div class="absolute top-0 right-0">
                                 <portal-target name="actions" />
                             </div>
 
