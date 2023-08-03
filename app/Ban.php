@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 /**
  * A ban that can be issued by a player and received by a players.
@@ -110,11 +112,71 @@ class Ban extends Model
         ]
     ];
 
-    public static function getAccuracy(string $reason)
-    {
-        $data = self::select("SELECT SUM(1) as total, SUM(IF(ban_hash IS NULL, 1, 0)) as unbanned, SUM(IF(ban_hash IS NOT NULL, 1, 0)) as banned FROM anti_cheat_events LEFT JOIN user_bans ON license_identifier = identifier WHERE type = 'fast_movement' AND anti_cheat_events.timestamp > UNIX_TIMESTAMP() - 10 * 24 * 60 * 60");
+    const AC_EVENT_MAP = [
+        "SUSPICIOUS_EXPLOSION" => "suspicious_explosion",
+        "CLEAR_TASKS" => "clear_tasks",
+        "DISTANCE_TAZE" => "distance_taze",
+        "HIGH_DAMAGE" => "high_damage",
+        "HONEYPOT" => "honeypot",
+        "SPECTATING" => "spectating",
+        "RUNTIME_TEXTURE" => "runtime_texture",
+        "PED_CHANGE" => "ped_change",
+        "WEAPON_SPAWN" => "illegal_weapon",
+        "DAMAGE_MODIFIER" => "damage_modifier",
+        "VEHICLE_MODIFICATION" => "vehicle_modification",
+        "THERMAL_NIGHTVISION" => "thermal_night_vision",
+        "BLACKLISTED_COMMAND" => "blacklisted_command",
+        "TEXT_ENTRY" => "text_entry",
+        "PLAYER_BLIPS" => "player_blips",
+        "INVINCIBILITY" => "invincibility",
+        "FAST_MOVEMENT" => "fast_movement",
+        "UNDERGROUND" => "underground",
+        "ILLEGAL_FREEZE" => "illegal_freeze",
+        "ILLEGAL_VEHICLE_MODIFIER" => "illegal_vehicle_modifier",
+        "BAD_SCREEN_WORD" => "bad_screen_word",
+        "FREECAM" => "freecam_detected",
+        "SPIKED_RESOURCE" => "spiked_resource",
+        "HOTWIRE_DRIVING" => "driving_hotwire",
+        "SEMI_GODMODE" => "semi_godmode",
+        "INVALID_HEALTH" => "invalid_health",
+        "ILLEGAL_NATIVE" => "illegal_native",
+        "INFINITE_AMMO" => "infinite_ammo",
+        "BAD_ENTITY_SPAWN" => "spawned_object",
+        "PED_SPAWN" => "illegal_ped_spawn",
+        "VEHICLE_SPAWN" => "illegal_vehicle_spawn"
+    ];
 
-        return $data;
+    public static function getAccuracy(string $reason): ?array
+    {
+        if (!Str::startsWith($reason, 'MODDING-')) {
+            return null;
+        }
+
+        $reason = explode('-', $reason)[1] ?? null;
+
+        $event = self::AC_EVENT_MAP[$reason] ?? null;
+
+        if (!$event) {
+            return null;
+        }
+
+        $data = DB::table('anti_cheat_events')
+            ->select(DB::raw('COUNT(*) as total, SUM(IF(ban_hash IS NULL, 1, 0)) as unbanned, SUM(IF(ban_hash IS NOT NULL, 1, 0)) as banned'))
+            ->leftJoin('user_bans', 'license_identifier', '=', 'identifier')
+            ->where('type', $event)
+            ->where('anti_cheat_events.timestamp', '>', time() - 16 * 24 * 60 * 60)
+            ->first();
+
+        if (!$data || $data->total === 0) {
+            return null;
+        }
+
+        return [
+            'total' => $data->total,
+            'banned' => $data->banned,
+            'unbanned' => $data->unbanned,
+            'accuracy' => round($data->banned / $data->total * 100, 2)
+        ];
     }
 
     public static function getAutomatedReasons()

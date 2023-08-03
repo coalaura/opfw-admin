@@ -19,8 +19,6 @@ class BanResource extends JsonResource
     {
         $reason = $this->getFormattedReason();
 
-        // $accuracy = Ban::getAccuracy($this->reason);
-
         return [
             'id'         => $this->id,
             'banHash'    => $this->ban_hash,
@@ -34,6 +32,7 @@ class BanResource extends JsonResource
             'timestamp'  => $this->timestamp,
             'issuer'     => $this->creator_name ?? null,
             'locked'     => $this->locked,
+            'accuracy'   => Ban::getAccuracy($this->reason)
         ];
     }
 
