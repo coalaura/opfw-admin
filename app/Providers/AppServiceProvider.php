@@ -37,7 +37,29 @@ class AppServiceProvider extends ServiceProvider
         JsonResource::withoutWrapping();
 
 		DB::listen(function ($query) {
-			// Disable query logging
+			if (!env('LOG_QUERIES') || !CLUSTER) {
+                return;
+            }
+
+            $time = date("H:i:s");
+            $day = date("Y_m_d");
+
+            $file = storage_path("logs/" . CLUSTER . "_{$day}_query.log");
+
+            $user = user();
+            $name = $user ? $user->player_name : 'Guest';
+
+            $sql = $query->sql;
+
+            foreach ($query->bindings as $binding) {
+                $sql = preg_replace('/\?/', "'{$binding}'", $sql, 1);
+            }
+
+            $sql = trim(str_replace("\n", ' ', $sql));
+
+            $log = "[{$time} - {$name}] {$sql} ({$query->time}ms)";
+
+            file_put_contents($file, $log . "\n", FILE_APPEND);
 		});
     }
 
