@@ -38,7 +38,7 @@ class AppServiceProvider extends ServiceProvider
         JsonResource::withoutWrapping();
 
         $session = SessionHelper::getInstance();
-        $discord = $session->get('discord');
+        $discord = $session->getDiscord();
         $name = $discord ? $discord['username'] : 'Guest';
 
 		DB::listen(function ($query) use ($name) {
