@@ -74,8 +74,7 @@ class AppServiceProvider extends ServiceProvider
                 $sql = preg_replace('/\?/', "{$binding}", $sql, 1);
             }
 
-            $re = '/in \((.+?)\)/m';
-            preg_replace_callback($re, function($matches) {
+            $sql = preg_replace_callback('/in \((.+?)\)/m', function($matches) {
                 $values = explode(',', $matches[1]);
 
                 if (count($values) > 5) {
