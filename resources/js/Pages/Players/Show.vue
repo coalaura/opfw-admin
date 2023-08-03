@@ -778,7 +778,6 @@
         <div>
             <!-- Viewing -->
             <alert class="bg-danger dark:bg-dark-danger" v-if="player.isBanned">
-
                 <div class="flex items-center justify-between mb-2">
                     <h2 class="text-lg font-semibold" v-html="local.ban"></h2>
                     <div class="font-semibold">
@@ -802,6 +801,9 @@
                     <b class="whitespace-nowrap">{{ player.ban.original }}:</b> <i>{{ player.ban.info }}</i>
                 </div>
 
+                <div class="mt-2 text-sm" v-if="player.ban.accuracy">
+                    <b class="whitespace-nowrap" :title="t('players.show.accuracy_title', player.ban.accuracy.banned, player.ban.accuracy.total)">{{ t('players.show.accuracy') }}:</b> <i>~{{ player.ban.accuracy.accuracy }}%</i>
+                </div>
             </alert>
             <!-- Issuing -->
             <div class="p-8 mb-10 bg-gray-100 rounded dark:bg-dark-secondary" v-if="isBanning">
