@@ -84,23 +84,23 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::resource('players.characters', PlayerCharacterController::class);
     Route::resource('players.bans', PlayerBanController::class);
     Route::resource('players.warnings', PlayerWarningController::class);
+
+    Route::get('/players/{player}/data', [PlayerController::class, 'extraData']);
+    Route::get('/players/{player}/linked', [PlayerRouteController::class, 'linkedAccounts']);
+    Route::get('/players/{player}/discord', [PlayerRouteController::class, 'discordAccounts']);
+    Route::get('/players/{player}/antiCheat', [PlayerRouteController::class, 'antiCheat']);
+    Route::get('/players/{player}/status', [PlayerRouteController::class, 'status']);
+
     Route::post('/players/{player}/kick', [PlayerRouteController::class, 'kick']);
     Route::post('/players/{player}/staffPM', [PlayerRouteController::class, 'staffPM']);
     Route::post('/players/{player}/unloadCharacter', [PlayerRouteController::class, 'unloadCharacter']);
     Route::post('/players/{player}/revivePlayer', [PlayerRouteController::class, 'revivePlayer']);
-    Route::get('/players/{player}/linked', [PlayerRouteController::class, 'linkedAccounts']);
-    Route::get('/players/{player}/discord', [PlayerRouteController::class, 'discordAccounts']);
-    Route::get('/players/{player}/antiCheat', [PlayerRouteController::class, 'antiCheat']);
-    Route::get('/players/{player}/screenshots', [PlayerRouteController::class, 'screenshots']);
-    Route::get('/players/{player}/panelLogs', [PlayerRouteController::class, 'panelLogs']);
-    Route::get('/players/{player}/status', [PlayerRouteController::class, 'status']);
     Route::delete('/players/{player}/removeIdentifier/{identifier}', [PlayerRouteController::class, 'removeIdentifier']);
     Route::post('/players/{player}/attachScreenshot', [PlayerRouteController::class, 'attachScreenshot']);
     Route::post('/players/{player}/updateSoftBanStatus/{status}', [PlayerRouteController::class, 'updateSoftBanStatus']);
     Route::post('/players/{player}/updateTag', [PlayerRouteController::class, 'updateTag']);
     Route::post('/players/{player}/updateRole', [PlayerRouteController::class, 'updateRole']);
     Route::post('/players/{player}/updateEnabledCommands', [PlayerRouteController::class, 'updateEnabledCommands']);
-
     Route::post('/players/{player}/bans/{ban}/lock', [PlayerBanController::class, 'lockBan']);
     Route::post('/players/{player}/bans/{ban}/unlock', [PlayerBanController::class, 'unlockBan']);
 

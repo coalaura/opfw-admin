@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Screenshot;
+use App\Http\Resources\PanelLogResource;
 
 class PlayerController extends Controller
 {
@@ -261,6 +263,22 @@ class PlayerController extends Controller
 
             abort(404);
         }
+    }
+
+    /**
+     * Extra data loaded via ajax.
+     *
+     * @param Player $player
+     * @return Response|void
+     */
+    public function extraData(Player $player)
+    {
+        $data = [
+            'panelLogs' => PanelLogResource::collection($player->panelLogs()->orderByDesc('timestamp')->limit(10)->get()),
+            'screenshots' => Screenshot::getAllScreenshotsForPlayer($player->license_identifier, 10)
+        ];
+
+        return $this->json(true, $data);
     }
 
 }

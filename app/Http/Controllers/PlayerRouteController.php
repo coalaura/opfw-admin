@@ -10,7 +10,6 @@ use App\Player;
 use App\WeaponDamageEvent;
 use App\Screenshot;
 use App\Server;
-use App\Http\Resources\PanelLogResource;
 use GuzzleHttp\Client;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -186,36 +185,6 @@ class PlayerRouteController extends Controller
 
                 return $entry;
             }, $events)
-        ], 200))->header('Content-Type', 'application/json');
-    }
-
-    /**
-     * Returns all screenshots.
-     *
-     * @param Player $player
-     * @param Request $request
-     * @return Response
-     */
-    public function screenshots(Player $player, Request $request): Response
-    {
-        return (new Response([
-            'status' => true,
-            'data'   => Screenshot::getAllScreenshotsForPlayer($player->license_identifier)
-        ], 200))->header('Content-Type', 'application/json');
-    }
-
-    /**
-     * Returns all panel logs.
-     *
-     * @param Player $player
-     * @param Request $request
-     * @return Response
-     */
-    public function panelLogs(Player $player, Request $request): Response
-    {
-        return (new Response([
-            'status' => true,
-            'data'   => PanelLogResource::collection($player->panelLogs()->orderByDesc('timestamp')->limit(10)->get()),
         ], 200))->header('Content-Type', 'application/json');
     }
 

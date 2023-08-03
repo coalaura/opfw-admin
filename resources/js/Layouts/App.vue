@@ -25,7 +25,7 @@
                         <header class="flex flex-wrap items-start justify-between flex-grow mb-8">
 
                             <!-- Title -->
-                            <div class="max-w-full prose dark:text-white">
+                            <div class="max-w-full w-full prose dark:text-white">
                                 <portal-target name="title" />
                             </div>
 

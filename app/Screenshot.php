@@ -52,7 +52,7 @@ class Screenshot extends Model
     protected $casts = [
     ];
 
-    public static function getAllScreenshotsForPlayer(string $license): array
+    public static function getAllScreenshotsForPlayer(string $license, ?int $limit = null): array
     {
         $characters = array_map(
             function ($character) {
@@ -93,6 +93,10 @@ class Screenshot extends Model
             usort($attached, function($a, $b) {
                 return ($b->created_at ?? 0) - ($a->created_at ?? 0);
             });
+        }
+
+        if ($limit) {
+            $attached = array_slice($attached, 0, $limit);
         }
 
         return $attached;

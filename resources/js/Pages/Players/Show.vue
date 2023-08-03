@@ -1,50 +1,41 @@
 <template>
     <div>
         <portal to="title">
-            <div class="flex items-start space-x-10 mobile:flex-wrap mt-8">
-                <h1 class="dark:text-white">
-                    {{ player.safePlayerName }}
-                </h1>
-                <div
-                    class="flex items-center space-x-5 mobile:flex-wrap mobile:w-full mobile:!mr-0 mobile:!ml-0 mobile:space-x-0">
-                    <badge class="border-blue-200 bg-blue-100 dark:bg-blue-700 font-semibold cursor-pointer !px-3" :title="t('players.show.copy_license')"
-                           :click="copyLicense">
-                        <i class="fas fa-copy"></i>
-                    </badge>
+            <div class="flex justify-between mobile:flex-wrap mt-8 gap-4 w-full">
+                <div class="flex gap-4">
+                    <!-- Copy License -->
+                    <div class="cursor-pointer text-2xl flex items-center" :title="t('players.show.copy_license')" :click="copyLicense">
+                        <i class="fas fa-copy relative top-2px"></i>
+                    </div>
 
-                    <badge class="border-pink-200 bg-pink-100 dark:bg-pink-700" :title="t('global.debugger_title')"
-                           v-if="player.isDebugger && !player.isRoot">
-                        <span class="font-semibold">{{ t('global.debugger') }}</span>
-                    </badge>
+                    <h1 class="dark:text-white">
+                        {{ player.safePlayerName }}
+                    </h1>
+                </div>
+                <div class="flex justify-end gap-3 mobile:flex-wrap mobile:w-full">
+                    <!-- Rank -->
                     <badge class="border-purple-200 bg-purple-100 dark:bg-purple-700" :title="t('global.trusted_title')"
-                           v-if="player.isTrusted && !player.isStaff">
+                        v-if="player.isTrusted && !player.isStaff">
                         <span class="font-semibold">{{ t('global.trusted') }}</span>
                     </badge>
                     <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('global.staff_title')"
-                           v-if="player.isStaff && !player.isSeniorStaff">
+                        v-if="player.isStaff && !player.isSeniorStaff">
                         <span class="font-semibold">{{ t('global.staff') }}</span>
                     </badge>
                     <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('global.senior_staff_title')"
-                           v-if="player.isSeniorStaff && !player.isSuperAdmin">
+                        v-if="player.isSeniorStaff && !player.isSuperAdmin">
                         <span class="font-semibold">{{ t('global.senior_staff') }}</span>
                     </badge>
                     <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('global.super_title')"
-                           v-if="player.isSuperAdmin && !player.isRoot">
+                        v-if="player.isSuperAdmin && !player.isRoot">
                         <span class="font-semibold">{{ t('global.super') }}</span>
                     </badge>
                     <badge class="border-indigo-200 bg-indigo-100 dark:bg-indigo-600" :title="t('global.developer_title')"
-                           v-if="player.isRoot">
+                        v-if="player.isRoot">
                         <span class="font-semibold">{{ t('global.developer') }}</span>
                     </badge>
 
-                    <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" v-if="whitelisted">
-                        <span class="font-semibold">{{ t('global.whitelisted') }}</span>
-                    </badge>
-
-                    <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale" v-if="blacklisted">
-                        <span class="font-semibold">{{ t('global.blacklisted') }}</span>
-                    </badge>
-
+                    <!-- Status & other infos -->
                     <badge class="border-yellow-200 bg-yellow-400 dark:bg-yellow-600"
                            v-if="statusLoading">
                         <span class="font-semibold">{{ t('global.loading') }}</span>
@@ -139,34 +130,107 @@
         </portal>
 
         <div class="flex flex-wrap justify-between mb-6">
-            <div class="mb-3 flex flex-wrap">
-                <!-- Soft Ban -->
-                <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale py-2 mr-3"
-                       v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && player.isSoftBanned">
-                    <span class="font-semibold">{{ t('global.soft_banned') }}</span>
-                    <a href="#" @click="removeSoftBan($event)" class="ml-1 text-white"
-                       :title="t('players.show.remove_soft_ban')">
-                        <i class="fas fa-times"></i>
-                    </a>
+            <div class="mb-3 flex flex-wrap gap-3">
+                <!-- Panel drug department -->
+                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale px-5 py-2" v-if="$page.auth.player.isSuperAdmin && player.panelDrugDepartment">
+                    <span class="font-semibold" :title="t('players.show.drug_department_title')">{{ t('players.show.drug_department') }}</span>
                 </badge>
 
-                <button
-                    class="px-5 py-2 mr-3 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    @click="addSoftBan()" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && !player.isSoftBanned">
-                    <i class="fas fa-user-lock"></i>
-                    {{ t('players.show.add_soft_ban') }}
-                </button>
+                <!-- Whitelisted -->
+                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale px-5 py-2" v-if="whitelisted">
+                    <span class="font-semibold">{{ t('global.whitelisted') }}</span>
+                </badge>
 
-                <!-- Panel drug department -->
-                <badge class="border-orange-200 bg-warning-pale dark:bg-dark-warning-pale py-2 mr-3"
-                       v-if="$page.auth.player.isSuperAdmin && player.panelDrugDepartment">
-                    <span class="font-semibold">{{ t('global.panel_drug_department') }}</span>
+                <!-- Blacklisted -->
+                <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale px-5 py-2" v-if="blacklisted">
+                    <span class="font-semibold">{{ t('global.blacklisted') }}</span>
+                </badge>
+
+                <!-- Debugger -->
+                <badge class="border-pink-200 bg-pink-100 dark:bg-pink-700 px-5 py-2" :title="t('global.debugger_title')"
+                    v-if="player.isDebugger && !player.isRoot">
+                    <span class="font-semibold">{{ t('global.debugger') }}</span>
                 </badge>
             </div>
 
-            <div class="absolute top-2 left-2 flex" v-if="this.perm.check(this.perm.PERM_LINKED)">
+            <div class="mb-3 flex flex-wrap justify-end gap-3">
+                <!-- Soft Ban -->
+                <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale py-2"
+                    v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && player.isSoftBanned">
+                    <span class="font-semibold">{{ t('global.soft_banned') }}</span>
+                    <a href="#" @click="removeSoftBan($event)" class="ml-1 text-white"
+                    :title="t('players.show.remove_soft_ban')">
+                        <i class="fas fa-times"></i>
+                    </a>
+                </badge>
+                <button
+                    class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
+                    @click="addSoftBan()" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && !player.isSoftBanned">
+                    <i class="fas fa-smoking-ban"></i>
+                    {{ t('players.show.add_soft_ban') }}
+                </button>
+
+                <!-- StaffPM -->
+                <button
+                    class="px-5 py-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
+                    @click="isStaffPM = true" v-if="status.status === 'online'">
+                    <i class="fas fa-envelope-open-text"></i>
+                    {{ t('players.show.staffpm') }}
+                </button>
+                <!-- Kicking -->
+                <button
+                    class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
+                    @click="isKicking = true" v-if="status.status === 'online'">
+                    <i class="fas fa-user-minus"></i>
+                    {{ t('players.show.kick') }}
+                </button>
+                <!-- Edit Ban -->
+                <inertia-link
+                    class="px-5 py-2 font-semibold text-white rounded bg-yellow-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
+                    v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/edit'"
+                    v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
+                    <i class="mr-1 fas fa-edit"></i>
+                    {{ t('players.show.edit_ban') }}
+                </inertia-link>
+                <!-- Unbanning -->
+                <button
+                    class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
+                    @click="unbanPlayer()"
+                    v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
+                    <i class="mr-1 fas fa-lock-open"></i>
+                    {{ t('players.show.unban') }}
+                </button>
+                <!-- Banning -->
+                <button
+                    class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
+                    @click="isBanning = true" v-else-if="!player.isBanned">
+                    <i class="mr-1 fas fa-gavel"></i>
+                    {{ t('players.show.issue') }}
+                </button>
+                <!-- Lock ban -->
+                <inertia-link
+                    class="px-5 py-2 font-semibold text-white rounded bg-success dark:bg-dark-success mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
+                    method="POST"
+                    v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/lock'"
+                    v-if="player.isBanned && !player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
+                    <i class="mr-1 fas fa-lock"></i>
+                    {{ t('players.show.lock_ban') }}
+                </inertia-link>
+                <!-- Unlock ban -->
+                <inertia-link
+                    class="px-5 py-2 font-semibold text-white rounded bg-success dark:bg-dark-success mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
+                    method="POST"
+                    v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/unlock'"
+                    v-if="player.isBanned && player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
+                    <i class="mr-1 fas fa-lock-open"></i>
+                    {{ t('players.show.unlock_ban') }}
+                </inertia-link>
+            </div>
+
+            <!-- Small icon buttons top left -->
+            <div class="absolute top-2 left-2 flex gap-2" v-if="this.perm.check(this.perm.PERM_LINKED)">
                 <a
-                    class="p-1 text-sm mr-2 font-bold leading-4 text-center w-7 rounded border-gray-200 bg-secondary dark:bg-dark-secondary border-2 block"
+                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 block"
                     :href="'/linked_tokens/' + player.licenseIdentifier"
                     :title="t('players.show.show_link_token')"
                     target="_blank"
@@ -174,7 +238,7 @@
                     <i class="fas fa-drumstick-bite"></i>
                 </a>
                 <a
-                    class="p-1 text-sm mr-2 font-bold leading-4 text-center w-7 rounded border-gray-200 bg-secondary dark:bg-dark-secondary border-2 block"
+                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 block"
                     :href="'/linked_ips/' + player.licenseIdentifier"
                     :title="t('players.show.show_link_ip')"
                     target="_blank"
@@ -182,7 +246,7 @@
                     <i class="fas fa-ethernet"></i>
                 </a>
                 <a
-                    class="p-1 text-sm mr-2 font-bold leading-4 text-center w-7 rounded border-gray-200 bg-secondary dark:bg-dark-secondary border-2 block"
+                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 block"
                     :href="'/linked_identifiers/' + player.licenseIdentifier"
                     :title="t('players.show.show_link_identifier')"
                     target="_blank"
@@ -191,10 +255,11 @@
                 </a>
             </div>
 
-            <div class="absolute top-2 right-2 flex">
+            <!-- Small icon buttons top right -->
+            <div class="absolute top-2 right-2 flex gap-2">
                 <!-- Damage Logs -->
                 <a
-                    class="py-1 px-2 ml-2 font-semibold text-white rounded bg-pink-600 dark:bg-pink-500 block"
+                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-pink-400 bg-secondary dark:bg-dark-secondary border-2 block"
                     :href="'/who_was_damaged/' + player.licenseIdentifier"
                     :title="t('players.show.damage_logs_by')"
                     v-if="this.perm.check(this.perm.PERM_DAMAGE_LOGS)"
@@ -204,7 +269,7 @@
                 </a>
                 <!-- Damage Logs 2 -->
                 <a
-                    class="py-1 px-2 ml-2 mr-5 font-semibold text-white rounded bg-pink-600 dark:bg-pink-500 block"
+                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-pink-400 bg-secondary dark:bg-dark-secondary border-2 block"
                     :href="'/who_damaged/' + player.licenseIdentifier"
                     :title="t('players.show.damage_logs')"
                     v-if="this.perm.check(this.perm.PERM_DAMAGE_LOGS)"
@@ -215,43 +280,47 @@
 
                 <!-- Edit Role -->
                 <button
-                    class="py-1 px-2 ml-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger block"
+                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-red-400 bg-secondary dark:bg-dark-secondary border-2 block"
                     @click="isRoleEdit = true"
                     v-if="allowRoleEdit && !player.isSuperAdmin"
                     :title="t('players.show.edit_role')"
                 >
                     <i class="fas fa-clipboard-list"></i>
                 </button>
+
                 <!-- Add Tag -->
                 <button
-                    class="py-1 px-2 ml-2 font-semibold text-white rounded bg-success dark:bg-dark-success block"
+                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-green-400 bg-secondary dark:bg-dark-secondary border-2 block"
                     @click="isTagging = true"
                     :title="t('players.show.edit_tag')"
                     v-if="this.perm.check(this.perm.PERM_EDIT_TAG)"
                 >
                     <i class="fas fa-tag"></i>
                 </button>
+
                 <!-- Create screen capture -->
                 <button
-                    class="py-1 px-2 ml-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 block"
+                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block"
                     @click="isScreenCapture = true"
                     :title="t('screenshot.screencapture')"
                     v-if="status.status === 'online' && this.perm.check(this.perm.PERM_SCREENSHOT)"
                 >
                     <i class="fas fa-video"></i>
                 </button>
+
                 <!-- Create screenshot -->
                 <button
-                    class="py-1 px-2 ml-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 block"
+                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block"
                     @click="isScreenshot = true; createScreenshot()"
                     :title="t('screenshot.screenshot')"
                     v-if="status.status === 'online' && this.perm.check(this.perm.PERM_SCREENSHOT)"
                 >
                     <i class="fas fa-camera"></i>
                 </button>
+
                 <!-- View on Map -->
                 <a
-                    class="py-1 px-2 ml-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 block"
+                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block"
                     :href="'/map#' + player.licenseIdentifier"
                     :title="t('global.view_map')"
                     v-if="this.perm.check(this.perm.PERM_LIVEMAP) && status.status === 'online'"
@@ -259,72 +328,15 @@
                 >
                     <i class="fas fa-map"></i>
                 </a>
+
                 <!-- Revive -->
                 <button
-                    class="py-1 px-2 ml-2 font-semibold text-white rounded bg-success dark:bg-dark-success block"
+                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-yellow-400 bg-secondary dark:bg-dark-secondary border-2 block"
                     @click="revivePlayer()" v-if="status.status === 'online'"
                     :title="t('players.show.revive')"
                 >
                     <i class="fas fa-heartbeat"></i>
                 </button>
-            </div>
-
-            <div class="mb-3 flex flex-wrap justify-end">
-                <!-- StaffPM -->
-                <button
-                    class="px-5 py-2 ml-3 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    @click="isStaffPM = true" v-if="status.status === 'online'">
-                    <i class="fas fa-envelope-open-text"></i>
-                    {{ t('players.show.staffpm') }}
-                </button>
-                <!-- Kicking -->
-                <button
-                    class="px-5 py-2 ml-3 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    @click="isKicking = true" v-if="status.status === 'online'">
-                    <i class="fas fa-user-minus"></i>
-                    {{ t('players.show.kick') }}
-                </button>
-                <!-- Edit Ban -->
-                <inertia-link
-                    class="px-5 py-2 font-semibold text-white rounded bg-yellow-500 ml-3 mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/edit'"
-                    v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
-                    <i class="mr-1 fas fa-edit"></i>
-                    {{ t('players.show.edit_ban') }}
-                </inertia-link>
-                <!-- Unbanning -->
-                <button
-                    class="px-5 py-2 ml-3 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    @click="unbanPlayer()"
-                    v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
-                    <i class="mr-1 fas fa-lock-open"></i>
-                    {{ t('players.show.unban') }}
-                </button>
-                <!-- Banning -->
-                <button
-                    class="px-5 py-2 ml-3 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    @click="isBanning = true" v-else-if="!player.isBanned">
-                    <i class="mr-1 fas fa-gavel"></i>
-                    {{ t('players.show.issue') }}
-                </button>
-                <!-- Lock ban -->
-                <inertia-link
-                    class="px-5 py-2 ml-3 font-semibold text-white rounded bg-success dark:bg-dark-success mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    method="POST"
-                    v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/lock'"
-                    v-if="player.isBanned && !player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
-                    <i class="mr-1 fas fa-lock"></i>
-                    {{ t('players.show.lock_ban') }}
-                </inertia-link>
-                <!-- Lock ban -->
-                <inertia-link
-                    class="px-5 py-2 ml-3 font-semibold text-white rounded bg-success dark:bg-dark-success mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    method="POST"
-                    v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/unlock'"
-                    v-if="player.isBanned && player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
-                    <i class="mr-1 fas fa-lock-open"></i>
-                    {{ t('players.show.unlock_ban') }}
-                </inertia-link>
             </div>
         </div>
 
@@ -946,24 +958,28 @@
         </v-section>
 
         <!-- Characters -->
-        <v-section :noFooter="true">
+        <v-section :noFooter="true" :collapsed="charactersCollapsed">
             <template #header>
-                <h2>
-                    {{ t('players.characters.characters') }}
+                <div class="flex justify-between">
+                    <div class="flex gap-4">
+                        <div class="cursor-pointer text-2xl flex items-center" @click="charactersCollapsed = !charactersCollapsed">
+                            <i class="fas fa-chevron-right" :class="{'rotate-90' : !charactersCollapsed}"></i>
+                        </div>
 
-                    <!-- Hiding deleted characters on click -->
-                    <button class="px-3 py-2 font-semibold text-white rounded bg-gray-400 text-base float-right"
-                            @click="hideDeleted">
+                        <h2>
+                            {{ t('players.characters.characters') }}
+                        </h2>
+                    </div>
+
+                    <button class="block px-5 py-2 font-semibold text-center text-white bg-gray-500 rounded" :class="{'bg-blue-500' : isShowingDeletedCharacters}" @click="hideDeleted" v-if="!charactersCollapsed">
                         <span v-if="isShowingDeletedCharacters">
-                            <i class="fas fa-eye-slash"></i>
                             {{ t('players.characters.hide') }}
                         </span>
                         <span v-else>
-                            <i class="fas fa-eye"></i>
                             {{ t('players.characters.show') }}
                         </span>
                     </button>
-                </h2>
+                </div>
             </template>
 
             <template>
@@ -972,7 +988,7 @@
                         v-for="(character) in characters"
                         :key="character.id"
                         v-bind:deleted="character.characterDeleted"
-                        class="relative"
+                        class="relative mb-0"
                         :class="{ 'shadow-lg' : status.character === character.id }"
                     >
                         <template #header>
@@ -1015,82 +1031,97 @@
                         </template>
 
                         <template #footer>
-                            <inertia-link
-                                class="block px-4 py-3 text-center text-white bg-indigo-600 dark:bg-indigo-400 rounded"
-                                :href="'/players/' + (player.overrideLicense ? player.overrideLicense : player.licenseIdentifier) + '/characters/' + character.id + '/edit?returnTo=' + player.licenseIdentifier">
-                                {{ t('global.view') }}
-                            </inertia-link>
                             <div class="flex justify-between flex-wrap">
-                                <button
-                                    class="block w-full px-4 py-3 2xl:w-split text-center text-white mt-3 bg-warning dark:bg-dark-warning rounded"
-                                    v-if="status.status === 'online' && status.character === character.id"
-                                    @click="form.unload.character = character.id; isUnloading = true">
-                                    <i class="fas fa-bolt mr-1"></i>
-                                    {{ t('players.show.unload') }}
-                                </button>
-                                <inertia-link
-                                    class="block w-full px-4 py-3 text-center text-white mt-3 bg-blue-600 dark:bg-blue-400 rounded"
-                                    :class="{ '2xl:w-split' : status.status === 'online' && status.character === character.id }"
-                                    :href="'/inventories/character/' + character.id"
-                                    v-if="!character.characterDeleted"
-                                >
-                                    <i class="fas fa-briefcase mr-1"></i>
-                                    {{ t('inventories.view') }}
-                                </inertia-link>
-                                <inertia-link
-                                    class="block px-2 py-1 text-center text-white absolute top-1 right-1 bg-blue-600 dark:bg-blue-400 rounded"
-                                    :href="'/inventory/character-' + character.id + ':1'"
-                                    :title="t('inventories.show_inv')"
-                                >
-                                    <i class="fas fa-box"></i>
-                                </inertia-link>
-                                <button
-                                    class="block px-2 cursor-default w-ch-button py-1 text-center text-white absolute top-1 left-1 bg-green-500 dark:bg-green-400 rounded"
-                                    :title="t('players.characters.loaded')"
-                                    v-if="status.character === character.id"
-                                >
-                                    <i class="fas fa-plug"></i>
-                                </button>
-                                <button
-                                    class="block px-2 cursor-default w-ch-button py-1 text-center text-white absolute top-1 left-1 bg-red-500 dark:bg-red-400 rounded"
-                                    v-if="character.isDead"
-                                    :class="{'left-10' : status.character === character.id}"
-                                >
-                                    <i class="fas fa-skull-crossbones"></i>
-                                </button>
+                                <div class="flex justify-between gap-2 w-full">
+                                    <inertia-link
+                                        class="block w-full px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded"
+                                        :href="'/players/' + (player.overrideLicense ? player.overrideLicense : player.licenseIdentifier) + '/characters/' + character.id + '/edit?returnTo=' + player.licenseIdentifier"
+                                    >
+                                        <i class="fas fa-eye mr-1" ></i>
+                                        {{ t('global.view') }}
+                                    </inertia-link>
 
-                                <button
-                                    class="block px-2 cursor-default w-ch-button py-1 text-center text-white absolute top-1 left-1 bg-red-500 dark:bg-red-400 rounded"
-                                    v-if="character.isDead"
-                                    :class="{'left-10' : status.character === character.id}"
-                                >
-                                    <i class="fas fa-skull-crossbones"></i>
-                                </button>
+                                    <inertia-link
+                                        class="block w-full px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded"
+                                        :class="{ '2xl:w-split' : status.status === 'online' && status.character === character.id }"
+                                        :href="'/inventories/character/' + character.id"
+                                    >
+                                        <i class="fas fa-briefcase mr-1"></i>
+                                        {{ t('inventories.view') }}
+                                    </inertia-link>
+                                </div>
 
-                                <button
-                                    class="block px-2 cursor-default w-ch-button py-1 text-center text-white absolute font-bold top-1 right-10 bg-pink-500 dark:bg-pink-400 rounded"
-                                    v-if="character.gender === 1"
-                                    :title="t('players.characters.is_female')"
-                                >
-                                    <i class="fas fa-female"></i>
-                                </button>
-                                <button
-                                    class="block px-2 cursor-default w-ch-button py-1 text-center text-white absolute font-bold top-1 right-10 bg-blue-600 dark:bg-blue-300 rounded"
-                                    v-if="character.gender === 0"
-                                    :title="t('players.characters.is_male')"
-                                >
-                                    <i class="fas fa-male"></i>
-                                </button>
+                                <div class="flex justify-between gap-2 w-full mt-2">
+                                    <button
+                                        class="block w-full px-3 py-2 text-center text-white bg-warning dark:bg-dark-warning rounded"
+                                        v-if="status.status === 'online' && status.character === character.id"
+                                        @click="form.unload.character = character.id; isUnloading = true">
+                                        <i class="fas fa-bolt mr-1"></i>
+                                        {{ t('players.show.unload') }}
+                                    </button>
 
-                                <inertia-link
-                                    class="block w-full px-4 py-3 text-center text-white mt-3 bg-red-600 dark:bg-red-400 rounded"
-                                    href="#"
-                                    @click="deleteCharacter($event, character.id)"
-                                    v-if="!character.characterDeleted && $page.auth.player.isSuperAdmin"
-                                >
-                                    <i class="fas fa-trash-alt mr-1"></i>
-                                    {{ t('players.characters.delete') }}
-                                </inertia-link>
+                                    <inertia-link
+                                        class="block w-full px-3 py-2 text-center text-white bg-red-600 dark:bg-red-400 rounded"
+                                        href="#"
+                                        @click="deleteCharacter($event, character.id)"
+                                        v-if="!character.characterDeleted && $page.auth.player.isSuperAdmin"
+                                    >
+                                        <i class="fas fa-trash-alt mr-1"></i>
+                                        {{ t('players.characters.delete') }}
+                                    </inertia-link>
+                                </div>
+
+                                <!-- Small icon buttons -->
+                                <div class="absolute top-1 left-1 right-1 flex gap-2 justify-between">
+                                    <!-- Top left -->
+                                    <div class="flex gap-2">
+                                        <!-- Show inventory -->
+                                        <inertia-link
+                                            class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-300 bg-secondary dark:bg-dark-secondary border-2 block"
+                                            :href="'/inventory/character-' + character.id + ':1'"
+                                            :title="t('inventories.show_inv')"
+                                        >
+                                            <i class="fas fa-box"></i>
+                                        </inertia-link>
+                                    </div>
+
+                                    <!-- Top right -->
+                                    <div class="flex gap-2 justify-end">
+                                        <!-- Character loaded -->
+                                        <button
+                                            class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-green-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help"
+                                            :title="t('players.characters.loaded')"
+                                            v-if="status.character === character.id"
+                                        >
+                                            <i class="fas fa-plug"></i>
+                                        </button>
+
+                                        <!-- Character dead -->
+                                        <button
+                                            class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-red-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help"
+                                            v-if="character.isDead"
+                                            :class="{'left-10' : status.character === character.id}"
+                                        >
+                                            <i class="fas fa-skull-crossbones"></i>
+                                        </button>
+
+                                        <!-- Gender -->
+                                        <button
+                                            class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-pink-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help"
+                                            v-if="character.gender === 1"
+                                            :title="t('players.characters.is_female')"
+                                        >
+                                            <i class="fas fa-female"></i>
+                                        </button>
+                                        <button
+                                            class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help"
+                                            v-if="character.gender === 0"
+                                            :title="t('players.characters.is_male')"
+                                        >
+                                            <i class="fas fa-male"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </template>
                     </card>
@@ -1102,67 +1133,76 @@
         </v-section>
 
         <!-- Warnings -->
-        <v-section>
+        <v-section :collapsed="warningsCollapsed">
             <template #header>
-                <h2>
-                    {{ t('players.show.warnings') }}
-                    <select class="inline-block ml-4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded"
-                            id="warningFilter" @change="filterWarnings">
-                        <option value="all" selected>{{ t('global.all') }}</option>
-                        <option value="strike">{{ t('players.show.warning_type.strike') }}</option>
-                        <option value="warning">{{ t('players.show.warning_type.warning') }}</option>
-                        <option value="note">{{ t('players.show.warning_type.note') }}</option>
-                        <option value="system">{{ t('players.show.warning_type.system') }}</option>
-                        <option value="hidden">{{ t('players.show.warning_type.hidden') }}</option>
-                    </select>
-                </h2>
+                <div class="flex justify-between">
+                    <div class="flex gap-4">
+                        <div class="cursor-pointer text-2xl flex items-center" @click="warningsCollapsed = !warningsCollapsed">
+                            <i class="fas fa-chevron-right" :class="{'rotate-90' : !warningsCollapsed}"></i>
+                        </div>
+
+                        <h2>
+                            {{ t('players.show.warnings') }}
+                        </h2>
+                    </div>
+
+                    <button class="block px-5 py-2 font-semibold text-center text-white bg-gray-500 rounded" :class="{'bg-blue-500' : showSystemWarnings}" @click="showSystemWarnings = !showSystemWarnings" v-if="!warningsCollapsed">
+                        <span v-if="showSystemWarnings">
+                            {{ t('players.show.hide_system') }}
+                        </span>
+                        <span v-else>
+                            {{ t('players.show.show_system') }}
+                        </span>
+                    </button>
+                </div>
             </template>
 
             <template>
-                <template v-for="(warning, index) in filteredWarnings">
-                    <div v-if="isAutomatedWarning(warning.message)"
-                        class="flex flex-col px-8 mb-5 bg-white dark:bg-gray-600 rounded-lg shadow-sm relative opacity-50 hover:opacity-100"
-                        :class="{'mb-3' : index+1 < filteredWarnings.length && isAutomatedWarning(filteredWarnings[index+1].message)}">
-                        <header class="text-center">
-                            <div class="flex justify-between gap-4">
+                <template v-for="(warning, index) in warnings">
+                    <template v-if="isAutomatedWarning(warning.message)">
+                        <div v-if="showSystemWarnings" class="flex flex-col px-8 mb-5 bg-white dark:bg-gray-600 rounded-lg shadow-sm relative opacity-50 hover:opacity-100"
+                            :class="{'mb-3' : index + 1 < warnings.length && isAutomatedWarning(warnings[index + 1].message)}">
+                            <header class="text-center">
                                 <div class="flex justify-between gap-4">
-                                    <div class="flex items-center py-4 pr-4 border-r border-gray-200 dark:border-gray-400 w-32 flex-shrink-0">
-                                        <h4 class="truncate" v-if="warning.issuer.playerName === null">{{ t('global.system') }}</h4>
-                                        <h4 class="truncate" :title="warning.issuer.playerName">{{ warning.issuer.playerName }}</h4>
+                                    <div class="flex justify-between gap-4">
+                                        <div class="flex items-center py-4 pr-4 border-r border-gray-200 dark:border-gray-400 w-32 flex-shrink-0">
+                                            <h4 class="truncate" v-if="warning.issuer.playerName === null">{{ t('global.system') }}</h4>
+                                            <h4 class="truncate" :title="warning.issuer.playerName">{{ warning.issuer.playerName }}</h4>
+                                        </div>
+
+                                        <div class="flex items-center py-4">
+                                            <span class="italic text-xs text-muted dark:text-dark-muted text-left">
+                                                {{ warning.message }}
+                                            </span>
+                                        </div>
                                     </div>
 
-                                    <div class="flex items-center py-4">
-                                        <span class="italic text-xs text-muted dark:text-dark-muted text-left">
-                                            {{ warning.message }}
+                                    <div class="flex items-center justify-end py-4 pl-4 border-l border-gray-200 dark:border-gray-400">
+                                        <span class="italic text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap blobk w-32 text-right">
+                                            {{ warning.createdAt | formatTime }}
                                         </span>
+
+                                        <inertia-link
+                                            class="px-3 py-1 ml-3 text-sm font-semibold text-white bg-red-500 rounded hover:bg-red-600"
+                                            method="DELETE"
+                                            v-bind:href="'/players/' + player.licenseIdentifier + '/warnings/' + warning.id"
+                                            v-if="warning.canDelete || $page.auth.player.isSeniorStaff">
+                                            <i class="fas fa-trash"></i>
+                                        </inertia-link>
                                     </div>
                                 </div>
+                            </header>
+                        </div>
+                    </template>
 
-                                <div class="flex items-center justify-end py-4 pl-4 border-l border-gray-200 dark:border-gray-400">
-                                    <span class="italic text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap blobk w-32 text-right">
-                                        {{ warning.createdAt | formatTime }}
-                                    </span>
-
-                                    <inertia-link
-                                        class="px-3 py-1 ml-3 text-sm font-semibold text-white bg-red-500 rounded hover:bg-red-600"
-                                        method="DELETE"
-                                        v-bind:href="'/players/' + player.licenseIdentifier + '/warnings/' + warning.id"
-                                        v-if="warning.canDelete || $page.auth.player.isSeniorStaff">
-                                        <i class="fas fa-trash"></i>
-                                    </inertia-link>
-                                </div>
-                            </div>
-                        </header>
-                    </div>
-
-                    <card class="relative" v-else>
+                    <card class="relative" :no_footer="true" v-else>
                         <template #header>
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center">
                                     <h4>
-                                        {{ warning.issuer.playerName }}
+                                        <span v-html="getWarningTypeIcon(warning.warningType)"></span>
                                         -
-                                        <span v-html="wrapWarningType(warning.warningType)"></span>
+                                        {{ warning.issuer.playerName }}
                                     </h4>
                                 </div>
                                 <div class="flex items-center">
@@ -1208,15 +1248,15 @@
 
                         <template>
                             <p class="text-muted dark:text-dark-muted" v-if="warningEditId !== warning.id">
-                                <span class="whitespace-pre-wrap"
-                                    v-html="formatWarning(warning.message)"></span>
+                                <span class="whitespace-pre-wrap" v-html="formatWarning(warning.message)"></span>
                             </p>
-                            <textarea class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
-                                    :id="'warning_' + warning.id" v-else-if="warningEditId === warning.id">{{ warning.message }}</textarea>
+
+                            <textarea class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" rows="3" :id="'warning_' + warning.id" v-else-if="warningEditId === warning.id">{{ warning.message }}</textarea>
                         </template>
                     </card>
                 </template>
-                <p class="text-muted dark:text-dark-muted" v-if="filteredWarnings.length === 0">
+
+                <p class="text-muted dark:text-dark-muted" v-if="warnings.length === 0">
                     {{ t('players.show.no_warnings') }}
                 </p>
             </template>
@@ -1231,7 +1271,7 @@
                         class="w-full p-5 mb-5 bg-gray-200 rounded shadow dark:bg-gray-600"
                         id="message"
                         name="message"
-                        rows="5"
+                        rows="4"
                         :placeholder="t('players.warning.placeholder', player.playerName)"
                         v-model="form.warning.message"
                         required
@@ -1263,38 +1303,45 @@
             </template>
         </v-section>
 
-        <!-- Screenshots -->
-        <v-section :noFooter="true">
+        <v-section :noFooter="true" :collapsed="extraDataCollapsed">
             <template #header>
-                <h2>
-                    {{ t('screenshot.screenshots') }}
-                </h2>
+                <div class="flex gap-4">
+                    <div class="cursor-pointer text-2xl flex items-center" @click="extraDataCollapsed = !extraDataCollapsed">
+                        <i class="fas fa-chevron-right" :class="{'rotate-90' : !extraDataCollapsed}"></i>
+                    </div>
+
+                    <h2>
+                        {{ t('players.show.logs_and_screenshots') }}
+                    </h2>
+                </div>
             </template>
 
-            <template>
-                <div class="flex justify-center items-center my-6 mt-12" v-if="!haveScreenshotsLoaded">
+            <template v-if="loadingExtraData">
+                <div class="flex justify-center text-lg items-center">
                     <div>
                         <i class="fas fa-cog animate-spin"></i>
                         {{ t('global.loading') }}
                     </div>
                 </div>
-                <table class="w-full whitespace-no-wrap" v-else>
+            </template>
+
+            <template v-else>
+                <table class="w-full">
                     <tr class="font-semibold text-left mobile:hidden">
-                        <th class="px-6 py-4">{{ t('screenshot.screenshot') }}</th>
-                        <th class="px-6 py-4">{{ t('screenshot.note') }}</th>
-                        <th class="px-6 py-4">{{ t('screenshot.created_at') }}</th>
+                        <th class="py-2 px-4">{{ t('screenshot.screenshot') }}</th>
+                        <th class="py-2 px-4">{{ t('screenshot.note') }}</th>
+                        <th class="py-2 px-4">{{ t('screenshot.created_at') }}</th>
                     </tr>
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4"
-                        v-for="screenshot in sortedScreenshots"
-                        :key="screenshot.system ? screenshot.url : screenshot.filename">
-                        <td class="px-6 py-3 border-t mobile:block" v-if="screenshot.system">
+                        v-for="(screenshot, index) in sortedScreenshots" :key="index">
+                        <td class="py-2 px-4 border-t mobile:block" v-if="screenshot.system">
                             <a :href="screenshot.url" target="_blank" class="text-indigo-600 dark:text-indigo-400">{{ t('screenshot.view', screenshot.url.split(".").pop()) }}</a>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block" v-else>
+                        <td class="py-2 px-4 border-t mobile:block" v-else>
                             <a :href="'/export/screenshot/' + screenshot.filename" target="_blank"
-                               class="text-indigo-600 dark:text-indigo-400">{{ t('screenshot.view', screenshot.filename.split(".").pop()) }}</a>
+                            class="text-indigo-600 dark:text-indigo-400">{{ t('screenshot.view', screenshot.filename.split(".").pop()) }}</a>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">
+                        <td class="py-2 px-4 border-t mobile:block">
                             <i class="fas fa-cogs mr-1" v-if="screenshot.system"></i>
                             {{ screenshot.note || 'N/A' }}
                             <a :href="cheatDocs(screenshot.note)" target="_blank"
@@ -1302,48 +1349,30 @@
                                 class="text-yellow-600 dark:text-yellow-400 font-semibold"
                                 :title="t('screenshot.documentation')">?</a>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block" v-if="screenshot.created_at">
+                        <td class="py-2 px-4 border-t w-56 mobile:block" v-if="screenshot.created_at">
                             {{ screenshot.created_at * 1000 | formatTime(true) }}
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block" v-else>{{ t('global.unknown') }}</td>
+                        <td class="py-2 px-4 border-t mobile:block" v-else>{{ t('global.unknown') }}</td>
                     </tr>
                     <tr v-if="sortedScreenshots.length === 0">
-                        <td class="px-4 py-6 text-center border-t" colspan="100%">
+                        <td class="py-2 px-4 text-center border-t" colspan="100%">
                             {{ t('screenshot.no_screenshots') }}
                         </td>
                     </tr>
                 </table>
-            </template>
 
-        </v-section>
-
-        <!-- Panel Logs -->
-        <v-section :noFooter="true">
-            <template #header>
-                <h2>
-                    {{ t('players.show.panel_logs') }}
-                </h2>
-            </template>
-
-            <template>
-                <div class="flex justify-center items-center my-6 mt-12" v-if="!havePanelLogsLoaded">
-                    <div>
-                        <i class="fas fa-cog animate-spin"></i>
-                        {{ t('global.loading') }}
-                    </div>
-                </div>
-                <table class="w-full whitespace-no-wrap" v-else>
+                <table class="w-full mt-6">
                     <tr class="font-semibold text-left mobile:hidden">
-                        <th class="px-6 py-4">{{ t('logs.action') }}</th>
-                        <th class="px-6 py-4">{{ t('logs.timestamp') }}</th>
+                        <th class="py-2 px-4">{{ t('logs.action') }}</th>
+                        <th class="py-2 px-4">{{ t('logs.timestamp') }}</th>
                     </tr>
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="log in panelLogs"
                         :key="log.id">
-                        <td class="px-6 py-3 border-t mobile:block">{{ log.log }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ log.timestamp | formatTime(true) }}</td>
+                        <td class="py-2 px-4 border-t mobile:block" v-html="formatPanelLog(log.log)"></td>
+                        <td class="py-2 px-4 border-t w-56 mobile:block">{{ log.timestamp | formatTime(true) }}</td>
                     </tr>
                     <tr v-if="panelLogs.length === 0">
-                        <td class="px-4 py-6 text-center border-t" colspan="100%">
+                        <td class="py-2 px-4 text-center border-t" colspan="100%">
                             {{ t('players.show.no_panel_logs') }}
                         </td>
                     </tr>
@@ -1491,9 +1520,7 @@
             </div>
         </div>
 
-        <ScreenshotAttacher :close="screenshotAttached" :license="screenshotLicense" :url="screenshotImage"
-                            v-if="isAttachingScreenshot"/>
-
+        <ScreenshotAttacher :close="screenshotAttached" :license="screenshotLicense" :url="screenshotImage" v-if="isAttachingScreenshot"/>
     </div>
 </template>
 
@@ -1516,13 +1543,6 @@ import json from 'highlight.js/lib/languages/json';
 hljs.registerLanguage('json', json);
 
 import 'highlight.js/styles/github-dark-dimmed.css';
-
-const ignoreMetadataKeys = [
-    "lastMessages",
-    "playerVehicle",
-    "playerPed",
-    "entity"
-];
 
 export default {
     layout: Layout,
@@ -1601,7 +1621,6 @@ export default {
             isTempBanning: false,
             isTempSelect: true,
             warningEditId: 0,
-            filteredWarnings: this.warnings,
             form: {
                 ban: {
                     reason: null,
@@ -1626,6 +1645,8 @@ export default {
             },
             isShowingDeletedCharacters: false,
             isUnloading: false,
+            showSystemWarnings: false,
+
             isShowingLinked: false,
             isShowingLinkedLoading: false,
             linkedAccounts: {
@@ -1678,16 +1699,19 @@ export default {
             screenshotError: null,
             isAttachingScreenshot: false,
 
-            haveScreenshotsLoaded: false,
-            sortedScreenshots: [],
+            loadingExtraData: false,
 
-            havePanelLogsLoaded: false,
+            sortedScreenshots: [],
             panelLogs: [],
 
             statusLoading: true,
             status: {},
 
-            playerTime: false
+            playerTime: false,
+
+            charactersCollapsed: false,
+            warningsCollapsed: true,
+            extraDataCollapsed: true
         }
     },
     methods: {
@@ -1702,6 +1726,14 @@ export default {
         },
         formatSecondDiff(sec) {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
+        },
+        formatPanelLog(log) {
+            return log.replace(/(license:\w+)(?=\))/gm, match => {
+				const start = match.substring(8, 12),
+					end = match.substring(match.length - 4);
+
+				return `<span class="text-gray-700 dark:text-gray-300" title="${match}">${start}...${end}</span>`;
+			});
         },
         cleanupObject(value) {
             if (typeof value === "object") {
@@ -1816,33 +1848,24 @@ export default {
 
             return false;
         },
-        async loadScreenshots() {
+        async loadExtraData() {
+            this.loadingExtraData = true;
+
             try {
-                const data = await axios.get('/players/' + this.player.licenseIdentifier + '/screenshots');
+                const response = await axios.get('/players/' + this.player.licenseIdentifier + '/data');
 
-                if (data.data && data.data.status) {
-                    const screenshots = data.data.data;
+                if (response.data && response.data.status) {
+                    const data = response.data.data;
 
-                    const sortedScreenshots = screenshots.sort((a, b) => b.created_at - a.created_at);
+                    this.panelLogs = data.panelLogs;
+                    this.sortedScreenshots = data.screenshots;
 
-                    this.sortedScreenshots = sortedScreenshots;
+                    this.sortedScreenshots.sort((a, b) => b.created_at - a.created_at);
                 }
             } catch (e) {
             }
 
-            this.haveScreenshotsLoaded = true;
-        },
-        async loadPanelLogs() {
-            try {
-                const data = await axios.get('/players/' + this.player.licenseIdentifier + '/panelLogs');
-
-                if (data.data && data.data.status) {
-                    this.panelLogs = data.data.data;
-                }
-            } catch (e) {
-            }
-
-            this.havePanelLogsLoaded = true;
+            this.loadingExtraData = false;
         },
         async loadStatus() {
             this.statusLoading = true;
@@ -2072,28 +2095,23 @@ export default {
 
             this.isShowingAntiCheatLoading = false;
         },
-        wrapWarningType(type) {
+        getWarningTypeIcon(type) {
             const label = this.t('players.show.warning_type.' + type);
 
             switch (type) {
                 case 'strike':
-                    return '<span class="italic text-red-500"><i class="fas fa-bolt"></i> ' + label + '</span>';
+                    return '<span class="cursor-help text-red-500"><i class="fas fa-bolt" title="' + label + '"></i></span>';
                 case 'warning':
-                    return '<span class="italic text-yellow-600"><i class="fas fa-exclamation-triangle"></i> ' + label + '</span>';
+                    return '<span class="cursor-help text-yellow-600"><i class="fas fa-exclamation-triangle" title="' + label + '"></i></span>';
                 case 'note':
-                    return '<span class="italic text-yellow-400"><i class="fas fa-sticky-note"></i> ' + label + '</span>';
+                    return '<span class="cursor-help text-yellow-400"><i class="fas fa-sticky-note" title="' + label + '"></i></span>';
                 case 'system':
-                    return '<span class="italic text-blue-500"><i class="fas fa-robot"></i> ' + label + '</span>';
+                    return '<span class="cursor-help text-blue-500"><i class="fas fa-robot" title="' + label + '"></i></span>';
                 case 'hidden':
-                    return '<span class="italic text-pink-500"><i class="fas fa-eye-slash"></i> ' + label + '</span>';
+                    return '<span class="cursor-help text-pink-500"><i class="fas fa-eye-slash" title="' + label + '"></i></span>';
             }
 
             return '';
-        },
-        filterWarnings() {
-            const filter = $('#warningFilter').val();
-
-            this.filteredWarnings = this.warnings.filter((w) => !filter || filter === 'all' || w.warningType === filter);
         },
         pedModel(hash) {
             if (!hash) {
@@ -2101,19 +2119,6 @@ export default {
             }
 
             return models[hash] || hash;
-        },
-        joaat(key) {
-            let hash = 0;
-            for (let i = 0, length = key.length; i < length; i++) {
-                hash += key.charCodeAt(i);
-                hash += (hash << 10);
-                hash ^= (hash >>> 6);
-            }
-            hash += (hash << 3);
-            hash ^= (hash >>> 11);
-            hash += (hash << 15);
-
-            return hash;
         },
         localizeBan() {
             if (!this.player.ban) {
@@ -2268,7 +2273,6 @@ export default {
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/bans', {...this.form.ban, expire});
 
             this.local.ban = this.localizeBan();
-            this.filterWarnings();
 
             // Reset.
             this.isBanning = false;
@@ -2283,8 +2287,6 @@ export default {
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/warnings', this.form.warning);
 
-            this.filterWarnings();
-
             // Reset.
             this.form.warning.message = null;
         },
@@ -2294,8 +2296,6 @@ export default {
                 message: $('#warning_' + id).val(),
                 warning_type: warningType,
             });
-
-            this.filterWarnings();
 
             // Reset.
             this.warningEditId = 0;
@@ -2485,8 +2485,7 @@ export default {
             this.form.kick.reason = this.kickReason;
         }
 
-        this.loadScreenshots();
-        this.loadPanelLogs();
+        this.loadExtraData();
         this.loadStatus();
 
         this.updatePlayerTime();
