@@ -74,6 +74,19 @@ class AppServiceProvider extends ServiceProvider
                 $sql = preg_replace('/\?/', "{$binding}", $sql, 1);
             }
 
+            $re = '/in \((.+?)\)/m';
+            preg_replace_callback($re, function($matches) {
+                $values = explode(',', $matches[1]);
+
+                if (count($values) > 5) {
+                    $values = array_slice($values, 0, 5);
+
+                    $values[] = '...';
+                }
+
+                return 'in (' . implode(',', $values) . ')';
+            }, $sql);
+
             $sql = trim(str_replace("\n", ' ', $sql));
 
             $log = "[{$time} - {$name}] {$sql} ({$query->time}ms)";
