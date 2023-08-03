@@ -801,8 +801,8 @@
                     <b class="whitespace-nowrap">{{ player.ban.original }}:</b> <i>{{ player.ban.info }}</i>
                 </div>
 
-                <div class="mt-2 text-sm" v-if="player.ban.accuracy">
-                    <b class="whitespace-nowrap" :title="t('players.show.accuracy_title', player.ban.accuracy.banned, player.ban.accuracy.total)">{{ t('players.show.accuracy') }}:</b> <i>~{{ player.ban.accuracy.accuracy }}%</i>
+                <div class="mt-2 text-sm" v-if="player.ban.accuracy" :title="t('players.show.accuracy_title', player.ban.accuracy.banned, player.ban.accuracy.total)">
+                    <b class="whitespace-nowrap">{{ t('players.show.accuracy') }}:</b> <i>~{{ player.ban.accuracy.accuracy }}%</i>
                 </div>
             </alert>
             <!-- Issuing -->
