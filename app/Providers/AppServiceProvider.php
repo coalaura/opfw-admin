@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Helpers\PermissionHelper;
 use App\Http\Resources\PlayerResource;
 use App\Server;
+use App\Helpers\SessionHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -36,7 +37,11 @@ class AppServiceProvider extends ServiceProvider
         // Disable resource wrapping.
         JsonResource::withoutWrapping();
 
-		DB::listen(function ($query) {
+        $session = SessionHelper::getInstance();
+        $discord = $session->get('discord');
+        $name = $discord ? $discord['username'] : 'Guest';
+
+		DB::listen(function ($query) use ($name) {
 			if (!env('LOG_QUERIES') || !CLUSTER) {
                 return;
             }
@@ -44,10 +49,7 @@ class AppServiceProvider extends ServiceProvider
             $time = date("H:i:s");
             $day = date("Y_m_d");
 
-            $file = storage_path("logs/" . CLUSTER . "_{$day}_query.log");
-
-            $user = user();
-            $name = $user ? $user->player_name : 'Guest';
+            $file = storage_path("logs/" . CLUSTER . "_query_{$day}.log");
 
             $sql = $query->sql;
 
@@ -58,7 +60,7 @@ class AppServiceProvider extends ServiceProvider
 
                 $binding = is_numeric($binding) ? $binding : "'{$binding}'";
 
-                $sql = preg_replace('/\?/', "'{$binding}'", $sql, 1);
+                $sql = preg_replace('/\?/', "{$binding}", $sql, 1);
             }
 
             $sql = trim(str_replace("\n", ' ', $sql));

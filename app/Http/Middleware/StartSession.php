@@ -47,4 +47,9 @@ namespace {
     {
         return sessionHelper()->getCurrentLicense();
     }
+
+    function discord(): ?array
+    {
+        return sessionHelper()->getDiscord();
+    }
 }

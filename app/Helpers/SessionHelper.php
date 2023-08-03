@@ -316,6 +316,17 @@ class SessionHelper
         return $this->player;
     }
 
+    public function getDiscord(): ?array
+    {
+        $discord = $this->get('discord');
+
+        if (!$discord) {
+            return null;
+        }
+
+        return $discord;
+    }
+
     public function getCurrentLicense(): ?string
     {
         $player = $this->getPlayer();
