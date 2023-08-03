@@ -258,7 +258,8 @@ class PlayerBanController extends Controller
             abort(401);
         }
 
-        $player->bans()->forceDelete();
+        $ban->forceDelete();
+
         $user = user();
 
         if ($ban->ban_hash) {
