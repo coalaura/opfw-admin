@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Ban;
 
 class BanResource extends JsonResource
 {
@@ -17,6 +18,8 @@ class BanResource extends JsonResource
     public function toArray($request): array
     {
         $reason = $this->getFormattedReason();
+
+        // $accuracy = Ban::getAccuracy($this->reason);
 
         return [
             'id'         => $this->id,

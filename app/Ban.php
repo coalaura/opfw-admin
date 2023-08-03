@@ -110,6 +110,13 @@ class Ban extends Model
         ]
     ];
 
+    public static function getAccuracy(string $reason)
+    {
+        $data = self::select("SELECT SUM(1) as total, SUM(IF(ban_hash IS NULL, 1, 0)) as unbanned, SUM(IF(ban_hash IS NOT NULL, 1, 0)) as banned FROM anti_cheat_events LEFT JOIN user_bans ON license_identifier = identifier WHERE type = 'fast_movement' AND anti_cheat_events.timestamp > UNIX_TIMESTAMP() - 10 * 24 * 60 * 60");
+
+        return $data;
+    }
+
     public static function getAutomatedReasons()
     {
         if (self::$automatedReasons === null) {

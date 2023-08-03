@@ -3,8 +3,6 @@
 namespace App\Http\Resources;
 
 use App\Helpers\GeneralHelper;
-use App\Player;
-use App\PlayerStatus;
 use App\Warning;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -27,6 +25,8 @@ class PlayerResource extends JsonResource
 
 		$drug = (isset($this->panel_drug_department) && $this->panel_drug_department) || ($this->license_identifier && GeneralHelper::isUserRoot($this->license_identifier));
 
+		$ban = $this->getActiveBan();
+
 		return [
 			'id'              => $this->user_id,
 			'avatar'          => $this->avatar,
@@ -43,10 +43,10 @@ class PlayerResource extends JsonResource
 			'isSeniorStaff'   => $this->isSeniorStaff(),
 			'isSuperAdmin'    => $this->isSuperAdmin(),
 			'isRoot'          => $this->isRoot(),
-			'isBanned'        => $this->isBanned(),
+			'isBanned'        => !!$ban,
 			'isSoftBanned'    => $this->is_soft_banned,
 			'warnings'        => $plain ? 0 : $this->warnings()->whereIn('warning_type', [Warning::TypeStrike, Warning::TypeWarning])->count(),
-			'ban'             => new BanResource($this->getActiveBan()),
+			'ban'             => new BanResource($ban),
 			'playerAliases'   => $identifiers ? array_values(array_unique(array_filter($identifiers, function($e) {
 				return $e !== $this->player_name && str_replace('?', '', $e) !== '';
 			}))) : [],
