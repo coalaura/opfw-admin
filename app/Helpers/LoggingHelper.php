@@ -117,9 +117,9 @@ class LoggingHelper
     private static function header()
     {
         $timestamp = date(\DateTimeInterface::RFC3339);
-        $method = str_pad($_SERVER['REQUEST_METHOD'], 7, ' ');
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $path = explode('?', $_SERVER['REQUEST_URI']);
+        $method = str_pad($_SERVER['REQUEST_METHOD'] ?? '???', 7, ' ');
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '???';
+        $path = explode('?', $_SERVER['REQUEST_URI'] ?? '???');
         $get = isset($path[1]) ? $path[1] : null;
         $path = $path[0];
 
