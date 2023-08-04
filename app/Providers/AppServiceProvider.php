@@ -37,8 +37,7 @@ class AppServiceProvider extends ServiceProvider
         // Disable resource wrapping.
         JsonResource::withoutWrapping();
 
-        $session = SessionHelper::getInstance();
-        $discord = $session->getDiscord();
+        $discord = env('DB_CONNECTION') ? SessionHelper::getInstance()->getDiscord() : null;
         $name = $discord ? $discord['username'] : 'Guest';
 
 		DB::listen(function ($query) use ($name) {
