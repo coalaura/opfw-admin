@@ -171,7 +171,7 @@
 				<table class="w-full whitespace-no-wrap">
 					<tr class="font-semibold text-left mobile:hidden">
 						<th class="px-6 py-4">{{ t('logs.player') }}</th>
-						<th class="px-6 py-4">{{ t('logs.server_id') }}</th>
+						<th class="px-6 py-4 whitespace-nowrap">{{ t('logs.server_id') }}</th>
 						<th class="px-6 py-4">{{ t('logs.action') }}</th>
 						<th class="px-6 py-4">{{ t('logs.details') }}</th>
 						<th class="px-6 py-4">
@@ -191,13 +191,15 @@
 								{{ playerName(log.licenseIdentifier) }}
 							</inertia-link>
 						</td>
-						<td class="px-6 py-3 border-t mobile:block" :title="t('global.server_timeout')">
-							<a class="font-semibold" :href="'/map#server_' + log.status.serverId"
-							   :title="t('global.view_map')" v-if="log.status.status === 'online'">
-								{{ log.status.serverId }}
-							</a>
+						<td class="px-6 py-3 border-t mobile:block">
+							<span class="font-semibold" v-if="statusLoading">
+                                {{ t('global.loading') }}
+                            </span>
+							<span class="font-semibold" v-else-if="status[log.licenseIdentifier]">
+                                {{ status[log.licenseIdentifier].source }}
+                            </span>
 							<span class="font-semibold" v-else>
-								{{ t('global.status.' + log.status.status) }}
+								{{ t('global.status.offline') }}
 							</span>
 						</td>
 						<td class="px-6 py-3 border-t mobile:block">
@@ -411,7 +413,10 @@ export default {
 			searchingActions: false,
 			searchableActions: [],
 
-			searchTimeout: false
+			searchTimeout: false,
+
+			statusLoading: false,
+			status: {}
 		};
 	},
 	methods: {
@@ -538,6 +543,8 @@ export default {
 					preserveScroll: true,
 					only: ['logs', 'playerMap', 'time', 'links', 'page'],
 				});
+
+				await this.updateStatus();
 			} catch (e) {
 			}
 
@@ -668,9 +675,24 @@ export default {
 		},
 		playerName(licenseIdentifier) {
 			return licenseIdentifier in this.playerMap ? this.playerMap[licenseIdentifier] : licenseIdentifier;
-		}
+		},
+        async updateStatus() {
+            this.statusLoading = true;
+
+            const identifiers = this.logs.map(player => player.licenseIdentifier).filter((value, index, self) => self.indexOf(value) === index).join(",");
+
+			if (identifiers) {
+            	this.status = await this.requestData("/online/" + identifiers);
+			} else {
+                this.status = {};
+            }
+
+            this.statusLoading = false;
+        }
 	},
 	mounted() {
+		this.updateStatus();
+
 		const _this = this;
 
 		$('body').on('click', 'a.exit-log', function (e) {

@@ -117,15 +117,15 @@
                         <th class="w-24 px-6 py-4"></th>
                     </tr>
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="player in players" v-bind:key="player.id">
-                        <td class="px-6 py-3 border-t mobile:block" :title="t('global.server_timeout')">
-                            <span class="font-semibold" v-if="player.status.status === 'online'">
-                                {{ player.status.serverId }} <sup>{{ player.status.serverName }}</sup>
+                        <td class="px-6 py-3 border-t mobile:block">
+                            <span class="font-semibold" v-if="statusLoading">
+                                {{ t('global.loading') }}
                             </span>
-                            <span class="font-semibold" v-else-if="player.status.status === 'unavailable'" :title="t('global.status.unavailable_info')">
-                                {{ t('global.status.unavailable') }}
+                            <span class="font-semibold" v-else-if="status[player.licenseIdentifier]">
+                                {{ status[player.licenseIdentifier].source }}
                             </span>
                             <span class="font-semibold" v-else>
-                                {{ t('global.status.' + player.status.status) }}
+                                {{ t('global.status.offline') }}
                             </span>
                         </td>
                         <td class="px-6 py-3 border-t mobile:block">{{ player.licenseIdentifier }}</td>
@@ -245,8 +245,14 @@ export default {
     },
     data() {
         return {
-            isLoading: false
+            isLoading: false,
+
+            statusLoading: false,
+            status: {}
         };
+    },
+    mounted() {
+        this.updateStatus();
     },
     methods: {
         refresh: async function () {
@@ -262,9 +268,24 @@ export default {
                     preserveScroll: true,
                     only: [ 'players', 'time', 'banMap', 'links', 'page' ],
                 });
+
+                await this.updateStatus();
             } catch(e) {}
 
             this.isLoading = false;
+        },
+        async updateStatus() {
+            this.statusLoading = true;
+
+            const identifiers = this.players.map(player => player.licenseIdentifier).join(',')
+
+            if (identifiers) {
+            	this.status = await this.requestData("/online/" + identifiers);
+			} else {
+                this.status = {};
+            }
+
+            this.statusLoading = false;
         },
         getBanInfo(licenseIdentifier, key) {
             const ban = licenseIdentifier in this.banMap ? this.banMap[licenseIdentifier] : null;

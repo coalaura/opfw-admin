@@ -1861,7 +1861,9 @@ export default {
         async loadStatus() {
             this.statusLoading = true;
 
-            this.status = await this.requestData("/online/" + this.player.licenseIdentifier);
+            const status = await this.requestData("/online/" + this.player.licenseIdentifier);
+
+            this.status = status[this.player.licenseIdentifier] || false;
 
             this.statusLoading = false;
         },

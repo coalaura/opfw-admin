@@ -18,16 +18,12 @@ class PlayerIndexResource extends JsonResource
      */
     public function toArray($request): array
     {
-        $status = Player::getOnlineStatus($this->license_identifier, true);
-
         return [
             'licenseIdentifier' => $this->license_identifier,
-            'playerName'        => $status && $status->fakeName ? $status->fakeName : $this->getFilteredPlayerName(),
+            'playerName'        => $this->getFilteredPlayerName(),
             'playTime'          => $this->playtime,
             'warnings'          => $this->warning_count,
             'isBanned'          => !!Ban::getBanForUser($this->license_identifier),
-            'status'            => $status,
-            'character'         => $status && $status->character,
             'playtime'          => $this->playtime,
 			'staffToggled'      => $this->isStaffToggled(),
 			'staffHidden'       => $this->isStaffHidden(),
