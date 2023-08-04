@@ -93,6 +93,8 @@ class AppServiceProvider extends ServiceProvider
      */
     protected function registerInertia()
     {
+        $ip = Server::getFirstServerIP();
+
         // Shared inertia data.
         Inertia::share([
             // Current and previous url.
@@ -115,7 +117,8 @@ class AppServiceProvider extends ServiceProvider
                 ];
             },
 
-            'serverIp' => Server::getFirstServerIP(),
+            'serverIp' => $ip,
+            'serverName' => Server::getServerName($ip),
 
             'discord' => function() {
                 $session = sessionHelper();

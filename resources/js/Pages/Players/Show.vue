@@ -41,26 +41,17 @@
                         <span class="font-semibold">{{ t('global.loading') }}</span>
                     </badge>
                     <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale"
-                           v-else-if="status.status === 'online'">
+                           v-else-if="status">
                         <span class="font-semibold">{{ t('global.status.online') }}
-                            <sup>[{{ status.serverId }}]</sup>
+                            <sup>[{{ status.source }}]</sup>
                         </span>
-
-                        <span class="font-semibold cursor-pointer ml-1" @click="loadStatus()">
-                            <i class="fas fa-sync-alt"></i>
-                        </span>
-                    </badge>
-                    <badge class="border-red-200 bg-warning-pale dark:bg-dark-warning-pale"
-                           v-else-if="status.status === 'unavailable'"
-                           :title="t('global.status.unavailable_info')">
-                        <span class="font-semibold">{{ t('global.status.unavailable') }}</span>
 
                         <span class="font-semibold cursor-pointer ml-1" @click="loadStatus()">
                             <i class="fas fa-sync-alt"></i>
                         </span>
                     </badge>
                     <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale" v-else>
-                        <span class="font-semibold">{{ t('global.status.' + status.status) }}</span>
+                        <span class="font-semibold">{{ t('global.status.offline') }}</span>
 
                         <span class="font-semibold cursor-pointer ml-1" @click="loadStatus()">
                             <i class="fas fa-sync-alt"></i>
@@ -173,14 +164,14 @@
                 <!-- StaffPM -->
                 <button
                     class="px-5 py-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    @click="isStaffPM = true" v-if="status.status === 'online'">
+                    @click="isStaffPM = true" v-if="status">
                     <i class="fas fa-envelope-open-text"></i>
                     {{ t('players.show.staffpm') }}
                 </button>
                 <!-- Kicking -->
                 <button
                     class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    @click="isKicking = true" v-if="status.status === 'online'">
+                    @click="isKicking = true" v-if="status">
                     <i class="fas fa-user-minus"></i>
                     {{ t('players.show.kick') }}
                 </button>
@@ -303,7 +294,7 @@
                     class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block"
                     @click="isScreenCapture = true"
                     :title="t('screenshot.screencapture')"
-                    v-if="status.status === 'online' && this.perm.check(this.perm.PERM_SCREENSHOT)"
+                    v-if="status && this.perm.check(this.perm.PERM_SCREENSHOT)"
                 >
                     <i class="fas fa-video"></i>
                 </button>
@@ -313,7 +304,7 @@
                     class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block"
                     @click="isScreenshot = true; createScreenshot()"
                     :title="t('screenshot.screenshot')"
-                    v-if="status.status === 'online' && this.perm.check(this.perm.PERM_SCREENSHOT)"
+                    v-if="status && this.perm.check(this.perm.PERM_SCREENSHOT)"
                 >
                     <i class="fas fa-camera"></i>
                 </button>
@@ -323,7 +314,7 @@
                     class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block"
                     :href="'/map#' + player.licenseIdentifier"
                     :title="t('global.view_map')"
-                    v-if="this.perm.check(this.perm.PERM_LIVEMAP) && status.status === 'online'"
+                    v-if="this.perm.check(this.perm.PERM_LIVEMAP) && status"
                     target="_blank"
                 >
                     <i class="fas fa-map"></i>
@@ -332,7 +323,7 @@
                 <!-- Revive -->
                 <button
                     class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-yellow-400 bg-secondary dark:bg-dark-secondary border-2 block"
-                    @click="revivePlayer()" v-if="status.status === 'online'"
+                    @click="revivePlayer()" v-if="status"
                     :title="t('players.show.revive')"
                 >
                     <i class="fas fa-heartbeat"></i>
@@ -989,7 +980,7 @@
                         :key="character.id"
                         v-bind:deleted="character.characterDeleted"
                         class="relative mb-0"
-                        :class="{ 'shadow-lg' : status.character === character.id }"
+                        :class="{ 'shadow-lg' : status && status.character === character.id }"
                     >
                         <template #header>
                             <div class="flex justify-between">
@@ -1043,7 +1034,7 @@
 
                                     <inertia-link
                                         class="block w-full px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded"
-                                        :class="{ '2xl:w-split' : status.status === 'online' && status.character === character.id }"
+                                        :class="{ '2xl:w-split' : status && status.character === character.id }"
                                         :href="'/inventories/character/' + character.id"
                                     >
                                         <i class="fas fa-briefcase mr-1"></i>
@@ -1054,7 +1045,7 @@
                                 <div class="flex justify-between gap-2 w-full mt-2">
                                     <button
                                         class="block w-full px-3 py-2 text-center text-white bg-warning dark:bg-dark-warning rounded"
-                                        v-if="status.status === 'online' && status.character === character.id"
+                                        v-if="status && status.character === character.id"
                                         @click="form.unload.character = character.id; isUnloading = true">
                                         <i class="fas fa-bolt mr-1"></i>
                                         {{ t('players.show.unload') }}
@@ -1091,7 +1082,7 @@
                                         <button
                                             class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-green-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help"
                                             :title="t('players.characters.loaded')"
-                                            v-if="status.character === character.id"
+                                            v-if="status && status.character === character.id"
                                         >
                                             <i class="fas fa-plug"></i>
                                         </button>
@@ -1100,7 +1091,7 @@
                                         <button
                                             class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-red-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help"
                                             v-if="character.isDead"
-                                            :class="{'left-10' : status.character === character.id}"
+                                            :class="{'left-10' : status && status.character === character.id}"
                                         >
                                             <i class="fas fa-skull-crossbones"></i>
                                         </button>
@@ -1870,21 +1861,8 @@ export default {
         async loadStatus() {
             this.statusLoading = true;
 
-            try {
-                const data = await axios.get('/players/' + this.player.licenseIdentifier + '/status');
+            this.status = await this.requestData("/online/" + this.player.licenseIdentifier);
 
-                if (data.data && data.data.status) {
-                    this.status = data.data.data;
-                    this.statusLoading = false;
-
-                    return;
-                }
-            } catch (e) {
-            }
-
-            this.status = {
-                status: "unavailable"
-            };
             this.statusLoading = false;
         },
         async createScreenCapture() {
@@ -1914,7 +1892,7 @@ export default {
             try {
                 const result = await axios({
                     method: 'post',
-                    url: '/api/capture/' + this.status.serverName + '/' + this.status.serverId + '/' + this.captureData.duration,
+                    url: '/api/capture/' + $page.serverName + '/' + this.status.source + '/' + this.captureData.duration,
                     timeout: this.captureData.duration + 20000
                 });
 
@@ -1922,7 +1900,7 @@ export default {
 
                 if (result.data) {
                     if (result.data.status) {
-                        console.info('Screen capture of ID ' + this.status.serverId, result.data.data.url, result.data.data.license);
+                        console.info('Screen capture of ID ' + this.status.source, result.data.data.url, result.data.data.license);
 
                         this.screenCaptureVideo = result.data.data.url;
                     } else {
@@ -1991,12 +1969,12 @@ export default {
             this.screenshotLicense = null;
 
             try {
-                const result = await axios.post('/api/screenshot/' + this.status.serverName + '/' + this.status.serverId + (shortLifespan ? '?short=1' : ''));
+                const result = await axios.post('/api/screenshot/' + $page.serverName + '/' + this.status.source + (shortLifespan ? '?short=1' : ''));
                 this.isScreenshotLoading = false;
 
                 if (result.data) {
                     if (result.data.status) {
-                        console.info('Screenshot of ID ' + this.status.serverId, result.data.data.url, result.data.data.license);
+                        console.info('Screenshot of ID ' + this.status.source, result.data.data.url, result.data.data.license);
 
                         this.screenshotImage = result.data.data.url;
                         this.screenshotLicense = result.data.data.license;
