@@ -258,16 +258,19 @@ class PlayerBanController extends Controller
             abort(401);
         }
 
-        $ban->forceDelete();
-
         $user = user();
 
-        if ($ban->ban_hash) {
-		    Ban::query()
-                ->where('smurf_account', $ban->ban_hash)
-                ->whereNotNull('smurf_account')
-                ->delete();
-        }
+        // Delete ban
+        Ban::query()
+            ->where('ban_hash', $ban->ban_hash)
+            ->whereNotNull('ban_hash')
+            ->delete();
+
+        // Delete linked bans
+        Ban::query()
+            ->where('smurf_account', $ban->ban_hash)
+            ->whereNotNull('smurf_account')
+            ->delete();
 
 		if (!$ban->creator_name) {
 			PanelLog::logSystemBanRemove($user->license_identifier, $player->license_identifier);
