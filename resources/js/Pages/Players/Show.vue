@@ -502,17 +502,14 @@
                 <video v-if="antiCheatMetadataImage && (['mp4', 'webm'].includes(antiCheatMetadataImage.split('.').pop()))" :src="antiCheatMetadataImage" controls class="w-full mb-3"></video>
                 <img :src="antiCheatMetadataImage" v-else-if="antiCheatMetadataImage" class="w-full mb-3" />
 
-                <table class="my-3 w-full text-left text-sm font-mono">
-                    <tr v-for="(value, key) in importantMetadata" :key="key" class="border-t">
-                        <th class="px-2 py-1">{{ key }}</th>
-                        <td class="px-2 py-1">{{ value }}</td>
-                    </tr>
-                </table>
-
-                <div class="mt-4" v-for="metadata in antiCheatMetadataJSON">
-                    <p class="font-semibold mb-1 font-mono">{{ metadata.key }}</p>
-                    <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm hljs" v-html="metadata.value"></pre>
-                </div>
+                <hashResolver>
+                    <template #default>
+                        <div class="mt-4" v-for="metadata in antiCheatMetadataJSON">
+                            <p class="font-semibold mb-1 font-mono">{{ metadata.key }}</p>
+                            <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm hljs" v-html="metadata.value"></pre>
+                        </div>
+                    </template>
+                </hashResolver>
 			</template>
 
 			<template #actions>
@@ -1524,6 +1521,7 @@ import Card from './../../Components/Card';
 import Avatar from './../../Components/Avatar';
 import ScreenshotAttacher from './../../Components/ScreenshotAttacher';
 import Modal from './../../Components/Modal';
+import HashResolver from './../../Components/HashResolver';
 
 import models from "../../data/ped_models.json";
 
@@ -1545,6 +1543,7 @@ export default {
         Avatar,
         ScreenshotAttacher,
         Modal,
+        HashResolver,
     },
     props: {
         player: {

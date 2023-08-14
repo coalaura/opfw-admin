@@ -1,6 +1,8 @@
 const Socket = {
     async install(Vue, options) {
-        Vue.prototype.requestData = async function(route) {
+        const cache = {};
+
+        Vue.prototype.requestData = async function(route, useCache = false) {
             if (!route.startsWith('/')) route = '/' + route;
 
             const isDev = window.location.hostname === 'localhost';
@@ -11,11 +13,19 @@ const Socket = {
 
             const url = host + '/data/' + server + route + '?token=' + token;
 
+            if (useCache && url in cache) {
+                return cache[url];
+            }
+
             try {
                 const data = await axios.get(url);
 
                 if (data.data && data.data.status) {
-                    return data.data.data
+                    const value = data.data.data;
+
+                    cache[url] = value;
+
+                    return value;
                 } else {
                     return false;
                 }
@@ -30,6 +40,14 @@ const Socket = {
 
                 return false;
             }
+        };
+
+        Vue.prototype.resolveHash = async function(hash) {
+            const data = await this.requestData('/hash/' + hash, true);
+
+            if (!data) return false;
+
+            return data;
         };
     },
 }
