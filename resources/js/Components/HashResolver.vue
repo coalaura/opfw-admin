@@ -31,7 +31,7 @@ export default {
     },
     methods: {
         isHash(str) {
-            return str.match(/^-?[0-9]+$/gm);
+            return !str.match(/\s/gm) && str.match(/^-?[0-9]+$/m);
         },
         async click(e) {
             if (this.loading) return;
