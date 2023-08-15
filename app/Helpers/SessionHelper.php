@@ -272,7 +272,6 @@ class SessionHelper
             $helper->ensure();
 
             $helper->load();
-            $helper->store();
 
             self::$instance = $helper;
         }
