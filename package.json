@@ -55,6 +55,7 @@
         "pako": "^2.0.4",
         "rainbowvis.js": "^1.0.1",
         "socket.io-client": "^4.5.1",
+        "user-agent": "^1.0.4",
         "vue-chartjs-financial": "^1.0.1",
         "vue-linkify": "^1.0.1",
         "vue-search-select": "^2.9.4",

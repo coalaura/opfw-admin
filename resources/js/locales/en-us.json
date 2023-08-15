@@ -85,6 +85,13 @@
 		"steam_hex": "Steam Hex",
 		"steam_url": "Profile URL"
 	},
+    "settings": {
+        "title": "User Settings",
+        "description": "Change and view your user settings.",
+        "sessions": "Active Sessions",
+        "last_viewed": "Last viewed",
+        "at": "at"
+    },
     "loading_screen": {
         "sidebar": "Loading Screen",
         "title": "Loading screen pictures",

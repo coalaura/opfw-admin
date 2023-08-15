@@ -45,6 +45,7 @@ use App\Http\Controllers\GraphController;
 use App\Http\Controllers\TwitterController;
 use App\Http\Controllers\LoadingScreenController;
 use App\Http\Controllers\WeaponController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -219,6 +220,9 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     Route::get('/errors/server', [ErrorController::class, 'server']);
     Route::post('/errors/server/cycle', [ErrorController::class, 'serverCycle']);
+
+    // Settings.
+    Route::get('/settings', [SettingsController::class, 'index']);
 
     // Exports.
     Route::get('/export/character/{character}', [PlayerCharacterController::class, 'export']);

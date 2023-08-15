@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 /**
  * An action that has been logged.
@@ -29,6 +30,15 @@ class Session extends Model
     const IgnorePaths = [
         '_debugbar',
         'api'
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'key' => 'string',
     ];
 
     /**
@@ -65,5 +75,21 @@ class Session extends Model
         }
 
         return $data;
+    }
+
+    public static function getActive()
+    {
+        $user = user();
+
+        if (!$user) {
+            return [];
+        }
+
+        return self::query()
+            ->select(['key', 'last_accessed', 'last_viewed', 'ip_address', 'user_agent'])
+            ->where(DB::raw("JSON_EXTRACT(data, '$.user')"), $user->user_id)
+            ->orderBy('last_accessed', 'desc')
+            ->get()
+            ->toArray();
     }
 }
