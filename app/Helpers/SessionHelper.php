@@ -153,7 +153,7 @@ class SessionHelper
     {
         if ($this->session) return;
 
-        $this->cleanup();
+        // $this->cleanup();
 
         $this->session = Session::where('key', $this->sessionKey)->first();
 
