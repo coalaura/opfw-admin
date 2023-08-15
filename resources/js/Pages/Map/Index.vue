@@ -1291,6 +1291,8 @@ export default {
                     }
                 }
             } catch (e) {
+                console.error(e);
+
                 this.screenshotError = this.t('map.screenshot_failed');
             }
         },

@@ -1860,7 +1860,7 @@ export default {
         async loadStatus() {
             this.statusLoading = true;
 
-            const status = await this.requestData("/online/" + this.player.licenseIdentifier);
+            const status = (await this.requestData("/online/" + this.player.licenseIdentifier)) || {};
 
             this.status = status[this.player.licenseIdentifier] || false;
 
@@ -1893,7 +1893,7 @@ export default {
             try {
                 const result = await axios({
                     method: 'post',
-                    url: '/api/capture/' + $page.serverName + '/' + this.status.source + '/' + this.captureData.duration,
+                    url: '/api/capture/' + this.$page.serverName + '/' + this.status.source + '/' + this.captureData.duration,
                     timeout: this.captureData.duration + 20000
                 });
 
@@ -1970,7 +1970,7 @@ export default {
             this.screenshotLicense = null;
 
             try {
-                const result = await axios.post('/api/screenshot/' + $page.serverName + '/' + this.status.source + (shortLifespan ? '?short=1' : ''));
+                const result = await axios.post('/api/screenshot/' + this.$page.serverName + '/' + this.status.source + (shortLifespan ? '?short=1' : ''));
                 this.isScreenshotLoading = false;
 
                 if (result.data) {
@@ -1988,6 +1988,8 @@ export default {
                     }
                 }
             } catch (e) {
+                console.error(e);
+
                 this.screenshotError = this.t('map.screenshot_failed');
 
                 this.isScreenshotLoading = false;
