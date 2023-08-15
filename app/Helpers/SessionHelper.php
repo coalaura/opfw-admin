@@ -165,7 +165,7 @@ class SessionHelper
             LoggingHelper::log('Session not found, creating again', $this->sessionKey);
 
             $metadata['key'] = $this->sessionKey;
-            $metadata['data'] = json_encode($this->value);
+            $metadata['data'] = json_encode($this->value ?? []);
 
             $this->session = Session::query()->create($metadata);
         }
@@ -180,8 +180,9 @@ class SessionHelper
 
         $data = json_decode($session->data, true);
 
-        if (!$data) {
+        if ($data === null) {
             LoggingHelper::log('Failed to decode session data', $this->sessionKey);
+
             $this->value = [];
 
             return;
