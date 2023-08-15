@@ -69,6 +69,11 @@
                             {{ t('nav.debug_info') }}
                         </button>
 
+                        <a href="/settings" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500">
+                            <i class="fas fa-cogs mr-1"></i>
+                            {{ t('settings.title') }}
+                        </a>
+
                         <a href="/auth/login" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500">
                             <i class="fas fa-sync mr-1"></i>
                             {{ t('nav.refresh_login') }}

@@ -46,6 +46,8 @@
                     </inertia-link>
                 </div>
             </div>
+
+            <div class="italic mt-6 text-sm">More coming soon™</div>
         </div>
 
     </div>
