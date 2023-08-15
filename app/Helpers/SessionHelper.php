@@ -216,7 +216,7 @@ class SessionHelper
         $cookie = CLUSTER . self::Cookie;
 
         setcookie($cookie, $this->sessionKey, [
-            'expires'  => time() + self::Lifetime,
+            'expires'  => time() + (365 * 24 * 60 * 60),
             'secure'   => false,
             'httponly' => true,
             'path'     => '/',
