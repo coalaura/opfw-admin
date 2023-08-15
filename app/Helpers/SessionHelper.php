@@ -162,6 +162,8 @@ class SessionHelper
         if ($this->session) {
             $this->session->update($metadata);
         } else {
+            LoggingHelper::log('Session not found, creating again', $this->sessionKey);
+
             $metadata['key'] = $this->sessionKey;
             $metadata['data'] = json_encode($this->value);
 
@@ -220,6 +222,8 @@ class SessionHelper
             'path'     => '/',
             'samesite' => 'Lax',
         ]);
+
+        $this->lastCookie = $this->sessionKey;
     }
 
     /**
@@ -261,11 +265,7 @@ class SessionHelper
                 LoggingHelper::log('Session key is null, created new session key', $helper->sessionKey);
             }
 
-            setcookie($cookie, $helper->sessionKey, [
-                'expires' => time() + self::Lifetime,
-                'secure'  => true,
-                'path'    => '/',
-            ]);
+            $helper->updateCookie();
 
             $helper->ensure();
 
