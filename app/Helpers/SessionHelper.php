@@ -238,7 +238,7 @@ class SessionHelper
             ->delete();
 
         if ($deleted > 0) {
-            LoggingHelper::log('Cleaned up ' . $deleted . ' sessions');
+            LoggingHelper::log('Cleaned up ' . $deleted . ' sessions', $this->sessionKey);
         }
     }
 
