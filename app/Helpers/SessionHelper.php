@@ -233,9 +233,13 @@ class SessionHelper
     {
         $lifetime = time() - self::Lifetime;
 
-        Session::query()
+        $deleted = Session::query()
             ->where('last_accessed', '<', $lifetime)
             ->delete();
+
+        if ($deleted > 0) {
+            LoggingHelper::log('Cleaned up ' . $deleted . ' sessions');
+        }
     }
 
     private static function getSessionKeyFromCookie(): ?string
