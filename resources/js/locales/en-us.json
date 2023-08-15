@@ -1026,6 +1026,7 @@
                 "hunting": "Hunting",
                 "fishing": "Fishing",
                 "weapon": "Weapon",
+                "mining": "Mining",
                 "confirm": "Are you sure you want to remove all of this characters licenses?"
             }
         },
