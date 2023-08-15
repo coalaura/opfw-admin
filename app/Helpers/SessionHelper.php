@@ -9,7 +9,7 @@ class SessionHelper
 {
     const Cookie   = '_op_fw_session_store_i2';
     const Alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    const Lifetime = 60 * 60 * 24 * 30;
+    const Lifetime = 60 * 60 * 24 * 7;
 
     /**
      * Singleton instance
