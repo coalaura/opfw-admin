@@ -16,7 +16,7 @@
             </h3>
 
             <div class="flex flex-wrap justify-between gap-4">
-                <div v-for="session in list" :key="session.key" class="bg-gray-200 dark:bg-gray-700 border-gray-500 px-4 py-2 rounded-sm shadow-sm">
+                <div v-for="session in list" :key="session.key" class="bg-gray-200 dark:bg-gray-700 border-gray-500 px-4 py-2 rounded-sm shadow-sm relative">
                     <div>
                         <b>{{ session.ip_address ? session.ip_address : 'Unknown IP' }}</b>
                     </div>
@@ -36,6 +36,14 @@
                     <div class="italic text-green-800 dark:text-green-200 text-sm" v-if="session.key === active">
                         This is your current session
                     </div>
+
+                    <inertia-link
+                        class="p-1 mt-2 text-sm font-bold leading-4 text-center w-full rounded-sm border-red-400 bg-secondary dark:bg-dark-secondary border-2 block"
+                        :href="'/settings/' + session.key"
+                        method="DELETE"
+                    >
+                        {{ t('settings.delete_session') }}
+                    </inertia-link>
                 </div>
             </div>
         </div>

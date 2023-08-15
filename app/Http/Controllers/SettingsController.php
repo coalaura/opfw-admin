@@ -22,4 +22,15 @@ class SettingsController extends Controller
         ]);
     }
 
+    public function deleteSession(Session $session)
+    {
+        if (!$session->isOwned()) {
+            return backWith('error', 'You can only delete your own sessions.');
+        }
+
+        $session->delete();
+
+        return redirect()->back();
+    }
+
 }

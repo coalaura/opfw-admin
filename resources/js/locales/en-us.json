@@ -89,8 +89,7 @@
         "title": "User Settings",
         "description": "Change and view your user settings.",
         "sessions": "Active Sessions",
-        "last_viewed": "Last viewed",
-        "at": "at"
+        "delete_session": "Delete Session"
     },
     "loading_screen": {
         "sidebar": "Loading Screen",

@@ -93,4 +93,17 @@ class Session extends Model
             ->get()
             ->toArray();
     }
+
+    public function isOwned()
+    {
+        $user = user();
+
+        if (!$user) {
+            return false;
+        }
+
+        $data = json_decode($this->data, true);
+
+        return $data && $data['user'] === $user->user_id;
+    }
 }
