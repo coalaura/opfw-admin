@@ -9,7 +9,7 @@ class SessionHelper
 {
     const Cookie   = '_op_fw_session_store_i2';
     const Alphabet = 'abcdefghijklmnopqrstuvwxyz0123456789';
-    const Lifetime = 60 * 60 * 24 * 30;
+    const Lifetime = 60 * 60 * 24 * 7;
 
     /**
      * Singleton instance
@@ -98,6 +98,7 @@ class SessionHelper
     public function put(string $key, $value)
     {
         $this->value[$key] = $value;
+
         $this->store();
     }
 
@@ -134,33 +135,38 @@ class SessionHelper
      */
     public static function drop()
     {
-        $helper = self::getInstance();
+        $sessionKey = self::getSessionKeyFromCookie();
 
-        LoggingHelper::log('Dropping session', $helper->sessionKey);
+        if (!$sessionKey) return;
 
-        $session = $helper->getSession();
+        LoggingHelper::log('Dropping session', $sessionKey);
 
-        if ($session) {
-            $session->delete();
-        } else {
-            LoggingHelper::log('Session not found', $helper->sessionKey);
-        }
-
-        $helper->session = null;
+        Session::query()->where('key', $sessionKey)->delete();
 
         self::$instance = null;
     }
 
     /**
-     * Retrieves the session from the database
+     * Ensures the session in the database
      */
-    private function getSession(): ?Session
+    private function ensure()
     {
-        if (!$this->session) {
-			$this->session = Session::where('key', $this->sessionKey)->first();
-        }
+        if ($this->session) return;
 
-        return $this->session;
+        $this->cleanup();
+
+        $this->session = Session::where('key', $this->sessionKey)->first();
+
+        $metadata = Session::metadata();
+
+        if ($this->session) {
+            $this->session->update($metadata);
+        } else {
+            $metadata['key'] = $this->sessionKey;
+            $metadata['data'] = json_encode($this->value);
+
+            $this->session = Session::query()->create($metadata);
+        }
     }
 
     /**
@@ -168,14 +174,7 @@ class SessionHelper
      */
     private function load()
     {
-        $session = $this->getSession();
-
-        if (!$session) {
-            LoggingHelper::log('Session did not exist in DB while loading data', $this->sessionKey);
-            $this->value = [];
-
-            return;
-        }
+        $session = $this->session;
 
         $data = json_decode($session->data, true);
 
@@ -194,20 +193,11 @@ class SessionHelper
      */
     private function store()
     {
-        $session = $this->getSession();
+        $session = $this->session;
 
-        if ($session) {
-            $session->update([
-                'data' => json_encode($this->value),
-                'last_accessed' => time()
-            ]);
-        } else {
-            Session::query()->create([
-                'key' => $this->sessionKey,
-                'data' => json_encode($this->value),
-                'last_accessed' => time()
-            ]);
-        }
+        $session->update([
+            'data' => json_encode($this->value)
+        ]);
 
         $this->updateCookie();
     }
@@ -235,11 +225,20 @@ class SessionHelper
     /**
      * Cleans up old sessions
      */
-    public static function cleanup()
+    private function cleanup()
     {
         $lifetime = time() - self::Lifetime;
 
-        Session::query()->where('last_accessed', '<', $lifetime)->delete();
+        Session::query()
+            ->where('last_accessed', '<', $lifetime)
+            ->delete();
+    }
+
+    private static function getSessionKeyFromCookie(): ?string
+    {
+        $cookie = CLUSTER . self::Cookie;
+
+        return !empty($_COOKIE[$cookie]) && is_string($_COOKIE[$cookie]) ? $_COOKIE[$cookie] : null;
     }
 
     /**
@@ -254,19 +253,12 @@ class SessionHelper
         if (self::$instance === null) {
             $helper = new SessionHelper();
 
-            $helper->sessionKey = !empty($_COOKIE[$cookie]) && is_string($_COOKIE[$cookie]) ? $_COOKIE[$cookie] : null;
+            $helper->sessionKey = self::getSessionKeyFromCookie();
 
-            if ($helper->sessionKey === null || !$helper->getSession()) {
-                $log = 'Creating new session key';
-                if ($helper->sessionKey === null) {
-                    $log = 'Session key is null, creating new session key';
-                } else if (!$helper->getSession()) {
-                    $log = 'Session (' . $helper->sessionKey . ') was not found in DB, creating new session key';
-                }
-
+            if ($helper->sessionKey === null) {
                 $helper->sessionKey = self::uniqueId();
 
-                LoggingHelper::log($log, $helper->sessionKey);
+                LoggingHelper::log('Session key is null, created new session key', $helper->sessionKey);
             }
 
             setcookie($cookie, $helper->sessionKey, [
@@ -274,6 +266,8 @@ class SessionHelper
                 'secure'  => true,
                 'path'    => '/',
             ]);
+
+            $helper->ensure();
 
             $helper->load();
             $helper->store();

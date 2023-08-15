@@ -14,13 +14,13 @@ class UpdateWebpanelSessionsTable extends Migration
      */
     public function up()
     {
-		Schema::dropIfExists('webpanel_sessions');
+        Schema::dropIfExists('webpanel_sessions');
 
-		Schema::create('webpanel_sessions', function (Blueprint $table) {
-			$table->string('key', 40)->nullable(false)->primary();
-			$table->text('data');
-			$table->integer('last_accessed')->nullable(false);
-		});
+        Schema::create('webpanel_sessions', function (Blueprint $table) {
+            $table->string('key', 40)->nullable(false)->primary();
+            $table->text('data');
+            $table->integer('last_accessed')->nullable(false);
+        });
     }
 
     /**

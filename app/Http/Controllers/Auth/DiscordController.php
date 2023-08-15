@@ -83,20 +83,7 @@ class DiscordController extends Controller
 
         $session->put('discord', $user);
 
-        // Session lock update
-        $session->put('session_lock', StaffMiddleware::getSessionDetail());
-        $session->put('session_detail', StaffMiddleware::getFingerprint());
-        $session->put('last_updated', time());
-
-        StaffMiddleware::updateSessionLock();
-
-        $redirect = '/';
-
-        if ($session->exists('returnTo')) {
-            $redirect = $session->get('returnTo');
-        }
-
-        return redirect($redirect);
+        return redirect($session->get('returnTo') ?? '/');
     }
 
     private function resolveAccessToken(Request $request, string $code)

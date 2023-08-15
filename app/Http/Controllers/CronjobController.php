@@ -29,12 +29,6 @@ class CronjobController extends Controller
 
         echo $this->stopTime($start);
 
-        $start = microtime(true);
-        echo "Cleaning up sessions...";
-        SessionHelper::cleanup();
-
-        echo $this->stopTime($start);
-
         return (new Response('Success', 200))->header('Content-Type', 'text/plain');
     }
 

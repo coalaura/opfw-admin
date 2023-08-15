@@ -2,10 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Helpers\LoggingHelper;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Middleware to check if user is a staff member on our game-servers.
@@ -14,11 +12,6 @@ use Illuminate\Support\Facades\DB;
  */
 class StaffMiddleware
 {
-    /**
-     * @var string
-     */
-    private $error = '';
-
     /**
      * Handle an incoming request.
      *
@@ -29,10 +22,6 @@ class StaffMiddleware
     public function handle(Request $request, Closure $next)
     {
         $session = sessionHelper();
-
-        if (!$this->checkSessionLock()) {
-            return redirectWith('/login', 'error', $this->error);
-        }
 
         // Check for staff status.
         $player = $session->getPlayer();
@@ -72,61 +61,5 @@ class StaffMiddleware
         }
 
         return $next($request);
-    }
-
-    public static function getSessionDetail(): array
-    {
-        return [
-            'db' => DB::connection()->getDatabaseName()
-        ];
-    }
-
-    protected function checkSessionLock(): bool
-    {
-        $detail = self::getSessionDetail();
-
-        $session = sessionHelper();
-        if ($session->exists('session_lock')) {
-            $lock = $session->get('session_lock');
-            $print = self::getFingerprint();
-
-            $valid = $lock === $print;
-
-            if (!$valid) {
-                $sDetail = $session->get('session_detail');
-
-                LoggingHelper::log('StaffMiddleware session-lock is invalid');
-                LoggingHelper::log($lock . ' != ' . $print);
-                LoggingHelper::log('current.detail -> ' . json_encode($detail));
-                LoggingHelper::log('session.detail -> ' . json_encode($sDetail));
-
-                $this->error = 'Your session is invalid, please refresh this page or log in again.';
-            }
-
-            $session->put('session_detail', $detail);
-
-            return $valid;
-        } else {
-            self::updateSessionLock();
-
-            return true;
-        }
-    }
-
-    public static function updateSessionLock()
-    {
-        $detail = [
-            'ua' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '',
-        ];
-
-        $session = sessionHelper();
-
-        $session->put('session_lock', self::getFingerprint());
-        $session->put('session_detail', $detail);
-    }
-
-    public static function getFingerprint(): string
-    {
-        return md5(json_encode(self::getSessionDetail()));
     }
 }

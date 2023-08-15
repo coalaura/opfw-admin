@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateWebpanelSessionsTable2 extends Migration
+class UpdateWebpanelSessionsTable4 extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -15,7 +14,8 @@ class UpdateWebpanelSessionsTable2 extends Migration
 	public function up()
 	{
 		Schema::table('webpanel_sessions', function (Blueprint $table) {
-			$table->index('last_accessed');
+			$table->string('user_agent');
+			$table->string('ip_address');
 		});
 	}
 
@@ -26,5 +26,9 @@ class UpdateWebpanelSessionsTable2 extends Migration
 	 */
 	public function down()
 	{
+		Schema::table('webpanel_sessions', function (Blueprint $table) {
+			$table->dropColumn('user_agent');
+			$table->dropColumn('ip_address');
+		});
 	}
 }

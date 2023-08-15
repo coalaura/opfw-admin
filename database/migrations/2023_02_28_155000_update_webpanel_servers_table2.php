@@ -14,7 +14,7 @@ class UpdateWebpanelServersTable2 extends Migration
      */
     public function up()
     {
-		Schema::dropIfExists('webpanel_servers');
+        Schema::dropIfExists('webpanel_servers');
     }
 
     /**
