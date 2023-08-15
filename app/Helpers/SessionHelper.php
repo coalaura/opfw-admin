@@ -153,7 +153,7 @@ class SessionHelper
     {
         if ($this->session) return;
 
-        // $this->cleanup();
+        $this->cleanup();
 
         $this->session = Session::where('key', $this->sessionKey)->first();
 
@@ -256,14 +256,12 @@ class SessionHelper
      */
     public static function getInstance(): SessionHelper
     {
-        $cookie = CLUSTER . self::Cookie;
-
         if (self::$instance === null) {
             $helper = new SessionHelper();
 
             $helper->sessionKey = self::getSessionKeyFromCookie();
 
-            if ($helper->sessionKey === null) {
+            if (!$helper->sessionKey) {
                 $helper->sessionKey = self::uniqueId();
 
                 LoggingHelper::log('Session key is null, created new session key', $helper->sessionKey);
