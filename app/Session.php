@@ -55,10 +55,11 @@ class Session extends Model
         'user_agent'
     ];
 
-    public static function metadata(): array
+    public static function metadata(array $value): array
     {
         $data = [
-            'last_accessed' => time()
+            'last_accessed' => time(),
+            'data' => json_encode($value)
         ];
 
         $req = request();
