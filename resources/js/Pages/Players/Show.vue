@@ -4,7 +4,7 @@
             <div class="flex justify-between mobile:flex-wrap mt-8 gap-4 w-full">
                 <div class="flex gap-4">
                     <!-- Copy License -->
-                    <div class="cursor-pointer text-2xl flex items-center" :title="t('players.show.copy_license')" :click="copyLicense">
+                    <div class="cursor-pointer text-2xl flex items-center" :title="t('players.show.copy_license')" @click="copyLicense">
                         <i class="fas fa-copy relative top-2px"></i>
                     </div>
 
