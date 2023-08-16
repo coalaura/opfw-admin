@@ -1777,7 +1777,11 @@ export default {
             const metadata = this.cleanupObject(eventData.metadata);
 
             for (const key in metadata) {
-                const value = metadata[key];
+                let value = metadata[key];
+
+                if (key === "trace") {
+                    value = value.split("\n");
+                }
 
                 if (typeof value === "object") {
                     this.antiCheatMetadataJSON.push({
