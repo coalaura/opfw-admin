@@ -28,7 +28,6 @@
                         <th class="px-6 py-4">{{ t('queue.consoleName') }}</th>
                         <th class="px-6 py-4">{{ t('queue.priorityName') }}</th>
                         <th class="px-6 py-4">{{ t('queue.queueTime') }}</th>
-                        <th class="w-24 px-6 py-4" v-if="$page.auth.player.isSuperAdmin">{{ t('queue.skipQueue') }}</th>
                     </tr>
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="(player, index) in queue" :key="player.licenseIdentifier">
                         <td class="px-6 py-3 border-t mobile:block">{{ index+1 }}.</td>
@@ -42,12 +41,6 @@
                         <td class="px-6 py-3 border-t mobile:block">{{ player.consoleName }}</td>
                         <td class="px-6 py-3 border-t mobile:block">{{ player.priorityName || t('queue.no_prio') }}</td>
                         <td class="px-6 py-3 border-t mobile:block">{{ formatSeconds(player.queueTime) }}</td>
-
-                        <td class="px-6 py-3 border-t mobile:block" v-if="$page.auth.player.isSuperAdmin">
-                            <button class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :title="t('queue.skip')" @click="skipQueue(player.licenseIdentifier)">
-                                <i class="fas fa-ticket-alt"></i>
-                            </button>
-                        </td>
                     </tr>
                     <tr v-if="queue.length === 0">
                         <td class="px-6 py-6 text-center border-t mobile:block" colspan="100%" v-if="isLoading">
@@ -121,39 +114,6 @@ export default {
             return new Promise(function(resolve) {
                 setTimeout(resolve, ms);
             });
-        },
-        async skipQueue(licenseIdentifier) {
-            if (this.isSkipping || !confirm(this.t('queue.skip_confirm'))) {
-                return;
-            }
-
-            this.isSkipping = true;
-            try {
-                const data = await axios.post('/skip_queue/' + this.server + '/' + licenseIdentifier);
-
-                clearTimeout(this.responseTimeout);
-
-                if (data.data && data.data.status) {
-                    this.responseLabel = data.data.data;
-                    this.responseIsError = false;
-                } else {
-                    this.responseLabel = data.data.message;
-                    this.responseIsError = true;
-                }
-
-                this.$nextTick(async () => {
-                    $('#queueTitle')[0].scrollIntoView();
-
-                    await this.refresh();
-
-                    await this.sleep(5000);
-
-                    this.responseLabel = '';
-                    $('#responseLabel').text('');
-                })
-            } catch(e) {}
-
-            this.isSkipping = false;
         },
         playerName(licenseIdentifier) {
             return licenseIdentifier in this.playerMap ? this.playerMap[licenseIdentifier] : licenseIdentifier;

@@ -35,34 +35,6 @@ class QueueController extends Controller
     }
 
     /**
-     * Makes a player skip the queue
-     *
-     * @param Request $request
-     * @param string $server
-     * @param string $licenseIdentifier
-     * @return \Illuminate\Http\Response
-     */
-    public function skip(Request $request, string $server, string $licenseIdentifier): \Illuminate\Http\Response
-    {
-        if (!$this->isSuperAdmin($request)) {
-            return self::json(false, null, 'Only super admins can make players skip the queue.');
-        }
-
-        $serverIp = Server::getServerApiURLFromName($server);
-        if (!$serverIp) {
-            return self::json(false, null, 'Unknown server.');
-        }
-
-        $response = OPFWHelper::updateQueuePosition($serverIp, $licenseIdentifier, 0);
-
-        if ($response->status) {
-            return self::json(true, $response->message);
-        }
-
-        return self::json(false, null, $response->message ?? 'Failed to set players queue position.');
-    }
-
-    /**
      * Queue api
      *
      * @param Request $request

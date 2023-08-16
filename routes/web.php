@@ -231,7 +231,6 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Queue.
     Route::get('/queue/{server}', [QueueController::class, 'render']);
-    Route::post('/skip_queue/{server}/{licenseIdentifier}', [QueueController::class, 'skip']);
     Route::get('/api/queue/{server}', [QueueController::class, 'api']);
 
     Route::get('/test/logs/{action}', [TestController::class, 'logs']);
