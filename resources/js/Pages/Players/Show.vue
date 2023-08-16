@@ -506,7 +506,8 @@
                     <template #default>
                         <div class="mt-4" v-for="metadata in antiCheatMetadataJSON">
                             <p class="font-semibold mb-1 font-mono">{{ metadata.key }}</p>
-                            <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm hljs" v-html="metadata.value"></pre>
+                            <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm hljs" v-html="metadata.value" v-if="metadata.value"></pre>
+                            <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm italic" v-else>empty</pre>
                         </div>
                     </template>
                 </hashResolver>
