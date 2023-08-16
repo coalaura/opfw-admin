@@ -1779,7 +1779,7 @@ export default {
             for (const key in metadata) {
                 let value = metadata[key];
 
-                if (key === "trace") {
+                if (key === "trace" || key === "modifications") {
                     value = value.split("\n");
                 }
 
