@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Player;
 use Illuminate\Http\Request;
-use App\Http\Middleware\StaffMiddleware;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 
