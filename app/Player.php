@@ -582,6 +582,21 @@ class Player extends Model
         return $plainWarnings;
     }
 
+    public function getHWIDBanHash(): ?array
+    {
+        $ban = DB::table('user_bans')
+            ->select(['ban_hash', 'license_identifier'])
+            ->leftJoin('users', 'identifier', '=', 'license_identifier')
+            ->where(DB::raw("JSON_OVERLAPS(player_tokens, '" . json_encode($this->getTokens()) . "')"), '=', '1')
+            ->whereNotNull('ban_hash')
+            ->first();
+
+        return $ban ? [
+            'hash' => $ban->ban_hash,
+            'license' => $ban->license_identifier
+        ] : null;
+    }
+
     /**
      * Gets the panel_logs relationship.
      *

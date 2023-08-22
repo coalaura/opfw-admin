@@ -806,6 +806,20 @@
                     <b class="whitespace-nowrap">{{ t('players.show.accuracy') }}:</b> <i>~{{ player.ban.accuracy.accuracy }}%</i>
                 </div>
             </alert>
+
+            <alert class="bg-rose-500" v-if="hwidBan">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-semibold">
+                        {{ t('players.show.hwid_ban') }}
+                    </h2>
+
+                    <inertia-link :href="'/players/' + hwidBan.license" class="text-rose-700 font-semibold px-3 py-1 rounded bg-white shadow-sm">
+                        {{ hwidBan.hash }}
+                        <i class="fas fa-chevron-right"></i>
+                    </inertia-link>
+                </div>
+            </alert>
+
             <!-- Issuing -->
             <div class="p-8 mb-10 bg-gray-100 rounded dark:bg-dark-secondary" v-if="isBanning">
                 <div class="mb-8 space-y-5">
@@ -1558,6 +1572,9 @@ export default {
         warnings: {
             type: Array,
             required: true,
+        },
+        hwidBan: {
+            type: Object
         },
         tags: {
             type: Array,
