@@ -813,10 +813,16 @@
                         {{ t('players.show.hwid_ban') }}
                     </h2>
 
-                    <inertia-link :href="'/players/' + hwidBan.license" class="text-rose-700 font-semibold px-3 py-1 rounded bg-white shadow-sm">
-                        {{ hwidBan.hash }}
-                        <i class="fas fa-chevron-right"></i>
-                    </inertia-link>
+                    <div class="flex gap-4">
+                        <button @click="unlinkHWID" class="text-rose-700 font-semibold px-3 py-1 rounded bg-white shadow" v-if="$page.auth.player.isSuperAdmin" :title="t('players.show.unlink')">
+                            <i class="fas fa-unlink"></i>
+                        </button>
+
+                        <inertia-link :href="'/players/' + hwidBan.license" class="text-rose-700 font-semibold px-3 py-1 rounded bg-white shadow">
+                            {{ hwidBan.hash }}
+                            <i class="fas fa-chevron-right"></i>
+                        </inertia-link>
+                    </div>
                 </div>
             </alert>
 
@@ -1730,7 +1736,9 @@ export default {
 
             charactersCollapsed: false,
             warningsCollapsed: true,
-            extraDataCollapsed: true
+            extraDataCollapsed: true,
+
+            isLoading: false
         }
     },
     methods: {
@@ -1845,6 +1853,8 @@ export default {
             return metadata.length ? metadata.join(', ') : false;
         },
         async unbanPlayer() {
+            if (this.isLoading) return;
+
             if (!this.player.ban.issuer && !this.isConfirmingUnban) {
                 this.isConfirmingUnban = true;
 
@@ -1853,18 +1863,57 @@ export default {
 
             this.isConfirmingUnban = false;
 
+            this.isLoading = true;
+
             // Send request.
             await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/bans/' + this.player.ban.id);
+
+            this.isLoading = false;
         },
         async updateCommands() {
+            if (this.isLoading) return;
+
             this.isEnablingCommands = false;
 
             const enabledCommands = this.commands.filter(c => c.enabled).map(c => c.name);
+
+            this.isLoading = true;
 
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateEnabledCommands', {
                 enabledCommands: enabledCommands,
             });
+
+            this.isLoading = false;
+        },
+        async unlinkHWID() {
+            if (this.isLoading) return;
+
+            if (!confirm(this.t('players.show.unlink_hwid_confirm'))) {
+                return;
+            }
+
+            this.isLoading = true;
+
+            // Send request.
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/unlink_hwid/' + this.hwidBan.license);
+
+            this.isLoading = false;
+        },
+        // TODO: finish this
+        async unlinkIdentifiers() {
+            if (this.isLoading) return;
+
+            if (!confirm(this.t('players.show.unlink_confirm'))) {
+                return;
+            }
+
+            this.isLoading = true;
+
+            // Send request.
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/unlink/' + this.player.licenseIdentifier);
+
+            this.isLoading = false;
         },
         cheatDocs(pNote) {
             pNote = pNote.trim();

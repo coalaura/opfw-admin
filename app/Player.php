@@ -88,8 +88,8 @@ class Player extends Model
     protected $casts = [
         'identifiers' => 'array',
         'last_used_identifiers' => 'array',
-        'ips' => 'array',
         'player_tokens' => 'array',
+        'ips' => 'array',
         'user_variables' => 'array',
         'player_aliases' => 'array',
         'enabled_commands' => 'array',

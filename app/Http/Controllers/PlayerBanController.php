@@ -311,6 +311,73 @@ class PlayerBanController extends Controller
         return backWith('success', 'The ban has been successfully unlocked.');
     }
 
+    public function unlinkHWID(Player $player, Player $player2, Request $request): RedirectResponse
+    {
+        if (!$this->isSuperAdmin($request)) {
+            abort(401);
+        }
+
+        $tokens = $player->getTokens();
+        $tokens2 = $player2->getTokens();
+
+        $newTokens = array_values(array_diff($tokens, $tokens2));
+        $newTokens2 = array_values(array_diff($tokens2, $tokens));
+
+        $player->update([
+            'player_tokens' => $newTokens
+        ]);
+
+        $player2->update([
+            'player_tokens' => $newTokens2
+        ]);
+
+        return backWith('success', 'The players have been successfully unlinked.');
+    }
+
+    public function unlinkIdentifiers(Player $player, Player $player2, Request $request): RedirectResponse
+    {
+        if (!$this->isSuperAdmin($request)) {
+            abort(401);
+        }
+
+        $identifiers = $player->getIdentifiers();
+        $identifiers2 = $player2->getIdentifiers();
+
+        $lastUsed = $player->getLastUsedIdentifiers();
+        $lastUsed2 = $player2->getLastUsedIdentifiers();
+
+        $newIdentifiers = [];
+
+        foreach($identifiers as $identifier) {
+            if (in_array($identifier, $lastUsed) || !in_array($identifier, $identifiers2)) {
+                $newIdentifiers[] = $identifier;
+            }
+        }
+
+        $newIdentifiers2 = [];
+
+        foreach($identifiers2 as $identifier) {
+            if (in_array($identifier, $lastUsed2) || !in_array($identifier, $identifiers)) {
+                $newIdentifiers2[] = $identifier;
+            }
+        }
+
+        // Check if still linked
+        if (!empty(array_intersect($newIdentifiers, $newIdentifiers2))) {
+            return backWith('error', 'Unable to unlink players.');
+        }
+
+        $player->update([
+            'identifiers' => $newIdentifiers
+        ]);
+
+        $player2->update([
+            'identifiers' => $newIdentifiers2
+        ]);
+
+        return backWith('success', 'The players have been successfully unlinked.');
+    }
+
     /**
      * Display the specified resource for editing.
      *
