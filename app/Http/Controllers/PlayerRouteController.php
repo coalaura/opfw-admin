@@ -115,21 +115,17 @@ class PlayerRouteController extends Controller
      */
     public function linkedAccounts(Player $player, Request $request): Response
     {
-        $identifiers = $player->getIdentifiers();
+        $identifiers = $player->getBannableIdentifiers();
         $linked = [
             'total'  => 0,
             'linked' => [],
         ];
 
-        $players = Player::query()->whereRaw("JSON_OVERLAPS(identifiers, '" . json_encode($player->getBannableIdentifiers()) . "') = 1")->groupBy('license_identifier')->get();
+        $players = Player::query()->whereRaw("JSON_OVERLAPS(identifiers, '" . json_encode($identifiers) . "') = 1")->groupBy('license_identifier')->get();
 
 		$last = $player->getLastUsedIdentifiers();
 
         foreach ($identifiers as $identifier) {
-            if (Str::startsWith($identifier, "ip:")) {
-                continue;
-            }
-
             if (!isset($linked['linked'][$identifier])) {
                 $linked['linked'][$identifier] = [
                     'label'    => Player::getIdentifierLabel($identifier) ?? 'Unknown Identifier',
@@ -141,7 +137,7 @@ class PlayerRouteController extends Controller
             $accounts = [];
 
             foreach($players as $p) {
-                if (in_array($identifier, $p->getIdentifiers())) {
+                if ($p->license_identifier !== $player->license_identifier && in_array($identifier, $p->getIdentifiers())) {
                     $accounts[] = [
                         'license_identifier' => $p->license_identifier,
                         'player_name'        => $p->player_name,
