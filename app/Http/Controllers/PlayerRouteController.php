@@ -137,7 +137,7 @@ class PlayerRouteController extends Controller
             }
 
             $accounts = Player::query()
-                ->where('identifiers', 'LIKE', '%' . $identifier . '%')
+                ->where('identifiers', 'LIKE', '%"' . $identifier . '"%')
                 ->where('license_identifier', '!=', $player->license_identifier)
                 ->select(['license_identifier', 'player_name'])
                 ->get()->toArray();
