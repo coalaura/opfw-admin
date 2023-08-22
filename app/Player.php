@@ -106,6 +106,8 @@ class Player extends Model
         'priority_level' => 'integer',
     ];
 
+    private $ban = null;
+
     const PlayerNameFilter = [
         "%^0",
         "%^1",
@@ -505,9 +507,13 @@ class Player extends Model
      */
     public function getActiveBan(): ?Ban
     {
-        return $this->bans()
-            ->get()
-            ->first();
+        if ($this->ban === null) {
+            $this->ban = $this->bans()
+                ->get()
+                ->first() ?? false;
+        }
+
+        return $this->ban ?? null;
     }
 
     /**
@@ -582,14 +588,19 @@ class Player extends Model
         return $plainWarnings;
     }
 
-    public function getHWIDBanHash(): ?array
+    public function getHWIDBanHash(?Ban $ban): ?array
     {
-        $ban = DB::table('user_bans')
+        $query = DB::table('user_bans')
             ->select(['ban_hash', 'license_identifier'])
             ->leftJoin('users', 'identifier', '=', 'license_identifier')
             ->where(DB::raw("JSON_OVERLAPS(player_tokens, '" . json_encode($this->getTokens()) . "')"), '=', '1')
-            ->whereNotNull('ban_hash')
-            ->first();
+            ->whereNotNull('ban_hash');
+
+        if ($ban) {
+            $query->where('ban_hash', '!=', $ban->ban_hash);
+        }
+
+        $ban = $query->first();
 
         return $ban ? [
             'hash' => $ban->ban_hash,

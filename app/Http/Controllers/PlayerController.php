@@ -245,7 +245,7 @@ class PlayerController extends Controller
 
 			$isSenior = $this->isSeniorStaff($request);
 
-            $hwidBan = $resolved->getHWIDBanHash();
+            $hwidBan = $resolved->getHWIDBanHash($resolved->getActiveBan());
 
 			return Inertia::render('Players/Show', [
 				'player'            => new PlayerResource($resolved),
