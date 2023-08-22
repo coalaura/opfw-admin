@@ -320,6 +320,10 @@ class PlayerBanController extends Controller
         $tokens = $player->getTokens();
         $tokens2 = $player2->getTokens();
 
+        if (empty(array_intersect($tokens, $tokens2))) {
+            return backWith('error', 'Players are not linked.');
+        }
+
         $newTokens = array_values(array_diff($tokens, $tokens2));
         $newTokens2 = array_values(array_diff($tokens2, $tokens));
 
@@ -342,6 +346,10 @@ class PlayerBanController extends Controller
 
         $identifiers = $player->getIdentifiers();
         $identifiers2 = $player2->getIdentifiers();
+
+        if (empty(array_intersect($identifiers, $identifiers2))) {
+            return backWith('error', 'Players are not linked.');
+        }
 
         $lastUsed = $player->getLastUsedIdentifiers();
         $lastUsed2 = $player2->getLastUsedIdentifiers();
@@ -537,9 +545,7 @@ class PlayerBanController extends Controller
             return $this->text(404, "No identifiers found.");
         }
 
-		$where = implode(' OR ', array_map(function($identifier) {
-			return 'JSON_CONTAINS(identifiers, \'"' . $identifier . '"\', \'$\')';
-		}, $identifiers));
+		$where = "JSON_OVERLAPS(identifiers, '" . json_encode($player->getBannableIdentifiers()) . "') = 1";
 
 		return $this->drawLinked($player, $where);
     }
