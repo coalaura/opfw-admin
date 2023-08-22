@@ -593,19 +593,14 @@ class Player extends Model
         return $plainWarnings;
     }
 
-    public function getHWIDBanHash(?Ban $ban): ?array
+    public function getHWIDBanHash(): ?array
     {
-        $query = DB::table('user_bans')
+        $ban = DB::table('user_bans')
             ->select(['ban_hash', 'license_identifier'])
             ->leftJoin('users', 'identifier', '=', 'license_identifier')
             ->where(DB::raw("JSON_OVERLAPS(player_tokens, '" . json_encode($this->getTokens()) . "')"), '=', '1')
-            ->whereNotNull('ban_hash');
-
-        if ($ban) {
-            $query->where('ban_hash', '!=', $ban->ban_hash);
-        }
-
-        $ban = $query->first();
+            ->whereNotNull('ban_hash')
+            ->first();
 
         return $ban ? [
             'hash' => $ban->ban_hash,
