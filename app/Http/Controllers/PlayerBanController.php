@@ -524,9 +524,7 @@ class PlayerBanController extends Controller
             return $this->text(404, "No tokens found.");
         }
 
-		$where = implode(' OR ', array_map(function($token) {
-			return 'JSON_CONTAINS(player_tokens, \'"' . $token . '"\', \'$\')';
-		}, $tokens));
+		$where = "JSON_OVERLAPS(player_tokens, '" . json_encode($player->getTokens()) . "') = 1";
 
 		return $this->drawLinked($player, $where);
     }

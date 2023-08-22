@@ -121,6 +121,8 @@ class PlayerRouteController extends Controller
             'linked' => [],
         ];
 
+        $players = Player::query()->whereRaw("JSON_OVERLAPS(identifiers, '" . json_encode($player->getBannableIdentifiers()) . "') = 1")->groupBy('license_identifier')->get();
+
 		$last = $player->getLastUsedIdentifiers();
 
         foreach ($identifiers as $identifier) {
@@ -136,11 +138,17 @@ class PlayerRouteController extends Controller
                 ];
             }
 
-            $accounts = Player::query()
-                ->where('identifiers', 'LIKE', '%"' . $identifier . '"%')
-                ->where('license_identifier', '!=', $player->license_identifier)
-                ->select(['license_identifier', 'player_name'])
-                ->get()->toArray();
+            $accounts = [];
+
+            foreach($players as $p) {
+                if (in_array($identifier, $p->getIdentifiers())) {
+                    $accounts[] = [
+                        'license_identifier' => $p->license_identifier,
+                        'player_name'        => $p->player_name,
+                    ];
+                }
+            }
+
             $linked['linked'][$identifier]['accounts'] = $accounts;
 
             $linked['total'] += sizeof($accounts);
