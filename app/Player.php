@@ -106,7 +106,12 @@ class Player extends Model
         'priority_level' => 'integer',
     ];
 
-    private $ban = null;
+    /**
+     * Cached active ban.
+     *
+     * @var ?Ban
+     */
+    private $ban = false;
 
     const PlayerNameFilter = [
         "%^0",
@@ -507,13 +512,13 @@ class Player extends Model
      */
     public function getActiveBan(): ?Ban
     {
-        if ($this->ban === null) {
+        if ($this->ban === false) {
             $this->ban = $this->bans()
                 ->get()
-                ->first() ?? false;
+                ->first();
         }
 
-        return $this->ban ?? null;
+        return $this->ban;
     }
 
     /**
