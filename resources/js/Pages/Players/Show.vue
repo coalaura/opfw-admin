@@ -11,6 +11,10 @@
                     <h1 class="dark:text-white">
                         {{ player.safePlayerName }}
                     </h1>
+
+                    <div v-if="loadingHWIDLink || loadingExtraData" class="relative text-yellow-600 dark:text-yellow-400" :title="t('players.show.loading_extra')">
+                        <i class="fas fa-spinner animate-spin absolute top-0"></i>
+                    </div>
                 </div>
                 <div class="flex justify-end gap-3 mobile:flex-wrap mobile:w-full">
                     <!-- Rank -->
@@ -1585,9 +1589,6 @@ export default {
             type: Array,
             required: true,
         },
-        hwidBan: {
-            type: Object
-        },
         tags: {
             type: Array,
             required: true,
@@ -1720,6 +1721,7 @@ export default {
             isAttachingScreenshot: false,
 
             loadingExtraData: false,
+            loadingHWIDLink: false,
 
             sortedScreenshots: [],
             panelLogs: [],
@@ -1732,6 +1734,8 @@ export default {
             charactersCollapsed: false,
             warningsCollapsed: true,
             extraDataCollapsed: true,
+
+            hwidBan: null,
 
             isLoading: false
         }
@@ -1948,6 +1952,26 @@ export default {
             this.status = status[this.player.licenseIdentifier] || false;
 
             this.statusLoading = false;
+        },
+        async loadHWIDLink() {
+            if (this.player.ban) {
+                return;
+            }
+
+            this.loadingHWIDLink = true;
+
+            try {
+                const response = await axios.get('/players/' + this.player.licenseIdentifier + '/linked_hwid');
+
+                if (response.data && response.data.status) {
+                    const data = response.data.data;
+
+                    this.hwidBan = data;
+                }
+            } catch (e) {
+            }
+
+            this.loadingHWIDLink = false;
         },
         async createScreenCapture() {
             if (this.screenCaptureStatus) {
@@ -2541,6 +2565,7 @@ export default {
         }
 
         this.loadExtraData();
+        this.loadHWIDLink();
         this.loadStatus();
 
         this.updatePlayerTime();

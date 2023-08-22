@@ -157,6 +157,20 @@ class PlayerRouteController extends Controller
     }
 
     /**
+     * Returns all linked accounts
+     *
+     * @param Player $player
+     * @return Response
+     */
+    public function linkedHWID(Player $player): Response
+    {
+        return (new Response([
+            'status' => true,
+            'data'   => $player->getHWIDBanHash(),
+        ], 200))->header('Content-Type', 'application/json');
+    }
+
+    /**
      * Returns all discord accounts
      *
      * @param Player $player

@@ -826,6 +826,7 @@
                 "hidden": "Hidden Note"
             },
             "copy_license": "Copy Players License Identifier",
+            "loading_extra": "Loading additional data...",
             "warnings": "Player Notes",
             "collapsed_warnings": "Show {0} player note(s)",
             "unload_do": "Unload",

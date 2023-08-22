@@ -245,13 +245,10 @@ class PlayerController extends Controller
 
 			$isSenior = $this->isSeniorStaff($request);
 
-            $hwidBan = !$resolved->isBanned() ? $resolved->getHWIDBanHash() : null;
-
 			return Inertia::render('Players/Show', [
 				'player'            => new PlayerResource($resolved),
 				'characters'        => CharacterResource::collection($resolved->characters),
 				'warnings'          => $resolved->fasterWarnings($isSenior),
-                'hwidBan'           => $hwidBan,
 				'kickReason'        => trim($request->query('kick')) ?? '',
 				'whitelisted'       => !!$whitelisted,
 				'blacklisted'       => !!$blacklisted,

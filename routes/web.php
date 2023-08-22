@@ -88,6 +88,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     Route::get('/players/{player}/data', [PlayerController::class, 'extraData']);
     Route::get('/players/{player}/linked', [PlayerRouteController::class, 'linkedAccounts']);
+    Route::get('/players/{player}/linked_hwid', [PlayerRouteController::class, 'linkedHWID']);
     Route::get('/players/{player}/discord', [PlayerRouteController::class, 'discordAccounts']);
     Route::get('/players/{player}/antiCheat', [PlayerRouteController::class, 'antiCheat']);
 
