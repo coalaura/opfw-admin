@@ -410,26 +410,21 @@
                                 :class="{'dark:text-green-300 text-green-700' : link.last_used}"
                                 :title="identifier"
                             >{{ identifier }}</pre>
-
-                            <button
-                                class="p-1 absolute top-0 right-0 text-xs font-semibold bg-transparent text-red-600 dark:text-red-400 rounded"
-                                @click="removeIdentifier(identifier)"
-                                :title="t('global.remove')"
-                                v-if="$page.auth.player.isSuperAdmin"
-                            >
-                                <i class="fas fa-trash"></i>
-                            </button>
                         </div>
                         <div class="p-3 w-1/2" v-if="link.accounts.length > 0">
-                            <a
-                                class="px-5 py-1 mb-2 border-2 rounded block w-full border-blue-200 bg-primary-pale dark:bg-dark-primary-pale"
-                                :href="'/players/' + account.license_identifier"
-                                target="_blank"
-                                v-for="account in link.accounts"
-                                :key="account.license_identifier"
-                            >
-                                <span class="font-semibold">{{ account.player_name }}</span>
-                            </a>
+                            <div class="flex mb-2" v-for="account in link.accounts" :key="account.license_identifier">
+                                <button @click="unlinkIdentifiers(account.license_identifier)" class="text-white border-2 border-red-200 bg-danger dark:bg-dark-danger font-semibold px-5 py-1 mb-2 mr-2 rounded" v-if="$page.auth.player.isSuperAdmin" :title="t('players.show.unlink')">
+                                    <i class="fas fa-unlink"></i>
+                                </button>
+
+                                <a
+                                    class="px-5 py-1 mb-2 border-2 rounded block w-full border-blue-200 bg-primary-pale dark:bg-dark-primary-pale"
+                                    :href="'/players/' + account.license_identifier"
+                                    target="_blank"
+                                >
+                                    <span class="font-semibold">{{ account.player_name }}</span>
+                                </a>
+                            </div>
                         </div>
                         <div class="p-3 w-1/2" v-else>
                             <span class="italic text-sm">{{ t('players.show.no_link') }}</span>
@@ -1889,7 +1884,7 @@ export default {
         async unlinkHWID() {
             if (this.isLoading) return;
 
-            if (!confirm(this.t('players.show.unlink_hwid_confirm'))) {
+            if (!confirm(this.t('players.show.unlink_confirm'))) {
                 return;
             }
 
@@ -1901,17 +1896,19 @@ export default {
             this.isLoading = false;
         },
         // TODO: finish this
-        async unlinkIdentifiers() {
+        async unlinkIdentifiers(pLicenseIdentifier) {
             if (this.isLoading) return;
 
             if (!confirm(this.t('players.show.unlink_confirm'))) {
                 return;
             }
 
+            this.isShowingLinked = false;
+
             this.isLoading = true;
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/unlink/' + this.player.licenseIdentifier);
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/unlink/' + pLicenseIdentifier);
 
             this.isLoading = false;
         },
@@ -2121,6 +2118,8 @@ export default {
             this.isShowingDiscordLoading = false;
         },
         async showLinked() {
+            if (this.isLoading) return;
+
             this.isShowingLinkedLoading = true;
             this.isShowingLinked = true;
 
@@ -2511,17 +2510,6 @@ export default {
                 '<a href="#" class="absolute top-0 left-0 z-10 bg-gray-100 text-gray-900 p-2" data-original="' + url + '">&#10006;</a>' +
                 '<iframe class="block h-96 w-iframe max-w-full" src="' + url + '" frameborder="0" allowfullscreen="true"></video>' +
                 '</div>');
-        },
-        async removeIdentifier(identifier) {
-            if (!confirm(this.t('players.show.identifier_remove'))) {
-                return;
-            }
-
-            this.isShowingLinked = false;
-            this.isShowingLinkedLoading = false;
-
-            // Send request.
-            await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/removeIdentifier/' + identifier);
         },
         formatBanCreator(creator) {
             if (!creator) {
