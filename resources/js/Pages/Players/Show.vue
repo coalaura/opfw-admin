@@ -1548,6 +1548,17 @@ hljs.registerLanguage('json', json);
 
 import 'highlight.js/styles/github-dark-dimmed.css';
 
+const AntiCheatTypes = {
+    "lastLag": "s",
+    "lastLagTime": "ms",
+    "waypoint": "m",
+    "speed": "m/s",
+    "timePassed": "s",
+    "distance": "m",
+    "calculatedSpeed": "m/s",
+    "allowedSpeed": "m/s"
+};
+
 export default {
     layout: Layout,
     components: {
@@ -1764,7 +1775,7 @@ export default {
 
             const lines = [];
 
-            for (let key in object) {
+            for (const key in object) {
                 let value = JSON.stringify(object[key])
                     .replace(/{"x":(-?\d+\.\d+),"y":(-?\d+\.\d+)}/gm, 'vector2($1, $2)') // vector2
                     .replace(/{"x":(-?\d+\.\d+),"y":(-?\d+\.\d+),"z":(-?\d+\.\d+)}/gm, 'vector3($1, $2, $3)') // vector3
@@ -1773,9 +1784,13 @@ export default {
 
                 value = hljs.highlight(value, {language: 'json'}).value;
 
-                const line = isArray ? value : `<b>${key.padEnd(maxLine, " ")}</b>: ${value}`;
+                let line = isArray ? value : `<b>${key.padEnd(maxLine, " ")}</b>: ${value}`;
 
-                lines.push(`<span class="block hover:bg-black dark:hover:bg-white hover:!bg-opacity-10 py-xs px-1">${line}</span>`);
+                if (key in AntiCheatTypes && object[key] !== false) {
+                    line += `<span class="text-gray-400 ml-0.5">${AntiCheatTypes[key]}</span>`;
+                }
+
+                lines.push(`<span class="block hover:bg-black hover:!bg-opacity-10 py-xs px-1">${line}</span>`);
             }
 
             if (!isArray) {
