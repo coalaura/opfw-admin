@@ -65,7 +65,7 @@ class HomeController extends Controller
             }
 
             return null;
-        }, $playerList));
+        }, array_values($playerList)));
 
         return Inertia::render('Home', [
             'quote'       => $quote,
