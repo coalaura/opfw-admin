@@ -59,7 +59,10 @@ export default {
 
             this.loading = true;
 
-            this.modelName = await this.resolveHash(this.hash);
+            const { name, hash } = await this.resolveHash(this.hash);
+
+            this.modelName = name;
+            this.hash = hash || this.hash;
 
             this.loading = false;
         },

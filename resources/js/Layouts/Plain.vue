@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bg-white">
 
         <div class="flex flex-col h-screen">
             <smallNavbar />

@@ -36,6 +36,6 @@
     {!! extraHeader() !!}
 </head>
 
-<body class="h-full font-sans bg-white text-black antialiased">
+<body class="h-full font-sans text-black antialiased" style="background: rgb(17, 24, 39)">
     @inertia
 </body>

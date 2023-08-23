@@ -490,36 +490,7 @@
             </template>
         </modal>
 
-        <modal :show.sync="antiCheatMetadata">
-			<template #header>
-				<h1 class="dark:text-white">
-					{{ t('players.show.anti_cheat_metadata') }}
-				</h1>
-			</template>
-
-			<template #default>
-                <video v-if="antiCheatMetadataImage && (['mp4', 'webm'].includes(antiCheatMetadataImage.split('.').pop()))" :src="antiCheatMetadataImage" controls class="w-full mb-3"></video>
-                <img :src="antiCheatMetadataImage" v-else-if="antiCheatMetadataImage" class="w-full mb-3" />
-
-                <hashResolver>
-                    <template #default>
-                        <div class="mt-4" v-for="metadata in antiCheatMetadataJSON">
-                            <p class="font-semibold mb-1 font-mono">{{ metadata.key }}</p>
-                            <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm hljs" v-html="metadata.value" v-if="metadata.value"></pre>
-                            <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm italic" v-else>empty</pre>
-                        </div>
-                    </template>
-                </hashResolver>
-			</template>
-
-			<template #actions>
-				<button type="button"
-						class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400"
-						@click="antiCheatMetadata = false">
-					{{ t('global.close') }}
-				</button>
-			</template>
-		</modal>
+        <metadataViewer :title="t('players.show.anti_cheat_metadata')" :image="antiCheatMetadataImage" :metadata="antiCheatMetadataJSON" :show.sync="antiCheatMetadata"></metadataViewer>
 
         <!-- Unloading -->
         <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isUnloading">
@@ -1541,28 +1512,9 @@ import Card from './../../Components/Card';
 import Avatar from './../../Components/Avatar';
 import ScreenshotAttacher from './../../Components/ScreenshotAttacher';
 import Modal from './../../Components/Modal';
-import HashResolver from './../../Components/HashResolver';
+import MetadataViewer from './../../Components/MetadataViewer';
 
 import models from "../../data/ped_models.json";
-
-import hljs from 'highlight.js';
-
-import json from 'highlight.js/lib/languages/json';
-
-hljs.registerLanguage('json', json);
-
-import 'highlight.js/styles/github-dark-dimmed.css';
-
-const AntiCheatTypes = {
-    "lastLag": "s",
-    "lastLagTime": "ms",
-    "waypoint": "m",
-    "speed": "m/s",
-    "timePassed": "s",
-    "distance": "m",
-    "calculatedSpeed": "m/s",
-    "allowedSpeed": "m/s"
-};
 
 export default {
     layout: Layout,
@@ -1574,7 +1526,7 @@ export default {
         Avatar,
         ScreenshotAttacher,
         Modal,
-        HashResolver,
+        MetadataViewer
     },
     props: {
         player: {
@@ -1687,9 +1639,8 @@ export default {
             antiCheatEvents: [],
 
             antiCheatMetadata: false,
-            antiCheatMetadataJSON: '',
+            antiCheatMetadataJSON: null,
             antiCheatMetadataImage: false,
-            importantMetadata: {},
 
             isTagging: false,
             tagCategory: this.player.tag ? this.player.tag : 'custom',
@@ -1761,82 +1712,13 @@ export default {
 				return `<span class="text-gray-700 dark:text-gray-300" title="${match}">${start}...${end}</span>`;
 			});
         },
-        cleanupObject(value) {
-            if (typeof value === "object") {
-                for (const key in value) {
-                    value[key] = this.cleanupObject(value[key]);
-                }
-
-                return value;
-            }
-
-            if (typeof value === "number") {
-                value = Math.round(value * 100) / 100;
-            }
-
-            return value;
-        },
-        highlightJSON(object) {
-            const isArray = Array.isArray(object),
-                maxLine = Object.keys(object).map(k => k.length).reduce((a, b) => Math.max(a, b), 0);
-
-            const lines = [];
-
-            for (const key in object) {
-                let value = JSON.stringify(object[key])
-                    .replace(/{"x":(-?\d+\.\d+),"y":(-?\d+\.\d+)}/gm, 'vector2($1, $2)') // vector2
-                    .replace(/{"x":(-?\d+\.\d+),"y":(-?\d+\.\d+),"z":(-?\d+\.\d+)}/gm, 'vector3($1, $2, $3)') // vector3
-                    .replace(/{"x":(-?\d+\.\d+),"y":(-?\d+\.\d+),"z":(-?\d+\.\d+),"w":(-?\d+\.\d+)}/gm, 'vector4($1, $2, $3, $4)') // vector4
-                    .replace(/(?<="):(?! |$)|,(?=")/gm, '$& ');
-
-                value = hljs.highlight(value, {language: 'json'}).value;
-
-                let line = isArray ? value : `<b>${key.padEnd(maxLine, " ")}</b>: ${value}`;
-
-                if (key in AntiCheatTypes && object[key] !== false) {
-                    line += `<span class="text-gray-400 ml-0.5">${AntiCheatTypes[key]}</span>`;
-                }
-
-                lines.push(`<span class="block hover:bg-black hover:!bg-opacity-10 py-xs px-1">${line}</span>`);
-            }
-
-            if (!isArray) {
-                lines.sort();
-            }
-
-            return lines.join("");
-        },
         showAntiCheatMetadata(event, eventData) {
             event.preventDefault();
 
             this.antiCheatMetadata = true;
+
             this.antiCheatMetadataImage = eventData.screenshot_url;
-
-            this.antiCheatMetadataJSON = [];
-
-            const metadata = this.cleanupObject(eventData.metadata);
-
-            for (const key in metadata) {
-                let value = metadata[key];
-
-                if (key === "trace" || key === "modifications") {
-                    value = value.split("\n");
-                }
-
-                if (typeof value === "object") {
-                    this.antiCheatMetadataJSON.push({
-                        key: `metadata.${key}`,
-                        value: this.highlightJSON(value)
-                    });
-
-                    delete metadata[key];
-                }
-            }
-
-            this.antiCheatMetadataJSON.unshift({
-                key: 'metadata',
-                value: this.highlightJSON(metadata)
-            });
+            this.antiCheatMetadataJSON = eventData.metadata;
         },
         getPlayerMetadata() {
             const statusMetadata = this.status?.metadata;

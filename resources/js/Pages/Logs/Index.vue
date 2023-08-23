@@ -294,38 +294,12 @@
 			</template>
 		</modal>
 
-		<modal :show.sync="showLogMetadata">
-			<template #header>
-				<h1 class="dark:text-white">
-					{{ t('logs.metadata.title') }}
-				</h1>
-			</template>
-
+		<metadataViewer :title="t('players.show.anti_cheat_metadata')" :metadata="logMetadata" :show.sync="showLogMetadata">
 			<template #default>
 				<p class="m-0 mb-2 font-bold">{{ t('logs.metadata.details') }}:</p>
-				<pre class="block text-sm whitespace-pre-wrap break-words border-dashed border-b-2 mb-4 pb-4">{{
-						parseLogMetadata(logMetadata) || 'N/A'
-					}}</pre>
-
-				<pre class="block text-sm whitespace-pre-wrap break-words border-dashed border-b-2 mb-4 pb-4" v-if="parsedMetadata"
-					v-html="parsedMetadata"></pre>
-
-				<p class="m-0 mb-2 font-bold">{{ t('logs.metadata.raw') }}:</p>
-				<pre class="block text-xs whitespace-pre-wrap break-words hljs px-3 py-2 rounded"
-					v-html="logMetadataJSON"></pre>
-
-				<p class="m-0 mt-2 mb-2 font-bold" v-if="metaScreenshot">{{ t('logs.metadata.screenshot') }}:</p>
-				<img :src="metaScreenshot" class="w-full" v-if="metaScreenshot" />
+				<pre class="block text-sm whitespace-pre-wrap break-words border-dashed border-b-2 mb-4 pb-4">{{ parseLogMetadata(logMetadata) || 'N/A' }}</pre>
 			</template>
-
-			<template #actions>
-				<button type="button"
-						class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400"
-						@click="showLogMetadata = false; logMetadata = null">
-					{{ t('global.close') }}
-				</button>
-			</template>
-		</modal>
+		</metadataViewer>
 
 	</div>
 </template>
@@ -335,21 +309,15 @@ import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
 import Pagination from './../../Components/Pagination';
 import Modal from './../../Components/Modal';
-
-import hljs from 'highlight.js';
-
-import json from 'highlight.js/lib/languages/json';
-
-hljs.registerLanguage('json', json);
-
-import 'highlight.js/styles/github-dark-dimmed.css';
+import MetadataViewer from './../../Components/MetadataViewer';
 
 export default {
 	layout: Layout,
 	components: {
 		Pagination,
 		Modal,
-		VSection
+		VSection,
+		MetadataViewer
 	},
 	props: {
 		logs: {
@@ -405,13 +373,11 @@ export default {
 				description: ''
 			},
 			showLogTimeDifference: false,
-			logMetadata: null,
-			showLogMetadata: false,
-			metaScreenshot: null,
-			logMetadataJSON: '',
-			parsedMetadata: '',
 			searchingActions: false,
 			searchableActions: [],
+
+			showLogMetadata: false,
+			logMetadata: null,
 
 			searchTimeout: false,
 
@@ -475,16 +441,7 @@ export default {
 
 			if (metadata) {
 				this.logMetadata = metadata;
-				this.logMetadataJSON = hljs.highlight(JSON.stringify(metadata, null, 4), {language: 'json'}).value;
 				this.showLogMetadata = true;
-
-				if (metadata.changes) {
-					this.parsedMetadata = metadata.changes;
-				} else {
-					this.parsedMetadata = '';
-				}
-
-				this.metaScreenshot = metadata && metadata.screenshotURL ? metadata.screenshotURL : null;
 			}
 		},
 		parseLogMetadata(metadata) {

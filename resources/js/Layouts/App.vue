@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bg-white">
 
         <!-- Modals -->
         <portal-target name="modals" />
