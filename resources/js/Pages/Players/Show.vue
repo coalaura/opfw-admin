@@ -1898,6 +1898,10 @@ export default {
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/unlink_hwid/' + this.hwidBan.license);
 
             this.isLoading = false;
+
+            this.hwidBan = null;
+
+            this.loadHWIDLink();
         },
         // TODO: finish this
         async unlinkIdentifiers(pLicenseIdentifier) {
