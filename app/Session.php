@@ -71,8 +71,8 @@ class Session extends Model
                 $data['last_viewed'] = $path;
             }
 
-            $data['ip_address'] = $req->ip();
-            $data['user_agent'] = $req->userAgent();
+            $data['ip_address'] = $req->ip() ?? 'Unknown';
+            $data['user_agent'] = $req->userAgent() ?? 'Unknown';
         }
 
         return $data;
