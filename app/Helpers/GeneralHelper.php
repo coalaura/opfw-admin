@@ -102,6 +102,28 @@ class GeneralHelper
         return $staff;
     }
 
+    public static function getCommonTimezones(): array
+    {
+        $key = "common_timezones";
+
+        if (CacheHelper::exists($key)) {
+            return CacheHelper::read($key, []);
+        }
+
+        $timezones = DB::table('users')
+            ->select(DB::raw("COUNT(1) as count, JSON_UNQUOTE(JSON_EXTRACT(user_variables, '$.timezone')) as timezone"))
+            ->whereNotNull(DB::raw("JSON_EXTRACT(user_variables, '$.timezone')"))
+            ->groupBy("timezone")
+            ->orderBy("count", "DESC")
+            ->orderBy("timezone", "ASC")
+            ->limit(10)
+            ->get()->toArray();
+
+        CacheHelper::write($key, $timezones, CacheHelper::HOUR * 2);
+
+        return $timezones;
+    }
+
     public static function ipInfo(string $ip): ?array
     {
         DB::table('panel_ip_infos')->where('last_crawled', '<', time() - CacheHelper::DAY * 5)->delete();

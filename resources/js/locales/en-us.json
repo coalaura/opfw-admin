@@ -459,7 +459,12 @@
             "announcement": "Post Announcement",
             "damage_logs": "View Damage Logs",
             "crafting": "View Crafting Recipes"
-        }
+        },
+
+        "world_time": "World Time",
+        "world_time_desc": "The time in the {0} most used timezones.",
+        "world_time_use": "Used by {0} player(s)",
+        "world_time_also": "Same as: {0}"
     },
     "pagination": {
         "previous": "Previous",

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Helpers\GeneralHelper;
 use App\Helpers\PermissionHelper;
 use App\Http\Resources\PlayerResource;
 use App\Server;
@@ -85,6 +86,10 @@ class AppServiceProvider extends ServiceProvider
 
             file_put_contents($file, $log . "\n", FILE_APPEND);
 		});
+
+        Inertia::share([
+            'timezones' => GeneralHelper::getCommonTimezones()
+        ]);
     }
 
     /**

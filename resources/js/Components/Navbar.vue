@@ -15,6 +15,10 @@
         <nav class="flex items-center justify-between w-full px-12 py-4 text-white bg-gray-900 shadow">
             <!-- Left side -->
             <p class="italic">
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-green-700 bg-success rounded dark:bg-dark-success float-right cursor-pointer" :title="t('nav.world_time_desc', timezones.length)" @click="showingWorldTime = true" v-if="timezones.length > 0">
+                    <i class="fas fa-globe"></i>
+                </span>
+
                 <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded float-right" :class="serverStatusLoading ? 'bg-gray-500 border-gray-700' : (serverStatus ? 'bg-green-500 border-green-700' : 'bg-red-500 border-red-700')" :title="!serverStatusLoading ? (!serverStatus ? t('global.server_offline') : t('global.server_online', serverStatus)) : ''">
                     <i class="fas fa-sync-alt" v-if="serverStatusLoading"></i>
                     <i class="fas fa-server" v-else></i>
@@ -146,6 +150,44 @@
             </template>
         </modal>
 
+        <modal :show.sync="showingWorldTime">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('nav.world_time') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="flex py-4 px-6 mb-5 bg-white dark:bg-gray-600 rounded-lg shadow-sm gap-10 relative" v-for="timezone in timezones" :key="timezone.timezone">
+                    <div class="text-7xl">
+                        <i :class="timezone.icon"></i>
+                    </div>
+
+                    <div class="flex items-center overflow-hidden">
+                        <div class="overflow-hidden">
+                            <p class="font-semibold text-lg">{{ timezone.timezone }}</p>
+                            <p class="text-sm">{{ timezone.time }}</p>
+                            <p class="mt-1 text-xs text-muted dark:text-dark-muted italic overflow-ellipsis overflow-hidden whitespace-nowrap" v-if="timezone.alias.length > 0">{{ t('nav.world_time_also', timezone.alias.join(', ')) }}</p>
+                        </div>
+                    </div>
+
+                    <div class="absolute top-1 right-1 text-sm font-bold leading-4" :title="t('nav.world_time_use', timezone.count)">
+                        {{ timezone.count }}
+                    </div>
+                </div>
+
+                <div class="italic text-sm text-muted dark:text-dark-muted">
+                    {{ t('nav.world_time_desc', timezones.length) }}
+                </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showingWorldTime = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
+
     </div>
 </template>
 
@@ -160,6 +202,23 @@ export default {
         Modal
     },
     data() {
+        const timezones = this.$page.timezones.map(timezone => {
+            timezone.time = this.getDateForTimezone(timezone);
+            timezone.icon = this.getTimezoneIcon(timezone.timezone);
+
+            timezone.alias = [];
+
+            return timezone;
+        }).filter((timezone, index, self) => {
+            const initial = self.findIndex(t => t.time === timezone.time);
+
+            if (initial === index) return true;
+
+            self[initial].alias.push(timezone.timezone);
+
+            return false;
+        });
+
         return {
             theme: 'light',
 
@@ -176,7 +235,10 @@ export default {
 
             loadingDebug: false,
             showingDebugInfo: false,
-            debugInfo: false
+            debugInfo: false,
+
+            showingWorldTime: false,
+            timezones: timezones
         }
     },
     beforeMount() {
@@ -184,8 +246,44 @@ export default {
     },
     mounted() {
         this.updateServerStatus();
+
+        setInterval(() => {
+            this.timezones = this.timezones.map(timezone => {
+                timezone.time = this.getDateForTimezone(timezone);
+
+                return timezone;
+            });
+        }, 1000);
     },
     methods: {
+        getDateForTimezone(pTimezone) {
+            const date = new Date((new Date()).toLocaleString('en-US', { timeZone: pTimezone.timezone }));
+
+            return moment(date).format('dddd, MMMM Do YYYY, h:mm:ss A');
+        },
+        getTimezoneIcon(pTimezone) {
+            const area = pTimezone.split('/').shift();
+
+            switch (area) {
+                case 'Europe':
+                    return 'fas fa-globe-europe';
+                case 'America':
+                    return 'fas fa-globe-americas';
+                case 'Asia':
+                case 'Australia':
+                case 'Indian':
+                    return 'fas fa-globe-asia';
+                case 'Africa':
+                    return 'fas fa-globe-africa';
+                case 'Pacific':
+                case 'Atlantic':
+                    return 'fas fa-water';
+                case 'Antarctica':
+                    return 'fas fa-igloo';
+                default:
+                    return 'fas fa-globe';
+            }
+        },
         getDiscordAvatar() {
             if (this.failedAvatarLoad) return '/images/discord_failed.png';
 
