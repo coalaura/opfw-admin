@@ -76,7 +76,9 @@ export default {
         const sessions = this.sessions.map(session => {
             const ua = this.parseUserAgent(session.user_agent);
 
-            session.last_viewed = '/' + session.last_viewed;
+            if (!session.last_viewed.startsWith('/')) {
+                session.last_viewed = '/' + session.last_viewed;
+            }
 
             return {
                 ...session,
