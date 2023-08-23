@@ -59,13 +59,17 @@ class HomeController extends Controller
                 ->orWhereIn('license_identifier', GeneralHelper::getRootUsers());
         })->whereIn('license_identifier', $players)->get();
 
-        $characters = array_filter(array_map(function ($player) {
-            if ($player['character']) {
-                return $player['license'];
-            }
+        $characters = [];
 
-            return null;
-        }, array_values($playerList)));
+        foreach($staff as $player) {
+            $license = $player->license_identifier;
+
+            $status = $playerList[$license];
+
+            if ($status && $status['character']) {
+                $characters[] = $license;
+            }
+        }
 
         return Inertia::render('Home', [
             'quote'       => $quote,
