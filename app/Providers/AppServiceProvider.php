@@ -38,7 +38,9 @@ class AppServiceProvider extends ServiceProvider
         // Disable resource wrapping.
         JsonResource::withoutWrapping();
 
-        $discord = !app()->runningInConsole() && env('DB_CONNECTION') ? SessionHelper::getInstance()->getDiscord() : null;
+        $canUseDB = !app()->runningInConsole() && env('DB_CONNECTION');
+
+        $discord = $canUseDB ? SessionHelper::getInstance()->getDiscord() : null;
         $name = $discord ? $discord['username'] : 'Guest';
 
 		DB::listen(function ($query) use ($name) {
@@ -88,7 +90,7 @@ class AppServiceProvider extends ServiceProvider
 		});
 
         Inertia::share([
-            'timezones' => GeneralHelper::getCommonTimezones()
+            'timezones' => $canUseDB ? GeneralHelper::getCommonTimezones() : []
         ]);
     }
 
