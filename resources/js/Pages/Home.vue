@@ -119,7 +119,7 @@
             </h3>
             <div class="flex flex-wrap -mx-3">
                 <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-gray-500 dark:bg-gray-600 rounded m-3" v-for="player in staff" :key="player.id" :href="'/players/' + player.licenseIdentifier">
-                    <i class="fas fa-bed mr-1 cursor-help text-purple-300" v-if="!player.character" :title="t('home.no_character')"></i>
+                    <i class="fas fa-bed mr-1 cursor-help text-purple-300" v-if="!characters.includes(player.licenseIdentifier)" :title="t('home.no_character')"></i>
 
                     <i class="fas fa-toggle-on mr-1 text-green-300 cursor-help" v-if="player.staffToggled" :title="t('home.staff_toggled')"></i>
                     <i class="fas fa-toggle-off mr-1 text-red-300 cursor-help" v-else :title="t('home.staff_toggled_off')"></i>
@@ -331,6 +331,10 @@ export default {
             required: true,
         },
         staff: {
+            type: Array,
+            required: true,
+        },
+        characters: {
             type: Array,
             required: true,
         },
