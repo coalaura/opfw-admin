@@ -161,7 +161,7 @@
                 <div class="mb-3 pb-3 border-b-2 border-dashed border-gray-400" v-if="gameTime !== false">
                     <div class="flex py-4 px-6 bg-white dark:bg-gray-600 rounded-lg shadow-sm gap-10 relative">
                         <div class="text-7xl">
-                            <i class="fas fa-cannabis"></i>
+                            <img src="/images/earth/san-andreas.png" class="w-20" />
                         </div>
 
                         <div class="flex items-center overflow-hidden">
