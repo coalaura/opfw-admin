@@ -1584,7 +1584,7 @@ export default {
 
         return {
             local: {
-                played: this.t('players.show.played', this.$options.filters.humanizeSeconds(this.player.playTime)),
+                played: this.player.playTime > 0 ? this.t('players.show.played', this.$options.filters.humanizeSeconds(this.player.playTime)) : this.t('players.show.no_playtime'),
                 ban: this.localizeBan(),
                 ban_warning: this.t('players.ban.ban_warning')
             },

@@ -751,6 +751,7 @@
         },
         "show": {
             "played": "<b>{0}</b> played",
+            "no_playtime": "<b>no playtime</b>",
             "description": "Viewing player profile.",
             "unban": "Unban",
             "issue": "Issue Ban",
