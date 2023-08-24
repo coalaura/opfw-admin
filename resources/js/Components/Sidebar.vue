@@ -70,15 +70,27 @@
             </ul>
         </nav>
 
-        <!-- Suggest a feature -->
-        <a
-            class="px-5 py-3 mt-auto text-center text-black bg-yellow-400 rounded"
-            target="_blank"
-            href="https://github.com/coalaura/opfw-admin"
-            v-if="!isMobile() && !collapsed"
-        >
-            <i class="mr-2 fas fa-bug"></i> {{ t("nav.report") }}
-        </a>
+        <div class="mt-auto">
+            <!-- Update available -->
+            <a
+                class="block px-5 py-2 mt-3 text-center text-black bg-green-400 rounded"
+                target="_blank"
+                href="https://github.com/coalaura/opfw-admin"
+                v-if="!isMobile() && $page.update"
+            >
+                <i class="mr-2 fas fa-wrench"></i> {{ t("nav.update") }}
+            </a>
+
+            <!-- Suggest a feature -->
+            <a
+                class="block px-5 py-2 mt-3 text-center text-black bg-yellow-400 rounded"
+                target="_blank"
+                href="https://github.com/coalaura/opfw-admin/issues/new/choose"
+                v-if="!isMobile() && !collapsed"
+            >
+                <i class="mr-2 fas fa-bug"></i> {{ t("nav.report") }}
+            </a>
+        </div>
     </div>
 </template>
 

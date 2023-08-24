@@ -89,9 +89,12 @@ class AppServiceProvider extends ServiceProvider
             file_put_contents($file, $log . "\n", FILE_APPEND);
 		});
 
-        Inertia::share([
-            'timezones' => $canUseDB ? GeneralHelper::getCommonTimezones() : []
-        ]);
+        if ($canUseDB) {
+            Inertia::share([
+                'timezones' => GeneralHelper::getCommonTimezones(),
+                'update' => GeneralHelper::isPanelUpdateAvailable(),
+            ]);
+        }
     }
 
     /**

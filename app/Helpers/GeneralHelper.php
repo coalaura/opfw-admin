@@ -9,8 +9,8 @@ use App\Player;
 class GeneralHelper
 {
     const DefaultDannies = [
-        -1667301416 => ["headBlendData"=>["skinSecondId"=>0,"shapeSecondId"=>0,"shapeMix"=>0.0,"isParent"=>false,"skinMix"=>0.0,"thirdMix"=>0.0,"shapeThirdId"=>0,"shapeFirstId"=>0,"skinFirstId"=>0,"skinThirdId"=>0],"headOverlay"=>[],"hairColor"=>["colorId"=>-1,"highlightColorId"=>-1],"components"=>["1"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"2"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"3"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"4"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"5"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"6"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"7"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"8"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>240],"9"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"10"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"11"=>["drawableId"=>6,"paletteId"=>0,"textureId"=>1],"0"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0]],"props"=>["1"=>["textureId"=>-1,"drawableId"=>-1],"2"=>["textureId"=>-1,"drawableId"=>-1],"0"=>["textureId"=>-1,"drawableId"=>-1],"7"=>["textureId"=>-1,"drawableId"=>-1],"6"=>["textureId"=>-1,"drawableId"=>-1]],"faceFeatures"=>["1"=>0.0,"2"=>0.0,"3"=>0.0,"4"=>0.0,"5"=>0.0,"6"=>0.0,"7"=>0.0,"8"=>0.0,"9"=>0.0,"10"=>0.0,"11"=>0.0,"12"=>0.0,"13"=>0.0,"14"=>0.0,"15"=>0.0,"16"=>0.0,"17"=>0.0,"18"=>0.0,"19"=>0.0,"0"=>0.0],"eyeColor"=>-1],
-        1885233650 => ["headBlendData"=>["skinSecondId"=>0,"shapeSecondId"=>0,"shapeMix"=>0.0,"isParent"=>false,"skinMix"=>0.0,"thirdMix"=>0.0,"shapeThirdId"=>0,"shapeFirstId"=>0,"skinFirstId"=>0,"skinThirdId"=>0],"headOverlay"=>[],"hairColor"=>["colorId"=>-1,"highlightColorId"=>-1],"components"=>["1"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"2"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"3"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"4"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"5"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"6"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"7"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"8"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>240],"9"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"10"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0],"11"=>["drawableId"=>6,"paletteId"=>0,"textureId"=>1],"0"=>["drawableId"=>0,"paletteId"=>0,"textureId"=>0]],"props"=>["1"=>["textureId"=>-1,"drawableId"=>-1],"2"=>["textureId"=>-1,"drawableId"=>-1],"0"=>["textureId"=>-1,"drawableId"=>-1],"7"=>["textureId"=>-1,"drawableId"=>-1],"6"=>["textureId"=>-1,"drawableId"=>-1]],"faceFeatures"=>["1"=>0.0,"2"=>0.0,"3"=>0.0,"4"=>0.0,"5"=>0.0,"6"=>0.0,"7"=>0.0,"8"=>0.0,"9"=>0.0,"10"=>0.0,"11"=>0.0,"12"=>0.0,"13"=>0.0,"14"=>0.0,"15"=>0.0,"16"=>0.0,"17"=>0.0,"18"=>0.0,"19"=>0.0,"0"=>0.0],"eyeColor"=>-1]
+        -1667301416 => ["headBlendData" => ["skinSecondId" => 0, "shapeSecondId" => 0, "shapeMix" => 0.0, "isParent" => false, "skinMix" => 0.0, "thirdMix" => 0.0, "shapeThirdId" => 0, "shapeFirstId" => 0, "skinFirstId" => 0, "skinThirdId" => 0], "headOverlay" => [], "hairColor" => ["colorId" => -1, "highlightColorId" => -1], "components" => ["1" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "2" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "3" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "4" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "5" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "6" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "7" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "8" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 240], "9" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "10" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "11" => ["drawableId" => 6, "paletteId" => 0, "textureId" => 1], "0" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0]], "props" => ["1" => ["textureId" => -1, "drawableId" => -1], "2" => ["textureId" => -1, "drawableId" => -1], "0" => ["textureId" => -1, "drawableId" => -1], "7" => ["textureId" => -1, "drawableId" => -1], "6" => ["textureId" => -1, "drawableId" => -1]], "faceFeatures" => ["1" => 0.0, "2" => 0.0, "3" => 0.0, "4" => 0.0, "5" => 0.0, "6" => 0.0, "7" => 0.0, "8" => 0.0, "9" => 0.0, "10" => 0.0, "11" => 0.0, "12" => 0.0, "13" => 0.0, "14" => 0.0, "15" => 0.0, "16" => 0.0, "17" => 0.0, "18" => 0.0, "19" => 0.0, "0" => 0.0], "eyeColor" => -1],
+        1885233650 => ["headBlendData" => ["skinSecondId" => 0, "shapeSecondId" => 0, "shapeMix" => 0.0, "isParent" => false, "skinMix" => 0.0, "thirdMix" => 0.0, "shapeThirdId" => 0, "shapeFirstId" => 0, "skinFirstId" => 0, "skinThirdId" => 0], "headOverlay" => [], "hairColor" => ["colorId" => -1, "highlightColorId" => -1], "components" => ["1" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "2" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "3" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "4" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "5" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "6" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "7" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "8" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 240], "9" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "10" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "11" => ["drawableId" => 6, "paletteId" => 0, "textureId" => 1], "0" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0]], "props" => ["1" => ["textureId" => -1, "drawableId" => -1], "2" => ["textureId" => -1, "drawableId" => -1], "0" => ["textureId" => -1, "drawableId" => -1], "7" => ["textureId" => -1, "drawableId" => -1], "6" => ["textureId" => -1, "drawableId" => -1]], "faceFeatures" => ["1" => 0.0, "2" => 0.0, "3" => 0.0, "4" => 0.0, "5" => 0.0, "6" => 0.0, "7" => 0.0, "8" => 0.0, "9" => 0.0, "10" => 0.0, "11" => 0.0, "12" => 0.0, "13" => 0.0, "14" => 0.0, "15" => 0.0, "16" => 0.0, "17" => 0.0, "18" => 0.0, "19" => 0.0, "0" => 0.0], "eyeColor" => -1]
     ];
 
     const PedComponents = [
@@ -124,6 +124,42 @@ class GeneralHelper
         return $timezones;
     }
 
+    public static function isPanelUpdateAvailable(): bool
+    {
+        $key = "panel_update";
+
+        if (CacheHelper::exists($key)) {
+            return CacheHelper::read($key, false);
+        }
+
+        // git rev-parse HEAD
+        $local = trim(shell_exec('git rev-parse HEAD'));
+
+        // git fetch origin
+        shell_exec('git fetch origin');
+
+        // git ls-remote
+        $remote = explode("\n", trim(shell_exec('git ls-remote')));
+
+        if (!$remote || !isset($remote[1])) {
+            return false;
+        }
+
+        $remote = preg_split('/\s+/', $remote[1]);
+
+        if (!$remote || !isset($remote[0])) {
+            return false;
+        }
+
+        $remote = $remote[0];
+
+        $updateAvailable = $local !== $remote;
+
+        CacheHelper::write($key, $updateAvailable, CacheHelper::MINUTE * 15);
+
+        return $updateAvailable;
+    }
+
     public static function ipInfo(string $ip): ?array
     {
         DB::table('panel_ip_infos')->where('last_crawled', '<', time() - CacheHelper::DAY * 5)->delete();
@@ -155,18 +191,18 @@ class GeneralHelper
         return $info;
     }
 
-	public static function dannyPercentageCreationTime($creationTime)
-	{
-		if (!$creationTime) {
-			return false;
-		}
+    public static function dannyPercentageCreationTime($creationTime)
+    {
+        if (!$creationTime) {
+            return false;
+        }
 
-		$creationTime = max(0, $creationTime - 25);
+        $creationTime = max(0, $creationTime - 25);
 
-		$percentage = 1.0 - ($creationTime / (15 * 60));
+        $percentage = 1.0 - ($creationTime / (15 * 60));
 
-		return min(1, max(0, $percentage));
-	}
+        return min(1, max(0, $percentage));
+    }
 
     public static function isDefaultDanny($modelHash, $modelData)
     {
@@ -184,7 +220,7 @@ class GeneralHelper
 
         $changed = 0;
 
-        foreach($modelData["components"] as $componentId => $component) {
+        foreach ($modelData["components"] as $componentId => $component) {
             if (!in_array(intval($componentId), self::PedComponents)) continue;
 
             $defaultValue = $default["components"][$componentId] ?? null;
@@ -194,7 +230,7 @@ class GeneralHelper
             }
         }
 
-        foreach($modelData["headOverlay"] as $overlayId => $overlay) {
+        foreach ($modelData["headOverlay"] as $overlayId => $overlay) {
             if (!in_array(intval($overlayId), self::PedOverlays)) continue;
 
             if ($overlay["overlayOpacity"] >= 0.3 && $overlay["overlayValue"] !== 255) {
@@ -202,7 +238,7 @@ class GeneralHelper
             }
         }
 
-        foreach($modelData["props"] as $propId => $prop) {
+        foreach ($modelData["props"] as $propId => $prop) {
             if (!in_array(intval($propId), self::PedProps)) continue;
 
             $defaultValue = $default["props"][$propId] ?? null;
