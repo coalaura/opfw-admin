@@ -32,7 +32,7 @@ const Socket = {
             } catch (e) {
                 console.log(`Error fetching data from ${url}: ${e.message}`);
 
-                if (e.response && e.response.status === 404) {
+                if ((e.response && e.response.status === 404) || e.message === 'Network Error') {
                     return null;
                 }
 
