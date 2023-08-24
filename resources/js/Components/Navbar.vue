@@ -177,7 +177,7 @@
 
                 <div class="flex py-4 px-6 mb-5 bg-white dark:bg-gray-600 rounded-lg shadow-sm gap-10 relative" v-for="timezone in timezones" :key="timezone.timezone">
                     <div class="text-7xl">
-                        <i :class="timezone.icon"></i>
+                        <img :src="'/images/earth/' + timezone.icon" class="w-20" />
                     </div>
 
                     <div class="flex items-center overflow-hidden">
@@ -313,22 +313,23 @@ export default {
 
             switch (area) {
                 case 'Europe':
-                    return 'fas fa-globe-europe';
-                case 'America':
-                    return 'fas fa-globe-americas';
-                case 'Asia':
-                case 'Australia':
-                case 'Indian':
-                    return 'fas fa-globe-asia';
                 case 'Africa':
-                    return 'fas fa-globe-africa';
+                    return 'earth-africa.png';
+                case 'America':
+                    return 'earth-america.png';
+                case 'Asia':
+                case 'Indian':
+                    return 'earth-asia.png';
+                case 'Australia':
+                    return 'earth-australia.png';
                 case 'Pacific':
+                    return 'earth-pacific.png';
                 case 'Atlantic':
-                    return 'fas fa-water';
+                    return 'earth-atlantic.png';
                 case 'Antarctica':
-                    return 'fas fa-igloo';
+                    return 'earth-antarctica.png';
                 default:
-                    return 'fas fa-globe';
+                    return 'earth-america.png';
             }
         },
         getDiscordAvatar() {
