@@ -2,7 +2,11 @@ const Socket = {
     async install(Vue, options) {
         const cache = {};
 
+        let originUnavailable = false;
+
         Vue.prototype.requestData = async function(route, useCache = false) {
+            if (originUnavailable) return null;
+
             if (!route.startsWith('/')) route = '/' + route;
 
             const isDev = window.location.hostname === 'localhost';
@@ -32,7 +36,11 @@ const Socket = {
             } catch (e) {
                 console.log(`Error fetching data from ${url}: ${e.message}`);
 
-                if ((e.response && e.response.status === 404) || e.message === 'Network Error') {
+                if (e.message === 'Network Error') {
+                    originUnavailable = true;
+
+                    console.info('Origin server is unavailable, aborting future requests.');
+
                     return null;
                 }
 

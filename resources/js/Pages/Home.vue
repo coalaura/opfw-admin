@@ -292,17 +292,7 @@ export default {
             }, 750);
         },
         refresh: async function () {
-            if (this.playerCount === null) {
-                return;
-            }
-
             const players = await this.requestData("/players/count");
-
-            if (players === null) {
-                this.playerCount = null;
-
-                return;
-            }
 
             if (typeof players === "number") {
                 this.playerCount = this.t('home.player_count', players);
