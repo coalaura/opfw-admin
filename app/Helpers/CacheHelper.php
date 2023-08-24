@@ -136,6 +136,23 @@ class CacheHelper
     }
 
     /**
+     * Forget something in the cache
+     *
+     * @param string $key
+     */
+    public static function forget(string $key)
+    {
+        if (CLUSTER && !Str::startsWith($key, CLUSTER)) {
+            $key = CLUSTER . $key;
+        }
+
+        try {
+            Cache::store('file')->forget($key);
+        } catch (InvalidArgumentException $e) {
+        }
+    }
+
+    /**
      * Write something to the cache
      *
      * @param string $key

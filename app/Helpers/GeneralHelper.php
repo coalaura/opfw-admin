@@ -155,7 +155,7 @@ class GeneralHelper
 
         $updateAvailable = $local !== $remote;
 
-        CacheHelper::write($key, $updateAvailable, CacheHelper::MINUTE * 15);
+        CacheHelper::write($key, $updateAvailable, CacheHelper::HOUR);
 
         return $updateAvailable;
     }
