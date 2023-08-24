@@ -71,7 +71,7 @@ class PanelLog extends Model
      */
     private static function doCleanup()
     {
-        self::query()->where('timestamp', '<=', Carbon::now()->subMonths(1))->delete();
+        self::query()->where('timestamp', '<=', Carbon::now()->subMonths(6))->delete();
     }
 
     /**
