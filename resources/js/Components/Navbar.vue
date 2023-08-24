@@ -256,7 +256,7 @@ export default {
             timezones: timezones,
 
             gameTime: false,
-            gameTimeInterval: false
+            gameTimeUpdated: false
         }
     },
     beforeMount() {
@@ -276,9 +276,11 @@ export default {
     },
     computed: {
         formattedGameTime() {
-            const hour = Math.floor(this.gameTime / 60);
-            const minute = Math.floor(this.gameTime % 60).toString().padStart(2, '0');
-            const second = Math.floor((this.gameTime % 1) * 60).toString().padStart(2, '0');
+            const baseTime = (this.gameTime + (((Date.now() - this.gameTimeUpdated) / 1000) * 0.2)) % 1440;
+
+            const hour = Math.floor(baseTime / 60);
+            const minute = Math.floor(baseTime % 60).toString().padStart(2, '0');
+            const second = Math.floor((baseTime % 1) * 60).toString().padStart(2, '0');
 
             if (hour === 0) {
                 return `12:${minute}:${second} AM`;
@@ -454,16 +456,7 @@ export default {
 
             if (world && 'baseTime' in world) {
                 this.gameTime = world.baseTime;
-
-                clearInterval(this.gameTimeInterval);
-
-                this.gameTimeInterval = setInterval(() => {
-                    this.gameTime += 0.1;
-
-                    if (this.gameTime > 1440) {
-                        this.gameTime = 0;
-                    }
-                }, 500);
+                this.gameTimeUpdated = Date.now();
             }
 
             setTimeout(() => {
