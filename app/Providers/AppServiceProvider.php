@@ -90,12 +90,9 @@ class AppServiceProvider extends ServiceProvider
 		});
 
         if ($canUseDB) {
-            $player = user();
-            $superAdmin = $player && $player->isSuperAdmin();
-
             Inertia::share([
                 'timezones' => GeneralHelper::getCommonTimezones(),
-                'update' => $superAdmin ? GeneralHelper::isPanelUpdateAvailable() : false,
+                'update' => GeneralHelper::isPanelUpdateAvailable(),
             ]);
         }
     }
