@@ -221,7 +221,7 @@ class PanelLog extends Model
         $to = self::resolvePlayerLogName($toIdentifier);
 
         $log = $from . ' removed a system ban from ' . $to;
-        self::createLog($fromIdentifier, $toIdentifier, $log, 'Removed System Ban', true);
+        self::createLog($fromIdentifier, $toIdentifier, $log, 'Removed System Ban', false);
     }
 
     /**
@@ -241,6 +241,26 @@ class PanelLog extends Model
 
         $log = $from . ' unloaded ' . $to . $reason;
         self::createLog($fromIdentifier, $toIdentifier, $log, 'Unloaded Character', true);
+    }
+
+    /**
+     * Logs unlinking 2 players
+     *
+     * @param string $fromIdentifier
+     * @param string $toIdentifier
+     * @param string $character
+     * @param string $reason
+     */
+    public static function logUnlink(string $type, string $staffLicense, string $player1License, string $player2License)
+    {
+        $staff = self::resolvePlayerLogName($staffLicense);
+
+        $player1 = self::resolvePlayerLogName($player1License);
+        $player2 = self::resolvePlayerLogName($player2License);
+
+        $log = $staff . ' unlinked ' . $player1 . ' and ' . $player2 . ' (' . $type . ')';
+
+        self::createLog($staffLicense, $player1License, $log, 'Unlinked ' . ucfirst($type), false);
     }
 
     /**

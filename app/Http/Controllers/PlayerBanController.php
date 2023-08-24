@@ -335,6 +335,8 @@ class PlayerBanController extends Controller
             'player_tokens' => $newTokens2
         ]);
 
+        PanelLog::logUnlink("hwid", license(), $player->license_identifier, $player2->license_identifier);
+
         return backWith('success', 'The players have been successfully unlinked.');
     }
 
@@ -382,6 +384,8 @@ class PlayerBanController extends Controller
         $player2->update([
             'identifiers' => $newIdentifiers2
         ]);
+
+        PanelLog::logUnlink("identifier", license(), $player->license_identifier, $player2->license_identifier);
 
         return backWith('success', 'The players have been successfully unlinked.');
     }
