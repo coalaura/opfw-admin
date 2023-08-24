@@ -278,6 +278,8 @@ export default {
         }, 1000);
 
         setInterval(() => {
+            if (!this.showingWorldTime) return;
+
             this.now = Date.now();
         }, Math.floor(1000 / 12));
     },
