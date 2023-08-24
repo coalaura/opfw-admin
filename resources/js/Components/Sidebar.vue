@@ -76,7 +76,7 @@
                 class="block px-5 py-2 mt-3 text-center text-black bg-green-400 rounded"
                 target="_blank"
                 href="https://github.com/coalaura/opfw-admin"
-                v-if="!isMobile() && $page.update"
+                v-if="!isMobile() && $page.update && $page.auth.player.isSuperAdmin"
             >
                 <i class="mr-2 fas fa-wrench"></i> {{ t("nav.update") }}
             </a>
