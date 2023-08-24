@@ -158,6 +158,21 @@
             </template>
 
             <template #default>
+                <div class="mb-3 pb-3 border-b-2 border-dashed border-gray-400">
+                    <div class="flex py-4 px-6 bg-white dark:bg-gray-600 rounded-lg shadow-sm gap-10 relative">
+                        <div class="text-7xl">
+                            <i class="fas fa-cannabis"></i>
+                        </div>
+
+                        <div class="flex items-center overflow-hidden">
+                            <div class="overflow-hidden">
+                                <p class="font-semibold text-lg">San Andreas</p>
+                                <p class="text-sm">{{ formattedGameTime }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="flex py-4 px-6 mb-5 bg-white dark:bg-gray-600 rounded-lg shadow-sm gap-10 relative" v-for="timezone in timezones" :key="timezone.timezone">
                     <div class="text-7xl">
                         <i :class="timezone.icon"></i>
@@ -238,7 +253,10 @@ export default {
             debugInfo: false,
 
             showingWorldTime: false,
-            timezones: timezones
+            timezones: timezones,
+
+            gameTime: false,
+            gameTimeInterval: false
         }
     },
     beforeMount() {
@@ -246,6 +264,7 @@ export default {
     },
     mounted() {
         this.updateServerStatus();
+        this.updateGameTime();
 
         setInterval(() => {
             this.timezones = this.timezones.map(timezone => {
@@ -254,6 +273,23 @@ export default {
                 return timezone;
             });
         }, 1000);
+    },
+    computed: {
+        formattedGameTime() {
+            const hour = Math.floor(this.gameTime / 60);
+            const minute = Math.floor(this.gameTime % 60).toString().padStart(2, '0');
+            const second = Math.floor((this.gameTime % 1) * 60).toString().padStart(2, '0');
+
+            if (hour === 0) {
+                return `12:${minute}:${second} AM`;
+            } else if (hour < 12) {
+                return `${hour}:${minute}:${second} AM`;
+            } else if (hour === 12) {
+                return `12:${minute}:${second} PM`;
+            } else {
+                return `${hour - 12}:${minute}:${second} PM`;
+            }
+        }
     },
     methods: {
         getDateForTimezone(pTimezone) {
@@ -412,6 +448,27 @@ export default {
             setTimeout(() => {
                 this.updateServerStatus();
             }, 20000);
+        },
+        async updateGameTime() {
+            const world = await this.requestData("/world");
+
+            if (world && 'baseTime' in world) {
+                this.gameTime = world.baseTime;
+
+                clearInterval(this.gameTimeInterval);
+
+                this.gameTimeInterval = setInterval(() => {
+                    this.gameTime += 0.1;
+
+                    if (this.gameTime > 1440) {
+                        this.gameTime = 0;
+                    }
+                }, 500);
+            }
+
+            setTimeout(() => {
+                this.updateGameTime();
+            }, 60000);
         }
     },
 }
