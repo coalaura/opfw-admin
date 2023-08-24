@@ -465,7 +465,8 @@
         "world_time": "World Time",
         "world_time_desc": "The time in the {0} most used timezones.",
         "world_time_use": "Used by {0} player(s)",
-        "world_time_also": "Same as: {0}"
+        "world_time_also": "Same as: {0}",
+        "game_time": "In-Game Time runs 12 times faster than real time."
     },
     "pagination": {
         "previous": "Previous",

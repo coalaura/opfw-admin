@@ -170,6 +170,8 @@
                                 <p class="text-sm">{{ formattedGameTime }}</p>
                             </div>
                         </div>
+
+                        <div class="absolute top-1 right-1 text-sm font-bold leading-4" :title="t('nav.game_time')">x12</div>
                     </div>
                 </div>
 
