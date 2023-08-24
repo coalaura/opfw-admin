@@ -12,7 +12,7 @@
                         {{ player.safePlayerName }}
                     </h1>
 
-                    <div v-if="loadingHWIDLink || loadingExtraData" class="relative text-yellow-600 dark:text-yellow-400" :title="t('players.show.loading_extra')">
+                    <div v-if="loadingHWIDLink || loadingExtraData" class="relative text-pink-600 dark:text-pink-400" :title="t('players.show.loading_extra')">
                         <i class="fas fa-spinner animate-spin absolute top-0"></i>
                     </div>
                 </div>
