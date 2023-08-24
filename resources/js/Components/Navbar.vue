@@ -258,7 +258,8 @@ export default {
             timezones: timezones,
 
             gameTime: false,
-            gameTimeUpdated: false
+            gameTimeUpdated: false,
+            now: false
         }
     },
     beforeMount() {
@@ -275,10 +276,14 @@ export default {
                 return timezone;
             });
         }, 1000);
+
+        setInterval(() => {
+            this.now = Date.now();
+        }, Math.floor(1000 / 12));
     },
     computed: {
         formattedGameTime() {
-            const baseTime = (this.gameTime + (((Date.now() - this.gameTimeUpdated) / 1000) * 0.2)) % 1440;
+            const baseTime = (this.gameTime + (((this.now - this.gameTimeUpdated) / 1000) * 0.2)) % 1440;
 
             const hour = Math.floor(baseTime / 60);
             const minute = Math.floor(baseTime % 60).toString().padStart(2, '0');
