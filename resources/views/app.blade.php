@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('-', '_', app()->getLocale()) }}" prefix="og: http://ogp.me/ns#">
+<html lang="{{ str_replace('-', '_', app()->getLocale()) }}" prefix="og: http://ogp.me/ns#" style="background: rgb(17, 24, 39)">
 <head>
     <!-- Metadata -->
     <meta charset="UTF-8">
@@ -36,6 +36,6 @@
     {!! extraHeader() !!}
 </head>
 
-<body class="h-full font-sans text-black antialiased" style="background: rgb(17, 24, 39)">
+<body class="h-full font-sans text-black antialiased">
     @inertia
 </body>
