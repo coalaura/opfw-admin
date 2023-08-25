@@ -747,8 +747,16 @@
 
         <!-- Ban -->
         <div>
+            <div class="mb-4 px-6 py-4 border-2 flex flex-col bg-success dark:bg-dark-success rounded border-green-800" v-if="player.ban && player.ban.info && player.ban.info.startsWith('Impossible')">
+                <span class="font-bold">
+                    <i class="fas fa-check mr-1"></i>
+                    {{ t('players.show.confirmed_accuracy') }}
+                </span>
+                <span class="text-sm italic">{{ t('players.show.confirmed_accuracy_title') }}</span>
+            </div>
+
             <!-- Viewing -->
-            <alert class="bg-danger dark:bg-dark-danger" v-if="player.isBanned">
+            <alert class="bg-danger dark:bg-dark-danger px-6 py-4" v-if="player.isBanned">
                 <div class="flex items-center justify-between mb-2">
                     <h2 class="text-lg font-semibold" v-html="local.ban"></h2>
                     <div class="font-semibold">

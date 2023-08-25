@@ -762,6 +762,8 @@
 			"original_ban": "This is a smurf ban, click here to show the original ban.",
             "accuracy": "Accuracy",
             "accuracy_title": "{0} of {1} detections were banned in the last 14 days.",
+            "confirmed_accuracy": "Confirmed Accuracy",
+            "confirmed_accuracy_title": "Due to the way this detection is built, there is no way for false positives to occur. This ban should not be removed.",
             "ban_locked": "This ban has been locked.",
             "ban": "Banned by <i>{0}</i> until <i>{1}</i>",
             "ban_text": "Till {0}",
