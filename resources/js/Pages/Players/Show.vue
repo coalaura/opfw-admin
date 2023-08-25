@@ -747,7 +747,7 @@
 
         <!-- Ban -->
         <div>
-            <div class="mb-4 px-6 py-4 border-2 flex flex-col bg-success dark:bg-dark-success rounded border-green-800" v-if="player.ban && player.ban.info && player.ban.info.startsWith('Impossible')">
+            <div class="mb-4 px-6 py-4 border-2 flex flex-col bg-success dark:bg-dark-success rounded border-green-800" v-if="confirmedAccuracy">
                 <span class="font-bold">
                     <i class="fas fa-check mr-1"></i>
                     {{ t('players.show.confirmed_accuracy') }}
@@ -780,7 +780,7 @@
                     <b class="whitespace-nowrap">{{ player.ban.original }}:</b> <i>{{ player.ban.info }}</i>
                 </div>
 
-                <div class="mt-2 text-sm" v-if="player.ban.accuracy" :title="t('players.show.accuracy_title', player.ban.accuracy.banned, player.ban.accuracy.total)">
+                <div class="mt-2 text-sm" v-if="player.ban.accuracy && !confirmedAccuracy" :title="t('players.show.accuracy_title', player.ban.accuracy.banned, player.ban.accuracy.total)">
                     <b class="whitespace-nowrap">{{ t('players.show.accuracy') }}:</b> <i>~{{ player.ban.accuracy.accuracy }}%</i>
                 </div>
             </alert>
@@ -1697,6 +1697,13 @@ export default {
             hwidBan: null,
 
             isLoading: false
+        }
+    },
+    computed: {
+        confirmedAccuracy() {
+            const ban = this.player.ban;
+
+            return ban && ban.info && ban.info.startsWith('Impossible');
         }
     },
     methods: {
