@@ -172,7 +172,7 @@ export default {
                     if (['ms', 's'].includes(type)) {
                         const actual = object[key] * (type === 'ms' ? 1 : 1000);
 
-                        value = `<span class="hljs-number">${this.msToTime(actual)}</span>`;
+                        value = `<span class="hljs-number" title="${object[key]} ${type}">${this.msToTime(actual)}</span>`;
                     } else {
                         value += `<span class="text-gray-400 ml-0.5">${type}</span>`;
                     }
