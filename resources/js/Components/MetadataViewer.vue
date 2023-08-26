@@ -142,12 +142,12 @@ export default {
             let minutes = Math.floor(seconds / 60).toString().padEnd(2, '0');
             seconds = seconds % 60;
 
-            minutes && (fmt = minutes + ':' + seconds.toString().padEnd(2, '0'));
+            minutes && (fmt = minutes + '<span class="text-gray-400 ml-0.5">m</span> ' + fmt);
 
             const hours = Math.floor(minutes / 60).toString().padEnd(2, '0');
             minutes = minutes % 60;
 
-            hours && (fmt = hours + ':' + minutes.toString().padEnd(2, '0'));
+            hours && (fmt = hours + '<span class="text-gray-400 ml-0.5">h</span> ' + fmt);
 
             return fmt;
         },
