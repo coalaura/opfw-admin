@@ -134,12 +134,12 @@ export default {
                 return `${ms}<span class="text-gray-400 ml-0.5">ms</span>`;
             }
 
-            const seconds = Math.floor(ms / 1000).toString().padEnd(2, '0');
+            let seconds = Math.floor(ms / 1000).toString().padEnd(2, '0');
             ms = ms % 1000;
 
             let fmt = seconds + (ms ? `.${ms.toString().padEnd(3, '0')}` : '') + '<span class="text-gray-400 ml-0.5">s</span>';
 
-            const minutes = Math.floor(seconds / 60).toString().padEnd(2, '0');
+            let minutes = Math.floor(seconds / 60).toString().padEnd(2, '0');
             seconds = seconds % 60;
 
             minutes && (fmt = minutes + ':' + seconds.toString().padEnd(2, '0'));
