@@ -129,6 +129,28 @@ export default {
 
             return value;
         },
+        msToTime(ms) {
+            if (ms < 1000) {
+                return `${ms}<span class="text-gray-400 ml-0.5">ms</span>`;
+            }
+
+            const seconds = Math.floor(ms / 1000).toString().padEnd(2, '0');
+            ms = ms % 1000;
+
+            let fmt = seconds + (ms ? `.${ms.toString().padEnd(3, '0')}` : '') + '<span class="text-gray-400 ml-0.5">s</span>';
+
+            const minutes = Math.floor(seconds / 60).toString().padEnd(2, '0');
+            seconds = seconds % 60;
+
+            minutes && (fmt = minutes + ':' + seconds.toString().padEnd(2, '0'));
+
+            const hours = Math.floor(minutes / 60).toString().padEnd(2, '0');
+            minutes = minutes % 60;
+
+            hours && (fmt = hours + ':' + minutes.toString().padEnd(2, '0'));
+
+            return fmt;
+        },
         highlightJSON(object) {
             const isArray = Array.isArray(object),
                 maxLine = Object.keys(object).map(k => k.length).reduce((a, b) => Math.max(a, b), 0);
@@ -136,6 +158,8 @@ export default {
             const lines = [];
 
             for (const key in object) {
+                const type = key in KnownTypes && object[key] !== false ? KnownTypes[key] : null;
+
                 let value = JSON.stringify(object[key])
                     .replace(/{"x":(-?\d+\.\d+),"y":(-?\d+\.\d+)}/gm, 'vector2($1, $2)') // vector2
                     .replace(/{"x":(-?\d+\.\d+),"y":(-?\d+\.\d+),"z":(-?\d+\.\d+)}/gm, 'vector3($1, $2, $3)') // vector3
@@ -144,11 +168,17 @@ export default {
 
                 value = hljs.highlight(value, {language: 'json'}).value;
 
-                let line = isArray ? value : `<b>${key.padEnd(maxLine, " ")}</b>: ${value}`;
+                if (type) {
+                    if (['ms', 's'].includes(type)) {
+                        const actual = object[key] * (type === 'ms' ? 1 : 1000);
 
-                if (key in KnownTypes && object[key] !== false) {
-                    line += `<span class="text-gray-400 ml-0.5">${KnownTypes[key]}</span>`;
+                        value = `<span class="hljs-number">${this.msToTime(actual)}</span>`;
+                    } else {
+                        value += `<span class="text-gray-400 ml-0.5">${type}</span>`;
+                    }
                 }
+
+                const line = isArray ? value : `<b>${key.padEnd(maxLine, " ")}</b>: ${value}`;
 
                 lines.push(`<span class="block hover:bg-black hover:!bg-opacity-10 py-xs px-1">${line}</span>`);
             }
