@@ -2452,8 +2452,10 @@ export default {
                 setTimeout(() => {
                     if (!img.complete || !img.naturalWidth) {
                         reject();
+
+                        img.src = "";
                     }
-                }, 5000);
+                }, 4000);
 
                 img.src = url;
             });
