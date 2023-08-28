@@ -220,6 +220,7 @@
             </div>
         </div>
 
+        <!-- Historic Data -->
         <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k" v-if="isHistoric">
             <div
                 class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded w-alert">
@@ -232,34 +233,40 @@
                     <label class="mr-4 block w-1/3 pt-2 font-bold" for="historic_license">
                         {{ t('map.historic_license') }}
                     </label>
-                    <input class="w-2/3 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="historic_license"
-                           v-model="form.historic_license"/>
+                    <div class="flex gap-3 w-2/3">
+                        <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="historic_license"
+                            v-model="form.historic_license" @input="checkHistoricLicense" />
+
+                        <button v-if="historicValidLicense" :title="t('map.historic_resolve')" class="p-2 px-3 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" @click="resolveHistoricLicenseDates">
+                            <i class="fas fa-band-aid"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- From -->
-                <div class="w-full p-3 flex justify-between px-0">
+                <div class="w-full p-3 flex justify-between px-0" v-if="historicValidLicense">
                     <label class="mr-4 block w-1/3 pt-2 font-bold" for="historic_date_from">
                         {{ t('map.historic_from') }}
                     </label>
                     <input class="w-1/3 px-4 py-2 mr-1 bg-gray-200 dark:bg-gray-600 border rounded" type="date"
                            step="any" id="historic_date_from"
-                           v-model="form.historic_from_date"/>
+                           v-model="form.historic_from_date" />
                     <input class="w-1/3 px-4 py-2 ml-1 bg-gray-200 dark:bg-gray-600 border rounded" type="time"
                            step="any" id="historic_time_from"
-                           v-model="form.historic_from_time"/>
+                           v-model="form.historic_from_time" />
                 </div>
 
                 <!-- Till -->
-                <div class="w-full p-3 flex justify-between px-0">
+                <div class="w-full p-3 flex justify-between px-0" v-if="historicValidLicense">
                     <label class="mr-4 block w-1/3 pt-2 font-bold" for="historic_date_till">
                         {{ t('map.historic_till') }}
                     </label>
                     <input class="w-1/3 px-4 py-2 mr-1 bg-gray-200 dark:bg-gray-600 border rounded" type="date"
                            step="any" id="historic_date_till"
-                           v-model="form.historic_till_date"/>
+                           v-model="form.historic_till_date" />
                     <input class="w-1/3 px-4 py-2 ml-1 bg-gray-200 dark:bg-gray-600 border rounded" type="time"
                            step="any" id="historic_time_till"
-                           v-model="form.historic_till_time"/>
+                           v-model="form.historic_till_time" />
                 </div>
 
                 <p>
@@ -269,7 +276,7 @@
                 <!-- Buttons -->
                 <div class="flex items-center mt-2">
                     <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded mr-2"
-                            @click="showHistory">
+                        v-if="historicValidLicense" @click="showHistory">
                         <i class="mr-1 fas fa-plus"></i>
                         {{ t('global.confirm') }}
                     </button>
@@ -1028,6 +1035,8 @@ export default {
             heatmapLayers: [],
             historyMarker: null,
             loadingScreenStatus: null,
+            historicCheckedLicense: false,
+            historicValidLicense: false,
 
             isTimestamp: false,
             isHistoric: false,
@@ -1058,6 +1067,38 @@ export default {
         };
     },
     methods: {
+        checkHistoricLicense() {
+            const license = this.form.historic_license;
+
+            if (!license || !license.match(/^license:[a-f0-9]{40}$/gm)) {
+                this.historicValidLicense = false;
+
+                return;
+            }
+
+            this.historicValidLicense = true;
+        },
+        async resolveHistoricLicenseDates() {
+            try {
+                const response = await axios.get('/players/' + this.form.historic_license + '/ban');
+
+                const data = response.data;
+
+                if (data && data.data && data.status) {
+                    const date = moment(data.data.timestamp * 1000);
+
+                    this.form.historic_till_date = date.format("YYYY-MM-DD");
+                    this.form.historic_till_time = date.format("HH:mm");
+
+                    date.subtract(1, 'hours');
+
+                    this.form.historic_from_date = date.format("YYYY-MM-DD");
+                    this.form.historic_from_time = date.format("HH:mm");
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        },
         formatViewers() {
             const viewers = this.activeViewers.filter(v => !this.isFake(v));
 

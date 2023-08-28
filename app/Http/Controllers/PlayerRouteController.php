@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\CacheHelper;
 use App\Helpers\LoggingHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
-use App\Helpers\CacheHelper;
 use App\Player;
-use App\WeaponDamageEvent;
 use App\Screenshot;
 use App\Server;
+use App\WeaponDamageEvent;
 use GuzzleHttp\Client;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Illuminate\Support\Facades\DB;
 
 class PlayerRouteController extends Controller
 {
@@ -37,7 +37,7 @@ class PlayerRouteController extends Controller
         "disable_idle_cam",
         "freecam",
         "orbitcam",
-        "player_stats"
+        "player_stats",
     ];
 
     /**
@@ -75,7 +75,7 @@ class PlayerRouteController extends Controller
      */
     public function staffPM(Player $player, Request $request): RedirectResponse
     {
-        $user = user();
+        $user    = user();
         $message = trim($request->input('message'));
 
         if (empty($message)) {
@@ -94,7 +94,7 @@ class PlayerRouteController extends Controller
      */
     public function unloadCharacter(Player $player, Request $request): RedirectResponse
     {
-        $user = user();
+        $user      = user();
         $character = trim($request->input('character'));
 
         if (empty($character)) {
@@ -116,27 +116,27 @@ class PlayerRouteController extends Controller
     public function linkedAccounts(Player $player, Request $request): Response
     {
         $identifiers = $player->getBannableIdentifiers();
-        $linked = [
+        $linked      = [
             'total'  => 0,
             'linked' => [],
         ];
 
         $players = Player::query()->whereRaw("JSON_OVERLAPS(identifiers, '" . json_encode($identifiers) . "') = 1")->groupBy('license_identifier')->get();
 
-		$last = $player->getLastUsedIdentifiers();
+        $last = $player->getLastUsedIdentifiers();
 
         foreach ($identifiers as $identifier) {
             if (!isset($linked['linked'][$identifier])) {
                 $linked['linked'][$identifier] = [
-                    'label'    => Player::getIdentifierLabel($identifier) ?? 'Unknown Identifier',
-                    'accounts' => [],
-					'last_used' => in_array($identifier, $last),
+                    'label'     => Player::getIdentifierLabel($identifier) ?? 'Unknown Identifier',
+                    'accounts'  => [],
+                    'last_used' => in_array($identifier, $last),
                 ];
             }
 
             $accounts = [];
 
-            foreach($players as $p) {
+            foreach ($players as $p) {
                 if ($p->license_identifier !== $player->license_identifier && in_array($identifier, $p->getIdentifiers())) {
                     $accounts[] = [
                         'license_identifier' => $p->license_identifier,
@@ -198,11 +198,30 @@ class PlayerRouteController extends Controller
 
         return (new Response([
             'status' => true,
-            'data'   => array_map(function($entry) {
+            'data'   => array_map(function ($entry) {
                 $entry->metadata = json_decode($entry->metadata);
 
                 return $entry;
-            }, $events)
+            }, $events),
+        ], 200))->header('Content-Type', 'application/json');
+    }
+
+    /**
+     * Returns ban information.
+     *
+     * @param Player $player
+     * @return Response
+     */
+    public function ban(Player $player): Response
+    {
+        $ban = $player->getActiveBan();
+
+        return (new Response([
+            'status' => true,
+            'data'   => $ban ? [
+                'hash'      => $ban->ban_hash,
+                'timestamp' => $ban->getTimestamp(),
+            ] : false,
         ], 200))->header('Content-Type', 'application/json');
     }
 
@@ -319,9 +338,9 @@ class PlayerRouteController extends Controller
         $role = $request->input('role') ? trim($request->input('role')) : null;
 
         $data = [
-            'is_trusted' => 0,
-            'is_staff' => 0,
-            'is_senior_staff' => 0
+            'is_trusted'      => 0,
+            'is_staff'        => 0,
+            'is_senior_staff' => 0,
         ];
 
         if ($role === 'seniorStaff') {
@@ -352,14 +371,14 @@ class PlayerRouteController extends Controller
 
         $enabledCommands = $request->input('enabledCommands');
 
-        foreach($enabledCommands as $command) {
+        foreach ($enabledCommands as $command) {
             if (!in_array($command, self::EnablableCommands)) {
                 return backWith('error', 'You cannot enable the command "' . $command . '".');
             }
         }
 
         $player->update([
-            "enabled_commands" => $enabledCommands
+            "enabled_commands" => $enabledCommands,
         ]);
 
         return backWith('success', 'Commands have been updated successfully.');
@@ -391,18 +410,18 @@ class PlayerRouteController extends Controller
 
         $status = Player::getOnlineStatus($license, true);
 
-		$lifespan = $request->query('short') ? 3*60 : 60*60;
+        $lifespan = $request->query('short') ? 3 * 60 : 60 * 60;
 
         $data = OPFWHelper::createScreenshot($api, $id, true, $lifespan);
 
         if ($data->status) {
             DB::table('panel_screenshot_logs')->insert([
-                'source_license' => license(),
-                'target_license' => $license,
+                'source_license'   => license(),
+                'target_license'   => $license,
                 'target_character' => $status->character,
-                'type' => $request->query('short') ? 'screenshot_short' : 'screenshot',
-                'url' => $data->data['screenshotURL'],
-                'timestamp' => time()
+                'type'             => $request->query('short') ? 'screenshot_short' : 'screenshot',
+                'url'              => $data->data['screenshotURL'],
+                'timestamp'        => time(),
             ]);
 
             DB::table('panel_screenshot_logs')
@@ -410,7 +429,7 @@ class PlayerRouteController extends Controller
                 ->delete();
 
             return self::json(true, [
-                'url'   => $data->data['screenshotURL'],
+                'url'     => $data->data['screenshotURL'],
                 'license' => $license,
             ]);
         } else {
@@ -453,12 +472,12 @@ class PlayerRouteController extends Controller
 
         if ($data->status) {
             DB::table('panel_screenshot_logs')->insert([
-                'source_license' => license(),
-                'target_license' => $license,
+                'source_license'   => license(),
+                'target_license'   => $license,
                 'target_character' => $status->character,
-                'type' => 'screencapture',
-                'url' => $data->data['screenshotURL'],
-                'timestamp' => time()
+                'type'             => 'screencapture',
+                'url'              => $data->data['screenshotURL'],
+                'timestamp'        => time(),
             ]);
 
             DB::table('panel_screenshot_logs')
@@ -466,7 +485,7 @@ class PlayerRouteController extends Controller
                 ->delete();
 
             return self::json(true, [
-                'url'   => $data->data['screenshotURL'],
+                'url'     => $data->data['screenshotURL'],
                 'license' => $license,
             ]);
         } else {
@@ -536,9 +555,9 @@ class PlayerRouteController extends Controller
 
         Screenshot::query()->create([
             'license_identifier' => $player->license_identifier,
-            'filename'         => $fileName,
-            'note'             => $note ?? '',
-            'created_at'       => time(),
+            'filename'           => $fileName,
+            'note'               => $note ?? '',
+            'created_at'         => time(),
         ]);
 
         return self::json(true, 'Screenshot was attached to players profile successfully');
@@ -557,7 +576,7 @@ class PlayerRouteController extends Controller
         $path = storage_path('screenshots') . '/' . $screenshot;
 
         return response()->file($path, [
-            'Content-type: image/jpeg'
+            'Content-type: image/jpeg',
         ]);
     }
 
@@ -566,25 +585,25 @@ class PlayerRouteController extends Controller
      */
     public function whoDamaged(Request $request, string $license)
     {
-		if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_DAMAGE_LOGS)) {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_DAMAGE_LOGS)) {
             abort(401);
         }
 
-		if (!$license || !Str::startsWith($license, 'license:')) {
+        if (!$license || !Str::startsWith($license, 'license:')) {
             abort(404);
         }
 
         $player = Player::query()->select(['player_name', 'license_identifier'])->where('license_identifier', '=', $license)->get()->first();
 
         if (!$player) {
-			abort(404);
+            abort(404);
         }
 
         $includeNPCs = $request->input('npcs') ?? false;
 
-		$logs = WeaponDamageEvent::getDamaged($player->license_identifier, $includeNPCs);
+        $logs = WeaponDamageEvent::getDamaged($player->license_identifier, $includeNPCs);
 
-		return $this->renderDamageLogs("Who damaged", $player, $logs, false, false);
+        return $this->renderDamageLogs("Who damaged", $player, $logs, false, false);
     }
 
     /**
@@ -592,82 +611,82 @@ class PlayerRouteController extends Controller
      */
     public function whoWasDamagedBy(Request $request, string $license)
     {
-		if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_DAMAGE_LOGS)) {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_DAMAGE_LOGS)) {
             abort(401);
         }
 
-		if (!$license || !Str::startsWith($license, 'license:')) {
+        if (!$license || !Str::startsWith($license, 'license:')) {
             abort(404);
         }
 
         $player = Player::query()->select(['player_name', 'license_identifier'])->where('license_identifier', '=', $license)->get()->first();
 
         if (!$player) {
-			abort(404);
+            abort(404);
         }
 
         $includeNPCs = $request->input('npcs') ?? false;
 
-		$logs = WeaponDamageEvent::getDamageDealtTo($player->license_identifier, $includeNPCs);
+        $logs = WeaponDamageEvent::getDamageDealtTo($player->license_identifier, $includeNPCs);
 
-		return $this->renderDamageLogs("Who was damaged by", $player, $logs, $includeNPCs, true);
+        return $this->renderDamageLogs("Who was damaged by", $player, $logs, $includeNPCs, true);
     }
 
     private function renderDamageLogs($title, $player, $logs, $includeNPCs, $showNPCToggle)
     {
         $list = [];
 
-		if (!empty($logs)) {
-			$names = Player::fetchLicensePlayerNameMap($logs, 'license_identifier');
+        if (!empty($logs)) {
+            $names = Player::fetchLicensePlayerNameMap($logs, 'license_identifier');
 
-			$logs = array_map(function ($log) {
-				$log["weapon_type"] = WeaponDamageEvent::getDamageWeapon($log["weapon_type"]);
-				$log["damage_type"] = WeaponDamageEvent::getDamageType($log["damage_type"]);
-				$log["hit_component"] = WeaponDamageEvent::getHitComponent($log["hit_component"]);
+            $logs = array_map(function ($log) {
+                $log["weapon_type"]   = WeaponDamageEvent::getDamageWeapon($log["weapon_type"]);
+                $log["damage_type"]   = WeaponDamageEvent::getDamageType($log["damage_type"]);
+                $log["hit_component"] = WeaponDamageEvent::getHitComponent($log["hit_component"]);
 
-				$log["distance"] = number_format($log["distance"], 2) . "m";
+                $log["distance"] = number_format($log["distance"], 2) . "m";
 
-				return $log;
-			}, $logs);
+                return $log;
+            }, $logs);
 
-			$maxName = max(array_map('mb_strlen', array_values($names)));
-			$maxWeapon = max(array_map(function ($log) {
-				return strlen($log["weapon_type"]);
-			}, $logs));
-			$maxComponent = max(array_map(function ($log) {
-				return strlen($log["hit_component"]);
-			}, $logs));
-			$maxDistance = max(array_map(function ($log) {
-				return strlen($log["distance"]);
-			}, $logs));
+            $maxName   = max(array_map('mb_strlen', array_values($names)));
+            $maxWeapon = max(array_map(function ($log) {
+                return strlen($log["weapon_type"]);
+            }, $logs));
+            $maxComponent = max(array_map(function ($log) {
+                return strlen($log["hit_component"]);
+            }, $logs));
+            $maxDistance = max(array_map(function ($log) {
+                return strlen($log["distance"]);
+            }, $logs));
 
-			$lastDate = false;
+            $lastDate = false;
 
-			foreach ($logs as $log) {
-				$date = date('D, jS M Y', $log["timestamp"]);
-				$time = '<i style="color:#ffb3b3">' . date('H:i:s', $log["timestamp"]) . '</i>';
+            foreach ($logs as $log) {
+                $date = date('D, jS M Y', $log["timestamp"]);
+                $time = '<i style="color:#ffb3b3">' . date('H:i:s', $log["timestamp"]) . '</i>';
 
-				if ($lastDate !== $date) {
-					$list[] = "\n<b style='border-bottom: 1px dashed #fff;margin: 10px 0 5px;display: inline-block;'>- - - " . $date . " - - -</b>";
+                if ($lastDate !== $date) {
+                    $list[] = "\n<b style='border-bottom: 1px dashed #fff;margin: 10px 0 5px;display: inline-block;'>- - - " . $date . " - - -</b>";
 
-					$lastDate = $date;
-				}
+                    $lastDate = $date;
+                }
 
-				$name = mb_str_pad($names[$log["license_identifier"]] ?? 'NPC', $maxName);
-				$name = '<a href="/players/' . $log["license_identifier"] . '" style="color:#fff2b3" target="_blank">' . $name . '</a>';
+                $name = mb_str_pad($names[$log["license_identifier"]] ?? 'NPC', $maxName);
+                $name = '<a href="/players/' . $log["license_identifier"] . '" style="color:#fff2b3" target="_blank">' . $name . '</a>';
 
-				$weapon = '<span style="color:#ccffb3">' . str_pad($log["weapon_type"], $maxWeapon) . '</span>';
-				$damage = '<span style="color:#b3ffd9">' . str_pad($log["weapon_damage"]."hp", 5) . '</span>';
-				$component = '<span style="color:#b3e5ff">' . str_pad($log["hit_component"], $maxComponent) . '</span>';
-				$distance = '<span style="color:#bfb3ff">' . str_pad($log["distance"], $maxDistance) . '</span>';
+                $weapon    = '<span style="color:#ccffb3">' . str_pad($log["weapon_type"], $maxWeapon) . '</span>';
+                $damage    = '<span style="color:#b3ffd9">' . str_pad($log["weapon_damage"] . "hp", 5) . '</span>';
+                $component = '<span style="color:#b3e5ff">' . str_pad($log["hit_component"], $maxComponent) . '</span>';
+                $distance  = '<span style="color:#bfb3ff">' . str_pad($log["distance"], $maxDistance) . '</span>';
 
-				$list[] = "  " . $time . "    " . $name . "    " . $weapon . "    " . $damage . "    " . $component . "    " . $distance . "    <span style='color:#ffb3ff'>" . $log["damage_type"] . "</span>";
-			}
-		} else {
-			$list[] = 'No damage logs found';
-		}
+                $list[] = "  " . $time . "    " . $name . "    " . $weapon . "    " . $damage . "    " . $component . "    " . $distance . "    <span style='color:#ffb3ff'>" . $log["damage_type"] . "</span>";
+            }
+        } else {
+            $list[] = 'No damage logs found';
+        }
 
-		$playerName = '<a href="/players/' . $player->license_identifier . '" target="_blank">' . $player->player_name . '</a>';
+        $playerName = '<a href="/players/' . $player->license_identifier . '" target="_blank">' . $player->player_name . '</a>';
 
         $extra = "";
 

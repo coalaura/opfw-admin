@@ -348,6 +348,7 @@
         "timestamp_title": "Timestamp Data",
         "timestamp_date": "Timestamp",
         "historic_license": "License Identifier",
+        "historic_resolve": "Fetch from and till from ban timestamp.",
         "historic_from": "From",
         "historic_till": "Till",
         "historic_note": "From and till cannot be further than 6 hours apart.",

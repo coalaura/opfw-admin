@@ -91,6 +91,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/players/{player}/linked_hwid', [PlayerRouteController::class, 'linkedHWID']);
     Route::get('/players/{player}/discord', [PlayerRouteController::class, 'discordAccounts']);
     Route::get('/players/{player}/antiCheat', [PlayerRouteController::class, 'antiCheat']);
+    Route::get('/players/{player}/ban', [PlayerRouteController::class, 'ban']);
 
     Route::post('/players/{player}/kick', [PlayerRouteController::class, 'kick']);
     Route::post('/players/{player}/staffPM', [PlayerRouteController::class, 'staffPM']);
