@@ -395,7 +395,7 @@
                                 @click="historyRangeButton(-1)">-1s
                             </button>
 
-                            <input type="range" :min="historyRange.min" :max="historyRange.max" value="0"
+                            <input type="range" :min="historyRange.min" :max="historyRange.max" value="0" step="0.1"
                                    @change="historyRangeChange" @input="historyRangeChange" id="range-slider"
                                    class="w-full px-2 py-1 range bg-transparent"/>
 
@@ -1346,29 +1346,54 @@ export default {
                 this.historyRangeChange();
             }
         },
+        getHistoricEntry(timestamp) {
+            let pos = this.historyRange.data[timestamp];
+
+            if (!pos) {
+                pos = this.historyRange.data[val + 1];
+            }
+
+            return pos;
+        },
         historyRangeChange(timestamp) {
             if (this.historyRange && this.historyMarker) {
-                const val = Number.isInteger(timestamp) ? timestamp : $('#range-slider').val();
+                const val = timestamp ? timestamp : $('#range-slider').val();
 
-                let pos = this.historyRange.data[val];
+                const min = Math.floor(val),
+                    max = Math.ceil(val);
 
-                this.renderAltitudeChart(val);
+                const start = this.getHistoricEntry(min),
+                    end = this.getHistoricEntry(max);
 
-                if (!pos) {
-                    pos = this.historyRange.data[val - 1];
+                let pos = start;
 
-                    if (!pos) {
-                        pos = this.historyRange.data[val + 1];
-                    }
+                if (pos && end) {
+                    const percent = val - min;
+
+                    const x = start.x + ((end.x - start.x) * percent),
+                        y = start.y + ((end.y - start.y) * percent),
+                        z = start.z + ((end.z - start.z) * percent);
+
+                    pos = {
+                        x: x,
+                        y: y,
+                        z: z,
+                        i: start.i || end.i,
+                        c: start.c || end.c,
+                        f: start.f || end.f,
+                        d: start.d || end.d
+                    };
                 }
 
-                const timezone = new Date(val * 1000).toLocaleDateString('en-US', {
+                this.renderAltitudeChart(min);
+
+                const timezone = new Date(min * 1000).toLocaleDateString('en-US', {
                     day: '2-digit',
                     timeZoneName: 'short',
                 }).slice(4);
 
                 let icon = "circle",
-                    label = moment.unix(val).format("MM/DD/YYYY - h:mm:ss") + ' ' + timezone + ' (' + val + ')';
+                    label = moment.unix(min).format("MM/DD/YYYY - h:mm:ss") + ' ' + timezone + ' (' + val + ')';
 
                 const flags = [
                     pos && pos.i ? 'invisible' : false,
