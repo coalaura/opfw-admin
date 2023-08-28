@@ -395,7 +395,7 @@
                                 @click="historyRangeButton(-1)">-1s
                             </button>
 
-                            <input type="range" :min="historyRange.min" :max="historyRange.max" value="0" step="0.1"
+                            <input type="range" :min="historyRange.min" :max="historyRange.max" value="0"
                                    @change="historyRangeChange" @input="historyRangeChange" id="range-slider"
                                    class="w-full px-2 py-1 range bg-transparent"/>
 
@@ -1348,43 +1348,19 @@ export default {
         },
         historyRangeChange(timestamp) {
             if (this.historyRange && this.historyMarker) {
-                const val = parseFloat(typeof timestamp === "number" ? timestamp : $('#range-slider').val());
+                const val = parseInt(typeof timestamp === "number" ? timestamp : $('#range-slider').val());
 
-                const min = Math.floor(val),
-                    max = Math.ceil(val);
+                const pos = this.historyRange.data[val];
 
-                const start = this.historyRange.data[min],
-                    end = this.historyRange.data[max];
+                this.renderAltitudeChart(val);
 
-                let pos = start;
-
-                if (val !== min) {
-                    const percent = val - min;
-
-                    const x = start.x + ((end.x - start.x) * percent),
-                        y = start.y + ((end.y - start.y) * percent),
-                        z = start.z + ((end.z - start.z) * percent);
-
-                    pos = {
-                        x: x,
-                        y: y,
-                        z: z,
-                        i: start.i || end.i,
-                        c: start.c || end.c,
-                        f: start.f || end.f,
-                        d: start.d || end.d
-                    };
-                }
-
-                this.renderAltitudeChart(min);
-
-                const timezone = new Date(min * 1000).toLocaleDateString('en-US', {
+                const timezone = new Date(val * 1000).toLocaleDateString('en-US', {
                     day: '2-digit',
                     timeZoneName: 'short',
                 }).slice(4);
 
                 let icon = "circle",
-                    label = moment.unix(min).format("MM/DD/YYYY - h:mm:ss") + ' ' + timezone + ' (' + min + ')';
+                    label = moment.unix(val).format("MM/DD/YYYY - h:mm:ss") + ' ' + timezone + ' (' + val + ')';
 
                 const flags = [
                     pos && pos.i ? 'invisible' : false,
