@@ -1346,28 +1346,19 @@ export default {
                 this.historyRangeChange();
             }
         },
-        getHistoricEntry(timestamp) {
-            let pos = this.historyRange.data[timestamp];
-
-            if (!pos) {
-                pos = this.historyRange.data[val + 1];
-            }
-
-            return pos;
-        },
         historyRangeChange(timestamp) {
             if (this.historyRange && this.historyMarker) {
-                const val = timestamp ? timestamp : $('#range-slider').val();
+                const val = parseFloat(typeof timestamp === "number" ? timestamp : $('#range-slider').val());
 
                 const min = Math.floor(val),
                     max = Math.ceil(val);
 
-                const start = this.getHistoricEntry(min),
-                    end = this.getHistoricEntry(max);
+                const start = this.historyRange.data[min],
+                    end = this.historyRange.data[max];
 
                 let pos = start;
 
-                if (pos && end) {
+                if (val !== min) {
                     const percent = val - min;
 
                     const x = start.x + ((end.x - start.x) * percent),
@@ -1393,7 +1384,7 @@ export default {
                 }).slice(4);
 
                 let icon = "circle",
-                    label = moment.unix(min).format("MM/DD/YYYY - h:mm:ss") + ' ' + timezone + ' (' + val + ')';
+                    label = moment.unix(min).format("MM/DD/YYYY - h:mm:ss") + ' ' + timezone + ' (' + min + ')';
 
                 const flags = [
                     pos && pos.i ? 'invisible' : false,
@@ -1404,7 +1395,7 @@ export default {
 
                 this.historicDetails = "Flags: " + (flags ? flags : 'N/A') + " - Altitude: " + (pos ? pos.z + "m" : "N/A");
 
-                if (pos) {
+                if (pos && !pos.missing) {
                     const coords = Vector3.fromGameCoords(parseInt(pos.x), parseInt(pos.y), 0).toMap();
 
                     this.historyMarker.setLatLng([coords.lat, coords.lng]);
@@ -1456,49 +1447,17 @@ export default {
                     colors = [];
 
                 for (let x = fromTime; x < tillTime; x++) {
-                    let pos = this.historyRange.data[x];
+                    const pos = this.historyRange.data[x];
 
                     if (!pos) {
-                        pos = this.historyRange.data[x - 1];
+                        data.push(0);
 
-                        if (!pos) {
-                            pos = this.historyRange.data[x + 1];
-                        }
+                        continue;
                     }
 
-                    const val = pos ? pos.z : null;
+                    data.push(pos.z);
 
-                    data.push(val);
-
-                    colors.push(pos ? this.getAltitudeChartColor(pos.c, pos.i, pos.f, pos.d) : '#ff4d4d')
-                }
-
-                let lastValue = data[0];
-
-                if (lastValue === null) {
-                    const first = Object.keys(this.historyRange.data)[0];
-
-                    for (let x = fromTime; x >= first; x--) {
-                        const pos = this.historyRange.data[x];
-
-                        if (pos) {
-                            lastValue = pos.z;
-
-                            break;
-                        }
-                    }
-
-                    if (lastValue === null) {
-                        for (let x = first; x >= tillTime; x++) {
-                            const pos = this.historyRange.data[x];
-
-                            if (pos) {
-                                lastValue = pos.z;
-
-                                break;
-                            }
-                        }
-                    }
+                    colors.push(!pos.missing ? this.getAltitudeChartColor(pos.c, pos.i, pos.f, pos.d) : '#ff4d4d')
                 }
 
                 const cWidth = canvas.width - 2,
@@ -1513,7 +1472,7 @@ export default {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                 for (let x = 0; x < data.length; x++) {
-                    const value = data[x] ? data[x] : lastValue;
+                    const value = data[x];
 
                     const normalizedValue = value ? (max - (value - min)) / max : 0;
 
@@ -1540,10 +1499,6 @@ export default {
 
                         ctx.beginPath();
                         ctx.moveTo(x1, y1);
-                    }
-
-                    if (value) {
-                        lastValue = value;
                     }
                 }
             } else {
@@ -1744,7 +1699,25 @@ export default {
 
                 this.loadingScreenStatus = this.t('map.heatmap_parse');
                 if (result.data && result.data.status) {
-                    return result.data.data;
+                    const data = result.data.data;
+
+                    const keys = Object.keys(data),
+                        first = keys[0],
+                        last = keys[keys.length - 1];
+
+                    let lastEntry = data[first];
+
+                    for (let x = first; x <= last; x++) {
+                        if (data[x]) {
+                            lastEntry = data[x];
+                        } else {
+                            data[x] = JSON.parse(JSON.stringify(lastEntry));
+
+                            data[x].missing = true;
+                        }
+                    }
+
+                    return data;
                 } else if (result.data && !result.data.status) {
                     console.error(result.data.error);
 
