@@ -2,11 +2,12 @@
     <div class="flex">
 
         <!-- Branding / Logo -->
-        <div class="flex-shrink-0 px-8 py-3 text-center text-white bg-gray-900 mobile:hidden">
-            <inertia-link href="/" class="flex justify-between">
-                <img src="/images/op-logo.png" class="block" />
-                <h1 class="text-lg px-4">
-                    <span class="block py-4">OP-FW <sub class="font-normal italic">{{ $page.auth.cluster }}</sub></span>
+        <div class="flex-shrink-0 px-8 py-3 text-center text-white bg-gray-900 mobile:hidden w-72 overflow-hidden">
+            <inertia-link href="/" class="flex gap-2">
+                <img :src="serverLogo ? serverLogo : '/images/op-logo.png'" class="block w-logo h-logo object-cover" />
+                <h1 class="text-lg px-4 flex flex-col text-left justify-center overflow-hidden">
+                    <span class="block leading-5">OP-FW</span>
+                    <span class="block text-xs leading-1 italic whitespace-nowrap overflow-ellipsis overflow-hidden">{{ serverName ? serverName : $page.auth.cluster }}</span>
                 </h1>
             </inertia-link>
         </div>
@@ -249,6 +250,8 @@ export default {
 
             serverStatusLoading: false,
             serverStatus: false,
+            serverName: false,
+            serverLogo: false,
 
             loadingDebug: false,
             showingDebugInfo: false,
@@ -440,19 +443,24 @@ export default {
         async updateServerStatus() {
             this.serverStatusLoading = true;
 
-            const uptime = await this.requestData("/uptime");
+            const info = await this.requestData("/info");
 
-            // We got a 404
-            if (uptime === null) {
-                this.serverStatus = false;
-
-                return;
-            }
-
-            if (uptime) {
-                this.serverStatus = this.formatUptime(uptime);
+            if (info && info.uptime) {
+                this.serverStatus = this.formatUptime(info.uptime);
             } else {
                 this.serverStatus = false;
+            }
+
+            if (info && info.name) {
+                this.serverName = info.name;
+            } else {
+                this.serverName = false;
+            }
+
+            if (info && info.logo) {
+                this.serverLogo = info.logo;
+            } else {
+                this.serverLogo = false;
             }
 
             this.serverStatusLoading = false;

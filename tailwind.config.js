@@ -27,7 +27,8 @@ module.exports = {
         },
         extend: {
             spacing: {
-                '17': '4.25rem'
+                '17':   '4.25rem',
+                'logo': '60px'
             },
             zIndex: {
                 '1k': '1000',
