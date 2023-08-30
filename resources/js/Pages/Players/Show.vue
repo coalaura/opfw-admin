@@ -2504,7 +2504,7 @@ export default {
         });
 
         // Delay loading of character images since it blocks other resources from loading for some reason
-        $(document).ready(function () {
+        $(document).ready(() => {
             setTimeout(() => {
                 $("img[data-lazy]").each((i, img) => {
                     const url = $(img).data("lazy");
