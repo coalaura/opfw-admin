@@ -2503,22 +2503,25 @@ export default {
             });
         });
 
-        this.$nextTick(() => {
-            $("img[data-lazy]").each((i, img) => {
-                const url = $(img).data("lazy");
+        // Delay loading of character images since it blocks other resources from loading for some reason
+        $(document).ready(function () {
+            setTimeout(() => {
+                $("img[data-lazy]").each((i, img) => {
+                    const url = $(img).data("lazy");
 
-                if (url.includes("screenshot-undefined")) {
-                    $(img).attr("src", "/images/no_mugshot.png");
+                    if (url.includes("screenshot-undefined")) {
+                        $(img).attr("src", "/images/no_mugshot.png");
 
-                    return;
-                }
+                        return;
+                    }
 
-                this.asyncLoadImage(url).then(() => {
-                    $(img).attr("src", url);
-                }).catch(() => {
-                    $(img).attr("src", "/images/no_mugshot.png");
+                    this.asyncLoadImage(url).then(() => {
+                        $(img).attr("src", url);
+                    }).catch(() => {
+                        $(img).attr("src", "/images/no_mugshot.png");
+                    });
                 });
-            });
+            }, 200);
         });
 
         $(document).on("visibilitychange", e => {
