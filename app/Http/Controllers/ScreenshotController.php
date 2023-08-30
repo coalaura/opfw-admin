@@ -52,7 +52,7 @@ class ScreenshotController extends Controller
 		$query = "SELECT id, player_name, users.license_identifier, url, details, timestamp FROM (" .
 			"SELECT CONCAT('s_', id) as id, license_identifier, url, details, created_at AS timestamp FROM system_screenshots LEFT JOIN characters ON system_screenshots.character_id = characters.character_id WHERE SUBSTRING_INDEX(details, ' ', 1) = 'Anti-Cheat:' AND SUBSTRING_INDEX(details, ' ', 3) != 'Anti-Cheat: Modified FOV' " .
 			"UNION " .
-			"SELECT CONCAT('b_', id) as id, identifier, ban_hash, reason, timestamp FROM user_bans WHERE SUBSTRING_INDEX(identifier, ':', 1) = 'license' AND SUBSTRING_INDEX(reason, '-', 1) = 'MODDING' AND smurf_account IS NULL" .
+			"SELECT CONCAT('b_', id) as id, identifier, ban_hash, reason, MAX(timestamp) FROM user_bans WHERE SUBSTRING_INDEX(identifier, ':', 1) = 'license' AND SUBSTRING_INDEX(reason, '-', 1) = 'MODDING' AND smurf_account IS NULL GROUP BY identifier" .
 			") data LEFT JOIN users ON data.license_identifier = users.license_identifier ORDER BY timestamp DESC LIMIT 20 OFFSET " . (($page - 1) * 20);
 
 		$system = DB::select(DB::raw($query));
