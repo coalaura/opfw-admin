@@ -59,7 +59,7 @@ export default {
     name: 'MetadataViewer',
     props: {
         title: String,
-        image: String,
+        image: [String, Boolean],
         metadata: Object,
         show: Boolean
     },
