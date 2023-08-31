@@ -138,10 +138,18 @@
 						</button>
 
 						<button
-							class="px-5 py-2 ml-5 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg"
+							class="px-5 py-2 ml-5 font-semibold text-white bg-primary dark:bg-dark-primary rounded hover:shadow-lg"
 							@click="showDrugLogs"
 							v-if="canSearchDrugs">
+							<i class="fas fa-capsules mr-1"></i>
 							{{ t('logs.drug_search') }}
+						</button>
+
+						<button
+							class="px-5 py-2 ml-5 font-semibold text-white bg-primary dark:bg-dark-primary rounded hover:shadow-lg"
+							@click="showMoneyLogs">
+							<i class="fas fa-money-bill-wave mr-1"></i>
+							{{ t('logs.money_search') }}
 						</button>
 					</div>
 				</form>
@@ -422,6 +430,11 @@ export default {
 		},
 		showDrugLogs() {
 			this.filters.action = this.drugActions.map(e => '=' + e).join(',');
+
+			this.refresh();
+		},
+		showMoneyLogs() {
+			this.filters.action = '=Bank Transfer,=Cash Transfer,=Paid Bill';
 
 			this.refresh();
 		},
