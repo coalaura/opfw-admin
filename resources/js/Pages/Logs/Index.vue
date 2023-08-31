@@ -614,8 +614,8 @@ export default {
 				details = details.replaceAll(inventories[x], '<a title="' + this.t('inventories.view') + '" class="text-indigo-600 dark:text-indigo-400" href="/inventory/' + inventories[x] + '">' + inventories[x] + '</a>');
 			}
 
-			if (metadata && metadata.killerLicense) {
-				const killerLicense = metadata.killerLicense;
+			if (metadata && metadata.killerLicenseIdentifier) {
+				const killerLicense = metadata.killerLicenseIdentifier;
 
 				details = details.replace(/killed by (.+?), death cause/gm, (match, playerName) => {
 					return 'killed by <a class="text-red-600 dark:text-red-400" href="/players/' + killerLicense + '">' + playerName + '</a>, death cause';
