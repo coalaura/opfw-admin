@@ -190,10 +190,10 @@
 							</a>
 						</th>
 					</tr>
-					<tr class="mobile:border-b-4 relative" :class="getLogColor(log.metadata)" v-for="(log, index) in logs"
+					<tr class="border-t border-gray-300 dark:border-gray-500 relative" :class="getLogColor(log.action, log.metadata)" v-for="(log, index) in logs"
 						:key="log.id">
-						<td class="px-6 py-3 border-t mobile:block">
-							<div class="absolute top-1 left-1 text-sm leading-3 font-semibold italic" v-html="getLogTag(log.metadata)"></div>
+						<td class="px-4 py-3 pl-8 mobile:block">
+							<div class="absolute top-1 left-1 text-sm leading-3 font-semibold italic" v-html="getLogTag(log.action, log.metadata)"></div>
 
 							<inertia-link
 								class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400"
@@ -201,7 +201,7 @@
 								{{ playerName(log.licenseIdentifier) }}
 							</inertia-link>
 						</td>
-						<td class="px-6 py-3 border-t mobile:block">
+						<td class="px-4 py-3 mobile:block">
 							<span class="font-semibold" v-if="statusLoading">
                                 {{ t('global.loading') }}
                             </span>
@@ -212,7 +212,7 @@
 								{{ t('global.status.offline') }}
 							</span>
 						</td>
-						<td class="px-6 py-3 border-t mobile:block">
+						<td class="px-4 py-3 mobile:block">
 							{{ log.action }}
 							<a href="#" @click="detailedAction($event, log)"
 							   class="block text-xs leading-1 text-blue-600 dark:text-blue-400 whitespace-nowrap"
@@ -220,8 +220,8 @@
 								{{ t('logs.metadata.show') }}
 							</a>
 						</td>
-						<td class="px-6 py-3 border-t mobile:block" v-html="parseLog(log.details, log.action, log.metadata)"></td>
-						<td class="px-6 py-3 border-t mobile:block" v-if="showLogTimeDifference"
+						<td class="px-4 py-3 mobile:block" v-html="parseLog(log.details, log.action, log.metadata)"></td>
+						<td class="px-4 py-3 mobile:block" v-if="showLogTimeDifference"
 							:title="t('logs.diff_label')">
 							<span v-if="index+1 < logs.length">
 								{{ formatSecondDiff(stamp(log.timestamp) - stamp(logs[index + 1].timestamp)) }}
@@ -229,15 +229,13 @@
 							</span>
 							<span v-else>Start</span>
 						</td>
-						<td class="px-6 py-3 border-t mobile:block" v-else>
+						<td class="px-4 py-3 pr-8 mobile:block" v-else>
 							{{ log.timestamp | formatTime(true) }}
-							<i class="block text-xs leading-1 whitespace-nowrap text-yellow-600 dark:text-yellow-400">{{
-									formatRawTimestamp(log.timestamp)
-								}}</i>
+							<i class="block text-xs leading-1 whitespace-nowrap text-yellow-600 dark:text-yellow-400">{{ formatRawTimestamp(log.timestamp) }}</i>
 						</td>
 					</tr>
 					<tr v-if="logs.length === 0">
-						<td class="px-4 py-6 text-center border-t" colspan="100%">
+						<td class="px-4 py-6 text-center" colspan="100%">
 							{{ t('logs.no_logs') }}
 						</td>
 					</tr>
@@ -320,6 +318,12 @@ import VSection from './../../Components/Section';
 import Pagination from './../../Components/Pagination';
 import Modal from './../../Components/Modal';
 import MetadataViewer from './../../Components/MetadataViewer';
+
+const MoneyTransferActions = [
+	'Bank Transfer',
+	'Cash Transfer',
+	'Paid Bill'
+];
 
 export default {
 	layout: Layout,
@@ -436,7 +440,7 @@ export default {
 			this.refresh();
 		},
 		showMoneyLogs() {
-			this.filters.action = '=Bank Transfer,=Cash Transfer,=Paid Bill';
+			this.filters.action = MoneyTransferActions.map(action => '=' + action).join(',');
 
 			this.refresh();
 		},
@@ -449,20 +453,28 @@ export default {
 		stamp(time) {
 			return this.$moment.utc(time).unix();
 		},
-		getLogColor(metadata) {
+		getLogColor(action, metadata) {
 			const minigames = metadata?.minigames || [];
 
 			if (minigames.length > 0) {
 				return 'bg-purple-500 !bg-opacity-20 hover:!bg-opacity-40';
+			} else if (MoneyTransferActions.includes(action)) {
+				return 'bg-green-500 !bg-opacity-20 hover:!bg-opacity-40';
+			} else if (this.drugActions.includes(action)) {
+				return 'bg-rose-500 !bg-opacity-20 hover:!bg-opacity-40';
 			}
 
-			return 'hover:bg-gray-100 dark:hover:bg-gray-600';
+			return 'hover:bg-gray-200 dark:hover:bg-gray-600';
 		},
-		getLogTag(metadata) {
+		getLogTag(action, metadata) {
 			const minigames = metadata?.minigames || [];
 
 			if (minigames.length > 0) {
-				return `<span class="text-purple-800 dark:text-purple-200">${minigames.join(', ')}</span>`;
+				return `<i class="text-purple-800 dark:text-purple-200 fas fa-gamepad" title="${minigames.join(', ')}"></i>`;
+			} else if (MoneyTransferActions.includes(action)) {
+				return `<i class="text-green-800 dark:text-green-200 fas fa-money-bill-wave" title="money transfer"></i>`;
+			} else if (this.drugActions.includes(action)) {
+				return `<i class="text-rose-800 dark:text-rose-200 fas fa-tablets" title="money transfer"></i>`;
 			}
 
 			return '';
