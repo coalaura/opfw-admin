@@ -119,17 +119,17 @@
 							</span>
 						</button>
 
-						<button class="px-5 py-2 ml-5 font-semibold text-white bg-yellow-600 dark:bg-yellow-400 rounded hover:shadow-lg" @click="showDrugLogs" v-if="canSearchDrugs">
+						<button class="px-5 py-2 ml-5 font-semibold text-white bg-yellow-600 dark:bg-yellow-500 rounded hover:shadow-lg" @click="showDrugLogs" v-if="canSearchDrugs">
 							<i class="fas fa-capsules mr-1"></i>
 							{{ t('logs.drug_search') }}
 						</button>
 
-						<button class="px-5 py-2 ml-5 font-semibold text-white bg-teal-600 dark:bg-teal-400 rounded hover:shadow-lg" @click="showMoneyLogs">
+						<button class="px-5 py-2 ml-5 font-semibold text-white bg-teal-600 dark:bg-teal-500 rounded hover:shadow-lg" @click="showMoneyLogs">
 							<i class="fas fa-money-bill-wave mr-1"></i>
 							{{ t('logs.money_search') }}
 						</button>
 
-						<button class="px-5 py-2 ml-5 font-semibold text-white bg-lime-600 dark:bg-lime-400 rounded hover:shadow-lg" @click="showConnectLogs">
+						<button class="px-5 py-2 ml-5 font-semibold text-white bg-lime-600 dark:bg-lime-500 rounded hover:shadow-lg" @click="showConnectLogs">
 							<i class="fas fa-person-booth mr-1"></i>
 							{{ t('logs.connect_search') }}
 						</button>
@@ -653,20 +653,25 @@ export default {
 				});
 			}
 
-			details = details.replace(/(license:\w+)(?=\))/gm, function (pMatch) {
+			details = details.replace(/(license:\w+)(?=\))/gm, pMatch => {
 				const start = pMatch.substring(8, 12),
 					end = pMatch.substring(pMatch.length - 4);
 
 				return `<span class="copy_title text-gray-700 dark:text-gray-300 cursor-pointer" title="${pMatch}">${start}...${end}</span>`;
 			});
 
-			details = details.replace(/URL `(.+?)`/gm, function (pMatch, pUrl) {
+			details = details.replace(/URL `(.+?)`/gm, (pMatch, pUrl) => {
 				return pMatch.replace(pUrl, `<a href="${pUrl}" target="_blank" class="text-indigo-600 dark:text-indigo-400">${pUrl}</a>`);
 			});
 
 			details = this.parseDisconnectLog(details, action, metadata);
 
-			details = details.replace(/`(.+?)`/gm, function (pMatch, pCode) {
+			// Small fix for idiots with backticks in their name
+			details = details.replace(/^.+?\[\d+]/gm, pMatch => {
+				return pMatch.replace(/[`]+/g, "");
+			});
+
+			details = details.replace(/`(.+?)`/gm, (pMatch, pCode) => {
 				return `<code class="select-all bg-black !bg-opacity-10 dark:!bg-opacity-20 font-mono px-1.5 py-0.5">${pCode}</code>`;
 			});
 
