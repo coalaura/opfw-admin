@@ -437,23 +437,27 @@ export default {
 			return this.$moment.utc(time).unix();
 		},
 		getLogColor(action, metadata) {
-			const minigames = metadata?.minigames || [];
+			if (this.setting('parseLogs')) {
+				const minigames = metadata?.minigames || [];
 
-			if (minigames.length > 0) {
-				return 'bg-purple-500 !bg-opacity-20 hover:!bg-opacity-40';
-			} else if (MoneyTransferActions.includes(action)) {
-				return 'bg-teal-500 !bg-opacity-20 hover:!bg-opacity-40';
-			} else if (this.drugActions.includes(action)) {
-				return 'bg-yellow-500 !bg-opacity-20 hover:!bg-opacity-40';
-			} else if (DisconnectActions.includes(action)) {
-				return 'bg-rose-500 !bg-opacity-20 hover:!bg-opacity-40';
-			} else if (ConnectActions.includes(action)) {
-				return 'bg-lime-500 !bg-opacity-20 hover:!bg-opacity-40';
+				if (minigames.length > 0) {
+					return 'bg-purple-500 !bg-opacity-20 hover:!bg-opacity-40';
+				} else if (MoneyTransferActions.includes(action)) {
+					return 'bg-teal-500 !bg-opacity-20 hover:!bg-opacity-40';
+				} else if (this.drugActions.includes(action)) {
+					return 'bg-yellow-500 !bg-opacity-20 hover:!bg-opacity-40';
+				} else if (DisconnectActions.includes(action)) {
+					return 'bg-rose-500 !bg-opacity-20 hover:!bg-opacity-40';
+				} else if (ConnectActions.includes(action)) {
+					return 'bg-lime-500 !bg-opacity-20 hover:!bg-opacity-40';
+				}
 			}
 
 			return 'hover:bg-gray-200 dark:hover:bg-gray-600';
 		},
 		getLogTag(action, metadata) {
+			if (!this.setting('parseLogs')) return '';
+
 			const minigames = metadata?.minigames || [];
 
 			if (minigames.length > 0) {
@@ -557,6 +561,8 @@ export default {
 			return details;
 		},
 		parseDisconnectLog(details, action, metadata) {
+			details = details.replace(/&#039;/g, "'");
+
 			const regex = /(?<=\) has disconnected from the server .+? with reason: `)(.+?)(?=`\.)/gm;
 			const matches = details.match(regex);
 			const match = matches && matches.length === 1 && matches[0].trim() ? matches[0].trim() : null;
@@ -621,6 +627,8 @@ export default {
 			let inventories = [];
 
 			details = this.escapeHtml(details);
+
+			if (!this.setting('parseLogs')) return details;
 
 			let m;
 			while ((m = regex.exec(details)) !== null) {

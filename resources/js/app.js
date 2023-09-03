@@ -9,6 +9,7 @@ import Socket from './Plugins/socket.js';
 import UserAgent from './Plugins/user-agent.js';
 import Dictionary from './Plugins/dictionary.js';
 import Permissions from './Plugins/permissions.js';
+import Settings from './Plugins/settings.js';
 import humanizeSeconds from './Filters/humanizeSeconds.js';
 import formatTime from './Filters/formatTime.js';
 import formatGender from './Filters/formatGender.js';
@@ -37,6 +38,7 @@ Vue.use(Socket);
 Vue.use(UserAgent);
 Vue.use(Dictionary);
 Vue.use(Permissions, page);
+Vue.use(Settings, page);
 Vue.use(Toast, {
     transition: "Vue-Toastification__slideBlurred",
     maxToasts: 10,

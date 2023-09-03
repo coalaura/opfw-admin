@@ -1300,6 +1300,8 @@ export default {
             };
         });
 
+        const autoExpandCollapsed = this.setting('expandCollapsed');
+
         return {
             local: {
                 played: this.player.playTime > 0 ? this.t('players.show.played', this.$options.filters.humanizeSeconds(this.player.playTime)) : this.t('players.show.no_playtime'),
@@ -1401,8 +1403,8 @@ export default {
             playerTime: false,
 
             charactersCollapsed: false,
-            warningsCollapsed: true,
-            extraDataCollapsed: true,
+            warningsCollapsed: true && !autoExpandCollapsed,
+            extraDataCollapsed: true && !autoExpandCollapsed,
 
             hwidBan: null,
 

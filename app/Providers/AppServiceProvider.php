@@ -141,6 +141,7 @@ class AppServiceProvider extends ServiceProvider
 
                 return [
                     'player'      => $player ? new PlayerResource($player) : null,
+                    'settings'    => $player ? $player->getPanelSettings() : null,
                     'permissions' => PermissionHelper::getFrontendPermissions(),
                     'token'       => sessionKey(),
                     'cluster'     => CLUSTER,

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Session;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
@@ -31,6 +32,20 @@ class SettingsController extends Controller
         $session->delete();
 
         return redirect()->back();
+    }
+
+    public function updateSetting(Request $request, string $key)
+    {
+        $user = user();
+
+        $value = $request->input('value');
+
+        $success = $user->setPanelSetting($key, $value);
+
+        return (new \Illuminate\Http\Response([
+            'success' => $success,
+            'value' => $value
+        ], 200))->header('Content-Type', 'application/json');
     }
 
 }

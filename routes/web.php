@@ -229,6 +229,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     // Settings.
     Route::get('/settings', [SettingsController::class, 'index']);
     Route::delete('/settings/{session}', [SettingsController::class, 'deleteSession']);
+    Route::put('/settings/{key}', [SettingsController::class, 'updateSetting']);
 
     // Exports.
     Route::get('/export/character/{character}', [PlayerCharacterController::class, 'export']);

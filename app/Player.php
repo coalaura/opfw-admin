@@ -10,9 +10,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 use SteamID;
 
 /**
@@ -58,7 +58,7 @@ class Player extends Model
         'player_name',
         'player_aliases',
         'identifiers',
-		'last_used_identifiers',
+        'last_used_identifiers',
         'ips',
         'player_tokens',
         'user_variables',
@@ -78,6 +78,7 @@ class Player extends Model
         'panel_tag',
         'average_ping',
         'average_fps',
+        'panel_settings',
     ];
 
     /**
@@ -86,24 +87,25 @@ class Player extends Model
      * @var array
      */
     protected $casts = [
-        'identifiers' => 'array',
+        'identifiers'           => 'array',
         'last_used_identifiers' => 'array',
-        'player_tokens' => 'array',
-        'ips' => 'array',
-        'user_variables' => 'array',
-        'player_aliases' => 'array',
-        'enabled_commands' => 'array',
-        'user_data' => 'array',
-        'last_connection' => 'datetime',
-        'is_trusted' => 'boolean',
-        'is_staff' => 'boolean',
-        'is_super_admin' => 'boolean',
-        'is_debugger' => 'boolean',
+        'player_tokens'         => 'array',
+        'ips'                   => 'array',
+        'user_variables'        => 'array',
+        'player_aliases'        => 'array',
+        'enabled_commands'      => 'array',
+        'user_data'             => 'array',
+        'last_connection'       => 'datetime',
+        'is_trusted'            => 'boolean',
+        'is_staff'              => 'boolean',
+        'is_super_admin'        => 'boolean',
+        'is_debugger'           => 'boolean',
         'panel_drug_department' => 'boolean',
-        'is_soft_banned' => 'boolean',
-        'playtime' => 'integer',
-        'total_joins' => 'integer',
-        'priority_level' => 'integer',
+        'is_soft_banned'        => 'boolean',
+        'playtime'              => 'integer',
+        'total_joins'           => 'integer',
+        'priority_level'        => 'integer',
+        'panel_settings'        => 'array',
     ];
 
     /**
@@ -112,6 +114,17 @@ class Player extends Model
      * @var ?Ban
      */
     private $ban = false;
+
+    const PlayerSettings = [
+        "parseLogs" => [
+            "type" => "boolean",
+            "default" => true
+        ],
+        "expandCollapsed" => [
+            "type" => "boolean",
+            "default" => false
+        ]
+    ];
 
     const PlayerNameFilter = [
         "%^0",
@@ -151,8 +164,49 @@ class Player extends Model
         "~y~",
         "~z~",
         "~italic~",
-        "~bold~"
+        "~bold~",
     ];
+
+    public function setPanelSetting(string $key, $value): bool
+    {
+        $info = self::PlayerSettings[$key] ?? null;
+
+        if (!$info) {
+            return false;
+        }
+
+        if (gettype($value) !== $info['type']) {
+            return false;
+        }
+
+        $settings = $this->panel_settings ?? [];
+
+        $settings[$key] = $value;
+
+        $this->update([
+            'panel_settings' => $settings
+        ]);
+
+        return true;
+    }
+
+    public function getPanelSettings(): array
+    {
+        $settings = $this->panel_settings ?? [];
+
+        $list = [];
+
+        foreach(self::PlayerSettings as $key => $setting) {
+            $value = isset($settings[$key]) ? $settings[$key] : $setting['default'];
+
+            $list[$key] = [
+                'value' => $value,
+                'type' => $setting['type']
+            ];
+        }
+
+        return $list;
+    }
 
     public function isStaffToggled(): bool
     {
@@ -170,7 +224,7 @@ class Player extends Model
 
     public static function filterPlayerName(string $name, string $license): string
     {
-        foreach(self::PlayerNameFilter as $filter) {
+        foreach (self::PlayerNameFilter as $filter) {
             $name = str_ireplace($filter, '', $name);
         }
 
@@ -187,7 +241,7 @@ class Player extends Model
 
     public function getFilteredPlayerName(): string
     {
-        $name = $this->player_name;
+        $name    = $this->player_name;
         $license = $this->license_identifier;
 
         return self::filterPlayerName($name, $license);
@@ -219,9 +273,9 @@ class Player extends Model
         }
 
         return [
-            'reason' => $mute['reason'] ?? null,
+            'reason'  => $mute['reason'] ?? null,
             'expires' => $mute['expiryTimestamp'] ?? null,
-            'creator' => $mute['creatorName'] ?? null
+            'creator' => $mute['creatorName'] ?? null,
         ];
     }
 
@@ -232,7 +286,7 @@ class Player extends Model
      */
     public static function resolvePlayer(string $player, Request $request)
     {
-        $resolved = Player::query()->select()->where('license_identifier', '=', $player)->leftJoin('ip_checks', function($join) {
+        $resolved = Player::query()->select()->where('license_identifier', '=', $player)->leftJoin('ip_checks', function ($join) {
             $join->on(DB::raw("CONCAT('ip:', last_ip_identifier)"), '=', 'ip_identifier');
         })->first();
 
@@ -320,7 +374,7 @@ class Player extends Model
      */
     public function getSteamProfileUrl(): ?string
     {
-		$steamId = $this->getSteamID();
+        $steamId = $this->getSteamID();
 
         return $steamId ? self::STEAM_INVITE_URL . $steamId->RenderSteamInvite() : null;
     }
@@ -344,7 +398,7 @@ class Player extends Model
      */
     public function getIdentifiers(): array
     {
-        $identifiers = $this->identifiers ?? [];
+        $identifiers   = $this->identifiers ?? [];
         $identifiers[] = $this->license_identifier;
 
         return array_values(
@@ -363,9 +417,9 @@ class Player extends Model
     {
         $identifiers = $this->last_used_identifiers ?? [];
 
-		if (is_string($identifiers)) {
-			$identifiers = json_decode($identifiers, true) ?? [];
-		}
+        if (is_string($identifiers)) {
+            $identifiers = json_decode($identifiers, true) ?? [];
+        }
 
         return array_values(
             array_unique(
@@ -427,7 +481,10 @@ class Player extends Model
     public function getIdentifier($key)
     {
         foreach ($this->getIdentifiers() as $identifier) {
-            if (strpos($identifier, $key) === 0) return $identifier;
+            if (strpos($identifier, $key) === 0) {
+                return $identifier;
+            }
+
         }
         return null;
     }
@@ -577,16 +634,16 @@ class Player extends Model
         $plainWarnings = [];
         foreach ($warnings as $warning) {
             $plainWarnings[] = [
-                'id' => $warning->id,
-                'message' => $warning->message,
+                'id'          => $warning->id,
+                'message'     => $warning->message,
                 'warningType' => $warning->warning_type,
-                'createdAt' => $warning->created_at,
-                'updatedAt' => $warning->updated_at,
-                'canDelete' => $warning->can_be_deleted,
-                'issuer' => [
-                    'playerName' => $warning->player_name,
-                    'licenseIdentifier' => $warning->license_identifier
-                ]
+                'createdAt'   => $warning->created_at,
+                'updatedAt'   => $warning->updated_at,
+                'canDelete'   => $warning->can_be_deleted,
+                'issuer'      => [
+                    'playerName'        => $warning->player_name,
+                    'licenseIdentifier' => $warning->license_identifier,
+                ],
             ];
         }
 
@@ -603,8 +660,8 @@ class Player extends Model
             ->first();
 
         return $ban ? [
-            'hash' => $ban->ban_hash,
-            'license' => $ban->license_identifier
+            'hash'    => $ban->ban_hash,
+            'license' => $ban->license_identifier,
         ] : null;
     }
 
@@ -656,37 +713,37 @@ class Player extends Model
                         // User flags
                         $flags = $player['flags'];
 
-                        $fake = !!($flags & 2);
-						$minigame = !!($flags & 4);
-						$camCords = !!($flags & 8);
-						$queue = !!($flags & 16);
+                        $fake     = !!($flags & 2);
+                        $minigame = !!($flags & 4);
+                        $camCords = !!($flags & 8);
+                        $queue    = !!($flags & 16);
 
                         // Character flags
                         $characterFlags = $player['characterFlags'] ?? 0;
 
                         $characterData = [];
 
-                        !!($characterFlags & 1) && $characterData[] = 'dead';
-                        !!($characterFlags & 2) && $characterData[] = 'trunk';
-                        !!($characterFlags & 4) && $characterData[] = 'in_shell';
-                        !!($characterFlags & 8) && $characterData[] = 'invisible';
-                        !!($characterFlags & 16) && $characterData[] = 'invincible';
-                        !!($characterFlags & 32) && $characterData[] = 'frozen';
-                        !!($characterFlags & 64) && $characterData[] = 'spawned';
+                        !!($characterFlags & 1) && $characterData[]   = 'dead';
+                        !!($characterFlags & 2) && $characterData[]   = 'trunk';
+                        !!($characterFlags & 4) && $characterData[]   = 'in_shell';
+                        !!($characterFlags & 8) && $characterData[]   = 'invisible';
+                        !!($characterFlags & 16) && $characterData[]  = 'invincible';
+                        !!($characterFlags & 32) && $characterData[]  = 'frozen';
+                        !!($characterFlags & 64) && $characterData[]  = 'spawned';
                         !!($characterFlags & 128) && $characterData[] = 'no_collisions';
                         !!($characterFlags & 256) && $characterData[] = 'no_gameplay_cam';
 
                         $result[$key] = [
-                            'id' => intval($player['source']),
-                            'character' => $player['character'],
-                            'license' => $key,
-                            'server' => $serverIp,
+                            'id'               => intval($player['source']),
+                            'character'        => $player['character'],
+                            'license'          => $key,
+                            'server'           => $serverIp,
                             'fakeDisconnected' => $fake,
-                            'fakeName' => !!($flags & 1) ? $player['name'] : null,
-							'minigame' => $minigame,
-							'camCords' => $camCords,
-							'queue' => $queue,
-                            'characterData' => $characterData
+                            'fakeName'         => !!($flags & 1) ? $player['name'] : null,
+                            'minigame'         => $minigame,
+                            'camCords'         => $camCords,
+                            'queue'            => $queue,
+                            'characterData'    => $characterData,
                         ];
                     }
                 }
@@ -725,10 +782,10 @@ class Player extends Model
             }
 
             return new PlayerStatus(PlayerStatus::STATUS_ONLINE, $player['server'], $player['id'], $player['character'], $player['fakeName'], [
-				'minigame' => $player['minigame'],
-				'camCords' => $player['camCords'],
-				'queue' => $player['queue']
-			], $player['characterData']);
+                'minigame' => $player['minigame'],
+                'camCords' => $player['camCords'],
+                'queue'    => $player['queue'],
+            ], $player['characterData']);
         }
 
         return new PlayerStatus(PlayerStatus::STATUS_OFFLINE, '', 0);
@@ -760,7 +817,7 @@ class Player extends Model
         }
 
         $identifiers = array_values(array_unique($identifiers));
-        $playerMap = CacheHelper::loadLicensePlayerNameMap($identifiers);
+        $playerMap   = CacheHelper::loadLicensePlayerNameMap($identifiers);
 
         if (empty($playerMap)) {
             $playerMap['empty'] = 'empty';
@@ -769,26 +826,26 @@ class Player extends Model
         return $playerMap;
     }
 
-	public static function findPlayerBySteam(string $steamIdentifier): ?Player
-	{
-		$players = Player::query()->where('identifiers', 'LIKE', "%\"" . $steamIdentifier . "\"%")->get();
+    public static function findPlayerBySteam(string $steamIdentifier): ?Player
+    {
+        $players = Player::query()->where('identifiers', 'LIKE', "%\"" . $steamIdentifier . "\"%")->get();
 
-		foreach($players as $player) {
-			$identifiers = $player->identifiers ?? [];
+        foreach ($players as $player) {
+            $identifiers = $player->identifiers ?? [];
 
-			foreach ($identifiers as $identifier) {
-				if (Str::startsWith($identifier, 'steam:')) {
-					if ($identifier === $steamIdentifier) {
-						return $player;
-					}
+            foreach ($identifiers as $identifier) {
+                if (Str::startsWith($identifier, 'steam:')) {
+                    if ($identifier === $steamIdentifier) {
+                        return $player;
+                    }
 
-					break;
-				}
-			}
-		}
+                    break;
+                }
+            }
+        }
 
-		return null;
-	}
+        return null;
+    }
 
     public static function getIdentifierLabel(string $identifier): ?string
     {
@@ -829,9 +886,9 @@ class Player extends Model
  */
 function get_steam_id(?string $identifier): ?SteamID
 {
-	if (!$identifier) {
-		return null;
-	}
+    if (!$identifier) {
+        return null;
+    }
 
     try {
         // Get rid of any prefix.

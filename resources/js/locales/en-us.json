@@ -89,7 +89,11 @@
         "title": "User Settings",
         "description": "Change and view your user settings.",
         "sessions": "Active Sessions",
-        "delete_session": "Kill Session"
+        "delete_session": "Kill Session",
+        "settings": "Settings",
+
+        "parseLogs": "Parse Logs (Highlighting, etc.)",
+        "expandCollapsed": "Auto-Expand Collapsed (Notes, etc.)"
     },
     "loading_screen": {
         "sidebar": "Loading Screen",

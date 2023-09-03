@@ -42,9 +42,31 @@
                     </inertia-link>
                 </div>
             </div>
-
-            <div class="italic mt-6 text-sm">More coming soon™</div>
         </div>
+
+        <div class="mt-8 pt-8 border-t-2 border-gray-300 dark:border-gray-500">
+            <h3 class="mb-5 dark:text-white">
+                {{ t('settings.settings') }}
+            </h3>
+
+            <table class="whitespace-no-wrap bg-white !bg-opacity-10">
+                <tr class="border-t border-gray-300 dark:border-gray-500" v-for="(setting, key) in $page.auth.settings" :key="key">
+                    <td class="p-3 pl-8">{{ t('settings.' + key) }}</td>
+                    <td class="p-3">
+                        <input v-model="setting.value" :type="getSettingsType(setting.type)" :disabled="setting.disabled" class="p-1 h-base min-w-base block border-2 bg-gray-200 dark:bg-gray-800" @change="saveSetting(key, setting)" />
+                    </td>
+                    <td class="p-3">
+                        <img :src="'/images/settings/' + key + '.png'" class="h-20" />
+                    </td>
+                    <td class="p-3 pr-8">
+                        <i class="fas fa-spinner fa-spin" v-if="setting.disabled"></i>
+                        <i class="fas fa-check" v-else></i>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="italic mt-8 pt-8 border-t-2 border-gray-300 dark:border-gray-500 text-sm">More coming soon™</div>
 
     </div>
 </template>
@@ -90,6 +112,32 @@ export default {
     methods: {
         formatTimestamp(timestamp) {
             return this.$options.filters.formatTime(timestamp * 1000);
+        },
+        getSettingsType(type) {
+            switch (type) {
+                case 'boolean':
+                    return 'checkbox';
+                case 'integer':
+                    return 'number';
+                default:
+                    return 'text';
+            }
+        },
+        async saveSetting(key, setting) {
+            if (setting.disabled) return;
+
+            setting.disabled = true;
+
+            try {
+                await axios.put('/settings/' + key, {
+                    value: setting.value
+                });
+            } catch (e) { }
+
+            setting.disabled = false;
+
+            // For some reason it doesn't auto-refresh
+            this.$forceUpdate();
         }
     }
 }

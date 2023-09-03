@@ -28,7 +28,8 @@ module.exports = {
         extend: {
             spacing: {
                 '17':   '4.25rem',
-                'logo': '60px'
+                'logo': '60px',
+                'base': '24px'
             },
             zIndex: {
                 '1k': '1000',
@@ -85,6 +86,7 @@ module.exports = {
             minWidth: {
                 'input':   '200px',
                 'context': '140px',
+                'base':    '24px'
             },
             minHeight: {
                 '50': '50px'
@@ -100,7 +102,7 @@ module.exports = {
             inset: {
                 'attr':  '16.5px',
                 'attr2': '118.5px',
-                '2px':   '2px',
+                '2px':   '2px'
             },
             colors: {
                 // Light & dark.
