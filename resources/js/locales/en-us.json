@@ -1136,6 +1136,7 @@
         "search": "Search in logs",
         "drug_search": "Drug-Logs",
         "money_search": "Money-Logs",
+        "connect_search": "Connect-Logs",
         "skipped": "Skipped logs where:",
         "metadata": {
             "show": "Show metadata",

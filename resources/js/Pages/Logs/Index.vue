@@ -128,6 +128,11 @@
 							<i class="fas fa-money-bill-wave mr-1"></i>
 							{{ t('logs.money_search') }}
 						</button>
+
+						<button class="px-5 py-2 ml-5 font-semibold text-white bg-lime-600 dark:bg-lime-400 rounded hover:shadow-lg" @click="showConnectLogs">
+							<i class="fas fa-person-booth mr-1"></i>
+							{{ t('logs.connect_search') }}
+						</button>
 					</div>
 				</form>
 			</template>
@@ -414,6 +419,11 @@ export default {
 		},
 		showMoneyLogs() {
 			this.filters.action = MoneyTransferActions.map(action => '=' + action).join(',');
+
+			this.refresh();
+		},
+		showConnectLogs() {
+			this.filters.action = ConnectActions.concat(DisconnectActions).map(action => '=' + action).join(',');
 
 			this.refresh();
 		},
