@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Character;
-use App\Helpers\CacheHelper;
 use App\Helpers\OPFWHelper;
 use App\Http\Requests\CharacterUpdateRequest;
-use App\Http\Resources\CharacterResource;
 use App\Http\Resources\CharacterIndexResource;
+use App\Http\Resources\CharacterResource;
 use App\Http\Resources\PlayerResource;
 use App\Motel;
 use App\PanelLog;
@@ -29,7 +28,7 @@ class PlayerCharacterController extends Controller
     ];
 
     const Licenses = [
-        "heli", "fw", "cfi", "hw", "hwh", "perf", "management", "military", "utility", "commercial", "special", "hunting", "fishing", "weapon", "mining"
+        "heli", "fw", "cfi", "hw", "hwh", "perf", "management", "military", "utility", "commercial", "special", "hunting", "fishing", "weapon", "mining",
     ];
 
     /**
@@ -126,16 +125,16 @@ class PlayerCharacterController extends Controller
 
         $query->select([
             'character_id', 'license_identifier', 'first_name', 'last_name', 'gender', 'job_name',
-            'department_name', 'position_name', 'phone_number', 'date_of_birth'
+            'department_name', 'position_name', 'phone_number', 'date_of_birth',
         ]);
 
         $characters = $query->paginate(15, [
             'id',
         ])->appends($request->query());
 
-		$characters = CharacterIndexResource::collection($characters);
+        $characters = CharacterIndexResource::collection($characters);
 
-		$end = round(microtime(true) * 1000);
+        $end = round(microtime(true) * 1000);
 
         return Inertia::render('Characters/Index', [
             'characters' => $characters,
@@ -164,12 +163,13 @@ class PlayerCharacterController extends Controller
     public function edit(Request $request, Player $player, Character $character): Response
     {
         $resetCoords = json_decode(file_get_contents(__DIR__ . '/../../../helpers/coords_reset.json'), true);
-        $motels = Motel::query()->where('cid', $character->character_id)->get()->sortBy(['motel', 'room_id']);
-        $motelMap = json_decode(file_get_contents(__DIR__ . '/../../../helpers/motels.json'), true);
+        $motels      = Motel::query()->where('cid', $character->character_id)->get()->sortBy(['motel', 'room_id']);
+        $motelMap    = json_decode(file_get_contents(__DIR__ . '/../../../helpers/motels.json'), true);
 
         $horns = Vehicle::getHornMap(false);
 
-        $jobs = OPFWHelper::getJobsJSON(Server::getFirstServer() ?? '');
+        $jobs     = OPFWHelper::getJobsJSON(Server::getFirstServer() ?? '');
+        $vehicles = OPFWHelper::getVehicleListJSON(Server::getFirstServer() ?? '');
 
         return Inertia::render('Players/Characters/Edit', [
             'player'       => new PlayerResource($player),
@@ -177,7 +177,7 @@ class PlayerCharacterController extends Controller
             'motels'       => $motels->toArray(),
             'motelMap'     => $motelMap,
             'horns'        => $horns,
-            'vehicleMap'   => CacheHelper::getVehicleMap() ?? ['empty' => 'map'],
+            'vehicles'     => $vehicles ?? [],
             'jobs'         => $jobs ? $jobs['jobs'] : [],
             'resetCoords'  => $resetCoords ? array_keys($resetCoords) : [],
             'vehicleValue' => Vehicle::getTotalVehicleValue($character->character_id),
@@ -231,8 +231,8 @@ class PlayerCharacterController extends Controller
     {
         $data = $request->validated();
 
-		$data['first_name'] = trim(ucwords(strtolower($data['first_name'])));
-		$data['last_name'] = trim(ucwords(strtolower($data['last_name'])));
+        $data['first_name'] = trim(ucwords(strtolower($data['first_name'])));
+        $data['last_name']  = trim(ucwords(strtolower($data['last_name'])));
 
         if (!empty($data['date_of_birth'])) {
             $time = strtotime($data['date_of_birth']);
@@ -244,13 +244,13 @@ class PlayerCharacterController extends Controller
         }
 
         if (!$data['job_name'] || $data['job_name'] === 'Unemployed') {
-            $data['job_name'] = "Unemployed";
+            $data['job_name']        = "Unemployed";
             $data['department_name'] = null;
-            $data['position_name'] = null;
+            $data['position_name']   = null;
         }
 
         $changed = [];
-        $old = $character->toArray();
+        $old     = $character->toArray();
         foreach ($data as $k => $v) {
             $c = isset($old[$k]) ? $old[$k] : null;
             if ($v !== $c) {
@@ -311,7 +311,7 @@ class PlayerCharacterController extends Controller
     {
         $zone = $request->get('zone');
         $json = json_decode($character->tattoos_data, true);
-        $map = json_decode(file_get_contents(__DIR__ . '/../../../helpers/tattoo-map.json'), true);
+        $map  = json_decode(file_get_contents(__DIR__ . '/../../../helpers/tattoo-map.json'), true);
 
         if (!$map || !is_array($map)) {
             return backWith('error', 'Failed to load zone map');
@@ -321,11 +321,11 @@ class PlayerCharacterController extends Controller
             return backWith('error', 'Invalid or no zone provided');
         }
 
-		$cleanedMap = [];
+        $cleanedMap = [];
 
-		foreach ($map as $key => $value) {
-			$cleanedMap[strtolower($key)] = $value;
-		}
+        foreach ($map as $key => $value) {
+            $cleanedMap[strtolower($key)] = $value;
+        }
 
         if ($zone === 'all') {
             $json = [];
@@ -337,7 +337,7 @@ class PlayerCharacterController extends Controller
                 }
 
                 $key = strtolower($tattoo['overlay']);
-                $z = isset($cleanedMap[$key]) ? $cleanedMap[$key]['zone'] : null;
+                $z   = isset($cleanedMap[$key]) ? $cleanedMap[$key]['zone'] : null;
 
                 if (!$z || $z !== $zone) {
                     $result[] = $tattoo;
@@ -356,7 +356,7 @@ class PlayerCharacterController extends Controller
         $user = user();
         PanelLog::logTattooRemoval($user->license_identifier, $player->license_identifier, $character->character_id, $zone);
 
-        $info = 'In-Game Tattoo refresh failed, user has to softnap.';
+        $info    = 'In-Game Tattoo refresh failed, user has to softnap.';
         $refresh = OPFWHelper::updateTattoos($player, $character->character_id);
         if ($refresh->status) {
             $info = 'In-Game tattoo refresh was successful too.';
@@ -375,7 +375,7 @@ class PlayerCharacterController extends Controller
      */
     public function resetSpawn(Player $player, Character $character, Request $request): RedirectResponse
     {
-        $spawn = $request->get('spawn');
+        $spawn       = $request->get('spawn');
         $resetCoords = json_decode(file_get_contents(__DIR__ . '/../../../helpers/coords_reset.json'), true);
 
         if (!$resetCoords || !is_array($resetCoords)) {
@@ -408,8 +408,8 @@ class PlayerCharacterController extends Controller
      */
     public function editBalance(Player $player, Character $character, Request $request): RedirectResponse
     {
-        $cash = intval($request->post("cash"));
-        $bank = intval($request->post("bank"));
+        $cash   = intval($request->post("cash"));
+        $bank   = intval($request->post("bank"));
         $stocks = intval($request->post("stocks"));
 
         if (!$this->isSuperAdmin($request)) {
@@ -477,8 +477,8 @@ class PlayerCharacterController extends Controller
             );
         };
 
-        $map = CacheHelper::getVehicleMap();
-        if (!in_array($model, $map)) {
+        $vehicles = OPFWHelper::getVehicleListJSON(Server::getFirstServer() ?? '');
+        if (!isset($vehicles[$model])) {
             return backWith('error', 'Unknown model name "' . $model . '".');
         }
 
@@ -544,7 +544,7 @@ class PlayerCharacterController extends Controller
 
         if ($license !== 'remove') {
             $json['licenses'][] = $license;
-            $json['licenses'] = array_values(array_unique($json['licenses']));
+            $json['licenses']   = array_values(array_unique($json['licenses']));
         } else if (empty($json['licenses'])) {
             return backWith('error', 'Character already has no licenses.');
         } else {
@@ -585,29 +585,29 @@ class PlayerCharacterController extends Controller
     public function resetGarage(Request $request, Vehicle $vehicle, bool $fullReset): RedirectResponse
     {
         if (!$this->isSuperAdmin($request)) {
-			return backWith('error', 'Only super admins can reset vehicles garages.');
+            return backWith('error', 'Only super admins can reset vehicles garages.');
         }
 
-		$data = [];
+        $data = [];
 
-		if ($fullReset) {
-			$data['garage_identifier'] = '*';
-			$data['garage_state'] = 1;
-			$data['garage_impound'] = 0;
-			$data['last_garage_identifier'] = null;
-		} else {
-			$data['garage_identifier'] = 6; // Garage C
-			$data['garage_state'] = 1;
-			$data['garage_impound'] = 0;
-			$data['last_garage_identifier'] = 6;
-		}
+        if ($fullReset) {
+            $data['garage_identifier']      = '*';
+            $data['garage_state']           = 1;
+            $data['garage_impound']         = 0;
+            $data['last_garage_identifier'] = null;
+        } else {
+            $data['garage_identifier']      = 6; // Garage C
+            $data['garage_state']           = 1;
+            $data['garage_impound']         = 0;
+            $data['last_garage_identifier'] = 6;
+        }
 
         $vehicle->update($data);
 
         return backWith('success', 'Vehicle garage was successfully reset.');
     }
 
-	/**
+    /**
      * Edits the specified vehicle.
      *
      * @param Request $request

@@ -95,6 +95,17 @@ class Vehicle extends Model
         return $this->belongsTo(Character::class, 'owner_cid');
     }
 
+    public function getDisplayName(): ?string
+    {
+        $vehicles = OPFWHelper::getVehicleListJSON(Server::getFirstServer() ?? '');
+
+        if (!$vehicles) {
+            return null;
+        }
+
+        return $vehicles[$this->model_name] ?? null;
+    }
+
     /**
      * Returns the garage name
      *

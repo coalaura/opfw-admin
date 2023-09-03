@@ -390,6 +390,32 @@ class OPFWHelper
     }
 
     /**
+     * Gets the vehicleList.json
+     *
+     * @param string $serverIp
+     * @return array|null
+     */
+    public static function getVehicleListJSON(string $serverIp): ?array
+    {
+        $serverIp = Server::fixApiUrl($serverIp);
+        $cache = 'vehicle_list_' . md5($serverIp);
+
+        if (CacheHelper::exists($cache)) {
+            return CacheHelper::read($cache, []);
+        } else {
+            $data = self::executeRoute($serverIp, $serverIp . 'vehicleList.json', [], 'GET', 3);
+
+            if ($data->data) {
+                CacheHelper::write($cache, $data->data, 12 * CacheHelper::HOUR);
+            } else if (!$data->status) {
+                CacheHelper::write($cache, [], 10);
+            }
+
+            return $data->data;
+        }
+    }
+
+    /**
      * Gets the exclusiveDealership.json
      *
      * @param string $serverIp

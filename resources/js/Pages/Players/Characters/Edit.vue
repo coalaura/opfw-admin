@@ -588,7 +588,7 @@
                         <template #header>
                             <h3 class="mb-2">
                                 {{
-                                    vehicle.model_name in vehicleMap ? vehicleMap[vehicle.model_name] : vehicle.model_name
+                                    vehicle.display_name ? vehicle.display_name : vehicle.model_name
                                 }}
                                 <sup>{{ vehicle.model_name }}</sup>
                             </h3>
@@ -791,8 +791,8 @@ export default {
             type: Object,
             required: true,
         },
-        vehicleMap: {
-            type: Array,
+        vehicles: {
+            type: [Object, Array],
             required: true,
         },
         horns: {
@@ -884,12 +884,14 @@ export default {
             }
         }
 
-        const sortedVehicles = this.vehicleMap.sort((a, b) => a.localeCompare(b)).map(m => {
-            return {
-                value: m,
-                text: m
-            };
-        });
+        const sortedVehicles = Object.entries(this.vehicles)
+            .map(([key, value]) => {
+                return {
+                    value: key,
+                    text: value
+                };
+            })
+            .sort((a, b) => a.text.localeCompare(b.text));
 
         const money = this.getMoneyLocals();
 
@@ -1126,7 +1128,7 @@ export default {
             this.isVehicleEdit = false;
         },
         async addVehicle() {
-            if (!this.vehicleMap.includes(this.vehicleAdd.value)) {
+            if (!this.vehicles[this.vehicleAdd.value]) {
                 alert('Unknown vehicle model "' + this.vehicleAdd.value + '"');
                 return;
             }

@@ -109,33 +109,6 @@ class CacheHelper
     }
 
     /**
-     * Get model -> display name map
-     *
-     * @return array
-     */
-    public static function getVehicleMap(): array
-    {
-        $map = self::read('vehicle_map', null);
-        if (!$map) {
-            $map = json_decode(GeneralHelper::get('https://raw.githubusercontent.com/twooot/legacyrp-admin-panel-sockets/master/vehicles.json'), true) ?? [];
-
-            if ($map) {
-                $list = [];
-
-                foreach ($map['data'] as $model) {
-                    $list[] = $model;
-                }
-
-                $map = $list;
-            }
-
-            self::write('vehicle_map', $map, self::DAY);
-        }
-
-        return $map;
-    }
-
-    /**
      * Forget something in the cache
      *
      * @param string $key

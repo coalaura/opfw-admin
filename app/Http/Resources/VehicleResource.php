@@ -21,6 +21,7 @@ class VehicleResource extends JsonResource
             'owner_cid'     => $this->owner_cid,
             'garage_name'   => $this->garage(),
             'model_name'    => vehicle_model_name($this->model_name),
+            'display_name'  => $this->getDisplayName(),
             'plate'         => $this->plate,
             'modifications' => $this->getModifications(),
             'fuel'          => intval($this->deprecated_fuel) ?? 0,
