@@ -317,6 +317,8 @@ export default {
             return this.url.startsWith(url);
         },
         len(sub, isSuperAdmin) {
+            if (this.setting('expandSidenav')) return 'h-auto';
+
             const length = sub.filter(l => (!l.private || isSuperAdmin) && !l.hidden).length;
 
             switch (length) {

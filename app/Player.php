@@ -123,6 +123,14 @@ class Player extends Model
         "expandCollapsed" => [
             "type" => "boolean",
             "default" => false
+        ],
+        "expandSidenav" => [
+            "type" => "boolean",
+            "default" => false
+        ],
+        "showSystemNotes" => [
+            "type" => "boolean",
+            "default" => false
         ]
     ];
 

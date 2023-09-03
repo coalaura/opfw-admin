@@ -1300,7 +1300,8 @@ export default {
             };
         });
 
-        const autoExpandCollapsed = this.setting('expandCollapsed');
+        const autoExpandCollapsed = this.setting('expandCollapsed'),
+            showSystemNotes = this.setting('showSystemNotes');
 
         return {
             local: {
@@ -1338,7 +1339,7 @@ export default {
             },
             isShowingDeletedCharacters: false,
             isUnloading: false,
-            showSystemWarnings: false,
+            showSystemWarnings: showSystemNotes,
 
             isShowingLinked: false,
             isShowingLinkedLoading: false,
