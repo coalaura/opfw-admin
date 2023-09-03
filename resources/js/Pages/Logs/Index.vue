@@ -178,11 +178,11 @@
 			<template>
 				<table class="w-full whitespace-no-wrap">
 					<tr class="font-semibold text-left mobile:hidden">
-						<th class="px-6 py-4">{{ t('logs.player') }}</th>
-						<th class="px-6 py-4 whitespace-nowrap">{{ t('logs.server_id') }}</th>
-						<th class="px-6 py-4">{{ t('logs.action') }}</th>
-						<th class="px-6 py-4">{{ t('logs.details') }}</th>
-						<th class="px-6 py-4">
+						<th class="p-3 pl-8">{{ t('logs.player') }}</th>
+						<th class="p-3 whitespace-nowrap">{{ t('logs.server_id') }}</th>
+						<th class="p-3">{{ t('logs.action') }}</th>
+						<th class="p-3">{{ t('logs.details') }}</th>
+						<th class="p-3 pr-8">
 							{{ t('logs.timestamp') }}
 							<a href="#" :title="t('logs.toggle_diff')"
 							   @click="$event.preventDefault();showLogTimeDifference = !showLogTimeDifference">
@@ -190,9 +190,8 @@
 							</a>
 						</th>
 					</tr>
-					<tr class="border-t border-gray-300 dark:border-gray-500 relative" :class="getLogColor(log.action, log.metadata)" v-for="(log, index) in logs"
-						:key="log.id">
-						<td class="px-4 py-3 pl-8 mobile:block">
+					<tr class="border-t border-gray-300 dark:border-gray-500 relative" :class="getLogColor(log.action, log.metadata)" v-for="(log, index) in logs" :key="log.id">
+						<td class="p-3 pl-8 mobile:block">
 							<div class="absolute top-1 left-1 text-sm leading-3 font-semibold italic" v-html="getLogTag(log.action, log.metadata)"></div>
 
 							<inertia-link
@@ -201,7 +200,7 @@
 								{{ playerName(log.licenseIdentifier) }}
 							</inertia-link>
 						</td>
-						<td class="px-4 py-3 mobile:block">
+						<td class="p-3 mobile:block">
 							<span class="font-semibold" v-if="statusLoading">
                                 {{ t('global.loading') }}
                             </span>
@@ -212,16 +211,14 @@
 								{{ t('global.status.offline') }}
 							</span>
 						</td>
-						<td class="px-4 py-3 mobile:block">
+						<td class="p-3 mobile:block">
 							{{ log.action }}
-							<a href="#" @click="detailedAction($event, log)"
-							   class="block text-xs leading-1 text-blue-600 dark:text-blue-400 whitespace-nowrap"
-							   v-if="log.metadata">
+							<a href="#" @click="detailedAction($event, log)" class="block text-xs leading-1 text-blue-700 dark:text-blue-300 whitespace-nowrap" v-if="log.metadata">
 								{{ t('logs.metadata.show') }}
 							</a>
 						</td>
-						<td class="px-4 py-3 mobile:block" v-html="parseLog(log.details, log.action, log.metadata)"></td>
-						<td class="px-4 py-3 mobile:block" v-if="showLogTimeDifference"
+						<td class="p-3 mobile:block" v-html="parseLog(log.details, log.action, log.metadata)"></td>
+						<td class="p-3 mobile:block" v-if="showLogTimeDifference"
 							:title="t('logs.diff_label')">
 							<span v-if="index+1 < logs.length">
 								{{ formatSecondDiff(stamp(log.timestamp) - stamp(logs[index + 1].timestamp)) }}
@@ -229,13 +226,13 @@
 							</span>
 							<span v-else>Start</span>
 						</td>
-						<td class="px-4 py-3 pr-8 mobile:block" v-else>
+						<td class="p-3 pr-8 mobile:block" v-else>
 							{{ log.timestamp | formatTime(true) }}
 							<i class="block text-xs leading-1 whitespace-nowrap text-yellow-600 dark:text-yellow-400">{{ formatRawTimestamp(log.timestamp) }}</i>
 						</td>
 					</tr>
 					<tr v-if="logs.length === 0">
-						<td class="px-4 py-6 text-center" colspan="100%">
+						<td class="py-3 px-8 text-center" colspan="100%">
 							{{ t('logs.no_logs') }}
 						</td>
 					</tr>
