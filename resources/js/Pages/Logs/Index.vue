@@ -119,12 +119,12 @@
 							</span>
 						</button>
 
-						<button class="px-5 py-2 ml-5 font-semibold text-white bg-primary dark:bg-dark-primary rounded hover:shadow-lg" @click="showDrugLogs" v-if="canSearchDrugs">
+						<button class="px-5 py-2 ml-5 font-semibold text-white bg-yellow-600 dark:bg-yellow-400 rounded hover:shadow-lg" @click="showDrugLogs" v-if="canSearchDrugs">
 							<i class="fas fa-capsules mr-1"></i>
 							{{ t('logs.drug_search') }}
 						</button>
 
-						<button class="px-5 py-2 ml-5 font-semibold text-white bg-primary dark:bg-dark-primary rounded hover:shadow-lg" @click="showMoneyLogs">
+						<button class="px-5 py-2 ml-5 font-semibold text-white bg-teal-600 dark:bg-teal-400 rounded hover:shadow-lg" @click="showMoneyLogs">
 							<i class="fas fa-money-bill-wave mr-1"></i>
 							{{ t('logs.money_search') }}
 						</button>
