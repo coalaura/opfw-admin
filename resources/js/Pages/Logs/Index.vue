@@ -446,7 +446,7 @@ export default {
 			} else if (this.drugActions.includes(action)) {
 				return 'bg-yellow-500 !bg-opacity-20 hover:!bg-opacity-40';
 			} else if (DisconnectActions.includes(action)) {
-				return 'bg-red-500 !bg-opacity-20 hover:!bg-opacity-40';
+				return 'bg-rose-500 !bg-opacity-20 hover:!bg-opacity-40';
 			} else if (ConnectActions.includes(action)) {
 				return 'bg-lime-500 !bg-opacity-20 hover:!bg-opacity-40';
 			}
@@ -463,7 +463,7 @@ export default {
 			} else if (this.drugActions.includes(action)) {
 				return `<i class="text-yellow-800 dark:text-yellow-200 fas fa-tablets" title="money transfer"></i>`;
 			} else if (DisconnectActions.includes(action)) {
-				return `<i class="text-red-800 dark:text-red-200 fas fa-door-open" title="exit/disconnect/unload"></i>`;
+				return `<i class="text-rose-800 dark:text-rose-200 fas fa-door-open" title="exit/disconnect/unload"></i>`;
 			} else if (ConnectActions.includes(action)) {
 				return `<i class="text-lime-800 dark:text-lime-200 fas fa-person-booth" title="connect/join/load"></i>`;
 			}
