@@ -291,6 +291,12 @@ const DisconnectActions = [
 	'Unloaded Character'
 ];
 
+const ConnectActions = [
+	'User Joined',
+	'User Connected',
+	'Character Loaded'
+];
+
 export default {
 	layout: Layout,
 	components: {
@@ -425,11 +431,13 @@ export default {
 			if (minigames.length > 0) {
 				return 'bg-purple-500 !bg-opacity-20 hover:!bg-opacity-40';
 			} else if (MoneyTransferActions.includes(action)) {
-				return 'bg-green-500 !bg-opacity-20 hover:!bg-opacity-40';
+				return 'bg-teal-500 !bg-opacity-20 hover:!bg-opacity-40';
 			} else if (this.drugActions.includes(action)) {
 				return 'bg-yellow-500 !bg-opacity-20 hover:!bg-opacity-40';
 			} else if (DisconnectActions.includes(action)) {
 				return 'bg-red-500 !bg-opacity-20 hover:!bg-opacity-40';
+			} else if (ConnectActions.includes(action)) {
+				return 'bg-lime-500 !bg-opacity-20 hover:!bg-opacity-40';
 			}
 
 			return 'hover:bg-gray-200 dark:hover:bg-gray-600';
@@ -440,11 +448,13 @@ export default {
 			if (minigames.length > 0) {
 				return `<i class="text-purple-800 dark:text-purple-200 fas fa-gamepad" title="${minigames.join(', ')}"></i>`;
 			} else if (MoneyTransferActions.includes(action)) {
-				return `<i class="text-green-800 dark:text-green-200 fas fa-money-bill-wave" title="money transfer"></i>`;
+				return `<i class="text-teal-800 dark:text-teal-200 fas fa-money-bill-wave" title="money transfer"></i>`;
 			} else if (this.drugActions.includes(action)) {
 				return `<i class="text-yellow-800 dark:text-yellow-200 fas fa-tablets" title="money transfer"></i>`;
 			} else if (DisconnectActions.includes(action)) {
 				return `<i class="text-red-800 dark:text-red-200 fas fa-door-open" title="exit/disconnect"></i>`;
+			} else if (ConnectActions.includes(action)) {
+				return `<i class="text-lime-800 dark:text-lime-200 fas fa-door-open" title="exit/disconnect"></i>`;
 			}
 
 			return '';

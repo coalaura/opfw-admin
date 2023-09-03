@@ -127,6 +127,28 @@ module.exports = {
                 'rose-800': 'rgb(159, 18, 57)',
                 'rose-900': 'rgb(136, 19, 55)',
 
+                // Lime
+                'lime-100': 'rgb(236 252 203)',
+                'lime-200': 'rgb(217 249 157)',
+                'lime-300': 'rgb(190 242 100)',
+                'lime-400': 'rgb(163 230 53)',
+                'lime-500': 'rgb(132 204 22)',
+                'lime-600': 'rgb(101 163 13)',
+                'lime-700': 'rgb(77 124 15)',
+                'lime-800': 'rgb(63 98 18)',
+                'lime-900': 'rgb(54 83 20)',
+
+                // Teal
+                'teal-100': 'rgb(204 251 241)',
+                'teal-200': 'rgb(153 246 228)',
+                'teal-300': 'rgb(94 234 212)',
+                'teal-400': 'rgb(45 212 191)',
+                'teal-500': 'rgb(20 184 166)',
+                'teal-600': 'rgb(13 148 136)',
+                'teal-700': 'rgb(15 118 110)',
+                'teal-800': 'rgb(17 94 89)',
+                'teal-900': 'rgb(19 78 74)',
+
                 // Theme colors.
                 'primary':   defaultTheme.colors.indigo['600'],
                 'secondary': defaultTheme.colors.gray['100'],
