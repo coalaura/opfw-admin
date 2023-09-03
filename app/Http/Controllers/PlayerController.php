@@ -30,88 +30,82 @@ class PlayerController extends Controller
      */
     public function index(Request $request)
     {
-		$identifiers = [];
-		$players = [];
-		$page = 1;
-
 		$start = round(microtime(true) * 1000);
 
-		if (!$request->query('empty')) {
-			$query = Player::query();
+        $query = Player::query();
 
-			// Filtering by name.
-			if ($name = $request->input('name')) {
-				if (Str::startsWith($name, '=')) {
-					$name = Str::substr($name, 1);
-					$query->where('player_name', $name);
-				} else {
-                    $query->where(function ($q) use ($name) {
-                        $q->where('player_name', 'like', "%{$name}%");
-                        $q->orWhere('player_aliases', 'like', "%{$name}%");
-                    });
-				}
-			}
+        // Filtering by name.
+        if ($name = $request->input('name')) {
+            if (Str::startsWith($name, '=')) {
+                $name = Str::substr($name, 1);
+                $query->where('player_name', $name);
+            } else {
+                $query->where(function ($q) use ($name) {
+                    $q->where('player_name', 'like', "%{$name}%");
+                    $q->orWhere('player_aliases', 'like', "%{$name}%");
+                });
+            }
+        }
 
-			// Filtering by identifier.
-			if ($identifier = $request->input('identifier')) {
-				$query->where('identifiers', 'like', "%{$identifier}%");
-			}
+        // Filtering by identifier.
+        if ($identifier = $request->input('identifier')) {
+            $query->where('identifiers', 'like', "%{$identifier}%");
+        }
 
-			// Filtering by license_identifier.
-			if ($license = $request->input('license')) {
-				if (!Str::startsWith($license, 'license:')) {
-					$license = 'license:' . $license;
-				}
-
-				if (strlen($license) !== 48) {
-					$query->where('license_identifier', 'LIKE', '%' . $license);
-				} else {
-					$query->where('license_identifier', $license);
-				}
-			}
-
-			// Filtering by discord.
-			if ($discord = $request->input('discord')) {
-				$query->where('identifiers', 'LIKE', '%discord:' . $discord . '%');
-			}
-
-			// Filtering by serer-id.
-			if ($server = $request->input('server')) {
-				$online = array_keys(array_filter(Player::getAllOnlinePlayers(true) ?? [], function ($player) use ($server) {
-					return $player['id'] === intval($server);
-				}));
-
-				$query->whereIn('license_identifier', $online);
-			}
-
-            // Filtering by enabled command
-            $enablable = $request->input('enablable');
-            if (in_array($enablable, PlayerRouteController::EnablableCommands)) {
-                $query->where(DB::raw('JSON_CONTAINS(enabled_commands, \'"' . $enablable . '"\')'), '=', '1');
+        // Filtering by license_identifier.
+        if ($license = $request->input('license')) {
+            if (!Str::startsWith($license, 'license:')) {
+                $license = 'license:' . $license;
             }
 
-			$query->orderBy("player_name");
+            if (strlen($license) !== 48) {
+                $query->where('license_identifier', 'LIKE', '%' . $license);
+            } else {
+                $query->where('license_identifier', $license);
+            }
+        }
 
-			$query->select([
-				'license_identifier', 'player_name', 'playtime', 'identifiers',
-			]);
-			$query->selectSub('SELECT COUNT(`id`) FROM `warnings` WHERE `player_id` = `user_id` AND `warning_type` IN (\'' . Warning::TypeWarning . '\', \'' . Warning::TypeStrike . '\')', 'warning_count');
+        // Filtering by discord.
+        if ($discord = $request->input('discord')) {
+            $query->where('identifiers', 'LIKE', '%discord:' . $discord . '%');
+        }
 
-			$page = Paginator::resolveCurrentPage('page');
-			$query->limit(15)->offset(($page - 1) * 15);
+        // Filtering by serer-id.
+        if ($server = $request->input('server')) {
+            $online = array_keys(array_filter(Player::getAllOnlinePlayers(true) ?? [], function ($player) use ($server) {
+                return $player['id'] === intval($server);
+            }));
 
-			$players = $query->get();
+            $query->whereIn('license_identifier', $online);
+        }
 
-			if ($players->count() === 1) {
-				$player = $players->first();
+        // Filtering by enabled command
+        $enablable = $request->input('enablable');
+        if (in_array($enablable, PlayerRouteController::EnablableCommands)) {
+            $query->where(DB::raw('JSON_CONTAINS(enabled_commands, \'"' . $enablable . '"\')'), '=', '1');
+        }
 
-				return redirect('/players/' . $player->license_identifier);
-			}
+        $query->orderBy("player_name");
 
-			$identifiers = array_values(array_map(function ($player) {
-				return $player['license_identifier'];
-			}, $players->toArray()));
-		}
+        $query->select([
+            'license_identifier', 'player_name', 'playtime', 'identifiers',
+        ]);
+        $query->selectSub('SELECT COUNT(`id`) FROM `warnings` WHERE `player_id` = `user_id` AND `warning_type` IN (\'' . Warning::TypeWarning . '\', \'' . Warning::TypeStrike . '\')', 'warning_count');
+
+        $page = Paginator::resolveCurrentPage('page');
+        $query->limit(15)->offset(($page - 1) * 15);
+
+        $players = $query->get();
+
+        if ($players->count() === 1) {
+            $player = $players->first();
+
+            return redirect('/players/' . $player->license_identifier);
+        }
+
+        $identifiers = array_values(array_map(function ($player) {
+            return $player['license_identifier'];
+        }, $players->toArray()));
 
 		$end = round(microtime(true) * 1000);
 

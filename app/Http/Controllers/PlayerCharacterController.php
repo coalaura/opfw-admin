@@ -42,100 +42,96 @@ class PlayerCharacterController extends Controller
     {
         $start = round(microtime(true) * 1000);
 
-		$characters = [];
+        $query = Character::query();
 
-		if (!$request->query('empty')) {
-			$query = Character::query();
+        // Filtering by cid.
+        if ($cid = $request->input('character_id')) {
+            $query->where('character_id', $cid);
+        }
 
-			// Filtering by cid.
-			if ($cid = $request->input('character_id')) {
-				$query->where('character_id', $cid);
-			}
+        // Filtering by name.
+        if ($name = $request->input('name')) {
+            if (Str::startsWith($name, '=')) {
+                $name = Str::substr($name, 1);
+                $query->where(DB::raw('CONCAT(first_name, \' \', last_name)'), $name);
+            } else {
+                $query->where(DB::raw('CONCAT(first_name, \' \', last_name)'), 'like', "%{$name}%");
+            }
+        }
 
-			// Filtering by name.
-			if ($name = $request->input('name')) {
-				if (Str::startsWith($name, '=')) {
-					$name = Str::substr($name, 1);
-					$query->where(DB::raw('CONCAT(first_name, \' \', last_name)'), $name);
-				} else {
-					$query->where(DB::raw('CONCAT(first_name, \' \', last_name)'), 'like', "%{$name}%");
-				}
-			}
+        // Filtering by Vehicle Plate.
+        if ($plate = $request->input('vehicle_plate')) {
+            $query->whereHas('vehicles', function ($subQuery) use ($plate) {
+                if (Str::startsWith($plate, '=')) {
+                    $plate = Str::substr($plate, 1);
+                    $subQuery->where('plate', $plate);
+                } else {
+                    $subQuery->where('plate', 'like', "%{$plate}%");
+                }
+            });
+        }
 
-			// Filtering by Vehicle Plate.
-			if ($plate = $request->input('vehicle_plate')) {
-				$query->whereHas('vehicles', function ($subQuery) use ($plate) {
-					if (Str::startsWith($plate, '=')) {
-						$plate = Str::substr($plate, 1);
-						$subQuery->where('plate', $plate);
-					} else {
-						$subQuery->where('plate', 'like', "%{$plate}%");
-					}
-				});
-			}
+        // Filtering by Phone Number.
+        if ($phone = $request->input('phone')) {
+            if (Str::startsWith($phone, '=')) {
+                $phone = Str::substr($phone, 1);
+                $query->where('phone_number', $phone);
+            } else {
+                $query->where('phone_number', 'like', "%{$phone}%");
+            }
+        }
 
-			// Filtering by Phone Number.
-			if ($phone = $request->input('phone')) {
-				if (Str::startsWith($phone, '=')) {
-					$phone = Str::substr($phone, 1);
-					$query->where('phone_number', $phone);
-				} else {
-					$query->where('phone_number', 'like', "%{$phone}%");
-				}
-			}
+        // Filtering by DoB.
+        if ($dob = $request->input('dob')) {
+            if (Str::startsWith($dob, '=')) {
+                $dob = Str::substr($dob, 1);
+                $query->where('date_of_birth', $dob);
+            } else {
+                $query->where('date_of_birth', 'like', "%{$dob}%");
+            }
+        }
 
-			// Filtering by DoB.
-			if ($dob = $request->input('dob')) {
-				if (Str::startsWith($dob, '=')) {
-					$dob = Str::substr($dob, 1);
-					$query->where('date_of_birth', $dob);
-				} else {
-					$query->where('date_of_birth', 'like', "%{$dob}%");
-				}
-			}
+        // Filtering by Job.
+        if ($job = $request->input('job')) {
+            if (Str::startsWith($phone, '=')) {
+                $job = Str::substr($job, 1);
+                $query->where(DB::raw('CONCAT(job_name, \' \', department_name, \' \', position_name)'), $job);
+            } else {
+                $query->where(DB::raw('CONCAT(job_name, \' \', department_name, \' \', position_name)'), 'like', "%{$job}%");
+            }
+        }
 
-			// Filtering by Job.
-			if ($job = $request->input('job')) {
-				if (Str::startsWith($phone, '=')) {
-					$job = Str::substr($job, 1);
-					$query->where(DB::raw('CONCAT(job_name, \' \', department_name, \' \', position_name)'), $job);
-				} else {
-					$query->where(DB::raw('CONCAT(job_name, \' \', department_name, \' \', position_name)'), 'like', "%{$job}%");
-				}
-			}
+        // Filtering isDeleted.
+        if ($deleted = $request->input('deleted')) {
+            if ($deleted === 'yes' || $deleted === 'no') {
+                if ($deleted === 'yes') {
+                    $query->where('character_deleted', '=', '1');
+                } else if ($deleted === 'no') {
+                    $query->where('character_deleted', '=', '0');
+                }
+            }
+        }
 
-			// Filtering isDeleted.
-			if ($deleted = $request->input('deleted')) {
-				if ($deleted === 'yes' || $deleted === 'no') {
-					if ($deleted === 'yes') {
-						$query->where('character_deleted', '=', '1');
-					} else if ($deleted === 'no') {
-						$query->where('character_deleted', '=', '0');
-					}
-				}
-			}
+        if ($request->input('new')) {
+            $query->orderByDesc('character_id');
+        } else if ($request->input('banned')) {
+            $query->leftJoin('user_bans', 'identifier', '=', 'license_identifier');
 
-			if ($request->input('new')) {
-				$query->orderByDesc('character_id');
-			} else if ($request->input('banned')) {
-				$query->leftJoin('user_bans', 'identifier', '=', 'license_identifier');
+            $query->whereNotNull("ban_hash");
 
-				$query->whereNotNull("ban_hash");
+            $query->orderByDesc('character_id');
+        } else {
+            $query->orderBy('first_name');
+        }
 
-				$query->orderByDesc('character_id');
-			} else {
-				$query->orderBy('first_name');
-			}
+        $query->select([
+            'character_id', 'license_identifier', 'first_name', 'last_name', 'gender', 'job_name',
+            'department_name', 'position_name', 'phone_number', 'date_of_birth'
+        ]);
 
-			$query->select([
-				'character_id', 'license_identifier', 'first_name', 'last_name', 'gender', 'job_name',
-				'department_name', 'position_name', 'phone_number', 'date_of_birth'
-			]);
-
-			$characters = $query->paginate(15, [
-				'id',
-			])->appends($request->query());
-		}
+        $characters = $query->paginate(15, [
+            'id',
+        ])->appends($request->query());
 
 		$characters = CharacterIndexResource::collection($characters);
 

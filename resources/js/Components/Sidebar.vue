@@ -122,7 +122,7 @@ export default {
                         {
                             label: this.t('players.title'),
                             icon: 'user',
-                            url: '/players?empty=true',
+                            url: '/players',
                         },
                         {
                             label: this.t('players.new.title'),
@@ -132,7 +132,7 @@ export default {
                         {
                             label: this.t('characters.title'),
                             icon: 'book',
-                            url: '/characters?empty=true',
+                            url: '/characters',
                         },
                         {
                             label: this.t('blacklist.title'),
@@ -155,7 +155,7 @@ export default {
                         {
                             label: this.t('logs.title'),
                             icon: 'printer',
-                            url: '/logs?empty=true',
+                            url: '/logs',
                         },
                         {
                             label: this.t('casino.title'),

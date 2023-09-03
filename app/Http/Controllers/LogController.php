@@ -36,9 +36,7 @@ class LogController extends Controller
     {
         $start = round(microtime(true) * 1000);
 
-        $logs = [];
         $canSearchDrugs = true;
-        $page = 1;
 
         $skipped = [];
 
@@ -50,110 +48,108 @@ class LogController extends Controller
             }
         }
 
-        if (!$request->query('empty')) {
-            $query = Log::query()->orderByDesc('timestamp');
+        $query = Log::query()->orderByDesc('timestamp');
 
-            if (!$canSearchDrugs) {
-                $query->whereNotIn('action', self::DRUG_LOGS);
+        if (!$canSearchDrugs) {
+            $query->whereNotIn('action', self::DRUG_LOGS);
 
-                $skipped = ['action is "' . implode('", "', self::DRUG_LOGS) . '"'];
-            }
-
-            // Filtering by identifier.
-            if ($identifier = $this->multiValues($request->input('identifier'))) {
-                /**
-                 * @var $q Builder
-                 */
-                $query->where(function ($q) use ($identifier) {
-                    foreach ($identifier as $i) {
-                        $q->orWhere('identifier', $i);
-                    }
-                });
-            }
-
-            // Filtering by before.
-            if ($before = $request->input('before')) {
-                $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '<', $before);
-            }
-
-            // Filtering by after.
-            if ($after = $request->input('after')) {
-                $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '>', $after);
-            }
-
-            // Filtering by server.
-            if ($server = $this->multiValues($request->input('server'))) {
-                /**
-                 * @var $q Builder
-                 */
-                $query->where(function ($q) use ($server) {
-                    foreach ($server as $s) {
-                        $q->orWhere('details', 'LIKE', '% [' . intval($s) . '] %');
-                    }
-                });
-            }
-
-            // Filtering by action.
-            if ($action = $this->multiValues($request->input('action'))) {
-                /**
-                 * @var $q Builder
-                 */
-                $query->where(function ($q) use ($action) {
-                    foreach ($action as $a) {
-                        if (Str::startsWith($a, '=')) {
-                            $a = Str::substr($a, 1);
-                            $q->orWhere('action', $a);
-                        } else {
-                            $q->orWhere('action', 'like', "%{$a}%");
-                        }
-                    }
-                });
-            }
-
-            // Filtering by details.
-            if ($details = $request->input('details')) {
-                if (Str::startsWith($details, '=')) {
-                    $details = Str::substr($details, 1);
-                    $query->where('details', $details);
-                } else {
-                    $query->where('details', 'like', "%{$details}%");
-                }
-            }
-
-            $actionInput = $request->input('action');
-            $detailsInput = $request->input('details');
-            $identifierInput = $request->input('identifier');
-            $serverInput = $request->input('server');
-
-            $action = $actionInput ? trim($actionInput) : null;
-            $details = $detailsInput ? trim($detailsInput) : null;
-            $identifier = $identifierInput ? trim($identifierInput) : null;
-            $server = $serverInput ? trim($serverInput) : null;
-
-            $page = Paginator::resolveCurrentPage('page');
-
-            if ($action || $details || $identifier || $server) {
-                DB::table('panel_log_searches')
-                    ->insert([
-                        'action' => $action,
-                        'details' => $details,
-                        'identifier' => $identifier,
-                        'server' => $server,
-                        'page' => $page,
-                        'license_identifier' => license(),
-                        'timestamp' => time()
-                    ]);
-
-                DB::table('panel_log_searches')
-                    ->where('timestamp', '<', time() - CacheHelper::YEAR)
-                    ->delete();
-            }
-
-            $query->select(['id', 'identifier', 'action', 'details', 'metadata', 'timestamp']);
-            $query->limit(15)->offset(($page - 1) * 15);
-
-            $logs = $query->get();
+            $skipped = ['action is "' . implode('", "', self::DRUG_LOGS) . '"'];
         }
+
+        // Filtering by identifier.
+        if ($identifier = $this->multiValues($request->input('identifier'))) {
+            /**
+             * @var $q Builder
+             */
+            $query->where(function ($q) use ($identifier) {
+                foreach ($identifier as $i) {
+                    $q->orWhere('identifier', $i);
+                }
+            });
+        }
+
+        // Filtering by before.
+        if ($before = $request->input('before')) {
+            $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '<', $before);
+        }
+
+        // Filtering by after.
+        if ($after = $request->input('after')) {
+            $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '>', $after);
+        }
+
+        // Filtering by server.
+        if ($server = $this->multiValues($request->input('server'))) {
+            /**
+             * @var $q Builder
+             */
+            $query->where(function ($q) use ($server) {
+                foreach ($server as $s) {
+                    $q->orWhere('details', 'LIKE', '% [' . intval($s) . '] %');
+                }
+            });
+        }
+
+        // Filtering by action.
+        if ($action = $this->multiValues($request->input('action'))) {
+            /**
+             * @var $q Builder
+             */
+            $query->where(function ($q) use ($action) {
+                foreach ($action as $a) {
+                    if (Str::startsWith($a, '=')) {
+                        $a = Str::substr($a, 1);
+                        $q->orWhere('action', $a);
+                    } else {
+                        $q->orWhere('action', 'like', "%{$a}%");
+                    }
+                }
+            });
+        }
+
+        // Filtering by details.
+        if ($details = $request->input('details')) {
+            if (Str::startsWith($details, '=')) {
+                $details = Str::substr($details, 1);
+                $query->where('details', $details);
+            } else {
+                $query->where('details', 'like', "%{$details}%");
+            }
+        }
+
+        $actionInput = $request->input('action');
+        $detailsInput = $request->input('details');
+        $identifierInput = $request->input('identifier');
+        $serverInput = $request->input('server');
+
+        $action = $actionInput ? trim($actionInput) : null;
+        $details = $detailsInput ? trim($detailsInput) : null;
+        $identifier = $identifierInput ? trim($identifierInput) : null;
+        $server = $serverInput ? trim($serverInput) : null;
+
+        $page = Paginator::resolveCurrentPage('page');
+
+        if ($action || $details || $identifier || $server) {
+            DB::table('panel_log_searches')
+                ->insert([
+                    'action' => $action,
+                    'details' => $details,
+                    'identifier' => $identifier,
+                    'server' => $server,
+                    'page' => $page,
+                    'license_identifier' => license(),
+                    'timestamp' => time()
+                ]);
+
+            DB::table('panel_log_searches')
+                ->where('timestamp', '<', time() - CacheHelper::YEAR)
+                ->delete();
+        }
+
+        $query->select(['id', 'identifier', 'action', 'details', 'metadata', 'timestamp']);
+        $query->limit(15)->offset(($page - 1) * 15);
+
+        $logs = $query->get();
 
         $logs = LogResource::collection($logs);
 

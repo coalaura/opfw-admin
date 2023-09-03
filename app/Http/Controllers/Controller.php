@@ -37,8 +37,6 @@ class Controller extends BaseController
     {
         $url = preg_replace('/[&?]page=\d+/m', '', $_SERVER['REQUEST_URI']);
 
-		$url = str_replace("empty=true", "", $url);
-
         if (Str::contains($url, '?')) {
             $url .= '&';
         } else {
