@@ -285,6 +285,12 @@ const MoneyTransferActions = [
 	'Paid Bill'
 ];
 
+const DisconnectActions = [
+	'User Disconnected',
+	'Character Unloaded',
+	'Unloaded Character'
+];
+
 export default {
 	layout: Layout,
 	components: {
@@ -421,7 +427,9 @@ export default {
 			} else if (MoneyTransferActions.includes(action)) {
 				return 'bg-green-500 !bg-opacity-20 hover:!bg-opacity-40';
 			} else if (this.drugActions.includes(action)) {
-				return 'bg-rose-500 !bg-opacity-20 hover:!bg-opacity-40';
+				return 'bg-yellow-500 !bg-opacity-20 hover:!bg-opacity-40';
+			} else if (DisconnectActions.includes(action)) {
+				return 'bg-red-500 !bg-opacity-20 hover:!bg-opacity-40';
 			}
 
 			return 'hover:bg-gray-200 dark:hover:bg-gray-600';
@@ -434,7 +442,9 @@ export default {
 			} else if (MoneyTransferActions.includes(action)) {
 				return `<i class="text-green-800 dark:text-green-200 fas fa-money-bill-wave" title="money transfer"></i>`;
 			} else if (this.drugActions.includes(action)) {
-				return `<i class="text-rose-800 dark:text-rose-200 fas fa-tablets" title="money transfer"></i>`;
+				return `<i class="text-yellow-800 dark:text-yellow-200 fas fa-tablets" title="money transfer"></i>`;
+			} else if (DisconnectActions.includes(action)) {
+				return `<i class="text-red-800 dark:text-red-200 fas fa-door-open" title="exit/disconnect"></i>`;
 			}
 
 			return '';
