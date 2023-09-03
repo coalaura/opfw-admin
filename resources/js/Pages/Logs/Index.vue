@@ -11,8 +11,7 @@
 		</portal>
 
 		<portal to="actions">
-			<button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-					type="button" @click="refresh">
+			<button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
 				<i class="mr-1 fa fa-refresh"></i>
 				{{ t('logs.refresh') }}
 			</button>
@@ -28,7 +27,7 @@
 
 			<template>
 				<form @submit.prevent autocomplete="off">
-					<input autocomplete="false" name="hidden" type="text" class="hidden"/>
+					<input autocomplete="false" name="hidden" type="text" class="hidden" />
 
 					<div class="flex flex-wrap mb-4">
 						<!-- Identifier -->
@@ -36,29 +35,21 @@
 							<label class="block mb-2" for="identifier">
 								{{ t('logs.identifier') }} <sup class="text-muted dark:text-dark-muted">*, C</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
-								   id="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier">
 						</div>
 						<!-- Action -->
 						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3 relative">
 							<label class="block mb-2" for="action">
 								{{ t('logs.action') }} <sup class="text-muted dark:text-dark-muted">**, C</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
-								   id="action" :placeholder="t('logs.placeholder_action')" v-model="filters.action"
-								   @keyup="searchActions()" @blur="cancelActionSearch()" @focus="searchActions()">
-							<div class="w-full absolute top-full left-0 px-3 z-10"
-								 v-if="searchingActions && searchableActions.length > 0">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="action" :placeholder="t('logs.placeholder_action')" v-model="filters.action" @keyup="searchActions()" @blur="cancelActionSearch()" @focus="searchActions()">
+							<div class="w-full absolute top-full left-0 px-3 z-10" v-if="searchingActions && searchableActions.length > 0">
 								<div class="max-h-40 overflow-y-auto rounded-b border">
-									<button
-										class="block text-left w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 transition duration-200 hover:bg-gray-300"
-										:class="{'border-b' : index < searchableActions.length-1}"
-										v-for="(action, index) in searchableActions"
-										@click="selectAction('=' + action.action)">
+									<button class="block text-left w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 transition duration-200 hover:bg-gray-300" :class="{ 'border-b': index < searchableActions.length - 1 }" v-for="(action, index) in searchableActions" @click="selectAction('=' + action.action)">
 										{{ action.action }}
 										<sup class="text-muted dark:text-dark-muted">{{
-												numberFormat(action.count, 0, false)
-											}}</sup>
+											numberFormat(action.count, 0, false)
+										}}</sup>
 									</button>
 								</div>
 							</div>
@@ -68,49 +59,42 @@
 							<label class="block mb-2" for="server">
 								{{ t('logs.server_id') }} <sup class="text-muted dark:text-dark-muted">*, C</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
-								   id="server" placeholder="3" v-model="filters.server">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="server" placeholder="3" v-model="filters.server">
 						</div>
 						<!-- Details -->
 						<div class="w-1/3 px-3">
 							<label class="block mb-3 mt-3" for="details">
 								{{ t('logs.details') }} <sup class="text-muted dark:text-dark-muted">**</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
-								   id="details" :placeholder="t('logs.placeholder_details')" v-model="filters.details">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="details" :placeholder="t('logs.placeholder_details')" v-model="filters.details">
 						</div>
 						<!-- After Date -->
 						<div class="w-1/6 px-3 pr-1 mobile:w-full mobile:mb-3">
 							<label class="block mb-3 mt-3" for="after-date">
 								{{ t('logs.after-date') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
-								   id="after-date"
-								   type="date" placeholder="">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="after-date" type="date" placeholder="">
 						</div>
 						<!-- After Time -->
 						<div class="w-1/6 px-3 pl-1 mobile:w-full mobile:mb-3">
 							<label class="block mb-3 mt-3" for="after-time">
 								{{ t('logs.after-time') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
-								   id="after-time" type="time" placeholder="">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="after-time" type="time" placeholder="">
 						</div>
 						<!-- Before Date -->
 						<div class="w-1/6 px-3 pr-1 mobile:w-full mobile:mb-3">
 							<label class="block mb-3 mt-3" for="before-date">
 								{{ t('logs.before-date') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
-								   id="before-date" type="date" placeholder="">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="before-date" type="date" placeholder="">
 						</div>
 						<!-- Before Time -->
 						<div class="w-1/6 px-3 pl-1 mobile:w-full mobile:mb-3">
 							<label class="block mb-3 mt-3" for="before-time">
 								{{ t('logs.before-time') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
-								   id="before-time" type="time" placeholder="">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="before-time" type="time" placeholder="">
 						</div>
 					</div>
 					<!-- Description -->
@@ -124,9 +108,7 @@
 					</div>
 					<!-- Search button -->
 					<div class="w-full px-3 mt-3">
-						<button
-							class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg"
-							@click="refresh">
+						<button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg" @click="refresh">
 							<span v-if="!isLoading">
 								<i class="fas fa-search"></i>
 								{{ t('logs.search') }}
@@ -137,17 +119,12 @@
 							</span>
 						</button>
 
-						<button
-							class="px-5 py-2 ml-5 font-semibold text-white bg-primary dark:bg-dark-primary rounded hover:shadow-lg"
-							@click="showDrugLogs"
-							v-if="canSearchDrugs">
+						<button class="px-5 py-2 ml-5 font-semibold text-white bg-primary dark:bg-dark-primary rounded hover:shadow-lg" @click="showDrugLogs" v-if="canSearchDrugs">
 							<i class="fas fa-capsules mr-1"></i>
 							{{ t('logs.drug_search') }}
 						</button>
 
-						<button
-							class="px-5 py-2 ml-5 font-semibold text-white bg-primary dark:bg-dark-primary rounded hover:shadow-lg"
-							@click="showMoneyLogs">
+						<button class="px-5 py-2 ml-5 font-semibold text-white bg-primary dark:bg-dark-primary rounded hover:shadow-lg" @click="showMoneyLogs">
 							<i class="fas fa-money-bill-wave mr-1"></i>
 							{{ t('logs.money_search') }}
 						</button>
@@ -184,8 +161,7 @@
 						<th class="p-3">{{ t('logs.details') }}</th>
 						<th class="p-3 pr-8">
 							{{ t('logs.timestamp') }}
-							<a href="#" :title="t('logs.toggle_diff')"
-							   @click="$event.preventDefault();showLogTimeDifference = !showLogTimeDifference">
+							<a href="#" :title="t('logs.toggle_diff')" @click="$event.preventDefault(); showLogTimeDifference = !showLogTimeDifference">
 								<i class="fas fa-stopwatch"></i>
 							</a>
 						</th>
@@ -194,19 +170,17 @@
 						<td class="p-3 pl-8 mobile:block">
 							<div class="absolute top-1 left-1 text-sm leading-3 font-semibold italic" v-html="getLogTag(log.action, log.metadata)"></div>
 
-							<inertia-link
-								class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400"
-								:href="'/players/' + log.licenseIdentifier">
+							<inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.licenseIdentifier">
 								{{ playerName(log.licenseIdentifier) }}
 							</inertia-link>
 						</td>
 						<td class="p-3 mobile:block">
 							<span class="font-semibold" v-if="statusLoading">
-                                {{ t('global.loading') }}
-                            </span>
+								{{ t('global.loading') }}
+							</span>
 							<span class="font-semibold" v-else-if="status[log.licenseIdentifier]">
-                                {{ status[log.licenseIdentifier].source }}
-                            </span>
+								{{ status[log.licenseIdentifier].source }}
+							</span>
 							<span class="font-semibold" v-else>
 								{{ t('global.status.offline') }}
 							</span>
@@ -218,9 +192,8 @@
 							</a>
 						</td>
 						<td class="p-3 mobile:block" v-html="parseLog(log.details, log.action, log.metadata)"></td>
-						<td class="p-3 mobile:block" v-if="showLogTimeDifference"
-							:title="t('logs.diff_label')">
-							<span v-if="index+1 < logs.length">
+						<td class="p-3 mobile:block" v-if="showLogTimeDifference" :title="t('logs.diff_label')">
+							<span v-if="index + 1 < logs.length">
 								{{ formatSecondDiff(stamp(log.timestamp) - stamp(logs[index + 1].timestamp)) }}
 								<i class="fas fa-arrow-down"></i>
 							</span>
@@ -244,19 +217,11 @@
 
 					<!-- Navigation -->
 					<div class="flex flex-wrap">
-						<inertia-link
-							class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-							:href="links.prev"
-							v-if="page >= 2"
-						>
+						<inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="links.prev" v-if="page >= 2">
 							<i class="mr-1 fas fa-arrow-left"></i>
 							{{ t("pagination.previous") }}
 						</inertia-link>
-						<inertia-link
-							class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-							v-if="logs.length === 15"
-							:href="links.next"
-						>
+						<inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="logs.length === 15" :href="links.next">
 							{{ t("pagination.next") }}
 							<i class="ml-1 fas fa-arrow-right"></i>
 						</inertia-link>
@@ -291,9 +256,7 @@
 			</template>
 
 			<template #actions>
-				<button type="button"
-						class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400"
-						@click="showLogDetail = false">
+				<button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showLogDetail = false">
 					{{ t('global.close') }}
 				</button>
 			</template>
@@ -659,20 +622,20 @@ export default {
 				});
 			}
 
-			details = details.replace(/(license:\w+)(?=\))/gm, function(pMatch) {
+			details = details.replace(/(license:\w+)(?=\))/gm, function (pMatch) {
 				const start = pMatch.substring(8, 12),
 					end = pMatch.substring(pMatch.length - 4);
 
 				return `<span class="copy_title text-gray-700 dark:text-gray-300 cursor-pointer" title="${pMatch}">${start}...${end}</span>`;
 			});
 
-			details = details.replace(/URL `(.+?)`/gm, function(pMatch, pUrl) {
+			details = details.replace(/URL `(.+?)`/gm, function (pMatch, pUrl) {
 				return pMatch.replace(pUrl, `<a href="${pUrl}" target="_blank" class="text-indigo-600 dark:text-indigo-400">${pUrl}</a>`);
 			});
 
 			details = this.parseDisconnectLog(details, action, metadata);
 
-			details = details.replace(/`(.+?)`/gm, function(pMatch, pCode) {
+			details = details.replace(/`(.+?)`/gm, function (pMatch, pCode) {
 				return `<code class="select-all bg-black !bg-opacity-10 dark:!bg-opacity-20 font-mono px-1.5 py-0.5">${pCode}</code>`;
 			});
 
@@ -681,19 +644,19 @@ export default {
 		playerName(licenseIdentifier) {
 			return licenseIdentifier in this.playerMap ? this.playerMap[licenseIdentifier] : licenseIdentifier;
 		},
-        async updateStatus() {
-            this.statusLoading = true;
+		async updateStatus() {
+			this.statusLoading = true;
 
-            const identifiers = this.logs.map(player => player.licenseIdentifier).filter((value, index, self) => self.indexOf(value) === index).join(",");
+			const identifiers = this.logs.map(player => player.licenseIdentifier).filter((value, index, self) => self.indexOf(value) === index).join(",");
 
 			if (identifiers) {
-            	this.status = (await this.requestData("/online/" + identifiers)) || {};
+				this.status = (await this.requestData("/online/" + identifiers)) || {};
 			} else {
-                this.status = {};
-            }
+				this.status = {};
+			}
 
-            this.statusLoading = false;
-        }
+			this.statusLoading = false;
+		}
 	},
 	mounted() {
 		this.updateStatus();
