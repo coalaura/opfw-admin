@@ -24,9 +24,7 @@
         </template>
 
         <template #actions>
-            <button type="button"
-                    class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400"
-                    @click="close">
+            <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="close">
                 {{ t('global.close') }}
             </button>
         </template>
@@ -166,7 +164,7 @@ export default {
                     .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?), ?"z": ?(-?\d+(\.\d+)?), ?"w": ?(-?\d+(\.\d+)?)}/gm, 'vector4($1, $3, $5, $7)') // vector4
                     .replace(/(?<="):(?! |$)|,(?=")/gm, '$& ');
 
-                value = hljs.highlight(value, {language: 'json'}).value;
+                value = hljs.highlight(value, { language: 'json' }).value;
 
                 if (type) {
                     if (['ms', 's'].includes(type)) {

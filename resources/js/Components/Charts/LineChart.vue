@@ -1,5 +1,5 @@
 <script>
-import {Line} from 'vue-chartjs';
+import { Line } from 'vue-chartjs';
 
 import ChartTrendline from 'chartjs-plugin-trendline';
 
@@ -65,7 +65,7 @@ export default {
 
         if (this.isCasinoChart) {
             options.tooltips.callbacks = {
-                label: function(tooltipItem, data) {
+                label: function (tooltipItem, data) {
                     const label = _this.labels[tooltipItem.datasetIndex];
 
                     if (tooltipItem.datasetIndex === 4) {

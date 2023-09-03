@@ -52,13 +52,7 @@
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4">
                         <th class="px-6 py-4">{{ t('serials.table.item') }}</th>
                         <td class="px-6 py-3">
-                            <img
-                                :src="'/images/icons/items/' + result.item + '.png'"
-                                :alt="result.item"
-                                :title="result.item"
-                                class="block w-inventory_slot h-inventory_slot"
-                                v-if="result.item"
-                            />
+                            <img :src="'/images/icons/items/' + result.item + '.png'" :alt="result.item" :title="result.item" class="block w-inventory_slot h-inventory_slot" v-if="result.item" />
                         </td>
                     </tr>
 
@@ -66,11 +60,7 @@
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4">
                         <th class="px-6 py-4">{{ t('serials.table.inventory') }}</th>
                         <td class="px-6 py-3">
-                            <inertia-link
-                                :title="t('inventories.view')"
-                                class="text-indigo-600 dark:text-indigo-400"
-                                :href="'/inventory/' + result.inventory"
-                            >{{ result.inventory }}</inertia-link>
+                            <inertia-link :title="t('inventories.view')" class="text-indigo-600 dark:text-indigo-400" :href="'/inventory/' + result.inventory">{{ result.inventory }}</inertia-link>
                         </td>
                     </tr>
 
@@ -78,10 +68,7 @@
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4">
                         <th class="px-6 py-4">{{ t('serials.table.character') }}</th>
                         <td class="px-6 py-3" v-if="result.character">
-                            <inertia-link
-                                class="text-indigo-600 dark:text-indigo-400"
-                                :href="'/players/' + result.character.license + '/characters/' + result.character.id + '/edit'"
-                            >{{ result.character.name }}</inertia-link>
+                            <inertia-link class="text-indigo-600 dark:text-indigo-400" :href="'/players/' + result.character.license + '/characters/' + result.character.id + '/edit'">{{ result.character.name }}</inertia-link>
 
                             <sup v-if="result.registered">{{ t('serials.registered') }}</sup>
                             <sup v-else>{{ t('serials.un_registered') }}</sup>
@@ -131,9 +118,9 @@ export default {
                     data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
-                    only: [ 'result' ],
+                    only: ['result'],
                 });
-            } catch(e) {}
+            } catch (e) { }
 
             this.isLoading = false;
         }

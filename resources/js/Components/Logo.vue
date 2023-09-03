@@ -1,10 +1,6 @@
 <template>
     <div>
-        <img
-            class="h-full max-w-full"
-            src=""
-            alt="Logo"
-        />
+        <img class="h-full max-w-full" src="" alt="Logo" />
     </div>
 </template>
 

@@ -19,22 +19,12 @@
         <div class="flex -mt-6 justify-between max-w-screen-lg gap-3 mobile:flex-wrap">
             <div class="absolute top-2 right-2 flex">
                 <!-- View crafting recipes -->
-                <button
-                    class="py-1 px-2 ml-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary block"
-                    @click="showCrafting()"
-                    v-if="this.perm.check(this.perm.PERM_CRAFTING)"
-                    :title="t('home.view_crafting')"
-                >
+                <button class="py-1 px-2 ml-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary block" @click="showCrafting()" v-if="this.perm.check(this.perm.PERM_CRAFTING)" :title="t('home.view_crafting')">
                     <i class="fas fa-pencil-ruler"></i>
                 </button>
 
                 <!-- Announcement -->
-                <button
-                    class="py-1 px-2 ml-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger block"
-                    @click="isServerAnnouncement = true"
-                    v-if="this.perm.check(this.perm.PERM_ANNOUNCEMENT)"
-                    :title="t('home.server_announcement')"
-                >
+                <button class="py-1 px-2 ml-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger block" @click="isServerAnnouncement = true" v-if="this.perm.check(this.perm.PERM_ANNOUNCEMENT)" :title="t('home.server_announcement')">
                     <i class="fas fa-scroll"></i>
                 </button>
             </div>
@@ -154,8 +144,7 @@
         </div>
 
         <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k" v-if="isServerAnnouncement">
-            <div
-                class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded w-alert">
+            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded w-alert">
                 <h3 class="mb-2">
                     {{ t('home.server_announcement') }}
                 </h3>
@@ -169,8 +158,7 @@
 
                 <!-- Buttons -->
                 <div class="flex justify-end mt-5">
-                    <button class="px-5 py-2 rounded bg-success dark:bg-dark-success mr-2"
-                            @click="postAnnouncement()">
+                    <button class="px-5 py-2 rounded bg-success dark:bg-dark-success mr-2" @click="postAnnouncement()">
                         {{ t('home.send_announcement') }}
                     </button>
                     <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" @click="isServerAnnouncement = false">
@@ -287,7 +275,7 @@ export default {
             this.copyToClipboard(coords);
 
             $(e.target).addClass('dark:!text-green-400 !text-green-600');
-            setTimeout(function() {
+            setTimeout(function () {
                 $(e.target).removeClass('dark:!text-green-400 !text-green-600');
             }, 750);
         },

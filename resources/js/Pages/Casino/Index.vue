@@ -11,8 +11,7 @@
         </portal>
 
         <portal to="actions">
-            <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                    type="button" @click="refresh">
+            <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
                 <i class="mr-1 fa fa-refresh"></i>
                 {{ t('global.refresh') }}
             </button>
@@ -34,16 +33,14 @@
                             <label class="block mb-2" for="identifier">
                                 {{ t('casino.identifier') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
-                                   id="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier">
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier">
                         </div>
                         <!-- Character ID -->
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="character">
                                 {{ t('casino.character_id') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
-                                   id="character" placeholder="12345" v-model="filters.character">
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="character" placeholder="12345" v-model="filters.character">
                         </div>
                         <!-- Game -->
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
@@ -81,9 +78,7 @@
                     </div>
                     <!-- Search button -->
                     <div class="w-full px-3 mt-3">
-                        <button
-                            class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg"
-                            @click="refresh">
+                        <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg" @click="refresh">
                             <span v-if="!isLoading">
                                 <i class="fas fa-search"></i>
                                 {{ t('casino.search') }}
@@ -112,36 +107,33 @@
             <template>
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left mobile:hidden">
-                        <th class="px-6 py-4">{{ t('casino.player') }}</th>
-                        <th class="px-6 py-4">{{ t('casino.character_id') }}</th>
-                        <th class="px-6 py-4">{{ t('casino.game') }}</th>
-                        <th class="px-6 py-4">{{ t('casino.bet') }}</th>
-                        <th class="px-6 py-4">{{ t('casino.money_return') }}</th>
-                        <th class="px-6 py-4">{{ t('casino.details') }}</th>
-                        <th class="px-6 py-4">{{ t('casino.timestamp') }}</th>
+                        <th class="p-3 pl-8">{{ t('casino.player') }}</th>
+                        <th class="p-3">{{ t('casino.character_id') }}</th>
+                        <th class="p-3">{{ t('casino.game') }}</th>
+                        <th class="p-3">{{ t('casino.bet') }}</th>
+                        <th class="p-3">{{ t('casino.money_return') }}</th>
+                        <th class="p-3">{{ t('casino.details') }}</th>
+                        <th class="p-3 pr-8">{{ t('casino.timestamp') }}</th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="(log, index) in logs"
-                        :key="log.id">
-                        <td class="px-6 py-3 border-t mobile:block">
-                            <inertia-link
-                                class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                                :href="'/players/' + log.license_identifier">
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="(log, index) in logs" :key="log.id">
+                        <td class="p-3 pl-8 mobile:block">
+                            <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.license_identifier">
                                 {{ playerName(log.license_identifier) }}
                             </inertia-link>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">
+                        <td class="p-3 mobile:block">
                             {{ log.character_id }}
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ log.game }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ numberFormat(log.bet_placed, 0, true) }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ numberFormat(log.money_won, 0, true) }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">
+                        <td class="p-3 mobile:block">{{ log.game }}</td>
+                        <td class="p-3 mobile:block">{{ numberFormat(log.bet_placed, 0, true) }}</td>
+                        <td class="p-3 mobile:block">{{ numberFormat(log.money_won, 0, true) }}</td>
+                        <td class="p-3 mobile:block">
                             {{ log.details }}
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ log.timestamp | formatTime(true) }}</td>
+                        <td class="p-3 pr-8 mobile:block">{{ log.timestamp | formatTime(true) }}</td>
                     </tr>
-                    <tr v-if="logs.length === 0">
-                        <td class="px-4 py-6 text-center border-t" colspan="100%">
+                    <tr v-if="logs.length === 0" class="border-t border-gray-300 dark:border-gray-500">
+                        <td class="px-8 py-3 text-center" colspan="100%">
                             {{ t('casino.no_logs') }}
                         </td>
                     </tr>
@@ -153,19 +145,11 @@
 
                     <!-- Navigation -->
                     <div class="flex flex-wrap">
-                        <inertia-link
-                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                            :href="links.prev"
-                            v-if="page >= 2"
-                        >
+                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="links.prev" v-if="page >= 2">
                             <i class="mr-1 fas fa-arrow-left"></i>
                             {{ t("pagination.previous") }}
                         </inertia-link>
-                        <inertia-link
-                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                            v-if="logs.length === 15"
-                            :href="links.next"
-                        >
+                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="logs.length === 15" :href="links.next">
                             {{ t("pagination.next") }}
                             <i class="ml-1 fas fa-arrow-right"></i>
                         </inertia-link>

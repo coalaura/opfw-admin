@@ -4,7 +4,7 @@ import Vue from 'vue';
 export default function (value, t) {
     value = parseInt(value);
 
-    switch(value) {
+    switch (value) {
         case 1:
             return t('global.female');
         case 0:

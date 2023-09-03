@@ -72,7 +72,7 @@ export default {
                 } else {
                     this.character = null;
                 }
-            } catch(e) {}
+            } catch (e) { }
 
             this.isLoading = false;
         }

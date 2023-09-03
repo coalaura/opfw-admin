@@ -24,18 +24,18 @@
             <template>
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left">
-                        <th class="px-6 py-4">{{ t('logs.player') }}</th>
-                        <th class="px-6 py-4">{{ t('inventories.character.item') }}</th>
-                        <th class="px-6 py-4">{{ t('logs.timestamp') }}</th>
-                        <th class="px-6 py-4">{{ t('inventories.character.movement') }}</th>
+                        <th class="p-3 pl-8">{{ t('logs.player') }}</th>
+                        <th class="p-3">{{ t('inventories.character.item') }}</th>
+                        <th class="p-3">{{ t('logs.timestamp') }}</th>
+                        <th class="p-3 pr-8">{{ t('inventories.character.movement') }}</th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600" v-for="log in logs" :key="log.id">
-                        <td class="px-6 py-3 border-t">
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="log in logs" :key="log.id">
+                        <td class="p-3 pl-8">
                             <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.licenseIdentifier">
                                 {{ playerName(log.licenseIdentifier) }}
                             </inertia-link>
                         </td>
-                        <td class="px-6 py-3 border-t">
+                        <td class="p-3">
                             <a class="dark:text-green-200 text-green-800 hover:text-yellow-500 dark:hover:text-yellow-300" v-if="log.itemMoved.startsWith('1x') && itemId(log.metadata)" :href="'/inventory/item/' + itemId(log.metadata)">
                                 {{ log.itemMoved }}
                             </a>
@@ -43,8 +43,8 @@
                                 {{ log.itemMoved }}
                             </span>
                         </td>
-                        <td class="px-6 py-3 border-t">{{ log.timestamp | formatTime(true) }}</td>
-                        <td class="px-6 py-3 border-t">
+                        <td class="p-3">{{ log.timestamp | formatTime(true) }}</td>
+                        <td class="p-3 pr-8">
                             <div class="flex">
                                 <inertia-link v-if="log.inventoryFrom && log.inventoryFrom.type" :class="'w-inventory block px-2 py-2 font-semibold text-center ' + inventoryColor(log.inventoryFrom.type)" v-bind:href="'/inventory/' + log.inventoryFrom.descriptor">
                                     {{ log.inventoryFrom.title }}
@@ -72,8 +72,8 @@
                             </div>
                         </td>
                     </tr>
-                    <tr v-if="logs.length === 0">
-                        <td class="px-4 py-6 text-center border-t" colspan="100%">
+                    <tr v-if="logs.length === 0" class="border-t border-gray-300 dark:border-gray-500">
+                        <td class="px-8 py-3 text-center" colspan="100%">
                             {{ t('logs.no_logs') }}
                         </td>
                     </tr>

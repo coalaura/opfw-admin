@@ -67,21 +67,21 @@
             <template>
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left mobile:hidden">
-                        <th class="px-6 py-4">{{ t('inventories.search.name') }}</th>
-                        <th class="px-6 py-4">{{ t('inventories.search.id') }}</th>
-                        <th class="w-24 px-6 py-4"></th>
+                        <th class="p-3 pl-8">{{ t('inventories.search.name') }}</th>
+                        <th class="p-3">{{ t('inventories.search.id') }}</th>
+                        <th class="w-24 p-3 pr-8"></th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="inventory in inventories" :key="inventory.id">
-                        <td class="px-6 py-3 border-t mobile:block">{{ inventory.name }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ inventory.id }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="inventory in inventories" :key="inventory.id">
+                        <td class="p-3 pl-8 mobile:block">{{ inventory.name }}</td>
+                        <td class="p-3 mobile:block">{{ inventory.id }}</td>
+                        <td class="p-3 pr-8 mobile:block">
                             <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/inventory/' + inventory.id">
                                 <i class="fas fa-chevron-right"></i>
                             </inertia-link>
                         </td>
                     </tr>
-                    <tr v-if="inventories.length === 0">
-                        <td class="px-6 py-6 text-center border-t mobile:block" colspan="100%">
+                    <tr v-if="inventories.length === 0" class="border-t border-gray-300 dark:border-gray-500">
+                        <td class="px-8 py-3 text-center mobile:block" colspan="100%">
                             {{ t('inventories.search.none') }}
                         </td>
                     </tr>

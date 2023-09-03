@@ -16,10 +16,7 @@
             <div>
                 <div class="flex justify-between">
                     <div class="flex">
-                        <inertia-link
-                            class="px-5 py-2 font-semibold text-white mr-3 rounded bg-blue-600 dark:bg-blue-500"
-                            :href="'/players/' + screenshot.license"
-                            v-if="screenshot">
+                        <inertia-link class="px-5 py-2 font-semibold text-white mr-3 rounded bg-blue-600 dark:bg-blue-500" :href="'/players/' + screenshot.license" v-if="screenshot">
                             <i class="fas fa-user"></i>
                             {{ t("overwatch.profile", screenshot.id, screenshot.character.name, screenshot.character.id) }}
                         </inertia-link>
@@ -34,7 +31,7 @@
                             <i class="fas fa-paperclip"></i>
                         </button>
 
-                        <button class="px-5 py-2 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :class="{'bg-green-600 rounded dark:bg-green-400' : autoRefreshEnabled}" @click="autoRefresh" :title="t('overwatch.auto_refresh')">
+                        <button class="px-5 py-2 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :class="{ 'bg-green-600 rounded dark:bg-green-400': autoRefreshEnabled }" @click="autoRefresh" :title="t('overwatch.auto_refresh')">
                             <template v-if="!isLoading || !autoRefreshEnabled">
                                 <i class="fa fa-magic mr-1"></i>
                                 <span v-if="autoRefreshEnabled" class="font-mono">{{ Math.floor(autoRefreshTime) }}s</span>
@@ -116,7 +113,7 @@ export default {
                     this.screenshot = null;
                     this.screenshotError = data.data.message;
                 }
-            } catch(e) {}
+            } catch (e) { }
 
             this.isLoading = false;
 

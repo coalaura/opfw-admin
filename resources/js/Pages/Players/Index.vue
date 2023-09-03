@@ -108,16 +108,16 @@
             <template>
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left mobile:hidden">
-                        <th class="px-6 py-4">{{ t('global.server_id') }}</th>
-                        <th class="px-6 py-4">{{ t('players.form.identifier') }}</th>
-                        <th class="px-6 py-4">{{ t('players.form.name') }}</th>
-                        <th class="px-6 py-4">{{ t('players.form.playtime') }}</th>
-                        <th class="px-6 py-4">{{ t('players.form.warnings') }}</th>
-                        <th class="w-64 px-6 py-4">{{ t('players.form.banned') }}?</th>
-                        <th class="w-24 px-6 py-4"></th>
+                        <th class="p-3 pl-8">{{ t('global.server_id') }}</th>
+                        <th class="p-3">{{ t('players.form.identifier') }}</th>
+                        <th class="p-3">{{ t('players.form.name') }}</th>
+                        <th class="p-3">{{ t('players.form.playtime') }}</th>
+                        <th class="p-3">{{ t('players.form.warnings') }}</th>
+                        <th class="w-64 p-3">{{ t('players.form.banned') }}?</th>
+                        <th class="w-24 p-3 pr-8"></th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="player in players" v-bind:key="player.id">
-                        <td class="px-6 py-3 border-t mobile:block">
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="player in players" v-bind:key="player.id">
+                        <td class="p-3 pl-8 mobile:block">
                             <span class="font-semibold" v-if="statusLoading">
                                 {{ t('global.loading') }}
                             </span>
@@ -128,17 +128,12 @@
                                 {{ t('global.status.offline') }}
                             </span>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ player.licenseIdentifier }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ player.playerName }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ player.playTime | humanizeSeconds }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ player.warnings }}</td>
-                        <td class="px-6 py-3 text-center border-t mobile:block">
-                            <span
-                                class="block px-4 py-2 text-white rounded"
-                                :class="getBanInfo(player.licenseIdentifier, 'reason') ? 'bg-red-600 dark:bg-red-700' : 'bg-red-500 dark:bg-red-600'"
-                                :title="getBanInfo(player.licenseIdentifier, 'reason') ? getBanInfo(player.licenseIdentifier, 'reason') : t('players.ban.no_reason')"
-                                v-if="player.isBanned"
-                            >
+                        <td class="p-3 mobile:block">{{ player.licenseIdentifier }}</td>
+                        <td class="p-3 mobile:block">{{ player.playerName }}</td>
+                        <td class="p-3 mobile:block">{{ player.playTime | humanizeSeconds }}</td>
+                        <td class="p-3 mobile:block">{{ player.warnings }}</td>
+                        <td class="p-3 text-center mobile:block">
+                            <span class="block px-4 py-2 text-white rounded" :class="getBanInfo(player.licenseIdentifier, 'reason') ? 'bg-red-600 dark:bg-red-700' : 'bg-red-500 dark:bg-red-600'" :title="getBanInfo(player.licenseIdentifier, 'reason') ? getBanInfo(player.licenseIdentifier, 'reason') : t('players.ban.no_reason')" v-if="player.isBanned">
                                 {{ t('global.banned') }}
                                 <span class="block text-xxs">
                                     {{ t('global.by', formatBanCreator(getBanInfo(player.licenseIdentifier, 'creator_name'))) }}
@@ -148,14 +143,14 @@
                                 {{ t('global.not_banned') }}
                             </span>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">
+                        <td class="p-3 pr-8 mobile:block">
                             <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" v-bind:href="'/players/' + player.licenseIdentifier">
                                 <i class="fas fa-chevron-right"></i>
                             </inertia-link>
                         </td>
                     </tr>
-                    <tr v-if="players.length === 0">
-                        <td class="px-6 py-6 text-center border-t mobile:block" colspan="100%">
+                    <tr v-if="players.length === 0" class="border-t border-gray-300 dark:border-gray-500">
+                        <td class="px-8 py-3 text-center mobile:block" colspan="100%">
                             {{ t('players.none') }}
                         </td>
                     </tr>
@@ -167,19 +162,11 @@
 
                     <!-- Navigation -->
                     <div class="flex flex-wrap">
-                        <inertia-link
-                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                            :href="links.prev"
-                            v-if="page >= 2"
-                        >
+                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="links.prev" v-if="page >= 2">
                             <i class="mr-1 fas fa-arrow-left"></i>
                             {{ t("pagination.previous") }}
                         </inertia-link>
-                        <inertia-link
-                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                            v-if="players.length === 15"
-                            :href="links.next"
-                        >
+                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="players.length === 15" :href="links.next">
                             {{ t("pagination.next") }}
                             <i class="ml-1 fas fa-arrow-right"></i>
                         </inertia-link>
@@ -266,11 +253,11 @@ export default {
                     data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
-                    only: [ 'players', 'time', 'banMap', 'links', 'page' ],
+                    only: ['players', 'time', 'banMap', 'links', 'page'],
                 });
 
                 await this.updateStatus();
-            } catch(e) {}
+            } catch (e) { }
 
             this.isLoading = false;
         },
@@ -280,8 +267,8 @@ export default {
             const identifiers = this.players.map(player => player.licenseIdentifier).join(',')
 
             if (identifiers) {
-            	this.status = await this.requestData("/online/" + identifiers);
-			} else {
+                this.status = await this.requestData("/online/" + identifiers);
+            } else {
                 this.status = {};
             }
 

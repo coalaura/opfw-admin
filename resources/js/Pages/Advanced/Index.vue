@@ -99,12 +99,12 @@
             <template>
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left">
-                        <th class="px-6 py-4" v-for="title in header">
+                        <th class="px-8 py-3" v-for="title in header">
                             <span v-if="title">{{ t('advanced.' + searchedTable + '.' + title) }}</span>
                         </th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600" v-for="result in results">
-                        <td class="px-6 py-3 border-t" v-for="entry in result">
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="result in results">
+                        <td class="p8-6 py-3" v-for="entry in result">
                             <inertia-link class="block py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="typeof entry === 'object' && 'link' in entry" :href="entry.link.target">
                                 {{ entry.link.label || "N/A" }}
                             </inertia-link>
@@ -123,8 +123,8 @@
                             </span>
                         </td>
                     </tr>
-                    <tr v-if="results.length === 0">
-                        <td class="px-4 py-6 text-center border-t" colspan="100%">
+                    <tr v-if="results.length === 0" class="border-t border-gray-300 dark:border-gray-500">
+                        <td class="px-8 py-3 text-center" colspan="100%">
                             {{ t('advanced.no_results') }}
                         </td>
                     </tr>
@@ -136,19 +136,11 @@
 
                     <!-- Navigation -->
                     <div class="flex flex-wrap">
-                        <inertia-link
-                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                            :href="links.prev"
-                            v-if="page >= 2"
-                        >
+                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="links.prev" v-if="page >= 2">
                             <i class="mr-1 fas fa-arrow-left"></i>
                             {{ t("pagination.previous") }}
                         </inertia-link>
-                        <inertia-link
-                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                            v-if="results.length === 15"
-                            :href="links.next"
-                        >
+                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="results.length === 15" :href="links.next">
                             {{ t("pagination.next") }}
                             <i class="ml-1 fas fa-arrow-right"></i>
                         </inertia-link>
@@ -250,13 +242,13 @@ export default {
             this.filters.field = this.config[value][0];
         },
         initHandlers() {
-            $('.collapsible:not(.handled) > .col-show').on('click', function() {
+            $('.collapsible:not(.handled) > .col-show').on('click', function () {
                 const parent = $(this).closest('.collapsible');
 
                 $('.col-show', parent).addClass('hidden');
                 $('.col-data', parent).removeClass('h-0');
             });
-            $('.collapsible:not(.handled) a').on('click', function(e) {
+            $('.collapsible:not(.handled) a').on('click', function (e) {
                 e.preventDefault();
 
                 const parent = $(this).closest('.collapsible');

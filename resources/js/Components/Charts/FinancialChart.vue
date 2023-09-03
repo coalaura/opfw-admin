@@ -1,5 +1,5 @@
 <script>
-import {Candlestick} from 'vue-chartjs-financial';
+import { Candlestick } from 'vue-chartjs-financial';
 
 export default {
     extends: Candlestick,

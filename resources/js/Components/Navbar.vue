@@ -28,7 +28,7 @@
                     <span v-else>{{ $page.auth.server }}</span>
                 </span>
 
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-yellow-700 bg-warning rounded dark:bg-dark-warning float-right" :title="t('global.permission')" @click="showPermissions" :class="{'cursor-pointer' : $page.auth.player.isSuperAdmin}">
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-yellow-700 bg-warning rounded dark:bg-dark-warning float-right" :title="t('global.permission')" @click="showPermissions" :class="{ 'cursor-pointer': $page.auth.player.isSuperAdmin }">
                     <i class="fas fa-tools"></i>
                     <span v-if="$page.auth.player.isRoot">{{ t('global.root') }}</span>
                     <span v-else-if="$page.auth.player.isSuperAdmin">{{ t('global.super') }}</span>
@@ -432,7 +432,7 @@ export default {
                 } else {
                     this.debugInfo = false;
                 }
-            } catch(e) {
+            } catch (e) {
                 console.error(e);
 
                 this.debugInfo = false;

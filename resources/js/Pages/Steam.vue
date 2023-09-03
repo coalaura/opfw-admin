@@ -94,7 +94,7 @@ export default {
                 } else {
                     this.result = null;
                 }
-            } catch(e) {}
+            } catch (e) { }
 
             this.isLoading = false;
         }

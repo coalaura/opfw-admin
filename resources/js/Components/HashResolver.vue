@@ -2,7 +2,7 @@
     <div @click="click">
         <slot />
 
-        <div class="text-xs font-mono px-1 py-0.5 bg-indigo-600 text-white rounded-sm absolute shadow" :style="{top: top + 'px', left: left + 'px'}" v-if="show" id="hash-resolver">
+        <div class="text-xs font-mono px-1 py-0.5 bg-indigo-600 text-white rounded-sm absolute shadow" :style="{ top: top + 'px', left: left + 'px' }" v-if="show" id="hash-resolver">
             <div v-if="loading">
                 <i class="fas fa-spinner fa-spin"></i> Loading...
             </div>

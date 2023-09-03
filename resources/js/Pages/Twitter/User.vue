@@ -4,11 +4,7 @@
         <template>
             <div class="w-full items-center flex flex-wrap mb-6 max-w-screen-md m-auto">
                 <div class="mr-3">
-                    <img
-                        class="block w-24 h-24 rounded-full"
-                        :src="user.avatar_url"
-                        @error="avatarError"
-                    />
+                    <img class="block w-24 h-24 rounded-full" :src="user.avatar_url" @error="avatarError" />
                 </div>
                 <div>
                     <inertia-link :href="'/players/' + player.licenseIdentifier + '/characters/' + character.id + '/edit'" class="hover:underline text-xl dark:text-white">
@@ -41,19 +37,11 @@
 
                 <!-- Navigation -->
                 <div class="flex flex-wrap">
-                    <inertia-link
-                        class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                        :href="links.prev"
-                        v-if="page >= 2"
-                    >
+                    <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="links.prev" v-if="page >= 2">
                         <i class="mr-1 fas fa-arrow-left"></i>
                         {{ t("pagination.previous") }}
                     </inertia-link>
-                    <inertia-link
-                        class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                        v-if="tweets.length === 15"
-                        :href="links.next"
-                    >
+                    <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="tweets.length === 15" :href="links.next">
                         {{ t("pagination.next") }}
                         <i class="ml-1 fas fa-arrow-right"></i>
                     </inertia-link>
@@ -111,7 +99,7 @@ export default {
                 });
 
                 this.selectedPosts = [];
-            } catch (e) {}
+            } catch (e) { }
 
             this.isLoading = false;
         },

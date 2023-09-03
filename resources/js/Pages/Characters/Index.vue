@@ -82,14 +82,14 @@
                         <!-- Search button -->
                         <div class="w-full px-3 mt-3">
                             <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg" @click="refresh">
-                            <span v-if="!isLoading">
-                                <i class="fas fa-search"></i>
-                                {{ t('characters.search') }}
-                            </span>
+                                <span v-if="!isLoading">
+                                    <i class="fas fa-search"></i>
+                                    {{ t('characters.search') }}
+                                </span>
                                 <span v-else>
-                                <i class="fas fa-cog animate-spin"></i>
-                                {{ t('global.loading') }}
-                            </span>
+                                    <i class="fas fa-cog animate-spin"></i>
+                                    {{ t('global.loading') }}
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -111,38 +111,38 @@
             <template>
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left mobile:hidden">
-                        <th class="px-6 py-4">{{ t('characters.result.player') }}</th>
-                        <th class="px-6 py-4">{{ t('characters.form.character_id') }}</th>
-                        <th class="px-6 py-4">{{ t('characters.form.phone') }}</th>
-                        <th class="px-6 py-4">{{ t('characters.form.name') }}</th>
-                        <th class="px-6 py-4">{{ t('characters.result.gender') }}</th>
-                        <th class="px-6 py-4">{{ t('characters.form.dob') }}</th>
-                        <th class="px-6 py-4">{{ t('characters.form.job') }}</th>
-                        <th class="px-6 py-4"></th>
+                        <th class="p-3 pl-8">{{ t('characters.result.player') }}</th>
+                        <th class="p-3">{{ t('characters.form.character_id') }}</th>
+                        <th class="p-3">{{ t('characters.form.phone') }}</th>
+                        <th class="p-3">{{ t('characters.form.name') }}</th>
+                        <th class="p-3">{{ t('characters.result.gender') }}</th>
+                        <th class="p-3">{{ t('characters.form.dob') }}</th>
+                        <th class="p-3">{{ t('characters.form.job') }}</th>
+                        <th class="p-3 pr-8"></th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="character in characters.data" :key="character.id">
-                        <td class="px-6 py-3 border-t mobile:block">
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="character in characters.data" :key="character.id">
+                        <td class="p-3 pl-8 mobile:block">
                             <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + character.licenseIdentifier">
                                 {{ playerName(character.licenseIdentifier) }}
                             </inertia-link>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ character.id }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ character.phoneNumber }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">
+                        <td class="p-3 mobile:block">{{ character.id }}</td>
+                        <td class="p-3 mobile:block">{{ character.phoneNumber }}</td>
+                        <td class="p-3 mobile:block">
                             {{ character.firstName }} {{ character.lastName }}
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">
+                        <td class="p-3 mobile:block">
                             {{ character.gender | formatGender(t) }}
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">
+                        <td class="p-3 mobile:block">
                             {{ character.dateOfBirth }}
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">
+                        <td class="p-3 mobile:block">
                             {{ character.jobName || t('global.none') }} /
                             {{ character.departmentName || t('global.none') }} /
                             {{ character.positionName || t('global.none') }}
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">
+                        <td class="p-3 pr-8 mobile:block">
                             <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" v-bind:href="'/players/' + character.licenseIdentifier + '/characters/' + character.id + '/edit'">
                                 <i class="fas fa-chevron-right"></i>
                             </inertia-link>
@@ -210,9 +210,9 @@ export default {
                     data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
-                    only: [ 'characters', 'playerMap', 'time' ],
+                    only: ['characters', 'playerMap', 'time'],
                 });
-            } catch(e) {}
+            } catch (e) { }
 
             this.isLoading = false;
         },

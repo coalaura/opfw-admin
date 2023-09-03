@@ -23,30 +23,30 @@
             <template>
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left mobile:hidden">
-                        <th class="px-6 py-4">{{ t('queue.queuePosition') }}</th>
-                        <th class="px-6 py-4">{{ t('queue.licenseIdentifier') }}</th>
-                        <th class="px-6 py-4">{{ t('queue.consoleName') }}</th>
-                        <th class="px-6 py-4">{{ t('queue.priorityName') }}</th>
-                        <th class="px-6 py-4">{{ t('queue.queueTime') }}</th>
+                        <th class="p-3 pl-8">{{ t('queue.queuePosition') }}</th>
+                        <th class="p-3">{{ t('queue.licenseIdentifier') }}</th>
+                        <th class="p-3">{{ t('queue.consoleName') }}</th>
+                        <th class="p-3">{{ t('queue.priorityName') }}</th>
+                        <th class="p-3 pr-8">{{ t('queue.queueTime') }}</th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="(player, index) in queue" :key="player.licenseIdentifier">
-                        <td class="px-6 py-3 border-t mobile:block">{{ index+1 }}.</td>
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="(player, index) in queue" :key="player.licenseIdentifier">
+                        <td class="p-3 pl-8 mobile:block">{{ index + 1 }}.</td>
 
-                        <td class="px-6 py-3 border-t mobile:block">
+                        <td class="p-3 mobile:block">
                             <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + player.licenseIdentifier">
                                 {{ playerName(player.licenseIdentifier) }}
                             </inertia-link>
                         </td>
 
-                        <td class="px-6 py-3 border-t mobile:block">{{ player.consoleName }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ player.priorityName || t('queue.no_prio') }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ formatSeconds(player.queueTime) }}</td>
+                        <td class="p-3 mobile:block">{{ player.consoleName }}</td>
+                        <td class="p-3 mobile:block">{{ player.priorityName || t('queue.no_prio') }}</td>
+                        <td class="p-3 pr-8 mobile:block">{{ formatSeconds(player.queueTime) }}</td>
                     </tr>
-                    <tr v-if="queue.length === 0">
-                        <td class="px-6 py-6 text-center border-t mobile:block" colspan="100%" v-if="isLoading">
+                    <tr v-if="queue.length === 0" class="border-t border-gray-300 dark:border-gray-500">
+                        <td class="px-8 py-3 text-center mobile:block" colspan="100%" v-if="isLoading">
                             {{ t('global.loading') }}
                         </td>
-                        <td class="px-6 py-6 text-center border-t mobile:block" colspan="100%" v-else>
+                        <td class="px-8 py-3 text-center mobile:block" colspan="100%" v-else>
                             {{ t('queue.none') }}
                         </td>
                     </tr>
@@ -103,7 +103,7 @@ export default {
                     this.queue = data.data.data.queue;
                     this.playerMap = data.data.data.playerMap;
                 }
-            } catch(e) {}
+            } catch (e) { }
 
             this.isLoading = false;
         },
@@ -111,7 +111,7 @@ export default {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
         },
         sleep(ms) {
-            return new Promise(function(resolve) {
+            return new Promise(function (resolve) {
                 setTimeout(resolve, ms);
             });
         },

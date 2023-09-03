@@ -37,11 +37,7 @@
                         This is your current session
                     </div>
 
-                    <inertia-link
-                        class="p-1 mt-2 text-sm font-bold leading-4 text-center w-full rounded-sm border-red-400 bg-secondary dark:bg-dark-secondary border-2 block"
-                        :href="'/settings/' + session.key"
-                        method="DELETE"
-                    >
+                    <inertia-link class="p-1 mt-2 text-sm font-bold leading-4 text-center w-full rounded-sm border-red-400 bg-secondary dark:bg-dark-secondary border-2 block" :href="'/settings/' + session.key" method="DELETE">
                         {{ t('settings.delete_session') }}
                     </inertia-link>
                 </div>

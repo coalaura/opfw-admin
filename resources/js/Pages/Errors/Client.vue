@@ -11,8 +11,7 @@
         </portal>
 
         <portal to="actions">
-            <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                    type="button" @click="refresh">
+            <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
                 <i class="mr-1 fa fa-refresh"></i>
                 {{ t('global.refresh') }}
             </button>
@@ -34,8 +33,7 @@
                             <label class="block mb-3 mt-3" for="trace">
                                 {{ t('errors.trace') }} <sup class="text-muted dark:text-dark-muted">**</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
-                                   id="trace" placeholder="attempted to index a nil value" v-model="filters.trace">
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="trace" placeholder="attempted to index a nil value" v-model="filters.trace">
                         </div>
 
                         <!-- Version -->
@@ -60,9 +58,7 @@
                     </div>
                     <!-- Search button -->
                     <div class="w-full px-3 mt-3">
-                        <button
-                            class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg"
-                            @click="refresh">
+                        <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg" @click="refresh">
                             <span v-if="!isLoading">
                                 <i class="fas fa-search"></i>
                                 {{ t('errors.search') }}
@@ -91,30 +87,27 @@
             <template>
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left mobile:hidden">
-                        <th class="px-6 py-4">{{ t('errors.player') }}</th>
-                        <th class="px-6 py-4">{{ t('errors.location') }}</th>
-                        <th class="px-6 py-4">{{ t('errors.trace') }}</th>
-                        <th class="px-6 py-4">{{ t('errors.occurrences') }}</th>
-                        <th class="px-6 py-4">{{ t('errors.server_version') }}</th>
-                        <th class="px-6 py-4">{{ t('errors.timestamp') }}</th>
+                        <th class="p-3 pl-8">{{ t('errors.player') }}</th>
+                        <th class="p-3">{{ t('errors.location') }}</th>
+                        <th class="p-3">{{ t('errors.trace') }}</th>
+                        <th class="p-3">{{ t('errors.occurrences') }}</th>
+                        <th class="p-3">{{ t('errors.server_version') }}</th>
+                        <th class="p-3 pr-8">{{ t('errors.timestamp') }}</th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" :class="{'bg-pink-500 bg-opacity-20' : error.error_feedback}" v-for="error in parsedErrors"
-                        :key="error.error_id">
-                        <td class="px-6 py-3 border-t mobile:block">
-                            <inertia-link
-                                class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                                :href="'/players/' + error.license_identifier">
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" :class="{ 'bg-pink-500 bg-opacity-20': error.error_feedback }" v-for="error in parsedErrors" :key="error.error_id">
+                        <td class="p-3 pl-8 mobile:block">
+                            <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + error.license_identifier">
                                 {{ playerName(error.license_identifier) }} [{{ error.server_id }}]
                             </inertia-link>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block whitespace-nowrap font-mono">{{ getErrorLocation(error) }}</td>
-                        <td class="px-6 py-3 border-t mobile:block font-mono text-sm cursor-pointer" @click="showError(error)">{{ cleanupTrace(error.error_trace) }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ error.occurrences }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ error.server_version || "N/A" }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ error.timestamp * 1000 | formatTime(true) }}</td>
+                        <td class="p-3 mobile:block whitespace-nowrap font-mono">{{ getErrorLocation(error) }}</td>
+                        <td class="p-3 mobile:block font-mono text-sm cursor-pointer" @click="showError(error)">{{ cleanupTrace(error.error_trace) }}</td>
+                        <td class="p-3 mobile:block">{{ error.occurrences }}</td>
+                        <td class="p-3 mobile:block">{{ error.server_version || "N/A" }}</td>
+                        <td class="p-3 pr-8 mobile:block">{{ error.timestamp * 1000 | formatTime(true) }}</td>
                     </tr>
-                    <tr v-if="errors.length === 0">
-                        <td class="px-4 py-6 text-center border-t" colspan="100%">
+                    <tr v-if="errors.length === 0" class="border-t border-gray-300 dark:border-gray-500">
+                        <td class="px-8 py-3 text-center" colspan="100%">
                             {{ t('errors.no_errors') }}
                         </td>
                     </tr>
@@ -126,19 +119,11 @@
 
                     <!-- Navigation -->
                     <div class="flex flex-wrap">
-                        <inertia-link
-                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                            :href="links.prev"
-                            v-if="page >= 2"
-                        >
+                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="links.prev" v-if="page >= 2">
                             <i class="mr-1 fas fa-arrow-left"></i>
                             {{ t("pagination.previous") }}
                         </inertia-link>
-                        <inertia-link
-                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                            v-if="errors.length === 15"
-                            :href="links.next"
-                        >
+                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="errors.length === 15" :href="links.next">
                             {{ t("pagination.next") }}
                             <i class="ml-1 fas fa-arrow-right"></i>
                         </inertia-link>
@@ -165,12 +150,12 @@
                 <pre class="text-lg block mb-4 pb-4 border-gray-500 border-dashed border-b-2 font-bold whitespace-pre-line">
                     {{ getErrorLocation(errorDetail) }}
                 </pre>
-                <pre class="block mb-4 pb-4 border-gray-500 border-dashed border-b-2 text-sm whitespace-pre-line break-words"
-                    v-html="formatChatColors(errorDetail.error_trace)"></pre>
+                <pre class="block mb-4 pb-4 border-gray-500 border-dashed border-b-2 text-sm whitespace-pre-line break-words" v-html="formatChatColors(errorDetail.error_trace)"></pre>
                 <div class="text-lg mb-4 pb-4 border-gray-500 border-dashed border-b-2" v-if="errorDetail.full_trace">
                     <pre class="block whitespace-pre-line break-words lines" v-html="lineNumbers(errorDetail.full_trace)"></pre>
                 </div>
-                <p class="m-0 mb-2 font-bold">{{ t('errors.feedback') }}:</p><pre class="block mb-4 text-sm whitespace-pre-line break-words">
+                <p class="m-0 mb-2 font-bold">{{ t('errors.feedback') }}:</p>
+                <pre class="block mb-4 text-sm whitespace-pre-line break-words">
                     {{ errorDetail.error_feedback || "N/A" }}
                 </pre>
             </template>
@@ -238,7 +223,7 @@ export default {
             parsedErrors: this.errors.map(error => {
                 try {
                     error.full_trace = JSON.parse(error.full_trace);
-                } catch (e) {}
+                } catch (e) { }
 
                 return error;
             })

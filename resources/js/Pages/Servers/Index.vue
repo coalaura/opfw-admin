@@ -37,7 +37,7 @@
 <script>
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
-import Card from  '../../Components/Card';
+import Card from '../../Components/Card';
 
 export default {
     layout: Layout,

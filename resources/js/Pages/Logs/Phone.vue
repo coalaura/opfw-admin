@@ -11,8 +11,7 @@
         </portal>
 
         <portal to="actions">
-            <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                    type="button" @click="refresh">
+            <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
                 <i class="mr-1 fa fa-refresh"></i>
                 {{ t('logs.refresh') }}
             </button>
@@ -28,7 +27,7 @@
 
             <template>
                 <form @submit.prevent autocomplete="off">
-                    <input autocomplete="false" name="hidden" type="text" class="hidden"/>
+                    <input autocomplete="false" name="hidden" type="text" class="hidden" />
 
                     <div class="flex flex-wrap mb-4">
                         <!-- Number -->
@@ -36,8 +35,7 @@
                             <label class="block mb-2" for="number">
                                 {{ t('phone.number') }} <sup class="text-muted dark:text-dark-muted">*, C</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
-                                   id="number" placeholder="123-4567" v-model="filters.number">
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="number" placeholder="123-4567" v-model="filters.number">
                         </div>
 
                         <!-- Message -->
@@ -45,8 +43,7 @@
                             <label class="block mb-2" for="message">
                                 {{ t('phone.message') }} <sup class="text-muted dark:text-dark-muted">**</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
-                                   id="message" placeholder="Some text message" v-model="filters.message">
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" placeholder="Some text message" v-model="filters.message">
                         </div>
                     </div>
                     <!-- Description -->
@@ -60,9 +57,7 @@
                     </div>
                     <!-- Search button -->
                     <div class="w-full px-3 mt-3">
-                        <button
-                            class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg"
-                            @click="refresh">
+                        <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg" @click="refresh">
                             <span v-if="!isLoading">
                                 <i class="fas fa-search"></i>
                                 {{ t('logs.search') }}
@@ -91,30 +86,29 @@
             <template>
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left mobile:hidden">
-                        <th class="px-6 py-4">{{ t('phone.from') }}</th>
-                        <th class="px-6 py-4">{{ t('phone.to') }}</th>
-                        <th class="px-6 py-4">{{ t('phone.message') }}</th>
-                        <th class="px-6 py-4">
+                        <th class="p-3 pl-8">{{ t('phone.from') }}</th>
+                        <th class="p-3">{{ t('phone.to') }}</th>
+                        <th class="p-3">{{ t('phone.message') }}</th>
+                        <th class="p-3 pr-8">
                             {{ t('logs.timestamp') }}
                         </th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="(log, index) in logs"
-                        :key="log.id">
-                        <td class="px-6 py-3 border-t mobile:block">
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="(log, index) in logs" :key="log.id">
+                        <td class="p-3 pl-8 mobile:block">
                             {{ log.sender_number }}
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">
+                        <td class="p-3 mobile:block">
                             {{ log.receiver_number }}
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">
+                        <td class="p-3 mobile:block">
                             {{ log.message }}
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">
-                            {{ log.timestamp*1000 | formatTime(true) }}
+                        <td class="p-3 pr-8 mobile:block">
+                            {{ log.timestamp * 1000 | formatTime(true) }}
                         </td>
                     </tr>
-                    <tr v-if="logs.length === 0">
-                        <td class="px-4 py-6 text-center border-t" colspan="100%">
+                    <tr v-if="logs.length === 0" class="border-t border-gray-300 dark:border-gray-500">
+                        <td class="px-8 py-3 text-center" colspan="100%">
                             {{ t('logs.no_logs') }}
                         </td>
                     </tr>
@@ -126,19 +120,11 @@
 
                     <!-- Navigation -->
                     <div class="flex flex-wrap">
-                        <inertia-link
-                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                            :href="links.prev"
-                            v-if="page >= 2"
-                        >
+                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="links.prev" v-if="page >= 2">
                             <i class="mr-1 fas fa-arrow-left"></i>
                             {{ t("pagination.previous") }}
                         </inertia-link>
-                        <inertia-link
-                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                            v-if="logs.length === 15"
-                            :href="links.next"
-                        >
+                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="logs.length === 15" :href="links.next">
                             {{ t("pagination.next") }}
                             <i class="ml-1 fas fa-arrow-right"></i>
                         </inertia-link>

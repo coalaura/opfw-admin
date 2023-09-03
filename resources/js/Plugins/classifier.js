@@ -21,7 +21,7 @@ const Classifier = {
 			}
 		}
 
-		Vue.prototype.loadClassifier = async function(onProgress) {
+		Vue.prototype.loadClassifier = async function (onProgress) {
 			const data = await get("/api/classifier.json?v=" + classifierJSON, {
 				onDownloadProgress: progressEvent => {
 					const percentage = Math.floor((progressEvent.loaded / progressEvent.total) * 100);

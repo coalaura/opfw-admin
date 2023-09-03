@@ -1,5 +1,5 @@
 <script>
-import {Bar} from 'vue-chartjs';
+import { Bar } from 'vue-chartjs';
 
 export default {
     extends: Bar,
@@ -52,7 +52,7 @@ export default {
         };
 
         options.tooltips.callbacks = {
-            label: function(tooltipItem, data) {
+            label: function (tooltipItem, data) {
                 const label = _this.tooltips[tooltipItem.index];
 
                 return label[tooltipItem.datasetIndex] || "";

@@ -204,7 +204,7 @@
 							<i class="block text-xs leading-1 whitespace-nowrap text-yellow-600 dark:text-yellow-400">{{ formatRawTimestamp(log.timestamp) }}</i>
 						</td>
 					</tr>
-					<tr v-if="logs.length === 0">
+					<tr v-if="logs.length === 0" class="border-t border-gray-300 dark:border-gray-500">
 						<td class="py-3 px-8 text-center" colspan="100%">
 							{{ t('logs.no_logs') }}
 						</td>

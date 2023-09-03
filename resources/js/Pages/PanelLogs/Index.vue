@@ -96,29 +96,29 @@
             <template>
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left mobile:hidden">
-                        <th class="px-6 py-4">{{ t('panel_logs.source') }}</th>
-                        <th class="px-6 py-4">{{ t('panel_logs.target') }}</th>
-                        <th class="px-6 py-4">{{ t('panel_logs.action') }}</th>
-                        <th class="px-6 py-4">{{ t('panel_logs.log') }}</th>
-                        <th class="px-6 py-4">{{ t('panel_logs.timestamp') }}</th>
+                        <th class="p-3 pl-8">{{ t('panel_logs.source') }}</th>
+                        <th class="p-3">{{ t('panel_logs.target') }}</th>
+                        <th class="p-3">{{ t('panel_logs.action') }}</th>
+                        <th class="p-3">{{ t('panel_logs.log') }}</th>
+                        <th class="p-3 pr-8">{{ t('panel_logs.timestamp') }}</th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="log in logs" :key="log.id">
-                        <td class="px-6 py-3 border-t mobile:block">
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="log in logs" :key="log.id">
+                        <td class="p-3 pl-8 mobile:block">
                             <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.source_identifier">
                                 {{ playerName(log.source_identifier) }}
                             </inertia-link>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">
+                        <td class="p-3 mobile:block">
                             <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.target_identifier">
                                 {{ playerName(log.target_identifier) }}
                             </inertia-link>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ log.action }}</td>
-                        <td class="px-6 py-3 border-t mobile:block" >{{ log.log }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ log.timestamp | formatTime(true) }}</td>
+                        <td class="p-3 mobile:block">{{ log.action }}</td>
+                        <td class="p-3 mobile:block" >{{ log.log }}</td>
+                        <td class="p-3 pr-8 mobile:block">{{ log.timestamp | formatTime(true) }}</td>
                     </tr>
-                    <tr v-if="logs.length === 0">
-                        <td class="px-4 py-6 text-center border-t" colspan="100%">
+                    <tr v-if="logs.length === 0" class="border-t border-gray-300 dark:border-gray-500">
+                        <td class="py-3 px-8 text-center" colspan="100%">
                             {{ t('panel_logs.no_logs') }}
                         </td>
                     </tr>

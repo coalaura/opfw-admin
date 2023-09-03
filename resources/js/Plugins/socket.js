@@ -4,7 +4,7 @@ const Socket = {
 
         let originUnavailable = false;
 
-        Vue.prototype.requestData = async function(route, useCache = false) {
+        Vue.prototype.requestData = async function (route, useCache = false) {
             if (originUnavailable) return null;
 
             if (!route.startsWith('/')) route = '/' + route;
@@ -50,7 +50,7 @@ const Socket = {
             }
         };
 
-        Vue.prototype.resolveHash = async function(hash) {
+        Vue.prototype.resolveHash = async function (hash) {
             const data = await this.requestData('/hash/' + hash, true);
 
             if (!data || !data.name) return false;

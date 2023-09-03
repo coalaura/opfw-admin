@@ -1,21 +1,13 @@
 <template>
     <div class="flex pt-3 pb-3 border-t w-full border-gray-400 dark:border-gray-500 px-2 relative hover:bg-gray-100 dark:hover:bg-gray-700">
         <div v-if="dontLink" class="mr-2 flex-shrink-0">
-            <img
-                class="block w-12 h-12 rounded-full"
-                :src="user.avatar_url"
-                @error="avatarError"
-            />
+            <img class="block w-12 h-12 rounded-full" :src="user.avatar_url" @error="avatarError" />
             <span class="block text-xs text-center mt-2 text-gray-500 dark:text-gray-400">
                 <i class="fas fa-heart text-red-800 dark:text-red-500"></i> {{ post.likes }}
             </span>
         </div>
         <inertia-link class="block mr-2 flex-shrink-0" :href="'/twitter/' + post.authorId" v-else>
-            <img
-                class="block w-12 h-12 rounded-full"
-                :src="user.avatar_url"
-                @error="avatarError"
-            />
+            <img class="block w-12 h-12 rounded-full" :src="user.avatar_url" @error="avatarError" />
             <span class="block text-xs text-center mt-2 text-gray-500 dark:text-gray-400">
                 <i class="fas fa-heart text-red-600 dark:text-red-500"></i> {{ post.likes }}
             </span>
@@ -24,13 +16,11 @@
         <div>
             <div v-if="dontLink" class="block mb-2 font-bold">
                 {{ user.username }}
-                <span :title="post.time | formatTime(true)"
-                      class="text-gray-400 dark:text-gray-500 font-normal">- {{ formatDate(post.time) }}</span>
+                <span :title="post.time | formatTime(true)" class="text-gray-400 dark:text-gray-500 font-normal">- {{ formatDate(post.time) }}</span>
             </div>
             <inertia-link :href="'/twitter/' + post.authorId" class="block mb-2 font-bold" v-else>
                 <span class="hover:underline">{{ user.username }}</span>
-                <span :title="post.time | formatTime(true)"
-                      class="text-gray-400 dark:text-gray-500 font-normal">- {{ formatDate(post.time) }}</span>
+                <span :title="post.time | formatTime(true)" class="text-gray-400 dark:text-gray-500 font-normal">- {{ formatDate(post.time) }}</span>
             </inertia-link>
 
             <div class="text-sm block" v-html="formatBody(post.message)"></div>

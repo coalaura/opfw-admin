@@ -18,34 +18,27 @@
                 </div>
                 <div class="flex justify-end gap-3 mobile:flex-wrap mobile:w-full">
                     <!-- Rank -->
-                    <badge class="border-purple-200 bg-purple-100 dark:bg-purple-700" :title="t('global.trusted_title')"
-                        v-if="player.isTrusted && !player.isStaff">
+                    <badge class="border-purple-200 bg-purple-100 dark:bg-purple-700" :title="t('global.trusted_title')" v-if="player.isTrusted && !player.isStaff">
                         <span class="font-semibold">{{ t('global.trusted') }}</span>
                     </badge>
-                    <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('global.staff_title')"
-                        v-if="player.isStaff && !player.isSeniorStaff">
+                    <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('global.staff_title')" v-if="player.isStaff && !player.isSeniorStaff">
                         <span class="font-semibold">{{ t('global.staff') }}</span>
                     </badge>
-                    <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('global.senior_staff_title')"
-                        v-if="player.isSeniorStaff && !player.isSuperAdmin">
+                    <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('global.senior_staff_title')" v-if="player.isSeniorStaff && !player.isSuperAdmin">
                         <span class="font-semibold">{{ t('global.senior_staff') }}</span>
                     </badge>
-                    <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('global.super_title')"
-                        v-if="player.isSuperAdmin && !player.isRoot">
+                    <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('global.super_title')" v-if="player.isSuperAdmin && !player.isRoot">
                         <span class="font-semibold">{{ t('global.super') }}</span>
                     </badge>
-                    <badge class="border-indigo-200 bg-indigo-100 dark:bg-indigo-600" :title="t('global.developer_title')"
-                        v-if="player.isRoot">
+                    <badge class="border-indigo-200 bg-indigo-100 dark:bg-indigo-600" :title="t('global.developer_title')" v-if="player.isRoot">
                         <span class="font-semibold">{{ t('global.developer') }}</span>
                     </badge>
 
                     <!-- Status & other infos -->
-                    <badge class="border-yellow-200 bg-yellow-400 dark:bg-yellow-600"
-                           v-if="statusLoading">
+                    <badge class="border-yellow-200 bg-yellow-400 dark:bg-yellow-600" v-if="statusLoading">
                         <span class="font-semibold">{{ t('global.loading') }}</span>
                     </badge>
-                    <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale"
-                           v-else-if="status">
+                    <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" v-else-if="status">
                         <span class="font-semibold">{{ t('global.status.online') }}
                             <sup>[{{ status.source }}]</sup>
                         </span>
@@ -62,19 +55,16 @@
                         </span>
                     </badge>
 
-                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary"
-                           :title="formatSecondDiff(player.playTime)" v-html="local.played"></badge>
+                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary" :title="formatSecondDiff(player.playTime)" v-html="local.played"></badge>
 
-                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary italic" v-if="player.averagePing"
-                           :title="t('players.show.average_ping')">
-                           <i class="fas fa-table-tennis"></i>
-                           {{ player.averagePing }}ms
+                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary italic" v-if="player.averagePing" :title="t('players.show.average_ping')">
+                        <i class="fas fa-table-tennis"></i>
+                        {{ player.averagePing }}ms
                     </badge>
 
-                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary italic" v-if="player.averageFps"
-                           :title="t('players.show.average_fps')">
-                           <i class="fas fa-stopwatch"></i>
-                           {{ player.averageFps }}fps
+                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary italic" v-if="player.averageFps" :title="t('players.show.average_fps')">
+                        <i class="fas fa-stopwatch"></i>
+                        {{ player.averageFps }}fps
                     </badge>
 
                     <badge class="border-pink-300 bg-pink-200 dark:bg-pink-700" v-if="player.tag">
@@ -142,81 +132,56 @@
                 </badge>
 
                 <!-- Debugger -->
-                <badge class="border-pink-200 bg-pink-100 dark:bg-pink-700 px-5 py-2" :title="t('global.debugger_title')"
-                    v-if="player.isDebugger && !player.isRoot">
+                <badge class="border-pink-200 bg-pink-100 dark:bg-pink-700 px-5 py-2" :title="t('global.debugger_title')" v-if="player.isDebugger && !player.isRoot">
                     <span class="font-semibold">{{ t('global.debugger') }}</span>
                 </badge>
             </div>
 
             <div class="mb-3 flex flex-wrap justify-end gap-3">
                 <!-- Soft Ban -->
-                <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale py-2"
-                    v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && player.isSoftBanned">
+                <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale py-2" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && player.isSoftBanned">
                     <span class="font-semibold">{{ t('global.soft_banned') }}</span>
-                    <a href="#" @click="removeSoftBan($event)" class="ml-1 text-white"
-                    :title="t('players.show.remove_soft_ban')">
+                    <a href="#" @click="removeSoftBan($event)" class="ml-1 text-white" :title="t('players.show.remove_soft_ban')">
                         <i class="fas fa-times"></i>
                     </a>
                 </badge>
-                <button
-                    class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    @click="addSoftBan()" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && !player.isSoftBanned">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="addSoftBan()" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && !player.isSoftBanned">
                     <i class="fas fa-smoking-ban"></i>
                     {{ t('players.show.add_soft_ban') }}
                 </button>
 
                 <!-- StaffPM -->
-                <button
-                    class="px-5 py-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    @click="isStaffPM = true" v-if="status">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isStaffPM = true" v-if="status">
                     <i class="fas fa-envelope-open-text"></i>
                     {{ t('players.show.staffpm') }}
                 </button>
                 <!-- Kicking -->
-                <button
-                    class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    @click="isKicking = true" v-if="status">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isKicking = true" v-if="status">
                     <i class="fas fa-user-minus"></i>
                     {{ t('players.show.kick') }}
                 </button>
                 <!-- Edit Ban -->
-                <inertia-link
-                    class="px-5 py-2 font-semibold text-white rounded bg-yellow-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/edit'"
-                    v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
+                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-yellow-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/edit'" v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
                     <i class="mr-1 fas fa-edit"></i>
                     {{ t('players.show.edit_ban') }}
                 </inertia-link>
                 <!-- Unbanning -->
-                <button
-                    class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    @click="unbanPlayer()"
-                    v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="unbanPlayer()" v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
                     <i class="mr-1 fas fa-lock-open"></i>
                     {{ t('players.show.unban') }}
                 </button>
                 <!-- Banning -->
-                <button
-                    class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    @click="isBanning = true" v-else-if="!player.isBanned">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isBanning = true" v-else-if="!player.isBanned">
                     <i class="mr-1 fas fa-gavel"></i>
                     {{ t('players.show.issue') }}
                 </button>
                 <!-- Lock ban -->
-                <inertia-link
-                    class="px-5 py-2 font-semibold text-white rounded bg-success dark:bg-dark-success mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    method="POST"
-                    v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/lock'"
-                    v-if="player.isBanned && !player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
+                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-success dark:bg-dark-success mobile:block mobile:w-full mobile:m-0 mobile:mb-3" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/lock'" v-if="player.isBanned && !player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
                     <i class="mr-1 fas fa-lock"></i>
                     {{ t('players.show.lock_ban') }}
                 </inertia-link>
                 <!-- Unlock ban -->
-                <inertia-link
-                    class="px-5 py-2 font-semibold text-white rounded bg-success dark:bg-dark-success mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    method="POST"
-                    v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/unlock'"
-                    v-if="player.isBanned && player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
+                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-success dark:bg-dark-success mobile:block mobile:w-full mobile:m-0 mobile:mb-3" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/unlock'" v-if="player.isBanned && player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
                     <i class="mr-1 fas fa-lock-open"></i>
                     {{ t('players.show.unlock_ban') }}
                 </inertia-link>
@@ -224,28 +189,13 @@
 
             <!-- Small icon buttons top left -->
             <div class="absolute top-2 left-2 flex gap-2" v-if="this.perm.check(this.perm.PERM_LINKED)">
-                <a
-                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 block"
-                    :href="'/linked_tokens/' + player.licenseIdentifier"
-                    :title="t('players.show.show_link_token')"
-                    target="_blank"
-                >
+                <a class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 block" :href="'/linked_tokens/' + player.licenseIdentifier" :title="t('players.show.show_link_token')" target="_blank">
                     <i class="fas fa-drumstick-bite"></i>
                 </a>
-                <a
-                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 block"
-                    :href="'/linked_ips/' + player.licenseIdentifier"
-                    :title="t('players.show.show_link_ip')"
-                    target="_blank"
-                >
+                <a class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 block" :href="'/linked_ips/' + player.licenseIdentifier" :title="t('players.show.show_link_ip')" target="_blank">
                     <i class="fas fa-ethernet"></i>
                 </a>
-                <a
-                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 block"
-                    :href="'/linked_identifiers/' + player.licenseIdentifier"
-                    :title="t('players.show.show_link_identifier')"
-                    target="_blank"
-                >
+                <a class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 block" :href="'/linked_identifiers/' + player.licenseIdentifier" :title="t('players.show.show_link_identifier')" target="_blank">
                     <i class="fas fa-passport"></i>
                 </a>
             </div>
@@ -253,83 +203,41 @@
             <!-- Small icon buttons top right -->
             <div class="absolute top-2 right-2 flex gap-2">
                 <!-- Damage Logs -->
-                <a
-                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-pink-400 bg-secondary dark:bg-dark-secondary border-2 block"
-                    :href="'/who_was_damaged/' + player.licenseIdentifier"
-                    :title="t('players.show.damage_logs_by')"
-                    v-if="this.perm.check(this.perm.PERM_DAMAGE_LOGS)"
-                    target="_blank"
-                >
+                <a class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-pink-400 bg-secondary dark:bg-dark-secondary border-2 block" :href="'/who_was_damaged/' + player.licenseIdentifier" :title="t('players.show.damage_logs_by')" v-if="this.perm.check(this.perm.PERM_DAMAGE_LOGS)" target="_blank">
                     <i class="fas fa-hammer"></i>
                 </a>
                 <!-- Damage Logs 2 -->
-                <a
-                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-pink-400 bg-secondary dark:bg-dark-secondary border-2 block"
-                    :href="'/who_damaged/' + player.licenseIdentifier"
-                    :title="t('players.show.damage_logs')"
-                    v-if="this.perm.check(this.perm.PERM_DAMAGE_LOGS)"
-                    target="_blank"
-                >
+                <a class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-pink-400 bg-secondary dark:bg-dark-secondary border-2 block" :href="'/who_damaged/' + player.licenseIdentifier" :title="t('players.show.damage_logs')" v-if="this.perm.check(this.perm.PERM_DAMAGE_LOGS)" target="_blank">
                     <i class="fas fa-procedures"></i>
                 </a>
 
                 <!-- Edit Role -->
-                <button
-                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-red-400 bg-secondary dark:bg-dark-secondary border-2 block"
-                    @click="isRoleEdit = true"
-                    v-if="allowRoleEdit && !player.isSuperAdmin"
-                    :title="t('players.show.edit_role')"
-                >
+                <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-red-400 bg-secondary dark:bg-dark-secondary border-2 block" @click="isRoleEdit = true" v-if="allowRoleEdit && !player.isSuperAdmin" :title="t('players.show.edit_role')">
                     <i class="fas fa-clipboard-list"></i>
                 </button>
 
                 <!-- Add Tag -->
-                <button
-                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-green-400 bg-secondary dark:bg-dark-secondary border-2 block"
-                    @click="isTagging = true"
-                    :title="t('players.show.edit_tag')"
-                    v-if="this.perm.check(this.perm.PERM_EDIT_TAG)"
-                >
+                <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-green-400 bg-secondary dark:bg-dark-secondary border-2 block" @click="isTagging = true" :title="t('players.show.edit_tag')" v-if="this.perm.check(this.perm.PERM_EDIT_TAG)">
                     <i class="fas fa-tag"></i>
                 </button>
 
                 <!-- Create screen capture -->
-                <button
-                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block"
-                    @click="isScreenCapture = true"
-                    :title="t('screenshot.screencapture')"
-                    v-if="status && this.perm.check(this.perm.PERM_SCREENSHOT)"
-                >
+                <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block" @click="isScreenCapture = true" :title="t('screenshot.screencapture')" v-if="status && this.perm.check(this.perm.PERM_SCREENSHOT)">
                     <i class="fas fa-video"></i>
                 </button>
 
                 <!-- Create screenshot -->
-                <button
-                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block"
-                    @click="isScreenshot = true; createScreenshot()"
-                    :title="t('screenshot.screenshot')"
-                    v-if="status && this.perm.check(this.perm.PERM_SCREENSHOT)"
-                >
+                <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block" @click="isScreenshot = true; createScreenshot()" :title="t('screenshot.screenshot')" v-if="status && this.perm.check(this.perm.PERM_SCREENSHOT)">
                     <i class="fas fa-camera"></i>
                 </button>
 
                 <!-- View on Map -->
-                <a
-                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block"
-                    :href="'/map#' + player.licenseIdentifier"
-                    :title="t('global.view_map')"
-                    v-if="this.perm.check(this.perm.PERM_LIVEMAP) && status"
-                    target="_blank"
-                >
+                <a class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block" :href="'/map#' + player.licenseIdentifier" :title="t('global.view_map')" v-if="this.perm.check(this.perm.PERM_LIVEMAP) && status" target="_blank">
                     <i class="fas fa-map"></i>
                 </a>
 
                 <!-- Revive -->
-                <button
-                    class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-yellow-400 bg-secondary dark:bg-dark-secondary border-2 block"
-                    @click="revivePlayer()" v-if="status"
-                    :title="t('players.show.revive')"
-                >
+                <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-yellow-400 bg-secondary dark:bg-dark-secondary border-2 block" @click="revivePlayer()" v-if="status" :title="t('players.show.revive')">
                     <i class="fas fa-heartbeat"></i>
                 </button>
             </div>
@@ -337,8 +245,7 @@
 
         <!-- Discord Accounts -->
         <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isShowingDiscord">
-            <div
-                class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
+            <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
                 <h3 class="mb-2">{{ t('players.show.discord_title') }}</h3>
                 <div v-if="isShowingDiscordLoading">
                     <div class="flex justify-center items-center my-6 mt-12">
@@ -351,25 +258,13 @@
                 <div v-else>
                     <div class="w-full flex justify-between" v-for="(discord, id) in discordAccounts" :key="id">
                         <div class="w-full relative">
-                            <a
-                                class="flex items-center text-lg p-5 m-2 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
-                                v-if="discord && discord.username"
-                                href="#"
-                                :title="t('players.show.discord_copy')"
-                                @click="copyText($event, '<@' + discord.id + '> ' + discord.username + (discord.discriminator ? '#' + discord.discriminator : ''))"
-                            >
+                            <a class="flex items-center text-lg p-5 m-2 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" v-if="discord && discord.username" href="#" :title="t('players.show.discord_copy')" @click="copyText($event, '<@' + discord.id + '> ' + discord.username + (discord.discriminator ? '#' + discord.discriminator : ''))">
                                 <img :src="discord.avatar" class="rounded shadow border-2 border-gray-300 w-avatar mr-3" />
                                 <span>
                                     {{ discord.username }}{{ discord.discriminator ? '#' + discord.discriminator : '' }}
                                 </span>
                             </a>
-                            <a
-                                class="flex items-center text-lg p-5 m-2 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
-                                v-else
-                                href="#"
-                                :title="t('players.show.discord_copy')"
-                                @click="copyText($event, '<@' + id + '>')"
-                            >
+                            <a class="flex items-center text-lg p-5 m-2 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" v-else href="#" :title="t('players.show.discord_copy')" @click="copyText($event, '<@' + id + '>')">
                                 <i class="mr-1 fab fa-discord"></i>
                                 {{ t('players.show.discord', id) }}
                             </a>
@@ -379,9 +274,7 @@
                     </div>
                 </div>
                 <div class="flex justify-end mt-2">
-                    <button type="button"
-                            class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-dark-secondary mr-3 dark:text-black dark:bg-secondary"
-                            @click="isShowingDiscord = false">
+                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-dark-secondary mr-3 dark:text-black dark:bg-secondary" @click="isShowingDiscord = false">
                         {{ t('global.close') }}
                     </button>
                 </div>
@@ -390,13 +283,13 @@
 
         <!-- Linked Accounts -->
         <modal :show.sync="isShowingLinked">
-			<template #header>
-				<h1 class="dark:text-white">
-					{{ t('players.show.linked_title') }}
-				</h1>
-			</template>
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.show.linked_title') }}
+                </h1>
+            </template>
 
-			<template #default>
+            <template #default>
                 <div v-if="isShowingLinkedLoading">
                     <div class="flex justify-center items-center my-6 mt-12">
                         <div>
@@ -406,14 +299,10 @@
                     </div>
                 </div>
                 <div v-else>
-                    <div class="w-full flex justify-between mb-2" v-for="(link, identifier) in linkedAccounts.linked"
-                         :key="identifier">
+                    <div class="w-full flex justify-between mb-2" v-for="(link, identifier) in linkedAccounts.linked" :key="identifier">
                         <div class="p-3 w-1/2 relative">
                             <b class="block">{{ link.label }}</b>
-                            <pre class="text-xs overflow-hidden overflow-ellipsis"
-                                :class="{'dark:text-green-300 text-green-700' : link.last_used}"
-                                :title="identifier"
-                            >{{ identifier }}</pre>
+                            <pre class="text-xs overflow-hidden overflow-ellipsis" :class="{ 'dark:text-green-300 text-green-700': link.last_used }" :title="identifier">{{ identifier }}</pre>
                         </div>
                         <div class="p-3 w-1/2" v-if="link.accounts.length > 0">
                             <div class="flex mb-2" v-for="account in link.accounts" :key="account.license_identifier">
@@ -421,11 +310,7 @@
                                     <i class="fas fa-unlink"></i>
                                 </button>
 
-                                <a
-                                    class="px-5 py-1 mb-2 border-2 rounded block w-full border-blue-200 bg-primary-pale dark:bg-dark-primary-pale"
-                                    :href="'/players/' + account.license_identifier"
-                                    target="_blank"
-                                >
+                                <a class="px-5 py-1 mb-2 border-2 rounded block w-full border-blue-200 bg-primary-pale dark:bg-dark-primary-pale" :href="'/players/' + account.license_identifier" target="_blank">
                                     <span class="font-semibold">{{ account.player_name }}</span>
                                 </a>
                             </div>
@@ -435,16 +320,14 @@
                         </div>
                     </div>
                 </div>
-			</template>
+            </template>
 
-			<template #actions>
-				<button type="button"
-						class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400"
-						@click="isShowingLinked = false">
-					{{ t('global.close') }}
-				</button>
-			</template>
-		</modal>
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingLinked = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
 
         <!-- Anti Cheat -->
         <modal :show.sync="isShowingAntiCheat">
@@ -494,8 +377,7 @@
 
         <!-- Unloading -->
         <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isUnloading">
-            <div
-                class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
+            <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
                 <h3 class="mb-2">{{ t('players.show.unload') }}</h3>
                 <form class="space-y-6" @submit.prevent="unloadCharacter">
                     <!-- Message -->
@@ -503,8 +385,7 @@
                         <label class="mr-4 block w-1/4 text-center pt-2 font-bold">
                             {{ t('players.show.unload_msg') }}
                         </label>
-                        <textarea class="block bg-gray-200 dark:bg-gray-600 rounded w-3/4 px-4 py-2" id="unload_message"
-                                  v-model="form.unload.message"></textarea>
+                        <textarea class="block bg-gray-200 dark:bg-gray-600 rounded w-3/4 px-4 py-2" id="unload_message" v-model="form.unload.message"></textarea>
                     </div>
 
                     <p>
@@ -513,13 +394,11 @@
 
                     <!-- Buttons -->
                     <div class="flex items-center space-x-3">
-                        <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600"
-                                type="submit">
+                        <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600" type="submit">
                             <i class="fas fa-bolt mr-1"></i>
                             {{ t('players.show.unload_do') }}
                         </button>
-                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500"
-                                type="button" @click="isUnloading = false">
+                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" type="button" @click="isUnloading = false">
                             {{ t('global.cancel') }}
                         </button>
                     </div>
@@ -529,16 +408,14 @@
 
         <!-- Role Edit -->
         <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isRoleEdit">
-            <div
-                class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-small-alert">
+            <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-small-alert">
                 <h3 class="mb-2">{{ t('players.show.edit_role') }}</h3>
                 <form class="space-y-6">
                     <div class="w-full p-3 flex justify-between">
                         <label class="mr-4 block w-1/4 text-center pt-2 font-bold">
                             {{ t('players.show.role') }}
                         </label>
-                        <select class="block bg-gray-200 dark:bg-gray-600 rounded w-3/4 px-4 py-2"
-                                v-model="selectedRole">
+                        <select class="block bg-gray-200 dark:bg-gray-600 rounded w-3/4 px-4 py-2" v-model="selectedRole">
                             <option value="player">{{ t('players.show.role_player') }}</option>
                             <option value="trusted">{{ t('players.show.role_trusted') }}</option>
                             <option value="staff">{{ t('players.show.role_staff') }}</option>
@@ -548,12 +425,10 @@
 
                     <!-- Buttons -->
                     <div class="flex justify-end space-x-3">
-                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500"
-                                type="button" @click="isRoleEdit = false">
+                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" type="button" @click="isRoleEdit = false">
                             {{ t('global.cancel') }}
                         </button>
-                        <button class="px-5 py-2 font-semibold text-white bg-green-500 rounded hover:bg-green-600"
-                                type="button" @click="updateRole">
+                        <button class="px-5 py-2 font-semibold text-white bg-green-500 rounded hover:bg-green-600" type="button" @click="updateRole">
                             <i class="fas fa-clipboard-list mr-1"></i>
                             {{ t('players.show.edit_role') }}
                         </button>
@@ -564,37 +439,31 @@
 
         <!-- Tag -->
         <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isTagging">
-            <div
-                class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
+            <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
                 <h3 class="mb-2">{{ t('players.show.edit_tag') }}</h3>
                 <form class="space-y-6">
                     <div class="flex">
-                        <select class="px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 w-1/2 mr-1"
-                                v-model="tagCategory">
+                        <select class="px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 w-1/2 mr-1" v-model="tagCategory">
                             <option value="custom">{{ t('players.show.tag_custom') }}</option>
                             <option :value="tag.panel_tag" :key="tag.panel_tag" v-for="tag in tags">{{
-                                    tag.panel_tag
-                                }}
+                                tag.panel_tag
+                            }}
                             </option>
                         </select>
 
-                        <input type="text" class="px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 w-1/2 ml-1"
-                               v-if="tagCategory === 'custom'" v-model="tagCustom"/>
+                        <input type="text" class="px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 w-1/2 ml-1" v-if="tagCategory === 'custom'" v-model="tagCustom" />
                     </div>
 
                     <!-- Buttons -->
                     <div class="flex items-center space-x-3">
-                        <button class="px-5 py-2 font-semibold text-white bg-green-500 rounded hover:bg-green-600"
-                                type="button" @click="addTag">
+                        <button class="px-5 py-2 font-semibold text-white bg-green-500 rounded hover:bg-green-600" type="button" @click="addTag">
                             <i class="fas fa-tag mr-1"></i>
                             {{ t('players.show.edit_tag') }}
                         </button>
-                        <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600"
-                                type="button" @click="removeTag">
+                        <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600" type="button" @click="removeTag">
                             {{ t('players.show.remove_tag') }}
                         </button>
-                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500"
-                                type="button" @click="isTagging = false">
+                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" type="button" @click="isTagging = false">
                             {{ t('global.cancel') }}
                         </button>
                     </div>
@@ -604,8 +473,7 @@
 
         <!-- Enabled commands -->
         <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isEnablingCommands">
-            <div
-                class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
+            <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
                 <h3 class="mb-2">{{ t('players.show.update_commands') }}</h3>
                 <form class="space-y-2">
                     <div class="flex items-center" v-for="command in commands" :key="command.name">
@@ -615,13 +483,11 @@
 
                     <!-- Buttons -->
                     <div class="flex items-center space-x-3 mt-4">
-                        <button class="px-5 py-2 font-semibold text-white bg-green-500 rounded hover:bg-green-600"
-                                type="button" @click="updateCommands">
+                        <button class="px-5 py-2 font-semibold text-white bg-green-500 rounded hover:bg-green-600" type="button" @click="updateCommands">
                             <i class="fas fa-tag mr-1"></i>
                             {{ t('players.show.update_commands') }}
                         </button>
-                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500"
-                                type="button" @click="isEnablingCommands = false">
+                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" type="button" @click="isEnablingCommands = false">
                             {{ t('global.cancel') }}
                         </button>
                     </div>
@@ -644,20 +510,16 @@
                         <label class="italic font-semibold" for="pm_message">
                             {{ t('players.show.pm_message') }}
                         </label>
-                        <textarea class="block w-full p-5 bg-gray-200 dark:bg-gray-600 rounded shadow" id="pm_message"
-                                  name="message" rows="5" placeholder="Please join waiting for support"
-                                  v-model="form.pm.message"></textarea>
+                        <textarea class="block w-full p-5 bg-gray-200 dark:bg-gray-600 rounded shadow" id="pm_message" name="message" rows="5" placeholder="Please join waiting for support" v-model="form.pm.message"></textarea>
                     </div>
 
                     <!-- Buttons -->
                     <div class="flex items-center space-x-3">
-                        <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600"
-                                type="submit">
+                        <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600" type="submit">
                             <i class="mr-1 fas fa-gavel"></i>
                             {{ t('players.show.pm_confirm') }}
                         </button>
-                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500"
-                                type="button" @click="isStaffPM = false">
+                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" type="button" @click="isStaffPM = false">
                             {{ t('global.cancel') }}
                         </button>
                     </div>
@@ -680,20 +542,16 @@
                         <label class="italic font-semibold" for="kick_reason">
                             {{ t('players.show.kick_reason') }}
                         </label>
-                        <textarea class="block w-full p-5 bg-gray-200 dark:bg-gray-600 rounded shadow" id="kick_reason"
-                                  name="reason" rows="5" placeholder="You were kicked from the server."
-                                  v-model="form.kick.reason"></textarea>
+                        <textarea class="block w-full p-5 bg-gray-200 dark:bg-gray-600 rounded shadow" id="kick_reason" name="reason" rows="5" placeholder="You were kicked from the server." v-model="form.kick.reason"></textarea>
                     </div>
 
                     <!-- Buttons -->
                     <div class="flex items-center space-x-3">
-                        <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600"
-                                type="submit">
+                        <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600" type="submit">
                             <i class="mr-1 fas fa-gavel"></i>
                             {{ t('players.show.kick') }}
                         </button>
-                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500"
-                                type="button" @click="isKicking = false">
+                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" type="button" @click="isKicking = false">
                             {{ t('global.cancel') }}
                         </button>
                     </div>
@@ -705,7 +563,7 @@
         <alert class="bg-rose-500 dark:bg-rose-500" v-if="player.mute">
             <div class="flex items-center justify-between mb-2">
                 <h2 class="text-lg font-semibold" v-if="player.mute.expires">
-                    {{ t('players.show.muted', formatTime(player.mute.expires*1000)) }}
+                    {{ t('players.show.muted', formatTime(player.mute.expires * 1000)) }}
                 </h2>
                 <h2 class="text-lg font-semibold" v-else>
                     {{ t('players.show.muted_forever') }}
@@ -722,8 +580,7 @@
 
         <!-- Removing system ban -->
         <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isConfirmingUnban">
-            <div
-                class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
+            <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
                 <h3 class="mb-2">{{ t('players.show.unban_system_title') }}</h3>
                 <div>
                     <p>
@@ -731,13 +588,10 @@
                     </p>
                 </div>
                 <div class="flex justify-end mt-2">
-                    <button type="button"
-                            class="px-5 py-2 font-semibold text-white rounded bg-dark-secondary mr-3 dark:text-black dark:bg-secondary"
-                            @click="isConfirmingUnban = false">
+                    <button type="button" class="px-5 py-2 font-semibold text-white rounded bg-dark-secondary mr-3 dark:text-black dark:bg-secondary" @click="isConfirmingUnban = false">
                         {{ t('global.close') }}
                     </button>
-                    <button class="px-5 py-2 rounded bg-danger dark:bg-dark-danger"
-                            type="button" @click="unbanPlayer()">
+                    <button class="px-5 py-2 rounded bg-danger dark:bg-dark-danger" type="button" @click="unbanPlayer()">
                         <i class="mr-1 fas fa-lock-open"></i>
                         {{ t('players.show.unban') }}
                     </button>
@@ -815,8 +669,7 @@
                 <form class="space-y-6" @submit.prevent="submitBan">
                     <!-- Deciding if ban is temporary -->
                     <div class="flex items-center space-x-3">
-                        <input class="block p-3 bg-gray-200 rounded shadow" type="checkbox" id="tempban" name="tempban"
-                               v-model="isTempBanning">
+                        <input class="block p-3 bg-gray-200 rounded shadow" type="checkbox" id="tempban" name="tempban" v-model="isTempBanning">
                         <label class="italic font-semibold" for="tempban">
                             {{ t('players.ban.temporary') }}
                         </label>
@@ -825,8 +678,7 @@
                     <!-- Expiration -->
                     <div class="flex flex-wrap" v-if="isTempBanning">
                         <div class="flex items-center space-x-3 w-full mb-3">
-                            <input class="block p-3 bg-gray-200 rounded shadow" type="checkbox" id="tempselect"
-                                   v-model="isTempSelect">
+                            <input class="block p-3 bg-gray-200 rounded shadow" type="checkbox" id="tempselect" v-model="isTempSelect">
                             <label class="italic font-semibold" for="tempselect">
                                 {{ t('players.ban.temp-select') }}
                             </label>
@@ -837,12 +689,8 @@
                                 {{ t('players.ban.expiration') }}
                             </label>
                             <div class="flex items-center">
-                                <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow mr-1" type="date"
-                                       id="expireDate" name="expireDate" step="any"
-                                       :min="$moment().format('YYYY-MM-DD')" v-model="form.ban.expireDate" required>
-                                <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow" type="time"
-                                       id="expireTime" name="expireTime" step="any" v-model="form.ban.expireTime"
-                                       required>
+                                <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow mr-1" type="date" id="expireDate" name="expireDate" step="any" :min="$moment().format('YYYY-MM-DD')" v-model="form.ban.expireDate" required>
+                                <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow" type="time" id="expireTime" name="expireTime" step="any" v-model="form.ban.expireTime" required>
                             </div>
                         </div>
 
@@ -850,15 +698,13 @@
                             <label class="italic font-semibold block mb-1">
                                 {{ t('players.ban.temp-value') }}
                             </label>
-                            <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow min-w-input"
-                                   type="number" min="1" id="ban-value" step="1" required>
+                            <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow min-w-input" type="number" min="1" id="ban-value" step="1" required>
                         </div>
                         <div v-if="!isTempSelect">
                             <label class="italic font-semibold block mb-1">
                                 {{ t('players.ban.temp-type') }}
                             </label>
-                            <select class="px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 min-w-input"
-                                    id="ban-type">
+                            <select class="px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 min-w-input" id="ban-type">
                                 <option value="hour">{{ t('players.ban.hour') }}</option>
                                 <option value="day">{{ t('players.ban.day') }}</option>
                                 <option value="week">{{ t('players.ban.week') }}</option>
@@ -872,20 +718,16 @@
                         <label class="italic font-semibold block mb-1" for="reason">
                             {{ t('players.ban.reason') }}
                         </label>
-                        <textarea class="block w-full p-5 bg-gray-200 dark:bg-gray-600 rounded shadow" id="reason"
-                                  name="reason" rows="5" :placeholder="player.playerName + ' did a big oopsie.'"
-                                  v-model="form.ban.reason"></textarea>
+                        <textarea class="block w-full p-5 bg-gray-200 dark:bg-gray-600 rounded shadow" id="reason" name="reason" rows="5" :placeholder="player.playerName + ' did a big oopsie.'" v-model="form.ban.reason"></textarea>
                     </div>
 
                     <!-- Buttons -->
                     <div class="flex items-center space-x-3">
-                        <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600"
-                                type="submit">
+                        <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600" type="submit">
                             <i class="mr-1 fas fa-gavel"></i>
                             {{ t('players.ban.do_ban') }}
                         </button>
-                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500"
-                                type="button" @click="isBanning = false">
+                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" type="button" @click="isBanning = false">
                             {{ t('global.cancel') }}
                         </button>
                     </div>
@@ -896,26 +738,15 @@
         <!-- Useful links -->
         <v-section class="dark:bg-dark-secondary" :noFooter="true" :noHeader="true">
             <div class="flex flex-wrap items-center text-center">
-                <inertia-link
-                    class="flex-1 block p-5 m-2 font-semibold text-white bg-indigo-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
-                    :href="'/logs?identifier=' + player.licenseIdentifier"
-                >
+                <inertia-link class="flex-1 block p-5 m-2 font-semibold text-white bg-indigo-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" :href="'/logs?identifier=' + player.licenseIdentifier">
                     <i class="mr-1 fas fa-toilet-paper"></i>
                     {{ t('players.show.logs') }}
                 </inertia-link>
-                <a
-                    class="flex-1 block p-5 m-2 font-semibold text-white bg-steam rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
-                    target="_blank"
-                    :href="player.steamProfileUrl"
-                    v-if="player.steamProfileUrl"
-                >
+                <a class="flex-1 block p-5 m-2 font-semibold text-white bg-steam rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" target="_blank" :href="player.steamProfileUrl" v-if="player.steamProfileUrl">
                     <i class="mr-1 fab fa-steam"></i>
                     {{ t('players.show.steam') }}
                 </a>
-                <button
-                    class="flex-1 block p-5 m-2 font-semibold text-white bg-rose-700 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
-                    @click="showAntiCheat"
-                >
+                <button class="flex-1 block p-5 m-2 font-semibold text-white bg-rose-700 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" @click="showAntiCheat">
                     <i class="mr-1 fas fa-bullseye"></i>
                     <span>
                         {{ t('players.show.anti_cheat') }}
@@ -923,20 +754,12 @@
                 </button>
             </div>
             <div class="flex flex-wrap items-center text-center">
-                <a
-                    class="flex-1 block p-5 m-2 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
-                    v-if="player.discord.length > 0"
-                    href="#"
-                    @click="showDiscord($event)"
-                >
+                <a class="flex-1 block p-5 m-2 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" v-if="player.discord.length > 0" href="#" @click="showDiscord($event)">
                     <i class="mr-1 fab fa-discord"></i>
                     {{ t('players.show.discord_accounts', player.discord.length) }}
                 </a>
 
-                <button
-                    class="flex-1 block p-5 m-2 font-semibold text-white bg-indigo-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none"
-                    @click="showLinked"
-                >
+                <button class="flex-1 block p-5 m-2 font-semibold text-white bg-indigo-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" @click="showLinked">
                     <span>
                         {{ t('players.show.linked') }}
                     </span>
@@ -950,7 +773,7 @@
                 <div class="flex justify-between">
                     <div class="flex gap-4">
                         <div class="cursor-pointer text-2xl flex items-center" @click="charactersCollapsed = !charactersCollapsed">
-                            <i class="fas fa-chevron-right" :class="{'rotate-90' : !charactersCollapsed}"></i>
+                            <i class="fas fa-chevron-right" :class="{ 'rotate-90': !charactersCollapsed }"></i>
                         </div>
 
                         <h2>
@@ -958,7 +781,7 @@
                         </h2>
                     </div>
 
-                    <button class="block px-5 py-2 font-semibold text-center text-white bg-gray-500 rounded" :class="{'bg-blue-500' : isShowingDeletedCharacters}" @click="hideDeleted" v-if="!charactersCollapsed">
+                    <button class="block px-5 py-2 font-semibold text-center text-white bg-gray-500 rounded" :class="{ 'bg-blue-500': isShowingDeletedCharacters }" @click="hideDeleted" v-if="!charactersCollapsed">
                         <span v-if="isShowingDeletedCharacters">
                             {{ t('players.characters.hide') }}
                         </span>
@@ -971,13 +794,7 @@
 
             <template>
                 <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9">
-                    <card
-                        v-for="(character) in characters"
-                        :key="character.id"
-                        v-bind:deleted="character.characterDeleted"
-                        class="relative mb-0"
-                        :class="{ 'shadow-lg' : status && status.character === character.id }"
-                    >
+                    <card v-for="(character) in characters" :key="character.id" v-bind:deleted="character.characterDeleted" class="relative mb-0" :class="{ 'shadow-lg': status && status.character === character.id }">
                         <template #header>
                             <div class="flex justify-between">
                                 <div class="flex-shrink-0">
@@ -988,8 +805,7 @@
                                     <h3 class="mb-2">
                                         {{ character.name }} (#{{ character.id }})
                                     </h3>
-                                    <h4 class="text-primary dark:text-dark-primary"
-                                        :title="t('players.characters.created', $moment(character.characterCreationTimestamp).format('l'))">
+                                    <h4 class="text-primary dark:text-dark-primary" :title="t('players.characters.created', $moment(character.characterCreationTimestamp).format('l'))">
                                         {{ t('players.characters.born') }} {{ $moment(character.dateOfBirth).format('l') }}
                                     </h4>
                                     <h4 class="text-red-700 dark:text-red-300" v-if="character.characterDeleted">
@@ -1020,39 +836,24 @@
                         <template #footer>
                             <div class="flex justify-between flex-wrap">
                                 <div class="flex justify-between gap-2 w-full">
-                                    <inertia-link
-                                        class="block w-full px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded"
-                                        :href="'/players/' + (player.overrideLicense ? player.overrideLicense : player.licenseIdentifier) + '/characters/' + character.id + '/edit?returnTo=' + player.licenseIdentifier"
-                                    >
-                                        <i class="fas fa-eye mr-1" ></i>
+                                    <inertia-link class="block w-full px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/players/' + (player.overrideLicense ? player.overrideLicense : player.licenseIdentifier) + '/characters/' + character.id + '/edit?returnTo=' + player.licenseIdentifier">
+                                        <i class="fas fa-eye mr-1"></i>
                                         {{ t('global.view') }}
                                     </inertia-link>
 
-                                    <inertia-link
-                                        class="block w-full px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded"
-                                        :class="{ '2xl:w-split' : status && status.character === character.id }"
-                                        :href="'/inventories/character/' + character.id"
-                                    >
+                                    <inertia-link class="block w-full px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :class="{ '2xl:w-split': status && status.character === character.id }" :href="'/inventories/character/' + character.id">
                                         <i class="fas fa-briefcase mr-1"></i>
                                         {{ t('inventories.view') }}
                                     </inertia-link>
                                 </div>
 
                                 <div class="flex justify-between gap-2 w-full mt-2">
-                                    <button
-                                        class="block w-full px-3 py-2 text-center text-white bg-warning dark:bg-dark-warning rounded"
-                                        v-if="status && status.character === character.id"
-                                        @click="form.unload.character = character.id; isUnloading = true">
+                                    <button class="block w-full px-3 py-2 text-center text-white bg-warning dark:bg-dark-warning rounded" v-if="status && status.character === character.id" @click="form.unload.character = character.id; isUnloading = true">
                                         <i class="fas fa-bolt mr-1"></i>
                                         {{ t('players.show.unload') }}
                                     </button>
 
-                                    <inertia-link
-                                        class="block w-full px-3 py-2 text-center text-white bg-red-600 dark:bg-red-400 rounded"
-                                        href="#"
-                                        @click="deleteCharacter($event, character.id)"
-                                        v-if="!character.characterDeleted && $page.auth.player.isSuperAdmin"
-                                    >
+                                    <inertia-link class="block w-full px-3 py-2 text-center text-white bg-red-600 dark:bg-red-400 rounded" href="#" @click="deleteCharacter($event, character.id)" v-if="!character.characterDeleted && $page.auth.player.isSuperAdmin">
                                         <i class="fas fa-trash-alt mr-1"></i>
                                         {{ t('players.characters.delete') }}
                                     </inertia-link>
@@ -1063,11 +864,7 @@
                                     <!-- Top left -->
                                     <div class="flex gap-2">
                                         <!-- Show inventory -->
-                                        <inertia-link
-                                            class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-300 bg-secondary dark:bg-dark-secondary border-2 block"
-                                            :href="'/inventory/character-' + character.id + ':1'"
-                                            :title="t('inventories.show_inv')"
-                                        >
+                                        <inertia-link class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-300 bg-secondary dark:bg-dark-secondary border-2 block" :href="'/inventory/character-' + character.id + ':1'" :title="t('inventories.show_inv')">
                                             <i class="fas fa-box"></i>
                                         </inertia-link>
                                     </div>
@@ -1075,36 +872,20 @@
                                     <!-- Top right -->
                                     <div class="flex gap-2 justify-end">
                                         <!-- Character loaded -->
-                                        <button
-                                            class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-green-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help"
-                                            :title="t('players.characters.loaded')"
-                                            v-if="status && status.character === character.id"
-                                        >
+                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-green-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help" :title="t('players.characters.loaded')" v-if="status && status.character === character.id">
                                             <i class="fas fa-plug"></i>
                                         </button>
 
                                         <!-- Character dead -->
-                                        <button
-                                            class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-red-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help"
-                                            v-if="character.isDead"
-                                            :class="{'left-10' : status && status.character === character.id}"
-                                        >
+                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-red-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help" v-if="character.isDead" :class="{ 'left-10': status && status.character === character.id }">
                                             <i class="fas fa-skull-crossbones"></i>
                                         </button>
 
                                         <!-- Gender -->
-                                        <button
-                                            class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-pink-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help"
-                                            v-if="character.gender === 1"
-                                            :title="t('players.characters.is_female')"
-                                        >
+                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-pink-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help" v-if="character.gender === 1" :title="t('players.characters.is_female')">
                                             <i class="fas fa-female"></i>
                                         </button>
-                                        <button
-                                            class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help"
-                                            v-if="character.gender === 0"
-                                            :title="t('players.characters.is_male')"
-                                        >
+                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help" v-if="character.gender === 0" :title="t('players.characters.is_male')">
                                             <i class="fas fa-male"></i>
                                         </button>
                                     </div>
@@ -1125,7 +906,7 @@
                 <div class="flex justify-between">
                     <div class="flex gap-4">
                         <div class="cursor-pointer text-2xl flex items-center" @click="warningsCollapsed = !warningsCollapsed">
-                            <i class="fas fa-chevron-right" :class="{'rotate-90' : !warningsCollapsed}"></i>
+                            <i class="fas fa-chevron-right" :class="{ 'rotate-90': !warningsCollapsed }"></i>
                         </div>
 
                         <h2>
@@ -1133,7 +914,7 @@
                         </h2>
                     </div>
 
-                    <button class="block px-5 py-2 font-semibold text-center text-white bg-gray-500 rounded" :class="{'bg-blue-500' : showSystemWarnings}" @click="showSystemWarnings = !showSystemWarnings" v-if="!warningsCollapsed">
+                    <button class="block px-5 py-2 font-semibold text-center text-white bg-gray-500 rounded" :class="{ 'bg-blue-500': showSystemWarnings }" @click="showSystemWarnings = !showSystemWarnings" v-if="!warningsCollapsed">
                         <span v-if="showSystemWarnings">
                             {{ t('players.show.hide_system') }}
                         </span>
@@ -1147,8 +928,7 @@
             <template>
                 <template v-for="(warning, index) in warnings">
                     <template v-if="isAutomatedWarning(warning.message)">
-                        <div v-if="showSystemWarnings" class="flex flex-col px-8 mb-5 bg-white dark:bg-gray-600 rounded-lg shadow-sm relative opacity-50 hover:opacity-100"
-                            :class="{'mb-3' : index + 1 < warnings.length && isAutomatedWarning(warnings[index + 1].message)}">
+                        <div v-if="showSystemWarnings" class="flex flex-col px-8 mb-5 bg-white dark:bg-gray-600 rounded-lg shadow-sm relative opacity-50 hover:opacity-100" :class="{ 'mb-3': index + 1 < warnings.length && isAutomatedWarning(warnings[index + 1].message) }">
                             <header class="text-center">
                                 <div class="flex justify-between gap-4">
                                     <div class="flex justify-between gap-4">
@@ -1169,11 +949,7 @@
                                             {{ warning.createdAt | formatTime }}
                                         </span>
 
-                                        <inertia-link
-                                            class="px-3 py-1 ml-3 text-sm font-semibold text-white bg-red-500 rounded hover:bg-red-600"
-                                            method="DELETE"
-                                            v-bind:href="'/players/' + player.licenseIdentifier + '/warnings/' + warning.id"
-                                            v-if="warning.canDelete || $page.auth.player.isSeniorStaff">
+                                        <inertia-link class="px-3 py-1 ml-3 text-sm font-semibold text-white bg-red-500 rounded hover:bg-red-600" method="DELETE" v-bind:href="'/players/' + player.licenseIdentifier + '/warnings/' + warning.id" v-if="warning.canDelete || $page.auth.player.isSeniorStaff">
                                             <i class="fas fa-trash"></i>
                                         </inertia-link>
                                     </div>
@@ -1196,37 +972,19 @@
                                     <span class="text-muted dark:text-dark-muted">
                                         {{ warning.createdAt | formatTime }}
                                     </span>
-                                    <sup class="ml-2 italic text-sm text-gray-600 dark:text-gray-400"
-                                        v-if="warning.updatedAt !== warning.createdAt"
-                                        :title="t('players.show.warning_edited_title', formatTime(warning.updatedAt))">
+                                    <sup class="ml-2 italic text-sm text-gray-600 dark:text-gray-400" v-if="warning.updatedAt !== warning.createdAt" :title="t('players.show.warning_edited_title', formatTime(warning.updatedAt))">
                                         {{ t('players.show.warning_edited') }}
                                     </sup>
-                                    <button
-                                        class="px-3 py-1 ml-4 text-sm font-semibold text-white bg-yellow-500 rounded"
-                                        @click="warningEditId = warning.id"
-                                        v-if="warningEditId !== warning.id && $page.auth.player.licenseIdentifier === warning.issuer.licenseIdentifier && warning.warningType !== 'system'"
-                                    >
+                                    <button class="px-3 py-1 ml-4 text-sm font-semibold text-white bg-yellow-500 rounded" @click="warningEditId = warning.id" v-if="warningEditId !== warning.id && $page.auth.player.licenseIdentifier === warning.issuer.licenseIdentifier && warning.warningType !== 'system'">
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <button
-                                        class="px-3 py-1 ml-4 text-sm font-semibold text-white bg-success dark:bg-dark-success rounded"
-                                        @click="editWarning(warning.id, warning.warningType)"
-                                        v-if="warningEditId === warning.id"
-                                    >
+                                    <button class="px-3 py-1 ml-4 text-sm font-semibold text-white bg-success dark:bg-dark-success rounded" @click="editWarning(warning.id, warning.warningType)" v-if="warningEditId === warning.id">
                                         <i class="fas fa-save"></i>
                                     </button>
-                                    <button
-                                        class="px-3 py-1 ml-4 text-sm font-semibold text-white bg-muted dark:bg-dark-muted rounded"
-                                        @click="warningEditId = 0"
-                                        v-if="warningEditId === warning.id"
-                                    >
+                                    <button class="px-3 py-1 ml-4 text-sm font-semibold text-white bg-muted dark:bg-dark-muted rounded" @click="warningEditId = 0" v-if="warningEditId === warning.id">
                                         <i class="fas fa-ban"></i>
                                     </button>
-                                    <inertia-link
-                                        class="px-3 py-1 ml-4 text-sm font-semibold text-white bg-red-500 rounded hover:bg-red-600"
-                                        method="DELETE"
-                                        v-bind:href="'/players/' + player.licenseIdentifier + '/warnings/' + warning.id"
-                                        v-if="warning.canDelete || $page.auth.player.isSeniorStaff">
+                                    <inertia-link class="px-3 py-1 ml-4 text-sm font-semibold text-white bg-red-500 rounded hover:bg-red-600" method="DELETE" v-bind:href="'/players/' + player.licenseIdentifier + '/warnings/' + warning.id" v-if="warning.canDelete || $page.auth.player.isSeniorStaff">
                                         <i class="fas fa-trash"></i>
                                     </inertia-link>
                                 </div>
@@ -1254,35 +1012,22 @@
                 </h3>
                 <form @submit.prevent="submitWarning">
                     <label for="message"></label>
-                    <textarea
-                        class="w-full p-5 mb-5 bg-gray-200 rounded shadow dark:bg-gray-600"
-                        id="message"
-                        name="message"
-                        rows="4"
-                        :placeholder="t('players.warning.placeholder', player.playerName)"
-                        v-model="form.warning.message"
-                        required
-                    >
+                    <textarea class="w-full p-5 mb-5 bg-gray-200 rounded shadow dark:bg-gray-600" id="message" name="message" rows="4" :placeholder="t('players.warning.placeholder', player.playerName)" v-model="form.warning.message" required>
                     </textarea>
 
-                    <button class="px-5 py-2 font-semibold text-white bg-red-500 dark:bg-red-500 rounded"
-                            @click="form.warning.warning_type = 'strike'" type="submit">
+                    <button class="px-5 py-2 font-semibold text-white bg-red-500 dark:bg-red-500 rounded" @click="form.warning.warning_type = 'strike'" type="submit">
                         <i class="mr-1 fas fa-bolt"></i>
                         {{ t('players.warning.do_strike') }}
                     </button>
-                    <button class="px-5 py-2 ml-2 font-semibold text-white bg-yellow-600 rounded"
-                            @click="form.warning.warning_type = 'warning'" type="submit">
+                    <button class="px-5 py-2 ml-2 font-semibold text-white bg-yellow-600 rounded" @click="form.warning.warning_type = 'warning'" type="submit">
                         <i class="mr-1 fas fa-exclamation-triangle"></i>
                         {{ t('players.warning.do_warn') }}
                     </button>
-                    <button class="px-5 py-2 ml-2 font-semibold text-white bg-yellow-400 dark:bg-yellow-500 rounded"
-                            @click="form.warning.warning_type = 'note'" type="submit">
+                    <button class="px-5 py-2 ml-2 font-semibold text-white bg-yellow-400 dark:bg-yellow-500 rounded" @click="form.warning.warning_type = 'note'" type="submit">
                         <i class="mr-1 fas fa-sticky-note"></i>
                         {{ t('players.warning.do_note') }}
                     </button>
-                    <button class="px-5 py-2 ml-2 font-semibold text-white bg-pink-400 dark:bg-pink-500 rounded"
-                            @click="form.warning.warning_type = 'hidden'" type="submit"
-                            v-if="$page.auth.player.isSeniorStaff">
+                    <button class="px-5 py-2 ml-2 font-semibold text-white bg-pink-400 dark:bg-pink-500 rounded" @click="form.warning.warning_type = 'hidden'" type="submit" v-if="$page.auth.player.isSeniorStaff">
                         <i class="mr-1 fas fa-eye-slash"></i>
                         {{ t('players.warning.do_hidden_note') }}
                     </button>
@@ -1294,7 +1039,7 @@
             <template #header>
                 <div class="flex gap-4">
                     <div class="cursor-pointer text-2xl flex items-center" @click="extraDataCollapsed = !extraDataCollapsed">
-                        <i class="fas fa-chevron-right" :class="{'rotate-90' : !extraDataCollapsed}"></i>
+                        <i class="fas fa-chevron-right" :class="{ 'rotate-90': !extraDataCollapsed }"></i>
                     </div>
 
                     <h2>
@@ -1319,22 +1064,17 @@
                         <th class="py-2 px-4">{{ t('screenshot.note') }}</th>
                         <th class="py-2 px-4">{{ t('screenshot.created_at') }}</th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4"
-                        v-for="(screenshot, index) in sortedScreenshots" :key="index">
+                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="(screenshot, index) in sortedScreenshots" :key="index">
                         <td class="py-2 px-4 border-t mobile:block" v-if="screenshot.system">
                             <a :href="screenshot.url" target="_blank" class="text-indigo-600 dark:text-indigo-400">{{ t('screenshot.view', screenshot.url.split(".").pop()) }}</a>
                         </td>
                         <td class="py-2 px-4 border-t mobile:block" v-else>
-                            <a :href="'/export/screenshot/' + screenshot.filename" target="_blank"
-                            class="text-indigo-600 dark:text-indigo-400">{{ t('screenshot.view', screenshot.filename.split(".").pop()) }}</a>
+                            <a :href="'/export/screenshot/' + screenshot.filename" target="_blank" class="text-indigo-600 dark:text-indigo-400">{{ t('screenshot.view', screenshot.filename.split(".").pop()) }}</a>
                         </td>
                         <td class="py-2 px-4 border-t mobile:block">
                             <i class="fas fa-cogs mr-1" v-if="screenshot.system"></i>
                             {{ screenshot.note || 'N/A' }}
-                            <a :href="cheatDocs(screenshot.note)" target="_blank"
-                                v-if="cheatDocs(screenshot.note)"
-                                class="text-yellow-600 dark:text-yellow-400 font-semibold"
-                                :title="t('screenshot.documentation')">?</a>
+                            <a :href="cheatDocs(screenshot.note)" target="_blank" v-if="cheatDocs(screenshot.note)" class="text-yellow-600 dark:text-yellow-400 font-semibold" :title="t('screenshot.documentation')">?</a>
                         </td>
                         <td class="py-2 px-4 border-t w-56 mobile:block" v-if="screenshot.created_at">
                             {{ screenshot.created_at * 1000 | formatTime(true) }}
@@ -1353,8 +1093,7 @@
                         <th class="py-2 px-4">{{ t('logs.action') }}</th>
                         <th class="py-2 px-4">{{ t('logs.timestamp') }}</th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="log in panelLogs"
-                        :key="log.id">
+                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="log in panelLogs" :key="log.id">
                         <td class="py-2 px-4 border-t mobile:block" v-html="formatPanelLog(log.log)"></td>
                         <td class="py-2 px-4 border-t w-56 mobile:block">{{ log.timestamp | formatTime(true) }}</td>
                     </tr>
@@ -1369,11 +1108,8 @@
         </v-section>
 
         <!-- Screenshot -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k"
-             v-if="isScreenshot && this.perm.check(this.perm.PERM_SCREENSHOT)">
-            <div
-                class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded"
-                :class="continuouslyScreenshotting ? 'w-vlarge-alert' : 'w-alert'">
+        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k" v-if="isScreenshot && this.perm.check(this.perm.PERM_SCREENSHOT)">
+            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded" :class="continuouslyScreenshotting ? 'w-vlarge-alert' : 'w-alert'">
                 <h3 class="mb-2">
                     {{ t('map.screenshot') }}
                     <span v-if="nextContinuousScreenshot > 0 && continuouslyScreenshotting"> - {{ nextContinuousScreenshot.toFixed(1) }}s</span>
@@ -1384,13 +1120,11 @@
                 </p>
 
                 <div class="relative min-h-50">
-                    <a v-if="screenshotImage && !screenshotError" class="w-full"
-                       :class="{'blur-sm' : isScreenshotLoading && !continuouslyScreenshotting}" :href="screenshotImage" target="_blank">
-                        <img :src="screenshotImage" alt="Screenshot" class="w-full"/>
+                    <a v-if="screenshotImage && !screenshotError" class="w-full" :class="{ 'blur-sm': isScreenshotLoading && !continuouslyScreenshotting }" :href="screenshotImage" target="_blank">
+                        <img :src="screenshotImage" alt="Screenshot" class="w-full" />
                     </a>
 
-                    <div class="flex justify-center absolute left-0 w-full top-1/2 transform -translate-y-1/2"
-                        v-if="isScreenshotLoading && !continuouslyScreenshotting">
+                    <div class="flex justify-center absolute left-0 w-full top-1/2 transform -translate-y-1/2" v-if="isScreenshotLoading && !continuouslyScreenshotting">
                         <i class="fas fa-cog animate-spin text-3xl"></i>
                     </div>
                 </div>
@@ -1400,33 +1134,23 @@
 
                 <!-- Buttons -->
                 <div class="flex justify-end mt-2">
-                    <button class="px-5 py-2 rounded bg-warning dark:bg-dark-warning mr-2"
-                            @click="isAttachingScreenshot = true"
-                            v-if="screenshotImage && screenshotLicense">
+                    <button class="px-5 py-2 rounded bg-warning dark:bg-dark-warning mr-2" @click="isAttachingScreenshot = true" v-if="screenshotImage && screenshotLicense">
                         {{ t('screenshot.attach') }}
                     </button>
 
-                    <button class="px-5 py-2 rounded bg-primary dark:bg-dark-primary mr-2"
-                            @click="startContinuousScreenshot()"
-                            v-if="!continuouslyScreenshotting && !isScreenshotLoading">
+                    <button class="px-5 py-2 rounded bg-primary dark:bg-dark-primary mr-2" @click="startContinuousScreenshot()" v-if="!continuouslyScreenshotting && !isScreenshotLoading">
                         {{ t('screenshot.continuous') }}
                     </button>
-                    <button class="px-5 py-2 rounded bg-danger dark:bg-dark-danger mr-2"
-                            @click="stopContinuousScreenshot()"
-                            v-else-if="continuouslyScreenshotting">
+                    <button class="px-5 py-2 rounded bg-danger dark:bg-dark-danger mr-2" @click="stopContinuousScreenshot()" v-else-if="continuouslyScreenshotting">
                         <i class="fas fa-cog animate-spin mr-1" v-if="isScreenshotLoading"></i>
 
                         {{ t('screenshot.continuous_stop') }}
                     </button>
 
-                    <button class="px-5 py-2 rounded bg-success dark:bg-dark-success mr-2"
-                            @click="createScreenshot()"
-                            v-if="!isScreenshotLoading && !continuouslyScreenshotting">
+                    <button class="px-5 py-2 rounded bg-success dark:bg-dark-success mr-2" @click="createScreenshot()" v-if="!isScreenshotLoading && !continuouslyScreenshotting">
                         {{ t('global.refresh') }}
                     </button>
-                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500"
-                            v-if="!continuouslyScreenshotting"
-                            @click="isScreenshot = false; screenshotImage = null; screenshotError = null; screenshotLicense = null">
+                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" v-if="!continuouslyScreenshotting" @click="isScreenshot = false; screenshotImage = null; screenshotError = null; screenshotLicense = null">
                         {{ t('global.close') }}
                     </button>
                 </div>
@@ -1434,12 +1158,8 @@
         </div>
 
         <!-- Screen capture -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k"
-             v-if="isScreenCapture && this.perm.check(this.perm.PERM_SCREENSHOT)">
-            <div
-                class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded"
-                :class="screenCaptureVideo ? 'w-large-alert' : 'w-alert'"
-            >
+        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k" v-if="isScreenCapture && this.perm.check(this.perm.PERM_SCREENSHOT)">
+            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded" :class="screenCaptureVideo ? 'w-large-alert' : 'w-alert'">
                 <h3 class="mb-2">
                     {{ t('screenshot.screencapture') }}
                 </h3>
@@ -1449,9 +1169,7 @@
                     <label class="mr-4 block w-1/4 pt-2 font-bold" for="capture_duration">
                         {{ t('screenshot.capture_duration') }}
                     </label>
-                    <input class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="capture_duration"
-                           min="3" max="30" type="number"
-                           v-model="captureData.duration"/>
+                    <input class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="capture_duration" min="3" max="30" type="number" v-model="captureData.duration" />
                 </div>
 
                 <p v-if="screenCaptureError" class="text-danger dark:text-dark-danger font-semibold mb-3">
@@ -1465,15 +1183,12 @@
 
                     <div class="w-full" v-if="screenCaptureStatus === 'capturing'">
                         <span class="text-sm block mb-1">{{
-                                t('screenshot.capturing', Math.ceil(captureRemaining / 10))
-                            }}</span>
-                        <div class="bg-green-700 dark:bg-green-400"
-                             :style="`height: 4px; width: ${(1 - (captureRemaining / (captureData.duration * 10))) * 100}%`"></div>
+                            t('screenshot.capturing', Math.ceil(captureRemaining / 10))
+                        }}</span>
+                        <div class="bg-green-700 dark:bg-green-400" :style="`height: 4px; width: ${(1 - (captureRemaining / (captureData.duration * 10))) * 100}%`"></div>
                     </div>
 
-                    <div
-                        class="flex justify-center absolute left-0 w-full top-1/2 transform -translate-y-1/2 flex-wrap"
-                        v-if="screenCaptureStatus === 'processing'">
+                    <div class="flex justify-center absolute left-0 w-full top-1/2 transform -translate-y-1/2 flex-wrap" v-if="screenCaptureStatus === 'processing'">
                         <i class="fas fa-cog animate-spin text-3xl"></i>
                         <span class="text-sm block mt-1 text-center w-full">{{ t('screenshot.processing') }}</span>
                     </div>
@@ -1489,25 +1204,20 @@
 
                 <!-- Buttons -->
                 <div class="flex justify-end mt-2">
-                    <a v-if="screenCaptureVideo" :href="screenCaptureVideo" target="_blank"
-                       class="px-5 py-2 rounded bg-primary dark:bg-dark-primary mr-2">
+                    <a v-if="screenCaptureVideo" :href="screenCaptureVideo" target="_blank" class="px-5 py-2 rounded bg-primary dark:bg-dark-primary mr-2">
                         {{ t('global.download') }}
                     </a>
-                    <button class="px-5 py-2 rounded bg-primary dark:bg-dark-primary mr-2"
-                            @click="createScreenCapture()"
-                            v-if="!screenCaptureStatus && !screenCaptureVideo">
+                    <button class="px-5 py-2 rounded bg-primary dark:bg-dark-primary mr-2" @click="createScreenCapture()" v-if="!screenCaptureStatus && !screenCaptureVideo">
                         {{ t('global.create') }}
                     </button>
-                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500"
-                            v-if="!screenCaptureStatus"
-                            @click="isScreenCapture = false; captureData.duration = 5; screenCaptureVideo = false; screenCaptureError = false">
+                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" v-if="!screenCaptureStatus" @click="isScreenCapture = false; captureData.duration = 5; screenCaptureVideo = false; screenCaptureError = false">
                         {{ t('global.close') }}
                     </button>
                 </div>
             </div>
         </div>
 
-        <ScreenshotAttacher :close="screenshotAttached" :license="screenshotLicense" :url="screenshotImage" v-if="isAttachingScreenshot"/>
+        <ScreenshotAttacher :close="screenshotAttached" :license="screenshotLicense" :url="screenshotImage" v-if="isAttachingScreenshot" />
     </div>
 </template>
 
@@ -1721,11 +1431,11 @@ export default {
         },
         formatPanelLog(log) {
             return log.replace(/(license:\w+)(?=\))/gm, match => {
-				const start = match.substring(8, 12),
-					end = match.substring(match.length - 4);
+                const start = match.substring(8, 12),
+                    end = match.substring(match.length - 4);
 
-				return `<span class="text-gray-700 dark:text-gray-300" title="${match}">${start}...${end}</span>`;
-			});
+                return `<span class="text-gray-700 dark:text-gray-300" title="${match}">${start}...${end}</span>`;
+            });
         },
         showAntiCheatMetadata(event, eventData) {
             event.preventDefault();
@@ -2082,7 +1792,7 @@ export default {
                 if (data.data && data.data.status) {
                     this.antiCheatEvents = data.data.data;
                 }
-            } catch (e) {}
+            } catch (e) { }
 
             this.isShowingAntiCheatLoading = false;
         },
@@ -2261,7 +1971,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/bans', {...this.form.ban, expire});
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/bans', { ...this.form.ban, expire });
 
             this.local.ban = this.localizeBan();
 

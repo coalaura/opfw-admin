@@ -71,17 +71,13 @@
         <portal to="actions">
             <div>
                 <!-- Importing -->
-                <button
-                    class="px-5 py-2 mr-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    @click="isUploading = true">
+                <button class="px-5 py-2 mr-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isUploading = true">
                     <i class="mr-1 fas fa-cloud-upload-alt"></i>
                     {{ t('blacklist.import') }}
                 </button>
 
                 <!-- Adding -->
-                <button
-                    class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3"
-                    @click="isAdding = true">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isAdding = true">
                     <i class="mr-1 fas fa-plus"></i>
                     {{ t('blacklist.add') }}
                 </button>
@@ -121,13 +117,11 @@
 
                 <!-- Buttons -->
                 <div class="flex items-center mt-2">
-                    <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded mr-2"
-                            @click="confirmAdd">
+                    <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded mr-2" @click="confirmAdd">
                         <i class="mr-1 fas fa-plus"></i>
                         {{ t('global.confirm') }}
                     </button>
-                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500"
-                            @click="isAdding = false">
+                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" @click="isAdding = false">
                         {{ t('global.cancel') }}
                     </button>
                 </div>
@@ -151,8 +145,7 @@
 
                 <!-- Buttons -->
                 <div class="flex items-center mt-2">
-                    <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded mr-2"
-                            @click="confirmImport">
+                    <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded mr-2" @click="confirmImport">
                         <span v-if="!isUploadLoading">
                             <i class="mr-1 fas fa-cloud-upload-alt"></i>
                             {{ t('global.confirm') }}
@@ -163,8 +156,7 @@
                         </span>
                     </button>
 
-                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500"
-                            @click="isUploading = false">
+                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" @click="isUploading = false">
                         {{ t('global.cancel') }}
                     </button>
                 </div>
@@ -184,33 +176,31 @@
             <template>
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left mobile:hidden">
-                        <th class="px-6 py-4">{{ t('blacklist.creator') }}</th>
-                        <th class="px-6 py-4">{{ t('blacklist.identifier') }}</th>
-                        <th class="px-6 py-4">{{ t('blacklist.reason') }}</th>
-                        <th class="px-6 py-4">{{ t('blacklist.note') }}</th>
-                        <th class="px-6 py-4">{{ t('blacklist.timestamp') }}</th>
-                        <th class="w-24 px-6 py-4"></th>
+                        <th class="p-3 pl-8">{{ t('blacklist.creator') }}</th>
+                        <th class="p-3">{{ t('blacklist.identifier') }}</th>
+                        <th class="p-3">{{ t('blacklist.reason') }}</th>
+                        <th class="p-3">{{ t('blacklist.note') }}</th>
+                        <th class="p-3">{{ t('blacklist.timestamp') }}</th>
+                        <th class="w-24 p-3 pr-8"></th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="identifier in identifiers" v-bind:key="identifier.id">
-                        <td class="px-6 py-3 border-t mobile:block">
-                            <inertia-link
-                                class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                                :href="'/players/' + identifier.creator.licenseIdentifier">
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="identifier in identifiers" v-bind:key="identifier.id">
+                        <td class="p-3 pl-8 mobile:block">
+                            <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + identifier.creator.licenseIdentifier">
                                 {{ identifier.creator.playerName }}
                             </inertia-link>
                         </td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ identifier.identifier }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ identifier.reason }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ identifier.note }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ identifier.timestamp | formatTime(true) }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">
+                        <td class="p-3 mobile:block">{{ identifier.identifier }}</td>
+                        <td class="p-3 mobile:block">{{ identifier.reason }}</td>
+                        <td class="p-3 mobile:block">{{ identifier.note }}</td>
+                        <td class="p-3 mobile:block">{{ identifier.timestamp | formatTime(true) }}</td>
+                        <td class="p-3 pr-8 mobile:block">
                             <button class="block px-4 py-2 font-semibold text-center text-white bg-danger rounded dark:bg-dark-danger" @click="removeIdentifier(identifier.id)">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
                     </tr>
-                    <tr v-if="identifiers.length === 0">
-                        <td class="px-6 py-6 text-center border-t mobile:block" colspan="100%">
+                    <tr v-if="identifiers.length === 0" class="border-t border-gray-300 dark:border-gray-500">
+                        <td class="px-8 py-3 text-center mobile:block" colspan="100%">
                             {{ t('blacklist.none') }}
                         </td>
                     </tr>
@@ -222,19 +212,11 @@
 
                     <!-- Navigation -->
                     <div class="flex flex-wrap">
-                        <inertia-link
-                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                            :href="links.prev"
-                            v-if="page >= 2"
-                        >
+                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="links.prev" v-if="page >= 2">
                             <i class="mr-1 fas fa-arrow-left"></i>
                             {{ t("pagination.previous") }}
                         </inertia-link>
-                        <inertia-link
-                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                            v-if="identifiers.length === 15"
-                            :href="links.next"
-                        >
+                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="identifiers.length === 15" :href="links.next">
                             {{ t("pagination.next") }}
                             <i class="ml-1 fas fa-arrow-right"></i>
                         </inertia-link>
@@ -313,14 +295,14 @@ export default {
                     data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
-                    only: [ 'identifiers', 'time' ],
+                    only: ['identifiers', 'time'],
                 });
-            } catch(e) {}
+            } catch (e) { }
 
             this.isLoading = false;
         },
         readFileContents(file) {
-            return new Promise(function(resolve, reject) {
+            return new Promise(function (resolve, reject) {
                 const reader = new FileReader();
 
                 reader.readAsText(file, "UTF-8");
@@ -359,7 +341,7 @@ export default {
                     } else {
                         alert("Invalid file!");
                     }
-                } catch(e) {
+                } catch (e) {
                     alert("Failed to read file!");
                 }
             } else {

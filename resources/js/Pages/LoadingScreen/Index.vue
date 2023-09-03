@@ -10,14 +10,12 @@
         </portal>
 
         <portal to="actions">
-            <button class="px-4 py-2 text-sm font-semibold text-white bg-green-600 rounded dark:bg-green-400 mr-1"
-                type="button" @click="isAdding = true">
+            <button class="px-4 py-2 text-sm font-semibold text-white bg-green-600 rounded dark:bg-green-400 mr-1" type="button" @click="isAdding = true">
                 <i class="mr-1 fa fa-plus"></i>
                 {{ t('loading_screen.add') }}
             </button>
 
-            <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                type="button" @click="refresh">
+            <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
                 <span v-if="!isLoading">
                     <i class="mr-1 fa fa-refresh"></i>
                     {{ t('logs.refresh') }}
@@ -51,7 +49,7 @@
                 <div class="flex pt-3 pb-3 border-t w-full border-gray-400 dark:border-gray-500 px-2 relative hover:bg-gray-100 dark:hover:bg-gray-700" v-for="(picture, index) in pictures" :key="picture.id">
                     <div>
                         <a clas="block relative" target="_blank" :href="picture.image_url">
-                            <img :src="picture.image_url" class="h-48 border-red-500" @load="imageLoaded($event, picture.id)" @error="imageFailed(picture.id)" :class="{'border-4' : failedLoad[picture.id] || smallSize[picture.id]}" />
+                            <img :src="picture.image_url" class="h-48 border-red-500" @load="imageLoaded($event, picture.id)" @error="imageFailed(picture.id)" :class="{ 'border-4': failedLoad[picture.id] || smallSize[picture.id] }" />
 
                             <span v-if="picture.description" class="block text-sm text-gray-500 mt-2">
                                 {{ picture.description }}
@@ -68,21 +66,11 @@
                         </a>
                     </div>
 
-                    <inertia-link
-                        class="block px-1.5 py-1 text-center text-white text-xs absolute top-1 right-1 bg-red-600 dark:bg-red-400 rounded"
-                        href="#"
-                        @click="deletePicture($event, picture.id)"
-                        :title="t('loading_screen.remove')"
-                    >
+                    <inertia-link class="block px-1.5 py-1 text-center text-white text-xs absolute top-1 right-1 bg-red-600 dark:bg-red-400 rounded" href="#" @click="deletePicture($event, picture.id)" :title="t('loading_screen.remove')">
                         <i class="fas fa-trash-alt"></i>
                     </inertia-link>
 
-                    <button
-                        class="block px-1.5 py-1 text-center text-white text-xs absolute top-1 right-8 bg-yellow-600 dark:bg-yellow-400 rounded"
-                        href="#"
-                        @click="editingPicture = picture; isEditingPicture = true"
-                        :title="t('loading_screen.edit')"
-                    >
+                    <button class="block px-1.5 py-1 text-center text-white text-xs absolute top-1 right-8 bg-yellow-600 dark:bg-yellow-400 rounded" href="#" @click="editingPicture = picture; isEditingPicture = true" :title="t('loading_screen.edit')">
                         <i class="fas fa-pencil-alt"></i>
                     </button>
                 </div>
@@ -171,7 +159,7 @@
 <script>
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
-import Modal from  '../../Components/Modal';
+import Modal from '../../Components/Modal';
 
 export default {
     layout: Layout,

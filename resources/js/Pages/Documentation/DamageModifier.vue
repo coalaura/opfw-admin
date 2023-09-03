@@ -42,9 +42,9 @@
 </template>
 
 <style>
-    header {
-        display: none !important;
-    }
+header {
+    display: none !important;
+}
 </style>
 <script>
 import Layout from './../../Layouts/App';

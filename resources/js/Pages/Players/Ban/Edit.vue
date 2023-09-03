@@ -101,9 +101,9 @@ export default {
 
             // Calculate expire relative to now in seconds if temp ban.
             if (this.isTempBanning) {
-                const nowUnix    = this.$moment().unix();
+                const nowUnix = this.$moment().unix();
                 const expireUnix = this.$moment(this.form.expireDate + ' ' + this.form.expireTime).unix();
-                expire           = expireUnix - nowUnix;
+                expire = expireUnix - nowUnix;
             }
 
             // Send request.

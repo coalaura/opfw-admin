@@ -12,13 +12,10 @@
                     ({{ player.source }})
                 </td>
                 <td>
-                    <a :class="'track-cid ' + color" href="#"
-                       data-popup="true" :title="t('map.track')"
-                       @click="trackServerId($event, 'server_' + player.source)">
+                    <a :class="'track-cid ' + color" href="#" data-popup="true" :title="t('map.track')" @click="trackServerId($event, 'server_' + player.source)">
                         {{ t('map.short.track') }}
                     </a>
-                    <a :class="'highlight-cid ' + color" href="#" :title="t('map.do_highlight')"
-                       @click="highlightServerId($event, player.license)">
+                    <a :class="'highlight-cid ' + color" href="#" :title="t('map.do_highlight')" @click="highlightServerId($event, player.license)">
                         {{ t('map.short.highlight') }}
                     </a>
                 </td>

@@ -25,12 +25,12 @@ const Copy = {
                 fallbackCopyTextToClipboard(text);
                 return;
             }
-            navigator.clipboard.writeText(text).then(function() {}, function(err) {
+            navigator.clipboard.writeText(text).then(function () { }, function (err) {
                 console.error('Could not copy text: ', err);
             });
         }
 
-        Vue.prototype.copyToClipboard = function(text) {
+        Vue.prototype.copyToClipboard = function (text) {
             copyTextToClipboard(text);
         };
     },

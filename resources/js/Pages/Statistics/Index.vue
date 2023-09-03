@@ -12,52 +12,21 @@
 
         <template>
             <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full w-map -mt-7 dark:bg-gray-300">
-                <LineChart
-                    :data="[bans.data, warnings.data, notes.data]"
-                    :data-labels="bans.labels"
-                    :labels="[t('statistics.bans'), t('statistics.warnings'), t('statistics.notes')]"
-                    :colors="['235, 54, 54', '235, 145, 55', '255, 235, 55']"
-                    :title="t('statistics.titles.ban_warn')"
-                    class="w-full"
-                ></LineChart>
+                <LineChart :data="[bans.data, warnings.data, notes.data]" :data-labels="bans.labels" :labels="[t('statistics.bans'), t('statistics.warnings'), t('statistics.notes')]" :colors="['235, 54, 54', '235, 145, 55', '255, 235, 55']" :title="t('statistics.titles.ban_warn')" class="w-full"></LineChart>
             </div>
 
             <div class="mt-7 bg-gray-100 p-6 rounded shadow-lg max-w-full w-map dark:bg-gray-300">
-                <LineChart
-                    :data="[creations.data, deletions.data]"
-                    :data-labels="creations.labels"
-                    :labels="[t('statistics.creations'), t('statistics.deletions')]"
-                    :colors="['49, 186, 18', '186, 18, 18']"
-                    :title="t('statistics.titles.character')"
-                    :smooth="true"
-                    class="w-full"
-                ></LineChart>
+                <LineChart :data="[creations.data, deletions.data]" :data-labels="creations.labels" :labels="[t('statistics.creations'), t('statistics.deletions')]" :colors="['49, 186, 18', '186, 18, 18']" :title="t('statistics.titles.character')" :smooth="true" class="w-full"></LineChart>
             </div>
 
             <div class="mt-7 bg-gray-100 p-6 rounded shadow-lg max-w-full w-map dark:bg-gray-300">
-                <LineChart
-                    :data="userStatistics.data"
-                    :data-labels="userStatistics.labels"
-                    :labels="[t('statistics.total_joins'), t('statistics.max_joined'), t('statistics.unique_joins'), t('statistics.max_queue')]"
-                    :colors="['145, 55, 235', '235, 54, 54', '255, 102, 204', '235, 127, 55']"
-                    :title="t('statistics.titles.user_statistics')"
-                    :smooth="true"
-                    :stacked="true"
-                    class="w-full"
-                ></LineChart>
+                <LineChart :data="userStatistics.data" :data-labels="userStatistics.labels" :labels="[t('statistics.total_joins'), t('statistics.max_joined'), t('statistics.unique_joins'), t('statistics.max_queue')]" :colors="['145, 55, 235', '235, 54, 54', '255, 102, 204', '235, 127, 55']" :title="t('statistics.titles.user_statistics')" :smooth="true" :stacked="true" class="w-full"></LineChart>
             </div>
 
             <div class="pt-10 border-gray-500 border-t-2 border-dashed mt-10 max-w-full w-map"></div>
 
             <div class=" bg-gray-100 p-6 rounded shadow-lg max-w-full w-map dark:bg-gray-300">
-                <BarChart
-                    :data="commandStatistics.data"
-                    :data-labels="commandStatistics.labels"
-                    :tooltips="commandStatistics.tooltips"
-                    :colors="['145, 55, 235', '235, 54, 54', '255, 102, 204', '255, 102, 102', '255, 179, 102']"
-                    :title="t('statistics.titles.command_statistics')"
-                    class="w-full"
-                ></BarChart>
+                <BarChart :data="commandStatistics.data" :data-labels="commandStatistics.labels" :tooltips="commandStatistics.tooltips" :colors="['145, 55, 235', '235, 54, 54', '255, 102, 204', '255, 102, 102', '255, 179, 102']" :title="t('statistics.titles.command_statistics')" class="w-full"></BarChart>
             </div>
 
             <div class="pt-10 border-gray-500 border-t-2 border-dashed mt-10 max-w-full w-map"></div>
@@ -69,16 +38,7 @@
             </div>
 
             <div class="mt-7 bg-gray-100 p-6 rounded shadow-lg max-w-full w-map dark:bg-gray-300" v-if="blackjack.labels.length > 0">
-                <LineChart
-                    :data="[blackjack.average_spent, blackjack.min_earned, blackjack.max_earned, blackjack.average_earned, blackjack.return_rate]"
-                    :data-labels="blackjack.labels"
-                    :labels="[t('statistics.avg_bet_placed'), t('statistics.min_money_return'), t('statistics.max_money_return'), t('statistics.avg_money_return'), t('statistics.return_rate')]"
-                    :colors="['55, 55, 235', '87, 235, 54', '255, 230, 0', '255, 42, 0']"
-                    :title="t('statistics.titles.blackjack')"
-                    :is-casino-chart="true"
-                    :smooth="true"
-                    class="w-full"
-                ></LineChart>
+                <LineChart :data="[blackjack.average_spent, blackjack.min_earned, blackjack.max_earned, blackjack.average_earned, blackjack.return_rate]" :data-labels="blackjack.labels" :labels="[t('statistics.avg_bet_placed'), t('statistics.min_money_return'), t('statistics.max_money_return'), t('statistics.avg_money_return'), t('statistics.return_rate')]" :colors="['55, 55, 235', '87, 235, 54', '255, 230, 0', '255, 42, 0']" :title="t('statistics.titles.blackjack')" :is-casino-chart="true" :smooth="true" class="w-full"></LineChart>
 
                 <div class="flex">
                     <div class="text-xs mt-3 text-gray-800">
@@ -111,15 +71,7 @@
             </div>
 
             <div class="mt-7 bg-gray-100 p-6 rounded shadow-lg max-w-full w-map dark:bg-gray-300" v-if="slots.labels.length > 0">
-                <LineChart
-                    :data="[slots.average_spent, slots.min_earned, slots.max_earned, slots.average_earned, slots.return_rate]"
-                    :data-labels="slots.labels"
-                    :labels="[t('statistics.avg_bet_placed'), t('statistics.min_money_return'), t('statistics.max_money_return'), t('statistics.avg_money_return'), t('statistics.return_rate')]"
-                    :colors="['55, 55, 235', '87, 235, 54', '255, 230, 0', '255, 42, 0']"
-                    :title="t('statistics.titles.slots')"
-                    :is-casino-chart="true"
-                    class="w-full"
-                ></LineChart>
+                <LineChart :data="[slots.average_spent, slots.min_earned, slots.max_earned, slots.average_earned, slots.return_rate]" :data-labels="slots.labels" :labels="[t('statistics.avg_bet_placed'), t('statistics.min_money_return'), t('statistics.max_money_return'), t('statistics.avg_money_return'), t('statistics.return_rate')]" :colors="['55, 55, 235', '87, 235, 54', '255, 230, 0', '255, 42, 0']" :title="t('statistics.titles.slots')" :is-casino-chart="true" class="w-full"></LineChart>
 
                 <div class="flex">
                     <div class="text-xs mt-3 text-gray-800">
@@ -152,15 +104,7 @@
             </div>
 
             <div class="mt-7 bg-gray-100 p-6 rounded shadow-lg max-w-full w-map dark:bg-gray-300" v-if="tracks.labels.length > 0">
-                <LineChart
-                    :data="[tracks.average_spent, tracks.min_earned, tracks.max_earned, tracks.average_earned, tracks.return_rate]"
-                    :data-labels="tracks.labels"
-                    :labels="[t('statistics.avg_bet_placed'), t('statistics.min_money_return'), t('statistics.max_money_return'), t('statistics.avg_money_return'), t('statistics.return_rate')]"
-                    :colors="['55, 55, 235', '87, 235, 54', '255, 230, 0', '255, 42, 0']"
-                    :title="t('statistics.titles.tracks')"
-                    :is-casino-chart="true"
-                    class="w-full"
-                ></LineChart>
+                <LineChart :data="[tracks.average_spent, tracks.min_earned, tracks.max_earned, tracks.average_earned, tracks.return_rate]" :data-labels="tracks.labels" :labels="[t('statistics.avg_bet_placed'), t('statistics.min_money_return'), t('statistics.max_money_return'), t('statistics.avg_money_return'), t('statistics.return_rate')]" :colors="['55, 55, 235', '87, 235, 54', '255, 230, 0', '255, 42, 0']" :title="t('statistics.titles.tracks')" :is-casino-chart="true" class="w-full"></LineChart>
 
                 <div class="flex">
                     <div class="text-xs mt-3 text-gray-800">
@@ -193,14 +137,7 @@
             </div>
 
             <div class="mt-7 bg-gray-100 p-6 rounded shadow-lg max-w-full w-map dark:bg-gray-300">
-                <LineChart
-                    :data="[luckyWheel.data]"
-                    :data-labels="luckyWheel.labels"
-                    :labels="[t('statistics.lucky_wheel')]"
-                    :colors="['55, 145, 235']"
-                    :title="t('statistics.titles.lucky_wheel')"
-                    class="w-full"
-                ></LineChart>
+                <LineChart :data="[luckyWheel.data]" :data-labels="luckyWheel.labels" :labels="[t('statistics.lucky_wheel')]" :colors="['55, 145, 235']" :title="t('statistics.titles.lucky_wheel')" class="w-full"></LineChart>
             </div>
         </template>
 

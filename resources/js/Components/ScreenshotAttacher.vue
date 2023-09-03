@@ -10,13 +10,11 @@
                     <label class="italic font-semibold mb-1">
                         {{ t('screenshot.note') }}
                     </label>
-                    <textarea class="block w-full p-5 bg-gray-200 dark:bg-gray-600 rounded shadow"
-                              placeholder="Player is using a mod menu"
-                              v-model="note" maxlength="500"></textarea>
+                    <textarea class="block w-full p-5 bg-gray-200 dark:bg-gray-600 rounded shadow" placeholder="Player is using a mod menu" v-model="note" maxlength="500"></textarea>
                 </div>
             </div>
             <div class="flex justify-end mt-2">
-                <button type="button" class="px-5 py-2 mr-3 hover:shadow-xl font-semibold text-white rounded bg-dark-secondary mr-3 dark:text-black dark:bg-secondary" @click="close(false, null)">
+                <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-dark-secondary mr-3 dark:text-black dark:bg-secondary" @click="close(false, null)">
                     {{ t('global.close') }}
                 </button>
                 <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600" @click="attach()">
@@ -74,7 +72,7 @@ export default {
                 } else {
                     this.close(false, result.data.message);
                 }
-            } catch(e) {}
+            } catch (e) { }
         }
     }
 }

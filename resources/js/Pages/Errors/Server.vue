@@ -103,18 +103,18 @@
             <template>
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left mobile:hidden">
-                        <th class="px-6 py-4">{{ t('errors.location') }}</th>
-                        <th class="px-6 py-4">{{ t('errors.trace') }}</th>
-                        <th class="px-6 py-4">{{ t('errors.timestamp') }}</th>
+                        <th class="p-3 pl-8">{{ t('errors.location') }}</th>
+                        <th class="p-3">{{ t('errors.trace') }}</th>
+                        <th class="p-3 pr-8">{{ t('errors.timestamp') }}</th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="error in errors"
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="error in errors"
                         :key="error.error_id">
-                        <td class="px-6 py-3 border-t mobile:block whitespace-nowrap font-mono" :title="error.error_location">{{ trim(error.error_location, 20) }}</td>
-                        <td class="px-6 py-3 border-t mobile:block font-mono text-sm cursor-pointer" @click="showError(error)" v-html="formatChatColors(trim(error.error_trace, 200))"></td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ error.timestamp * 1000 | formatTime(true) }}</td>
+                        <td class="p-3 pl-8 mobile:block whitespace-nowrap font-mono" :title="error.error_location">{{ trim(error.error_location, 20) }}</td>
+                        <td class="p-3 mobile:block font-mono text-sm cursor-pointer" @click="showError(error)" v-html="formatChatColors(trim(error.error_trace, 200))"></td>
+                        <td class="p-3 pr-8 mobile:block">{{ error.timestamp * 1000 | formatTime(true) }}</td>
                     </tr>
-                    <tr v-if="errors.length === 0">
-                        <td class="px-4 py-6 text-center border-t" colspan="100%">
+                    <tr v-if="errors.length === 0" class="border-t border-gray-300 dark:border-gray-500">
+                        <td class="px-8 py-3 text-center" colspan="100%">
                             {{ t('errors.no_errors') }}
                         </td>
                     </tr>

@@ -27,40 +27,39 @@
             <template>
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left mobile:hidden">
-                        <th class="px-6 py-4 w-56">{{ t('screenshot.player') }}</th>
-                        <th class="px-6 py-4 w-40">{{ t('screenshot.screenshot') }}</th>
-                        <th class="px-6 py-4">{{ t('screenshot.note') }}</th>
-                        <th class="px-6 py-4 w-32">{{ t('screenshot.ban_status') }}</th>
-                        <th class="px-6 py-4 w-56">{{ t('screenshot.created_at') }}</th>
+                        <th class="p-3 pl-8 w-56">{{ t('screenshot.player') }}</th>
+                        <th class="p-3 w-40">{{ t('screenshot.screenshot') }}</th>
+                        <th class="p-3">{{ t('screenshot.note') }}</th>
+                        <th class="p-3 w-32">{{ t('screenshot.ban_status') }}</th>
+                        <th class="p-3 pr-8 w-56">{{ t('screenshot.created_at') }}</th>
                     </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600" :class="{'new-entry' : screenshot.new}" v-for="screenshot in formattedScreenshots"
-                        :key="screenshot.url">
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" :class="{ 'new-entry': screenshot.new }" v-for="screenshot in formattedScreenshots" :key="screenshot.url">
                         <template v-if="screenshot.isBan">
-                            <td class="px-6 py-2 border-t text-center mobile:block">
+                            <td class="p-3 pl-8 text-center mobile:block">
                                 <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-red-600 rounded dark:bg-red-400" :href="'/players/' + screenshot.license_identifier">
                                     {{ screenshot.player_name }}
                                 </inertia-link>
                             </td>
-                            <td class="px-6 py-2 border-t mobile:block italic text-gray-600 dark:text-gray-400 text-sm" colspan="3">
+                            <td class="p-3 mobile:block italic text-gray-600 dark:text-gray-400 text-sm" colspan="3">
                                 Banned indefinitely for <span class="font-semibold">{{ screenshot.reason }}</span>
                             </td>
-                            <td class="px-6 py-2 border-t mobile:block italic text-gray-600 dark:text-gray-400 w-56">
+                            <td class="p-3 pr-8 mobile:block italic text-gray-600 dark:text-gray-400 w-56">
                                 {{ screenshot.timestamp * 1000 | formatTime(true) }}
                             </td>
                         </template>
                         <template v-else>
-                            <td class="px-6 py-3 border-t mobile:block w-56">
+                            <td class="p-3 pl-8 mobile:block w-56">
                                 <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + screenshot.license_identifier">
                                     {{ screenshot.player_name }}
                                 </inertia-link>
                             </td>
-                            <td class="px-6 py-3 border-t mobile:block w-40">
+                            <td class="p-3 mobile:block w-40">
                                 <a :href="screenshot.url" target="_blank" class="text-indigo-600 dark:text-indigo-400">{{ t('screenshot.view', screenshot.url.split(".").pop()) }}</a>
                             </td>
-                            <td class="px-6 py-3 border-t mobile:block">
+                            <td class="p-3 mobile:block">
                                 {{ screenshot.details || 'N/A' }}
                             </td>
-                            <td class="px-6 py-3 border-t mobile:block font-semibold w-32">
+                            <td class="p-3 mobile:block font-semibold w-32">
                                 <span class="text-red-600 dark:text-red-400" v-if="screenshot.ban">
                                     {{ t('global.banned') }}
                                 </span>
@@ -68,12 +67,12 @@
                                     {{ t('global.not_banned') }}
                                 </span>
                             </td>
-                            <td class="px-6 py-3 border-t mobile:block w-56 italic text-gray-600 dark:text-gray-400" v-if="screenshot.timestamp">{{ screenshot.timestamp * 1000 | formatTime(true) }}</td>
-                            <td class="px-6 py-3 border-t mobile:block w-56 italic text-gray-600 dark:text-gray-400" v-else>{{ t('global.unknown') }}</td>
+                            <td class="p-3 mobile:block w-56 italic text-gray-600 dark:text-gray-400" v-if="screenshot.timestamp">{{ screenshot.timestamp * 1000 | formatTime(true) }}</td>
+                            <td class="p-3 pr-8 mobile:block w-56 italic text-gray-600 dark:text-gray-400" v-else>{{ t('global.unknown') }}</td>
                         </template>
                     </tr>
-                    <tr v-if="screenshots.length === 0">
-                        <td class="px-4 py-6 text-center border-t" colspan="100%">
+                    <tr v-if="screenshots.length === 0" class="border-t border-gray-300 dark:border-gray-500">
+                        <td class="px-8 py-3 text-center" colspan="100%">
                             {{ t('screenshot.no_screenshots') }}
                         </td>
                     </tr>
@@ -85,19 +84,11 @@
 
                     <!-- Navigation -->
                     <div class="flex flex-wrap">
-                        <inertia-link
-                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                            :href="links.prev"
-                            v-if="page >= 2"
-                        >
+                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="links.prev" v-if="page >= 2">
                             <i class="mr-1 fas fa-arrow-left"></i>
                             {{ t("pagination.previous") }}
                         </inertia-link>
-                        <inertia-link
-                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                            v-if="screenshots.length === 20"
-                            :href="links.next"
-                        >
+                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="screenshots.length === 20" :href="links.next">
                             {{ t("pagination.next") }}
                             <i class="ml-1 fas fa-arrow-right"></i>
                         </inertia-link>
@@ -200,9 +191,9 @@ export default {
                     data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
-                    only: [ 'screenshots', 'banMap', 'links', 'page' ],
+                    only: ['screenshots', 'banMap', 'links', 'page'],
                 });
-            } catch(e) {}
+            } catch (e) { }
 
             this.formattedScreenshots = this.getFormattedScreenshots(previousIds);
 

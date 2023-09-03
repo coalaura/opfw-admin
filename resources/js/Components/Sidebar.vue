@@ -1,7 +1,7 @@
 <template>
-    <div class="flex flex-col w-72 px-3 py-10 pt-2 overflow-y-auto font-semibold text-white bg-indigo-900 mobile:w-full mobile:py-4" :class="{'w-10' : collapsed}">
+    <div class="flex flex-col w-72 px-3 py-10 pt-2 overflow-y-auto font-semibold text-white bg-indigo-900 mobile:w-full mobile:py-4" :class="{ 'w-10': collapsed }">
         <!-- General stuff -->
-        <div class="pb-3 text-right" :class="{'!text-center' : collapsed}">
+        <div class="pb-3 text-right" :class="{ '!text-center': collapsed }">
             <a href="#" @click="collapse">
                 <i class="fas fa-compress-alt" v-if="collapsed"></i>
                 <i class="fas fa-expand-alt" v-else></i>
@@ -10,34 +10,18 @@
         <nav v-if="!collapsed">
             <ul v-if="!isMobile()">
                 <li v-for="link in links" :key="link.label" v-if="(!link.private || $page.auth.player.isSuperAdmin) && !link.hidden">
-                    <inertia-link
-                        class="flex items-center px-5 py-2 mb-3 rounded hover:bg-gray-900 hover:text-white whitespace-nowrap"
-                        :class="isUrl(link.url) ? [ 'bg-gray-900', 'text-white' ] : ''"
-                        :href="link.url"
-                        v-if="!('sub' in link)"
-                    >
+                    <inertia-link class="flex items-center px-5 py-2 mb-3 rounded hover:bg-gray-900 hover:text-white whitespace-nowrap" :class="isUrl(link.url) ? ['bg-gray-900', 'text-white'] : ''" :href="link.url" v-if="!('sub' in link)">
                         <icon class="w-4 h-4 mr-3 fill-current" :name="link.icon"></icon>
                         {{ link.label }}
                     </inertia-link>
-                    <a
-                        href="#"
-                        class="flex flex-wrap items-center px-5 py-2 mb-3 -mt-1 rounded hover:bg-indigo-700 hover:text-white overflow-hidden"
-                        :class="len(link.sub, $page.auth.player.isSuperAdmin)"
-                        v-if="link.sub && len(link.sub, $page.auth.player.isSuperAdmin)"
-                        @click="$event.preventDefault()"
-                    >
+                    <a href="#" class="flex flex-wrap items-center px-5 py-2 mb-3 -mt-1 rounded hover:bg-indigo-700 hover:text-white overflow-hidden" :class="len(link.sub, $page.auth.player.isSuperAdmin)" v-if="link.sub && len(link.sub, $page.auth.player.isSuperAdmin)" @click="$event.preventDefault()">
                         <span class="block w-full mb-2 whitespace-nowrap">
                             <icon class="w-4 h-4 mr-3 fill-current" :name="link.icon"></icon>
                             {{ link.label }}
                         </span>
                         <ul class="w-full">
-                            <li v-for="sub in link.sub" :key="sub.label"
-                                v-if="(!sub.private || $page.auth.player.isSuperAdmin) && !sub.hidden">
-                                <inertia-link
-                                    class="flex items-center px-5 py-2 mt-1 rounded hover:bg-gray-900 hover:text-white whitespace-nowrap"
-                                    :class="isUrl(sub.url) ? [ 'bg-gray-900', 'text-white' ] : ''"
-                                    :href="sub.url"
-                                >
+                            <li v-for="sub in link.sub" :key="sub.label" v-if="(!sub.private || $page.auth.player.isSuperAdmin) && !sub.hidden">
+                                <inertia-link class="flex items-center px-5 py-2 mt-1 rounded hover:bg-gray-900 hover:text-white whitespace-nowrap" :class="isUrl(sub.url) ? ['bg-gray-900', 'text-white'] : ''" :href="sub.url">
                                     <icon class="w-4 h-4 mr-3 fill-current" :name="sub.icon"></icon>
                                     {{ sub.label }}
                                 </inertia-link>
@@ -48,22 +32,10 @@
             </ul>
             <ul v-else class="mobile:flex mobile:flex-wrap mobile:justify-between">
                 <template v-for="link in links">
-                    <inertia-link
-                        class="flex items-center px-5 py-2 mb-3 rounded hover:bg-gray-900 hover:text-white text-sm"
-                        :class="isUrl(link.url) ? [ 'bg-gray-900', 'text-white' ] : ''"
-                        :href="link.url"
-                        v-if="!('sub' in link) && (!link.private || $page.auth.player.isSuperAdmin) && !link.hidden"
-                    >
+                    <inertia-link class="flex items-center px-5 py-2 mb-3 rounded hover:bg-gray-900 hover:text-white text-sm" :class="isUrl(link.url) ? ['bg-gray-900', 'text-white'] : ''" :href="link.url" v-if="!('sub' in link) && (!link.private || $page.auth.player.isSuperAdmin) && !link.hidden">
                         {{ link.label }}
                     </inertia-link>
-                    <inertia-link
-                        v-for="sub in link.sub"
-                        class="flex items-center px-5 py-2 mb-3 rounded hover:bg-gray-900 hover:text-white text-sm"
-                        :class="isUrl(sub.url) ? [ 'bg-gray-900', 'text-white' ] : ''"
-                        :href="sub.url"
-                        :key="sub.label"
-                        v-if="'sub' in link && (!(sub.private || link.private) || $page.auth.player.isSuperAdmin) && !(sub.hidden || link.hidden)"
-                    >
+                    <inertia-link v-for="sub in link.sub" class="flex items-center px-5 py-2 mb-3 rounded hover:bg-gray-900 hover:text-white text-sm" :class="isUrl(sub.url) ? ['bg-gray-900', 'text-white'] : ''" :href="sub.url" :key="sub.label" v-if="'sub' in link && (!(sub.private || link.private) || $page.auth.player.isSuperAdmin) && !(sub.hidden || link.hidden)">
                         {{ sub.label }}
                     </inertia-link>
                 </template>
@@ -72,22 +44,12 @@
 
         <div class="mt-auto">
             <!-- Update available -->
-            <a
-                class="block px-5 py-2 mt-3 text-center text-black bg-green-400 rounded"
-                target="_blank"
-                href="https://github.com/coalaura/opfw-admin"
-                v-if="!isMobile() && $page.update && $page.auth.player.isSuperAdmin"
-            >
+            <a class="block px-5 py-2 mt-3 text-center text-black bg-green-400 rounded" target="_blank" href="https://github.com/coalaura/opfw-admin" v-if="!isMobile() && $page.update && $page.auth.player.isSuperAdmin">
                 <i class="mr-2 fas fa-wrench"></i> {{ t("nav.update") }}
             </a>
 
             <!-- Suggest a feature -->
-            <a
-                class="block px-5 py-2 mt-3 text-center text-black bg-yellow-400 rounded"
-                target="_blank"
-                href="https://github.com/coalaura/opfw-admin/issues/new/choose"
-                v-if="!isMobile() && !collapsed"
-            >
+            <a class="block px-5 py-2 mt-3 text-center text-black bg-yellow-400 rounded" target="_blank" href="https://github.com/coalaura/opfw-admin/issues/new/choose" v-if="!isMobile() && !collapsed">
                 <i class="mr-2 fas fa-bug"></i> {{ t("nav.report") }}
             </a>
         </div>
