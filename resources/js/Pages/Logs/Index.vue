@@ -190,9 +190,11 @@
 							</a>
 						</th>
 					</tr>
-					<tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="(log, index) in logs"
+					<tr class="mobile:border-b-4 relative" :class="getLogColor(log.metadata)" v-for="(log, index) in logs"
 						:key="log.id">
 						<td class="px-6 py-3 border-t mobile:block">
+							<div class="absolute top-1 left-1 text-sm leading-3 font-semibold italic" v-html="getLogTag(log.metadata)"></div>
+
 							<inertia-link
 								class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400"
 								:href="'/players/' + log.licenseIdentifier">
@@ -446,6 +448,24 @@ export default {
 		},
 		stamp(time) {
 			return this.$moment.utc(time).unix();
+		},
+		getLogColor(metadata) {
+			const minigames = metadata?.minigames || [];
+
+			if (minigames.length > 0) {
+				return 'bg-purple-500 !bg-opacity-20 hover:!bg-opacity-40';
+			}
+
+			return 'hover:bg-gray-100 dark:hover:bg-gray-600';
+		},
+		getLogTag(metadata) {
+			const minigames = metadata?.minigames || [];
+
+			if (minigames.length > 0) {
+				return `<span class="text-purple-800 dark:text-purple-200">${minigames.join(', ')}</span>`;
+			}
+
+			return '';
 		},
 		detailedAction(e, log) {
 			e.preventDefault();
