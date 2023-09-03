@@ -452,9 +452,9 @@ export default {
 			} else if (this.drugActions.includes(action)) {
 				return `<i class="text-yellow-800 dark:text-yellow-200 fas fa-tablets" title="money transfer"></i>`;
 			} else if (DisconnectActions.includes(action)) {
-				return `<i class="text-red-800 dark:text-red-200 fas fa-door-open" title="exit/disconnect"></i>`;
+				return `<i class="text-red-800 dark:text-red-200 fas fa-door-open" title="exit/disconnect/unload"></i>`;
 			} else if (ConnectActions.includes(action)) {
-				return `<i class="text-lime-800 dark:text-lime-200 fas fa-door-open" title="exit/disconnect"></i>`;
+				return `<i class="text-lime-800 dark:text-lime-200 fas fa-person-booth" title="connect/join/load"></i>`;
 			}
 
 			return '';
@@ -586,7 +586,7 @@ export default {
 					$('<a></a>', {
 						"data-reason": match,
 						"data-description": description,
-						"class": "text-rose-500 dark:text-rose-300 exit-log",
+						"class": "text-rose-600 dark:text-rose-200 exit-log",
 						"href": "#"
 					}).text(match)
 				).html();
