@@ -594,7 +594,7 @@ export default {
 					$('<a></a>', {
 						"data-reason": match,
 						"data-description": description,
-						"class": "text-yellow-800 dark:text-yellow-200 exit-log",
+						"class": "text-rose-500 dark:text-rose-300 exit-log",
 						"href": "#"
 					}).text(match)
 				).html();
@@ -661,7 +661,13 @@ export default {
 				return pMatch.replace(pUrl, `<a href="${pUrl}" target="_blank" class="text-indigo-600 dark:text-indigo-400">${pUrl}</a>`);
 			});
 
-			return this.parseDisconnectLog(details, action, metadata);
+			details = this.parseDisconnectLog(details, action, metadata);
+
+			details = details.replace(/`(.+?)`/gm, function(pMatch, pCode) {
+				return `<code class="select-all bg-black !bg-opacity-10 dark:!bg-opacity-20 font-mono px-1.5 py-0.5">${pCode}</code>`;
+			});
+
+			return details;
 		},
 		playerName(licenseIdentifier) {
 			return licenseIdentifier in this.playerMap ? this.playerMap[licenseIdentifier] : licenseIdentifier;
