@@ -597,14 +597,7 @@ export default {
 					description = this.t('logs.detail.reasons.unknown');
 				}
 
-				const html = $('<div />').append(
-					$('<a></a>', {
-						"data-reason": match,
-						"data-description": description,
-						"class": "text-rose-600 dark:text-rose-200 exit-log",
-						"href": "#"
-					}).text(match)
-				).html();
+				const html = `<a href="#" class="text-rose-600 dark:text-rose-200 exit-log" data-reason="${match}" data-description="${description}">${match}</a>`;
 
 				return details.replace(match, html);
 			}
@@ -623,11 +616,6 @@ export default {
 			const regex = /(to|from) (inventory )?((trunk|glovebox|character|property|ped|motel-\w+?|evidence|ground|locker-\w+?)-(\d+-)?\d+:\d+)/gmi;
 
 			let inventories = [];
-
-			// Small fixes for double escaped html
-			details = details.replace(/&#039;/g, "'");
-			details = details.replace(/&gt;/g, ">");
-			details = details.replace(/&lt;/g, "<");
 
 			details = this.escapeHtml(details);
 
@@ -719,6 +707,8 @@ export default {
 			_this.log_detail.reason = $(this).data('reason');
 			_this.log_detail.description = $(this).data('description');
 		});
+
+		console.log(this.parseLog('nam [2284] (license:f4ef05316fda300b37799f0fe31b91a25268a528) has disconnected from the server after having played for 30 minutes, 53 seconds with reason: `Server->client connection timed out. Last seen 38997 msec ago.`.'))
 
 		$('body').on('click', '.copy_title', function (e) {
 			const title = $(this).attr('title'),
