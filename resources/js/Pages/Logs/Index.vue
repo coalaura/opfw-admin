@@ -294,7 +294,8 @@ const DisconnectActions = [
 const ConnectActions = [
 	'User Joined',
 	'User Connected',
-	'Character Loaded'
+	'Character Loaded',
+	'Connection Accepted'
 ];
 
 export default {
