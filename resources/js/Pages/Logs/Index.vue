@@ -561,8 +561,6 @@ export default {
 			return details;
 		},
 		parseDisconnectLog(details, action, metadata) {
-			details = details.replace(/&#039;/g, "'");
-
 			const regex = /(?<=\) has disconnected from the server .+? with reason: `)(.+?)(?=`\.)/gm;
 			const matches = details.match(regex);
 			const match = matches && matches.length === 1 && matches[0].trim() ? matches[0].trim() : null;
@@ -625,6 +623,11 @@ export default {
 			const regex = /(to|from) (inventory )?((trunk|glovebox|character|property|ped|motel-\w+?|evidence|ground|locker-\w+?)-(\d+-)?\d+:\d+)/gmi;
 
 			let inventories = [];
+
+			// Small fixes for double escaped html
+			details = details.replace(/&#039;/g, "'");
+			details = details.replace(/&gt;/g, ">");
+			details = details.replace(/&lt;/g, "<");
 
 			details = this.escapeHtml(details);
 
