@@ -16,11 +16,14 @@ const Localization = {
         }
 
         Vue.prototype.loadLocale = function (locale) {
+            const start = performance.now();
+
             try {
-                console.info('Loading locale ' + locale);
                 lang = require('../locales/' + locale + '.json');
+
+                console.info(`Loaded locale ${locale} in ${performance.now() - start}ms`);
             } catch (e) {
-                console.error('Failed to load locale "' + locale + '", falling back to "en-us"');
+                console.error(`Failed to load locale ${locale} after ${performance.now() - start}ms`);
 
                 try {
                     lang = require('../locales/en-us.json');
