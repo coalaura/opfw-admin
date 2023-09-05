@@ -903,7 +903,7 @@
             "no_vehicles": "No Vehicles",
             "plate": "Plate Number",
             "vehicle_id": "Vehicle ID",
-            "parked": "Parked at <i>{0}</i>.",
+            "parked": "Parked at {0}.",
             "not_parked": "Vehicle is not parked.",
             "parked_any": "Vehicle can be withdrawn anywhere.",
             "impounded": "Vehicle is impounded.",
