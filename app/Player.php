@@ -141,7 +141,7 @@ class Player extends Model
                 "en-au"     => "Australian",
                 "en-cave"   => "Caveman Speak",
                 "en-uwu"    => "UwU Language",
-                //"en-pirate" => "Pirate Speak",
+                "en-pirate" => "Pirate Speak",
             ],
         ],
     ];
