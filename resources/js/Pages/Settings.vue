@@ -127,6 +127,14 @@ export default {
                     return 'text';
             }
         },
+        refreshLocales(locale) {
+            this.loadLocale(locale);
+
+            this.$inertia.reload({
+                preserveState: true,
+                preserveScroll: true
+            });
+        },
         async saveSetting(key, setting) {
             if (setting.disabled) return;
 
@@ -136,6 +144,10 @@ export default {
                 await axios.put('/settings/' + key, {
                     value: setting.value
                 });
+
+                if (key === 'locale') {
+                    this.refreshLocales(setting.value);
+                }
             } catch (e) { }
 
             setting.disabled = false;
