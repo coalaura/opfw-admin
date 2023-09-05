@@ -5,6 +5,7 @@ import PortalVue from 'portal-vue';
 import moment from 'moment';
 import Localization from './Plugins/localization.js';
 import Copy from './Plugins/copy-text.js';
+import Interceptor from './Plugins/interceptor.js';
 import Socket from './Plugins/socket.js';
 import UserAgent from './Plugins/user-agent.js';
 import Dictionary from './Plugins/dictionary.js';
@@ -33,6 +34,7 @@ const app = document.getElementById('app'),
 
 // Plugins.
 Vue.use(InertiaApp);
+Vue.use(Interceptor);
 Vue.use(PortalVue);
 Vue.use(Localization);
 Vue.use(Copy);
@@ -72,6 +74,10 @@ Vue.directive('click-outside', {
         document.body.removeEventListener('click', el.clickOutsideEvent)
     },
 });
+
+/*router.on('beforeHistoryChange', (event) => {
+    console.log('beforeHistoryChange', event);
+});*/
 
 // Create Vue.
 const vue = new Vue({

@@ -196,10 +196,7 @@ export default {
                     data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
-                    only: ['posts', 'userMap', 'time', 'links', 'page'],
-                    onBefore: (visit) => {
-                        console.log(visit);
-                    }
+                    only: ['posts', 'userMap', 'time', 'links', 'page']
                 });
 
                 this.selectedPosts = [];
