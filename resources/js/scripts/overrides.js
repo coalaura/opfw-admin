@@ -1,6 +1,8 @@
 Number.prototype.toFixed = function(digits) {
     const pow = Math.pow(10, digits),
-        fixed = Math.round(this * pow) / pow;
+        fixed = (Math.round(this * pow) / pow).toString();
 
-    return fixed.toString().replace(/\.?0+$/, '');
+    if (!fixed.includes('.')) return fixed;
+
+    return fixed.replace(/\.?0+$/, '');
 };
