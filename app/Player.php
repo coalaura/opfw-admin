@@ -138,6 +138,7 @@ class Player extends Model
             "options" => [
                 "en-us"   => "English",
                 "en-cave" => "Caveman Speak",
+                "en-uwu"  => "UwU Language",
             ],
         ],
     ];
@@ -220,9 +221,9 @@ class Player extends Model
             $value = isset($settings[$key]) ? $settings[$key] : $setting['default'];
 
             $list[$key] = [
-                'value' => $value,
-                'type'  => $setting['type'],
-                'options' => $setting['options'] ?? false
+                'value'   => $value,
+                'type'    => $setting['type'],
+                'options' => $setting['options'] ?? false,
             ];
         }
 
