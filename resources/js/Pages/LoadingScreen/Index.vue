@@ -300,7 +300,7 @@ export default {
             this.isLoading = true;
             try {
                 await this.$inertia.replace('/loading_screen', {
-                    data: this.filters.clean(),
+                    data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
                     only: ['pictures'],

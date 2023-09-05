@@ -217,7 +217,7 @@ export default {
             this.isLoading = true;
             try {
                 await this.$inertia.replace('/panel_logs', {
-                    data: this.filters.clean(),
+                    data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
                     only: [ 'logs', 'sources', 'playerMap', 'time', 'links', 'page' ],

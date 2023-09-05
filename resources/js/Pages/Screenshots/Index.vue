@@ -121,7 +121,7 @@ export default {
             this.isLoading = true;
             try {
                 await this.$inertia.replace('/screenshots', {
-                    data: this.filters.clean(),
+                    data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
                     only: ['screenshots', 'playerMap', 'links', 'page'],

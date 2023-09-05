@@ -238,7 +238,7 @@ export default {
             this.isLoading = true;
             try {
                 await this.$inertia.replace('/errors/client', {
-                    data: this.filters.clean(),
+                    data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
                     only: ['errors', 'versions', 'playerMap', 'time', 'links', 'page'],

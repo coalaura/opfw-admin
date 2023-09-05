@@ -222,7 +222,7 @@ export default {
             this.isLoading = true;
             try {
                 await this.$inertia.replace('/casino', {
-                    data: this.filters.clean(),
+                    data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
                     only: ['logs', 'playerMap', 'time', 'links', 'page'],

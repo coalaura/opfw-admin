@@ -222,7 +222,7 @@ export default {
             this.isLoading = true;
             try {
                 await this.$inertia.replace('/advanced', {
-                    data: this.filters.clean(),
+                    data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
                     only: ['results', 'header', 'time', 'links', 'page', 'error', 'searchedTable'],

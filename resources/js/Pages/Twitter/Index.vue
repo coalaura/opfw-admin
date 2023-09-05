@@ -193,10 +193,13 @@ export default {
 
             try {
                 await this.$inertia.replace('/twitter', {
-                    data: this.filters.clean(),
+                    data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
                     only: ['posts', 'userMap', 'time', 'links', 'page'],
+                    onBefore: (visit) => {
+                        console.log(visit);
+                    }
                 });
 
                 this.selectedPosts = [];

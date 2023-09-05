@@ -207,7 +207,7 @@ export default {
             this.isLoading = true;
             try {
                 await this.$inertia.replace('/characters', {
-                    data: this.filters.clean(),
+                    data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
                     only: ['characters', 'playerMap', 'time'],

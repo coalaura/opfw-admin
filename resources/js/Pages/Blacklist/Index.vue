@@ -292,7 +292,7 @@ export default {
             this.isLoading = true;
             try {
                 await this.$inertia.replace('/blacklist', {
-                    data: this.filters.clean(),
+                    data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
                     only: ['identifiers', 'time'],

@@ -263,7 +263,7 @@ export default {
             this.isLoading = true;
             try {
                 await this.$inertia.replace('/suspicious', {
-                    data: this.filters.clean(),
+                    data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
                     only: ['logs', 'time', 'links', 'page', 'total', 'logType', 'playerMap'],
