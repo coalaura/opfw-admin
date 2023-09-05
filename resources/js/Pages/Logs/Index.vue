@@ -708,8 +708,6 @@ export default {
 			_this.log_detail.description = $(this).data('description');
 		});
 
-		console.log(this.parseLog('nam [2284] (license:f4ef05316fda300b37799f0fe31b91a25268a528) has disconnected from the server after having played for 30 minutes, 53 seconds with reason: `Server->client connection timed out. Last seen 38997 msec ago.`.'))
-
 		$('body').on('click', '.copy_title', function (e) {
 			const title = $(this).attr('title'),
 				timeout = $(this).data('timeout'),
