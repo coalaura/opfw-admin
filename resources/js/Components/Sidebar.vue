@@ -12,18 +12,18 @@
                 <li v-for="link in links" :key="link.label" v-if="(!link.private || $page.auth.player.isSuperAdmin) && !link.hidden">
                     <inertia-link class="flex items-center px-5 py-2 mb-3 rounded hover:bg-gray-900 hover:text-white whitespace-nowrap" :class="isUrl(link.url) ? ['bg-gray-900', 'text-white'] : ''" :href="link.url" v-if="!('sub' in link)">
                         <icon class="w-4 h-4 mr-3 fill-current" :name="link.icon"></icon>
-                        {{ link.label }}
+                        {{ link.raw ? link.raw : t(link.label) }}
                     </inertia-link>
                     <a href="#" class="flex flex-wrap items-center px-5 py-2 mb-3 -mt-1 rounded hover:bg-indigo-700 hover:text-white overflow-hidden" :class="len(link.sub, $page.auth.player.isSuperAdmin)" v-if="link.sub && len(link.sub, $page.auth.player.isSuperAdmin)" @click="$event.preventDefault()">
                         <span class="block w-full mb-2 whitespace-nowrap">
                             <icon class="w-4 h-4 mr-3 fill-current" :name="link.icon"></icon>
-                            {{ link.label }}
+                            {{ link.raw ? link.raw : t(link.label) }}
                         </span>
                         <ul class="w-full">
                             <li v-for="sub in link.sub" :key="sub.label" v-if="(!sub.private || $page.auth.player.isSuperAdmin) && !sub.hidden">
                                 <inertia-link class="flex items-center px-5 py-2 mt-1 rounded hover:bg-gray-900 hover:text-white whitespace-nowrap" :class="isUrl(sub.url) ? ['bg-gray-900', 'text-white'] : ''" :href="sub.url">
                                     <icon class="w-4 h-4 mr-3 fill-current" :name="sub.icon"></icon>
-                                    {{ sub.label }}
+                                    {{ sub.raw ? sub.raw : t(sub.label) }}
                                 </inertia-link>
                             </li>
                         </ul>
@@ -33,10 +33,10 @@
             <ul v-else class="mobile:flex mobile:flex-wrap mobile:justify-between">
                 <template v-for="link in links">
                     <inertia-link class="flex items-center px-5 py-2 mb-3 rounded hover:bg-gray-900 hover:text-white text-sm" :class="isUrl(link.url) ? ['bg-gray-900', 'text-white'] : ''" :href="link.url" v-if="!('sub' in link) && (!link.private || $page.auth.player.isSuperAdmin) && !link.hidden">
-                        {{ link.label }}
+                        {{ link.raw ? link.raw : t(link.label) }}
                     </inertia-link>
                     <inertia-link v-for="sub in link.sub" class="flex items-center px-5 py-2 mb-3 rounded hover:bg-gray-900 hover:text-white text-sm" :class="isUrl(sub.url) ? ['bg-gray-900', 'text-white'] : ''" :href="sub.url" :key="sub.label" v-if="'sub' in link && (!(sub.private || link.private) || $page.auth.player.isSuperAdmin) && !(sub.hidden || link.hidden)">
-                        {{ sub.label }}
+                        {{ sub.raw ? sub.raw : t(sub.label) }}
                     </inertia-link>
                 </template>
             </ul>
@@ -68,42 +68,42 @@ export default {
             url: this.$page.url,
             links: [
                 {
-                    label: this.t('home.title'),
+                    label: 'home.title',
                     icon: 'dashboard',
                     url: '/',
                 },
                 {
-                    label: this.t('steam.title'),
+                    label: 'steam.title',
                     icon: 'steam',
                     url: '/steam',
                 },
                 {
-                    label: this.t('sidebar.management'),
+                    label: 'sidebar.management',
                     icon: 'users',
                     sub: [
                         {
-                            label: this.t('players.title'),
+                            label: 'players.title',
                             icon: 'user',
                             url: '/players',
                         },
                         {
-                            label: this.t('players.new.title'),
+                            label: 'players.new.title',
                             icon: 'kiwi',
                             url: '/new_players',
                         },
                         {
-                            label: this.t('characters.title'),
+                            label: 'characters.title',
                             icon: 'book',
                             url: '/characters',
                         },
                         {
-                            label: this.t('blacklist.title'),
+                            label: 'blacklist.title',
                             icon: 'shield',
                             private: true,
                             url: '/blacklist',
                         },
                         {
-                            label: this.t('loading_screen.sidebar'),
+                            label: 'loading_screen.sidebar',
                             icon: 'spinner',
                             hidden: !this.perm.check(this.perm.PERM_LOADING_SCREEN),
                             url: '/loading_screen',
@@ -111,26 +111,26 @@ export default {
                     ]
                 },
                 {
-                    label: this.t('sidebar.logs'),
+                    label: 'sidebar.logs',
                     icon: 'boxes',
                     sub: [
                         {
-                            label: this.t('logs.title'),
+                            label: 'logs.title',
                             icon: 'printer',
                             url: '/logs',
                         },
                         {
-                            label: this.t('casino.title'),
+                            label: 'casino.title',
                             icon: 'poker',
                             url: '/casino',
                         },
                         {
-                            label: this.t('panel_logs.title'),
+                            label: 'panel_logs.title',
                             icon: 'paperstack',
                             url: '/panel_logs',
                         },
                         {
-                            label: this.t('phone.title'),
+                            label: 'phone.title',
                             icon: 'phone',
                             url: '/phoneLogs',
                             private: true,
@@ -138,76 +138,76 @@ export default {
                     ]
                 },
                 {
-                    label: this.t('sidebar.bans'),
+                    label: 'sidebar.bans',
                     icon: 'user-slash',
                     sub: [
                         {
-                            label: this.t('sidebar.all_bans'),
+                            label: 'sidebar.all_bans',
                             icon: 'friends',
                             url: '/bans',
                         },
                         {
-                            label: this.t('sidebar.my_bans'),
+                            label: 'sidebar.my_bans',
                             icon: 'user',
                             url: '/my_bans',
                         },
                         {
-                            label: this.t('sidebar.system_bans'),
+                            label: 'sidebar.system_bans',
                             icon: 'kiwi',
                             url: '/system_bans',
                         }
                     ]
                 },
                 {
-                    label: this.t('sidebar.data'),
+                    label: 'sidebar.data',
                     icon: 'server',
                     sub: [
                         {
-                            label: this.t('map.title'),
+                            label: 'map.title',
                             icon: 'map',
                             url: '/map',
                             hidden: !this.perm.check(this.perm.PERM_LIVEMAP),
                         },
                         {
-                            label: this.t('statistics.title'),
+                            label: 'statistics.title',
                             icon: 'statistics',
                             url: '/statistics',
                         },
                         {
-                            label: this.t('twitter.title'),
+                            label: 'twitter.title',
                             icon: 'twitter',
                             url: '/twitter',
                         },
                         {
-                            label: this.t('screenshot.label'),
+                            label: 'screenshot.label',
                             icon: 'images',
                             url: '/screenshots',
                         }
                     ]
                 },
                 {
-                    label: this.t('sidebar.csi'),
+                    label: 'sidebar.csi',
                     icon: 'prints',
                     sub: [
                         {
-                            label: this.t('sidebar.serials'),
+                            label: 'sidebar.serials',
                             icon: 'fingerprint',
                             url: '/serials',
                         },
                         {
-                            label: this.t('sidebar.overwatch'),
+                            label: 'sidebar.overwatch',
                             icon: 'camera',
                             url: '/overwatch',
                             hidden: !this.perm.check(this.perm.PERM_SCREENSHOT),
                         },
                         {
-                            label: this.t('search_logs.title'),
+                            label: 'search_logs.title',
                             icon: 'binoculars',
                             url: '/searches',
                             hidden: !this.perm.check(this.perm.PERM_ADVANCED),
                         },
                         {
-                            label: this.t('screenshot_logs.title'),
+                            label: 'screenshot_logs.title',
                             icon: 'portrait',
                             url: '/screenshot_logs',
                             hidden: !this.perm.check(this.perm.PERM_ADVANCED),
@@ -215,56 +215,56 @@ export default {
                     ]
                 },
                 {
-                    label: this.t('sidebar.random'),
+                    label: 'sidebar.random',
                     icon: 'random',
                     sub: [
                         {
-                            label: this.t('backstories.title'),
+                            label: 'backstories.title',
                             icon: 'box-open',
                             url: '/backstories',
                         },
                         {
-                            label: this.t('screenshot.anti_cheat_title'),
+                            label: 'screenshot.anti_cheat_title',
                             icon: 'ghost',
                             url: '/anti_cheat',
                         }
                     ]
                 },
                 {
-                    label: this.t('sidebar.errors'),
+                    label: 'sidebar.errors',
                     icon: 'bug',
                     hidden: !this.$page.auth.player.isRoot,
                     sub: [
                         {
-                            label: this.t('errors.client.title'),
+                            label: 'errors.client.title',
                             icon: 'spider',
                             url: '/errors/client?server_version=newest',
                         },
                         {
-                            label: this.t('errors.server.title'),
+                            label: 'errors.server.title',
                             icon: 'virus',
                             url: '/errors/server'
                         }
                     ]
                 },
                 {
-                    label: this.t('sidebar.advanced'),
+                    label: 'sidebar.advanced',
                     icon: 'cogs',
                     sub: [
                         {
-                            label: this.t('sidebar.advanced_search'),
+                            label: 'sidebar.advanced_search',
                             icon: 'search',
                             url: '/advanced',
                             hidden: !this.perm.check(this.perm.PERM_ADVANCED),
                         },
                         {
-                            label: this.t('sidebar.suspicious'),
+                            label: 'sidebar.suspicious',
                             icon: 'heart',
                             url: '/suspicious',
                             hidden: !this.perm.check(this.perm.PERM_SUSPICIOUS),
                         },
                         {
-                            label: this.t('inventories.search.label'),
+                            label: 'inventories.search.label',
                             icon: 'pallet',
                             url: '/search_inventory',
                             private: true,
@@ -272,7 +272,7 @@ export default {
                     ]
                 },
                 {
-                    label: this.t('servers.title'),
+                    label: 'servers.title',
                     icon: 'office',
                     url: '/servers',
                 }
@@ -283,7 +283,7 @@ export default {
 
         if (servers) {
             let queue = {
-                label: this.t('queue.title'),
+                label: 'queue.title',
                 icon: 'subway',
                 hidden: !this.perm.check(this.perm.PERM_VIEW_QUEUE),
                 sub: []
@@ -291,7 +291,7 @@ export default {
 
             $.each(servers, (key, name) => {
                 queue.sub.push({
-                    label: name.toUpperCase(),
+                    raw: name.toUpperCase(),
                     icon: 'subway',
                     hidden: !this.perm.check(this.perm.PERM_VIEW_QUEUE),
                     url: '/queue/' + name

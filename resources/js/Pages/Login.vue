@@ -44,7 +44,9 @@ export default {
         }
     },
     beforeCreate() {
-        this.loadLocale(this.$page.lang);
+        const lang = this.setting("locale") || "en-US";
+
+        this.loadLocale(lang);
     }
 };
 </script>

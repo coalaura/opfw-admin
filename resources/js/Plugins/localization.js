@@ -1,6 +1,9 @@
 const Localization = {
     async install(Vue, options) {
-        let lang = {};
+        const base = require('../locales/en-us.json');
+
+        let lang = {},
+            activeLocale = "en-us";
 
         function searchObject(object, key) {
             if (!object) {
@@ -16,24 +19,31 @@ const Localization = {
         }
 
         Vue.prototype.loadLocale = function (locale) {
+            if (locale === "en-us") {
+                lang = base;
+
+                return;
+            }
+
             const start = performance.now();
 
             try {
                 lang = require('../locales/' + locale + '.json');
+                activeLocale = locale;
 
                 console.info(`Loaded locale ${locale} in ${performance.now() - start}ms`);
             } catch (e) {
                 console.error(`Failed to load locale ${locale} after ${performance.now() - start}ms`);
 
                 try {
-                    lang = require('../locales/en-us.json');
+                    lang = base;
                 } catch (e) {
                     console.error('Failed to load fallback locale "en-us"');
                 }
             }
 
             try {
-                Vue.prototype.$moment.locale(locale);
+                Vue.prototype.$moment.locale("en-us");
             } catch (e) {
                 console.error('Failed to load moment locale "' + locale + '"', e);
             }
@@ -41,17 +51,25 @@ const Localization = {
         Vue.prototype.t = function (key, ...params) {
             let val = lang ? searchObject(lang, key) : null;
 
+            if (!val) {
+                console.error(`${key} not found in locale ${activeLocale}!`);
+
+                val = searchObject(base, key);
+
+                if (!val) {
+                    console.error(`${key} not found in fallback locale en-us!`);
+
+                    return 'MISSING_LOCALE';
+                }
+            }
+
             if (Array.isArray(params) && typeof val === 'string') {
                 for (let x = 0; x < params.length; x++) {
                     val = val.replaceAll('{' + x + '}', params[x]);
                 }
             }
 
-            return val ? val : (() => {
-                console.error('Locale "' + key + '" not found');
-                console.debug('Loaded locale:', lang);
-                return 'MISSING_LOCALE';
-            })();
+            return val;
         };
         Vue.prototype.numberFormat = function (number, decimals, asCurrency) {
             let options = {

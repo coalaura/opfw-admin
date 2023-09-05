@@ -53,7 +53,11 @@
                 <tr class="border-t border-gray-300 dark:border-gray-500" v-for="(setting, key) in $page.auth.settings" :key="key">
                     <td class="p-3 pl-8">{{ t('settings.' + key) }}</td>
                     <td class="p-3">
-                        <input v-model="setting.value" :type="getSettingsType(setting.type)" :disabled="setting.disabled" class="p-1 h-base min-w-base block border-2 bg-gray-200 dark:bg-gray-800" @change="saveSetting(key, setting)" />
+                        <select v-if="setting.options" v-model="setting.value" class="p-1 min-w-base block border-2 bg-gray-200 dark:bg-gray-800" :disabled="setting.disabled" @change="saveSetting(key, setting)">
+                            <option v-for="(value, key) in setting.options" :value="key">{{ value }}</option>
+                        </select>
+
+                        <input v-else v-model="setting.value" :type="getSettingsType(setting.type)" :disabled="setting.disabled" class="p-1 h-base min-w-base block border-2 bg-gray-200 dark:bg-gray-800" @change="saveSetting(key, setting)" />
                     </td>
                     <td class="p-3">
                         <img :src="'/images/settings/' + key + '.png'" class="h-20" />

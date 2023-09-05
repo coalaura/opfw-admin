@@ -116,22 +116,30 @@ class Player extends Model
     private $ban = false;
 
     const PlayerSettings = [
-        "parseLogs" => [
-            "type" => "boolean",
-            "default" => true
+        "parseLogs"       => [
+            "type"    => "boolean",
+            "default" => true,
         ],
         "expandCollapsed" => [
-            "type" => "boolean",
-            "default" => false
+            "type"    => "boolean",
+            "default" => false,
         ],
-        "expandSidenav" => [
-            "type" => "boolean",
-            "default" => false
+        "expandSidenav"   => [
+            "type"    => "boolean",
+            "default" => false,
         ],
         "showSystemNotes" => [
-            "type" => "boolean",
-            "default" => false
-        ]
+            "type"    => "boolean",
+            "default" => false,
+        ],
+        "locale"          => [
+            "type"    => "string",
+            "default" => "en-us",
+            "options" => [
+                "en-us"   => "English",
+                "en-cave" => "Caveman Speak",
+            ],
+        ],
     ];
 
     const PlayerNameFilter = [
@@ -187,12 +195,16 @@ class Player extends Model
             return false;
         }
 
+        if (isset($info['options']) && !isset($info['options'][$value])) {
+            return false;
+        }
+
         $settings = $this->panel_settings ?? [];
 
         $settings[$key] = $value;
 
         $this->update([
-            'panel_settings' => $settings
+            'panel_settings' => $settings,
         ]);
 
         return true;
@@ -204,12 +216,13 @@ class Player extends Model
 
         $list = [];
 
-        foreach(self::PlayerSettings as $key => $setting) {
+        foreach (self::PlayerSettings as $key => $setting) {
             $value = isset($settings[$key]) ? $settings[$key] : $setting['default'];
 
             $list[$key] = [
                 'value' => $value,
-                'type' => $setting['type']
+                'type'  => $setting['type'],
+                'options' => $setting['options'] ?? false
             ];
         }
 

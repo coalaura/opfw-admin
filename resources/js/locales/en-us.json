@@ -95,7 +95,8 @@
         "parseLogs": "Parse Logs (Highlighting, etc.)",
         "expandCollapsed": "Auto-Expand Collapsed (Notes, etc.)",
         "expandSidenav": "Always fully expand the Side-Navigation",
-        "showSystemNotes": "Show system notes by default"
+        "showSystemNotes": "Show system notes by default",
+        "locale": "Language"
     },
     "loading_screen": {
         "sidebar": "Loading Screen",
