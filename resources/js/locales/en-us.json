@@ -909,7 +909,9 @@
             "impounded": "Vehicle is impounded.",
             "none": "This character does not own any vehicles.",
             "delete_vehicle": "Are you sure you want to delete this vehicle?",
-			"vehicle_value": "Total value of owned vehicles"
+			"vehicle_value": "Total value of owned vehicles",
+            "oil_change": "Oil change due in {0} miles.",
+            "oil_change_needed": "Oil change needed."
         },
         "properties": {
             "properties": "Properties",

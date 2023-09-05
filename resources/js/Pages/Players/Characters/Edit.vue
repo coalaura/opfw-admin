@@ -596,8 +596,14 @@
                         </template>
 
                         <template>
-                            <p class="italic" :class="{ 'text-red-700 dark:text-red-300': !vehicle.garage_name, 'text-green-700 dark:text-green-300': vehicle.garage_name }">
-                                {{ getGarageLabel(vehicle.garage_name) }}
+                            <p class="italic">
+                                <span :class="vehicle.garage_name ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'">
+                                    {{ getGarageLabel(vehicle.garage_name) }}
+                                </span>
+
+                                <span v-if="vehicle.oil !== null" :class="vehicle.oil > 0 ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'">
+                                    {{ vehicle.oil > 0 ? t('players.vehicles.oil_change', vehicle.oil.toFixed(1)) : t('players.vehicles.oil_change_needed') }}
+                                </span>
                             </p>
                         </template>
 

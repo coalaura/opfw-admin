@@ -25,7 +25,8 @@ class VehicleResource extends JsonResource
             'plate'         => $this->plate,
             'modifications' => $this->getModifications(),
             'fuel'          => intval($this->deprecated_fuel) ?? 0,
-            'emergency'     => intval($this->emergency_type) ?? 0
+            'emergency'     => intval($this->emergency_type) ?? 0,
+            'oil'           => $this->oilChangeMiles(),
         ];
     }
 

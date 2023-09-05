@@ -49,19 +49,21 @@ class Vehicle extends Model
         'deprecated_modifications',
         'deprecated_fuel',
         'emergency_type',
-		'last_garage_identifier'
+        'last_garage_identifier',
+        'oil_mileage_after',
+        'mileage',
     ];
 
     const PublicGarages = [
-        1 => "Impound",
-        2 => "Impound",
-        3 => "Impound",
-        4 => "Garage A",
-        5 => "Garage B",
-        6 => "Garage C",
-        7 => "Garage D",
-        8 => "Garage E",
-        9 => "Garage F",
+        1  => "Impound",
+        2  => "Impound",
+        3  => "Impound",
+        4  => "Garage A",
+        5  => "Garage B",
+        6  => "Garage C",
+        7  => "Garage D",
+        8  => "Garage E",
+        9  => "Garage F",
         10 => "Garage G",
         11 => "Garage H",
         12 => "Garage I",
@@ -83,7 +85,7 @@ class Vehicle extends Model
         28 => "Sandy Shores (Airfield)",
         29 => "DOC",
         30 => "Garage R",
-        31 => "Garage S"
+        31 => "Garage S",
     ];
 
     /**
@@ -105,6 +107,18 @@ class Vehicle extends Model
         }
 
         return $vehicles[$this->model_name] ?? null;
+    }
+
+    public function oilChangeMiles(): ?int
+    {
+        $milage     = $this->mileage;
+        $oilMileage = $this->oil_mileage_after;
+
+        if ($milage === null || $oilMileage === null) {
+            return null;
+        }
+
+        return $oilMileage - $milage;
     }
 
     /**
@@ -151,21 +165,21 @@ class Vehicle extends Model
             return isset($json[$key]) && is_array($json[$key]) && !empty($json[$key]) && isset($json[$key]['r']) && isset($json[$key]['g']) && isset($json[$key]['b']);
         };
 
-        $json = json_decode($this->deprecated_modifications, true) ?? [];
+        $json    = json_decode($this->deprecated_modifications, true) ?? [];
         $default = '#ffffff';
 
         return [
             'xenon_headlights' => isset($json['modXenon']) && intval($json['modXenon']) === 1,
             'tire_smoke'       => $isColor($json, 'tireSmokeColor')
-                ? $color($json['tireSmokeColor']['r'], $json['tireSmokeColor']['g'], $json['tireSmokeColor']['b'])
-                : $default,
+            ? $color($json['tireSmokeColor']['r'], $json['tireSmokeColor']['g'], $json['tireSmokeColor']['b'])
+            : $default,
             'neon_enabled'     => isset($json['neonEnabled']) && sizeof($json['neonEnabled']) === 4 && $json['neonEnabled'][0] && $json['neonEnabled'][1] && $json['neonEnabled'][2] && $json['neonEnabled'][3],
             'engine'           => isset($json['modEngine']) && is_numeric($json['modEngine']) ? intval($json['modEngine']) + 1 : 0,
             'transmission'     => isset($json['modTransmission']) && is_numeric($json['modTransmission']) ? intval($json['modTransmission']) + 1 : 0,
             'breaks'           => isset($json['modBrakes']) && is_numeric($json['modBrakes']) ? intval($json['modBrakes']) + 1 : 0,
             'neon'             => $isColor($json, 'neonColor')
-                ? $color($json['neonColor']['r'], $json['neonColor']['g'], $json['neonColor']['b'])
-                : $default,
+            ? $color($json['neonColor']['r'], $json['neonColor']['g'], $json['neonColor']['b'])
+            : $default,
             'turbo'            => isset($json['modTurbo']) && intval($json['modTurbo']) === 1,
             'suspension'       => isset($json['modSuspension']) && is_numeric($json['modSuspension']) ? intval($json['modSuspension']) + 1 : 0,
             'armor'            => isset($json['modArmor']) && is_numeric($json['modArmor']) ? intval($json['modArmor']) + 1 : 0,
@@ -185,7 +199,7 @@ class Vehicle extends Model
     public function parseModifications(array $mods): ?string
     {
         $hornMap = self::getHornMap(true);
-        $mods = array_map(function ($m) {
+        $mods    = array_map(function ($m) {
             return is_numeric($m) ? intval($m) : $m;
         }, $mods);
 
@@ -220,19 +234,19 @@ class Vehicle extends Model
         };
         $json = json_decode($this->deprecated_modifications, true) ?? [];
 
-        $json['modXenon'] = $mods['xenon_headlights'] ? 1 : false;
-        $json['tireSmokeColor'] = $color($mods['tire_smoke']);
-        $json['neonEnabled'] = $mods['neon_enabled'] ? [1, 1, 1, 1] : [false, false, false, false];
-        $json['modEngine'] = $mods['engine'] - 1;
+        $json['modXenon']        = $mods['xenon_headlights'] ? 1 : false;
+        $json['tireSmokeColor']  = $color($mods['tire_smoke']);
+        $json['neonEnabled']     = $mods['neon_enabled'] ? [1, 1, 1, 1] : [false, false, false, false];
+        $json['modEngine']       = $mods['engine'] - 1;
         $json['modTransmission'] = $mods['transmission'] - 1;
-        $json['modBrakes'] = $mods['breaks'] - 1;
-        $json['neonColor'] = $color($mods['neon']);
-        $json['modTurbo'] = $mods['turbo'] ? 1 : false;
-        $json['modSuspension'] = $mods['suspension'] - 1;
-        $json['modArmor'] = $mods['armor'] - 1;
-        $json['windowTint'] = $mods['tint'];
-        $json['plateIndex'] = $mods['plate_type'];
-        $json['modHorns'] = $mods['horn'];
+        $json['modBrakes']       = $mods['breaks'] - 1;
+        $json['neonColor']       = $color($mods['neon']);
+        $json['modTurbo']        = $mods['turbo'] ? 1 : false;
+        $json['modSuspension']   = $mods['suspension'] - 1;
+        $json['modArmor']        = $mods['armor'] - 1;
+        $json['windowTint']      = $mods['tint'];
+        $json['plateIndex']      = $mods['plate_type'];
+        $json['modHorns']        = $mods['horn'];
 
         $this->deprecated_modifications = json_encode($json);
 
@@ -248,7 +262,7 @@ class Vehicle extends Model
     public static function getHornMap(bool $validationMap = false): array
     {
         $hornMaps = json_decode(file_get_contents(__DIR__ . '/../helpers/vehicle-horns.json'), true);
-        $horns = [];
+        $horns    = [];
 
         if ($validationMap) {
             foreach ($hornMaps as $map) {
