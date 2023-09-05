@@ -136,10 +136,12 @@ class Player extends Model
             "type"    => "string",
             "default" => "en-us",
             "options" => [
-                "en-us"   => "English",
-                "en-gb"   => "Rude British",
-                "en-cave" => "Caveman Speak",
-                "en-uwu"  => "UwU Language",
+                "en-us"     => "English",
+                "en-gb"     => "Rude British",
+                "en-au"     => "Australian",
+                "en-cave"   => "Caveman Speak",
+                "en-uwu"    => "UwU Language",
+                //"en-pirate" => "Pirate Speak",
             ],
         ],
     ];
