@@ -53,9 +53,9 @@ class Vehicle extends Model
     ];
 
     const PublicGarages = [
-        1 => "Impound Lot",
-        2 => "Impound Lot",
-        3 => "Impound Lot",
+        1 => "Impound",
+        2 => "Impound",
+        3 => "Impound",
         4 => "Garage A",
         5 => "Garage B",
         6 => "Garage C",
@@ -65,7 +65,7 @@ class Vehicle extends Model
         10 => "Garage G",
         11 => "Garage H",
         12 => "Garage I",
-        13 => "Impound Lot",
+        13 => "Impound",
         14 => "Garage J",
         15 => "Garage K",
         16 => "La Fuente Blanca",
@@ -80,9 +80,10 @@ class Vehicle extends Model
         25 => "FIB",
         26 => "Garage P",
         27 => "Garage Q",
-        28 => "Sandy Shores",
+        28 => "Sandy Shores (Airfield)",
         29 => "DOC",
-        30 => "Garage R"
+        30 => "Garage R",
+        31 => "Garage S"
     ];
 
     /**
@@ -111,10 +112,10 @@ class Vehicle extends Model
      *
      * @return string
      */
-    public function garage(): string
+    public function garage(): ?string
     {
         if (intval($this->garage_state) === 0) {
-            return 'Out';
+            return null;
         }
 
         $this->garage_identifier = trim($this->garage_identifier);

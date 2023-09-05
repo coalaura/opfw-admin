@@ -596,7 +596,9 @@
                         </template>
 
                         <template>
-                            <p v-html="t('players.vehicles.parked', vehicle.garage_name)"></p>
+                            <p class="italic" :class="{ 'text-red-700 dark:text-red-300': !vehicle.garage_name, 'text-green-700 dark:text-green-300': vehicle.garage_name }">
+                                {{ getGarageLabel(vehicle.garage_name) }}
+                            </p>
                         </template>
 
                         <template #footer>
@@ -987,6 +989,17 @@ export default {
                 ),
                 stocks: this.t("players.edit.stocks", this.numberFormat(this.character.stocksBalance, 0, true))
             };
+        },
+        getGarageLabel(garage) {
+            if (!garage) {
+                return this.t('players.vehicles.not_parked');
+            } else if (garage === '*') {
+                return this.t('players.vehicles.parked_any');
+            } else if (garage === 'Impound') {
+                return this.t('players.vehicles.impounded');
+            }
+
+            return TouchList.t('players.vehicles.parked', garage);
         },
         getAvailableLicenses() {
             return ["heli", "fw", "cfi", "hw", "hwh", "perf", "management", "military", "utility", "commercial", "special", "hunting", "fishing", "weapon", "mining"].filter(l => !this.character.licenses.includes(l));
