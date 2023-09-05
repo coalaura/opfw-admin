@@ -999,7 +999,7 @@ export default {
                 return this.t('players.vehicles.impounded');
             }
 
-            return TouchList.t('players.vehicles.parked', garage);
+            return this.t('players.vehicles.parked', garage);
         },
         getAvailableLicenses() {
             return ["heli", "fw", "cfi", "hw", "hwh", "perf", "management", "military", "utility", "commercial", "special", "hunting", "fishing", "weapon", "mining"].filter(l => !this.character.licenses.includes(l));
