@@ -583,20 +583,15 @@
             </template>
 
             <template>
-                <div class="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-9">
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9">
                     <card :key="vehicle.id" v-for="(vehicle) in character.vehicles" class="relative">
                         <template #header>
                             <h3 class="mb-2">
-                                {{
-                                    vehicle.display_name ? vehicle.display_name : vehicle.model_name
-                                }}
-                                <sup>{{ vehicle.model_name }}</sup>
+                                {{ vehicle.display_name ? vehicle.display_name : vehicle.model_name }}
+                                <span class="block text-xs font-mono font-normal leading-1 select-all">{{ vehicle.model_name }}</span>
                             </h3>
-                            <h4 class="text-primary dark:text-dark-primary">
-                                <span>{{ t('players.vehicles.plate') }}:</span> {{ vehicle.plate }}
-                            </h4>
-                            <h4 class="text-primary dark:text-dark-primary">
-                                <span>{{ t('players.vehicles.vehicle_id') }}:</span> {{ vehicle.id }}
+                            <h4 class="text-blue-700 dark:text-blue-300 font-semibold">
+                                {{ vehicle.id }} <span class="text-gray-500">/</span> {{ vehicle.plate }}
                             </h4>
                         </template>
 
@@ -605,18 +600,22 @@
                         </template>
 
                         <template #footer>
-                            <inertia-link class="block px-4 py-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventories/vehicle/' + vehicle.id">
+                            <inertia-link class="block px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventories/vehicle/' + vehicle.id">
                                 <i class="fas fa-briefcase mr-1"></i>
                                 {{ t('inventories.view') }}
                             </inertia-link>
-                            <inertia-link class="block px-4 py-3 text-center text-white mt-3 bg-warning dark:bg-dark-warning rounded" @click="startEditVehicle($event, vehicle)" href="#" v-if="$page.auth.player.isSuperAdmin">
-                                <i class="fas fa-trash-alt mr-1"></i>
-                                {{ t('players.characters.vehicle.confirm') }}
-                            </inertia-link>
-                            <inertia-link class="block px-4 py-3 text-center text-white mt-3 bg-red-600 dark:bg-red-400 rounded" @click="deleteVehicle($event, vehicle.id)" href="#" v-if="$page.auth.player.isSuperAdmin">
-                                <i class="fas fa-trash-alt mr-1"></i>
-                                {{ t('global.delete') }}
-                            </inertia-link>
+
+                            <div class="flex justify-between gap-2 w-full" v-if="$page.auth.player.isSuperAdmin">
+                                <inertia-link class="block w-full px-3 py-2 text-center text-white mt-3 bg-warning dark:bg-dark-warning rounded" @click="startEditVehicle($event, vehicle)" href="#">
+                                    <i class="fas fa-wrench mr-1"></i>
+                                    {{ t('players.characters.vehicle.confirm') }}
+                                </inertia-link>
+
+                                <inertia-link class="block w-full px-3 py-2 text-center text-white mt-3 bg-red-600 dark:bg-red-400 rounded" @click="deleteVehicle($event, vehicle.id)" href="#">
+                                    <i class="fas fa-trash-alt mr-1"></i>
+                                    {{ t('global.delete') }}
+                                </inertia-link>
+                            </div>
 
                             <button class="block px-2 w-ch-button py-1 text-center text-white absolute top-1 left-1 bg-yellow-400 dark:bg-yellow-400 rounded cursor-pointer" :title="t('players.characters.vehicle.reset_last_garage')" v-if="$page.auth.player.isSuperAdmin" @click="resetLastGarage(vehicle.id, false)">
                                 <i class="fas fa-parking"></i>
@@ -656,29 +655,25 @@
             </template>
 
             <template>
-                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-9">
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9">
                     <card :key="property.property_id" v-for="(property) in character.properties" :no_body="true">
                         <template #header>
                             <h3 class="mb-2">
                                 {{ property.property_address }}
                                 <sup>{{ property.property_id }}</sup>
                             </h3>
-                            <h4 class="text-primary dark:text-dark-primary">
-                                <span>{{ t('players.properties.cost') }}:</span>
-                                {{ numberFormat(property.property_cost, 0, true) }}
+                            <h4 class="text-blue-700 dark:text-blue-300 font-semibold">
+                                <span :title="t('players.properties.cost')">{{ numberFormat(property.property_cost, 0, true) }}</span>
+                                <span class="text-gray-500">/</span>
+                                <span :title="t('players.properties.rent')">{{ numberFormat(property.property_income, 0, true) }}</span>
                             </h4>
-                            <h4 class="text-primary dark:text-dark-primary">
-                                <span>{{ t('players.properties.rent') }}:</span>
-                                {{ numberFormat(property.property_income, 0, true) }}
-                            </h4>
-                            <h4 class="text-primary dark:text-dark-primary">
-                                <span>{{ t('players.properties.expires') }}:</span>
+                            <h4 class="text-gray-700 dark:text-gray-300 font-normal text-sm italic" :title="t('players.properties.paid_till')">
                                 {{ (property.property_last_pay + (7 * 24 * 60 * 60)) * 1000 | formatTime(true) }}
                             </h4>
                         </template>
 
                         <template #footer>
-                            <inertia-link class="block px-4 py-3 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventories/property/' + property.property_id">
+                            <inertia-link class="block px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventories/property/' + property.property_id">
                                 <i class="fas fa-briefcase mr-1"></i>
                                 {{ t('inventories.view') }}
                             </inertia-link>
@@ -694,21 +689,21 @@
                 <h3 class="mb-4 mt-5 pt-5 border-t-2 border-dashed border-gray-500">
                     {{ t('players.properties.properties_shared') }}
                 </h3>
-                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-9" v-if="character.accessProperties.length > 0">
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9" v-if="character.accessProperties.length > 0">
                     <card :key="property.property_id" v-for="(property) in character.accessProperties" :no_body="true">
                         <template #header>
                             <h3 class="mb-2">
                                 {{ property.property_address }}
                                 <sup>{{ property.property_id }}</sup>
                             </h3>
-                            <h4 class="text-primary dark:text-dark-primary">
+                            <h4 class="text-blue-700 dark:text-blue-300 font-semibold">
                                 <span>{{ t('players.properties.access_level') }}:</span>
                                 {{ property.keys["c_" + character.id] || "N/A" }}
                             </h4>
                         </template>
 
                         <template #footer>
-                            <inertia-link class="block px-4 py-3 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventories/property/' + property.property_id">
+                            <inertia-link class="block px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventories/property/' + property.property_id">
                                 <i class="fas fa-briefcase mr-1"></i>
                                 {{ t('inventories.view') }}
                             </inertia-link>
@@ -730,21 +725,22 @@
             </template>
 
             <template>
-                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-9">
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9">
                     <card :key="motel.id" v-for="(motel) in motels" :no_body="true" class="relative">
                         <template #header>
                             <h3 class="mb-2">
                                 {{ motel.motel }} #{{ motel.room_id }}
                             </h3>
-                            <h4 class="text-primary dark:text-dark-primary">
-                                <span>{{ t('players.motels.expires') }}:</span> {{ motel.expire | formatTime(true) }}
+                            <h4 class="text-gray-700 dark:text-gray-300 font-normal text-sm italic" :title="t('players.motels.paid_till')">
+                                {{ motel.expire | formatTime(true) }}
                             </h4>
                         </template>
                         <template #footer>
                             <inertia-link class="block px-2 py-1 text-center text-white absolute top-1 right-1 bg-blue-600 dark:bg-blue-400 rounded" v-if="motel.motel in motelMap" :href="'/inventory/motel-' + motelMap[motel.motel] + '-' + motel.room_id + ':1'" :title="t('inventories.show_motel')">
                                 <i class="fas fa-archive"></i>
                             </inertia-link>
-                            <inertia-link class="block px-4 py-3 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventories/motel/' + motel.id">
+
+                            <inertia-link class="block px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventories/motel/' + motel.id">
                                 <i class="fas fa-briefcase mr-1"></i>
                                 {{ t('inventories.view') }}
                             </inertia-link>

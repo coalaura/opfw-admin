@@ -914,13 +914,13 @@
 			"none_access": "This character does not have shared access to any properties.",
             "cost": "Maintenance Cost",
             "rent": "Rent",
-            "expires": "Expires",
+            "paid_till": "Rent paid till",
 			"access_level": "Access Level"
         },
         "motels": {
             "motels": "Motels",
             "none": "This character does not have access to any motels.",
-            "expires": "Expires"
+            "paid_till": "Rent paid till"
         },
         "characters": {
             "characters": "Characters",
@@ -981,7 +981,7 @@
                 "edit": "Pimp my Ride™",
                 "owner": "Owner CID",
                 "plate": "Plate",
-                "confirm": "Edit Vehicle",
+                "confirm": "Edit",
 				"reset_last_garage": "Move vehicle to garage C (also moves it out of the impound lot).",
 				"reset_garage_state": "Reset vehicle last garage and garage state (Makes it withdrawable from anywhere for free).",
 				"full_reset_confirm": "Are you sure you want to reset this vehicles last garage and garage state?",

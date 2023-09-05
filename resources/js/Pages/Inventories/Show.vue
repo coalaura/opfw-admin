@@ -39,7 +39,7 @@
             </template>
 
             <template>
-                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-9 max-w-screen-lg"
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9 max-w-screen-lg"
                      v-if="inventory.type === 'character' || inventory.type === 'locker-police' || inventory.type === 'locker-mechanic' || inventory.type === 'locker-ems'">
                     <card v-if="inventory.character">
                         <template #header>
@@ -80,7 +80,7 @@
                         </template>
                     </card>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-9 max-w-screen-lg"
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9 max-w-screen-lg"
                      v-else-if="inventory.type === 'trunk' || inventory.type === 'glovebox'">
                     <card v-if="inventory.vehicle">
                         <template #header>
@@ -191,7 +191,7 @@
                     </card>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-9 max-w-screen-lg"
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9 max-w-screen-lg"
                      v-else-if="inventory.type === 'property'">
                     <card v-if="inventory.property">
                         <template #header>
@@ -299,7 +299,7 @@
                     </card>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-9 max-w-screen-lg"
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9 max-w-screen-lg"
                      v-else-if="inventory.type === 'motel'">
                     <card v-if="inventory.character">
                         <template #header>
