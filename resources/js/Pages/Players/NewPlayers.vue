@@ -245,7 +245,7 @@ export default {
             this.isLoading = true;
             try {
                 await this.$inertia.replace('/new_players', {
-                    data: this.filters,
+                    data: this.filters.clean(),
                     preserveState: true,
                     preserveScroll: true,
                     only: ['players'],

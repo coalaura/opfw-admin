@@ -6,3 +6,17 @@ Number.prototype.toFixed = function(digits) {
 
     return fixed.replace(/\.?0+$/, '');
 };
+
+Object.prototype.clean = function() {
+    const clean = {};
+
+    for (const key in this) {
+        const value = this[key];
+
+        if (value !== undefined && value !== null && value !== '' && value !== NaN) {
+            clean[key] = value;
+        }
+    }
+
+    return clean;
+};

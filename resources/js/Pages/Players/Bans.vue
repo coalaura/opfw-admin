@@ -180,7 +180,7 @@ export default {
 
             try {
                 await this.$inertia.replace(window.location.pathname, {
-                    data: this.filters,
+                    data: this.filters.clean(),
                     preserveState: true,
                     preserveScroll: true,
                     only: ['players', 'staff', 'links', 'page'],

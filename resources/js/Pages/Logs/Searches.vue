@@ -247,7 +247,7 @@ export default {
                 }
 
                 await this.$inertia.replace('/searches', {
-                    data: this.filters,
+                    data: this.filters.clean(),
                     preserveState: true,
                     preserveScroll: true,
                     only: ['logs', 'playerMap', 'links', 'page'],

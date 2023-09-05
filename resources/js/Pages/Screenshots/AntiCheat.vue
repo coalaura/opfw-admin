@@ -188,7 +188,7 @@ export default {
             this.isLoading = true;
             try {
                 await this.$inertia.replace('/anti_cheat', {
-                    data: this.filters,
+                    data: this.filters.clean(),
                     preserveState: true,
                     preserveScroll: true,
                     only: ['screenshots', 'banMap', 'links', 'page'],
