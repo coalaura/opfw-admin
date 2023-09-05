@@ -1,7 +1,5 @@
-const toFixed = Number.prototype.toFixed;
-
 Number.prototype.toFixed = digits => {
-    const fixed = toFixed.call(this, digits);
+    const fixed = Math.round(this * Math.pow(10, digits)) / Math.pow(10, digits);
 
-    return fixed.replace(/\.?0+$/, '');
+    return fixed.toString().replace(/\.?0+$/, '');
 };
