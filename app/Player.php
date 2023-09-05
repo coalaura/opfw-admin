@@ -137,6 +137,7 @@ class Player extends Model
             "default" => "en-us",
             "options" => [
                 "en-us"   => "English",
+                "en-gb"   => "Rude British",
                 "en-cave" => "Caveman Speak",
                 "en-uwu"  => "UwU Language",
             ],
