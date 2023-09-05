@@ -910,8 +910,8 @@
             "none": "This character does not own any vehicles.",
             "delete_vehicle": "Are you sure you want to delete this vehicle?",
 			"vehicle_value": "Total value of owned vehicles",
-            "oil_change": "Oil change due in {0} miles.",
-            "oil_change_needed": "Oil change needed."
+            "oil_change": "Oil change is due in {0} miles.",
+            "oil_change_needed": "Oil change is needed."
         },
         "properties": {
             "properties": "Properties",

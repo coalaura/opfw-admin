@@ -22,6 +22,8 @@ import Toast from "vue-toastification";
 import 'vue-toastification/dist/index.css';
 import 'vue-search-select/dist/VueSearchSelect.css';
 
+import './scripts/overrides.js';
+
 // Directives.
 Vue.directive('linkified', linkify);
 
