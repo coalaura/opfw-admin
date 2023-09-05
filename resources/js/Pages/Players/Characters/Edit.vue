@@ -565,21 +565,21 @@
         <!-- Vehicles -->
         <v-section :noFooter="true">
             <template #header>
-                <h2>
-                    {{ t('players.vehicles.vehicles') }}
+                <div class="flex justify-between">
+                    <h2>
+                        {{ character.vehicles.length > 0 ? t('players.vehicles.vehicles', character.vehicles.length) : t('players.vehicles.no_vehicles') }}
 
-                    <sup v-if="character.vehicles.length > 0" class="align-top text-xs static">({{ character.vehicles.length }})</sup>
-
-                    <sup :title="t('players.vehicles.vehicle_value')" class="align-top text-xs static">
-                        {{ totalVehicleValue }}
-                    </sup>
+                        <sup :title="t('players.vehicles.vehicle_value')" class="font-mono text-xs -top-6">
+                            {{ totalVehicleValue }}
+                        </sup>
+                    </h2>
 
                     <!-- Add Vehicle -->
-                    <button class="px-3 py-2 font-semibold text-white rounded bg-success dark:bg-dark-success text-base ml-5" @click="isVehicleAdd = true" v-if="$page.auth.player.isSuperAdmin">
-                        <i class="fas fa-car"></i>
+                    <button class="block px-5 py-2 font-semibold text-center text-white rounded bg-success dark:bg-dark-success text-base" @click="isVehicleAdd = true" v-if="$page.auth.player.isSuperAdmin">
+                        <i class="fas fa-plus"></i>
                         {{ t('players.characters.vehicle.add') }}
                     </button>
-                </h2>
+                </div>
             </template>
 
             <template>
@@ -656,11 +656,12 @@
 
             <template>
                 <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9">
-                    <card :key="property.property_id" v-for="(property) in character.properties" :no_body="true">
+                    <card :key="property.property_id" v-for="(property) in character.properties" :no_body="true" class="relative">
                         <template #header>
+                            <div class="absolute top-1 right-1 select-all font-bold text-sm">{{ property.property_id }}</div>
+
                             <h3 class="mb-2">
                                 {{ property.property_address }}
-                                <sup>{{ property.property_id }}</sup>
                             </h3>
                             <h4 class="text-blue-700 dark:text-blue-300 font-semibold">
                                 <span :title="t('players.properties.cost')">{{ numberFormat(property.property_cost, 0, true) }}</span>
@@ -690,11 +691,12 @@
                     {{ t('players.properties.properties_shared') }}
                 </h3>
                 <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9" v-if="character.accessProperties.length > 0">
-                    <card :key="property.property_id" v-for="(property) in character.accessProperties" :no_body="true">
+                    <card :key="property.property_id" v-for="(property) in character.accessProperties" :no_body="true" class="relative">
                         <template #header>
+                            <div class="absolute top-1 right-1 select-all font-bold text-sm">{{ property.property_id }}</div>
+
                             <h3 class="mb-2">
                                 {{ property.property_address }}
-                                <sup>{{ property.property_id }}</sup>
                             </h3>
                             <h4 class="text-blue-700 dark:text-blue-300 font-semibold">
                                 <span>{{ t('players.properties.access_level') }}:</span>

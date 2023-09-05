@@ -899,7 +899,8 @@
             "set": "Update Job"
         },
         "vehicles": {
-            "vehicles": "Vehicles",
+            "vehicles": "{0} Vehicle(s)",
+            "no_vehicles": "No Vehicles",
             "plate": "Plate Number",
             "vehicle_id": "Vehicle ID",
             "parked": "Parked at <i>{0}</i>",
@@ -988,7 +989,7 @@
 				"reset_last_garage_confirm": "Are you sure you want to reset this vehicles last garage?",
                 "pd_emergency": "PD Vehicle",
                 "ems_emergency": "EMS Vehicle",
-                "add": "Add Vehicle",
+                "add": "Add",
                 "model": "Model Name",
                 "xenon_headlights": "Xenon Headlights",
                 "tire_smoke": "Tire Smoke Color",
