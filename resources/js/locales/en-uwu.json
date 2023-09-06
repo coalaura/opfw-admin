@@ -893,14 +893,14 @@
             "no_vehicles": "Sowwy, buwt youwu don't have any vewicwes",
             "plate": "Pwate Numbew",
             "vehicle_id": "Vewicwe ID",
-            "parked": "Youwu cawn find youwu vewicwe hewe: {0}",
+            "parked": "Youwu cawn find youwu vewicwe hewe: <b>{0}</b>",
             "not_parked": "youwu vewicwe is nowt pawked",
             "parked_any": "youwu cawn pawk youwu vewicwe anywhewe!",
             "impounded": "youwu vewicwe has been impounded",
             "none": "this chawactew doesn't own any vewicwes, so tah-tah",
             "delete_vehicle": "aweye youwu suwe youwu wanna dewete this vewicwe?",
             "vehicle_value": "Nyaa~! Total vawue of owned vehicwes",
-            "oil_change": "OwO Oiw change is due in {0} miwes.",
+            "oil_change": "OwO Oiw change is due in <b>{0}</b> miwes.",
             "oil_change_needed": "OwO Oiw change is nyecessawy."
         },
         "properties": {

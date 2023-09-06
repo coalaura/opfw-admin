@@ -597,13 +597,8 @@
 
                         <template>
                             <p class="italic">
-                                <span :class="vehicle.garage_name ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'">
-                                    {{ getGarageLabel(vehicle.garage_name) }}
-                                </span>
-
-                                <span v-if="vehicle.oil !== null" :class="vehicle.oil > 0 ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'">
-                                    {{ vehicle.oil > 0 ? t('players.vehicles.oil_change', vehicle.oil.toFixed(1)) : t('players.vehicles.oil_change_needed') }}
-                                </span>
+                                <span :class="vehicle.garage_name ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'" v-html="getGarageLabel(vehicle.garage_name)"></span>
+                                <span v-if="vehicle.oil !== null" :class="vehicle.oil > 0 ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'" v-html="getOilLabel(vehicle.oil)"></span>
                             </p>
                         </template>
 
@@ -806,7 +801,7 @@ export default {
             required: true,
         },
         jobs: {
-            type: Object,
+            type: [Object, Array],
             required: true,
         },
         motelMap: {
@@ -1006,6 +1001,13 @@ export default {
             }
 
             return this.t('players.vehicles.parked', garage);
+        },
+        getOilLabel(oil) {
+            if (oil > 0) {
+                return this.t('players.vehicles.oil_change', oil.toFixed(1));
+            }
+
+            return this.t('players.vehicles.oil_change_needed');
         },
         getAvailableLicenses() {
             return ["heli", "fw", "cfi", "hw", "hwh", "perf", "management", "military", "utility", "commercial", "special", "hunting", "fishing", "weapon", "mining"].filter(l => !this.character.licenses.includes(l));

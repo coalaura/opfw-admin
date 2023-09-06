@@ -893,14 +893,14 @@
             "no_vehicles": "No Tin Can",
             "plate": "Number Plate",
             "vehicle_id": "Car ID",
-            "parked": "Chucked It at {0}.",
+            "parked": "Chucked It at <b>{0}</b>.",
             "not_parked": "This Bloody Car Ain't Parked, Mate.",
             "parked_any": "This Car Can Be Yanked Anywhere.",
             "impounded": "This Car's Been Knocked Off.",
             "none": "Ah, mate! This bloke doesn't have any sick whips, aye.",
             "delete_vehicle": "Oi, reckon you wanna chuck this vehicle in the bin, mate?",
             "vehicle_value": "Mate, add up the total value of all them wheels this bloke owns.",
-            "oil_change": "Oi, the oil needs changing in this rig in {0} miles.",
+            "oil_change": "Oi, the oil needs changing in this rig in <b>{0}</b> miles.",
             "oil_change_needed": "Oi, get the oil changed, mate. It's way overdue."
         },
         "properties": {

@@ -904,14 +904,14 @@
             "no_vehicles": "No Vehicles",
             "plate": "Plate Number",
             "vehicle_id": "Vehicle ID",
-            "parked": "Parked at {0}.",
+            "parked": "Parked at <b>{0}</b>.",
             "not_parked": "Vehicle is not parked.",
             "parked_any": "Vehicle can be withdrawn anywhere.",
             "impounded": "Vehicle is impounded.",
             "none": "This character does not own any vehicles.",
             "delete_vehicle": "Are you sure you want to delete this vehicle?",
 			"vehicle_value": "Total value of owned vehicles",
-            "oil_change": "Oil change is due in {0} miles.",
+            "oil_change": "Oil change is due in <b>{0}</b> miles.",
             "oil_change_needed": "Oil change is needed."
         },
         "properties": {

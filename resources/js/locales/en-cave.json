@@ -893,14 +893,14 @@
             "no_vehicles": "No Big Rocks",
             "plate": "Big Rock Markings",
             "vehicle_id": "Big Rock ID",
-            "parked": "Big Rock Parked at {0}.",
+            "parked": "Big Rock Parked at <b>{0}</b>.",
             "not_parked": "Big Rock not Parked.",
             "parked_any": "Big Rock can be taken anywhere.",
             "impounded": "Big Rock taken by Prehistoric Police.",
             "none": "Ugga ugga. This character no have cars.",
             "delete_vehicle": "Ugga? You want delete this car?",
             "vehicle_value": "Total value of cave character's cars.",
-            "oil_change": "Ugga ugga. Oil change due in {0} miles.",
+            "oil_change": "Ugga ugga. Oil change due in <b>{0}</b> miles.",
             "oil_change_needed": "Ugga! Need oil change."
         },
         "properties": {

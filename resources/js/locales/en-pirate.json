@@ -894,14 +894,14 @@
             "no_vehicles": "No Ships",
             "plate": "Pirate Code",
             "vehicle_id": "Ship's Log",
-            "parked": "Moored at {0}.",
+            "parked": "Moored at <b>{0}</b>.",
             "not_parked": "Ship be not moored.",
             "parked_any": "Ship can be plundered anywhere.",
             "impounded": "Ship be impounded.",
             "none": "Yo ho ho! This scallywag doesn't be owning any sea vessels.",
             "delete_vehicle": "Be ye sure ye be wantin' to scuttle this vessel?",
             "vehicle_value": "Total booty value of owned vessels",
-            "oil_change": "Arr, ye be needin' an oil change in {0} nautical miles.",
+            "oil_change": "Arr, ye be needin' an oil change in <b>{0}</b> nautical miles.",
             "oil_change_needed": "Arrr, ye be needin' an oil change!"
         },
         "properties": {

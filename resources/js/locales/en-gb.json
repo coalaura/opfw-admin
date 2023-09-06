@@ -893,14 +893,14 @@
             "no_vehicles": "No Bleedin' Vehicles",
             "plate": "Bleedin' Plate Number",
             "vehicle_id": "Bleedin' Vehicle ID",
-            "parked": "Bloody Parked at {0}.",
+            "parked": "Bloody Parked at <b>{0}</b>.",
             "not_parked": "Bleedin' Vehicle ain't bloody parked.",
             "parked_any": "Bleedin' Vehicle can be bloody withdrawn anywhere.",
             "impounded": "Bleedin' Vehicle's bleeding impounded.",
             "none": "This wanker doesn't bloody own any bleedin' vehicles.",
             "delete_vehicle": "Oi mate, ya reckon ya wanna delete this piece of shit car or what? Make up yer bloody mind.",
             "vehicle_value": "Fookin' 'ell, look at the total value of these posh vehicles this tosser 'as.",
-            "oil_change": "Oi, the bloody oil change is due in {0} miles, ya lazy bugger.",
+            "oil_change": "Oi, the bloody oil change is due in <b>{0}</b> miles, ya lazy bugger.",
             "oil_change_needed": "Get off yer arse and change the bloody oil, ya wanker."
         },
         "properties": {
