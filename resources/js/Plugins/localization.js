@@ -81,7 +81,7 @@ const Localization = {
                 options['currency'] = 'USD';
             }
 
-            const formatter = new Intl.NumberFormat(this.t('locale'), options);
+            const formatter = new Intl.NumberFormat("en-US", options);
 
             return formatter.format(number);
         };
