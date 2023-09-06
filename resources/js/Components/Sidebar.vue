@@ -121,7 +121,7 @@ export default {
                         },
                         {
                             label: 'casino.title',
-                            icon: 'poker',
+                            icon: 'chess',
                             url: '/casino',
                         },
                         {
