@@ -143,6 +143,7 @@ class Player extends Model
                 "en-uwu"    => "UwU Language",
                 "en-pirate" => "Pirate Speak",
                 "en-us_s"   => "Southern Accent",
+                "en-emoji"  => "Emojis",
             ],
         ],
     ];
