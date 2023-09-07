@@ -488,13 +488,7 @@ class AdvancedSearchController extends Controller
             ->get()->toArray();
 
         if (empty($data)) {
-            $data = WeaponDamageEvent::query()
-                ->select([DB::raw('COUNT(DISTINCT license_identifier) as count'), 'weapon_damage', 'ban_hash'])
-                ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
-                ->whereIn('weapon_type', [$hash, $unsigned])
-                ->where('hit_players', '!=', '[]')
-                ->groupBy(['weapon_damage', 'ban_hash'])
-                ->get()->toArray();
+            return $this->json(false, null, 'No data');
         }
 
         $dmgBanned = [];
