@@ -542,6 +542,7 @@ class AdvancedSearchController extends Controller
 
         return $this->json(true, [
             'damages' => $damages,
+            'hashes' => [$hash, $unsigned]
         ]);
     }
 
