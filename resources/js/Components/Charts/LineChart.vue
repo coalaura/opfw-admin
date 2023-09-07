@@ -6,7 +6,8 @@ import ChartTrendline from 'chartjs-plugin-trendline';
 export default {
     extends: Line,
     data() {
-        const _this = this;
+        const gridColor = this.isDarkMode() ? "rgba(180, 180, 180, 0.3)" : "rgba(128, 128, 128, 0.3)",
+            textColor = this.isDarkMode() ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)";
 
         let options = {
             devicePixelRatio: 2,
@@ -16,11 +17,12 @@ export default {
                 yAxes: [{
                     display: true,
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        fontColor: textColor
                     },
                     gridLines: {
                         display: true,
-                        color: "rgba(128, 128, 128, 0.3)"
+                        color: gridColor
                     },
                     stacked: this.stacked
                 }],
@@ -37,7 +39,8 @@ export default {
             title: {
                 display: true,
                 text: this.title,
-                fontSize: 13
+                fontSize: 13,
+                fontColor: textColor
             },
             tooltips: {
                 mode: 'index',
@@ -65,13 +68,13 @@ export default {
 
         if (this.isCasinoChart) {
             options.tooltips.callbacks = {
-                label: function (tooltipItem, data) {
-                    const label = _this.labels[tooltipItem.datasetIndex];
+                label: (tooltipItem, data) => {
+                    const label = this.labels[tooltipItem.datasetIndex];
 
                     if (tooltipItem.datasetIndex === 4) {
-                        tooltipItem.yLabel = _this.numberFormat(tooltipItem.yLabel, 2, false) + '%';
+                        tooltipItem.yLabel = this.numberFormat(tooltipItem.yLabel, 2, false) + '%';
                     } else {
-                        tooltipItem.yLabel = _this.numberFormat(tooltipItem.yLabel, 2, true);
+                        tooltipItem.yLabel = this.numberFormat(tooltipItem.yLabel, 2, true);
                     }
 
                     return label + ': ' + tooltipItem.yLabel;
