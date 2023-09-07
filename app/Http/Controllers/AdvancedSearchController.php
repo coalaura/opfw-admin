@@ -527,7 +527,7 @@ class AdvancedSearchController extends Controller
 
             if ($normal === 0 && $banned === 0) continue;
 
-            if (!$index && $normal == $damages['max']) {
+            if (!$index && $normal === $damages['max']) {
                 $index = sizeof($damages['labels']);
             }
 
