@@ -481,14 +481,21 @@ class AdvancedSearchController extends Controller
         $data = WeaponDamageEvent::query()
             ->select([DB::raw('COUNT(DISTINCT license_identifier) as count'), 'weapon_damage', 'ban_hash'])
             ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
-            ->where('weapon_damage_events.timestamp' , '>', time() - 60 * 60 * 24 * 120)
+            ->where('weapon_damage_events.timestamp', '>', time() - 60 * 60 * 24 * 120)
             ->whereIn('weapon_type', [$hash, $unsigned])
             ->where('hit_players', '!=', '[]')
             ->groupBy(['weapon_damage', 'ban_hash'])
             ->get()->toArray();
 
-        // Ensure we have at least one entry
-        $data[] = ['count' => 0, 'weapon_damage' => 0, 'ban_hash' => null];
+        if (empty($data)) {
+            $data = WeaponDamageEvent::query()
+                ->select([DB::raw('COUNT(DISTINCT license_identifier) as count'), 'weapon_damage', 'ban_hash'])
+                ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
+                ->whereIn('weapon_type', [$hash, $unsigned])
+                ->where('hit_players', '!=', '[]')
+                ->groupBy(['weapon_damage', 'ban_hash'])
+                ->get()->toArray();
+        }
 
         $dmgBanned = [];
         $dmgNormal = [];
@@ -546,7 +553,7 @@ class AdvancedSearchController extends Controller
 
         return $this->json(true, [
             'damages' => $damages,
-            'hashes' => [$hash, $unsigned]
+            'hashes'  => [$hash, $unsigned],
         ]);
     }
 
