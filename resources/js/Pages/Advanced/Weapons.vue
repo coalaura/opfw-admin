@@ -38,7 +38,12 @@
             </template>
         </v-section>
 
-        <!-- Table -->
+        <v-section class="overflow-x-auto" v-if="error" :noHeader="true" :noFooter="true">
+            <template>
+                <p class="text-red-500 font-semibold">{{ error }}</p>
+            </template>
+        </v-section>
+
         <v-section class="overflow-x-auto" v-if="weaponData" :noHeader="true" :noFooter="true">
             <template>
                 <p class="text-muted dark:text-dark-muted mb-3" v-html="damageDescription"></p>
@@ -82,6 +87,7 @@ export default {
 
             weaponList: weaponList,
             weaponData: null,
+            error: false,
 
             damageHighlights: []
         };
@@ -126,6 +132,8 @@ export default {
 
                 if (data && data.data && data.status) {
                     this.weaponData = data.data;
+                } else {
+                    this.error = data?.message || 'Unknown error';
                 }
             } catch (e) {
                 console.error(e);
