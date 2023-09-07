@@ -520,7 +520,7 @@ class AdvancedSearchController extends Controller
             'max'        => $max[1],
             'highlights' => [
                 ['from' => false, 'to' => min($max[0] + 1, $len - 1), 'color' => 'rgba(50, 255, 50, 0.1)'],
-                ['from' => min($max[0] + 1, $len - 1), 'to' => false, 'color' => 'rgba(255, 50, 50, 0.1)'],
+                ['from' => min($max[0] + 2, $len - 1), 'to' => false, 'color' => 'rgba(255, 50, 50, 0.1)'],
             ],
         ];
 
