@@ -487,6 +487,9 @@ class AdvancedSearchController extends Controller
             ->groupBy(['weapon_damage', 'ban_hash'])
             ->get()->toArray();
 
+        // Ensure we have at least one entry
+        $data[] = ['count' => 0, 'weapon_damage' => 0, 'ban_hash' => null];
+
         $dmgBanned = [];
         $dmgNormal = [];
 
