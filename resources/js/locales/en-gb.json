@@ -1201,5 +1201,14 @@
         "title": "Login with your sodding Discord account.",
         "description": "Oi, login with the same bloody Discord account that is linked to the wanker user you have your staff permissions on. If you use a bloody different one, you won't be able to access the server panel, you twat.",
         "login": "Bugger off with Discord"
+    },
+    "weapons": {
+        "title": "Bloody Weapon Bollocks",
+        "description": "Bollocks, let's check out these bloody weapons and their bleedin' stats.",
+        "search": "Gobshite",
+        "damages": "Bloody Damage Breakdown",
+        "damage_description": "<i>{0}</i> usually bashes 'em for around {1}, but never more than about {2} damage.",
+        "damage_normal": "Normal Arse",
+        "damage_banned": "Banned and Bollocks"
     }
 }

@@ -1201,5 +1201,14 @@
         "title": "Login with y'alls Discord account, sugah.",
         "description": "Please login with the same Discord account that's linked to the user y'all got them staff permissions on. Usin' a different one'll result in y'all not bein' able to access the server panel, now.",
         "login": "Y'all come on in with Discord, bless your heart"
+    },
+    "weapons": {
+        "title": "Gun Knowledge",
+        "description": "Dig up info 'bout guns 'n their stats.",
+        "search": "Hunt",
+        "damages": "Ass-Kickin' Distribution",
+        "damage_description": "<i>{0}</i> us'ally do 'bout {1} 'n no more 'n 'bout {2} damage.",
+        "damage_normal": "Regular",
+        "damage_banned": "Forbidden"
     }
 }

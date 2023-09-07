@@ -1201,5 +1201,14 @@
         "title": "Wogin with youw Discord account.",
         "description": "Pwease wogin with the same Discord account that is winked to the usew you have youw staff pewmissions on. Using a diffewent one wiww wesuwt in you not being abwe to access the sewvew panew.",
         "login": "Wogin with Discord UwU"
+    },
+    "weapons": {
+        "title": "Wewapon Info",
+        "description": "Wookup weapons and theiw stats.",
+        "search": "Seawch",
+        "damages": "Damage Distwibution",
+        "damage_description": "<i>{0}</i> usuawwy does abouwt {1} and not mowe than abouwt {2} damage.",
+        "damage_normal": "Nyowmal",
+        "damage_banned": "Bwanned"
     }
 }

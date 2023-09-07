@@ -1201,5 +1201,14 @@
         "title": "Login using your cave man word account.",
         "description": "Make talk with same cave man word account like staff-guy do. If different, no access to server panel for you.",
         "login": "Ugga ugga, join tribe with grunt-link"
+    },
+    "weapons": {
+        "title": "Club Thunk Thunk",
+        "description": "Find club and look smash stats.",
+        "search": "Find",
+        "damages": "Thunk Distribution",
+        "damage_description": "<i>{0}</i> usual ooga booga around {1} thunk thunk, no more than {2} thunk.",
+        "damage_normal": "Ooga",
+        "damage_banned": "No thunk thunk"
     }
 }

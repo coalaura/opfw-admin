@@ -44,7 +44,6 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\TwitterController;
 use App\Http\Controllers\LoadingScreenController;
-use App\Http\Controllers\WeaponController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -257,8 +256,6 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/graph/gems', [GraphController::class, 'minedGems']);
 
     Route::get('/test/test', [TestController::class, 'test']);
-
-    Route::get('/weapon/{weapon}', [WeaponController::class, 'weaponDamage']);
 
     // API.
     Route::get('/api/crafting', [ApiController::class, 'crafting']);

@@ -1202,5 +1202,14 @@
         "title": "Set yer sails an' login wit' yer Discord account.",
         "description": "Arr, matey! Login wit' th' same Discord account that be linked t' th' scurvy dog ye be holdin' yer staff permissions on. Usin' a different one will result in ye not bein' able t' access th' server panel.",
         "login": "Set Sail with Discord"
+    },
+    "weapons": {
+        "title": "Weapon Intelligence",
+        "description": "Scour weapons 'n' thar stats.",
+        "search": "Scour",
+        "damages": "Boom Distribution",
+        "damage_description": "<i>{0}</i> usually be dishin' out 'bout {1} 'n' nothin' more than 'bout {2} damage.",
+        "damage_normal": "Regular",
+        "damage_banned": "Doomed"
     }
 }

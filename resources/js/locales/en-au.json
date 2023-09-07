@@ -1201,5 +1201,14 @@
         "title": "Chuck a login with your bloody Discord account.",
         "description": "Strewth, mate! Login with the same bloody Discord account that's linked to the user with your staff permissions. If you use another one, you won't be able to get into the bloody server panel.",
         "login": "Chuck a yewy with Discord"
+    },
+    "weapons": {
+        "title": "Bloody Weapon Info, Mate",
+        "description": "Look up shanks and their bloody stats.",
+        "search": "Have a Geez",
+        "damages": "Bloody Damage Distribution",
+        "damage_description": "<i>{0}</i> usually does 'bout {1} damage, and it won't go over 'bout {2} damage.",
+        "damage_normal": "Fair Dinkum",
+        "damage_banned": "No Bloody Good"
     }
 }
