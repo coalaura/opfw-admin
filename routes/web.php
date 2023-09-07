@@ -148,6 +148,8 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Advanced search.
     Route::get('/advanced', [AdvancedSearchController::class, 'index']);
+    Route::get('/weapons', [AdvancedSearchController::class, 'weapons']);
+    Route::get('/weapons/{hash}', [AdvancedSearchController::class, 'searchWeapons']);
 
     Route::group(['middleware' => ['super-admin']], function () {
         // Blacklisted Identifiers.

@@ -529,6 +529,15 @@
         "registered": "(Registered)",
         "un_registered": "(Un-Registered)"
     },
+    "weapons": {
+        "title": "Weapon Info",
+        "description": "Lookup weapons and their stats.",
+        "search": "Search",
+
+        "damages": "Damage Distribution",
+        "damage_normal": "Normal",
+        "damage_banned": "Banned"
+    },
     "advanced": {
         "title": "Advanced Search",
         "description": "Advanced search for different tables",

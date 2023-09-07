@@ -4,6 +4,7 @@ import Vue from 'vue';
 import PortalVue from 'portal-vue';
 import moment from 'moment';
 import Localization from './Plugins/localization.js';
+import Theme from './Plugins/theme.js';
 import Copy from './Plugins/copy-text.js';
 import Interceptor from './Plugins/interceptor.js';
 import Socket from './Plugins/socket.js';
@@ -35,6 +36,7 @@ const app = document.getElementById('app'),
 // Plugins.
 Vue.use(InertiaApp);
 Vue.use(Interceptor);
+Vue.use(Theme);
 Vue.use(PortalVue);
 Vue.use(Localization);
 Vue.use(Copy);

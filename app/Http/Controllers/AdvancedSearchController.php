@@ -7,6 +7,7 @@ use App\Helpers\PermissionHelper;
 use App\Player;
 use App\Property;
 use App\Vehicle;
+use App\WeaponDamageEvent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -99,7 +100,7 @@ class AdvancedSearchController extends Controller
 
         $table = $request->get('table') ?? 'characters';
         $field = $request->get('field') ?? 'character_id';
-        $type = $request->get('searchType') ?? 'exact';
+        $type  = $request->get('searchType') ?? 'exact';
         $value = trim($request->get('value')) ?? '';
 
         if (in_array($type, [
@@ -112,7 +113,7 @@ class AdvancedSearchController extends Controller
         }
 
         $results = [];
-        $header = [];
+        $header  = [];
 
         $error = '';
         if (!isset(self::AllowedAdvancedTypes[$type])) {
@@ -131,24 +132,24 @@ class AdvancedSearchController extends Controller
                 } else if ($value) {
                     switch ($table) {
                         case 'characters':
-                            $data = $this->searchCharacters($field, $type, $value, $page);
+                            $data    = $this->searchCharacters($field, $type, $value, $page);
                             $results = $data['results'];
-                            $header = $data['header'];
+                            $header  = $data['header'];
                             break;
                         case 'vehicles':
-                            $data = $this->searchVehicles($field, $type, $value, $page);
+                            $data    = $this->searchVehicles($field, $type, $value, $page);
                             $results = $data['results'];
-                            $header = $data['header'];
+                            $header  = $data['header'];
                             break;
                         case 'users':
-                            $data = $this->searchUsers($field, $type, $value, $page);
+                            $data    = $this->searchUsers($field, $type, $value, $page);
                             $results = $data['results'];
-                            $header = $data['header'];
+                            $header  = $data['header'];
                             break;
                         case 'properties':
-                            $data = $this->searchProperties($field, $type, $value, $page);
+                            $data    = $this->searchProperties($field, $type, $value, $page);
                             $results = $data['results'];
-                            $header = $data['header'];
+                            $header  = $data['header'];
                             break;
                         default:
                             $error = 'Unknown table';
@@ -339,7 +340,7 @@ class AdvancedSearchController extends Controller
             unset($json['character_id']);
 
             if (!isset($players[$entry['license_identifier']])) {
-                $player = Player::query()->where('license_identifier', '=', $entry['license_identifier'])->first(['player_name']);
+                $player                                = Player::query()->where('license_identifier', '=', $entry['license_identifier'])->first(['player_name']);
                 $players[$entry['license_identifier']] = $player ? $player->player_name : $entry['license_identifier'];
             }
 
@@ -400,11 +401,11 @@ class AdvancedSearchController extends Controller
 
         return [
             'target' => $character
-                ? '/players/' . $character['license_identifier'] . '/characters/' . $character['character_id'] . '/edit'
-                : '',
+            ? '/players/' . $character['license_identifier'] . '/characters/' . $character['character_id'] . '/edit'
+            : '',
             'label'  => $character
-                ? $character['first_name'] . ' ' . $character['last_name']
-                : ($characterId ?? 'N/A'),
+            ? $character['first_name'] . ' ' . $character['last_name']
+            : ($characterId ?? 'N/A'),
         ];
     }
 
@@ -435,6 +436,90 @@ class AdvancedSearchController extends Controller
         return [
             'pre' => json_encode($json, JSON_PRETTY_PRINT),
         ];
+    }
+
+    /**
+     * Weapons search.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function weapons(Request $request): Response
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_ADVANCED)) {
+            abort(401);
+        }
+
+        $weapons = WeaponDamageEvent::getWeaponList();
+
+        return Inertia::render('Advanced/Weapons', [
+            'weapons' => $weapons,
+        ]);
+    }
+
+    /**
+     * Weapons search API.
+     *
+     * @param Request $request
+     * @param int $hash
+     */
+    public function searchWeapons(Request $request, int $hash)
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_ADVANCED)) {
+            abort(401);
+        }
+
+        $weapons = WeaponDamageEvent::getWeaponList();
+
+        if (!isset($weapons[$hash])) {
+            abort(404);
+        }
+
+        $unsigned = $hash + 4294967296;
+
+        $data = WeaponDamageEvent::query()
+            ->select(['license_identifier', 'weapon_type', 'distance', 'weapon_damage', 'ban_hash'])
+            ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
+            ->where('weapon_type', '=', $hash)
+            ->orWhere('weapon_type', '=', $unsigned)
+            ->get()->toArray();
+
+        $dmgBanned = [];
+        $dmgNormal = [];
+
+        foreach ($data as $entry) {
+            $damage = intval($entry['weapon_damage']);
+
+            if ($entry['ban_hash']) {
+                $dmgBanned[$damage] = ($dmgBanned[$damage] ?? 0) + 1;
+            } else {
+                $dmgNormal[$damage] = ($dmgNormal[$damage] ?? 0) + 1;
+            }
+        }
+
+        $damages = [
+            'data'   => [
+                [], [],
+            ],
+            'labels' => [],
+            'names' => ['weapons.damage_normal', 'weapons.damage_banned']
+        ];
+
+        $maxDamage = max(array_keys($dmgBanned) + array_keys($dmgNormal));
+
+        for ($x = 0; $x <= $maxDamage; $x++) {
+            $damages['labels'][] = $x . 'hp';
+
+            $normal = $dmgNormal[$x] ?? 0;
+            $banned = $dmgBanned[$x] ?? 0;
+
+            $damages['data'][0][] = $normal;
+            $damages['data'][1][] = $banned;
+        }
+
+        return $this->json(true, [
+            'damages' => $damages,
+        ]);
     }
 
 }

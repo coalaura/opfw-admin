@@ -4,7 +4,8 @@ import { Bar } from 'vue-chartjs';
 export default {
     extends: Bar,
     data() {
-        const _this = this;
+        const gridColor = this.isDarkMode() ? "rgba(180, 180, 180, 0.3)" : "rgba(128, 128, 128, 0.3)",
+            textColor = this.isDarkMode() ? "rgba(255, 255, 255, 0.7)" : "rgba(0, 0, 0, 0.7)";
 
         let options = {
             devicePixelRatio: 2,
@@ -14,11 +15,12 @@ export default {
                 yAxes: [{
                     display: true,
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        fontColor: textColor
                     },
                     gridLines: {
                         display: true,
-                        color: "rgba(128, 128, 128, 0.3)"
+                        color: gridColor
                     },
                     stacked: true
                 }],
@@ -36,7 +38,8 @@ export default {
             title: {
                 display: true,
                 text: this.title,
-                fontSize: 13
+                fontSize: 13,
+                fontColor: textColor
             },
             tooltips: {
                 mode: 'index',
@@ -51,23 +54,28 @@ export default {
             },
         };
 
-        options.tooltips.callbacks = {
-            label: function (tooltipItem, data) {
-                const label = _this.tooltips[tooltipItem.index];
+        if (this.data.tooltips) {
+            options.tooltips.callbacks = {
+                label: (tooltipItem, data) => {
+                    const label = this.data.tooltips[tooltipItem.index];
 
-                return label[tooltipItem.datasetIndex] || "";
-            }
-        };
+                    return label[tooltipItem.datasetIndex] || "";
+                }
+            };
+        }
 
         return {
             options: options
         };
     },
     mounted() {
+        const data = this.data.data;
+
         let datasets = [];
-        for (let x = 0; x < this.data.length; x++) {
-            while (this.data[x].length < this.data[0].length) {
-                this.data[x].unshift(null);
+
+        for (let x = 0; x < data.length; x++) {
+            while (data[x].length < data[0].length) {
+                data[x].unshift(null);
             }
 
             let bg, fg;
@@ -81,7 +89,8 @@ export default {
             }
 
             datasets.push({
-                data: this.data[x],
+                label: this.data.names ? this.t(this.data.names[x]) : null,
+                data: data[x],
                 backgroundColor: bg,
                 fill: true,
                 borderColor: fg,
@@ -91,7 +100,7 @@ export default {
         }
 
         this.renderChart({
-            labels: this.dataLabels,
+            labels: this.data.labels,
             datasets: datasets
         }, this.options);
     },
@@ -104,21 +113,9 @@ export default {
             type: Array,
             required: true,
         },
-        tooltips: {
-            type: Array,
-            required: true,
-        },
-        dataLabels: {
-            type: Array,
-            required: true,
-        },
         data: {
             type: Array,
             required: true,
-        },
-        isCasinoChart: {
-            type: Boolean,
-            default: false,
         }
     }
 }

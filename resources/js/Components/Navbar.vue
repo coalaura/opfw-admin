@@ -37,7 +37,7 @@
                 </span>
 
                 <!-- Toggle Dark mode -->
-                <button class="px-4 py-1 focus:outline-none font-semibold text-white text-sm rounded border-2 border-gray-400 bg-gray-700 hover:bg-gray-600 float-right" @click="toggleTheme" v-if="theme === 'light'">
+                <button class="px-4 py-1 focus:outline-none font-semibold text-white text-sm rounded border-2 border-gray-400 bg-gray-700 hover:bg-gray-600 float-right" @click="toggleTheme" v-if="isDarkMode()">
                     <i class="fas fa-moon"></i>
                     {{ t("nav.dark") }}
                 </button>
@@ -238,8 +238,6 @@ export default {
         });
 
         return {
-            theme: 'light',
-
             copiedIp: false,
             copyIpTimeout: false,
 
@@ -264,9 +262,6 @@ export default {
             gameTimeUpdated: false,
             now: false
         }
-    },
-    beforeMount() {
-        this.updateTheme();
     },
     mounted() {
         this.updateServerStatus();
@@ -375,29 +370,6 @@ export default {
             window.open('/staff', 'Staff Chat', 'directories=no,titlebar=no,toolbar=no,menubar=no,location=no,status=no,width=550,height=700');
 
             this.hideContext();
-        },
-        updateTheme() {
-            const cachedTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : false;
-            const userPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-            if (cachedTheme)
-                this.theme = cachedTheme;
-            else if (userPrefersDark)
-                this.theme = 'dark';
-
-            $('html').removeClass('dark');
-            if (this.theme === 'dark') {
-                $('html').addClass('dark');
-            }
-        },
-        toggleTheme() {
-            if ($('html').hasClass('dark')) {
-                localStorage.setItem('theme', 'light');
-            } else {
-                localStorage.setItem('theme', 'dark');
-            }
-
-            this.updateTheme();
         },
         formatUptime(pMilliseconds) {
             if (pMilliseconds < 3600000) {
