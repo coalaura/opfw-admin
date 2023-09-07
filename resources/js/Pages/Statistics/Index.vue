@@ -39,7 +39,7 @@
                         <span class="text-sm font-semibold mb-1 block">{{ t('statistics.best_players') }}</span>
                         <span v-for="(player, index) in blackjack.best_players" :key="index" class="flex font-mono">
                             <span class="mr-1">{{ index + 1 }}.</span>
-                            <a class="text-blue-700 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + player.license_identifier">{{ player.player_name || player.license_identifier }}</a>
+                            <a class="text-blue-500 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + player.license_identifier">{{ player.player_name || player.license_identifier }}</a>
                             <span :class="player.win > 0 ? 'text-green-500' : 'text-red-500'">{{ numberFormat(player.win, 0, true) }}</span>
                         </span>
                     </div>
@@ -48,7 +48,7 @@
                         <span class="text-sm font-semibold mb-1 block">{{ t('statistics.worst_players') }}</span>
                         <span v-for="(player, index) in blackjack.worst_players" :key="index" class="flex font-mono">
                             <span class="mr-1">{{ index + 1 }}.</span>
-                            <a class="text-blue-700 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + player.license_identifier">{{ player.player_name || player.license_identifier }}</a>
+                            <a class="text-blue-500 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + player.license_identifier">{{ player.player_name || player.license_identifier }}</a>
                             <span :class="player.win > 0 ? 'text-green-500' : 'text-red-500'">{{ numberFormat(player.win, 0, true) }}</span>
                         </span>
                     </div>
@@ -57,7 +57,7 @@
                         <span class="text-sm font-semibold mb-1 block">{{ t('statistics.your_spot') }}</span>
                         <span class="flex font-mono">
                             <span class="mr-1">{{ blackjack.my_place.total }} / {{ blackjack.my_place.place }}.</span>
-                            <a class="text-blue-700 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + blackjack.my_place.license_identifier">{{ $page.auth.player.playerName }}</a>
+                            <a class="text-blue-500 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + blackjack.my_place.license_identifier">{{ $page.auth.player.playerName }}</a>
                             <span :class="blackjack.my_place.win > 0 ? 'text-green-500' : 'text-red-500'">{{ numberFormat(blackjack.my_place.win, 0, true) }}</span>
                         </span>
                     </div>
@@ -72,7 +72,7 @@
                         <span class="text-sm font-semibold mb-1 block">{{ t('statistics.best_players') }}</span>
                         <span v-for="(player, index) in slots.best_players" :key="index" class="flex font-mono">
                             <span class="mr-1">{{ index + 1 }}.</span>
-                            <a class="text-blue-700 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + player.license_identifier">{{ player.player_name || player.license_identifier }}</a>
+                            <a class="text-blue-500 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + player.license_identifier">{{ player.player_name || player.license_identifier }}</a>
                             <span :class="player.win > 0 ? 'text-green-600' : 'text-red-600'">{{ numberFormat(player.win, 0, true) }}</span>
                         </span>
                     </div>
@@ -81,7 +81,7 @@
                         <span class="text-sm font-semibold mb-1 block">{{ t('statistics.worst_players') }}</span>
                         <span v-for="(player, index) in slots.worst_players" :key="index" class="flex font-mono">
                             <span class="mr-1">{{ index + 1 }}.</span>
-                            <a class="text-blue-700 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + player.license_identifier">{{ player.player_name || player.license_identifier }}</a>
+                            <a class="text-blue-500 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + player.license_identifier">{{ player.player_name || player.license_identifier }}</a>
                             <span :class="player.win > 0 ? 'text-green-600' : 'text-red-600'">{{ numberFormat(player.win, 0, true) }}</span>
                         </span>
                     </div>
@@ -90,7 +90,7 @@
                         <span class="text-sm font-semibold mb-1 block">{{ t('statistics.your_spot') }}</span>
                         <span class="flex font-mono">
                             <span class="mr-1">{{ slots.my_place.total }} / {{ slots.my_place.place }}.</span>
-                            <a class="text-blue-700 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + slots.my_place.license_identifier">{{ $page.auth.player.playerName }}</a>
+                            <a class="text-blue-500 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + slots.my_place.license_identifier">{{ $page.auth.player.playerName }}</a>
                             <span :class="slots.my_place.win > 0 ? 'text-green-600' : 'text-red-600'">{{ numberFormat(slots.my_place.win, 0, true) }}</span>
                         </span>
                     </div>
@@ -105,7 +105,7 @@
                         <span class="text-sm font-semibold mb-1 block">{{ t('statistics.best_players') }}</span>
                         <span v-for="(player, index) in tracks.best_players" :key="index" class="flex font-mono">
                             <span class="mr-1">{{ index + 1 }}.</span>
-                            <a class="text-blue-700 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + player.license_identifier">{{ player.player_name || player.license_identifier }}</a>
+                            <a class="text-blue-500 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + player.license_identifier">{{ player.player_name || player.license_identifier }}</a>
                             <span :class="player.win > 0 ? 'text-green-600' : 'text-red-600'">{{ numberFormat(player.win, 0, true) }}</span>
                         </span>
                     </div>
@@ -114,7 +114,7 @@
                         <span class="text-sm font-semibold mb-1 block">{{ t('statistics.worst_players') }}</span>
                         <span v-for="(player, index) in tracks.worst_players" :key="index" class="flex font-mono">
                             <span class="mr-1">{{ index + 1 }}.</span>
-                            <a class="text-blue-700 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + player.license_identifier">{{ player.player_name || player.license_identifier }}</a>
+                            <a class="text-blue-500 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + player.license_identifier">{{ player.player_name || player.license_identifier }}</a>
                             <span :class="player.win > 0 ? 'text-green-600' : 'text-red-600'">{{ numberFormat(player.win, 0, true) }}</span>
                         </span>
                     </div>
@@ -123,7 +123,7 @@
                         <span class="text-sm font-semibold mb-1 block">{{ t('statistics.your_spot') }}</span>
                         <span class="flex font-mono">
                             <span class="mr-1">{{ tracks.my_place.total }} / {{ tracks.my_place.place }}.</span>
-                            <a class="text-blue-700 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + tracks.my_place.license_identifier">{{ $page.auth.player.playerName }}</a>
+                            <a class="text-blue-500 mr-1 inline-block w-xs-steam overflow-hidden overflow-ellipsis" :href="'/players/' + tracks.my_place.license_identifier">{{ $page.auth.player.playerName }}</a>
                             <span :class="tracks.my_place.win > 0 ? 'text-green-600' : 'text-red-600'">{{ numberFormat(tracks.my_place.win, 0, true) }}</span>
                         </span>
                     </div>
