@@ -535,7 +535,7 @@
         "search": "Search",
 
         "damages": "Damage Distribution",
-        "damage_description": "<i>{0}</i> usually does about <i>{1}hp</i> and not more than about <i>{2}hp</i> damage.",
+        "damage_description": "<i>{0}</i> usually does about {1} and not more than about {2} damage.",
         "damage_normal": "Normal",
         "damage_banned": "Banned"
     },

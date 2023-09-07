@@ -41,7 +41,7 @@
         <!-- Table -->
         <v-section class="overflow-x-auto" v-if="weaponData" :noHeader="true" :noFooter="true">
             <template>
-                <p class="text-muted dark:text-dark-muted mb-3" v-html="t('weapons.damage_description', weaponName, weaponData.damages.avg, weaponData.damages.max)"></p>
+                <p class="text-muted dark:text-dark-muted mb-3" v-html="damageDescription"></p>
 
                 <BarChart :data="weaponData.damages" :colors="['100, 235, 55', '235, 55, 55']" :title="t('weapons.damages')" class="w-full"></BarChart>
             </template>
@@ -83,6 +83,13 @@ export default {
     computed: {
         valid() {
             return !!this.getWeaponHash();
+        },
+
+        damageDescription() {
+            const avg = `<i class="text-lime-500">${this.weaponData.damages.avg}hp</i>`,
+                max = `<i class="text-rose-500">${this.weaponData.damages.max}hp</i>`;
+
+            return this.t('weapons.damage_description', this.weaponName, avg, max);
         }
     },
     methods: {
