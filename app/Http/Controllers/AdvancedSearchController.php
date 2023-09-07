@@ -543,7 +543,7 @@ class AdvancedSearchController extends Controller
         ]);
     }
 
-    private function closest(array $array, int $number): int
+    private function closest(array $array, int $number): array
     {
         $last = 0;
 
