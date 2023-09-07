@@ -483,6 +483,7 @@ class AdvancedSearchController extends Controller
             ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
             ->where('weapon_damage_events.timestamp' , '>', time() - 60 * 60 * 24 * 90)
             ->whereIn('weapon_type', [$hash, $unsigned])
+            ->where('hit_players', '!=', '[]')
             ->groupBy(['weapon_damage', 'ban_hash'])
             ->get()->toArray();
 
