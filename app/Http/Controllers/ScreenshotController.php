@@ -50,7 +50,7 @@ class ScreenshotController extends Controller
         $page = Paginator::resolveCurrentPage('page');
 
 		$query = "SELECT id, player_name, users.license_identifier, url, details, timestamp FROM (" .
-			"SELECT CONCAT('s_', id) as id, license_identifier, screenshot_url as url, type as details, timestamp FROM anti_cheat_events WHERE screenshot_url IS NOT NULL" .
+			"SELECT CONCAT('s_', id) as id, license_identifier, screenshot_url as url, type as details, timestamp FROM anti_cheat_events WHERE screenshot_url IS NOT NULL " .
 			"UNION " .
 			"SELECT CONCAT('b_', id) as id, identifier, ban_hash, reason, MAX(timestamp) FROM user_bans WHERE SUBSTRING_INDEX(identifier, ':', 1) = 'license' AND SUBSTRING_INDEX(reason, '-', 1) = 'MODDING' AND smurf_account IS NULL GROUP BY identifier" .
 			") data LEFT JOIN users ON data.license_identifier = users.license_identifier ORDER BY timestamp DESC LIMIT 20 OFFSET " . (($page - 1) * 20);
@@ -62,7 +62,11 @@ class ScreenshotController extends Controller
         }, $system));
 
 		$system = array_map(function ($entry) {
-			$entry->reason = Str::startsWith($entry->details, 'Anti-Cheat:') ? $entry->details : Ban::resolveAutomatedReason($entry->details)['reason'];
+            if (Str::startsWith($entry->id, 'b_')) {
+			    $entry->reason = Ban::resolveAutomatedReason($entry->details)['reason'];
+            } else {
+                $entry->details = ucwords(strtolower(str_replace('_', ' ', $entry->details)));
+            }
 
             $entry->player_name = Player::filterPlayerName($entry->player_name ?? "", $entry->license_identifier ?? "");
 
