@@ -10,7 +10,7 @@ Number.prototype.toFixed = function (digits) {
 };
 
 function _left(chart, index) {
-    if (!index || index === 0) {
+    if (index === false || index === 0) {
         return chart.chartArea.left;
     }
 
@@ -24,7 +24,7 @@ function _left(chart, index) {
 function _right(chart, index) {
     const meta = chart.getDatasetMeta(0);
 
-    if (!index || index === meta.data.length - 1) {
+    if (index === false || index === meta.data.length - 1) {
         return chart.chartArea.right;
     }
 
