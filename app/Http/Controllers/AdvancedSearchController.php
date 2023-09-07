@@ -514,7 +514,7 @@ class AdvancedSearchController extends Controller
             'labels' => [],
             'names' => ['weapons.damage_normal', 'weapons.damage_banned'],
             'avg' => $max,
-            'max' => $max * 4
+            'max' => $this->closest(array_keys($dmgNormal), $max * 5)
         ];
 
         $maxDamage = max(array_keys($dmgBanned) + array_keys($dmgNormal));
@@ -534,6 +534,21 @@ class AdvancedSearchController extends Controller
         return $this->json(true, [
             'damages' => $damages,
         ]);
+    }
+
+    private function closest(array $array, int $number): int
+    {
+        $last = 0;
+
+        foreach ($array as $item) {
+            if ($item > $number) {
+                return $last;
+            }
+
+            $last = $item;
+        }
+
+        return $last;
     }
 
 }
