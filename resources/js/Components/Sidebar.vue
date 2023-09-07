@@ -268,6 +268,12 @@ export default {
                             icon: 'pallet',
                             url: '/search_inventory',
                             private: true,
+                        },
+                        {
+                            label: 'weapons.title',
+                            icon: 'damage',
+                            url: '/weapons',
+                            hidden: !this.perm.check(this.perm.PERM_ADVANCED),
                         }
                     ]
                 },

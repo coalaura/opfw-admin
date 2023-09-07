@@ -87,9 +87,7 @@ export default {
 
             weaponList: weaponList,
             weaponData: null,
-            error: false,
-
-            damageHighlights: []
+            error: false
         };
     },
     computed: {
@@ -121,9 +119,8 @@ export default {
             if (this.isLoading || !this.weaponName || !hash) return;
 
             this.isLoading = true;
+            this.error = false;
             this.weaponData = null;
-
-            this.damageChart = false;
 
             try {
                 const response = await axios.get('/weapons/' + hash);

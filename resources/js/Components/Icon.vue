@@ -77,6 +77,7 @@
     <i class="fas fa-spinner" v-else-if="name === 'spinner'"></i>
     <i class="fab fa-steam" v-else-if="name === 'steam'"></i>
     <i class="fas fa-portrait" v-else-if="name === 'portrait'"></i>
+    <i class="fas fa-house-damage" v-else-if="name === 'damage'"></i>
 </template>
 
 <script>
