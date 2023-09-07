@@ -479,7 +479,7 @@ class AdvancedSearchController extends Controller
         $unsigned = $hash + 4294967296;
 
         $data = WeaponDamageEvent::query()
-            ->select([DB::raw('COUNT(1) as count'), 'weapon_damage', 'ban_hash'])
+            ->select([DB::raw('COUNT(DISTINCT license_identifier) as count'), 'weapon_damage', 'ban_hash'])
             ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
             ->where('weapon_damage_events.timestamp' , '>', time() - 60 * 60 * 24 * 90)
             ->whereIn('weapon_type', [$hash, $unsigned])
