@@ -14,6 +14,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\DB;
 
 class AdvancedSearchController extends Controller
 {
@@ -478,10 +479,11 @@ class AdvancedSearchController extends Controller
         $unsigned = $hash + 4294967296;
 
         $data = WeaponDamageEvent::query()
-            ->select(['license_identifier', 'weapon_type', 'distance', 'weapon_damage', 'ban_hash'])
+            ->select([DB::raw('COUNT(1) as count'), 'weapon_damage', 'ban_hash'])
             ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
             ->where('weapon_type', '=', $hash)
             ->orWhere('weapon_type', '=', $unsigned)
+            ->groupBy(['weapon_damage', 'ban_hash'])
             ->get()->toArray();
 
         $dmgBanned = [];
@@ -491,9 +493,9 @@ class AdvancedSearchController extends Controller
             $damage = intval($entry['weapon_damage']);
 
             if ($entry['ban_hash']) {
-                $dmgBanned[$damage] = ($dmgBanned[$damage] ?? 0) + 1;
+                $dmgBanned[$damage] = $entry['count'];
             } else {
-                $dmgNormal[$damage] = ($dmgNormal[$damage] ?? 0) + 1;
+                $dmgNormal[$damage] = $entry['count'];
             }
         }
 
