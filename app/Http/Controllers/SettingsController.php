@@ -42,10 +42,7 @@ class SettingsController extends Controller
 
         $success = $user->setPanelSetting($key, $value);
 
-        return (new \Illuminate\Http\Response([
-            'success' => $success,
-            'value' => $value
-        ], 200))->header('Content-Type', 'application/json');
+        return $this->json($success, $value);
     }
 
 }

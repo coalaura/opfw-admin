@@ -141,14 +141,20 @@ export default {
             setting.disabled = true;
 
             try {
-                await axios.put('/settings/' + key, {
+                const response = await axios.put('/settings/' + key, {
                     value: setting.value
                 });
+
+                if (!response.data.status) {
+                    alert(response.data.message || 'An error occurred while saving the setting');
+                }
 
                 if (key === 'locale') {
                     this.refreshLocales(setting.value);
                 }
-            } catch (e) { }
+            } catch (e) {
+                alert(e.message || 'An error occurred while saving the setting (Status: ' + e.response.status + ')');
+            }
 
             setting.disabled = false;
 
