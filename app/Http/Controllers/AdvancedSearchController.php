@@ -510,10 +510,12 @@ class AdvancedSearchController extends Controller
         $maxDamage = max(array_keys($dmgBanned) + array_keys($dmgNormal));
 
         for ($x = 0; $x <= $maxDamage; $x++) {
-            $damages['labels'][] = $x === 999 ? '999+ hp' : $x . 'hp';
-
             $normal = $dmgNormal[$x] ?? 0;
             $banned = $dmgBanned[$x] ?? 0;
+
+            if ($normal === 0 && $banned === 0) continue;
+
+            $damages['labels'][] = $x === 999 ? '999+ hp' : $x . 'hp';
 
             $damages['data'][0][] = $normal;
             $damages['data'][1][] = $banned;
