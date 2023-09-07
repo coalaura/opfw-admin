@@ -479,7 +479,7 @@ class AdvancedSearchController extends Controller
         $unsigned = $hash + 4294967296;
 
         $data = WeaponDamageEvent::query()
-            ->select([DB::raw('COUNT(1) as count'), 'weapon_damage', 'ban_hash'])
+            ->select([DB::raw('COUNT(1) as count'), DB::raw('MIN(weapon_damage, 999) as weapon_damage'), 'ban_hash'])
             ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
             ->where('weapon_type', '=', $hash)
             ->orWhere('weapon_type', '=', $unsigned)
@@ -510,7 +510,7 @@ class AdvancedSearchController extends Controller
         $maxDamage = max(array_keys($dmgBanned) + array_keys($dmgNormal));
 
         for ($x = 0; $x <= $maxDamage; $x++) {
-            $damages['labels'][] = $x . 'hp';
+            $damages['labels'][] = $x === 999 ? '999+ hp' : $x . 'hp';
 
             $normal = $dmgNormal[$x] ?? 0;
             $banned = $dmgBanned[$x] ?? 0;
