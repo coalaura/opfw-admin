@@ -304,15 +304,6 @@
             "command_statistics": "Pathetic Command Usage Statistics"
         }
     },
-    "weapon_damage": {
-        "title": "{0} Wreckage Statistics",
-        "description": "Stats about how much damage a pathetic weapon can cause.",
-        "average_damage": "Middling Pummel",
-        "distance_damage": "Damage by Bally Distance",
-        "damage": "Proper Bashing",
-        "amount": "Bloody Amount",
-        "distance": "Bloody Distance"
-    },
     "map": {
         "title": "Wanker's Map",
         "loading": "Bollocks, loading player data...",

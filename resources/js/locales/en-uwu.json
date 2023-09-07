@@ -304,15 +304,6 @@
             "command_statistics": "Command Usage Statistics"
         }
     },
-    "weapon_damage": {
-        "title": "{0} Damage Statistics",
-        "description": "Statistics about a specified weapon's damage.",
-        "average_damage": "Avewage Damage UwU",
-        "distance_damage": "Damage by Distance UwU",
-        "damage": "Damage UwU",
-        "amount": "Amount UwU",
-        "distance": "Distance UwU"
-    },
     "map": {
         "title": "Wive-Map UwU",
         "loading": "Woading pwayew data... UwU",

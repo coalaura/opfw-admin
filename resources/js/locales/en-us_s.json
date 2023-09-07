@@ -304,15 +304,6 @@
             "command_statistics": "Usage Stats for Commands"
         }
     },
-    "weapon_damage": {
-        "title": "{0} Damage Stats",
-        "description": "Stats 'bout a specific weapon's damage.",
-        "average_damage": "Avg. Damage",
-        "distance_damage": "Damage by Gap",
-        "damage": "Damage",
-        "amount": "Amount",
-        "distance": "Gap"
-    },
     "map": {
         "title": "Active Map",
         "loading": "Fixin' to load player data...",

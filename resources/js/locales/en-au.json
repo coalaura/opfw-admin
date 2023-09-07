@@ -304,15 +304,6 @@
             "command_statistics": "Command Usage Arvo"
         }
     },
-    "weapon_damage": {
-        "title": "{0} Damage Stat Crunches",
-        "description": "Stat Dummies on a chosen weapon's damage.",
-        "average_damage": "Pretty average damage",
-        "distance_damage": "Damage based on how far away they were",
-        "damage": "Damage done",
-        "amount": "How much damage",
-        "distance": "How far away"
-    },
     "map": {
         "title": "Bloody Live-Map",
         "loading": "Hang on, mate. Loading all the player data...",

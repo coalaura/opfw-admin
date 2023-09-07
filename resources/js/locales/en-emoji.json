@@ -304,15 +304,6 @@
             "command_statistics": "⌨️ Command Usage Statistics"
         }
     },
-    "weapon_damage": {
-        "title": "{0} 💥 Damage Statistics",
-        "description": "📈 Statistics about a specified weapon's damage.",
-        "average_damage": "📊 Average Damage",
-        "distance_damage": "💥 Damage by Distance",
-        "damage": "💥 Damage",
-        "amount": "🔢 Amount",
-        "distance": "📏 Distance"
-    },
     "map": {
         "title": "🌍 Live-Map",
         "loading": "🔄 Loading player data...",

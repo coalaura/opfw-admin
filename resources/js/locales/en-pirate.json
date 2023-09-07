@@ -113,7 +113,6 @@
         "small_size_count_label": "Image be too puny. We be advisin' a size o' at least 1920x1080, current compass be {0}.",
         "loading_images": "We be haulin' in {0} o' {1} images..."
     },
-    "undefined": "More Plunder",
     "backstories": {
         "title": "Tales o' Me Hearties",
         "description": "Plunderous character tales.",
@@ -304,15 +303,6 @@
             "user_statistics": "Scallywag Statistics",
             "command_statistics": "Command Plunderin' Statistics"
         }
-    },
-    "weapon_damage": {
-        "title": "{0} Cannon Damage Statistics",
-        "description": "Shiver me timbers! Statistics 'bout a pistol's firepower.",
-        "average_damage": "Mediocre Plunder",
-        "distance_damage": "Plunder by Distance",
-        "damage": "Plunder",
-        "amount": "Amount o' Plunder",
-        "distance": "Distance o' Plunder"
     },
     "map": {
         "title": "Sailin' Map",

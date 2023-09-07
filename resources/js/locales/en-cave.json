@@ -304,15 +304,6 @@
             "command_statistics": "Command Ooga-booga Statistics"
         }
     },
-    "weapon_damage": {
-        "title": "{0} Oogabunga Statistics",
-        "description": "Ugga bugga about a specified weapon's ooga.",
-        "average_damage": "Ooga booga Damage",
-        "distance_damage": "Ooga booga Damage by Distance",
-        "damage": "Ooga booga Damage",
-        "amount": "Ooga booga Amount",
-        "distance": "Ooga booga Distance"
-    },
     "map": {
         "title": "Ooga-Map",
         "loading": "Ooga player data loading...",
