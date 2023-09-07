@@ -11,10 +11,10 @@ use App\WeaponDamageEvent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Facades\DB;
 
 class AdvancedSearchController extends Controller
 {
@@ -490,7 +490,7 @@ class AdvancedSearchController extends Controller
         $dmgNormal = [];
 
         $count = 0;
-        $avg = 0;
+        $avg   = 0;
 
         foreach ($data as $entry) {
             $damage = intval($entry['weapon_damage']);
@@ -502,7 +502,7 @@ class AdvancedSearchController extends Controller
 
                 if ($count < $entry['count']) {
                     $count = $entry['count'];
-                    $avg = $damage;
+                    $avg   = $damage;
                 }
             }
         }
@@ -510,13 +510,17 @@ class AdvancedSearchController extends Controller
         $max = $this->closest(array_keys($dmgNormal), $avg * 5);
 
         $damages = [
-            'data'   => [
+            'data'       => [
                 [], [],
             ],
-            'labels' => [],
-            'names' => ['weapons.damage_normal', 'weapons.damage_banned'],
-            'avg' => $avg,
-            'max' => $max[1]
+            'labels'     => [],
+            'names'      => ['weapons.damage_normal', 'weapons.damage_banned'],
+            'avg'        => $avg,
+            'max'        => $max[1],
+            'highlights' => [
+                ['from' => false, 'to' => $max[0], 'color' => 'rgba(50, 255, 50, 0.1)'],
+                ['from' => $max[0] + 1, 'to' => false, 'color' => 'rgba(255, 50, 50, 0.1)'],
+            ],
         ];
 
         $maxDamage = max(array_keys($dmgBanned) + array_keys($dmgNormal));
@@ -525,18 +529,15 @@ class AdvancedSearchController extends Controller
             $normal = $dmgNormal[$x] ?? 0;
             $banned = $dmgBanned[$x] ?? 0;
 
-            if ($normal === 0 && $banned === 0) continue;
+            if ($normal === 0 && $banned === 0) {
+                continue;
+            }
 
             $damages['labels'][] = $x === 999 ? '999+ hp' : $x . 'hp';
 
             $damages['data'][0][] = $normal;
             $damages['data'][1][] = $banned;
         }
-
-        $damages['highlights'] = [
-            ['from' => false, 'to' => $max[0], 'color' => 'rgba(50, 255, 50, 0.1)'],
-            ['from' => $max[0], 'to' => false, 'color' => 'rgba(255, 50, 50, 0.1)'],
-        ];
 
         return $this->json(true, [
             'damages' => $damages,
