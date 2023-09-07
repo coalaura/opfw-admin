@@ -490,7 +490,7 @@ class AdvancedSearchController extends Controller
         $dmgNormal = [];
 
         $count = 0;
-        $max = 0;
+        $avg = 0;
 
         foreach ($data as $entry) {
             $damage = intval($entry['weapon_damage']);
@@ -502,10 +502,12 @@ class AdvancedSearchController extends Controller
 
                 if ($count < $entry['count']) {
                     $count = $entry['count'];
-                    $max = $damage;
+                    $avg = $damage;
                 }
             }
         }
+
+        $max = $this->closest(array_keys($dmgNormal), $avg * 5);
 
         $damages = [
             'data'   => [
@@ -513,23 +515,17 @@ class AdvancedSearchController extends Controller
             ],
             'labels' => [],
             'names' => ['weapons.damage_normal', 'weapons.damage_banned'],
-            'avg' => $max,
-            'max' => $this->closest(array_keys($dmgNormal), $max * 5)
+            'avg' => $avg,
+            'max' => $max[1]
         ];
 
         $maxDamage = max(array_keys($dmgBanned) + array_keys($dmgNormal));
-
-        $index = 0;
 
         for ($x = 0; $x <= $maxDamage; $x++) {
             $normal = $dmgNormal[$x] ?? 0;
             $banned = $dmgBanned[$x] ?? 0;
 
             if ($normal === 0 && $banned === 0) continue;
-
-            if (!$index && $normal === $damages['max']) {
-                $index = sizeof($damages['labels']);
-            }
 
             $damages['labels'][] = $x === 999 ? '999+ hp' : $x . 'hp';
 
@@ -538,8 +534,8 @@ class AdvancedSearchController extends Controller
         }
 
         $damages['highlights'] = [
-            ['from' => false, 'to' => $index, 'color' => 'rgba(50, 255, 50, 0.1)'],
-            ['from' => $index, 'to' => false, 'color' => 'rgba(255, 50, 50, 0.1)'],
+            ['from' => false, 'to' => $max[0], 'color' => 'rgba(50, 255, 50, 0.1)'],
+            ['from' => $max[0], 'to' => false, 'color' => 'rgba(255, 50, 50, 0.1)'],
         ];
 
         return $this->json(true, [
@@ -551,15 +547,15 @@ class AdvancedSearchController extends Controller
     {
         $last = 0;
 
-        foreach ($array as $item) {
+        foreach ($array as $index => $item) {
             if ($item > $number) {
-                return $last;
+                return [$index - 1, $last];
             }
 
             $last = $item;
         }
 
-        return $last;
+        return [sizeof($array) - 1, $last];
     }
 
 }
