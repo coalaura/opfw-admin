@@ -43,7 +43,11 @@
             <template>
                 <p class="text-muted dark:text-dark-muted mb-3" v-html="damageDescription"></p>
 
-                <BarChart :data="weaponData.damages" :colors="['100, 235, 55', '235, 55, 55']" :title="t('weapons.damages')" class="w-full"></BarChart>
+                <div class="w-full relative">
+                    <BarChart :data="weaponData.damages" :colors="['100, 235, 55', '235, 55, 55']" :title="t('weapons.damages')" class="w-full"></BarChart>
+
+                    <div class="absolute bg-opacity-10" :class="highlight.color" :style="highlight" v-for="highlight in damageHighlights"></div>
+                </div>
             </template>
         </v-section>
 
@@ -77,7 +81,9 @@ export default {
             weaponName: '',
 
             weaponList: weaponList,
-            weaponData: null
+            weaponData: null,
+
+            damageHighlights: []
         };
     },
     computed: {
@@ -110,6 +116,8 @@ export default {
 
             this.isLoading = true;
             this.weaponData = null;
+
+            this.damageChart = false;
 
             try {
                 const response = await axios.get('/weapons/' + hash);

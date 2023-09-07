@@ -52,6 +52,9 @@ export default {
                 mode: 'nearest',
                 intersect: true
             },
+            plugins: {
+                highlights: this.data.highlights || []
+            }
         };
 
         if (this.data.tooltips) {

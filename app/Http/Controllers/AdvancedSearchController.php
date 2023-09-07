@@ -519,17 +519,28 @@ class AdvancedSearchController extends Controller
 
         $maxDamage = max(array_keys($dmgBanned) + array_keys($dmgNormal));
 
+        $index = 0;
+
         for ($x = 0; $x <= $maxDamage; $x++) {
             $normal = $dmgNormal[$x] ?? 0;
             $banned = $dmgBanned[$x] ?? 0;
 
             if ($normal === 0 && $banned === 0) continue;
 
+            if (!$index && $normal == $damages['max']) {
+                $index = sizeof($damages['labels']);
+            }
+
             $damages['labels'][] = $x === 999 ? '999+ hp' : $x . 'hp';
 
             $damages['data'][0][] = $normal;
             $damages['data'][1][] = $banned;
         }
+
+        $damages['highlights'] = [
+            ['from' => false, 'to' => $index, 'color' => 'rgba(50, 255, 50, 0.1)'],
+            ['from' => $index, 'to' => false, 'color' => 'rgba(255, 50, 50, 0.1)'],
+        ];
 
         return $this->json(true, [
             'damages' => $damages,

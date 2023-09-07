@@ -25,6 +25,7 @@ import 'vue-toastification/dist/index.css';
 import 'vue-search-select/dist/VueSearchSelect.css';
 
 import './scripts/overrides.js';
+import './scripts/chartjs-highlights.js';
 
 // Directives.
 Vue.directive('linkified', linkify);
