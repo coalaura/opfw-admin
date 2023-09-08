@@ -9,22 +9,25 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
+use App\Ban;
 use App\Http\Controllers\AdvancedSearchController;
+use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Auth\DiscordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
-use App\Http\Controllers\Auth\DiscordController;
 use App\Http\Controllers\BlacklistController;
 use App\Http\Controllers\CasinoLogController;
 use App\Http\Controllers\CronjobController;
+use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\GraphController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\SteamLookupController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\LoadingScreenController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\MapController;
-use App\Http\Controllers\ApiController;
 use App\Http\Controllers\OverwatchController;
 use App\Http\Controllers\PanelLogController;
 use App\Http\Controllers\PlayerBanController;
@@ -34,23 +37,22 @@ use App\Http\Controllers\PlayerRouteController;
 use App\Http\Controllers\PlayerWarningController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\ScreenshotController;
-use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\SerialsController;
 use App\Http\Controllers\ServerController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StaffChatController;
 use App\Http\Controllers\StatisticsController;
+use App\Http\Controllers\SteamLookupController;
 use App\Http\Controllers\SuspiciousController;
 use App\Http\Controllers\TestController;
-use App\Http\Controllers\GraphController;
 use App\Http\Controllers\TwitterController;
-use App\Http\Controllers\LoadingScreenController;
-use App\Http\Controllers\SettingsController;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
 // Authentication methods.
 Route::group(['prefix' => 'auth'], function () {
-    Route::group(['middleware' => ['session']], function() {
+    Route::group(['middleware' => ['session']], function () {
         Route::get('/login', [DiscordController::class, 'login']);
         Route::get('/complete', [DiscordController::class, 'complete']);
     });
@@ -70,7 +72,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/', [HomeController::class, 'render']);
     Route::post('/announcement', [HomeController::class, 'serverAnnouncement']);
 
-	// Steam Lookup.
+    // Steam Lookup.
     Route::get('/steam', [SteamLookupController::class, 'render']);
     Route::post('/steam', [SteamLookupController::class, 'playerInfo']);
 
@@ -121,15 +123,15 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/findUserBanHash/{hash}', [PlayerBanController::class, 'findUserBanHash']);
     Route::get('/ban_info/{hash}', [PlayerBanController::class, 'banInfo']);
 
-	// Epic linked account finders
-	Route::get('/linked_ips/{license}', [PlayerBanController::class, 'linkedIPs']);
-	Route::get('/linked_tokens/{license}', [PlayerBanController::class, 'linkedTokens']);
-	Route::get('/linked_identifiers/{license}', [PlayerBanController::class, 'linkedIdentifiers']);
-	Route::get('/linked_print/{license}', [PlayerBanController::class, 'linkedPrint']);
+    // Epic linked account finders
+    Route::get('/linked_ips/{license}', [PlayerBanController::class, 'linkedIPs']);
+    Route::get('/linked_tokens/{license}', [PlayerBanController::class, 'linkedTokens']);
+    Route::get('/linked_identifiers/{license}', [PlayerBanController::class, 'linkedIdentifiers']);
+    Route::get('/linked_print/{license}', [PlayerBanController::class, 'linkedPrint']);
 
-	// Epic damage logs
-	Route::get('/who_damaged/{license}', [PlayerRouteController::class, 'whoDamaged']);
-	Route::get('/who_was_damaged/{license}', [PlayerRouteController::class, 'whoWasDamagedBy']);
+    // Epic damage logs
+    Route::get('/who_damaged/{license}', [PlayerRouteController::class, 'whoDamaged']);
+    Route::get('/who_was_damaged/{license}', [PlayerRouteController::class, 'whoWasDamagedBy']);
 
     // Inventories.
     Route::get('/inventories/character/{character}', [InventoryController::class, 'character']);
@@ -217,7 +219,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/screenshots', [ScreenshotController::class, 'render']);
     Route::get('/anti_cheat', [ScreenshotController::class, 'antiCheat']);
 
-	// Documentations.
+    // Documentations.
     Route::get('/docs/{type}', [DocumentationController::class, 'docs']);
 
     // Errors.
@@ -289,23 +291,37 @@ Route::group(['prefix' => 'debug', 'middleware' => ['session']], function () {
             abort(401);
         }
 
-        $user = user() ?? abort(401);
+        $user     = user() ?? abort(401);
         $username = $user ? $user->player_name : 'N/A';
 
         $error = $request->json('entry');
-        $href = $request->json('href');
+        $href  = $request->json('href');
         if (!$error || !is_string($error) || !$href || !is_string($href)) {
             abort(400);
         }
 
-        $href = substr($href, 0, 150);
+        $href  = substr($href, 0, 150);
         $error = substr($error, 0, 500);
-        $key = sessionKey();
+        $key   = sessionKey();
 
         $entry = '[' . $key . ' - ' . $username . '] ' . $href . ' - ' . $error;
-        $file = storage_path('logs/' . CLUSTER . '_frontend.log');
+        $file  = storage_path('logs/' . CLUSTER . '_frontend.log');
 
         file_put_contents($file, $entry . PHP_EOL, FILE_APPEND);
         abort(200);
     });
+});
+
+Route::get('hash/{hash}', function (string $hash) {
+    $hash = trim($hash);
+
+    $identifier = false;
+
+    if ($hash && preg_match('/^[a-z0-9]+$/im', $hash)) {
+        $identifier = Ban::find($hash);
+    }
+
+    return (new Response([
+        'valid' => !!$identifier,
+    ], 200))->header('Content-Type', 'application/json');
 });

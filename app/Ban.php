@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\CacheHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -384,5 +385,33 @@ class Ban extends Model
         }
 
         return $bans;
+    }
+
+    public static function find(string $hash): ?string
+    {
+        $key  = "ban_hash_list";
+        $bans = false;
+
+        if (CacheHelper::exists($key)) {
+            $bans = CacheHelper::read($key) ?? false;
+        }
+
+        if (!$bans) {
+            $list = self::query()
+                ->select(["ban_hash", "identifier"])
+                ->where(DB::raw("SUBSTRING_INDEX(identifier, ':', 1)"), '=', 'license')
+                ->groupBy("ban_hash")
+                ->get();
+
+            $bans = [];
+
+            foreach ($list as $entry) {
+                $bans[$entry->ban_hash] = $entry->identifier;
+            }
+
+            CacheHelper::write($key, $bans, CacheHelper::HOUR * 6);
+        }
+
+        return $bans[$hash] ?? null;
     }
 }
