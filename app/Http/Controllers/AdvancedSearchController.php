@@ -482,6 +482,7 @@ class AdvancedSearchController extends Controller
             ->select([DB::raw('COUNT(DISTINCT license_identifier) as count'), 'weapon_damage', 'ban_hash'])
             ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
             ->where('weapon_damage_events.timestamp', '>', time() - 60 * 60 * 24 * 120)
+            ->where('is_parent_self', '=', '1')
             ->whereIn('weapon_type', [$hash, $unsigned])
             ->where('hit_players', '!=', '[]')
             ->groupBy(['weapon_damage', 'ban_hash'])
