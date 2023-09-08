@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\DB;
 use Dotenv\Dotenv;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Artisan;
+use App\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -256,3 +258,31 @@ Artisan::command("migrate-trunks", function() {
 
 	return;
 })->describe("Update all trunks to have the correct vehicle class.");
+
+Artisan::command("clear:cache", function() {
+	$this->info(CLUSTER . " Clearing caches...");
+
+	$caches = [
+		"cache:clear",
+		"view:clear",
+		"config:clear",
+		"event:clear",
+		"route:clear"
+	];
+
+	foreach ($caches as $cache) {
+		$this->comment(" - $cache");
+
+		Artisan::call($cache);
+	}
+
+	$this->info(CLUSTER . " Done!");
+})->describe("Clear all laravel caches.");
+
+Artisan::command("clear:sessions", function() {
+	$this->info(CLUSTER . " Dropping all sessions...");
+
+	$count = Session::query()->delete();
+
+	$this->info(CLUSTER . " Dropped $count sessions.");
+})->describe("Clear all laravel caches.");
