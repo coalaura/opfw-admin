@@ -609,6 +609,14 @@
                 <span class="text-sm italic">{{ t('players.show.confirmed_accuracy_title') }}</span>
             </div>
 
+            <div class="mb-4 px-6 py-4 border-2 flex flex-col bg-warning dark:bg-dark-warning rounded border-yellow-800" v-else-if="prettyHighAccuracy">
+                <span class="font-bold">
+                    <i class="fas fa-check mr-1"></i>
+                    {{ t('players.show.high_accuracy') }}
+                </span>
+                <span class="text-sm italic">{{ t('players.show.high_accuracy_title') }}</span>
+            </div>
+
             <!-- Viewing -->
             <alert class="bg-danger dark:bg-dark-danger px-6 py-4" v-if="player.isBanned">
                 <div class="flex items-center justify-between mb-2">
@@ -1417,6 +1425,11 @@ export default {
             const ban = this.player.ban;
 
             return ban && ban.info && ban.info.startsWith('Impossible');
+        },
+        prettyHighAccuracy() {
+            const ban = this.player.ban;
+
+            return ban && ban.info && ban.info.startsWith('Highly unlikely');
         }
     },
     methods: {
