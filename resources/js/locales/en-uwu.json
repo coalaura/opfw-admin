@@ -851,7 +851,9 @@
             "show_link_identifier": "Shuw accounts winked via identifiers",
             "meta_minigame": "Awenaa/BW",
             "meta_camCords": "Fwee-cam/Itbitcam",
-            "meta_queue": "Qwueue"
+            "meta_queue": "Qwueue",
+            "high_accuracy": "Haiwy Accuwacy",
+            "high_accuracy_title": "Dis detectiun iz buiwt in UwU way dat false positives awe highwy unwikewy. Mwakie suwe u awe 100% cewtain dis ban iz false befowe wemoving it."
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

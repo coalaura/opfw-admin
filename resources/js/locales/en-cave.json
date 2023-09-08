@@ -851,7 +851,9 @@
             "show_link_identifier": "Show accounts linked via identifiers",
             "meta_minigame": "Arena/BR",
             "meta_camCords": "Freecam/Orbitcam",
-            "meta_queue": "Queue"
+            "meta_queue": "Queue",
+            "high_accuracy": "Ugga Ugga Ugga",
+            "high_accuracy_title": "Ugga ugga ugga ugga, ugga ugga ugga ugga. Ugga ugga ugga ugga ugga ugga ugga ugga ugga ugga ugga ugga ugga."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

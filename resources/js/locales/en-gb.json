@@ -851,7 +851,9 @@
             "show_link_identifier": "Reveal 'em accounts linked wiv identifiers",
             "meta_minigame": "Arena/Bloody BR",
             "meta_camCords": "Freecam/Orbitcam bollocks",
-            "meta_queue": "Bloody long queue, buggers"
+            "meta_queue": "Bloody long queue, buggers",
+            "high_accuracy": "Bloody Accurate",
+            "high_accuracy_title": "This sodding detection is built in a way that false positives are as rare as a unicorn's bollocks. Make sure you are absolutely blimey certain this ban is false before buggering off and removing it."
         },
         "ban_reason": "Give us the bleedin' reason",
         "ban_time": "Expires in yonks",

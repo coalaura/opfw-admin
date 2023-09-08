@@ -851,7 +851,9 @@
             "show_link_identifier": "🔗-🆔",
             "meta_minigame": "🏟️/🌪️",
             "meta_camCords": "🎥🌍/🛰️",
-            "meta_queue": "🚶‍♂️"
+            "meta_queue": "🚶‍♂️",
+            "high_accuracy": "🔍🎯",
+            "high_accuracy_title": "🔍🎯👀✨❗ ️◼️🚫🔍👍❌❌️✨👀👀🚫❗🧐🕵️‍♂️🕵️‍♀️"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

@@ -755,8 +755,6 @@
             "accuracy_title": "{0} of {1} detections were banned in the last 14 days.",
             "confirmed_accuracy": "Confirmed Ackurracy",
             "confirmed_accuracy_title": "Due to the way this here detection is built, there ain't no way for false positives to occur. This ban should not be removed.",
-            "high_accuracy": "High Accuracy",
-            "high_accuracy_title": "This detection is built in a way that false positives are highly unlikely. Make sure you are 100% certain this ban is false before removing it.",
             "ban_locked": "This here ban has been locked, y'all.",
             "ban": "That ol' rascal <i>{0}</i> done banned yer sorry hide 'til <i>{1}</i>.",
             "ban_text": "Till <i>{0}</i>, reckon.",
@@ -853,7 +851,9 @@
             "show_link_identifier": "Show accounts linked via identifahs",
             "meta_minigame": "Playback/Ayarren",
             "meta_camCords": "Freecam/Orbitcam",
-            "meta_queue": "Queue"
+            "meta_queue": "Queue",
+            "high_accuracy": "High Accuracy, Dang Near Foolproof",
+            "high_accuracy_title": "Now let me tell ya, this here detection system is built real solid. Ain't no need to worry 'bout no false positives, partner. But, I reckon ya gotta be doggone sure that this ban is a dud before ya go 'head and lift it."
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

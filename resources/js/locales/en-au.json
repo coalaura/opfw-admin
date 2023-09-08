@@ -851,7 +851,9 @@
             "show_link_identifier": "Show accounts linked via dodgy identifiers",
             "meta_minigame": "Footy/Chook Shoot",
             "meta_camCords": "Bloody Freecam/Orbitcam",
-            "meta_queue": "Farkin' Line"
+            "meta_queue": "Farkin' Line",
+            "high_accuracy": "Deadset Bonza Accuracy",
+            "high_accuracy_title": "This dinky-di detection is built in a way that it's as rare as rocking horse droppings to false positive. Make sure you come it a bewdy before chuckin' a speccy and removing it."
         },
         "ban_reason": "Sorry mate",
         "ban_time": "Runs out",
