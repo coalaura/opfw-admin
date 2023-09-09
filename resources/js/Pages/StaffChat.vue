@@ -1,6 +1,11 @@
 <template>
     <div class="w-full h-full relative" id="chat">
         <div class="messages" ref="messages">
+            <div class="message" v-for="message in messages" :class="message.color">
+                <a class="title" :href="'/players/' + message.license" target="_blank">{{ message.title }}:</a>
+                <span class="text">{{ message.text }}</span>
+            </div>
+
             <div class="message red" v-if="!socket">
                 <span class="title">{{ t("staff_chat.voice_chat") }}:</span>
                 <span class="text">{{ t("staff_chat.disconnected") }}</span>
@@ -11,17 +16,12 @@
                 <span class="text">{{ t("staff_chat.connecting") }}</span>
             </div>
 
-            <div class="message" v-for="message in messages" :class="message.color" v-if="!isLoading && socket">
-                <a class="title" :href="'/players/' + message.license" target="_blank">{{ message.title }}:</a>
-                <span class="text">{{ message.text }}</span>
-            </div>
-
             <div ref="scrollTo"></div>
         </div>
 
         <div class="input-wrap" :class="{ 'opacity-75': isSendingChat }" v-if="!isLoading && socket">
             <div class="prefix">
-                <i class="fas fa-spinner fa-spin" v-if="isSendingChat"></i>
+                <i class="fas fa-spinner fa-spin" v-if="isSendingChat" ref="chat"></i>
                 <span v-else>➤</span>
             </div>
             <input class="input" v-model="chatInput" spellcheck="false" @keydown="keydown" :disabled="isSendingChat" />
@@ -150,6 +150,8 @@ export default {
 
             this.chatInput = "";
             this.isSendingChat = false;
+
+            this.$refs.chat.focus();
         },
         chatKeyPress(event) {
             if (event.key === 'Enter') {
@@ -207,6 +209,8 @@ export default {
                     });
 
                     this.scroll();
+
+                    this.$refs.chat.focus();
                 } catch (e) {
                     console.error('Failed to parse socket message ', e)
                 }
@@ -222,18 +226,17 @@ export default {
             });
         },
         scroll() {
-            setTimeout(() => {
-                const scrollTo = this.$refs.scrollTo,
-                    messages = this.$refs.messages;
+            const scrollTo = this.$refs.scrollTo,
+                messages = this.$refs.messages,
+                top = messages.scrollTopMax - messages.scrollTop;
 
-                if (!scrollTo) return;
+            if (top > 20) return;
 
-                if (messages.scrollTopMax - messages.scrollTop > 20) return;
-
+            this.$nextTick(() => {
                 scrollTo.scrollIntoView({
                     behavior: "smooth"
                 });
-            }, 200);
+            });
         },
         notify() {
             const audio = new Audio("/images/notification_pop.ogg");
