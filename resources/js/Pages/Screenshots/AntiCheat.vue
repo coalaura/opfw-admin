@@ -198,6 +198,8 @@ export default {
             this.formattedScreenshots = this.getFormattedScreenshots(previousIds);
 
             this.isLoading = false;
+
+            this.$forceUpdate();
         },
         getFormattedScreenshots(previousIds) {
             return this.screenshots.map(screenshot => {
