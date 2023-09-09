@@ -192,7 +192,7 @@ class PlayerController extends Controller
                     'danny' => GeneralHelper::dannyPercentageCreationTime(intval($character->character_creation_time)),
                     'data' => $status->characterMetadata ?? [],
                 ],
-                'playerName' => Player::filterPlayerName($player->player_name, $player->license_identifier),
+                'playerName' => $player->getSafePlayerName(),
                 'playTime' => $player->playtime,
                 'licenseIdentifier' => $player->license_identifier,
             ];

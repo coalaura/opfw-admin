@@ -36,7 +36,7 @@ class CacheHelper
                 'license_identifier', 'player_name',
             ])->get();
             foreach ($players as $player) {
-                $map[$player->license_identifier] = Player::filterPlayerName($player->player_name, $player->license_identifier);
+                $map[$player->license_identifier] = $player->getSafePlayerName();
             }
 
             self::write('license_player_map', $map, 12 * self::HOUR);

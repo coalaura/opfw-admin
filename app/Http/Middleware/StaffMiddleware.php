@@ -54,7 +54,7 @@ class StaffMiddleware
             );
         }
 
-        $name = $player->getFilteredPlayerName();
+        $name = $player->getSafePlayerName();
 
         if ($session->get('name') !== $name) {
             $session->put('name', $name);

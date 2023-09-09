@@ -49,7 +49,7 @@ class ScreenshotController extends Controller
     {
         $page = Paginator::resolveCurrentPage('page');
 
-		$query = "SELECT id, player_name, users.license_identifier, url, details, timestamp FROM (" .
+		$query = "SELECT id, player_name, users.license_identifier, users.player_aliases, url, details, timestamp FROM (" .
 			"SELECT CONCAT('s_', id) as id, license_identifier, screenshot_url as url, type as details, timestamp FROM anti_cheat_events WHERE screenshot_url IS NOT NULL AND type != 'modified_fov'" .
 			" UNION " .
 			"SELECT CONCAT('b_', id) as id, identifier, ban_hash, reason, MAX(timestamp) FROM user_bans WHERE SUBSTRING_INDEX(identifier, ':', 1) = 'license' AND SUBSTRING_INDEX(reason, '-', 1) = 'MODDING' AND smurf_account IS NULL GROUP BY identifier" .
@@ -68,7 +68,7 @@ class ScreenshotController extends Controller
                 $entry->details = ucwords(strtolower(str_replace('_', ' ', $entry->details)));
             }
 
-            $entry->player_name = Player::filterPlayerName($entry->player_name ?? "", $entry->license_identifier ?? "");
+            $entry->player_name = Player::getFilteredPlayerName($entry->player_name ?? "", $entry->player_aliases, $entry->license_identifier ?? "");
 
 			return $entry;
 		}, $system);

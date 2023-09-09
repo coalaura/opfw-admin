@@ -249,7 +249,7 @@ class Player extends Model
         return isset($data['staffHidden']) && $data['staffHidden'];
     }
 
-    public static function filterPlayerName(string $name, string $license): string
+    private static function filterPlayerName(string $name): string
     {
         foreach (self::PlayerNameFilter as $filter) {
             $name = str_ireplace($filter, '', $name);
@@ -257,21 +257,32 @@ class Player extends Model
 
         $name = preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $name);
 
-        $name = trim($name);
-
-        if (empty($name)) {
-            $name = "L-" . substr($license, 8, 6);
-        }
-
-        return $name;
+        return trim($name);
     }
 
-    public function getFilteredPlayerName(): string
+    public static function getFilteredPlayerName(string $name, $alias, string $license): string
     {
-        $name    = $this->player_name;
-        $license = $this->license_identifier;
+        $name  = self::filterPlayerName($name);
+        $alias = $alias ?? [];
 
-        return self::filterPlayerName($name, $license);
+        if ($name) {
+            return $name;
+        }
+
+        for ($i = sizeof($alias) - 1; $i >= 0; $i--) {
+            $name = self::filterPlayerName($alias[$i]);
+
+            if ($name) {
+                return $name;
+            }
+        }
+
+        return substr($license, 8, 10);
+    }
+
+    public function getSafePlayerName(): string
+    {
+        return self::getFilteredPlayerName($this->player_name, $this->player_aliases, $this->license_identifier);
     }
 
     public static function resolveTags(bool $refreshCache = false): array

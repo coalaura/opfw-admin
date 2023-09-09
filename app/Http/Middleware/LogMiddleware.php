@@ -27,7 +27,7 @@ class LogMiddleware
         $name = "N/A";
 
 		if ($player) {
-			$name = $player->getFilteredPlayerName();
+			$name = $player->getSafePlayerName();
 		}
 
         LoggingHelper::log('ACCEPTED ' . $name);

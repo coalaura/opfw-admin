@@ -19,7 +19,7 @@ class PlayerIndexResource extends JsonResource
     {
         return [
             'licenseIdentifier' => $this->license_identifier,
-            'playerName'        => $this->getFilteredPlayerName(),
+            'playerName'        => $this->getSafePlayerName(),
             'playTime'          => $this->playtime,
             'warnings'          => $this->warning_count,
             'isBanned'          => !!Ban::getBanForUser($this->license_identifier),
