@@ -33,7 +33,7 @@
                         <th class="p-3 w-32">{{ t('screenshot.ban_status') }}</th>
                         <th class="p-3 pr-8 w-56">{{ t('screenshot.created_at') }}</th>
                     </tr>
-                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" :class="{ 'new-entry': screenshot.new }" v-for="screenshot in formattedScreenshots" :key="screenshot.url">
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" :class="{ 'new-entry': screenshot.new }" v-for="screenshot in list" :key="screenshot.url">
                         <template v-if="screenshot.isBan">
                             <td class="p-3 pl-8 text-center mobile:block">
                                 <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-red-600 rounded dark:bg-red-400" :href="'/players/' + screenshot.license_identifier">
@@ -174,8 +174,20 @@ export default {
 
             showingReasons: false,
 
-            formattedScreenshots: this.getFormattedScreenshots(false)
+            previousIds: false
         };
+    },
+    computed: {
+        list() {
+            return this.screenshots.map(screenshot => {
+                screenshot.ban = this.getBanInfo(screenshot.license_identifier);
+                screenshot.isBan = !screenshot.url.startsWith("http");
+
+                screenshot.new = this.previousIds && !this.previousIds.includes(screenshot.id);
+
+                return screenshot;
+            });
+        }
     },
     methods: {
         refresh: async function () {
@@ -183,33 +195,18 @@ export default {
                 return;
             }
 
-            const previousIds = this.screenshots.map(screenshot => screenshot.id);
+            this.previousIds = this.screenshots.map(screenshot => screenshot.id);
 
             this.isLoading = true;
             try {
                 await this.$inertia.replace('/anti_cheat', {
-                    data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
                     only: ['screenshots', 'banMap', 'links', 'page'],
                 });
             } catch (e) { }
 
-            this.formattedScreenshots = this.getFormattedScreenshots(previousIds);
-
             this.isLoading = false;
-
-            this.$forceUpdate();
-        },
-        getFormattedScreenshots(previousIds) {
-            return this.screenshots.map(screenshot => {
-                screenshot.ban = this.getBanInfo(screenshot.license_identifier);
-                screenshot.isBan = !screenshot.url.startsWith("http");
-
-                screenshot.new = previousIds && !previousIds.includes(screenshot.id);
-
-                return screenshot;
-            });
         },
         getBanInfo(licenseIdentifier, key) {
             const ban = licenseIdentifier in this.banMap ? this.banMap[licenseIdentifier] : null;
