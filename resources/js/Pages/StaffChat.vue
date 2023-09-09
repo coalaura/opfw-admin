@@ -222,7 +222,7 @@ export default {
             });
         },
         scroll() {
-            this.$nextTick(() => {
+            setTimeout(() => {
                 const scrollTo = this.$refs.scrollTo,
                     messages = this.$refs.messages;
 
@@ -233,7 +233,7 @@ export default {
                 scrollTo.scrollIntoView({
                     behavior: "smooth"
                 });
-            });
+            }, 200);
         },
         notify() {
             const audio = new Audio("/images/notification_pop.ogg");
