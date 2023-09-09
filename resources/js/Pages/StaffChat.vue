@@ -1,7 +1,6 @@
 <template>
     <div class="w-full h-full relative" id="chat">
-        <div class="messages">
-
+        <div class="messages" ref="messages">
             <div class="message red" v-if="!socket">
                 <span class="title">{{ t("staff_chat.voice_chat") }}:</span>
                 <span class="text">{{ t("staff_chat.disconnected") }}</span>
@@ -16,9 +15,11 @@
                 <a class="title" :href="'/players/' + message.license" target="_blank">{{ message.title }}:</a>
                 <span class="text">{{ message.text }}</span>
             </div>
+
+            <div ref="scrollTo"></div>
         </div>
 
-        <div class="input-wrap" :class="{'opacity-75': isSendingChat}" v-if="!isLoading && socket">
+        <div class="input-wrap" :class="{ 'opacity-75': isSendingChat }" v-if="!isLoading && socket">
             <div class="prefix">
                 <i class="fas fa-spinner fa-spin" v-if="isSendingChat"></i>
                 <span v-else>➤</span>
@@ -55,6 +56,8 @@ body {
     grid-gap: 1.4vh;
     align-items: flex-start;
     align-content: flex-start;
+    height: 100%;
+    overflow-y: auto;
 }
 
 .message {
@@ -202,6 +205,8 @@ export default {
                             createdAt: message.createdAt
                         };
                     });
+
+                    this.scroll();
                 } catch (e) {
                     console.error('Failed to parse socket message ', e)
                 }
@@ -214,6 +219,20 @@ export default {
                 setTimeout(() => {
                     this.init();
                 }, 5000);
+            });
+        },
+        scroll() {
+            this.$nextTick(() => {
+                const scrollTo = this.$refs.scrollTo,
+                    messages = this.$refs.messages;
+
+                if (!scrollTo) return;
+
+                if (messages.scrollTopMax - messages.scrollTop > 20) return;
+
+                scrollTo.scrollIntoView({
+                    behavior: "smooth"
+                });
             });
         },
         notify() {
