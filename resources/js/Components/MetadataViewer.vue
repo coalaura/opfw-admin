@@ -139,10 +139,10 @@ export default {
             let seconds = Math.floor(ms / 1000).toString().padEnd(2, '0');
             ms = ms % 1000;
 
-            let fmt = seconds + (ms ? `.${ms.toString().padEnd(3, '0')}` : '') + '<span class="text-gray-400 ml-0.5">s</span>';
-
             let minutes = Math.floor(seconds / 60).toString().padEnd(2, '0');
             seconds = seconds % 60;
+
+            let fmt = seconds + (ms ? `.${ms.toString().padEnd(3, '0')}` : '') + '<span class="text-gray-400 ml-0.5">s</span>';
 
             minutes && (fmt = minutes + '<span class="text-gray-400 ml-0.5">m</span> ' + fmt);
 
