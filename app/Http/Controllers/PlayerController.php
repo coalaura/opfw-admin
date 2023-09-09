@@ -88,7 +88,7 @@ class PlayerController extends Controller
         $query->orderBy("player_name");
 
         $query->select([
-            'license_identifier', 'player_name', 'playtime', 'identifiers',
+            'license_identifier', 'player_name', 'playtime', 'identifiers', 'player_aliases'
         ]);
         $query->selectSub('SELECT COUNT(`id`) FROM `warnings` WHERE `player_id` = `user_id` AND `warning_type` IN (\'' . Warning::TypeWarning . '\', \'' . Warning::TypeStrike . '\')', 'warning_count');
 
