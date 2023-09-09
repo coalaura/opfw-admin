@@ -150,10 +150,10 @@
         "no_prio": "❌🆘"
     },
     "staff_chat": {
-        "toggle": "📢👥📢",
         "voice_chat": "🔊📢",
         "disconnected": "🔌📵",
-        "connecting": "🔌🗣️🚀. 💌🗣️🎮📁 to 🎯🆔 players."
+        "connecting": "🔌🗣️🚀. 💌🗣️🎮📁 to 🎯🆔 players.",
+        "title": "👥💬"
     },
     "overwatch": {
         "title": "👁️‍🗨️",

@@ -150,10 +150,10 @@
         "no_prio": "Nowo pwioowityuwu"
     },
     "staff_chat": {
-        "toggle": "Twugwle staff-chat",
         "voice_chat": "Voiwce Chat UwU",
         "disconnected": "Disconnyected fwom the voice sewver. Waiting fow connection. OwO",
-        "connecting": "On the way to the voice server! Sending precious voice data to relevant cuties~"
+        "connecting": "On the way to the voice server! Sending precious voice data to relevant cuties~",
+        "title": "Stwaff Chat UwU"
     },
     "overwatch": {
         "title": "OwO-watch",

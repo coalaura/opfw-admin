@@ -150,10 +150,10 @@
         "no_prio": "Not Really That special"
     },
     "staff_chat": {
-        "toggle": "Toggle staff-yarns",
         "voice_chat": "Yarn Yarn",
         "disconnected": "Arvo mate, got disconnected from the voice server. Just hang tight, we'll sort it out soon.",
-        "connecting": "G'day, mate! Connecting to the bloody voice server. Chucking voice data straight to the fair dinkum players."
+        "connecting": "G'day, mate! Connecting to the bloody voice server. Chucking voice data straight to the fair dinkum players.",
+        "title": "Bloody Staff Yarn"
     },
     "overwatch": {
         "title": "Undercover",

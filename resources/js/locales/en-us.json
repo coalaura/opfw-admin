@@ -151,7 +151,7 @@
         "no_prio": "No priority"
     },
     "staff_chat": {
-        "toggle": "Toggle staff-chat",
+        "title": "Staff Chat",
         "voice_chat": "Voice Chat",
         "connecting": "Connecting to the voice server. Sending voice data to relevant players.",
         "disconnected": "Disconnected from the voice server. Waiting for connection."

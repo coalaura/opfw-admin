@@ -150,10 +150,10 @@
         "no_prio": "No Importance"
     },
     "staff_chat": {
-        "toggle": "Toggle matey-chat",
         "voice_chat": "Parrot Squawk",
         "disconnected": "Marooned from the voice server. Waitin' for a matey to reconnect.",
-        "connecting": "We be settin' sail fer th' voice server. Sendin' voice data t' relevant scallywags."
+        "connecting": "We be settin' sail fer th' voice server. Sendin' voice data t' relevant scallywags.",
+        "title": "Matey Chatter"
     },
     "overwatch": {
         "title": "Spyglass",

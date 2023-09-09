@@ -150,10 +150,10 @@
         "no_prio": "No special important"
     },
     "staff_chat": {
-        "toggle": "Ugga bugga staff-chat",
         "voice_chat": "Grunt Grunt",
         "disconnected": "Me no hear other cavemen. Wait for connection.",
-        "connecting": "Ug. Me go connect to voice cave. Me send voice grunt to other players who need to hear."
+        "connecting": "Ug. Me go connect to voice cave. Me send voice grunt to other players who need to hear.",
+        "title": "Ugga Ugga Chat"
     },
     "overwatch": {
         "title": "Bugga bugga",

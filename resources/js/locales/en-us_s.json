@@ -150,10 +150,10 @@
         "no_prio": "No special treatment"
     },
     "staff_chat": {
-        "toggle": "Turn staff-chat on or off",
         "voice_chat": "Y'all come on in and holler at each other",
         "disconnected": "Done got disconnected from the voice server. Just waitin' on a connection now.",
-        "connecting": "Fixin' to connect to the voice server. Sendin' voice data to the right players."
+        "connecting": "Fixin' to connect to the voice server. Sendin' voice data to the right players.",
+        "title": "Y'all Talk"
     },
     "overwatch": {
         "title": "Overwatch",
