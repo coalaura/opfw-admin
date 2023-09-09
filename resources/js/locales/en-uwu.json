@@ -151,12 +151,9 @@
     },
     "staff_chat": {
         "toggle": "Twugwle staff-chat",
-        "failed": "OwO Oopsie wopsie! I faiwed to connyect!",
-        "connecting": "Cwonnwecting..",
-        "title": "Chat UwU",
-        "no_messages": "No staff messages uwu",
-        "send_chat": "Send uwu",
-        "sent_chat": "Sent uwu!"
+        "voice_chat": "Voiwce Chat UwU",
+        "disconnected": "Disconnyected fwom the voice sewver. Waiting fow connection. OwO",
+        "connecting": "On the way to the voice server! Sending precious voice data to relevant cuties~"
     },
     "overwatch": {
         "title": "OwO-watch",

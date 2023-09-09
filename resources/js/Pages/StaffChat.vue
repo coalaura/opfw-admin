@@ -1,142 +1,169 @@
 <template>
-    <div>
+    <div class="w-full h-full relative" id="chat">
+        <div class="messages">
 
-        <button @click="notificationSound = !notificationSound" class="text-lg text-white absolute top-4 right-4">
-            <i class="fas fa-volume-up text-green-200" v-if="notificationSound"></i>
-            <i class="fas fa-volume-mute text-red-200" v-else></i>
-        </button>
-
-        <div class="-mt-12">
-            <div class="flex flex-wrap flex-row">
-                <form class="mb-6 flex w-full" @submit.prevent="sendChat">
-                    <input class="w-full px-4 py-2 mr-3 bg-gray-200 dark:bg-gray-600 border rounded !outline-none" maxlength="250" required placeholder="Hey gang!" v-model="staffMessage" @keypress="chatKeyPress($event)" :disabled="isSendingChat">
-
-                    <button class="px-4 py-2 font-semibold text-white rounded hover:shadow-lg flex-shrink-0" type="submit" :class="{ 'bg-success dark:bg-dark-success': sentChatFlash, 'bg-warning dark:bg-dark-warning': isSendingChat, 'bg-primary dark:bg-dark-primary': !sentChatFlash && !isSendingChat }">
-                        <span v-if="sentChatFlash">
-                            <i class="fas fa-check"></i>
-                        </span>
-                        <span v-else-if="!isSendingChat">
-                            <i class="fas fa-envelope"></i>
-                        </span>
-                        <span v-else>
-                            <i class="fas fa-cog animate-spin"></i>
-                        </span>
-                    </button>
-                </form>
-
-                <div class="w-full mb-3" v-if="isLoading">
-                    <div class="badge border-blue-200 bg-blue-100 dark:bg-blue-900 inline-block px-4 leading-5 py-2 border-2 rounded">
-                        <i class="fas fa-cog animate-spin mr-1"></i>
-                        {{ t('staff_chat.connecting') }}
-                    </div>
-                </div>
-
-                <div class="w-full mb-3" v-if="socketError">
-                    <div class="badge border-red-200 bg-red-100 dark:bg-red-900 inline-block px-4 leading-5 py-2 border-2 rounded">
-                        {{ t('staff_chat.failed') }}
-                    </div>
-                </div>
-
-                <div class="w-full mb-3" v-if="!socketError && !isLoading && staffMessages.length === 0">
-                    <div class="badge border-yellow-200 bg-yellow-100 dark:bg-yellow-900 inline-block px-4 leading-5 py-2 border-2 rounded">
-                        {{ t('staff_chat.no_messages') }}
-                    </div>
-                </div>
-
-                <div class="w-full mb-3" v-for="(message, index) in staffMessages" :key="index" v-else>
-                    <!-- Report Message -->
-                    <div :title="formatTimestamp(message.createdAt * 1000)" class="badge border-green-200 bg-green-100 dark:bg-green-900 inline-block px-4 leading-5 py-2 border-2 rounded" v-if="message.type === 'report'">
-                        <a :href="'/players/' + message.user.licenseIdentifier" class="font-semibold text-black dark:text-white !no-underline">{{ message.user.playerName }}:</a> {{ message.message }}
-                    </div>
-
-                    <!-- Staff Chat Message -->
-                    <div :title="formatTimestamp(message.createdAt * 1000)" class="badge border-purple-200 bg-purple-100 dark:bg-purple-900 inline-block px-4 leading-5 py-2 border-2 rounded" v-else>
-                        <a :href="'/players/' + message.user.licenseIdentifier" class="font-semibold text-black dark:text-white !no-underline">{{ message.user.playerName }}:</a> {{ message.message }}
-                    </div>
-                </div>
+            <div class="message red" v-if="!socket">
+                <span class="title">{{ t("staff_chat.voice_chat") }}:</span>
+                <span class="text">{{ t("staff_chat.disconnected") }}</span>
             </div>
 
+            <div class="message red" v-if="isLoading">
+                <span class="title">{{ t("staff_chat.voice_chat") }}:</span>
+                <span class="text">{{ t("staff_chat.connecting") }}</span>
+            </div>
+
+            <div class="message" v-for="message in messages" :class="message.color" v-if="!isLoading && socket">
+                <a class="title" :href="'/players/' + message.license" target="_blank">{{ message.title }}:</a>
+                <span class="text">{{ message.text }}</span>
+            </div>
         </div>
 
+        <div class="input-wrap" :class="{'opacity-75': isSendingChat}" v-if="!isLoading && socket">
+            <div class="prefix">
+                <i class="fas fa-spinner fa-spin" v-if="isSendingChat"></i>
+                <span v-else>➤</span>
+            </div>
+            <input class="input" v-model="chatInput" spellcheck="false" @keydown="keydown" :disabled="isSendingChat" />
+        </div>
     </div>
 </template>
 
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500&display=swap");
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+#chat {
+    background: url(/images/default.webp);
+    background-size: cover;
+    background-position: center;
+    padding: 5vh;
+    font-family: "Rubik", sans-serif;
+    font-size: 2.15vh;
+    color: white;
+    line-height: 4vh;
+    padding-bottom: 14vh;
+}
+
+.messages {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 1.4vh;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.message {
+    padding: 1vh 2.2vh;
+    border-radius: 1.2vh;
+
+    .title {
+        font-weight: 500;
+    }
+}
+
+.purple {
+    background: rgba(125, 63, 166, 0.85);
+}
+
+.green {
+    background: rgba(50, 130, 35, 0.85);
+}
+
+.red {
+    background: rgba(140, 50, 35, 0.85);
+}
+
+.input-wrap {
+    position: absolute;
+    bottom: 5vh;
+    left: 5vh;
+    right: 5vh;
+    background: rgba(44, 62, 80, 0.7);
+    border: 1px solid rgb(77, 144, 254);
+    box-shadow: 0 0 2px rgb(77, 144, 254);
+    margin-top: 2vh;
+    padding: 1vh 2.2vh;
+    border-radius: 1.2vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input {
+    flex-grow: 1;
+    border: none;
+    background: none;
+    font-weight: 500;
+
+    padding-left: 1.3vh;
+    padding-right: 1.3vh;
+
+    &:focus {
+        outline: none;
+    }
+}
+</style>
+
 <script>
-import Layout from "../Layouts/Plain";
-import Badge from "../Components/Badge";
 import DataCompressor from "./Map/DataCompressor";
 
 import { io } from "socket.io-client";
 
 export default {
-    layout: Layout,
-    components: {
-        Badge
-    },
     data() {
         return {
-            isLoading: false,
-            isInitialized: false,
-            socketError: false,
-            staffMessages: [],
-            staffMessage: "",
+            chatInput: "",
+
+            messages: [],
+
             isSendingChat: false,
+            isLoading: false,
+            error: false,
 
-            sentChatFlash: false,
-            sentFlashTimeout: false,
-
-            notificationSound: false
+            socket: false
         };
     },
     methods: {
-        formatTimestamp(time) {
-            return this.$options.filters.formatTime(time);
+        keydown(e) {
+            if (e.key !== "Enter") return;
+
+            this.sendChat();
         },
         async sendChat() {
-            if (this.isSendingChat) {
-                return;
-            }
-
-            clearTimeout(this.sentFlashTimeout);
+            if (this.isSendingChat) return;
 
             this.isSendingChat = true;
 
-            // Send request.
-            await this.$inertia.post('/staffChat', {
-                message: this.staffMessage
-            });
+            try {
+                await axios.post('/chat', {
+                    message: this.chatInput
+                });
+            } catch (e) { }
 
-            // Reset.
+            this.chatInput = "";
             this.isSendingChat = false;
-            this.staffMessage = "";
-
-            this.sentChatFlash = true;
-
-            this.sentFlashTimeout = setTimeout(() => {
-                this.sentChatFlash = false;
-            }, 5000);
         },
         chatKeyPress(event) {
             if (event.key === 'Enter') {
                 this.sendChat();
             }
         },
-        initChat() {
-            if (this.isInitialized) {
-                return;
-            }
-            this.isInitialized = true;
+        init() {
+            if (this.socket) return;
+
             this.isLoading = true;
 
-            this.socketError = false;
-
-            const isDev = window.location.hostname === 'localhost';
-
-            const token = this.$page.auth.token,
+            const isDev = window.location.hostname === 'localhost',
+                token = this.$page.auth.token,
                 server = this.$page.auth.server,
                 socketUrl = isDev ? 'ws://localhost:9999' : 'wss://' + window.location.host;
 
-            let socket = io(socketUrl, {
+            this.socket = io(socketUrl, {
                 reconnectionDelayMax: 5000,
                 query: {
                     server: server,
@@ -146,42 +173,40 @@ export default {
                 }
             });
 
-            socket.on("message", async (buffer) => {
+            this.socket.on("message", async (buffer) => {
                 this.isLoading = false;
 
                 try {
                     const unzipped = await DataCompressor.GUnZIP(buffer);
 
-                    const messages = JSON.parse(unzipped).reverse();
+                    const messages = JSON.parse(unzipped);
 
-                    if (messages[0]?.type === 'report' && messages[0]?.createdAt !== this.staffMessages[0]?.createdAt) {
-                        this.notify();
-                    }
+                    this.messages = messages.map(message => {
+                        const type = message.type,
+                            user = message.user;
 
-                    this.staffMessages = messages;
+                        return {
+                            license: user.licenseIdentifier,
+                            title: (type === "staff" ? "STAFF " : "REPORT ") + user.playerName + (type === "staff" ? "" : " (" + user.source + ")"),
+                            text: message.message,
+                            color: type === "staff" ? "purple" : "green"
+                        };
+                    });
                 } catch (e) {
                     console.error('Failed to parse socket message ', e)
                 }
             });
 
-            socket.on("disconnect", () => {
-                this.isLoading = false;
-                this.isInitialized = false;
-
-                socket.close();
-
-                this.socketError = true;
+            this.socket.on("disconnect", () => {
+                this.socket.close();
+                this.socket = false;
 
                 setTimeout(() => {
-                    this.initChat();
-                }, 3000);
+                    this.init();
+                }, 5000);
             });
         },
         notify() {
-            if (!this.notificationSound) {
-                return;
-            }
-
             const audio = new Audio("/images/notification_pop.ogg");
 
             audio.volume = 0.55;
@@ -190,12 +215,7 @@ export default {
         }
     },
     mounted() {
-        const _this = this;
-
-        this.$nextTick(function () {
-            _this.initChat();
-        });
-    },
-    props: {}
+        this.init();
+    }
 }
 </script>

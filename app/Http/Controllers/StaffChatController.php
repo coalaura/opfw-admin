@@ -19,7 +19,7 @@ class StaffChatController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function staff(Request $request): Response
+    public function chat(Request $request): Response
     {
         return Inertia::render('StaffChat', []);
     }
@@ -28,14 +28,13 @@ class StaffChatController extends Controller
      * Add external staff messages
      *
      * @param Request $request
-     * @return RedirectResponse
      */
-    public function externalStaffChat(Request $request): RedirectResponse
+    public function sendChat(Request $request)
     {
         $message = trim($request->input('message'));
 
         if (!$message || strlen($message) > 250) {
-            return backWith('error', 'Invalid or empty message.');
+            return $this->json(false, null, 'Invalid message length');
         }
 
         $serverIp = Server::getFirstServer();
@@ -43,10 +42,10 @@ class StaffChatController extends Controller
         $status = OPFWHelper::staffChat($serverIp, license(), $message);
 
         if (!$status->status) {
-            return $status->redirect();
+            return $this->json(false, null, $status->message);
         }
 
-        return back();
+        return $this->json(true, $message);
     }
 
     public function staffChat()

@@ -151,12 +151,9 @@
     },
     "staff_chat": {
         "toggle": "Toggle matey-chat",
-        "failed": "Failed to connect, ye scurvy dog!",
-        "connecting": "Connecting, arr!",
-        "title": "Chat, me hearties",
-        "no_messages": "No matey messages, ye landlubber",
-        "send_chat": "Send, me bucko",
-        "sent_chat": "Sent, yo-ho-ho!"
+        "voice_chat": "Parrot Squawk",
+        "disconnected": "Marooned from the voice server. Waitin' for a matey to reconnect.",
+        "connecting": "We be settin' sail fer th' voice server. Sendin' voice data t' relevant scallywags."
     },
     "overwatch": {
         "title": "Spyglass",

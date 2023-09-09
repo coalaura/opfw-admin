@@ -151,12 +151,9 @@
     },
     "staff_chat": {
         "toggle": "Toggle staff-yarns",
-        "failed": "Bloody stuffed it!",
-        "connecting": "Having a crack..",
-        "title": "Yarns",
-        "no_messages": "No chit-chat from the team",
-        "send_chat": "Chuck it",
-        "sent_chat": "Chucked it!"
+        "voice_chat": "Yarn Yarn",
+        "disconnected": "Arvo mate, got disconnected from the voice server. Just hang tight, we'll sort it out soon.",
+        "connecting": "G'day, mate! Connecting to the bloody voice server. Chucking voice data straight to the fair dinkum players."
     },
     "overwatch": {
         "title": "Undercover",

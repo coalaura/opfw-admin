@@ -151,12 +151,9 @@
     },
     "staff_chat": {
         "toggle": "Turn staff-chat on or off",
-        "failed": "Couldn't connect, reckon!",
-        "connecting": "Fixin' to connect..",
-        "title": "Y'all Talk",
-        "no_messages": "Ain't no messages from the staff",
-        "send_chat": "Y'all holla",
-        "sent_chat": "Sent, y'all!"
+        "voice_chat": "Y'all come on in and holler at each other",
+        "disconnected": "Done got disconnected from the voice server. Just waitin' on a connection now.",
+        "connecting": "Fixin' to connect to the voice server. Sendin' voice data to the right players."
     },
     "overwatch": {
         "title": "Overwatch",

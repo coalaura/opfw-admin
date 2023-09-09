@@ -152,12 +152,9 @@
     },
     "staff_chat": {
         "toggle": "Toggle staff-chat",
-        "failed": "Failed to connect!",
-        "connecting": "Connecting..",
-        "title": "Chat",
-        "no_messages": "No staff messages",
-        "send_chat": "Send",
-        "sent_chat": "Sent!"
+        "voice_chat": "Voice Chat",
+        "connecting": "Connecting to the voice server. Sending voice data to relevant players.",
+        "disconnected": "Disconnected from the voice server. Waiting for connection."
     },
     "overwatch": {
         "title": "Overwatch",

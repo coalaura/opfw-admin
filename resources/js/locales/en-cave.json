@@ -151,12 +151,9 @@
     },
     "staff_chat": {
         "toggle": "Ugga bugga staff-chat",
-        "failed": "Ugga bugga failed to connect!",
-        "connecting": "Ugga bugga connecting..",
-        "title": "Bugga",
-        "no_messages": "Ugga bugga no staff messages",
-        "send_chat": "Ugga",
-        "sent_chat": "Ugga bugga!"
+        "voice_chat": "Grunt Grunt",
+        "disconnected": "Me no hear other cavemen. Wait for connection.",
+        "connecting": "Ug. Me go connect to voice cave. Me send voice grunt to other players who need to hear."
     },
     "overwatch": {
         "title": "Bugga bugga",

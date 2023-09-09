@@ -151,12 +151,9 @@
     },
     "staff_chat": {
         "toggle": "📢👥📢",
-        "failed": "❌❌❌!",
-        "connecting": "🔌..",
-        "title": "💬",
-        "no_messages": "No 🕵️‍♂️ messages",
-        "send_chat": "📤",
-        "sent_chat": "✉️!"
+        "voice_chat": "🔊📢",
+        "disconnected": "🔌📵",
+        "connecting": "🔌🗣️🚀. 💌🗣️🎮📁 to 🎯🆔 players."
     },
     "overwatch": {
         "title": "👁️‍🗨️",

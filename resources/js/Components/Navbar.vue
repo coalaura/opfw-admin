@@ -367,7 +367,7 @@ export default {
             });
         },
         showStaffChat() {
-            window.open('/staff', 'Staff Chat', 'directories=no,titlebar=no,toolbar=no,menubar=no,location=no,status=no,width=550,height=700');
+            window.open('/chat', 'Staff Chat', 'directories=no,titlebar=no,toolbar=no,menubar=no,location=no,status=no,width=480,height=700');
 
             this.hideContext();
         },
