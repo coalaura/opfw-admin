@@ -181,6 +181,15 @@ export default {
 
                     const messages = JSON.parse(unzipped);
 
+                    if (messages.length > 0) {
+                        const latest = messages[messages.length - 1],
+                            last = this.messages.length > 0 ? this.messages[this.messages.length - 1] : null;
+
+                        if (latest.type === "report" && (!last || last.createdAt !== latest.createdAt)) {
+                            this.notify();
+                        }
+                    }
+
                     this.messages = messages.map(message => {
                         const type = message.type,
                             user = message.user;
@@ -189,7 +198,8 @@ export default {
                             license: user.licenseIdentifier,
                             title: (type === "staff" ? "STAFF " : "REPORT ") + user.playerName + (type === "staff" ? "" : " (" + user.source + ")"),
                             text: message.message,
-                            color: type === "staff" ? "purple" : "green"
+                            color: type === "staff" ? "purple" : "green",
+                            createdAt: message.createdAt
                         };
                     });
                 } catch (e) {
