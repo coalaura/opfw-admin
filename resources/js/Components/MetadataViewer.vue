@@ -50,7 +50,11 @@ const KnownTypes = {
     "timePassed": "s",
     "distance": "m",
     "calculatedSpeed": "m/s",
-    "allowedSpeed": "m/s"
+    "allowedSpeed": "m/s",
+    "lastBelowGround": "ticks",
+    "lastFalling": "ms",
+    "lastFastMovement": "ticks",
+    "lastHighSpeed": "ms"
 };
 
 export default {
