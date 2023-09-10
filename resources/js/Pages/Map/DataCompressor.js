@@ -1,10 +1,11 @@
-import * as pako from "pako";
+import { ungzip } from "pako";
+import { unpack } from "msgpackr";
 
 class DataCompressor {
     static async GUnZIP(data) {
-        return pako.ungzip(data, {
-            to: 'string'
-        });
+        const zip = ungzip(data);
+
+        return unpack(zip);
     }
 
     static decompressData(data) {
@@ -57,7 +58,7 @@ class DataCompressor {
                 x: parseFloat(coordsArray[0]),
                 y: parseFloat(coordsArray[1]),
                 z: parseFloat(coordsArray[2])
-            } : {x: 0, y: 0, z: 0};
+            } : { x: 0, y: 0, z: 0 };
 
         return {
             afk: this.get('a', 0),

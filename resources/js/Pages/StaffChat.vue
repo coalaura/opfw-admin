@@ -182,9 +182,7 @@ export default {
                 this.isLoading = false;
 
                 try {
-                    const unzipped = await DataCompressor.GUnZIP(buffer);
-
-                    const messages = JSON.parse(unzipped);
+                    const messages = await DataCompressor.GUnZIP(buffer);
 
                     if (messages.length > 0) {
                         const latest = messages[messages.length - 1],

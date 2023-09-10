@@ -1826,8 +1826,7 @@ export default {
 
                 connection.on("message", async (buffer) => {
                     try {
-                        const unzipped = await DataCompressor.GUnZIP(buffer),
-                            data = JSON.parse(unzipped);
+                        const data = await DataCompressor.GUnZIP(buffer);
 
                         await this.renderMapData(data);
 
