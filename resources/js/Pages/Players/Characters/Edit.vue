@@ -883,8 +883,8 @@ export default {
             }
         }
 
-        const sortedVehicles = Object.entries(this.vehicles)
-            .map(([key, value]) => {
+        const sortedVehicles = Object.values(this.vehicles)
+            .map(value => {
                 return {
                     value: value.model,
                     text: value.label
