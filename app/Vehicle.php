@@ -100,13 +100,19 @@ class Vehicle extends Model
 
     public function getDisplayName(): ?string
     {
-        $vehicles = OPFWHelper::getVehicleListJSON(Server::getFirstServer() ?? '');
+        $vehicles = OPFWHelper::getVehiclesJSON(Server::getFirstServer() ?? '');
 
         if (!$vehicles) {
             return null;
         }
 
-        return $vehicles[$this->model_name] ?? null;
+        foreach($vehicles as $vehicle) {
+            if ($vehicle['model'] === $this->model_name) {
+                return $vehicle['label'];
+            }
+        }
+
+        return null;
     }
 
     public function oilChangeMiles(): ?int

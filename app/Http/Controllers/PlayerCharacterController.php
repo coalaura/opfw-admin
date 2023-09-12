@@ -169,7 +169,7 @@ class PlayerCharacterController extends Controller
         $horns = Vehicle::getHornMap(false);
 
         $jobs     = OPFWHelper::getJobsJSON(Server::getFirstServer() ?? '');
-        $vehicles = OPFWHelper::getVehicleListJSON(Server::getFirstServer() ?? '');
+        $vehicles = OPFWHelper::getVehiclesJSON(Server::getFirstServer() ?? '');
 
         return Inertia::render('Players/Characters/Edit', [
             'player'       => new PlayerResource($player),
@@ -477,8 +477,19 @@ class PlayerCharacterController extends Controller
             );
         };
 
-        $vehicles = OPFWHelper::getVehicleListJSON(Server::getFirstServer() ?? '');
-        if (!isset($vehicles[$model])) {
+        $vehicles = OPFWHelper::getVehiclesJSON(Server::getFirstServer() ?? '') ?? [];
+
+        $valid = false;
+
+        foreach($vehicles as $vehicle) {
+            if ($vehicle['model'] === $model) {
+                $valid = true;
+
+                break;
+            }
+        }
+
+        if (!$valid) {
             return backWith('error', 'Unknown model name "' . $model . '".');
         }
 

@@ -770,8 +770,6 @@ import Modal from "../../../Components/Modal";
 import { ModelSelect } from 'vue-search-select';
 import axios from 'axios';
 
-import prices from '../../../data/vehicle_prices.json';
-
 let jobsObject = [];
 
 export default {
@@ -888,8 +886,8 @@ export default {
         const sortedVehicles = Object.entries(this.vehicles)
             .map(([key, value]) => {
                 return {
-                    value: key,
-                    text: value
+                    value: value.model,
+                    text: value.label
                 };
             })
             .sort((a, b) => a.text.localeCompare(b.text));
@@ -897,9 +895,9 @@ export default {
         const money = this.getMoneyLocals();
 
         const totalVehicleValue = this.numberFormat(this.character.vehicles.map(vehicle => {
-            const price = prices[vehicle.model_name] || 0;
+            const price = this.vehicles.find(v => v.model === vehicle.model_name)
 
-            return price;
+            return price ? price.price : 0;
         }).reduce((a, b) => a + b, 0), 0, true);
 
         return {

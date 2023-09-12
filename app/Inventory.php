@@ -82,13 +82,6 @@ class Inventory
     public ?Property $property;
 
     /**
-     * The JSON stored in helpers/op-fw_vehicles.json
-     *
-     * @var array
-     */
-    private static array $vehicleJSON = [];
-
-    /**
      * Inventory constructor.
      *
      * @param string $descriptor
@@ -162,35 +155,12 @@ class Inventory
 
                 $type = intval($server);
 
-                $json = self::getOPFWVehicleJSON();
-                if ($json && $type >= 0 && $type <= 22) {
-                    $inventory->more_info['type'] = $json['labels'][$type];
-                }
-
                 break;
             default:
                 return $inventory;
         }
 
         return $inventory;
-    }
-
-    /**
-     * Returns the json stored at /helpers/op-fw_vehicles.json
-     *
-     * @return array
-     */
-    public static function getOPFWVehicleJSON(): array
-    {
-        if (!self::$vehicleJSON) {
-            $json = json_decode(file_get_contents(__DIR__ . '/../helpers/op-fw_vehicles.json'), true);
-
-            if ($json && !empty($json['map']) && !empty($json['labels'])) {
-                self::$vehicleJSON = $json;
-            }
-        }
-
-        return self::$vehicleJSON;
     }
 
     /**

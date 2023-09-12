@@ -20,7 +20,7 @@ class VehicleResource extends JsonResource
             'id'            => $this->vehicle_id,
             'owner_cid'     => $this->owner_cid,
             'garage_name'   => $this->garage(),
-            'model_name'    => vehicle_model_name($this->model_name),
+            'model_name'    => $this->model_name,
             'display_name'  => $this->getDisplayName(),
             'plate'         => $this->plate,
             'modifications' => $this->getModifications(),
