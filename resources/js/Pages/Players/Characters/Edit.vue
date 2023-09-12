@@ -895,7 +895,7 @@ export default {
         const money = this.getMoneyLocals();
 
         const totalVehicleValue = this.numberFormat(this.character.vehicles.map(vehicle => {
-            const price = this.vehicles.find(v => v.model === vehicle.model_name)
+            const price = Object.values(this.vehicles).find(v => v.model === vehicle.model_name);
 
             return price ? price.price : 0;
         }).reduce((a, b) => a + b, 0), 0, true);
@@ -1145,8 +1145,11 @@ export default {
             this.isVehicleEdit = false;
         },
         async addVehicle() {
-            if (!this.vehicles[this.vehicleAdd.value]) {
+            const vehicle = Object.values(this.vehicles).find(v => this.vehicleAdd.value === v.model);
+
+            if (!vehicle) {
                 alert('Unknown vehicle model "' + this.vehicleAdd.value + '"');
+
                 return;
             }
 

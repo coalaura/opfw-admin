@@ -477,22 +477,6 @@ class PlayerCharacterController extends Controller
             );
         };
 
-        $vehicles = OPFWHelper::getVehiclesJSON(Server::getFirstServer() ?? '') ?? [];
-
-        $valid = false;
-
-        foreach($vehicles as $vehicle) {
-            if ($vehicle['model'] === $model) {
-                $valid = true;
-
-                break;
-            }
-        }
-
-        if (!$valid) {
-            return backWith('error', 'Unknown model name "' . $model . '".');
-        }
-
         $plate = $genPlate();
         $tries = 0;
         while ($tries < 100) {
