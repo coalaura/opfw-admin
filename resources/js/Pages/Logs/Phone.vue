@@ -10,134 +10,95 @@
             </p>
         </portal>
 
-        <portal to="actions">
-            <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
-                <i class="mr-1 fa fa-refresh"></i>
-                {{ t('logs.refresh') }}
-            </button>
-        </portal>
+        <div class="flex gap-5 max-h-lg">
+            <!-- Querying -->
+            <v-section :noFooter="true" :noHeader="true" class="w-1/3">
+                <template>
+                    <form @submit.prevent autocomplete="off">
+                        <input autocomplete="false" name="hidden" type="text" class="hidden" />
 
-        <!-- Querying -->
-        <v-section :noFooter="true">
-            <template #header>
-                <h2>
-                    {{ t('logs.filter') }}
-                </h2>
-            </template>
+                        <div class="flex flex-wrap">
+                            <!-- Participant 1 -->
+                            <div class="w-full px-3 mb-4">
+                                <label class="block mb-2" for="number1">
+                                    {{ t('phone.number1') }} <sup class="text-muted dark:text-dark-muted">*, C</sup>
+                                </label>
+                                <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="number1" placeholder="123-4567" v-model="filters.number1">
+                            </div>
 
-            <template>
-                <form @submit.prevent autocomplete="off">
-                    <input autocomplete="false" name="hidden" type="text" class="hidden" />
+                            <!-- Participant 2 -->
+                            <div class="w-full px-3 mb-4">
+                                <label class="block mb-2" for="number2">
+                                    {{ t('phone.number2') }} <sup class="text-muted dark:text-dark-muted">*, C</sup>
+                                </label>
+                                <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="number2" placeholder="987-6543" v-model="filters.number2">
+                            </div>
 
-                    <div class="flex flex-wrap mb-4">
-                        <!-- Number -->
-                        <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
-                            <label class="block mb-2" for="number">
-                                {{ t('phone.number') }} <sup class="text-muted dark:text-dark-muted">*, C</sup>
-                            </label>
-                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="number" placeholder="123-4567" v-model="filters.number">
+                            <!-- Message -->
+                            <div class="w-full px-3 mb-4">
+                                <label class="block mb-2" for="message">
+                                    {{ t('phone.message') }} <sup class="text-muted dark:text-dark-muted">**</sup>
+                                </label>
+                                <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" placeholder="Some text message" v-model="filters.message">
+                            </div>
                         </div>
 
-                        <!-- Message -->
-                        <div class="w-2/3 px-3 mobile:w-full mobile:mb-3">
-                            <label class="block mb-2" for="message">
-                                {{ t('phone.message') }} <sup class="text-muted dark:text-dark-muted">**</sup>
-                            </label>
-                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" placeholder="Some text message" v-model="filters.message">
+                        <!-- Search button -->
+                        <div class="w-full px-3 mt-6">
+                            <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg w-full" @click="refresh">
+                                <span v-if="!isLoading">
+                                    <i class="fas fa-search"></i>
+                                    {{ t('logs.search') }}
+                                </span>
+                                <span v-else>
+                                    <i class="fas fa-cog animate-spin"></i>
+                                    {{ t('global.loading') }}
+                                </span>
+                            </button>
+                        </div>
+                    </form>
+                </template>
+            </v-section>
+
+            <!-- Table -->
+            <div class="p-8 mb-10 rounded-lg shadow relative w-2/3 overflow-hidden bg-secondary dark:bg-dark-secondary">
+                <div class="overflow-y-auto px-5 -mx-5 max-h-full">
+                    <div class="flex flex-col gap-6">
+                        <div v-for="message in messages" :key="message.id" class="flex flex-wrap" :class="{ 'justify-end': !message.left, 'justify-start': message.left }" v-if="messages.length > 0">
+                            <div class="w-full text-xs leading-1 flex justify-end" v-if="participants == 2">
+                                <div class="italic" :title="message.sender_number" :class="numbers[message.sender_number].text">{{ message.from }}</div>
+                            </div>
+
+                            <div class="w-full text-xs leading-1 flex justify-end" v-else>
+                                <div class="italic" :title="message.sender_number" :class="numbers[message.sender_number].text">{{ message.from }}</div>
+
+                                <div class="font-semibold px-2">🠚</div>
+
+                                <div class="italic" :title="message.receiver_number" :class="numbers[message.receiver_number].text">{{ message.to }}</div>
+                            </div>
+
+                            <div class="my-1 px-3 py-1 border-2 rounded bg-opacity-50" :class="numbers[message.sender_number].badge">{{ message.message }}</div>
+
+                            <div class="w-full text-right text-xs leading-1">
+                                <div class="italic text-gray-500 dark:text-gray-400">{{ message.timestamp * 1000 | formatTime(true) }}</div>
+                            </div>
+                        </div>
+
+                        <div class="flex justify-end" v-if="isLoading" ref="loading">
+                            <div class="px-3 py-1 border-2 rounded bg-opacity-50 bg-gray-300 dark:bg-gray-800 border-gray-500">{{ t('global.loading') }}</div>
+                        </div>
+
+                        <div class="flex justify-end" v-else-if="hasMore">
+                            <button class="px-3 py-1 border-2 rounded bg-opacity-50 bg-gray-300 dark:bg-gray-800 border-gray-500" @click="more">{{ t('phone.more') }}</button>
+                        </div>
+
+                        <div class="flex justify-end" v-else-if="messages.length === 0">
+                            <div class="px-3 py-1 border-2 rounded bg-opacity-50 bg-gray-300 dark:bg-gray-800 border-gray-500">{{ t('phone.no_messages') }}</div>
                         </div>
                     </div>
-                    <!-- Description -->
-                    <div class="w-full px-3 mt-3">
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">*
-                            {{ t('global.search.exact') }}</small>
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">**
-                            {{ t('global.search.like') }} {{ t('global.search.like_prepend') }}</small>
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">C
-                            {{ t('global.search.comma') }}</small>
-                    </div>
-                    <!-- Search button -->
-                    <div class="w-full px-3 mt-3">
-                        <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg" @click="refresh">
-                            <span v-if="!isLoading">
-                                <i class="fas fa-search"></i>
-                                {{ t('logs.search') }}
-                            </span>
-                            <span v-else>
-                                <i class="fas fa-cog animate-spin"></i>
-                                {{ t('global.loading') }}
-                            </span>
-                        </button>
-                    </div>
-                </form>
-            </template>
-        </v-section>
-
-        <!-- Table -->
-        <v-section class="overflow-x-auto">
-            <template #header>
-                <h2>
-                    {{ t('logs.logs') }}
-                </h2>
-                <p class="text-muted dark:text-dark-muted text-xs">
-                    {{ t('global.results', time) }}
-                </p>
-            </template>
-
-            <template>
-                <table class="w-full whitespace-no-wrap">
-                    <tr class="font-semibold text-left mobile:hidden">
-                        <th class="p-3 pl-8">{{ t('phone.from') }}</th>
-                        <th class="p-3">{{ t('phone.to') }}</th>
-                        <th class="p-3">{{ t('phone.message') }}</th>
-                        <th class="p-3 pr-8">
-                            {{ t('logs.timestamp') }}
-                        </th>
-                    </tr>
-                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="(log, index) in logs" :key="log.id">
-                        <td class="p-3 pl-8 mobile:block">
-                            {{ log.sender_number }}
-                        </td>
-                        <td class="p-3 mobile:block">
-                            {{ log.receiver_number }}
-                        </td>
-                        <td class="p-3 mobile:block">
-                            {{ log.message }}
-                        </td>
-                        <td class="p-3 pr-8 mobile:block">
-                            {{ log.timestamp * 1000 | formatTime(true) }}
-                        </td>
-                    </tr>
-                    <tr v-if="logs.length === 0" class="border-t border-gray-300 dark:border-gray-500">
-                        <td class="px-8 py-3 text-center" colspan="100%">
-                            {{ t('logs.no_logs') }}
-                        </td>
-                    </tr>
-                </table>
-            </template>
-
-            <template #footer>
-                <div class="flex items-center justify-between mt-6 mb-1">
-
-                    <!-- Navigation -->
-                    <div class="flex flex-wrap">
-                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="links.prev" v-if="page >= 2">
-                            <i class="mr-1 fas fa-arrow-left"></i>
-                            {{ t("pagination.previous") }}
-                        </inertia-link>
-                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="logs.length === 15" :href="links.next">
-                            {{ t("pagination.next") }}
-                            <i class="ml-1 fas fa-arrow-right"></i>
-                        </inertia-link>
-                    </div>
-
-                    <!-- Meta -->
-                    <div class="font-semibold">
-                        {{ t("pagination.page", page) }}
-                    </div>
-
                 </div>
-            </template>
-        </v-section>
+            </div>
+        </div>
 
     </div>
 </template>
@@ -147,6 +108,15 @@ import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
 import Pagination from './../../Components/Pagination';
 
+// bg-red-300 dark:bg-red-900 border-red-500
+// bg-yellow-300 dark:bg-yellow-900 border-yellow-500
+// bg-green-300 dark:bg-green-900 border-green-500
+// bg-blue-300 dark:bg-blue-900 border-blue-500
+// bg-purple-300 dark:bg-purple-900 border-purple-500
+// bg-pink-300 dark:bg-pink-900 border-pink-500
+// bg-lime-300 dark:bg-lime-900 border-lime-500
+const colors = ['red', 'yellow', 'green', 'blue', 'purple', 'pink', 'lime'];
+
 export default {
     layout: Layout,
     components: {
@@ -154,51 +124,130 @@ export default {
         VSection
     },
     props: {
-        logs: {
-            type: Array,
-            required: true,
-        },
         filters: {
-            number: String,
+            number1: String,
+            number2: String,
             message: String,
-        },
-        links: {
-            type: Object,
-            required: true,
-        },
-        page: {
-            type: Number,
-            required: true,
-        },
-        time: {
-            type: Number,
-            required: true,
         }
     },
     data() {
         return {
-            isLoading: false
+            isLoading: false,
+
+            messages: [],
+            page: 1,
+            hasMore: false,
+            participants: 0,
+
+            numbers: {},
+            index: 0
         };
     },
     methods: {
-        refresh: async function () {
-            if (this.isLoading) {
-                return;
-            }
+        color(messages) {
+            const find = number => {
+                if (this.numbers[number]) return;
+
+                const color = colors[this.index];
+
+                this.numbers[number] = {
+                    badge: `bg-${color}-300 dark:bg-${color}-900 border-${color}-500`,
+                    text: `text-${color}-500`
+                };
+
+                this.index = (this.index + 1) % colors.length;
+            };
+
+            messages = messages.map(message => {
+                find(message.sender_number);
+                find(message.receiver_number);
+
+                message.from = message.sender_first_name && message.sender_last_name
+                    ? `${message.sender_first_name} ${message.sender_last_name}`
+                    : message.sender_number;
+
+                message.to = message.receiver_first_name && message.receiver_last_name
+                    ? `${message.receiver_first_name} ${message.receiver_last_name}`
+                    : message.receiver_number;
+
+                message.left = this.filters.number1?.includes(message.sender_number);
+
+                return message;
+            });
+
+            this.messages.push(...messages);
+
+            this.participants = this.messages.filter((message, index, self) => {
+                return self.findIndex(m => m.sender_number === message.sender_number) === index;
+            }).length;
+        },
+        async fetch() {
+            if (this.isLoading) return;
 
             this.isLoading = true;
+
+            this.scrollLoading();
+
             try {
-                await this.$inertia.replace('/phoneLogs', {
-                    data: this.filters,
-                    preserveState: true,
-                    preserveScroll: true,
-                    only: ['logs', 'time', 'links', 'page'],
+                const data = await axios.get('/phoneLogs/get', {
+                    params: {
+                        page: this.page,
+                        ...this.filters
+                    }
                 });
+
+                if (data.data && data.data.status) {
+                    this.isLoading = false;
+
+                    return data.data.data;
+                }
             } catch (e) {
             }
 
             this.isLoading = false;
+
+            return false;
         },
+        async refresh() {
+            this.page = 1;
+
+            const messages = await this.fetch();
+
+            if (!messages) return;
+
+            this.hasMore = messages.length === 30;
+
+            this.messages = [];
+            this.numbers = {};
+            this.index = 0;
+
+            this.color(messages);
+
+            this.scroll();
+        },
+        async more() {
+            this.page++;
+
+            const messages = await this.fetch();
+
+            if (!messages) return;
+
+            this.hasMore = messages.length === 30;
+
+            this.color(messages);
+        },
+        scrollLoading() {
+            this.$nextTick(() => {
+                if (!this.$refs.loading) return;
+
+                this.$refs.loading.scrollIntoView({
+                    behavior: "smooth"
+                });
+            });
+        }
+    },
+    mounted() {
+        this.refresh();
     }
 };
 </script>

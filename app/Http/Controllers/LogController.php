@@ -117,28 +117,28 @@ class LogController extends Controller
             }
         }
 
-        $actionInput = $request->input('action');
-        $detailsInput = $request->input('details');
+        $actionInput     = $request->input('action');
+        $detailsInput    = $request->input('details');
         $identifierInput = $request->input('identifier');
-        $serverInput = $request->input('server');
+        $serverInput     = $request->input('server');
 
-        $action = $actionInput ? trim($actionInput) : null;
-        $details = $detailsInput ? trim($detailsInput) : null;
+        $action     = $actionInput ? trim($actionInput) : null;
+        $details    = $detailsInput ? trim($detailsInput) : null;
         $identifier = $identifierInput ? trim($identifierInput) : null;
-        $server = $serverInput ? trim($serverInput) : null;
+        $server     = $serverInput ? trim($serverInput) : null;
 
         $page = Paginator::resolveCurrentPage('page');
 
         if ($action || $details || $identifier || $server) {
             DB::table('panel_log_searches')
                 ->insert([
-                    'action' => $action,
-                    'details' => $details,
-                    'identifier' => $identifier,
-                    'server' => $server,
-                    'page' => $page,
+                    'action'             => $action,
+                    'details'            => $details,
+                    'identifier'         => $identifier,
+                    'server'             => $server,
+                    'page'               => $page,
                     'license_identifier' => license(),
-                    'timestamp' => time()
+                    'timestamp'          => time(),
                 ]);
 
             DB::table('panel_log_searches')
@@ -156,8 +156,8 @@ class LogController extends Controller
         $end = round(microtime(true) * 1000);
 
         return Inertia::render('Logs/Index', [
-            'logs' => $logs,
-            'filters' => $request->all(
+            'logs'           => $logs,
+            'filters'        => $request->all(
                 'identifier',
                 'server',
                 'action',
@@ -165,19 +165,19 @@ class LogController extends Controller
                 'after',
                 'before'
             ),
-            'links' => $this->getPageUrls($page),
-            'time' => $end - $start,
-            'playerMap' => Player::fetchLicensePlayerNameMap($logs->toArray($request), 'licenseIdentifier'),
-            'page' => $page,
-            'drugActions' => self::DRUG_LOGS,
+            'links'          => $this->getPageUrls($page),
+            'time'           => $end - $start,
+            'playerMap'      => Player::fetchLicensePlayerNameMap($logs->toArray($request), 'licenseIdentifier'),
+            'page'           => $page,
+            'drugActions'    => self::DRUG_LOGS,
             'canSearchDrugs' => $canSearchDrugs,
-            'actions' => CacheHelper::getLogActions(),
-            'skipped' => $skipped
+            'actions'        => CacheHelper::getLogActions(),
+            'skipped'        => $skipped,
         ]);
     }
 
     /**
-     * Display a phone message logs.
+     * Display the phone message logs.
      *
      * @param Request $request
      * @return Response
@@ -188,51 +188,75 @@ class LogController extends Controller
             abort(403);
         }
 
-        $start = round(microtime(true) * 1000);
+        return Inertia::render('Logs/Phone', [
+            'filters' => $request->all(
+                'number',
+                'message'
+            ),
+        ]);
+    }
 
-        $query = DB::table("phone_message_logs")->select()->orderByDesc('timestamp');
+    /**
+     * Returns messages.
+     *
+     * @param Request $request
+     */
+    public function phoneLogsData(Request $request)
+    {
+        if (!$this->isSuperAdmin($request)) {
+            abort(403);
+        }
 
-        // Filtering by number.
-        if ($number = $this->multiValues($request->input('number'))) {
-            /**
-             * @var $q Builder
-             */
-            $query->where(function ($q) use ($number) {
-                foreach ($number as $i) {
-                    $q->orWhere('sender_number', $i);
-                    $q->orWhere('receiver_number', $i);
+        $query = DB::table("phone_message_logs")->select([
+            'id', 'sender_number', 'receiver_number', 'message', 'timestamp',
+            'characters.first_name as sender_first_name', 'characters.last_name as sender_last_name',
+            'characters2.first_name as receiver_first_name', 'characters2.last_name as receiver_last_name'
+        ])->orderBy('timestamp');
+
+        $number1 = $this->multiValues($request->input('number1'));
+
+        if ($number1) {
+            if (sizeof($number1) === 1) {
+                $number1 = $number1[0];
+
+                $number2 = $request->input('number2');
+
+                if ($number2) {
+                    $query->where(function ($q) use ($number1, $number2) {
+                        $q->where('sender_number', $number1)->where('receiver_number', $number2);
+                    })->orWhere(function ($q) use ($number1, $number2) {
+                        $q->where('sender_number', $number2)->where('receiver_number', $number1);
+                    });
+                } else {
+                    $query->where('sender_number', $number1)->orWhere('receiver_number', $number1);
                 }
-            });
+            } else {
+                $query->whereIn('sender_number', $number1)->orWhereIn('receiver_number', $number1);
+            }
         }
 
         // Filtering by message.
         if ($message = $request->input('message')) {
             if (Str::startsWith($message, '=')) {
                 $message = Str::substr($message, 1);
+
                 $query->where('message', $message);
             } else {
                 $query->where('message', 'like', "%{$message}%");
             }
         }
 
-        $page = Paginator::resolveCurrentPage('page');
+        // Get sender and receiver names.
+        $query->leftJoin('characters', 'characters.phone_number', '=', 'phone_message_logs.sender_number');
+        $query->leftJoin('characters as characters2', 'characters2.phone_number', '=', 'phone_message_logs.receiver_number');
 
-        $query->limit(15)->offset(($page - 1) * 15);
+        $page = intval($request->input('page', 1));
+
+        $query->limit(30)->offset(($page - 1) * 30);
 
         $logs = $query->get()->toArray();
 
-        $end = round(microtime(true) * 1000);
-
-        return Inertia::render('Logs/Phone', [
-            'logs' => $logs,
-            'filters' => $request->all(
-                'number',
-                'message'
-            ),
-            'links' => $this->getPageUrls($page),
-            'time' => $end - $start,
-            'page' => $page
-        ]);
+        return $this->json(true, $logs);
     }
 
     public function searches(Request $request): Response
@@ -293,16 +317,16 @@ class LogController extends Controller
         $logs = $query->get();
 
         return Inertia::render('Logs/Searches', [
-            'logs' => $logs,
-            'filters' => $request->all(
+            'logs'      => $logs,
+            'filters'   => $request->all(
                 'identifier',
                 'details',
                 'after',
                 'before'
             ),
-            'links' => $this->getPageUrls($page),
+            'links'     => $this->getPageUrls($page),
             'playerMap' => Player::fetchLicensePlayerNameMap($logs->toArray($request), 'license_identifier'),
-            'page' => $page,
+            'page'      => $page,
         ]);
     }
 
@@ -356,9 +380,9 @@ class LogController extends Controller
 
         foreach ($logs as $log) {
             $entry = [
-                "url" => $log->url,
+                "url"       => $log->url,
                 "timestamp" => $log->timestamp,
-                "type" => $log->type
+                "type"      => $log->type,
             ];
 
             $foundEntry = false;
@@ -388,31 +412,31 @@ class LogController extends Controller
             }
 
             $groupedLogs[] = [
-                "source_license" => $log->source_license,
-                "target_license" => $log->target_license,
+                "source_license"   => $log->source_license,
+                "target_license"   => $log->target_license,
                 "target_character" => $log->target_character,
-                "from" => $log->timestamp,
-                "till" => $log->timestamp,
-                "entries" => [
-                    $entry
-                ]
+                "from"             => $log->timestamp,
+                "till"             => $log->timestamp,
+                "entries"          => [
+                    $entry,
+                ],
             ];
         }
 
         $paginated = array_slice($groupedLogs, ($page - 1) * 15, 15);
 
         return Inertia::render('Logs/Screenshots', [
-            'logs' => $paginated,
-            'filters' => $request->all(
+            'logs'      => $paginated,
+            'filters'   => $request->all(
                 'identifier',
                 'character',
                 'after',
                 'before'
             ),
-            'links' => $this->getPageUrls($page),
+            'links'     => $this->getPageUrls($page),
             'playerMap' => Player::fetchLicensePlayerNameMap($logs, ['source_license', 'target_license']),
-            'page' => $page,
-            'maxPage' => ceil(sizeof($groupedLogs) / 15)
+            'page'      => $page,
+            'maxPage'   => ceil(sizeof($groupedLogs) / 15),
         ]);
     }
 

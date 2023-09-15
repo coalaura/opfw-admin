@@ -1118,10 +1118,13 @@
     "phone": {
         "title": "Phone Logs",
         "description": "On this page you can view and filter the phone message logs.",
-        "from": "Sender",
-        "to": "Receiver",
+        "sender": "Sender",
+        "receiver": "Receiver",
         "message": "Message",
-        "number": "Phone Number"
+        "number1": "Number A",
+        "number2": "Number B",
+        "no_messages": "No messages found.",
+        "more": "Load More"
     },
     "logs": {
         "title": "Server Logs",

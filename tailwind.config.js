@@ -94,7 +94,8 @@ module.exports = {
             maxHeight: {
                 'max':       'calc(100% - 60px)',
                 'img':       '500px',
-                'modal-max': 'calc(100% - 10rem)'
+                'modal-max': 'calc(100% - 10rem)',
+                'lg':        '40rem'
             },
             listStyleType: {
                 'dash': "'–'"
