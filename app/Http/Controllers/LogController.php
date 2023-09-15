@@ -222,9 +222,11 @@ class LogController extends Controller
 
                 if ($number2) {
                     $query->where(function ($q) use ($number1, $number2) {
-                        $q->where('sender_number', $number1)->where('receiver_number', $number2);
-                    })->orWhere(function ($q) use ($number1, $number2) {
-                        $q->where('sender_number', $number2)->where('receiver_number', $number1);
+                        $q->where(function ($q2) use ($number1, $number2) {
+                            $q2->where('sender_number', $number1)->where('receiver_number', $number2);
+                        })->orWhere(function ($q2) use ($number1, $number2) {
+                            $q2->where('sender_number', $number2)->where('receiver_number', $number1);
+                        });
                     });
                 } else {
                     $query->where(function ($q) use ($number1) {
