@@ -84,7 +84,7 @@
                             </div>
                         </div>
 
-                        <div class="flex justify-end" v-if="isLoading" ref="loading">
+                        <div class="flex justify-end" v-if="isLoading">
                             <div class="px-3 py-1 border-2 rounded bg-opacity-50 bg-gray-300 dark:bg-gray-800 border-gray-500">{{ t('global.loading') }}</div>
                         </div>
 
@@ -135,7 +135,6 @@ export default {
             isLoading: false,
 
             messages: [],
-            page: 1,
             hasMore: false,
             participants: 0,
 
@@ -179,9 +178,11 @@ export default {
             this.isLoading = true;
 
             try {
+                const after = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : false;
+
                 const data = await axios.get('/phoneLogs/get', {
                     params: {
-                        page: this.page,
+                        after: after,
                         ...this.filters
                     }
                 });
@@ -199,26 +200,20 @@ export default {
             return false;
         },
         async refresh() {
-            this.page = 1;
+            this.messages = [];
+            this.numbers = {};
+            this.index = 0;
+            this.hasMore = false;
 
             const messages = await this.fetch();
 
             if (!messages) return;
 
             this.hasMore = messages.length === 30;
-
-            this.messages = [];
-            this.numbers = {};
-            this.index = 0;
 
             this.color(messages);
         },
         async more() {
-            this.isLoading = true;
-            this.scrollLoading();
-
-            this.page++;
-
             const messages = await this.fetch();
 
             if (!messages) return;
@@ -226,15 +221,6 @@ export default {
             this.hasMore = messages.length === 30;
 
             this.color(messages);
-        },
-        scrollLoading() {
-            this.$nextTick(() => {
-                if (!this.$refs.loading) return;
-
-                this.$refs.loading.scrollIntoView({
-                    behavior: "smooth"
-                });
-            });
         }
     },
     mounted() {

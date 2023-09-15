@@ -244,9 +244,11 @@ class LogController extends Controller
             }
         }
 
-        $page = intval($request->input('page', 1));
+        if ($after = $request->input('after')) {
+            $query->where('id', '>', $after);
+        }
 
-        $query->limit(30)->offset(($page - 1) * 30);
+        $query->limit(30);
 
         $logs = $query->get()->toArray();
 
