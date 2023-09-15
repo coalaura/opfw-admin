@@ -66,15 +66,15 @@
                     <div class="flex flex-col gap-6">
                         <div v-for="message in messages" :key="message.id" class="flex flex-wrap" :class="{ 'justify-end': !message.left, 'justify-start': message.left }" v-if="messages.length > 0">
                             <div class="w-full text-xs leading-1 flex justify-end" v-if="participants == 2">
-                                <div class="italic" :title="message.sender_number" :class="numbers[message.sender_number].text">{{ message.from }}</div>
+                                <div class="italic" :class="numbers[message.sender_number].text">{{ message.sender_number }}</div>
                             </div>
 
                             <div class="w-full text-xs leading-1 flex justify-end" v-else>
-                                <div class="italic" :title="message.sender_number" :class="numbers[message.sender_number].text">{{ message.from }}</div>
+                                <div class="italic" :class="numbers[message.sender_number].text">{{ message.sender_number }}</div>
 
                                 <div class="font-semibold px-2">🠚</div>
 
-                                <div class="italic" :title="message.receiver_number" :class="numbers[message.receiver_number].text">{{ message.to }}</div>
+                                <div class="italic" :class="numbers[message.receiver_number].text">{{ message.receiver_number }}</div>
                             </div>
 
                             <div class="my-1 px-3 py-1 border-2 rounded bg-opacity-50" :class="numbers[message.sender_number].badge">{{ message.message }}</div>
@@ -161,14 +161,6 @@ export default {
             messages = messages.map(message => {
                 find(message.sender_number);
                 find(message.receiver_number);
-
-                message.from = message.sender_first_name && message.sender_last_name
-                    ? `${message.sender_first_name} ${message.sender_last_name}`
-                    : message.sender_number;
-
-                message.to = message.receiver_first_name && message.receiver_last_name
-                    ? `${message.receiver_first_name} ${message.receiver_last_name}`
-                    : message.receiver_number;
 
                 message.left = this.filters.number1?.includes(message.sender_number);
 

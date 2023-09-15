@@ -208,9 +208,7 @@ class LogController extends Controller
         }
 
         $query = DB::table("phone_message_logs")->select([
-            'id', 'sender_number', 'receiver_number', 'message', 'timestamp',
-            'characters.first_name as sender_first_name', 'characters.last_name as sender_last_name',
-            'characters2.first_name as receiver_first_name', 'characters2.last_name as receiver_last_name'
+            'id', 'sender_number', 'receiver_number', 'message', 'timestamp'
         ])->orderBy('timestamp');
 
         $number1 = $this->multiValues($request->input('number1'));
@@ -245,10 +243,6 @@ class LogController extends Controller
                 $query->where('message', 'like', "%{$message}%");
             }
         }
-
-        // Get sender and receiver names.
-        $query->leftJoin('characters', 'characters.phone_number', '=', 'phone_message_logs.sender_number');
-        $query->leftJoin('characters as characters2', 'characters2.phone_number', '=', 'phone_message_logs.receiver_number');
 
         $page = intval($request->input('page', 1));
 
