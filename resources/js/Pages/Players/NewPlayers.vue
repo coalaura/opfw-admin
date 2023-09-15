@@ -243,6 +243,7 @@ export default {
             }
 
             this.isLoading = true;
+
             try {
                 await this.$inertia.replace('/new_players', {
                     preserveState: true,
@@ -251,7 +252,7 @@ export default {
                 });
             } catch (e) { }
 
-            this.playerList = this.getPlayerList();
+            this.sortList();
 
             this.isLoading = false;
         }
@@ -263,7 +264,7 @@ export default {
             this.progress = percentage;
         });
 
-        this.playerList = this.getPlayerList();
+        this.sortList();
 
         setTimeout(() => {
             this.progress = 100;
