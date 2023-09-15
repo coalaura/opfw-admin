@@ -186,8 +186,6 @@ export default {
 
             this.isLoading = true;
 
-            this.scrollLoading();
-
             try {
                 const data = await axios.get('/phoneLogs/get', {
                     params: {
@@ -222,10 +220,11 @@ export default {
             this.index = 0;
 
             this.color(messages);
-
-            this.scroll();
         },
         async more() {
+            this.isLoading = true;
+            this.scrollLoading();
+
             this.page++;
 
             const messages = await this.fetch();
