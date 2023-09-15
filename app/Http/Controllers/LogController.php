@@ -227,10 +227,14 @@ class LogController extends Controller
                         $q->where('sender_number', $number2)->where('receiver_number', $number1);
                     });
                 } else {
-                    $query->where('sender_number', $number1)->orWhere('receiver_number', $number1);
+                    $query->where(function ($q) use ($number1) {
+                        $q->where('sender_number', $number1)->orWhere('receiver_number', $number1);
+                    });
                 }
             } else {
-                $query->whereIn('sender_number', $number1)->orWhereIn('receiver_number', $number1);
+                $query->where(function ($q) use ($number1) {
+                    $q->whereIn('sender_number', $number1)->orWhereIn('receiver_number', $number1);
+                });
             }
         }
 
