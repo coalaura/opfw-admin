@@ -64,12 +64,8 @@
             <div class="p-8 mb-10 rounded-lg shadow relative w-2/3 overflow-hidden bg-secondary dark:bg-dark-secondary">
                 <div class="overflow-y-auto px-5 -mx-5 max-h-full">
                     <div class="flex flex-col gap-6">
-                        <div v-for="message in messages" :key="message.id" class="flex flex-wrap" :class="{ 'justify-end': !message.left, 'justify-start': message.left }" v-if="messages.length > 0">
-                            <div class="w-full text-xs leading-1 flex justify-end" v-if="participants == 2">
-                                <div class="italic" :class="numbers[message.sender_number].text">{{ message.sender_number }}</div>
-                            </div>
-
-                            <div class="w-full text-xs leading-1 flex justify-end" v-else>
+                        <div v-for="message in messages" :key="message.id" class="flex flex-wrap" :class="message.justify" v-if="messages.length > 0">
+                            <div class="w-full text-xs leading-1 flex" :class="message.justify">
                                 <div class="italic" :class="numbers[message.sender_number].text">{{ message.sender_number }}</div>
 
                                 <div class="font-semibold px-2">🠚</div>
@@ -79,20 +75,20 @@
 
                             <div class="my-1 px-3 py-1 border-2 rounded bg-opacity-50" :class="numbers[message.sender_number].badge">{{ message.message }}</div>
 
-                            <div class="w-full text-right text-xs leading-1">
+                            <div class="w-full text-xs leading-1 flex" :class="message.justify">
                                 <div class="italic text-gray-500 dark:text-gray-400" @click="copyToClipboard(message.timestamp)">{{ message.timestamp * 1000 | formatTime(true) }}</div>
                             </div>
                         </div>
 
                         <template v-if="!isLoading">
-                            <div class="flex justify-end" v-if="hasMore">
+                            <div class="flex justify-center" v-if="hasMore">
                                 <button class="px-3 py-1 border-2 rounded bg-opacity-50 bg-gray-300 dark:bg-gray-800 border-gray-500 font-semibold" @click="more">
                                     <i class="fas fa-plus mr-1"></i>
                                     {{ t('phone.more') }}
                                 </button>
                             </div>
 
-                            <div class="flex justify-end" v-else-if="messages.length === 0">
+                            <div class="flex justify-center" v-else-if="messages.length === 0">
                                 <div class="px-3 py-1 border-2 rounded bg-opacity-50 bg-gray-300 dark:bg-gray-800 border-gray-500 font-semibold">{{ t('phone.no_messages') }}</div>
                             </div>
                         </template>
@@ -137,7 +133,6 @@ export default {
 
             messages: [],
             hasMore: false,
-            participants: 0,
 
             numbers: {},
             index: 0
@@ -162,16 +157,12 @@ export default {
                 find(message.sender_number);
                 find(message.receiver_number);
 
-                message.left = this.filters.number1?.includes(message.sender_number);
+                message.justify = this.filters.number2?.includes(message.sender_number) ? 'justify-start' : 'justify-end';
 
                 return message;
             });
 
             this.messages.push(...messages);
-
-            this.participants = this.messages.filter((message, index, self) => {
-                return self.findIndex(m => m.sender_number === message.sender_number) === index;
-            }).length;
         },
         async fetch() {
             if (this.isLoading) return;
@@ -179,17 +170,19 @@ export default {
             this.isLoading = true;
 
             try {
-                const after = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : false;
+                const before = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : 0;
 
                 const data = await axios.get('/phoneLogs/get', {
                     params: {
-                        after: after,
+                        before: before,
                         ...this.filters
                     }
                 });
 
                 if (data.data && data.data.status) {
                     this.isLoading = false;
+
+                    this.replaceState();
 
                     return data.data.data;
                 }
@@ -222,6 +215,19 @@ export default {
             this.hasMore = messages.length === 30;
 
             this.color(messages);
+        },
+        replaceState() {
+            const url = new URL(window.location.href);
+
+            for (const key in this.filters) {
+                if (this.filters[key]) {
+                    url.searchParams.set(key, this.filters[key]);
+                } else {
+                    url.searchParams.delete(key);
+                }
+            }
+
+            window.history.replaceState({}, '', url);
         }
     },
     mounted() {

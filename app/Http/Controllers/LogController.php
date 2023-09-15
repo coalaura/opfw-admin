@@ -190,7 +190,8 @@ class LogController extends Controller
 
         return Inertia::render('Logs/Phone', [
             'filters' => $request->all(
-                'number',
+                'number1',
+                'number2',
                 'message'
             ),
         ]);
@@ -209,7 +210,7 @@ class LogController extends Controller
 
         $query = DB::table("phone_message_logs")->select([
             'id', 'sender_number', 'receiver_number', 'message', 'timestamp'
-        ])->orderBy('timestamp');
+        ])->orderByDesc('timestamp')->orderByDesc('id');
 
         $number1 = $this->multiValues($request->input('number1'));
 
@@ -244,8 +245,8 @@ class LogController extends Controller
             }
         }
 
-        if ($after = $request->input('after')) {
-            $query->where('id', '>', $after);
+        if ($before = intval($request->input('before'))) {
+            $query->where('id', '<', $before);
         }
 
         $query->limit(30);
