@@ -31,7 +31,7 @@ const Copy = {
         }
 
         Vue.prototype.copyToClipboard = function (text) {
-            copyTextToClipboard(text);
+            copyTextToClipboard(text + "");
         };
     },
 }

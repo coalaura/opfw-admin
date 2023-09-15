@@ -80,7 +80,7 @@
                             <div class="my-1 px-3 py-1 border-2 rounded bg-opacity-50" :class="numbers[message.sender_number].badge">{{ message.message }}</div>
 
                             <div class="w-full text-right text-xs leading-1">
-                                <div class="italic text-gray-500 dark:text-gray-400">{{ message.timestamp * 1000 | formatTime(true) }}</div>
+                                <div class="italic text-gray-500 dark:text-gray-400" @click="copyToClipboard(message.timestamp)">{{ message.timestamp * 1000 | formatTime(true) }}</div>
                             </div>
                         </div>
 
