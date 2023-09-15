@@ -184,7 +184,7 @@ class LogController extends Controller
      */
     public function phoneLogs(Request $request): Response
     {
-        if (!$this->isSuperAdmin($request)) {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_PHONE_LOGS)) {
             abort(403);
         }
 
@@ -203,7 +203,7 @@ class LogController extends Controller
      */
     public function phoneLogsData(Request $request)
     {
-        if (!$this->isSuperAdmin($request)) {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_PHONE_LOGS)) {
             abort(403);
         }
 

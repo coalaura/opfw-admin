@@ -133,7 +133,7 @@ export default {
                             label: 'phone.title',
                             icon: 'phone',
                             url: '/phoneLogs',
-                            private: true,
+                            hidden: !this.perm.check(this.perm.PERM_PHONE_LOGS),
                         }
                     ]
                 },

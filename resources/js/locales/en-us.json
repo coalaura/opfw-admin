@@ -454,7 +454,8 @@
             "linked": "Show Linked Accounts",
             "announcement": "Post Announcement",
             "damage_logs": "View Damage Logs",
-            "crafting": "View Crafting Recipes"
+            "crafting": "View Crafting Recipes",
+            "phone_logs": "View Phone Logs"
         },
 
         "world_time": "World Time",

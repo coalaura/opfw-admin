@@ -21,6 +21,7 @@ class PermissionHelper
         self::PERM_ANNOUNCEMENT   => ['announcement', self::LEVEL_SUPERADMIN],
         self::PERM_DAMAGE_LOGS    => ['damage_logs', self::LEVEL_SENIOR],
         self::PERM_CRAFTING       => ['crafting', self::LEVEL_SUPERADMIN],
+        self::PERM_PHONE_LOGS     => ['phone_logs', self::LEVEL_SUPERADMIN],
     ];
 
     const PERM_SCREENSHOT     = 'P_SCREENSHOT';
@@ -37,13 +38,14 @@ class PermissionHelper
     const PERM_ANNOUNCEMENT   = 'P_ANNOUNCEMENT';
     const PERM_DAMAGE_LOGS    = 'P_DAMAGE_LOGS';
     const PERM_CRAFTING       = 'P_CRAFTING';
+    const PERM_PHONE_LOGS     = 'P_PHONE_LOGS';
 
     const LEVEL_STAFF      = 1;
     const LEVEL_SENIOR     = 2;
     const LEVEL_SUPERADMIN = 3;
     const LEVEL_ROOT       = 4;
 
-    const LEVEL_DISABLED   = 99;
+    const LEVEL_DISABLED = 99;
 
     public static function getFrontendPermissions(): array
     {

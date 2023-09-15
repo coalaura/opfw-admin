@@ -37,6 +37,7 @@ const Permissions = {
             PERM_ANNOUNCEMENT: 'announcement',
             PERM_DAMAGE_LOGS: 'damage_logs',
             PERM_CRAFTING: 'crafting',
+            PERM_PHONE_LOGS: 'phone_logs',
 
             level(permission) {
                 if (!(permission in permissions)) {
