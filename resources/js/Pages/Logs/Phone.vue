@@ -29,7 +29,7 @@
                             <!-- Participant 2 -->
                             <div class="w-full px-3 mb-4">
                                 <label class="block mb-2" for="number2">
-                                    {{ t('phone.number2') }} <sup class="text-muted dark:text-dark-muted">*, C</sup>
+                                    {{ t('phone.number2') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                                 </label>
                                 <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="number2" placeholder="987-6543" v-model="filters.number2">
                             </div>
