@@ -51,7 +51,7 @@
                                     {{ t('logs.search') }}
                                 </span>
                                 <span v-else>
-                                    <i class="fas fa-cog animate-spin"></i>
+                                    <i class="fas fa-spinner animate-spin"></i>
                                     {{ t('global.loading') }}
                                 </span>
                             </button>
@@ -84,17 +84,18 @@
                             </div>
                         </div>
 
-                        <div class="flex justify-end" v-if="isLoading">
-                            <div class="px-3 py-1 border-2 rounded bg-opacity-50 bg-gray-300 dark:bg-gray-800 border-gray-500">{{ t('global.loading') }}</div>
-                        </div>
+                        <template v-if="!isLoading">
+                            <div class="flex justify-end" v-if="hasMore">
+                                <button class="px-3 py-1 border-2 rounded bg-opacity-50 bg-gray-300 dark:bg-gray-800 border-gray-500 font-semibold" @click="more">
+                                    <i class="fas fa-plus mr-1"></i>
+                                    {{ t('phone.more') }}
+                                </button>
+                            </div>
 
-                        <div class="flex justify-end" v-else-if="hasMore">
-                            <button class="px-3 py-1 border-2 rounded bg-opacity-50 bg-gray-300 dark:bg-gray-800 border-gray-500" @click="more">{{ t('phone.more') }}</button>
-                        </div>
-
-                        <div class="flex justify-end" v-else-if="messages.length === 0">
-                            <div class="px-3 py-1 border-2 rounded bg-opacity-50 bg-gray-300 dark:bg-gray-800 border-gray-500">{{ t('phone.no_messages') }}</div>
-                        </div>
+                            <div class="flex justify-end" v-else-if="messages.length === 0">
+                                <div class="px-3 py-1 border-2 rounded bg-opacity-50 bg-gray-300 dark:bg-gray-800 border-gray-500 font-semibold">{{ t('phone.no_messages') }}</div>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>

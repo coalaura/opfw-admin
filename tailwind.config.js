@@ -95,7 +95,7 @@ module.exports = {
                 'max':       'calc(100% - 60px)',
                 'img':       '500px',
                 'modal-max': 'calc(100% - 10rem)',
-                'lg':        '40rem'
+                'lg':        '38rem'
             },
             listStyleType: {
                 'dash': "'–'"
