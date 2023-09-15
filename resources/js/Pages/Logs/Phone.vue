@@ -10,7 +10,7 @@
             </p>
         </portal>
 
-        <div class="flex gap-5 max-h-lg">
+        <div class="flex gap-5 max-h-lg max-w-6xl">
             <!-- Querying -->
             <v-section :noFooter="true" :noHeader="true" class="w-1/3">
                 <template>
