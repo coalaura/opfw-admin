@@ -40,7 +40,7 @@
 
                         <td class="p-3 mobile:block">{{ player.consoleName }}</td>
                         <td class="p-3 mobile:block">{{ player.priorityName || t('queue.no_prio') }}</td>
-                        <td class="p-3 pr-8 mobile:block">{{ formatSeconds(player.queueTime) }}</td>
+                        <td class="p-3 pr-8 mobile:block">{{ formatSeconds(Math.floor(player.queueTime / 1000)) }}</td>
                     </tr>
                     <tr v-if="queue.length === 0" class="border-t border-gray-300 dark:border-gray-500">
                         <td class="px-8 py-3 text-center mobile:block" colspan="100%" v-if="isLoading">
