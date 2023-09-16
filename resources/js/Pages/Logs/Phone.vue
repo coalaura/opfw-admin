@@ -68,7 +68,7 @@
                             <div class="w-full text-xs leading-1 flex" :class="message.justify">
                                 <div class="italic" :class="numbers[message.sender_number].text">{{ message.sender_number }}</div>
 
-                                <div class="font-semibold px-2">🠚</div>
+                                <div class="font-semibold px-2 cursor-pointer" @click="showConversation(message)">🠚</div>
 
                                 <div class="italic" :class="numbers[message.receiver_number].text">{{ message.receiver_number }}</div>
                             </div>
@@ -228,6 +228,12 @@ export default {
             }
 
             window.history.replaceState({}, '', url);
+        },
+        showConversation(message) {
+            this.filters.number1 = message.sender_number;
+            this.filters.number2 = message.receiver_number;
+
+            this.refresh();
         }
     },
     mounted() {
