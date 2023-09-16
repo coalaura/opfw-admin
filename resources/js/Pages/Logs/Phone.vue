@@ -179,7 +179,7 @@ export default {
 
                 message.justify = this.filters.number2?.includes(message.sender_number) ? 'justify-start' : 'justify-end';
 
-                if (message.message.match(/^https?:\/\/.+?\.(png|jpe?g|gif|webp)\?$/im)) {
+                if (message.message.match(/^https?:\/\/[^\s]+?\.(png|jpe?g|gif|webp)(\?[\w&=%]*)?$/im)) {
                     message.image = message.message;
                 }
 
