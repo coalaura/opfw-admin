@@ -118,6 +118,10 @@ class OPFWHelper
             return new OPFWResponse(false, 'Player is offline.');
         }
 
+        if (env('HIDE_BAN_CREATOR')) {
+            $staffPlayerName = "a staff member";
+        }
+
         $response = self::executeRoute($status->serverIp, $status->serverIp . 'execute/kickPlayer', [
             'licenseIdentifier'         => $license,
             'reason'                  => 'You have been kicked by ' . $staffPlayerName . ' for reason `' . $reason . '`',
