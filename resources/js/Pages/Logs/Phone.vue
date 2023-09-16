@@ -66,14 +66,22 @@
                     <div class="flex flex-col gap-6">
                         <div v-for="message in messages" :key="message.id" class="flex flex-wrap" :class="message.justify" v-if="messages.length > 0">
                             <div class="w-full text-xs leading-1 flex" :class="message.justify">
-                                <div class="italic" :class="numbers[message.sender_number].text">{{ message.sender_number }}</div>
+                                <div class="italic" :class="textColor(message.sender_number)">{{ message.sender_number }}</div>
 
                                 <div class="font-semibold px-2 cursor-pointer" @click="showConversation(message)">🠚</div>
 
-                                <div class="italic" :class="numbers[message.receiver_number].text">{{ message.receiver_number }}</div>
+                                <div class="italic" :class="textColor(message.receiver_number)">{{ message.receiver_number }}</div>
                             </div>
 
-                            <div class="my-1 px-3 py-1 border-2 rounded bg-opacity-50" :class="numbers[message.sender_number].badge">{{ message.message }}</div>
+                            <div class="my-1 px-3 py-1 border-2 rounded bg-opacity-50" :class="badgeColor(message.sender_number)">
+                                <a v-if="message.image" class="py-2 block" :href="message.image" target="_blank">
+                                    <img :src="message.image" class="h-full max-w-full max-h-80 object-contain" />
+                                </a>
+
+                                <div v-else>
+                                    {{ message.message }}
+                                </div>
+                            </div>
 
                             <div class="w-full text-xs leading-1 flex" :class="message.justify">
                                 <div class="italic text-gray-500 dark:text-gray-400" @click="copyToClipboard(message.timestamp)">{{ message.timestamp * 1000 | formatTime(true) }}</div>
@@ -112,7 +120,29 @@ import Pagination from './../../Components/Pagination';
 // bg-purple-300 dark:bg-purple-900 border-purple-500
 // bg-pink-300 dark:bg-pink-900 border-pink-500
 // bg-lime-300 dark:bg-lime-900 border-lime-500
-const colors = ['red', 'yellow', 'green', 'blue', 'purple', 'pink', 'lime'];
+const colors = ['red', 'yellow', 'green', 'blue', 'purple', 'pink', 'lime'],
+    usedColors = {};
+
+let index = 0;
+
+function numberColor(number) {
+    number = number.trim().toLowerCase();
+
+    if (usedColors[number]) return usedColors[number];
+
+    const color = colors[index];
+
+    usedColors[number] = {
+        badge: `bg-${color}-300 dark:bg-${color}-900 border-${color}-500`,
+        text: `text-${color}-500`
+    };
+
+    index++;
+
+    if (index >= colors.length) index = 0;
+
+    return usedColors[number];
+}
 
 export default {
     layout: Layout,
@@ -132,32 +162,26 @@ export default {
             isLoading: false,
 
             messages: [],
-            hasMore: false,
-
-            numbers: {},
-            index: 0
+            hasMore: false
         };
     },
     methods: {
-        color(messages) {
-            const find = number => {
-                if (this.numbers[number]) return;
-
-                const color = colors[this.index];
-
-                this.numbers[number] = {
-                    badge: `bg-${color}-300 dark:bg-${color}-900 border-${color}-500`,
-                    text: `text-${color}-500`
-                };
-
-                this.index = (this.index + 1) % colors.length;
-            };
-
+        textColor(number) {
+            return numberColor(number).text;
+        },
+        badgeColor(number) {
+            return numberColor(number).badge;
+        },
+        addMessages(messages) {
             messages = messages.map(message => {
                 find(message.sender_number);
                 find(message.receiver_number);
 
                 message.justify = this.filters.number2?.includes(message.sender_number) ? 'justify-start' : 'justify-end';
+
+                if (message.message.match(/^https?:\/\/.+?\.(png|jpe?g|gif|webp)\?$/im)) {
+                    message.image = message.message;
+                }
 
                 return message;
             });
@@ -195,8 +219,6 @@ export default {
         },
         async refresh() {
             this.messages = [];
-            this.numbers = {};
-            this.index = 0;
             this.hasMore = false;
 
             const messages = await this.fetch();
@@ -205,7 +227,7 @@ export default {
 
             this.hasMore = messages.length === 30;
 
-            this.color(messages);
+            this.addMessages(messages);
         },
         async more() {
             const messages = await this.fetch();
@@ -214,7 +236,7 @@ export default {
 
             this.hasMore = messages.length === 30;
 
-            this.color(messages);
+            this.addMessages(messages);
         },
         replaceState() {
             const url = new URL(window.location.href);
