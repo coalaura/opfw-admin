@@ -24,7 +24,7 @@
                 <i class="fas fa-spinner fa-spin" v-if="isSendingChat" ref="chat"></i>
                 <span v-else>➤</span>
             </div>
-            <input class="input" v-model="chatInput" spellcheck="false" @keydown="keydown" :disabled="isSendingChat" />
+            <input class="input !outline-none" v-model="chatInput" spellcheck="false" @keydown="keydown" :disabled="isSendingChat" />
         </div>
     </div>
 </template>
@@ -197,10 +197,15 @@ export default {
                         const type = message.type,
                             user = message.user;
 
+                        const text = message.message.trim()
+                            .replace(/&lt;/g, "<")
+                            .replace(/&gt;/g, ">")
+                            .replace(/&quot;/g, '"');
+
                         return {
                             license: user.licenseIdentifier,
                             title: (type === "staff" ? "STAFF " : "REPORT ") + user.playerName + (type === "staff" ? "" : " (" + user.source + ")"),
-                            text: message.message,
+                            text: text,
                             color: type === "staff" ? "purple" : "green",
                             createdAt: message.createdAt
                         };
@@ -208,9 +213,11 @@ export default {
 
                     this.scroll();
 
-                    this.$refs.chat.focus();
+                    if (this.$refs.chat) {
+                        this.$refs.chat.focus();
+                    }
                 } catch (e) {
-                    console.error('Failed to parse socket message ', e)
+                    console.error('Failed to parse socket message', e);
                 }
             });
 
@@ -246,6 +253,10 @@ export default {
     },
     mounted() {
         this.init();
+
+        window.addEventListener("resize", () => {
+            this.scroll();
+        });
     }
 }
 </script>
