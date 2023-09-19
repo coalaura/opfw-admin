@@ -58,6 +58,8 @@
                             </td>
                             <td class="p-3 mobile:block">
                                 {{ screenshot.details || 'N/A' }}
+
+                                <div v-if="screenshot.subtitle" class="text-xs text-gray-500 dark:text-gray-400 font-mono">{{ screenshot.subtitle }}</div>
                             </td>
                             <td class="p-3 mobile:block font-semibold w-32">
                                 <span class="text-red-600 dark:text-red-400" v-if="screenshot.ban">
@@ -185,6 +187,8 @@ export default {
 
                 screenshot.new = this.previousIds && !this.previousIds.includes(screenshot.id);
 
+                screenshot.subtitle = this.getSubtitle(screenshot.type, screenshot.metadata);
+
                 return screenshot;
             });
         }
@@ -216,6 +220,77 @@ export default {
             }
 
             return ban;
+        },
+        getSubtitle(type, metadata) {
+            if (!type || !metadata) return false;
+
+            switch (type) {
+                case 'illegal_event':
+                case 'illegal_server_event':
+                case 'honeypot':
+                    return metadata.eventName;
+                case 'suspicious_explosion':
+                    return metadata.explosionEvent;
+                case 'suspicious_transfer':
+                    if (!metadata.amount) return false;
+
+                    return `$${metadata.amount}`;
+                case 'runtime_texture':
+                    if (!metadata.textureDict || !metadata.textureName) return false;
+
+                    return `${metadata.textureDict} / ${metadata.textureName}`;
+                case 'illegal_weapon':
+                    return metadata.weaponLabel;
+                case 'damage_modifier':
+                    if (!metadata.expected || !metadata.actual) return false;
+
+                    return `${metadata.expected} / ${metadata.actual}`;
+                case 'thermal_night_vision':
+                    return metadata.nativeName;
+                case 'blacklisted_command':
+                    return metadata.command;
+                case 'text_entry':
+                    if (!metadata.textEntry || !metadata.textEntryValue) return false;
+
+                    return `${metadata.textEntry}: ${metadata.textEntryValue}`;
+                case 'fast_movement':
+                case 'underground':
+                case 'distance_taze':
+                    if (!metadata.distance) return false;
+
+                    return `${metadata.distance.toFixed(2)}m`;
+                case 'bad_screen_word':
+                    if (!metadata.words) return false;
+
+                    return metadata.words.join(', ');
+                case 'semi_godmode':
+                case 'infinite_ammo':
+                    return metadata.weaponName;
+                case 'illegal_native':
+                    if (!metadata.resource || !metadata.native) return false;
+
+                    const args = metadata.arguments ? `(${metadata.arguments.join(', ')})` : '()';
+
+                    return `${metadata.resource}: ${metadata.native}${args}`;
+                case 'illegal_global':
+                    if (!metadata.resource || !metadata.variable) return false;
+
+                    return `${metadata.resource} - ${metadata.variable}`;
+                case 'illegal_damage':
+                    if (!metadata.type || !metadata.weaponType || !metadata.distance || !metadata.damage) return false;
+
+                    return `${metadata.type}: ${metadata.weaponType} - ${metadata.damage}hp (${metadata.distance.toFixed(2)}m)`;
+                case 'illegal_damage':
+                    return metadata.modifierName;
+                case 'spawned_object':
+                case 'illegal_ped_spawn':
+                case 'illegal_vehicle_spawn':
+                    if (!metadata.distance || !metadata.entity) return false;
+
+                    return `${metadata.entity.model} (${metadata.distance.toFixed(2)}m)`;
+            }
+
+            return false;
         }
     }
 };

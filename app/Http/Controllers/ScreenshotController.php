@@ -49,10 +49,10 @@ class ScreenshotController extends Controller
     {
         $page = Paginator::resolveCurrentPage('page');
 
-		$query = "SELECT id, player_name, users.license_identifier, users.player_aliases, url, details, timestamp FROM (" .
-			"SELECT CONCAT('s_', id) as id, license_identifier, screenshot_url as url, type as details, timestamp FROM anti_cheat_events WHERE screenshot_url IS NOT NULL AND type != 'modified_fov'" .
+		$query = "SELECT id, player_name, users.license_identifier, users.player_aliases, url, details, metadata, timestamp FROM (" .
+			"SELECT CONCAT('s_', id) as id, license_identifier, screenshot_url as url, type as details, metadata, timestamp FROM anti_cheat_events WHERE screenshot_url IS NOT NULL AND type != 'modified_fov'" .
 			" UNION " .
-			"SELECT CONCAT('b_', id) as id, identifier, ban_hash, reason, MAX(timestamp) FROM user_bans WHERE SUBSTRING_INDEX(identifier, ':', 1) = 'license' AND SUBSTRING_INDEX(reason, '-', 1) = 'MODDING' AND smurf_account IS NULL GROUP BY identifier" .
+			"SELECT CONCAT('b_', id) as id, identifier, ban_hash, reason, null as metadata, MAX(timestamp) FROM user_bans WHERE SUBSTRING_INDEX(identifier, ':', 1) = 'license' AND SUBSTRING_INDEX(reason, '-', 1) = 'MODDING' AND smurf_account IS NULL GROUP BY identifier" .
 			") data LEFT JOIN users ON data.license_identifier = users.license_identifier ORDER BY timestamp DESC LIMIT 20 OFFSET " . (($page - 1) * 20);
 
 		$system = DB::select(DB::raw($query));
@@ -65,10 +65,13 @@ class ScreenshotController extends Controller
             if (Str::startsWith($entry->id, 'b_')) {
 			    $entry->reason = Ban::resolveAutomatedReason($entry->details)['reason'];
             } else {
+                $entry->type = $entry->details;
                 $entry->details = ucwords(strtolower(str_replace('_', ' ', $entry->details)));
             }
 
             $entry->player_name = Player::getFilteredPlayerName($entry->player_name ?? "", $entry->player_aliases, $entry->license_identifier ?? "");
+
+            $entry->metadata = json_decode($entry->metadata, true);
 
 			return $entry;
 		}, $system);
