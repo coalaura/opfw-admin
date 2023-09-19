@@ -232,7 +232,7 @@ export default {
                 case 'suspicious_explosion':
                     return metadata.explosionEvent;
                 case 'suspicious_transfer':
-                    if (metadata.amount !== undefined) return false;
+                    if (metadata.amount === undefined) return false;
 
                     return `$${metadata.amount}`;
                 case 'runtime_texture':
@@ -242,7 +242,7 @@ export default {
                 case 'illegal_weapon':
                     return metadata.weaponLabel;
                 case 'damage_modifier':
-                    if (metadata.expected !== undefined || metadata.actual !== undefined) return false;
+                    if (metadata.expected === undefined || metadata.actual === undefined) return false;
 
                     return `${metadata.expected} / ${metadata.actual}`;
                 case 'thermal_night_vision':
@@ -256,11 +256,11 @@ export default {
                 case 'fast_movement':
                 case 'underground':
                 case 'distance_taze':
-                    if (metadata.distance !== undefined) return false;
+                    if (metadata.distance === undefined) return false;
 
                     return `${metadata.distance.toFixed(2)}m`;
                 case 'bad_screen_word':
-                    if (metadata.words !== undefined) return false;
+                    if (metadata.words === undefined) return false;
 
                     return metadata.words.join(', ');
                 case 'semi_godmode':
@@ -277,10 +277,10 @@ export default {
 
                     return `${metadata.resource} - ${metadata.variable}`;
                 case 'illegal_damage':
-                    if (!metadata.type || metadata.weaponType !== undefined || metadata.distance !== undefined || metadata.damage !== undefined) return false;
+                    if (!metadata.type || metadata.weaponType === undefined || metadata.distance === undefined || metadata.damage === undefined) return false;
 
                     return `${metadata.type}: ${metadata.weaponType} - ${metadata.damage}hp (${metadata.distance.toFixed(2)}m)`;
-                case 'illegal_damage':
+                case 'illegal_vehicle_modifier':
                     return metadata.modifierName;
                 case 'spawned_object':
                 case 'illegal_ped_spawn':
