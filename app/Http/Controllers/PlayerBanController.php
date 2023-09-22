@@ -311,6 +311,44 @@ class PlayerBanController extends Controller
         return backWith('success', 'The ban has been successfully unlocked.');
     }
 
+    public function schedule(Player $player, Ban $ban, Request $request): RedirectResponse
+    {
+        $time = strtotime($request->input('date'));
+
+        if (!$time || $time < time()) {
+            return backWith('error', 'Invalid date.');
+        }
+
+        $date = new \DateTime();
+
+        $date->setTimestamp($time);
+
+        $date->setTime(1, 0, 0, 0);
+
+        $ban->update([
+            'scheduled_unban' => $date->getTimestamp()
+        ]);
+
+        $user = user();
+
+        // Automatically log the ban update as a warning.
+        $player->warnings()->create([
+            'issuer_id' => $user->user_id,
+            'message' => 'I scheduled the removal of this players ban for ' . date('m/d/Y', $date->getTimestamp()) . '.',
+        ]);
+
+        return backWith('success', 'The ban has been successfully scheduled for removal.');
+    }
+
+    public function unschedule(Player $player, Ban $ban, Request $request): RedirectResponse
+    {
+        $ban->update([
+            'scheduled_unban' => null
+        ]);
+
+        return backWith('success', 'The ban has been successfully unscheduled.');
+    }
+
     public function unlinkHWID(Player $player, Player $player2, Request $request): RedirectResponse
     {
         if (!$this->isSuperAdmin($request)) {

@@ -64,6 +64,7 @@ class Ban extends Model
         'timestamp',
         'expire',
         'locked',
+        'scheduled_unban',
     ];
 
     /**

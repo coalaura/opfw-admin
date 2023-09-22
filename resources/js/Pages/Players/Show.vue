@@ -117,72 +117,84 @@
         <div class="flex flex-wrap justify-between mb-6">
             <div class="mb-3 flex flex-wrap gap-3">
                 <!-- Panel drug department -->
-                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale px-5 py-2" v-if="$page.auth.player.isSuperAdmin && player.panelDrugDepartment">
+                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale px-4 py-2" v-if="$page.auth.player.isSuperAdmin && player.panelDrugDepartment">
                     <span class="font-semibold" :title="t('players.show.drug_department_title')">{{ t('players.show.drug_department') }}</span>
                 </badge>
 
                 <!-- Whitelisted -->
-                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale px-5 py-2" v-if="whitelisted">
+                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale px-4 py-2" v-if="whitelisted">
                     <span class="font-semibold">{{ t('global.whitelisted') }}</span>
                 </badge>
 
                 <!-- Blacklisted -->
-                <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale px-5 py-2" v-if="blacklisted">
+                <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale px-4 py-2" v-if="blacklisted">
                     <span class="font-semibold">{{ t('global.blacklisted') }}</span>
                 </badge>
 
                 <!-- Debugger -->
-                <badge class="border-pink-200 bg-pink-100 dark:bg-pink-700 px-5 py-2" :title="t('global.debugger_title')" v-if="player.isDebugger && !player.isRoot">
+                <badge class="border-pink-200 bg-pink-100 dark:bg-pink-700 px-4 py-2" :title="t('global.debugger_title')" v-if="player.isDebugger && !player.isRoot">
                     <span class="font-semibold">{{ t('global.debugger') }}</span>
                 </badge>
-            </div>
 
-            <div class="mb-3 flex flex-wrap justify-end gap-3">
                 <!-- Soft Ban -->
-                <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale py-2" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && player.isSoftBanned">
+                <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale px-4 py-2" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && player.isSoftBanned">
                     <span class="font-semibold">{{ t('global.soft_banned') }}</span>
+
                     <a href="#" @click="removeSoftBan($event)" class="ml-1 text-white" :title="t('players.show.remove_soft_ban')">
                         <i class="fas fa-times"></i>
                     </a>
                 </badge>
-                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="addSoftBan()" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && !player.isSoftBanned">
+            </div>
+
+            <div class="mb-3 flex flex-wrap justify-end gap-3">
+                <button class="px-4 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="addSoftBan()" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && !player.isSoftBanned">
                     <i class="fas fa-smoking-ban"></i>
                     {{ t('players.show.add_soft_ban') }}
                 </button>
 
                 <!-- StaffPM -->
-                <button class="px-5 py-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isStaffPM = true" v-if="status">
+                <button class="px-4 py-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 flex items-center gap-1" @click="isStaffPM = true" v-if="status">
                     <i class="fas fa-envelope-open-text"></i>
                     {{ t('players.show.staffpm') }}
                 </button>
                 <!-- Kicking -->
-                <button class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isKicking = true" v-if="status">
+                <button class="px-4 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" @click="isKicking = true" v-if="status">
                     <i class="fas fa-user-minus"></i>
                     {{ t('players.show.kick') }}
                 </button>
                 <!-- Edit Ban -->
-                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-yellow-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/edit'" v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
-                    <i class="mr-1 fas fa-edit"></i>
+                <inertia-link class="px-4 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/edit'" v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
+                    <i class="fas fa-edit"></i>
                     {{ t('players.show.edit_ban') }}
                 </inertia-link>
                 <!-- Unbanning -->
-                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="unbanPlayer()" v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
-                    <i class="mr-1 fas fa-lock-open"></i>
+                <button class="px-4 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="unbanPlayer()" v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
+                    <i class="fas fa-lock-open"></i>
                     {{ t('players.show.unban') }}
                 </button>
+                <!-- Schedule Unban -->
+                <button class="px-4 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" @click="isSchedulingUnban = true" v-if="player.isBanned && !player.ban.scheduled">
+                    <i class="fas fa-calendar-day"></i>
+                    {{ t('players.show.schedule_unban') }}
+                </button>
+                <!-- Remove Scheduled Unban -->
+                <inertia-link class="px-4 py-2 font-semibold text-white rounded bg-purple-600 dark:bg-purple-500 flex items-center gap-1" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/unschedule'" v-if="player.isBanned && player.ban.scheduled">
+                    <i class="fas fa-calendar-times"></i>
+                    {{ t('players.show.remove_schedule') }}
+                </inertia-link>
                 <!-- Banning -->
-                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isBanning = true" v-else-if="!player.isBanned">
-                    <i class="mr-1 fas fa-gavel"></i>
+                <button class="px-4 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="isBanning = true" v-else-if="!player.isBanned">
+                    <i class="fas fa-gavel"></i>
                     {{ t('players.show.issue') }}
                 </button>
                 <!-- Lock ban -->
-                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-success dark:bg-dark-success mobile:block mobile:w-full mobile:m-0 mobile:mb-3" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/lock'" v-if="player.isBanned && !player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
-                    <i class="mr-1 fas fa-lock"></i>
+                <inertia-link class="px-4 py-2 font-semibold text-white rounded bg-purple-600 dark:bg-purple-500 flex items-center gap-1" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/lock'" v-if="player.isBanned && !player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
+                    <i class="fas fa-lock"></i>
                     {{ t('players.show.lock_ban') }}
                 </inertia-link>
                 <!-- Unlock ban -->
-                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-success dark:bg-dark-success mobile:block mobile:w-full mobile:m-0 mobile:mb-3" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/unlock'" v-if="player.isBanned && player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
-                    <i class="mr-1 fas fa-lock-open"></i>
+                <inertia-link class="px-4 py-2 font-semibold text-white rounded bg-purple-600 dark:bg-purple-500 flex items-center gap-1" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/unlock'" v-if="player.isBanned && player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
+                    <i class="fas fa-lock-open"></i>
                     {{ t('players.show.unlock_ban') }}
                 </inertia-link>
             </div>
@@ -280,6 +292,29 @@
                 </div>
             </div>
         </div>
+
+        <!-- Scheduled Unban -->
+        <modal :show.sync="isSchedulingUnban">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.show.scheduled_unban') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" type="date" v-model="scheduledUnbanDate">
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isSchedulingUnban = false">
+                    {{ t('global.close') }}
+                </button>
+
+                <button type="button" class="px-5 py-2 rounded hover:bg-yellow-200 dark:bg-yellow-600 dark:hover:bg-yellow-400" @click="scheduleUnban()">
+                    {{ t('players.show.schedule_unban') }}
+                </button>
+            </template>
+        </modal>
 
         <!-- Linked Accounts -->
         <modal :show.sync="isShowingLinked">
@@ -615,6 +650,14 @@
                     {{ t('players.show.high_accuracy') }}
                 </span>
                 <span class="text-sm italic">{{ t('players.show.high_accuracy_title') }}</span>
+            </div>
+
+            <div class="mb-4 px-6 py-4 border-2 flex flex-col bg-purple-600 dark:bg-purple-500 rounded border-purple-800" v-if="player.isBanned && player.ban.scheduled">
+                <span class="font-bold">
+                    <i class="fas fa-calendar-day mr-1"></i>
+                    {{ t('players.show.scheduled_unban') }}
+                </span>
+                <span class="text-sm italic" v-html="t('players.show.scheduled_details', player.ban.scheduled)"></span>
             </div>
 
             <!-- Viewing -->
@@ -1356,6 +1399,9 @@ export default {
                 linked: []
             },
 
+            isSchedulingUnban: false,
+            scheduledUnbanDate: false,
+
             commands: commands,
             isEnablingCommands: false,
 
@@ -1489,6 +1535,23 @@ export default {
 
             // Send request.
             await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/bans/' + this.player.ban.id);
+
+            this.isLoading = false;
+        },
+        async scheduleUnban() {
+            if (this.isLoading || !this.scheduledUnbanDate) return;
+
+            const timestamp = (new Date(this.scheduledUnbanDate)).getTime();
+
+            if (timestamp < Date.now()) return;
+
+            this.isLoading = true;
+            this.isSchedulingUnban = false;
+
+            // Send request.
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/bans/' + this.player.ban.id + '/schedule', {
+                date: this.scheduledUnbanDate
+            });
 
             this.isLoading = false;
         },

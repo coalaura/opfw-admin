@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\CacheHelper;
 use App\Helpers\SessionHelper;
 use App\Server;
+use App\Ban;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -35,24 +36,16 @@ class CronjobController extends Controller
 
         echo $this->stopTime($start);
 
+        $start = microtime(true);
+        echo "Removing scheduled bans...";
+        Ban::query()->where('scheduled_unban', '<=', time())->delete();
+
+        echo $this->stopTime($start);
+
         return (new Response('Success', 200))->header('Content-Type', 'text/plain');
     }
 
     private function stopTime($time): string {
         return round(microtime(true) - $time, 2) . "s" . PHP_EOL;
-    }
-
-    /**
-     * Validates a request
-     *
-     * @param Request $request
-     * @return bool
-     */
-    private function validateRequest(Request $request): bool
-    {
-        $token = env('DEV_API_KEY', '');
-        $submitted = $request->query('token');
-
-        return $token && $token !== "some_random_token" && $token === $submitted;
     }
 }
