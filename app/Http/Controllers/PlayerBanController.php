@@ -394,21 +394,15 @@ class PlayerBanController extends Controller
         $lastUsed = $player->getLastUsedIdentifiers();
         $lastUsed2 = $player2->getLastUsedIdentifiers();
 
-        $newIdentifiers = [];
+        $intersect = array_intersect($identifiers, $identifiers2);
 
-        foreach($identifiers as $identifier) {
-            if (in_array($identifier, $lastUsed) || !in_array($identifier, $identifiers2)) {
-                $newIdentifiers[] = $identifier;
-            }
-        }
+        $newIdentifiers = array_values(array_filter($identifiers, function($identifier) use ($intersect, $lastUsed) {
+            return !in_array($identifier, $intersect) || in_array($identifier, $lastUsed);
+        }));
 
-        $newIdentifiers2 = [];
-
-        foreach($identifiers2 as $identifier) {
-            if (in_array($identifier, $lastUsed2) || !in_array($identifier, $identifiers)) {
-                $newIdentifiers2[] = $identifier;
-            }
-        }
+        $newIdentifiers2 = array_values(array_filter($identifiers2, function($identifier) use ($intersect, $lastUsed2) {
+            return !in_array($identifier, $intersect) || in_array($identifier, $lastUsed2);
+        }));
 
         // Check if still linked
         if (!empty(array_intersect($newIdentifiers, $newIdentifiers2))) {
