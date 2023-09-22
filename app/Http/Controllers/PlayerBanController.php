@@ -390,11 +390,11 @@ class PlayerBanController extends Controller
         $lastUsed = $player->getLastUsedIdentifiers();
         $lastUsed2 = $player2->getLastUsedIdentifiers();
 
-        $intersect = array_values(array_intersect($identifiers, $identifiers2));
-
-        if (empty($intersect)) {
+        if (!Player::isLinked($identifiers, $identifiers2)) {
             return backWith('error', 'Players are not linked.');
         }
+
+        $intersect = array_values(array_intersect($identifiers, $identifiers2));
 
         $newIdentifiers = array_values(array_filter($identifiers, function($identifier) use ($intersect, $lastUsed) {
             return !in_array($identifier, $intersect) || in_array($identifier, $lastUsed);
@@ -405,7 +405,7 @@ class PlayerBanController extends Controller
         }));
 
         // Check if still linked
-        if (!empty(array_intersect($newIdentifiers, $newIdentifiers2))) {
+        if (Player::isLinked($newIdentifiers, $newIdentifiers2)) {
             return backWith('error', 'Unable to unlink players.');
         }
 

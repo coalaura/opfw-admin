@@ -467,6 +467,24 @@ class Player extends Model
     }
 
     /**
+     * Gets all the identifiers.
+     *
+     * @return array
+     */
+    public static function isLinked(array $identifiers1, array $identifiers2): bool
+    {
+        $identifiers1 = array_values(array_filter($identifiers1, function ($identifier) {
+            return !Str::startsWith($identifier, 'ip:');
+        }));
+
+        $identifiers2 = array_values(array_filter($identifiers2, function ($identifier) {
+            return !Str::startsWith($identifier, 'ip:');
+        }));
+
+        return !empty(array_intersect($identifiers1, $identifiers2));
+    }
+
+    /**
      * Gets all the ips.
      *
      * @return array
