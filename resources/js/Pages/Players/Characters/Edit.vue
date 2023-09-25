@@ -187,8 +187,12 @@
                                             {{ t('players.characters.edit_cash') }}
                                         </label>
                                     </th>
-                                    <td class="p-2">
-                                        <input type="number" class="block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" v-model="balanceForm.cash" v-if="$page.auth.player.isSuperAdmin" />
+                                    <td class="p-2 relative">
+                                        <template v-if="$page.auth.player.isSuperAdmin">
+                                            <input type="number" class="block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" v-model="balanceForm.cash" />
+                                            <span class="absolute top-0 left-0 font-mono text-xs leading-1 italic text-gray-500 dark:text-gray-400 pointer-events-none" v-if="balanceForm.cash !== 0">{{ numberFormat(balanceForm.cash, 0, true) }}</span>
+                                        </template>
+
                                         <span class="block border-gray-500 border-b-2 px-3 py-2" v-else>{{ numberFormat(balanceForm.cash, 0, true) }}</span>
                                     </td>
                                 </tr>
@@ -198,8 +202,12 @@
                                             {{ t('players.characters.edit_bank') }}
                                         </label>
                                     </th>
-                                    <td class="p-2">
-                                        <input type="number" class="block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" v-model="balanceForm.bank" v-if="$page.auth.player.isSuperAdmin" />
+                                    <td class="p-2 relative">
+                                        <template v-if="$page.auth.player.isSuperAdmin">
+                                            <input type="number" class="block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" v-model="balanceForm.bank" />
+                                            <span class="absolute top-0 left-0 font-mono text-xs leading-1 italic text-gray-500 dark:text-gray-400 pointer-events-none" v-if="balanceForm.bank !== 0">{{ numberFormat(balanceForm.bank, 0, true) }}</span>
+                                        </template>
+
                                         <span class="block border-gray-500 border-b-2 px-3 py-2" v-else>{{ numberFormat(balanceForm.bank, 0, true) }}</span>
                                     </td>
                                 </tr>
@@ -209,8 +217,12 @@
                                             {{ t('players.characters.edit_stocks') }}
                                         </label>
                                     </th>
-                                    <td class="p-2">
-                                        <input type="number" class="block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" v-model="balanceForm.stocks" v-if="$page.auth.player.isSuperAdmin" />
+                                    <td class="p-2 relative">
+                                        <template v-if="$page.auth.player.isSuperAdmin">
+                                            <input type="number" class="block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" v-model="balanceForm.stocks" />
+                                            <span class="absolute top-0 left-0 font-mono text-xs leading-1 italic text-gray-500 dark:text-gray-400 pointer-events-none" v-if="balanceForm.stocks !== 0">{{ numberFormat(balanceForm.stocks, 0, true) }}</span>
+                                        </template>
+
                                         <span class="block border-gray-500 border-b-2 px-3 py-2" v-else>{{ numberFormat(balanceForm.stocks, 0, true) }}</span>
                                     </td>
                                 </tr>
