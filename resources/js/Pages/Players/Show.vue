@@ -201,37 +201,48 @@
 
             <!-- Small icon buttons top left -->
             <div class="absolute top-2 left-2 flex gap-2" v-if="this.perm.check(this.perm.PERM_LINKED)">
-                <a class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 block" :href="'/linked_tokens/' + player.licenseIdentifier" :title="t('players.show.show_link_token')" target="_blank">
-                    <i class="fas fa-drumstick-bite"></i>
+                <a class="p-1 text-sm font-bold leading-4 text-center rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/linked_tokens/' + player.licenseIdentifier" :title="t('players.show.show_link_token')" target="_blank">
+                    <i class="fas fa-drumstick-bite mr-1"></i>
+                    Tkn
                 </a>
-                <a class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 block" :href="'/linked_ips/' + player.licenseIdentifier" :title="t('players.show.show_link_ip')" target="_blank">
-                    <i class="fas fa-ethernet"></i>
+                <a class="p-1 text-sm font-bold leading-4 text-center rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/linked_ips/' + player.licenseIdentifier" :title="t('players.show.show_link_ip')" target="_blank">
+                    <i class="fas fa-ethernet mr-1"></i>
+                    IPs
                 </a>
-                <a class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 block" :href="'/linked_identifiers/' + player.licenseIdentifier" :title="t('players.show.show_link_identifier')" target="_blank">
-                    <i class="fas fa-passport"></i>
+                <a class="p-1 text-sm font-bold leading-4 text-center rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/linked_identifiers/' + player.licenseIdentifier" :title="t('players.show.show_link_identifier')" target="_blank">
+                    <i class="fas fa-passport mr-1"></i>
+                    Idf
                 </a>
             </div>
 
             <!-- Small icon buttons top right -->
-            <div class="absolute top-2 right-2 flex gap-2">
+            <div class="absolute top-2 right-2 flex gap-2 items-center">
                 <!-- Damage Logs -->
-                <a class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-pink-400 bg-secondary dark:bg-dark-secondary border-2 block" :href="'/who_was_damaged/' + player.licenseIdentifier" :title="t('players.show.damage_logs_by')" v-if="this.perm.check(this.perm.PERM_DAMAGE_LOGS)" target="_blank">
-                    <i class="fas fa-hammer"></i>
+                <a class="p-1 text-sm font-bold leading-4 text-center rounded border-pink-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/who_was_damaged/' + player.licenseIdentifier" :title="t('players.show.damage_logs_by')" v-if="this.perm.check(this.perm.PERM_DAMAGE_LOGS)" target="_blank">
+                    <i class="fas fa-hammer mr-1"></i>
+                    Out
                 </a>
                 <!-- Damage Logs 2 -->
-                <a class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-pink-400 bg-secondary dark:bg-dark-secondary border-2 block" :href="'/who_damaged/' + player.licenseIdentifier" :title="t('players.show.damage_logs')" v-if="this.perm.check(this.perm.PERM_DAMAGE_LOGS)" target="_blank">
-                    <i class="fas fa-procedures"></i>
+                <a class="p-1 text-sm font-bold leading-4 text-center rounded border-pink-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/who_damaged/' + player.licenseIdentifier" :title="t('players.show.damage_logs')" v-if="this.perm.check(this.perm.PERM_DAMAGE_LOGS)" target="_blank">
+                    <i class="fas fa-procedures mr-1"></i>
+                    In
                 </a>
 
+                <div class="w-px bg-white bg-opacity-30 h-full separator">&nbsp;</div>
+
                 <!-- Edit Role -->
-                <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-red-400 bg-secondary dark:bg-dark-secondary border-2 block" @click="isRoleEdit = true" v-if="allowRoleEdit && !player.isSuperAdmin" :title="t('players.show.edit_role')">
-                    <i class="fas fa-clipboard-list"></i>
+                <button class="p-1 text-sm font-bold leading-4 text-center rounded border-red-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" @click="isRoleEdit = true" v-if="allowRoleEdit && !player.isSuperAdmin" :title="t('players.show.edit_role')">
+                    <i class="fas fa-clipboard-list mr-1"></i>
+                    Role
                 </button>
 
                 <!-- Add Tag -->
-                <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-green-400 bg-secondary dark:bg-dark-secondary border-2 block" @click="isTagging = true" :title="t('players.show.edit_tag')" v-if="this.perm.check(this.perm.PERM_EDIT_TAG)">
-                    <i class="fas fa-tag"></i>
+                <button class="p-1 text-sm font-bold leading-4 text-center rounded border-green-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" @click="isTagging = true" :title="t('players.show.edit_tag')" v-if="this.perm.check(this.perm.PERM_EDIT_TAG)">
+                    <i class="fas fa-tag mr-1"></i>
+                    Tag
                 </button>
+
+                <div class="w-px bg-white bg-opacity-30 h-full separator">&nbsp;</div>
 
                 <!-- Create screen capture -->
                 <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block" @click="isScreenCapture = true" :title="t('screenshot.screencapture')" v-if="status && this.perm.check(this.perm.PERM_SCREENSHOT)">
@@ -243,14 +254,18 @@
                     <i class="fas fa-camera"></i>
                 </button>
 
+                <div class="w-px bg-white bg-opacity-30 h-full separator">&nbsp;</div>
+
                 <!-- View on Map -->
-                <a class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block" :href="'/map#' + player.licenseIdentifier" :title="t('global.view_map')" v-if="this.perm.check(this.perm.PERM_LIVEMAP) && status" target="_blank">
-                    <i class="fas fa-map"></i>
+                <a class="p-1 text-sm font-bold leading-4 text-center rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/map#' + player.licenseIdentifier" :title="t('global.view_map')" v-if="this.perm.check(this.perm.PERM_LIVEMAP) && status" target="_blank">
+                    <i class="fas fa-map mr-1"></i>
+                    Map
                 </a>
 
                 <!-- Revive -->
-                <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-yellow-400 bg-secondary dark:bg-dark-secondary border-2 block" @click="revivePlayer()" v-if="status" :title="t('players.show.revive')">
-                    <i class="fas fa-heartbeat"></i>
+                <button class="p-1 text-sm font-bold leading-4 text-center rounded border-yellow-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" @click="revivePlayer()" v-if="status" :title="t('players.show.revive')">
+                    <i class="fas fa-heartbeat mr-1"></i>
+                    Rez
                 </button>
             </div>
         </div>
@@ -2317,6 +2332,15 @@ export default {
             if (document.visibilityState !== "visible") {
                 this.continuouslyScreenshotting = false;
             }
+        });
+    },
+    updated() {
+        $(".separator").each(() => {
+            while ($(this).next().hasClass("separator")) {
+                $(this).next().remove();
+            }
+
+            $(".separator:last-child").remove();
         });
     }
 };
