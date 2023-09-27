@@ -144,6 +144,7 @@ class Player extends Model
                 "en-pirate" => "Pirate Speak",
                 "en-us_s"   => "Southern Accent",
                 "en-emoji"  => "Emojis",
+                "en-gib"    => "Gibberish",
             ],
         ],
     ];
