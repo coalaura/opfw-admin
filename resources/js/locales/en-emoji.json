@@ -450,7 +450,8 @@
             "linked": "🔗🔐",
             "announcement": "📣📢",
             "damage_logs": "📈📊",
-            "crafting": "🔨📚"
+            "crafting": "🔨📚",
+            "phone_logs": "📱📚"
         },
         "world_time": "🌍⏰",
         "world_time_desc": "⌚🌍{0}",
@@ -850,7 +851,11 @@
             "meta_camCords": "🎥🌍/🛰️",
             "meta_queue": "🚶‍♂️",
             "high_accuracy": "🔍🎯",
-            "high_accuracy_title": "🔍🎯👀✨❗ ️◼️🚫🔍👍❌❌️✨👀👀🚫❗🧐🕵️‍♂️🕵️‍♀️"
+            "high_accuracy_title": "🔍🎯👀✨❗ ️◼️🚫🔍👍❌❌️✨👀👀🚫❗🧐🕵️‍♂️🕵️‍♀️",
+            "schedule_unban": "📅",
+            "remove_schedule": "⌛",
+            "scheduled_unban": "⏰🚫",
+            "scheduled_details": "🚫🗓️📅📆🕒🕑{0}"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",
@@ -1015,7 +1020,6 @@
                 "license": "🔤",
                 "licenses": "🔤🔤🔤🔤🔤🔤",
                 "add": "➕ 🔑🔤",
-                "all": "👥🔐📄👾💼",
                 "remove": "🔄🔐🔥",
                 "heli": "📄✈️🚁",
                 "fw": "📄✈️🐦",
@@ -1031,8 +1035,7 @@
                 "hunting": "🦌 - Hunting",
                 "fishing": "🎣 - Fishing",
                 "weapon": "🔫 - Weapon",
-                "mining": "⛏️ - Mining",
-                "confirm": "❓ Are you sure you want to remove all of this character's licenses?"
+                "mining": "⛏️ - Mining"
             }
         },
         "edit": {
@@ -1097,10 +1100,13 @@
     "phone": {
         "title": "📱 Phone Logs",
         "description": "On this page you can view and filter the 📱 message logs.",
-        "from": "📩 Sender",
-        "to": "📩 Receiver",
         "message": "✉️ Message",
-        "number": "☎️ Phone Number"
+        "sender": "📩",
+        "receiver": "📥",
+        "number1": "🔢 A",
+        "number2": "🔢 B",
+        "no_messages": "🚫📬",
+        "more": "🔄➕"
     },
     "logs": {
         "title": "📋 Server Logs",

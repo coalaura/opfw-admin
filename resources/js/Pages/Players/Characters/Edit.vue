@@ -160,7 +160,7 @@
                             </ul>
 
                             <!-- Add License -->
-                            <button type="button" class="block w-full px-5 py-2 mt-6 hover:shadow-xl font-semibold text-white rounded bg-primary mr-3 dark:bg-dark-primary" @click="isLicenceAdd = true">
+                            <button type="button" class="block w-full px-5 py-2 mt-6 hover:shadow-xl font-semibold text-white rounded bg-primary mr-3 dark:bg-dark-primary" @click="isLicenseEdit = true">
                                 {{ t('players.characters.license.add') }}
                             </button>
                         </div>
@@ -545,29 +545,22 @@
             </div>
         </div>
 
-        <!-- Add License -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isLicenceAdd">
+        <!-- Edit License -->
+        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isLicenseEdit">
             <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
                 <h3 class="mb-2">{{ t('players.characters.license.add') }}</h3>
-                <div class="w-full p-3 flex justify-between" v-if="licenses.length > 0">
-                    <label class="mr-4 block w-1/3 text-center pt-2 font-bold">
-                        {{ t('players.characters.license.license') }}
-                    </label>
-                    <select class="block w-2/3 px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" v-model="licenseForm.license">
-                        <option :value="license" v-for="license in licenses">
-                            {{ t('players.characters.license.' + license) }}
-                        </option>
-                    </select>
-                </div>
-                <p v-else>{{ t('players.characters.license.all') }}</p>
+
+                <select multiple class="w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" v-model="licenseForm.licenses">
+                    <option :value="license" v-for="license in licenses">
+                        {{ t('players.characters.license.' + license) }}
+                    </option>
+                </select>
+
                 <div class="flex justify-end">
-                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-dark-secondary mr-3 dark:text-black dark:bg-secondary" @click="isLicenceAdd = false">
+                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-dark-secondary mr-3 dark:text-black dark:bg-secondary" @click="isLicenseEdit = false">
                         {{ t('global.cancel') }}
                     </button>
-                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-danger mr-3 dark:bg-dark-danger" @click="removeLicenses">
-                        {{ t('players.characters.license.remove') }}
-                    </button>
-                    <button type="button" v-if="licenses.length > 0" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-success mr-3 dark:bg-dark-success" @click="addLicense">
+                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-success dark:bg-dark-success" @click="updateLicenses" v-if="licensesChanged">
                         {{ t('players.characters.license.add') }}
                     </button>
                 </div>
@@ -960,7 +953,7 @@ export default {
                 repair: false
             },
             licenseForm: {
-                license: 'fw'
+                licenses: this.character.licenses
             },
             balanceForm: {
                 cash: this.character.cash,
@@ -976,8 +969,16 @@ export default {
             isVehicleEdit: false,
             vehicleEditError: null,
             isVehicleAdd: false,
-            isLicenceAdd: false
+            isLicenseEdit: false
         };
+    },
+    computed: {
+        licensesChanged() {
+            const licenses = this.character.licenses.sort(),
+                formLicenses = this.licenseForm.licenses.sort();
+
+            return JSON.stringify(licenses) !== JSON.stringify(formLicenses);
+        }
     },
     methods: {
         getResetCoords() {
@@ -1020,7 +1021,13 @@ export default {
             return this.t('players.vehicles.oil_change_needed');
         },
         getAvailableLicenses() {
-            return ["heli", "fw", "cfi", "hw", "hwh", "perf", "management", "military", "utility", "commercial", "special", "hunting", "fishing", "weapon", "mining"].filter(l => !this.character.licenses.includes(l));
+            return ["heli", "fw", "cfi", "hw", "hwh", "perf", "management", "military", "utility", "commercial", "special", "hunting", "fishing", "weapon", "mining"]
+                .sort((a, b) => {
+                    const aName = this.t('players.characters.license.' + a),
+                        bName = this.t('players.characters.license.' + b);
+
+                    return aName.localeCompare(bName);
+                });
         },
         setPayCheck() {
             if (this.form.job_name === "Unemployed") {
@@ -1173,30 +1180,14 @@ export default {
             // Reset.
             this.isVehicleAdd = false;
         },
-        async addLicense() {
+        async updateLicenses() {
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + '/addLicense', {
-                license: this.licenseForm.license
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + '/updateLicenses', {
+                licenses: this.licenseForm.licenses
             });
 
             // Reset.
-            this.isLicenceAdd = false;
-
-            this.licenses = this.getAvailableLicenses();
-        },
-        async removeLicenses() {
-            if (!confirm(this.t('players.characters.license.confirm'))) {
-                this.isLicenceAdd = false;
-                return;
-            }
-
-            // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + '/addLicense', {
-                license: 'remove'
-            });
-
-            // Reset.
-            this.isLicenceAdd = false;
+            this.isLicenseEdit = false;
 
             this.licenses = this.getAvailableLicenses();
         },

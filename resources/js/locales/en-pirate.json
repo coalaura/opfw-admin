@@ -450,7 +450,8 @@
             "linked": "Reveal Linked Mateys",
             "announcement": "Broadside Announcement",
             "damage_logs": "Sight Damage Scrolls",
-            "crafting": "Sight Crafting Secrets"
+            "crafting": "Sight Crafting Secrets",
+            "phone_logs": "View Scoundrel Logs"
         },
         "world_time": "World O' Time",
         "world_time_desc": "The time in the {0} most used doubloon zones.",
@@ -850,7 +851,11 @@
             "meta_camCords": "Freecam/Orbitcam",
             "meta_queue": "Queue",
             "high_accuracy": "Arr, Me Hearties",
-            "high_accuracy_title": "Ahoy, ye scurvy dog! This here detection be built in a way that false positives be highly unlikely. Be sure ye be 100% certain this ban be false afore removin' it."
+            "high_accuracy_title": "Ahoy, ye scurvy dog! This here detection be built in a way that false positives be highly unlikely. Be sure ye be 100% certain this ban be false afore removin' it.",
+            "schedule_unban": "Chart a Course",
+            "remove_schedule": "Avast, Un-Schedule",
+            "scheduled_unban": "Scheduled Pardon",
+            "scheduled_details": "Blackmark be scheduled to be lifted on <b>{0}</b>."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",
@@ -1015,7 +1020,6 @@
                 "license": "Letter of Marque",
                 "licenses": "Letters of Marque",
                 "add": "Add Letter of Marque",
-                "all": "Ye scurvy dog be havin' all licenses.",
                 "remove": "Be removin' all",
                 "heli": "PPL - 'elicopter",
                 "fw": "PPL - Fixed Wing",
@@ -1031,8 +1035,7 @@
                 "hunting": "Plunderin'",
                 "fishing": "Fishin'",
                 "weapon": "Blunderbuss",
-                "mining": "Diggin'",
-                "confirm": "Be ye certain ye be removin' all o' this scurvy dog's licenses?"
+                "mining": "Diggin'"
             }
         },
         "edit": {
@@ -1097,10 +1100,13 @@
     "phone": {
         "title": "Phone Scrolls",
         "description": "On this here page ye can spy on and sift through the missives sent on the phone.",
-        "from": "Scribbler",
-        "to": "Receiver o' Messages",
         "message": "Missive",
-        "number": "Digits o' the Phone"
+        "sender": "Scrawler",
+        "receiver": "Receiver of Parley",
+        "number1": "Scuttlebutt A",
+        "number2": "Scuttlebutt B",
+        "no_messages": "No scrawlings found, ye scurvy dog.",
+        "more": "Load More Booty"
     },
     "logs": {
         "title": "Logs o' the Ship",

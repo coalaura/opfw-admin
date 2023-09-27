@@ -450,7 +450,8 @@
             "linked": "Bring Up All them Joined Accounts",
             "announcement": "Chuck a Message Out There",
             "damage_logs": "Check Out the Damage Records",
-            "crafting": "Browse Through the Recipe Book"
+            "crafting": "Browse Through the Recipe Book",
+            "phone_logs": "Check Out Phone Dunny Rolls"
         },
         "world_time": "What's the Time in the Big Wide World",
         "world_time_desc": "The time in all them timezones people use a lot.",
@@ -850,7 +851,11 @@
             "meta_camCords": "Bloody Freecam/Orbitcam",
             "meta_queue": "Farkin' Line",
             "high_accuracy": "Deadset Bonza Accuracy",
-            "high_accuracy_title": "This dinky-di detection is built in a way that it's as rare as rocking horse droppings to false positive. Make sure you come it a bewdy before chuckin' a speccy and removing it."
+            "high_accuracy_title": "This dinky-di detection is built in a way that it's as rare as rocking horse droppings to false positive. Make sure you come it a bewdy before chuckin' a speccy and removing it.",
+            "schedule_unban": "Get Me Bloody Diary",
+            "remove_schedule": "Ballsed Up the Schedule",
+            "scheduled_unban": "Oi, It's Gonna Get Unbanned",
+            "scheduled_details": "Ban's gettin' the boot on <b>{0}</b>."
         },
         "ban_reason": "Sorry mate",
         "ban_time": "Runs out",
@@ -1015,7 +1020,6 @@
                 "license": "Papers, Mate",
                 "licenses": "Papers, Mates",
                 "add": "Chuck Another License In",
-                "all": "Bloody oath! This character already has all the licenses, mate.",
                 "remove": "Get rid of all",
                 "heli": "License to fly choppers, mate - PPL",
                 "fw": "License to fly fixed wing aircraft, cobber - PPL",
@@ -1031,8 +1035,7 @@
                 "hunting": "Bloke Smash",
                 "fishing": "Fishin' Mate",
                 "weapon": "Bloke Battlefield",
-                "mining": "Mined All Day",
-                "confirm": "Ya reckon ya wanna get rid of all these licenses, mate?"
+                "mining": "Mined All Day"
             }
         },
         "edit": {
@@ -1097,10 +1100,13 @@
     "phone": {
         "title": "Blower Dunny",
         "description": "Ya can check out and sift through the blower message logs here.",
-        "from": "Sender",
-        "to": "Receiver",
         "message": "Message",
-        "number": "Blower Number"
+        "sender": "Bloke Who Sent It",
+        "receiver": "Bloke Who Copped It",
+        "number1": "Blower A",
+        "number2": "Blower B",
+        "no_messages": "Nah, No Messages Found, Mate.",
+        "more": "Chuck More In"
     },
     "logs": {
         "title": "Arvo Logs",

@@ -450,7 +450,8 @@
             "linked": "Show Linked Accounts",
             "announcement": "Post Announcement",
             "damage_logs": "View Damage Logs",
-            "crafting": "View Craftin' Recipes"
+            "crafting": "View Craftin' Recipes",
+            "phone_logs": "Peep Them Phone Logs"
         },
         "world_time": "World Time",
         "world_time_desc": "The time in the {0} most used timezones.",
@@ -850,7 +851,11 @@
             "meta_camCords": "Freecam/Orbitcam",
             "meta_queue": "Queue",
             "high_accuracy": "High Accuracy, Dang Near Foolproof",
-            "high_accuracy_title": "Now let me tell ya, this here detection system is built real solid. Ain't no need to worry 'bout no false positives, partner. But, I reckon ya gotta be doggone sure that this ban is a dud before ya go 'head and lift it."
+            "high_accuracy_title": "Now let me tell ya, this here detection system is built real solid. Ain't no need to worry 'bout no false positives, partner. But, I reckon ya gotta be doggone sure that this ban is a dud before ya go 'head and lift it.",
+            "schedule_unban": "Plan It",
+            "remove_schedule": "Cancel It",
+            "scheduled_unban": "Bout to Get Unbanned",
+            "scheduled_details": "The ban's gonna be lifted on <b>{0}</b>."
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",
@@ -1015,7 +1020,6 @@
                 "license": "'Licensh",
                 "licenses": "'Licensesh",
                 "add": "Add 'Licensh",
-                "all": "Charagrah already done got all the licenses.",
                 "remove": "Get rid of 'em all",
                 "heli": "PPL - Choppa",
                 "fw": "PPL - Fixed Wing",
@@ -1031,8 +1035,7 @@
                 "hunting": "Huntin'",
                 "fishing": "Fishin'",
                 "weapon": "Weap'n",
-                "mining": "Minin'",
-                "confirm": "Y'all shure ya wanna git rid of all them licenses fer this here character?"
+                "mining": "Minin'"
             }
         },
         "edit": {
@@ -1097,10 +1100,13 @@
     "phone": {
         "title": "Phone Recordas",
         "description": "Y'all kin peep an' strainer the phone message log here.",
-        "from": "Sender",
-        "to": "Receiver",
         "message": "Message",
-        "number": "Phone Nummer"
+        "sender": "Sender",
+        "receiver": "Receiver",
+        "number1": "Numero Uno",
+        "number2": "Numero Dos",
+        "no_messages": "Ain't no messages here.",
+        "more": "Fetch Me Some More"
     },
     "logs": {
         "title": "Server Recordas",

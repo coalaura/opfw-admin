@@ -513,38 +513,28 @@ class PlayerCharacterController extends Controller
     }
 
     /**
-     * Adds the specified license.
+     * Updates a characters licenses.
      *
      * @param Request $request
      * @param Player $player
      * @param Character $character
      * @return RedirectResponse
      */
-    public function addLicense(Request $request, Player $player, Character $character): RedirectResponse
+    public function updateLicenses(Request $request, Player $player, Character $character): RedirectResponse
     {
-        $license = $request->post('license');
+        $licenses = $request->post('licenses');
 
-        if (!in_array($license, self::Licenses) && $license !== 'remove') {
-            return backWith('error', 'Invalid license "' . $license . '".');
+        if (!is_array($licenses)) {
+            return backWith('error', 'Invalid licenses.');
         }
+
+        $licenses = array_values(array_unique(array_filter($licenses, function ($license) {
+            return in_array($license, self::Licenses);
+        })));
 
         $json = json_decode($character->character_data, true) ?? [];
-        if (!isset($json['licenses'])) {
-            $json['licenses'] = [];
-        }
 
-        if (in_array($license, $json['licenses'])) {
-            return backWith('error', 'Character already has license "' . $license . '".');
-        }
-
-        if ($license !== 'remove') {
-            $json['licenses'][] = $license;
-            $json['licenses']   = array_values(array_unique($json['licenses']));
-        } else if (empty($json['licenses'])) {
-            return backWith('error', 'Character already has no licenses.');
-        } else {
-            $json['licenses'] = [];
-        }
+        $json['licenses'] = $licenses;
 
         $character->update([
             'character_data' => json_encode($json),
@@ -560,13 +550,9 @@ class PlayerCharacterController extends Controller
 
         $user = user();
 
-        if ($license === 'remove') {
-            PanelLog::logLicenseRemove($user->license_identifier, $player->license_identifier, $character->character_id);
-            return backWith('success', 'All Licenses were successfully removed. ' . $info);
-        }
+        PanelLog::logLicenseUpdate($user->license_identifier, $player->license_identifier, $character->character_id);
 
-        PanelLog::logLicenseAdd($user->license_identifier, $player->license_identifier, $character->character_id, $license);
-        return backWith('success', 'License was successfully added (License: ' . $license . '). ' . $info);
+        return backWith('success', 'Licenses were successfully updated. ' . $info);
     }
 
     /**

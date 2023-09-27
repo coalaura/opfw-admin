@@ -450,7 +450,8 @@
             "linked": "Show Winked Accounts",
             "announcement": "Post Announcementowo",
             "damage_logs": "View Damage Wogs",
-            "crafting": "View Cwafting Wecipes"
+            "crafting": "View Cwafting Wecipes",
+            "phone_logs": "View Phwone Wogs"
         },
         "world_time": "Wowld Timeowo",
         "world_time_desc": "The time in the {0} most used timezonesowo.",
@@ -850,7 +851,11 @@
             "meta_camCords": "Fwee-cam/Itbitcam",
             "meta_queue": "Qwueue",
             "high_accuracy": "Haiwy Accuwacy",
-            "high_accuracy_title": "Dis detectiun iz buiwt in UwU way dat false positives awe highwy unwikewy. Mwakie suwe u awe 100% cewtain dis ban iz false befowe wemoving it."
+            "high_accuracy_title": "Dis detectiun iz buiwt in UwU way dat false positives awe highwy unwikewy. Mwakie suwe u awe 100% cewtain dis ban iz false befowe wemoving it.",
+            "schedule_unban": "Schweduwe",
+            "remove_schedule": "Un-Schweduw",
+            "scheduled_unban": "Schweduwed Unbwan",
+            "scheduled_details": "Bwan is schweduwed fow wemovaw on <b>{0}</b>."
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",
@@ -1015,7 +1020,6 @@
                 "license": "Wicense",
                 "licenses": "Wicenses",
                 "add": "Add Wicense",
-                "all": "Character awweady has aww wicenses. OwO",
                 "remove": "Wemove aww. UwU",
                 "heli": "PPL - Hewicopter. >w<",
                 "fw": "PPL - Fwixed Wing. :3",
@@ -1031,8 +1035,7 @@
                 "hunting": "HuntingwU",
                 "fishing": "FishyingwU",
                 "weapon": "WeaponwU",
-                "mining": "MiningwU",
-                "confirm": "Awe you suwe you want to welove aww of thiws chawactews wicenseswU?"
+                "mining": "MiningwU"
             }
         },
         "edit": {
@@ -1097,10 +1100,13 @@
     "phone": {
         "title": "Phwone Logs",
         "description": "On this page you can view and fwilter the phwone message wogs.",
-        "from": "Sendew",
-        "to": "Weceivew",
         "message": "Mwessage",
-        "number": "Phwone Numbew"
+        "sender": "Sendeuw",
+        "receiver": "Weceivew",
+        "number1": "Numbew A",
+        "number2": "Numbew B",
+        "no_messages": "No mwessages found.",
+        "more": "Woad Mowe"
     },
     "logs": {
         "title": "Sewvew Wogs",

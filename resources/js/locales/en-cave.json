@@ -450,7 +450,8 @@
             "linked": "Show Tied Together Accounts",
             "announcement": "Shout Big News",
             "damage_logs": "Look at Hurt Logs",
-            "crafting": "Access Crafting Secrets"
+            "crafting": "Access Crafting Secrets",
+            "phone_logs": "Grok Phone Logs"
         },
         "world_time": "World Time-Big",
         "world_time_desc": "The time in the {0} most used timezones. Listen, sun go up, sun go down.",
@@ -850,7 +851,11 @@
             "meta_camCords": "Freecam/Orbitcam",
             "meta_queue": "Queue",
             "high_accuracy": "Ugga Ugga Ugga",
-            "high_accuracy_title": "Ugga ugga ugga ugga, ugga ugga ugga ugga. Ugga ugga ugga ugga ugga ugga ugga ugga ugga ugga ugga ugga ugga."
+            "high_accuracy_title": "Ugga ugga ugga ugga, ugga ugga ugga ugga. Ugga ugga ugga ugga ugga ugga ugga ugga ugga ugga ugga ugga ugga.",
+            "schedule_unban": "Meep",
+            "remove_schedule": "Un-Meep",
+            "scheduled_unban": "Scheduled Meep",
+            "scheduled_details": "Ban is scheduled for removal on <b>{0}</b>."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",
@@ -1015,7 +1020,6 @@
                 "license": "Ugga Ugga",
                 "licenses": "Ugga Ugga",
                 "add": "Add Ugga Ugga",
-                "all": "Ugg. Character already have all licenses.",
                 "remove": "Ugg Ugg. Remove all licenses.",
                 "heli": "Ugg - Helicopter",
                 "fw": "Ugg - Fixed Wing",
@@ -1031,8 +1035,7 @@
                 "hunting": "Hunt",
                 "fishing": "Fish",
                 "weapon": "Wapen",
-                "mining": "Mine",
-                "confirm": "Hmmm, you wanna remove all dis caveman licenses?"
+                "mining": "Mine"
             }
         },
         "edit": {
@@ -1097,10 +1100,13 @@
     "phone": {
         "title": "Grunt Logs",
         "description": "Ug this page grunts and filters the grunt logs.",
-        "from": "Grunt Sender",
-        "to": "Grunt Receiver",
         "message": "Grunt",
-        "number": "Grunt Number"
+        "sender": "Grunter",
+        "receiver": "Hoofer",
+        "number1": "Thag A",
+        "number2": "Thag B",
+        "no_messages": "No grunts found.",
+        "more": "Ugg Meep"
     },
     "logs": {
         "title": "Fire Logs",

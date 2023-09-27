@@ -184,29 +184,13 @@ class PanelLog extends Model
      * @param string $character
      * @param string $license
      */
-    public static function logLicenseAdd(string $fromIdentifier, string $toIdentifier, string $character, string $license)
+    public static function logLicenseUpdate(string $fromIdentifier, string $toIdentifier, string $character)
     {
         $from = self::resolvePlayerLogName($fromIdentifier);
         $to = self::resolvePlayerCharacterLogName($toIdentifier, $character);
 
-        $log = $from . ' added the license `' . $license . '` to ' . $to;
-        self::createLog($fromIdentifier, $toIdentifier, $log, 'Added License');
-    }
-
-    /**
-     * Logs a license remove from the panel
-     *
-     * @param string $fromIdentifier
-     * @param string $toIdentifier
-     * @param string $character
-     */
-    public static function logLicenseRemove(string $fromIdentifier, string $toIdentifier, string $character)
-    {
-        $from = self::resolvePlayerLogName($fromIdentifier);
-        $to = self::resolvePlayerCharacterLogName($toIdentifier, $character);
-
-        $log = $from . ' removed all licenses from ' . $to;
-        self::createLog($fromIdentifier, $toIdentifier, $log, 'Removed Licenses');
+        $log = $from . ' updated ' . $to . '\'s characters (#' . $character . ') licenses';
+        self::createLog($fromIdentifier, $toIdentifier, $log, 'Updated Licenses');
     }
 
     /**
