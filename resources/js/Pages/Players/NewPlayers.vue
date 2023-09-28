@@ -252,9 +252,11 @@ export default {
                 });
             } catch (e) { }
 
-            this.sortList();
-
             this.isLoading = false;
+
+            this.$nextTick(() => {
+                this.sortList();
+            });
         }
     },
     async mounted() {
