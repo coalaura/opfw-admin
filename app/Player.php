@@ -266,6 +266,10 @@ class Player extends Model
         $name  = self::filterPlayerName($name);
         $alias = $alias ?? [];
 
+        if (is_string($alias)) {
+            $alias = json_decode($alias, true) ?? [];
+        }
+
         if ($name) {
             return $name;
         }
