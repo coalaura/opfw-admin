@@ -178,7 +178,9 @@ export default {
             return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
         },
         getPlayerList() {
-            const list = this.players
+            const sortBy = this.sorting || 'playtime';
+
+            return this.players
                 .filter(player => player.character)
                 .map(player => {
                     let backstory = this.escapeHTML(player.character.backstory);
@@ -202,37 +204,31 @@ export default {
                     player.data = this.getCharacterData(player);
 
                     return player;
+                }).sort((a, b) => {
+                    if (sortBy === 'percentage') {
+                        const dannyA = a.character.danny ?? 0;
+                        const dannyB = b.character.danny ?? 0;
+
+                        return dannyB - dannyA;
+                    } else if (sortBy === 'server_id') {
+                        const idA = a.serverId ?? 0;
+                        const idB = b.serverId ?? 0;
+
+                        return idB - idA;
+                    } else if (sortBy === 'playtime') {
+                        const timeA = a.playTime ?? 0;
+                        const timeB = b.playTime ?? 0;
+
+                        return timeA - timeB;
+                    } else if (sortBy === 'prediction') {
+                        const predA = a.sortPrediction ?? 0;
+                        const predB = b.sortPrediction ?? 0;
+
+                        return predB - predA;
+                    }
+
+                    return 0;
                 });
-
-            const sortBy = this.sorting || 'playtime';
-
-            list.sort((a, b) => {
-                if (sortBy === 'percentage') {
-                    const dannyA = a.character.danny ?? 0;
-                    const dannyB = b.character.danny ?? 0;
-
-                    return dannyB - dannyA;
-                } else if (sortBy === 'server_id') {
-                    const idA = a.serverId ?? 0;
-                    const idB = b.serverId ?? 0;
-
-                    return idB - idA;
-                } else if (sortBy === 'playtime') {
-                    const timeA = a.playTime ?? 0;
-                    const timeB = b.playTime ?? 0;
-
-                    return timeA - timeB;
-                } else if (sortBy === 'prediction') {
-                    const predA = a.sortPrediction ?? 0;
-                    const predB = b.sortPrediction ?? 0;
-
-                    return predB - predA;
-                }
-
-                return 0;
-            });
-
-            return list;
         },
         formatSecondDiff(sec) {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
