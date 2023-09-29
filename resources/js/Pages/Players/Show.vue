@@ -81,36 +81,50 @@
                     <span class="font-bold">{{ t('players.show.aliases') }}:</span>
                     {{ player.playerAliases.join(", ") }}
                 </span>
-                <span class="block" v-if="getPlayerMetadata()">
-                    <span class="font-bold">{{ t('players.show.metadata') }}:</span>
-                    {{ getPlayerMetadata() }}
-                </span>
-                <span class="block">
-                    <span class="font-bold">{{ t('players.show.enabled_commands') }}:</span>
-                    {{ player.enabledCommands.length > 0 ? player.enabledCommands.map(e => '/' + e).join(", ") : "N/A" }}
-
-                    <a href="#" class="text-indigo-600 dark:text-indigo-400" @click="$event.preventDefault(); isEnablingCommands = true" v-if="$page.auth.player.isSuperAdmin">{{ t('players.show.edit') }}</a>
-                </span>
             </div>
-            <div class="text-sm italic mt-2">
-                <span class="block" v-if="player.countryName" :title="t('players.show.country_detail')">
-                    <span class="font-bold">{{ t('players.show.country_name') }}:</span>
-                    {{ player.countryName }}
-                </span>
+            <div class="mt-3 overflow-hidden" :class="{'h-4': !showingMoreInfo}">
+                <div class="text-sm italic font-semibold">
+                    <span @click="showingMoreInfo = !showingMoreInfo" class="cursor-pointer">
+                        <span v-if="showingMoreInfo"><i class="fas fa-chevron-down"></i> {{ t('players.show.less_info') }}</span>
+                        <span v-else><i class="fas fa-chevron-right"></i> {{ t('players.show.more_info') }}</span>
+                    </span>
+                </div>
+                <div class="text-sm italic mt-1">
+                    <span class="block" v-if="getPlayerMetadata()">
+                        <span class="font-bold">{{ t('players.show.metadata') }}:</span>
+                        {{ getPlayerMetadata() }}
+                    </span>
+                    <span class="block">
+                        <span class="font-bold">{{ t('players.show.enabled_commands') }}:</span>
+                        {{ player.enabledCommands.length > 0 ? player.enabledCommands.map(e => '/' + e).join(", ") : "N/A" }}
 
-                <span class="block" v-if="player.variables && player.variables.timezone && player.variables.timezoneOffset">
-                    <span class="font-bold">{{ t('players.show.timezone') }}:</span>
-                    {{ player.variables.timezone }} - <span class="font-semibold">{{ playerTime }}</span>
-                </span>
+                        <a href="#" class="text-indigo-600 dark:text-indigo-400" @click="$event.preventDefault(); isEnablingCommands = true" v-if="$page.auth.player.isSuperAdmin">{{ t('players.show.edit') }}</a>
+                    </span>
+                    <span class="block" v-if="player.lastConnection">
+                        <span class="font-bold">{{ t('players.show.last_connection') }}:</span>
+                        {{ player.lastConnection | formatTime(true) }} ({{ $moment(player.lastConnection).fromNow() }})
+                    </span>
+                </div>
+                <div class="text-sm italic mt-1">
+                    <span class="block" v-if="player.countryName" :title="t('players.show.country_detail')">
+                        <span class="font-bold">{{ t('players.show.country_name') }}:</span>
+                        {{ player.countryName }}
+                    </span>
 
-                <span class="block" v-if="player.variables && player.variables.screenWidth && player.variables.screenHeight">
-                    <span class="font-bold">{{ t('players.show.resolution') }}:</span>
-                    {{ player.variables.screenWidth + "x" + player.variables.screenHeight }}
-                </span>
-                <span class="block" v-if="player.variables && player.variables.ofFingerprint && this.perm.check(this.perm.PERM_LINKED)">
-                    <span class="font-bold">{{ t('players.show.ofFingerprint') }}:</span>
-                    <a :href="'/linked_print/' + player.licenseIdentifier" target="_blank" class="text-indigo-600 dark:text-indigo-400 !no-underline">{{ player.variables.ofFingerprint }}</a>
-                </span>
+                    <span class="block" v-if="player.variables && player.variables.timezone && player.variables.timezoneOffset">
+                        <span class="font-bold">{{ t('players.show.timezone') }}:</span>
+                        {{ player.variables.timezone }} - <span class="font-semibold">{{ playerTime }}</span>
+                    </span>
+
+                    <span class="block" v-if="player.variables && player.variables.screenWidth && player.variables.screenHeight">
+                        <span class="font-bold">{{ t('players.show.resolution') }}:</span>
+                        {{ player.variables.screenWidth + "x" + player.variables.screenHeight }}
+                    </span>
+                    <span class="block" v-if="player.variables && player.variables.ofFingerprint && this.perm.check(this.perm.PERM_LINKED)">
+                        <span class="font-bold">{{ t('players.show.ofFingerprint') }}:</span>
+                        <a :href="'/linked_print/' + player.licenseIdentifier" target="_blank" class="text-indigo-600 dark:text-indigo-400 !no-underline">{{ player.variables.ofFingerprint }}</a>
+                    </span>
+                </div>
             </div>
         </portal>
 
@@ -1478,7 +1492,8 @@ export default {
 
             hwidBan: null,
 
-            isLoading: false
+            isLoading: false,
+            showingMoreInfo: false
         }
     },
     computed: {

@@ -858,8 +858,11 @@
             "add_soft_ban": "Soft Ban",
             "aliases": "Aliases",
             "original_name": "Original Name",
+            "more_info": "More Info",
+            "less_info": "Less Info",
 			"metadata": "Status Info",
             "enabled_commands": "Enabled Commands",
+            "last_connection": "Last Connected",
             "average_ping": "Average ping to the server in milliseconds.",
             "average_fps": "Average fps (tracked once a second).",
 
