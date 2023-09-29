@@ -1493,7 +1493,7 @@ export default {
             hwidBan: null,
 
             isLoading: false,
-            showingMoreInfo: !!autoExpandCollapsed
+            showingMoreInfo: false
         }
     },
     computed: {
