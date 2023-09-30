@@ -740,78 +740,83 @@
 
             <!-- Issuing -->
             <div class="p-8 mb-10 bg-gray-100 rounded dark:bg-dark-secondary" v-if="isBanning">
-                <div class="mb-8 space-y-5">
-                    <h2 class="text-2xl font-semibold">
-                        {{ t('players.ban.issuing') }}
-                    </h2>
-                    <p class="text-gray-900 dark:text-gray-100" v-html="local.ban_warning"></p>
-                </div>
-                <form class="space-y-6" @submit.prevent="submitBan">
-                    <!-- Deciding if ban is temporary -->
-                    <div class="flex items-center space-x-3">
-                        <input class="block p-3 bg-gray-200 rounded shadow" type="checkbox" id="tempban" name="tempban" v-model="isTempBanning">
-                        <label class="italic font-semibold" for="tempban">
-                            {{ t('players.ban.temporary') }}
-                        </label>
+                <template v-if="isBanLoading">
+                    <img src="/images/banned.webp" class="h-72" style="image-rendering: pixelated" />
+                </template>
+                <template v-else>
+                    <div class="mb-8 space-y-5">
+                        <h2 class="text-2xl font-semibold">
+                            {{ t('players.ban.issuing') }}
+                        </h2>
+                        <p class="text-gray-900 dark:text-gray-100" v-html="local.ban_warning"></p>
                     </div>
-
-                    <!-- Expiration -->
-                    <div class="flex flex-wrap" v-if="isTempBanning">
-                        <div class="flex items-center space-x-3 w-full mb-3">
-                            <input class="block p-3 bg-gray-200 rounded shadow" type="checkbox" id="tempselect" v-model="isTempSelect">
-                            <label class="italic font-semibold" for="tempselect">
-                                {{ t('players.ban.temp-select') }}
+                    <form class="space-y-6" @submit.prevent="submitBan">
+                        <!-- Deciding if ban is temporary -->
+                        <div class="flex items-center space-x-3">
+                            <input class="block p-3 bg-gray-200 rounded shadow" type="checkbox" id="tempban" name="tempban" v-model="isTempBanning">
+                            <label class="italic font-semibold" for="tempban">
+                                {{ t('players.ban.temporary') }}
                             </label>
                         </div>
 
-                        <div class="w-full" v-if="isTempSelect">
-                            <label class="italic font-semibold block mb-1">
-                                {{ t('players.ban.expiration') }}
-                            </label>
-                            <div class="flex items-center">
-                                <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow mr-1" type="date" id="expireDate" name="expireDate" step="any" :min="$moment().format('YYYY-MM-DD')" v-model="form.ban.expireDate" required>
-                                <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow" type="time" id="expireTime" name="expireTime" step="any" v-model="form.ban.expireTime" required>
+                        <!-- Expiration -->
+                        <div class="flex flex-wrap" v-if="isTempBanning">
+                            <div class="flex items-center space-x-3 w-full mb-3">
+                                <input class="block p-3 bg-gray-200 rounded shadow" type="checkbox" id="tempselect" v-model="isTempSelect">
+                                <label class="italic font-semibold" for="tempselect">
+                                    {{ t('players.ban.temp-select') }}
+                                </label>
+                            </div>
+
+                            <div class="w-full" v-if="isTempSelect">
+                                <label class="italic font-semibold block mb-1">
+                                    {{ t('players.ban.expiration') }}
+                                </label>
+                                <div class="flex items-center">
+                                    <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow mr-1" type="date" id="expireDate" name="expireDate" step="any" :min="$moment().format('YYYY-MM-DD')" v-model="form.ban.expireDate" required>
+                                    <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow" type="time" id="expireTime" name="expireTime" step="any" v-model="form.ban.expireTime" required>
+                                </div>
+                            </div>
+
+                            <div class="mr-1" v-if="!isTempSelect">
+                                <label class="italic font-semibold block mb-1">
+                                    {{ t('players.ban.temp-value') }}
+                                </label>
+                                <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow min-w-input" type="number" min="1" id="ban-value" step="1" required>
+                            </div>
+                            <div v-if="!isTempSelect">
+                                <label class="italic font-semibold block mb-1">
+                                    {{ t('players.ban.temp-type') }}
+                                </label>
+                                <select class="px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 min-w-input" id="ban-type">
+                                    <option value="hour">{{ t('players.ban.hour') }}</option>
+                                    <option value="day">{{ t('players.ban.day') }}</option>
+                                    <option value="week">{{ t('players.ban.week') }}</option>
+                                    <option value="month">{{ t('players.ban.month') }}</option>
+                                </select>
                             </div>
                         </div>
 
-                        <div class="mr-1" v-if="!isTempSelect">
-                            <label class="italic font-semibold block mb-1">
-                                {{ t('players.ban.temp-value') }}
+                        <!-- Reason -->
+                        <div>
+                            <label class="italic font-semibold block mb-1" for="reason">
+                                {{ t('players.ban.reason') }}
                             </label>
-                            <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow min-w-input" type="number" min="1" id="ban-value" step="1" required>
+                            <textarea class="block w-full p-5 bg-gray-200 dark:bg-gray-600 rounded shadow" id="reason" name="reason" rows="5" :placeholder="player.playerName + ' did a big oopsie.'" v-model="form.ban.reason"></textarea>
                         </div>
-                        <div v-if="!isTempSelect">
-                            <label class="italic font-semibold block mb-1">
-                                {{ t('players.ban.temp-type') }}
-                            </label>
-                            <select class="px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 min-w-input" id="ban-type">
-                                <option value="hour">{{ t('players.ban.hour') }}</option>
-                                <option value="day">{{ t('players.ban.day') }}</option>
-                                <option value="week">{{ t('players.ban.week') }}</option>
-                                <option value="month">{{ t('players.ban.month') }}</option>
-                            </select>
+
+                        <!-- Buttons -->
+                        <div class="flex items-center space-x-3">
+                            <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600" type="submit">
+                                <i class="mr-1 fas fa-gavel"></i>
+                                {{ t('players.ban.do_ban') }}
+                            </button>
+                            <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" type="button" @click="isBanning = false">
+                                {{ t('global.cancel') }}
+                            </button>
                         </div>
-                    </div>
-
-                    <!-- Reason -->
-                    <div>
-                        <label class="italic font-semibold block mb-1" for="reason">
-                            {{ t('players.ban.reason') }}
-                        </label>
-                        <textarea class="block w-full p-5 bg-gray-200 dark:bg-gray-600 rounded shadow" id="reason" name="reason" rows="5" :placeholder="player.playerName + ' did a big oopsie.'" v-model="form.ban.reason"></textarea>
-                    </div>
-
-                    <!-- Buttons -->
-                    <div class="flex items-center space-x-3">
-                        <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600" type="submit">
-                            <i class="mr-1 fas fa-gavel"></i>
-                            {{ t('players.ban.do_ban') }}
-                        </button>
-                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" type="button" @click="isBanning = false">
-                            {{ t('global.cancel') }}
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                </template>
             </div>
         </div>
 
@@ -1389,7 +1394,6 @@ export default {
                 ban: this.localizeBan(),
                 ban_warning: this.t('players.ban.ban_warning')
             },
-            isBanning: false,
             isKicking: false,
             isStaffPM: false,
             isTempBanning: false,
@@ -1427,6 +1431,9 @@ export default {
                 total: 0,
                 linked: []
             },
+
+            isBanning: false,
+            isBanLoading: false,
 
             isSchedulingUnban: false,
             scheduledUnbanDate: false,
@@ -2079,12 +2086,17 @@ export default {
                 }
             }
 
+            if (this.isBanLoading) return;
+
+            this.isBanLoading = true;
+
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/bans', { ...this.form.ban, expire });
 
             this.local.ban = this.localizeBan();
 
             // Reset.
+            this.isBanLoading = false;
             this.isBanning = false;
             this.isTempBanning = false;
             this.isTempSelect = true;
