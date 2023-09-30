@@ -8,6 +8,11 @@ for directory in ./envs/*/; do
 
     cluster="$(basename -- $directory)"
 
+    # Skip the "auth" cluster
+    if [ "$cluster" = "auth" ]; then
+        continue
+    fi
+
     echo "Running $cluster cronjobs"
 
     php artisan cron --cluster=$cluster
