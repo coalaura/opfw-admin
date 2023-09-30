@@ -19,7 +19,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\BlacklistController;
 use App\Http\Controllers\CasinoLogController;
-use App\Http\Controllers\CronjobController;
 use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\GraphController;
@@ -282,11 +281,6 @@ Route::group(['middleware' => ['staff', 'session'], 'prefix' => 'api'], function
 
     // Overwatch.
     Route::get('randomScreenshot', [OverwatchController::class, 'getRandomScreenshot']);
-});
-
-Route::group(['prefix' => 'cron'], function () {
-    // General purpose cronjobs
-    Route::get('general', [CronjobController::class, 'generalCronjob']);
 });
 
 Route::group(['prefix' => 'debug', 'middleware' => ['session']], function () {
