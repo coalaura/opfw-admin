@@ -13,10 +13,8 @@ class CronjobController extends Controller
 {
     /**
      * General purpose cronjobs
-     *
-     * @return Response
      */
-    public function generalCronjob(): Response
+    public function generalCronjob()
     {
         $start = microtime(true);
         echo "Getting log actions...";
@@ -41,8 +39,6 @@ class CronjobController extends Controller
         Ban::query()->where('scheduled_unban', '<=', time())->delete();
 
         echo $this->stopTime($start);
-
-        return (new Response('Success', 200))->header('Content-Type', 'text/plain');
     }
 
     private function stopTime($time): string {

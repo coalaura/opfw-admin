@@ -32,6 +32,7 @@ class Warning extends Model
      * @var array
      */
     protected $fillable = [
+        'player_id',
         'issuer_id',
         'message',
         'warning_type',

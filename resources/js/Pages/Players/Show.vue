@@ -1045,7 +1045,7 @@
                                     <h4>
                                         <span v-html="getWarningTypeIcon(warning.warningType)"></span>
                                         -
-                                        {{ warning.issuer.playerName }}
+                                        {{ warning.issuer.licenseIdentifier ? warning.issuer.playerName : t('global.system') }}
                                     </h4>
                                 </div>
                                 <div class="flex items-center">
@@ -2153,7 +2153,7 @@ export default {
             });
         },
         isAutomatedWarning(warning) {
-            return warning.includes('This warning was generated automatically') || warning === 'I removed this players ban.' || warning.startsWith('I scheduled the removal of this players ban for');
+            return warning.includes('This warning was generated automatically') || warning.startsWith('I scheduled the removal of this players ban for') || warning.startsWith('I removed this players ban.');
         },
         formatWarning(warning) {
             warning = warning.replace(/(https?:\/\/(.+?)\/players\/)?(steam:\w{15})/gmi, (full, _ignore, host, steam) => {

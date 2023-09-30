@@ -1,11 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
-use Dotenv\Dotenv;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Artisan;
+use App\Ban;
+use App\Helpers\CacheHelper;
+use App\Helpers\SessionHelper;
 use App\Session;
+use App\Warning;
+use Dotenv\Dotenv;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,273 +20,321 @@ use App\Session;
 | commands. Each Closure is bound to a command instance allowing a
 | simple approach to interacting with each command"s IO methods.
 |
-*/
+ */
 
 function runQuery(string $cluster, string $query)
 {
-	$dir = realpath(__DIR__ . "/../envs/" . $cluster);
-	$env = $dir . "/.env";
+    $dir = realpath(__DIR__ . "/../envs/" . $cluster);
+    $env = $dir . "/.env";
 
-	if (empty($env) || !file_exists($env)) {
-		return [false, "Failed to read .env file"];
-	}
+    if (empty($env) || !file_exists($env)) {
+        return [false, "Failed to read .env file"];
+    }
 
-	$contents = file_get_contents($env);
+    $contents = file_get_contents($env);
 
-	$dotenv = Dotenv::createImmutable($dir, ".env");
-	$envData = $dotenv->parse($contents);
+    $dotenv  = Dotenv::createImmutable($dir, ".env");
+    $envData = $dotenv->parse($contents);
 
-	$dbName = "cluster_" . $cluster;
+    $dbName = "cluster_" . $cluster;
 
-	Config::set("database.connections." . $dbName, [
-		"driver" => $envData["DB_CONNECTION"],
-		"host" => $envData["DB_HOST"],
-		"port" => $envData["DB_PORT"],
-		"database" => $envData["DB_DATABASE"],
-		"username" => $envData["DB_USERNAME"],
-		"password" => $envData["DB_PASSWORD"]
-	]);
+    Config::set("database.connections." . $dbName, [
+        "driver"   => $envData["DB_CONNECTION"],
+        "host"     => $envData["DB_HOST"],
+        "port"     => $envData["DB_PORT"],
+        "database" => $envData["DB_DATABASE"],
+        "username" => $envData["DB_USERNAME"],
+        "password" => $envData["DB_PASSWORD"],
+    ]);
 
-	try {
+    try {
         DB::connection($dbName)->getPdo();
     } catch (\Exception $e) {
         return [false, "Failed to connect to database: " . $e->getMessage()];
     }
 
-	$affected = 0;
+    $affected = 0;
 
-	if (Str::startsWith($query, "SELECT")) {
-		$affected = DB::connection($dbName)->select($query);
+    if (Str::startsWith($query, "SELECT")) {
+        $affected = DB::connection($dbName)->select($query);
 
-		$affected = count($affected);
-	} else if (Str::startsWith($query, "UPDATE")) {
-		$affected = DB::connection($dbName)->update($query);
-	} else if (Str::startsWith($query, "INSERT")) {
-		$affected = DB::connection($dbName)->insert($query);
-	} else if (Str::startsWith($query, "DELETE")) {
-		$affected = DB::connection($dbName)->delete($query);
-	} else {
-		return [false, "Unknown query type"];
-	}
+        $affected = count($affected);
+    } else if (Str::startsWith($query, "UPDATE")) {
+        $affected = DB::connection($dbName)->update($query);
+    } else if (Str::startsWith($query, "INSERT")) {
+        $affected = DB::connection($dbName)->insert($query);
+    } else if (Str::startsWith($query, "DELETE")) {
+        $affected = DB::connection($dbName)->delete($query);
+    } else {
+        return [false, "Unknown query type"];
+    }
 
-	return [true, "Affected " . $affected . " rows"];
+    return [true, "Affected " . $affected . " rows"];
+}
+
+function stopTime($time): string
+{
+    return round(microtime(true) - $time, 2) . "s" . PHP_EOL;
 }
 
 // UPDATE `inventories` SET `item_name` = "weapon_addon_hk416" WHERE `item_name` = "weapon_addon_m4"
-Artisan::command("run-query", function() {
-	$query = trim($this->ask("SQL Query"));
+Artisan::command("run-query", function () {
+    $query = trim($this->ask("SQL Query"));
 
-	if (empty($query)) {
-		$this->error("Query is empty");
+    if (empty($query)) {
+        $this->error("Query is empty");
 
-		return;
-	}
+        return;
+    }
 
-	$this->info("Iterating through all clusters...");
+    $this->info("Iterating through all clusters...");
 
-	$dir = __DIR__ . "/../envs";
+    $dir = __DIR__ . "/../envs";
 
-	$clusters = array_diff(scandir($dir), [".", ".."]);
+    $clusters = array_diff(scandir($dir), [".", ".."]);
 
-	chdir(__DIR__ . "/..");
+    chdir(__DIR__ . "/..");
 
-	foreach ($clusters as $cluster) {
-		$cluster = trim($cluster);
+    foreach ($clusters as $cluster) {
+        $cluster = trim($cluster);
 
-		$path = $dir . "/" . $cluster;
+        $path = $dir . "/" . $cluster;
 
-		if (empty($cluster) || !is_dir($path)) {
-			continue;
-		}
+        if (empty($cluster) || !is_dir($path)) {
+            continue;
+        }
 
-		$this->info("Running query on cluster `" . $cluster . "`...");
+        $this->info("Running query on cluster `" . $cluster . "`...");
 
-		$result = runQuery($cluster, $query);
+        $result = runQuery($cluster, $query);
 
-		if (!$result[0]) {
-			$this->error(" - " . $result[1]);
-		} else {
-			$this->comment(" - " . $result[1]);
-		}
-	}
+        if (!$result[0]) {
+            $this->error(" - " . $result[1]);
+        } else {
+            $this->comment(" - " . $result[1]);
+        }
+    }
 
-	return;
+    return;
 })->describe("Runs a query on all clusters.");
 
-Artisan::command("migrate-trunks", function() {
-	$this->info(CLUSTER . " Loading inventories...");
+Artisan::command("cron", function () {
+    $this->info(CLUSTER . " Running cronjobs...");
 
-	$inventories = DB::select("SELECT * FROM inventories WHERE inventory_name LIKE 'trunk-%' GROUP BY inventory_name");
+    $start = microtime(true);
+    echo "Getting log actions...";
+    CacheHelper::getLogActions(true);
 
-	$this->info(CLUSTER . " Parsing " . sizeof($inventories) . " inventories...");
+    echo stopTime($start);
 
-	$ids = [];
+    $start = microtime(true);
+    echo "Cleaning up sessions...";
+    SessionHelper::cleanup();
 
-	$vehicleInventories = [];
+    echo stopTime($start);
 
-	$npcs = 0;
+    $start = microtime(true);
+    echo "Removing scheduled bans...";
+	$time = time();
 
-	foreach ($inventories as $inventory) {
-		$name = $inventory->inventory_name;
+    $bans = Ban::query()
+        ->where('scheduled_unban', '<=', $time)
+        ->select(["user_id"])
+        ->leftJoin("users", "license_identifier", "=", "identifier")
+        ->get();
 
-		$parts = explode("-", $name);
+    foreach ($bans as $ban) {
+        $id = $ban->user_id;
 
-		if (sizeof($parts) !== 3) {
-			continue;
-		}
+        if ($id) {
+            Warning::query()->create([
+                'player_id'      => $id,
+                'warning_type'   => 'system',
+                'can_be_deleted' => 0,
+                'message'        => 'I removed this players ban. (Scheduled unban)',
+            ]);
+        }
+    }
 
-		if (preg_match('/[^0-9]/', $parts[2])) {
-			$npcs++;
+    Ban::query()->where('scheduled_unban', '<=', $time)->delete();
 
-			continue;
-		}
+    echo stopTime($start);
+})->describe("Runs all cronjobs for a certain cluster.");
 
-		$class = intval($parts[1]);
-		$id = intval($parts[2]);
+Artisan::command("migrate-trunks", function () {
+    $this->info(CLUSTER . " Loading inventories...");
 
-		$vehicleInventories[$id] = [
-			"class" => $class,
-			"name" => $name
-		];
+    $inventories = DB::select("SELECT * FROM inventories WHERE inventory_name LIKE 'trunk-%' GROUP BY inventory_name");
 
-		$ids[] = $id;
-	}
+    $this->info(CLUSTER . " Parsing " . sizeof($inventories) . " inventories...");
 
-	$this->info(CLUSTER . " Skipped $npcs npc trunks...");
+    $ids = [];
 
-	if (empty($ids)) {
-		$this->info(CLUSTER . " No inventories to migrate...");
+    $vehicleInventories = [];
 
-		return;
-	}
+    $npcs = 0;
 
-	$this->info(CLUSTER . " Loading " . sizeof($ids) . " vehicles...");
+    foreach ($inventories as $inventory) {
+        $name = $inventory->inventory_name;
 
-	$vehicles = DB::table("character_vehicles")->whereIn("vehicle_id", $ids)->get();
+        $parts = explode("-", $name);
 
-	$alphaModels = [
-		-2137348917 => "phantom",
-		-956048545 => "taxi",
-		1162065741 => "rumpo",
-		1353720154 => "flatbed"
-	];
+        if (sizeof($parts) !== 3) {
+            continue;
+        }
 
-	$classes = json_decode(file_get_contents(__DIR__ . "/../helpers/vehicle_classes.json"), true);
+        if (preg_match('/[^0-9]/', $parts[2])) {
+            $npcs++;
 
-	$this->info(CLUSTER . " Parsing " . sizeof($vehicles) . " vehicles...");
+            continue;
+        }
 
-	$update = [];
-	$alpha = [];
+        $class = intval($parts[1]);
+        $id    = intval($parts[2]);
 
-	$skipped = 0;
+        $vehicleInventories[$id] = [
+            "class" => $class,
+            "name"  => $name,
+        ];
 
-	foreach($vehicles as $vehicle) {
-		$id = intval($vehicle->vehicle_id);
-		$model = $vehicle->model_name;
+        $ids[] = $id;
+    }
 
-		if (!isset($vehicleInventories[$id])) {
-			$skipped++;
+    $this->info(CLUSTER . " Skipped $npcs npc trunks...");
 
-			continue;
-		}
+    if (empty($ids)) {
+        $this->info(CLUSTER . " No inventories to migrate...");
 
-		if (is_numeric($model)) {
-			$model = intval($model);
+        return;
+    }
 
-			$model = $alphaModels[$model] ?? null;
+    $this->info(CLUSTER . " Loading " . sizeof($ids) . " vehicles...");
 
-			if (!$model) {
-				$skipped++;
+    $vehicles = DB::table("character_vehicles")->whereIn("vehicle_id", $ids)->get();
 
-				continue;
-			}
+    $alphaModels = [
+        -2137348917 => "phantom",
+        -956048545  => "taxi",
+        1162065741  => "rumpo",
+        1353720154  => "flatbed",
+    ];
 
-			$alpha[intval($vehicle->model_name)] = $model;
-		}
+    $classes = json_decode(file_get_contents(__DIR__ . "/../helpers/vehicle_classes.json"), true);
 
-		$expected = $classes[$model] ?? null;
+    $this->info(CLUSTER . " Parsing " . sizeof($vehicles) . " vehicles...");
 
-		if (!$expected && $expected !== 0) {
-			$expected = 22;
-		}
+    $update = [];
+    $alpha  = [];
 
-		$wasName = $vehicleInventories[$id]["name"];
-		$isName = "trunk-" . $expected . "-" . $id;
+    $skipped = 0;
 
-		if ($wasName === $isName) {
-			continue;
-		}
+    foreach ($vehicles as $vehicle) {
+        $id    = intval($vehicle->vehicle_id);
+        $model = $vehicle->model_name;
 
-		$update[$wasName] = $isName;
-	}
+        if (!isset($vehicleInventories[$id])) {
+            $skipped++;
 
-	if ($skipped > 0) {
-		$this->info(CLUSTER . " Skipped $skipped vehicles...");
-	}
+            continue;
+        }
 
-	if (!empty($alpha)) {
-		if ($this->confirm(CLUSTER . " Found " . sizeof($alpha) . " alpha model hashes, do you want to update them?", false)) {
-			foreach ($alpha as $old => $new) {
-				$this->info(CLUSTER . " Updating alpha hash $old to $new...");
+        if (is_numeric($model)) {
+            $model = intval($model);
 
-				DB::update("UPDATE character_vehicles SET model_name = ? WHERE model_name = ?", [$new, $old]);
-			}
-		}
-	}
+            $model = $alphaModels[$model] ?? null;
 
-	$size = sizeof($update);
+            if (!$model) {
+                $skipped++;
 
-	if ($size > 0) {
-		if (!$this->confirm(CLUSTER . " Found $size affected inventories, continue?", false)) {
-			$this->info(CLUSTER . " Aborted!");
+                continue;
+            }
 
-			return;
-		}
+            $alpha[intval($vehicle->model_name)] = $model;
+        }
 
-		$this->info(CLUSTER . " Updating $size inventories...");
+        $expected = $classes[$model] ?? null;
 
-		$index = 1;
+        if (!$expected && $expected !== 0) {
+            $expected = 22;
+        }
 
-		foreach($update as $was => $is) {
-			echo "$was ($index/$size)          \r";
+        $wasName = $vehicleInventories[$id]["name"];
+        $isName  = "trunk-" . $expected . "-" . $id;
 
-			DB::update("UPDATE inventories SET inventory_name = ? WHERE inventory_name = ?", [$is, $was]);
+        if ($wasName === $isName) {
+            continue;
+        }
 
-			$index++;
-		}
+        $update[$wasName] = $isName;
+    }
 
-		$this->info(CLUSTER . " Finished updating $size inventories.                    ");
-	} else {
-		$this->info(CLUSTER . " No inventories to update.");
-	}
+    if ($skipped > 0) {
+        $this->info(CLUSTER . " Skipped $skipped vehicles...");
+    }
 
-	return;
+    if (!empty($alpha)) {
+        if ($this->confirm(CLUSTER . " Found " . sizeof($alpha) . " alpha model hashes, do you want to update them?", false)) {
+            foreach ($alpha as $old => $new) {
+                $this->info(CLUSTER . " Updating alpha hash $old to $new...");
+
+                DB::update("UPDATE character_vehicles SET model_name = ? WHERE model_name = ?", [$new, $old]);
+            }
+        }
+    }
+
+    $size = sizeof($update);
+
+    if ($size > 0) {
+        if (!$this->confirm(CLUSTER . " Found $size affected inventories, continue?", false)) {
+            $this->info(CLUSTER . " Aborted!");
+
+            return;
+        }
+
+        $this->info(CLUSTER . " Updating $size inventories...");
+
+        $index = 1;
+
+        foreach ($update as $was => $is) {
+            echo "$was ($index/$size)          \r";
+
+            DB::update("UPDATE inventories SET inventory_name = ? WHERE inventory_name = ?", [$is, $was]);
+
+            $index++;
+        }
+
+        $this->info(CLUSTER . " Finished updating $size inventories.                    ");
+    } else {
+        $this->info(CLUSTER . " No inventories to update.");
+    }
+
+    return;
 })->describe("Update all trunks to have the correct vehicle class.");
 
-Artisan::command("clear:cache", function() {
-	$this->info(CLUSTER . " Clearing caches...");
+Artisan::command("clear:cache", function () {
+    $this->info(CLUSTER . " Clearing caches...");
 
-	$caches = [
-		"cache:clear",
-		"view:clear",
-		"config:clear",
-		"event:clear",
-		"route:clear"
-	];
+    $caches = [
+        "cache:clear",
+        "view:clear",
+        "config:clear",
+        "event:clear",
+        "route:clear",
+    ];
 
-	foreach ($caches as $cache) {
-		$this->comment(" - $cache");
+    foreach ($caches as $cache) {
+        $this->comment(" - $cache");
 
-		Artisan::call($cache);
-	}
+        Artisan::call($cache);
+    }
 
-	$this->info(CLUSTER . " Done!");
+    $this->info(CLUSTER . " Done!");
 })->describe("Clear all laravel caches.");
 
-Artisan::command("clear:sessions", function() {
-	$this->info(CLUSTER . " Dropping all sessions...");
+Artisan::command("clear:sessions", function () {
+    $this->info(CLUSTER . " Dropping all sessions...");
 
-	$count = Session::query()->delete();
+    $count = Session::query()->delete();
 
-	$this->info(CLUSTER . " Dropped $count sessions.");
+    $this->info(CLUSTER . " Dropped $count sessions.");
 })->describe("Clear all laravel caches.");

@@ -25,7 +25,7 @@ class PlayerWarningController extends Controller
 
 		$msg = trim($data["message"]);
 
-		if (Str::contains($msg, "This warning was generated automatically") || $msg === "I removed this players ban." || Str::startsWith($msg, "I scheduled the removal of this players ban for")) {
+		if (Str::contains($msg, "This warning was generated automatically") || Str::startsWith($msg, "I removed this players ban.") || Str::startsWith($msg, "I scheduled the removal of this players ban for")) {
 			return backWith('error', 'Something went wrong.');
 		}
 
