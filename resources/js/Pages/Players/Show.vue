@@ -2153,7 +2153,7 @@ export default {
             });
         },
         isAutomatedWarning(warning) {
-            return warning.includes('This warning was generated automatically') || warning === 'I removed this players ban.';
+            return warning.includes('This warning was generated automatically') || warning === 'I removed this players ban.' || warning.startsWith('I scheduled the removal of this players ban for');
         },
         formatWarning(warning) {
             warning = warning.replace(/(https?:\/\/(.+?)\/players\/)?(steam:\w{15})/gmi, (full, _ignore, host, steam) => {
