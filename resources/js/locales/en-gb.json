@@ -855,7 +855,10 @@
             "schedule_unban": "Bloody Schedule",
             "remove_schedule": "Un-Bloody Schedule",
             "scheduled_unban": "Scheduled Bloody Unban",
-            "scheduled_details": "Ban's been scheduled for removal on <b>{0}</b>."
+            "scheduled_details": "Ban's been scheduled for removal on <b>{0}</b>.",
+            "more_info": "Bloody hell, Gimme All the Details",
+            "less_info": "Bugger off, I Don't Need Your Life Story",
+            "last_connection": "Last Bloody Time They Logged In"
         },
         "ban_reason": "Give us the bleedin' reason",
         "ban_time": "Expires in yonks",

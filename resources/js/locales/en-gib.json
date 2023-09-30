@@ -864,7 +864,10 @@
             "show_link_identifier": "Kisigeg fepelo vilu gotasuzu",
             "meta_minigame": "Honenaze/LGeG",
             "meta_camCords": "Zuzavum/Okuzola",
-            "meta_queue": "Bukele"
+            "meta_queue": "Bukele",
+            "more_info": "Blibber Blabber",
+            "less_info": "Wibber Wabber",
+            "last_connection": "Flibber Floober"
         },
         "ban_reason": "Efoki",
         "ban_time": "Lujemuv",

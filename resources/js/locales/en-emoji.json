@@ -855,7 +855,10 @@
             "schedule_unban": "📅",
             "remove_schedule": "⌛",
             "scheduled_unban": "⏰🚫",
-            "scheduled_details": "🚫🗓️📅📆🕒🕑{0}"
+            "scheduled_details": "🚫🗓️📅📆🕒🕑{0}",
+            "more_info": "📚🔍",
+            "less_info": "🔍",
+            "last_connection": "⏳🔗"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

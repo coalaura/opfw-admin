@@ -855,7 +855,10 @@
             "schedule_unban": "Get Me Bloody Diary",
             "remove_schedule": "Ballsed Up the Schedule",
             "scheduled_unban": "Oi, It's Gonna Get Unbanned",
-            "scheduled_details": "Ban's gettin' the boot on <b>{0}</b>."
+            "scheduled_details": "Ban's gettin' the boot on <b>{0}</b>.",
+            "more_info": "Gimme the Goss",
+            "less_info": "Aussie Info",
+            "last_connection": "Latest Hangout"
         },
         "ban_reason": "Sorry mate",
         "ban_time": "Runs out",

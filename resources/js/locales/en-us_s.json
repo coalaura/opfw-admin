@@ -855,7 +855,10 @@
             "schedule_unban": "Plan It",
             "remove_schedule": "Cancel It",
             "scheduled_unban": "Bout to Get Unbanned",
-            "scheduled_details": "The ban's gonna be lifted on <b>{0}</b>."
+            "scheduled_details": "The ban's gonna be lifted on <b>{0}</b>.",
+            "more_info": "Y'all wanna see more?",
+            "less_info": "Y'all wanna see less?",
+            "last_connection": "Last time they was connected"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

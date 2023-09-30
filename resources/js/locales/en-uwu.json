@@ -855,7 +855,10 @@
             "schedule_unban": "Schweduwe",
             "remove_schedule": "Un-Schweduw",
             "scheduled_unban": "Schweduwed Unbwan",
-            "scheduled_details": "Bwan is schweduwed fow wemovaw on <b>{0}</b>."
+            "scheduled_details": "Bwan is schweduwed fow wemovaw on <b>{0}</b>.",
+            "more_info": "Mowe Infowo OwO",
+            "less_info": "Wess Infowo UwU",
+            "last_connection": "Wast Connecte UwU"
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",
