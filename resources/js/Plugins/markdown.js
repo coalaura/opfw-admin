@@ -59,7 +59,7 @@ const Markdown = {
             });
 
             // urls
-            text = text.replace(/(?<!")(https?:\/\/[^\s]+)/gi, (match, p1, offset, string) => {
+            text = text.replace(/(?<!["=])(https?:\/\/[^\s]+)/gi, (match, p1, offset, string) => {
                 return `<a href="${p1}" target="_blank" class="text-indigo-600 dark:text-indigo-400">${p1}</a>`;
             });
 
