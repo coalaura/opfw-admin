@@ -1023,9 +1023,7 @@
                                         </div>
 
                                         <div class="flex items-center py-4">
-                                            <span class="italic text-xs text-muted dark:text-dark-muted text-left">
-                                                {{ warning.message }}
-                                            </span>
+                                            <span class="italic text-xs text-muted dark:text-dark-muted text-left">{{ warning.message }}</span>
                                         </div>
                                     </div>
 
@@ -1078,10 +1076,10 @@
 
                         <template>
                             <p class="text-muted dark:text-dark-muted" v-if="warningEditId !== warning.id">
-                                <span class="whitespace-pre-wrap" v-html="formatWarning(warning.message)"></span>
+                                <span class="whitespace-pre-wrap" v-html="markdown(formatWarning(warning.message), false)"></span>
                             </p>
 
-                            <textarea class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" rows="3" :id="'warning_' + warning.id" v-else-if="warningEditId === warning.id">{{ warning.message }}</textarea>
+                            <textarea class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-700" rows="8" :id="'warning_' + warning.id" v-else-if="warningEditId === warning.id">{{ warning.message }}</textarea>
                         </template>
                     </card>
                 </template>
@@ -2228,6 +2226,10 @@ export default {
                     if (name) {
                         text = "cdn.discordapp.com/" + name.pop();
                     }
+                }
+
+                if (text === url) {
+                    return url;
                 }
 
                 return '<a href="' + url + '" target="_blank" class="text-indigo-600 dark:text-indigo-400 ' + extraClass + '">' + text + '</a>';

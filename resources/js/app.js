@@ -5,6 +5,7 @@ import PortalVue from 'portal-vue';
 import moment from 'moment';
 import Localization from './Plugins/localization.js';
 import Theme from './Plugins/theme.js';
+import Markdown from './Plugins/markdown.js';
 import Copy from './Plugins/copy-text.js';
 import Interceptor from './Plugins/interceptor.js';
 import Socket from './Plugins/socket.js';
@@ -44,6 +45,7 @@ Vue.use(Copy);
 Vue.use(Socket);
 Vue.use(UserAgent);
 Vue.use(Dictionary);
+Vue.use(Markdown);
 Vue.use(Permissions, page);
 Vue.use(Settings, page);
 Vue.use(Toast, {
