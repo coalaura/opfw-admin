@@ -27,7 +27,7 @@
                         <div class="absolute top-1/2 left-0 w-full text-center transform -translate-y-1/2 text-xs monospace">{{ t('players.new.loading', progress) }}</div>
                     </div>
 
-                    <select class="inline-block absolute top-1/2 right-0 transform -translate-y-1/2 px-2 py-1 bg-gray-200 dark:bg-gray-600 border" v-model="sorting" @change="sortList()" v-else>
+                    <select class="inline-block absolute top-1/2 right-0 transform -translate-y-1/2 px-2 py-1 bg-gray-200 dark:bg-gray-600 border" v-model="sorting" v-else>
                         <option value="percentage">{{ t('players.new.danny_percentage') }}</option>
                         <option value="server_id">{{ t('global.server_id') }}</option>
                         <option value="playtime">{{ t('players.form.playtime') }}</option>
@@ -134,6 +134,11 @@ export default {
             required: true,
         }
     },
+    computed: {
+        playerList() {
+            return this.getPlayerList();
+        }
+    },
     data() {
         return {
             isLoading: false,
@@ -141,9 +146,7 @@ export default {
             isLoadingDictionaries: false,
             progress: 0,
 
-            sorting: 'playtime',
-
-            playerList: this.getPlayerList()
+            sorting: 'playtime'
         };
     },
     methods: {
@@ -170,9 +173,6 @@ export default {
                     color: colors[icon[1]]
                 } : false;
             }).filter(Boolean);
-        },
-        sortList() {
-            this.playerList = this.getPlayerList();
         },
         escapeHTML(text) {
             return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -249,10 +249,6 @@ export default {
             } catch (e) { }
 
             this.isLoading = false;
-
-            this.sortList();
-
-            this.$forceUpdate();
         }
     },
     async mounted() {
@@ -262,7 +258,7 @@ export default {
             this.progress = percentage;
         });
 
-        this.sortList();
+        this.$forceUpdate();
 
         setTimeout(() => {
             this.progress = 100;
