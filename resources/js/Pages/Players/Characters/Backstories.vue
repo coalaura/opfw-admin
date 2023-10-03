@@ -38,14 +38,9 @@
 
 <script>
 import Layout from '../../../Layouts/App';
-import VueCircle from 'vue2-circle-progress';
-import "chart.js";
 
 export default {
     layout: Layout,
-    components: {
-        VueCircle
-    },
     data() {
         return {
             isLoading: false,

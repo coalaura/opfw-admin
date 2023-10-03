@@ -11,8 +11,7 @@
         </portal>
 
         <portal to="actions">
-            <button class="px-4 py-2 text-sm font-semibold text-white bg-warning rounded dark:bg-dark-warning mr-1"
-                    type="button" @click="createCycle" v-if="$page.auth.player.isRoot">
+            <button class="px-4 py-2 text-sm font-semibold text-white bg-warning rounded dark:bg-dark-warning mr-1" type="button" @click="createCycle" v-if="$page.auth.player.isRoot">
                 <span v-if="isCreatingCycle">
                     <i class="mr-1 fas fa-recycle animate-spin"></i>
                     {{ t('global.loading') }}
@@ -23,10 +22,15 @@
                 </span>
             </button>
 
-            <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
-                    type="button" @click="refresh">
-                <i class="mr-1 fa fa-refresh"></i>
-                {{ t('global.refresh') }}
+            <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
+                <span v-if="!isLoading">
+                    <i class="fa fa-refresh mr-1"></i>
+                    {{ t('global.refresh') }}
+                </span>
+                <span v-else>
+                    <i class="fas fa-spinner animate-spin mr-1"></i>
+                    {{ t('global.loading') }}
+                </span>
             </button>
         </portal>
 
@@ -230,6 +234,7 @@ export default {
             }
 
             this.isLoading = true;
+
             try {
                 await this.$inertia.replace('/errors/server', {
                     data: this.filters,

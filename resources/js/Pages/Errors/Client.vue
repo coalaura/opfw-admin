@@ -12,8 +12,14 @@
 
         <portal to="actions">
             <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
-                <i class="mr-1 fa fa-refresh"></i>
-                {{ t('global.refresh') }}
+                <span v-if="!isLoading">
+                    <i class="fa fa-refresh mr-1"></i>
+                    {{ t('global.refresh') }}
+                </span>
+                <span v-else>
+                    <i class="fas fa-spinner animate-spin mr-1"></i>
+                    {{ t('global.loading') }}
+                </span>
             </button>
         </portal>
 
@@ -236,6 +242,7 @@ export default {
             }
 
             this.isLoading = true;
+
             try {
                 await this.$inertia.replace('/errors/client', {
                     data: this.filters,
