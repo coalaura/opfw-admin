@@ -256,10 +256,16 @@ export default {
             this.isLoading = false;
 
             this.sortList();
-        }
+        },
+        wait(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        },
     },
     async mounted() {
         this.isLoadingDictionaries = true;
+
+        // Wait a bit so the page can start loading
+        await this.wait(250);
 
         await this.loadDictionaries(percentage => {
             this.progress = percentage;
