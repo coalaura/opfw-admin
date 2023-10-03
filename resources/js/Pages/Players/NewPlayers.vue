@@ -244,15 +244,12 @@ export default {
                 await this.$inertia.replace('/new_players', {
                     preserveState: true,
                     preserveScroll: true,
-                    only: ['players'],
                 });
             } catch (e) { }
 
             this.isLoading = false;
 
             this.sortList();
-
-            this.$forceUpdate();
         }
     },
     async mounted() {
@@ -262,7 +259,7 @@ export default {
             this.progress = percentage;
         });
 
-        this.sortList();
+        this.refresh();
 
         setTimeout(() => {
             this.progress = 100;
