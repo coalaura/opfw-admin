@@ -59,7 +59,7 @@
                             <td class="p-3 mobile:block">
                                 {{ screenshot.details || 'N/A' }}
 
-                                <div v-if="screenshot.subtitle" class="text-xs text-gray-500 dark:text-gray-400 font-mono">{{ screenshot.subtitle }}</div>
+                                <div v-if="screenshot.subtitle" class="text-xs text-gray-500 dark:text-gray-400 font-mono ac-subtitle" v-html="screenshot.subtitle" :title="screenshot.subtitleText"></div>
                             </td>
                             <td class="p-3 mobile:block font-semibold w-32">
                                 <span class="text-red-600 dark:text-red-400" v-if="screenshot.ban">
@@ -135,6 +135,16 @@
     </div>
 </template>
 
+<style>
+.ac-subtitle {
+    filter: brightness(0.8);
+}
+
+.dark .ac-subtitle {
+    filter: brightness(1.2);
+}
+</style>
+
 <script>
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
@@ -187,7 +197,9 @@ export default {
 
                 screenshot.new = this.previousIds && !this.previousIds.includes(screenshot.id);
 
-                screenshot.subtitle = this.getSubtitle(screenshot.type, screenshot.metadata);
+                screenshot.subtitle = this.markdown(this.getSubtitle(screenshot.type, screenshot.metadata), true);
+
+                if (screenshot.subtitle) screenshot.subtitleText = screenshot.subtitle.replace(/(<([^>]+)>)/gi, "");
 
                 return screenshot;
             });
@@ -227,8 +239,15 @@ export default {
             function trace(metadata) {
                 if (!metadata.trace || !metadata.resource) return "";
 
-                const first = metadata.trace.split("\n").shift();
-                if (!first) return "";
+                const lines = metadata.trace.split("\n");
+
+                let first;
+
+                while (first = lines.shift()) {
+                    if (first.includes("spike_client")) continue;
+
+                    break;
+                }
 
                 // [Lua ] @dpemotes/Client/Emote.lua:270: in global 'OnEmotePlay'
                 return first.replace(/^\[(.+?)] (.+?:\d+:|\[C]:) in (\?|(\w+ )?'(.+?)')$/gm, (match, type, file, location) => {
@@ -270,7 +289,7 @@ export default {
                 case 'text_entry':
                     if (!metadata.textEntry || !metadata.textEntryValue) return false;
 
-                    return `${metadata.textEntry}: ${metadata.textEntryValue}`;
+                    return `${metadata.textEntry} - ${metadata.textEntryValue}` + (metadata.keyboardValue ? `: "*${metadata.keyboardValue}*"` : '');
                 case 'fast_movement':
                 case 'underground':
                 case 'distance_taze':
@@ -287,17 +306,33 @@ export default {
                 case 'illegal_native':
                     if (!metadata.resource || !metadata.native) return false;
 
-                    const args = metadata.arguments ? `(${metadata.arguments.join(', ')})` : '()';
+                    const args = (metadata.arguments || []).map(arg => {
+                        if (typeof arg === 'number') {
+                            return arg.toFixed(2);
+                        }
 
-                    return `${trace(metadata)} - ${metadata.native}${args}`;
+                        if (typeof arg === 'object') {
+                            if ('x' in arg && 'y' in arg && 'z' in arg && 'w' in arg) {
+                                return `vector4(${arg.x.toFixed(1)}, ${arg.y.toFixed(1)}, ${arg.z.toFixed(1)}, ${arg.w.toFixed(1)})`;
+                            } else if ('x' in arg && 'y' in arg && 'z' in arg) {
+                                return `vector3(${arg.x.toFixed(1)}, ${arg.y.toFixed(1)}, ${arg.z.toFixed(1)})`;
+                            } else if ('x' in arg && 'y' in arg) {
+                                return `vector2(${arg.x.toFixed(1)}, ${arg.y.toFixed(1)})`;
+                            }
+                        }
+
+                        return arg;
+                    }).join(', ');
+
+                    return `${trace(metadata)} - **${metadata.native}** (${args})`;
                 case 'illegal_global':
                     if (!metadata.resource || !metadata.variable) return false;
 
-                    return `${trace(metadata)} - ${metadata.variable}`;
+                    return `${trace(metadata)} - **${metadata.variable}**`;
                 case 'illegal_damage':
                     if (!metadata.type || metadata.weaponType === undefined || metadata.distance === undefined || metadata.damage === undefined) return false;
 
-                    return `${metadata.type}: ${metadata.weaponType} - ${metadata.damage}hp (${metadata.distance.toFixed(2)}m)`;
+                    return `${metadata.type}: ${metadata.weaponType} - **${metadata.damage}hp** (${metadata.distance.toFixed(2)}m)`;
                 case 'illegal_vehicle_modifier':
                     return metadata.modifierName;
                 case 'spawned_object':
@@ -310,6 +345,22 @@ export default {
                     if (metadata.health === undefined || metadata.maxHealth === undefined || metadata.armor === undefined || metadata.maxArmor === undefined) return false;
 
                     return `${metadata.health}/${metadata.maxHealth}hp - ${metadata.armor}/${metadata.maxArmor}ap`;
+                case 'ped_change':
+                    if (!Array.isArray(metadata.new) || !Array.isArray(metadata.old)) return false;
+
+                    const changed = metadata.new.filter((prop, index) => {
+                        if (prop === metadata.old[index]) return false;
+
+                        return true;
+                    }).length;
+
+                    return `**${changed}** propert${changed === 1 ? 'y' : 'ies'} changed`;
+                case 'advanced_noclip':
+                    if (metadata.aboveGround === undefined) return false;
+
+                    const speed = metadata.playerPed?.speed?.toFixed(2) || '0';
+
+                    return `**${metadata.aboveGround.toFixed(2)}m** AGL @ **${speed}m/s**`;
             }
 
             return false;

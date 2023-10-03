@@ -10,6 +10,8 @@ const Markdown = {
 		}
 
         Vue.prototype.markdown = function (text, escapeHTML = false) {
+            if (!text) return false;
+
             if (escapeHTML) {
                 text = escapeHtml(text);
             }
@@ -41,9 +43,6 @@ const Markdown = {
 
             // __text__
             text = text.replace(/_{2}(.+?)_{2}/gi, '<u>$1</u>');
-
-            // _text_
-            text = text.replace(/_(.+?)_/gi, '<em>$1</em>');
 
             // ~~text~~
             text = text.replace(/~{2}(.+?)~{2}/gi, '<del>$1</del>');
