@@ -250,9 +250,9 @@ export default {
 
             this.isLoading = false;
 
-            this.$nextTick(() => {
-                this.sortList();
-            });
+            this.sortList();
+
+            this.$forceUpdate();
         }
     },
     async mounted() {
