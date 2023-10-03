@@ -214,6 +214,7 @@ export default {
             this.previousIds = this.screenshots.map(screenshot => screenshot.id);
 
             this.isLoading = true;
+
             try {
                 await this.$inertia.replace('/anti_cheat', {
                     preserveState: true,
@@ -361,7 +362,13 @@ export default {
                     const speed = metadata.playerPed?.speed?.toFixed(2) || '0';
 
                     return `**${metadata.aboveGround.toFixed(2)}m** AGL @ **${speed}m/s**`;
-            }
+                case 'freecam_detected':
+                    if (metadata.playerPed === undefined) return false;
+
+                    const flags = metadata.playerPed.flags.join(', ') || 'no flags';
+
+                    return `${flags}` + (metadata.playerPed.inVehicle ? ' (in vehicle)' : '');
+                }
 
             return false;
         }
