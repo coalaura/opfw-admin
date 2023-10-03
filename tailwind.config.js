@@ -39,6 +39,7 @@ module.exports = {
                 'xs': '1px'
             },
             fontSize: {
+                'xs':  '0.85rem',
                 'xxs': '11px',
             },
             fontFamily: {
