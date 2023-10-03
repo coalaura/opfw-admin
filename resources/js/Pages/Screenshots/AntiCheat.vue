@@ -31,7 +31,7 @@
                         <th class="p-3 w-40">{{ t('screenshot.screenshot') }}</th>
                         <th class="p-3">{{ t('screenshot.note') }}</th>
                         <th class="p-3 w-32">{{ t('screenshot.ban_status') }}</th>
-                        <th class="p-3 pr-8 w-56">{{ t('screenshot.created_at') }}</th>
+                        <th class="p-3 pr-8 w-60">{{ t('screenshot.created_at') }}</th>
                     </tr>
                     <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" :class="{ 'new-entry': screenshot.new }" v-for="screenshot in list" :key="screenshot.url">
                         <template v-if="screenshot.isBan">
@@ -43,7 +43,7 @@
                             <td class="p-3 mobile:block italic text-gray-600 dark:text-gray-400 text-sm" colspan="3">
                                 Banned indefinitely for <span class="font-semibold">{{ screenshot.reason }}</span>
                             </td>
-                            <td class="p-3 pr-8 mobile:block italic text-gray-600 dark:text-gray-400 w-56">
+                            <td class="p-3 pr-8 mobile:block italic text-gray-600 dark:text-gray-400 w-60">
                                 {{ screenshot.timestamp * 1000 | formatTime(true) }}
                             </td>
                         </template>
@@ -69,8 +69,8 @@
                                     {{ t('global.not_banned') }}
                                 </span>
                             </td>
-                            <td class="p-3 mobile:block w-56 italic text-gray-600 dark:text-gray-400" v-if="screenshot.timestamp">{{ screenshot.timestamp * 1000 | formatTime(true) }}</td>
-                            <td class="p-3 pr-8 mobile:block w-56 italic text-gray-600 dark:text-gray-400" v-else>{{ t('global.unknown') }}</td>
+                            <td class="p-3 mobile:block w-60 italic text-gray-600 dark:text-gray-400" v-if="screenshot.timestamp">{{ screenshot.timestamp * 1000 | formatTime(true) }}</td>
+                            <td class="p-3 pr-8 mobile:block w-60 italic text-gray-600 dark:text-gray-400" v-else>{{ t('global.unknown') }}</td>
                         </template>
                     </tr>
                     <tr v-if="screenshots.length === 0" class="border-t border-gray-300 dark:border-gray-500">

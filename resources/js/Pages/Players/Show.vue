@@ -1159,7 +1159,7 @@
                             {{ screenshot.note || 'N/A' }}
                             <a :href="cheatDocs(screenshot.note)" target="_blank" v-if="cheatDocs(screenshot.note)" class="text-yellow-600 dark:text-yellow-400 font-semibold" :title="t('screenshot.documentation')">?</a>
                         </td>
-                        <td class="py-2 px-4 border-t w-56 mobile:block" v-if="screenshot.created_at">
+                        <td class="py-2 px-4 border-t w-60 mobile:block" v-if="screenshot.created_at">
                             {{ screenshot.created_at * 1000 | formatTime(true) }}
                         </td>
                         <td class="py-2 px-4 border-t mobile:block" v-else>{{ t('global.unknown') }}</td>
@@ -1178,7 +1178,7 @@
                     </tr>
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="log in panelLogs" :key="log.id">
                         <td class="py-2 px-4 border-t mobile:block" v-html="formatPanelLog(log.log)"></td>
-                        <td class="py-2 px-4 border-t w-56 mobile:block">{{ log.timestamp | formatTime(true) }}</td>
+                        <td class="py-2 px-4 border-t w-60 mobile:block">{{ log.timestamp | formatTime(true) }}</td>
                     </tr>
                     <tr v-if="panelLogs.length === 0">
                         <td class="py-2 px-4 text-center border-t" colspan="100%">
