@@ -224,6 +224,24 @@ export default {
         getSubtitle(type, metadata) {
             if (!type || !metadata) return false;
 
+            function trace(metadata) {
+                if (!metadata.trace || !metadata.resource) return "";
+
+                const first = metadata.trace.split("\n").shift();
+                if (!first) return "";
+
+                // [Lua ] @dpemotes/Client/Emote.lua:270: in global 'OnEmotePlay'
+                return first.replace(/^\[(.+?)] (.+?:\d+:|\[C]:) in (\?|(\w+ )?'(.+?)')$/gm, (match, type, file, location) => {
+                    if (file === '[C]:') {
+                        return `C (${metadata.resource}): ${location}`;
+                    }
+
+                    const path = metadata.resource + '/' + file.split('/').pop();
+
+                    return `${path} ${location}`;
+                });
+            }
+
             switch (type) {
                 case 'illegal_event':
                 case 'illegal_server_event':
@@ -271,11 +289,11 @@ export default {
 
                     const args = metadata.arguments ? `(${metadata.arguments.join(', ')})` : '()';
 
-                    return `${metadata.resource}: ${metadata.native}${args}`;
+                    return `${trace(metadata)} - ${metadata.native}${args}`;
                 case 'illegal_global':
                     if (!metadata.resource || !metadata.variable) return false;
 
-                    return `${metadata.resource} - ${metadata.variable}`;
+                    return `${trace(metadata)} - ${metadata.variable}`;
                 case 'illegal_damage':
                     if (!metadata.type || metadata.weaponType === undefined || metadata.distance === undefined || metadata.damage === undefined) return false;
 
@@ -288,6 +306,10 @@ export default {
                     if (!metadata.distance || !metadata.entity) return false;
 
                     return `${metadata.entity.model} (${metadata.distance.toFixed(2)}m)`;
+                case 'invalid_health':
+                    if (metadata.health === undefined || metadata.maxHealth === undefined || metadata.armor === undefined || metadata.maxArmor === undefined) return false;
+
+                    return `${metadata.health}/${metadata.maxHealth}hp - ${metadata.armor}/${metadata.maxArmor}ap`;
             }
 
             return false;
