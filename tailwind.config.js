@@ -74,12 +74,12 @@ module.exports = {
                 'screenshot':         '540px'
             },
             height: {
-                'side-close':      '40px',
-                'side-open-one':   '116px',
-                'side-open-two':   '134px',
-                'side-open-three': '180px',
-                'side-open-four':  '226px',
-                'side-open-five':  '272px',
+                'side-close':      '37px',
+                'side-open-one':   '87px',
+                'side-open-two':   '128px',
+                'side-open-three': '169px',
+                'side-open-four':  '210px',
+                'side-open-five':  '250px',
                 'max':             'calc(100vh - (210px + 120px))',
                 'inventory_slot':  '100px'
             },
