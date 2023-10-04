@@ -1,6 +1,7 @@
 <template>
     <div v-if="players.length > 0" class="pt-4 mr-4">
         <h3 class="mb-2">{{ title }} <sup>{{ players.length }}</sup></h3>
+
         <table class="text-sm font-mono font-medium">
             <tr v-for="(player, x) in players" :key="x">
                 <td class="pr-2">
@@ -12,11 +13,8 @@
                     ({{ player.source }})
                 </td>
                 <td>
-                    <a :class="'track-cid ' + color" href="#" data-popup="true" :title="t('map.track')" @click="trackServerId($event, 'server_' + player.source)">
+                    <a :class="'track-cid ' + color" href="#" data-popup="true" :title="t('map.track')" @click="track($event, player.source)">
                         {{ t('map.short.track') }}
-                    </a>
-                    <a :class="'highlight-cid ' + color" href="#" :title="t('map.do_highlight')" @click="highlightServerId($event, player.license)">
-                        {{ t('map.short.highlight') }}
                     </a>
                 </td>
             </tr>
@@ -27,12 +25,6 @@
 export default {
     name: "SimplePlayerList",
     props: {
-        trackServerId: {
-            type: Function
-        },
-        highlightServerId: {
-            type: Function
-        },
         players: {
             type: Array,
             required: true
@@ -48,6 +40,13 @@ export default {
         usePlayerName: {
             type: Boolean,
             default: false
+        }
+    },
+    methods: {
+        track(e, source) {
+            e.preventDefault();
+
+            this.$emit('track', source);
         }
     }
 }

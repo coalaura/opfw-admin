@@ -41,6 +41,28 @@ body {
     line-height: 1rem;
 }
 
+/* Hide number input arrows */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.leaflet-tl {
+    top: 10px;
+    left: 10px;
+    border-radius: 4px;
+    border: 2px solid rgba(0, 0, 0, 0.2) !important;
+    background-clip: padding-box;
+    height: 32px;
+    line-height: 30px;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
 * {
   transition-duration: 0.3s;
 }

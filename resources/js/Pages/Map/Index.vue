@@ -41,18 +41,12 @@
                     {{ t('map.historic_title') }}
                 </button>
 
-                <!-- Toggle On-Duty List -->
-                <button class="px-5 py-2 mr-3 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isShowingOnDutyList = !isShowingOnDutyList">
-                    <i class="fas fa-gavel"></i>
-                    {{ t('map.toggle_duty_list') }}
-                </button>
-
                 <!-- Play/Pause -->
-                <button class="px-5 py-2 mr-3 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isPaused = true" v-if="!isPaused && !isTimestampShowing && !isHistoricShowing">
+                <button class="px-5 py-2 mr-3 font-semibold text-white rounded bg-green-600 dark:bg-green-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isPaused = true" v-if="!isPaused && !isTimestampShowing && !isHistoricShowing">
                     <i class="fas fa-pause"></i>
                     {{ t('map.pause') }}
                 </button>
-                <button class="px-5 py-2 mr-3 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isPaused = false" v-if="isPaused && !isTimestampShowing && !isHistoricShowing">
+                <button class="px-5 py-2 mr-3 font-semibold text-white rounded bg-red-600 dark:bg-red-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isPaused = false" v-if="isPaused && !isTimestampShowing && !isHistoricShowing">
                     <i class="fas fa-play"></i>
                     {{ t('map.play') }}
                 </button>
@@ -144,7 +138,7 @@
 
         <template>
             <div class="-mt-10 flex flex-wrap">
-                <div class="w-map mr-10" id="map-wrapper">
+                <div class="w-full">
                     <div v-if="historyRange.view" class="mb-3">
                         <div class="flex">
                             <button class="px-2 py-1 mr-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary" @click="historyRangeButton(-20)">-20s
@@ -167,86 +161,16 @@
                         <p class="text-center text-sm">{{ historicDetails }}</p>
                     </div>
 
-                    <div class="w-full mb-2">
-                        <canvas width="1160" height="140" v-if="historicChart" id="historicChart"></canvas>
-                    </div>
+                    <div class="relative w-full">
+                        <div id="map" class="w-full relative h-max"></div>
 
-                    <div class="flex flex-wrap justify-between mb-2 w-map max-w-full" v-if="!historicChart && !isTimestampShowing && !isHistoricShowing">
-                        <div class="flex flex-wrap">
-                            <input type="text" class="form-control w-56 rounded border block mobile:w-full px-4 py-2 bg-gray-200 dark:bg-gray-600" :placeholder="t('map.track_placeholder')" v-model="tracking.id" />
-                            <select class="block w-44 ml-2 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded mobile:w-full mobile:m-0 mobile:mt-1" v-model="tracking.type">
-                                <option value="server_">{{ t('map.track_server') }}</option>
-                                <option value="">{{ t('map.track_license') }}</option>
-                                <option value="player_">{{ t('map.track_character') }}</option>
-                            </select>
-                            <button class="px-5 py-2 ml-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary mobile:block mobile:w-full mobile:m-0 mobile:mt-1" @click="trackId(tracking.type + tracking.id)">
-                                {{ t('map.do_track') }}
-                            </button>
-                            <button class="px-5 py-2 ml-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="stopTracking()" v-if="container.isTrackedPlayerVisible">
-                                {{ t('global.stop') }}
-                            </button>
-                        </div>
-                        <div class="flex flex-wrap">
-                            <button class="px-5 py-2 ml-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary mobile:block mobile:w-full mobile:m-0 mobile:mt-1" @click="advancedTracking = !advancedTracking" :title="advancedTracking ? t('global.enabled') : t('global.disabled')">
-                                {{ t('map.advanced_track') }}
-                                <i class="fas fa-check ml-1" v-if="advancedTracking"></i>
-                                <i class="fas fa-times ml-1" v-else></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="relative w-map max-w-full">
-                        <div id="map" class="w-map max-w-full relative h-max"></div>
-                        <pre class="bg-opacity-70 bg-white coordinate-attr absolute bottom-0 left-0 cursor-pointer z-1k" v-if="clickedCoords"><span @click="copyText($event, clickedCoords)">{{
-                            clickedCoords
-                        }}</span> / <span
-                            @click="copyText($event, coordsCommand)">{{ t('map.command') }}</span></pre>
-                        <pre class="w-map-gauge leaflet-attr bg-opacity-70 bg-white absolute bottom-attr2 right-0 z-1k p-2 text-gray-800 text-xs" v-if="advancedTracking && container.isTrackedPlayerVisible">{{ tracking.data.advanced }}</pre>
-                        <div class="w-map-gauge leaflet-attr bg-opacity-70 bg-white absolute bottom-attr right-0 z-1k px-2 pt-2 pb-1 flex" :class="{ 'hidden': !advancedTracking || !container.isTrackedPlayerVisible }" v-if="!isTimestampShowing && !isHistoricShowing">
-                            <div class="relative w-map-other-gauge">
-                                <img src="/images/height-indicator.png" style="height: 90px" alt="Height indicator" />
-                                <div class="font-bold absolute border-b-2 border-gray-700 left-8 text-gray-700 w-map-height-ind text-right text-xxs leading-3" :style="'bottom: ' + tracking.data.alt + '%;'">
-                                    {{ tracking.data.altitude }}
-                                </div>
-                            </div>
-                            <vue-speedometer class="inline-block" :value="tracking.data.speed" labelFontSize="12px" :ringWidth="20" :height="90" :width="120" startColor="#90EF90" endColor="#fa1e43" :minValue="0" :maxValue="360" :segments="4" currentValueText="${value}mph" valueTextFontSize="14px" :needleHeightRatio="0.7" />
-                        </div>
+                        <input v-if="!isTimestampShowing && !isHistoricShowing" type="number" class="absolute z-1k leaflet-tl ml-10 w-16 block px-2 font-base bg-white text-black font-semibold" :placeholder="t('map.track_placeholder')" min="0" max="65536" v-model="trackServerId" />
 
-                        <div v-if="rightClickedPlayer.id && !isTimestampShowing && !isHistoricShowing" class="absolute z-1k top-0 left-0 right-0 bottom-0 bg-black bg-opacity-70">
-                            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded">
-                                <h2 class="text-xl mb-2" v-html="rightClickedPlayer.name"></h2>
-                                <p class="text-muted dark:text-dark-muted mb-1">
-                                    <span class="font-semibold">{{ t('players.license') }}:</span>
-                                    <a :href="'/players/' + rightClickedPlayer.id" target="_blank" class="text-blue-600 dark:text-blue-400 italic">{{ rightClickedPlayer.id }}</a>
-                                </p>
-                                <p class="text-muted dark:text-dark-muted mb-3">
-                                    <span class="font-semibold">{{ t('players.name') }}:</span>
-                                    <span class="italic">{{ rightClickedPlayer.playerName }}</span>
-                                </p>
-                                <div class="flex justify-between">
-                                    <button class="px-5 py-2 mr-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary" @click="trackId(rightClickedPlayer.id)" v-if="!rightClickedPlayer.tracked">
-                                        {{ t('map.do_track') }}
-                                    </button>
-                                    <button class="px-5 py-2 mr-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger" @click="stopTracking()" v-else>
-                                        {{ t('map.stop_track') }}
-                                    </button>
-
-                                    <button class="px-5 py-2 mr-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary" @click="highlightLicense(rightClickedPlayer.id)" v-if="!(rightClickedPlayer.id in highlightedPeople)">
-                                        {{ t('map.do_highlight') }}
-                                    </button>
-                                    <button class="px-5 py-2 mr-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger" @click="stopHighlight($event, rightClickedPlayer.id)" v-else>
-                                        {{ t('map.stop_highlight') }}
-                                    </button>
-
-                                    <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" @click="rightClickedPlayer.id = null">
-                                        {{ t('global.close') }}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                        <pre class="bg-opacity-70 bg-white coordinate-attr absolute bottom-0 left-0 cursor-pointer z-1k" v-if="clickedCoords"><span @click="copyText($event, clickedCoords)">{{ clickedCoords }}</span> / <span @click="copyText($event, coordsCommand)">{{ t('map.command') }}</span></pre>
                     </div>
 
                     <!-- Map Legend -->
-                    <div class="my-2 flex flex-wrap -mx-2 justify-between text-xs w-map max-w-full">
+                    <div class="my-2 flex flex-wrap justify-between text-xs w-full">
                         <div class="mx-2">
                             <img src="/images/icons/circle.png" class="w-map-icon inline-block" alt="on foot" />
                             <span class="leading-map-icon">on foot</span>
@@ -294,58 +218,9 @@
                                     {{ t('map.invisible') }}
                                 </td>
                                 <td>
-                                    <a class="track-cid dark:text-red-400 text-red-600" href="#" :data-trackid="'server_' + player.source" data-popup="true">
+                                    <a class="track-cid dark:text-red-400 text-red-600" href="#" :data-trackid="player.source" data-popup="true">
                                         {{ t('map.short.track') }}
                                     </a>
-                                    <a class="highlight-cid dark:text-red-400 text-red-600" href="#" :data-license="player.license">{{ t('map.short.highlight') }}</a>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <!-- Highlighted Players -->
-                    <div v-if="Object.keys(highlightedPeople).length > 0 && !isTimestampShowing && !isHistoricShowing" class="pt-4 mr-4">
-                        <h3 class="mb-2">{{ t('map.highlighted_title') }}</h3>
-                        <table class="text-sm font-mono text-map-highlight font-medium">
-                            <tr v-for="(player, license) in highlightedPeople" :key="license" v-if="player !== true">
-                                <td class="pr-2">
-                                    <a target="_blank" :href="'/players/' + license">{{ player.name }}</a>
-                                </td>
-                                <td class="pr-2">
-                                    ({{ player.source }})
-                                </td>
-                                <td class="pr-2">
-                                    {{ t('map.highlighted') }}
-                                </td>
-                                <td>
-                                    <a class="track-cid" href="#" :data-trackid="'server_' + player.source" data-popup="true">
-                                        {{ t('map.short.track') }}
-                                    </a>
-                                    <a href="#" @click="stopHighlight($event, license)">{{ t('map.short.remove') }}</a>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <!-- AFK Players -->
-                    <div v-if="afkPeople.length > 0 && !isTimestampShowing && !isHistoricShowing" class="pt-4 mr-4 font-medium">
-                        <h3 class="mb-2">{{ t('map.afk_title') }}</h3>
-                        <table class="text-sm font-mono">
-                            <tr v-for="(player, x) in afkPeople" :key="x" :title="player.is_staff ? t('map.is_staff') : ''">
-                                <td class="pr-2">
-                                    <a :style="'color:' + player.color" target="_blank" :href="'/players/' + player.license">{{ player.name }}</a>
-                                </td>
-                                <td class="pr-2" :style="'color:' + player.color">
-                                    ({{ player.source }})
-                                </td>
-                                <td class="pr-2" :title="player.afk_title">
-                                    {{ t('map.afk_move', formatSeconds(player.afk)) }}
-                                </td>
-                                <td>
-                                    <a class="track-cid" :style="'color:' + player.color" href="#" @click="trackServerId($event, 'server_' + player.source)" data-popup="true">{{
-                                        t('map.short.track')
-                                    }}</a>
-                                    <a class="highlight-cid" :style="'color:' + player.color" href="#" @click="highlightServerId($event, player.license)">{{ t('map.short.highlight') }}</a>
                                 </td>
                             </tr>
                         </table>
@@ -353,11 +228,11 @@
                 </div>
 
                 <div class="flex flex-wrap" v-if="!isTimestampShowing && !isHistoricShowing">
-                    <simple-player-list v-if="isShowingOnDutyList" :title="t('map.duty_list_pd')" :players="container.on_duty.pd" color="text-map-police" :track-server-id="trackServerId" :highlight-server-id="highlightServerId"></simple-player-list>
+                    <simple-player-list :title="t('map.duty_list_pd')" :players="container.on_duty.pd" color="text-map-police" @track="track"></simple-player-list>
 
-                    <simple-player-list v-if="isShowingOnDutyList" :title="t('map.duty_list_ems')" :players="container.on_duty.ems" color="text-map-ems" :track-server-id="trackServerId" :highlight-server-id="highlightServerId"></simple-player-list>
+                    <simple-player-list :title="t('map.duty_list_ems')" :players="container.on_duty.ems" color="text-map-ems" @track="track"></simple-player-list>
 
-                    <simple-player-list :title="t('map.staff_online')" :players="container.staff" color="text-map-staff" :usePlayerName="true" :track-server-id="trackServerId" :highlight-server-id="highlightServerId"></simple-player-list>
+                    <simple-player-list :title="t('map.staff_online')" :players="container.staff" color="text-map-staff" :usePlayerName="true" @track="track"></simple-player-list>
                 </div>
             </div>
         </template>
@@ -478,25 +353,13 @@ export default {
             data: this.t('map.loading'),
             connection: null,
             isPaused: false,
-            isShowingOnDutyList: false,
             firstRefresh: true,
             clickedCoords: '',
             rawClickedCoords: null,
             coordsCommand: '',
-            afkPeople: [],
             invisiblePeople: [],
-            openPopup: null,
             isDragging: false,
-            whereAmI: null,
-            rightClickedPlayer: {
-                id: null,
-                name: null,
-                playerName: null,
-                tracked: false
-            },
             form: {
-                filters: [],
-
                 timestamp: Math.floor(Date.now() / 1000),
 
                 historic_license: '',
@@ -511,22 +374,11 @@ export default {
                 "Vehicles": L.layerGroup(),
                 "Blips": L.layerGroup(),
             },
-            tracking: {
-                id: '',
-                type: 'server_',
-                data: {
-                    speed: 0,
-                    alt: 0,
-                    altitude: '0m',
-                    advanced: 'Loading...'
-                }
-            },
+            trackServerId: "",
             lastConnectionError: null,
             lastSocketMessage: null,
             socketStart: 0,
             characters: {},
-            highlightedPeople: {},
-            advancedTracking: false,
             cayoCalibrationMode: false, // Set this to true to recalibrate the cayo perico map
 
             heatmapLayers: [],
@@ -542,8 +394,6 @@ export default {
             isHistoricShowing: false,
 
             historicDetails: '',
-
-            historicChart: false,
 
             historyRange: {
                 view: false,
@@ -574,6 +424,9 @@ export default {
             }
 
             this.historicValidLicense = true;
+        },
+        track(source) {
+            this.trackServerId = source;
         },
         async resolveHistoricLicenseDates() {
             try {
@@ -657,39 +510,6 @@ export default {
         formatSeconds(sec) {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
         },
-        stopTracking() {
-            window.location.hash = '';
-
-            this.rightClickedPlayer.id = null;
-        },
-        trackId(id) {
-            window.location.hash = id;
-            this.firstRefresh = true;
-
-            this.rightClickedPlayer.id = null;
-        },
-        addFilter(e) {
-            e.preventDefault();
-
-            this.form.filters.push('is_invisible');
-        },
-        removeFilter(e, index) {
-            e.preventDefault();
-
-            this.form.filters.splice(index, 1);
-        },
-        highlightLicense(license) {
-            this.highlightedPeople[license] = true;
-
-            this.rightClickedPlayer.id = null;
-        },
-        stopHighlight(e, license) {
-            e.preventDefault();
-
-            delete this.highlightedPeople[license];
-
-            this.rightClickedPlayer.id = null;
-        },
         humanizeMilliseconds(ms) {
             const sec = Math.round(ms / 1000);
 
@@ -718,8 +538,6 @@ export default {
                 const val = parseInt(typeof timestamp === "number" ? timestamp : $('#range-slider').val());
 
                 const pos = this.historyRange.data[val];
-
-                this.renderAltitudeChart(val);
 
                 const timezone = new Date(val * 1000).toLocaleDateString('en-US', {
                     day: '2-digit',
@@ -779,77 +597,6 @@ export default {
 
             return "#8080ff";
         },
-        renderAltitudeChart(timestamp) {
-            const fromTime = parseInt(timestamp),
-                tillTime = fromTime + 60;
-
-            const canvas = document.getElementById("historicChart");
-
-            if (canvas) {
-                let data = [],
-                    colors = [];
-
-                for (let x = fromTime; x < tillTime; x++) {
-                    const pos = this.historyRange.data[x];
-
-                    if (!pos) {
-                        data.push(0);
-
-                        continue;
-                    }
-
-                    data.push(pos.z);
-
-                    colors.push(!pos.missing ? this.getAltitudeChartColor(pos.c, pos.i, pos.f, pos.d) : '#ff4d4d')
-                }
-
-                const cWidth = canvas.width - 2,
-                    cHeight = canvas.height - 2;
-
-                const min = this.historyRange.minAltitude,
-                    max = this.historyRange.maxAltitude - min,
-                    width = cWidth / data.length;
-
-                const ctx = canvas.getContext('2d');
-
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                for (let x = 0; x < data.length; x++) {
-                    const value = data[x];
-
-                    const normalizedValue = value ? (max - (value - min)) / max : 0;
-
-                    if (x > 0) {
-                        const x2 = x * width,
-                            y2 = Math.max(
-                                Math.min(
-                                    (normalizedValue * cHeight) + 1,
-                                    canvas.height - 1),
-                                1);
-
-                        ctx.lineTo(x2, y2);
-                        ctx.closePath();
-
-                        ctx.lineWidth = 2;
-                        ctx.strokeStyle = colors[x];
-                        ctx.stroke();
-
-                        ctx.beginPath();
-                        ctx.moveTo(x2, y2);
-                    } else {
-                        const x1 = 1,
-                            y1 = value ? (normalizedValue * cHeight) + 1 : 1;
-
-                        ctx.beginPath();
-                        ctx.moveTo(x1, y1);
-                    }
-                }
-            } else {
-                setTimeout(() => {
-                    this.renderAltitudeChart(timestamp);
-                }, 100);
-            }
-        },
         async showTimestamp() {
             const timestamp = this.form.timestamp;
 
@@ -859,7 +606,7 @@ export default {
                 this.isHistoricShowing = false;
                 this.isTimestampShowing = true;
 
-                this.stopTracking();
+                this.trackServerId = "";
 
                 await this.renderTimestamp(timestamp);
             } else {
@@ -877,7 +624,7 @@ export default {
                     this.isHistoricShowing = true;
                     this.isTimestampShowing = false;
 
-                    this.stopTracking();
+                    this.trackServerId = "";
 
                     await this.renderHistory(this.form.historic_license.replace('license:', ''), fromUnix, tillUnix);
                 } else {
@@ -892,8 +639,6 @@ export default {
                 return;
             }
             this.loadingScreenStatus = this.t('map.heatmap_fetch');
-
-            this.historicChart = false;
 
             const server = this.activeServer,
                 history = await this.loadHistory(server, license, from, till);
@@ -915,8 +660,6 @@ export default {
             this.historyRange.view = false;
 
             if (history) {
-                this.historicChart = true;
-
                 $('.leaflet-control-layers-selector').each(function () {
                     if ($(this).prop('checked')) {
                         $(this).trigger('click');
@@ -1072,104 +815,6 @@ export default {
 
             return null;
         },
-        async renderNoclipBans() {
-            if (this.loadingScreenStatus) {
-                return;
-            }
-
-            this.historicChart = false;
-
-            const server = this.activeServer,
-                history = await this.loadNoclipBans(server);
-
-            this.loadingScreenStatus = this.t('map.heatmap_render');
-
-            if (this.heatmapLayers) {
-                for (let x = 0; x < this.heatmapLayers.length; x++) {
-                    this.map.removeLayer(this.heatmapLayers[x]);
-                }
-
-                if (this.historyMarker) {
-                    this.map.removeLayer(this.historyMarker);
-                }
-
-                this.heatmapLayers = [];
-            }
-
-            if (history) {
-                this.historicChart = true;
-
-                $('.leaflet-control-layers-selector').each(function () {
-                    if ($(this).prop('checked')) {
-                        $(this).trigger('click');
-                    }
-                });
-
-                Object.values(history).forEach(entry => {
-                    const coords = entry.map(pos => {
-                        const latlgn = Vector3.fromGameCoords(pos[0], pos[1], 0).toMap();
-
-                        return [latlgn.lat, latlgn.lng];
-                    });
-
-                    // random integer between 160 and 270;
-                    const color = Math.floor(Math.random() * 110) + 160;
-
-                    const line = L.polyline(coords, { color: 'hsl(' + color + ', 100%, 50%)' });
-
-                    line.addTo(this.map);
-
-                    this.heatmapLayers.push(line);
-                });
-            }
-
-            this.loadingScreenStatus = null;
-        },
-        async loadNoclipBans(server) {
-            this.loadingScreenStatus = this.t('map.bans_fetch');
-
-            try {
-                const result = await axios.get('/map/noclipBans');
-
-                if (!result.data || !result.data.status) {
-                    console.log("Failed to load noclip bans");
-
-                    return;
-                }
-
-                if (!result.data.data || result.data.data.length === 0) {
-                    console.log("No noclip bans");
-
-                    return;
-                }
-
-                const bans = result.data.data.map(ban => {
-                    ban.timestamp = this.$moment(ban.timestamp).unix();
-
-                    return ban;
-                });
-
-                this.loadingScreenStatus = this.t('map.heatmap_fetch');
-
-                const historic = await axios.post('/experimental/bans/' + server + '?token=' + this.token, {
-                    bans: bans
-                });
-
-                if (!historic.data || !historic.data.status) {
-                    console.log("Failed to load bans historic data");
-
-                    return;
-                }
-
-                const data = historic.data.data;
-
-                return data;
-            } catch (e) {
-                console.error(e);
-            }
-
-            return null;
-        },
         async loadPlayerNames(licenses) {
             try {
                 const result = await axios.post('/map/playerNames', {
@@ -1188,7 +833,6 @@ export default {
             return null;
         },
         async renderTimestamp(timestamp) {
-            this.historicChart = false;
             this.historyRange.view = false;
 
             if (this.loadingScreenStatus) {
@@ -1262,47 +906,6 @@ export default {
 
             this.loadingScreenStatus = null;
         },
-        async renderHeatMap(date) {
-            if (this.loadingScreenStatus) {
-                return;
-            }
-            this.loadingScreenStatus = this.t('map.heatmap_fetch');
-
-            const server = this.activeServer,
-                heatmap = await this.loadHeatMap(server, date);
-
-            this.loadingScreenStatus = this.t('map.heatmap_render');
-
-            if (this.heatmapLayer) {
-                this.map.removeLayer(this.heatmapLayer);
-                if (this.historyMarker) {
-                    this.map.removeLayer(this.historyMarker);
-                }
-                this.heatmapLayer = null;
-            }
-
-            this.historyRange.view = false;
-
-            if (heatmap) {
-                $('.leaflet-control-layers-selector').each(function () {
-                    if ($(this).prop('checked')) {
-                        $(this).trigger('click');
-                    }
-                });
-
-                this.heatmapLayer = L.heatLayer(heatmap, {
-                    radius: 10,
-                    minOpacity: 0.65,
-                    maxZoom: 5,
-                    max: 100,
-                    blur: 15
-                });
-
-                this.heatmapLayer.addTo(this.map);
-            }
-
-            this.loadingScreenStatus = null;
-        },
         async loadTimestamp(server, timestamp) {
             try {
                 const result = await axios.get(this.hostname(false) + '/timestamp/' + server + '/' + timestamp + '?token=' + this.token);
@@ -1327,37 +930,6 @@ export default {
                     return players;
                 } else if (result.data && !result.data.status) {
                     alert(result.data.error);
-                    console.error(result.data.error);
-                }
-            } catch (e) {
-                console.error(e);
-            }
-
-            return null;
-        },
-        async loadHeatMap(server, date) {
-            this.loadingScreenStatus = this.t('map.heatmap_fetch');
-            try {
-                const result = await axios.get(this.hostname(false) + '/history/heatmap/' + server + '/' + date + '?token=' + this.token + '&cluster=' + this.cluster);
-
-                this.loadingScreenStatus = this.t('map.heatmap_parse');
-                if (result.data && result.data.status) {
-                    let heatmap = [];
-                    for (const coords in result.data.data) {
-                        if (Object.hasOwnProperty(coords)) continue;
-                        const tmp = coords.split('/'),
-                            location = Vector3.fromGameCoords(parseInt(tmp[0]), parseInt(tmp[1]), 0).toMap();
-
-                        heatmap.push([
-                            location.lat,
-                            location.lng,
-                            result.data.data[coords]
-                        ]);
-                    }
-
-                    return heatmap;
-                } else if (result.data && !result.data.status) {
-                    console.error(result.data.error);
                 }
             } catch (e) {
                 console.error(e);
@@ -1377,13 +949,15 @@ export default {
                     }
                 });
 
+                let lastTrackedId = "";
+
                 connection.on("message", async (buffer) => {
                     try {
                         const data = await DataCompressor.GUnZIP(buffer);
 
-                        await this.renderMapData(data);
+                        await this.renderMapData(data, this.trackServerId !== lastTrackedId);
 
-                        this.firstRefresh = false;
+                        lastTrackedId = this.trackServerId;
                     } catch (e) {
                         console.error('Failed to parse socket message ', e);
                     }
@@ -1421,105 +995,54 @@ export default {
                 return "Players";
             }
         },
-        async renderMapData(data) {
+        async renderMapData(data, trackedChanged) {
             if (this.isPaused || this.isDragging || this.isTimestampShowing || this.isHistoricShowing) {
                 return;
             }
 
-            if (this.container.isTrackedPlayerVisible) {
-                this.map.dragging.disable();
-            } else {
-                this.map.dragging.enable();
-            }
+            let isActivelyTracking = false;
 
             data = DataCompressor.decompressData(data);
 
             if (data && Array.isArray(data.players)) {
                 if (this.map) {
-                    const _this = this;
+                    if (!this.selectedInstance) {
+                        this.selectedInstance = data.instance;
+                    }
 
                     this.container.updatePlayers(data.players, this, this.selectedInstance, data.instance);
 
-                    if (!this.selectedInstance) {
-                        this.selectedInstance = this.container.mainInstance;
-                    }
+                    let unknownCharacters = [];
 
-                    let unknownCharacters = [],
-                        foundTracked = false;
-
-                    this.container.eachPlayer(function (id, player) {
-                        if (window.findPlayer) {
-                            window.findPlayer(player);
-                        }
-
+                    this.container.eachPlayer((id, player) => {
                         if (!player.character) {
                             return;
                         }
 
-                        if (player.player.license === _this.myself) {
-                            _this.whereAmI = player.location.toGame();
-                        }
-
                         const characterID = player.getCharacterID();
 
-                        if (characterID && !unknownCharacters.includes(characterID) && !(characterID in _this.characters)) {
+                        if (characterID && !unknownCharacters.includes(characterID) && !(characterID in this.characters)) {
                             unknownCharacters.push(characterID);
                         }
 
-                        if (player.isTracked()) {
-                            _this.map.setView(player.location.toMap(), _this.firstRefresh ? 7 : _this.map.getZoom(), {
+                        if (!(id in this.markers)) {
+                            this.markers[id] = Player.newMarker();
+                        }
+
+                        this.markers[id] = player.updateMarker(this.markers[id], this.trackServerId, this.container.vehicles);
+
+                        this.addToLayer(this.markers[id], this.getLayer(player));
+
+                        if (this.markers[id]._icon) {
+                            this.markers[id]._icon.dataset.playerId = id;
+                        }
+
+                        if (player.player.source == this.trackServerId) {
+                            this.map.setView(player.location.toMap(), trackedChanged ? 7 : this.map.getZoom(), {
                                 duration: 0.1
                             });
 
-                            _this.tracking.data.speed = player.speed;
-
-                            const feet = Math.round(player.location.z * 3.281);
-                            _this.tracking.data.alt = (feet / 5000) * 100;
-                            _this.tracking.data.alt = _this.tracking.data.alt > 99 ? 99 : _this.tracking.data.alt;
-                            _this.tracking.data.altitude = feet + 'ft';
-
-                            let trackingInfo = [
-                                player.getTitle(),
-                                'Coords: ' + player.location.toStringGame()
-                            ];
-
-                            !player.vehicle || trackingInfo.push('Vehicle: ' + player.vehicle.model);
-
-                            if (player.afk.time > 10) {
-                                trackingInfo.push('AFK since ' + _this.$options.filters.humanizeSeconds(player.afk.time));
-                            }
-
-                            _this.tracking.data.advanced = trackingInfo.join("\n");
-
-                            if (_this.firstRefresh) {
-                                _this.openPopup = id;
-                            }
-
-                            foundTracked = true;
-                        }
-
-                        if (player.player.license in _this.highlightedPeople) {
-                            _this.highlightedPeople[player.player.license] = {
-                                name: player.character.name,
-                                source: player.player.source,
-                                cid: player.character.id
-                            };
-                        }
-
-                        if (!(id in _this.markers)) {
-                            _this.markers[id] = Player.newMarker();
-                        }
-                        _this.markers[id] = player.updateMarker(_this.markers[id], _this.highlightedPeople, _this.container.vehicles);
-
-                        _this.addToLayer(_this.markers[id], _this.getLayer(player));
-
-                        if (_this.markers[id]._icon) {
-                            _this.markers[id]._icon.dataset.playerId = id;
-                        }
-
-                        if (_this.openPopup === id) {
-                            _this.markers[id].openPopup();
-                            _this.openPopup = null;
+                            isActivelyTracking = true;
                         }
                     });
 
@@ -1534,7 +1057,6 @@ export default {
                         this.container.remove(id);
                     }
 
-                    this.afkPeople = this.container.afk;
                     this.invisiblePeople = this.container.invisible;
 
                     let unloaded = "";
@@ -1556,22 +1078,18 @@ export default {
                         this.container.stats.staff
                     ) + unloaded + '</span>';
 
-                    if (!foundTracked) {
-                        window.location.hash = '';
-                    }
-
                     if (unknownCharacters.length > 0) {
                         // Prevent it being requested twice while the other is still loading
-                        $.each(unknownCharacters, function (_, id) {
-                            _this.characters[id] = null;
+                        $.each(unknownCharacters, (_, id) => {
+                            this.characters[id] = null;
                         });
 
                         axios.post('/api/characters', {
                             ids: unknownCharacters
-                        }).then(function (result) {
+                        }).then(result => {
                             if (result.data && result.data.status) {
-                                $.each(result.data.data, function (_, ch) {
-                                    _this.characters[ch.character_id] = ch;
+                                $.each(result.data.data, (_, ch) => {
+                                    this.characters[ch.character_id] = ch;
                                 });
                             }
                         });
@@ -1593,6 +1111,12 @@ export default {
 
                     this.data += `<span class="block text-xs leading-3">${error}</span>`;
                 }
+            }
+
+            if (isActivelyTracking) {
+                this.map.dragging.disable();
+            } else {
+                this.map.dragging.enable();
             }
         },
         async buildMap() {
@@ -1705,23 +1229,6 @@ export default {
                 }, 500);
             });
 
-            $('#map').on('contextmenu', 'img.leaflet-marker-icon', function (e) {
-                e.preventDefault();
-
-                const id = $(this).data('playerId');
-
-                if (id) {
-                    const player = _this.container.get(id);
-
-                    if (player) {
-                        _this.rightClickedPlayer.id = id;
-                        _this.rightClickedPlayer.name = player.getTitle(true);
-                        _this.rightClickedPlayer.playerName = player.player.name;
-                        _this.rightClickedPlayer.tracked = player.isTracked();
-                    }
-                }
-            });
-
             this.map.addControl(new L.Control.Fullscreen());
 
             const styles = [
@@ -1735,55 +1242,21 @@ export default {
                 '.leaflet-attr {width:' + $('.leaflet-bottom.leaflet-right').width() + 'px}'
             ];
             $('#map').append('<style>' + styles.join('') + '</style>');
-        },
-        trackServerId(event, track) {
-            event.preventDefault();
-
-            if (track === 'stop') {
-                window.location.hash = '';
-            } else {
-                window.location.hash = track;
-                this.firstRefresh = true;
-
-                this.map.closePopup();
-
-                if ($(this).data('popup')) {
-                    this.openPopup = track;
-                }
-            }
-        },
-        highlightServerId(event, license) {
-            event.preventDefault();
-
-            if ($(this).hasClass('stop_highlight')) {
-                delete this.highlightedPeople[license];
-            } else {
-                this.highlightedPeople[license] = true;
-            }
         }
     },
     mounted() {
-        const _this = this;
         this.buildMap();
 
-        $(document).ready(function () {
-            $('#server').val(_this.activeServer);
+        $(document).ready(() => {
+            $('#server').val(this.activeServer);
 
-            $('#server').on('change', function () {
-                const val = $(this).val();
-
-                if (!val || val === _this.activeServer) return;
-
-                window.location.replace('/map/' + $(this).val() + window.location.hash);
-            }).trigger('change');
-
-            _this.firstRefresh = true;
-            _this.initializeMap();
+            this.firstRefresh = true;
+            this.initializeMap();
         });
 
         if (Math.round(Math.random() * 100) === 1) { // 1% chance it says fib spy satellite map
-            $(document).ready(function () {
-                $('#map_title').text(_this.t('map.spy_satellite'));
+            $(document).ready(() => {
+                $('#map_title').text(this.t('map.spy_satellite'));
             });
         }
 
@@ -1802,6 +1275,14 @@ export default {
         };
 
         window.instance = this;
+
+        const id = parseInt(window.location.hash.substring(1));
+
+        if (id) {
+            this.trackServerId = id;
+
+            window.location.hash = "";
+        }
     }
 };
 </script>

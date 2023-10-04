@@ -63,7 +63,6 @@ class DataCompressor {
             } : { x: 0, y: 0, z: 0 };
 
         return {
-            afk: this.get('a', 0),
             character: character,
             coords: coords,
             heading: coordsArray.length >= 4 ? parseFloat(coordsArray[3]) : 0.0,

@@ -271,7 +271,7 @@
                 <div class="w-px bg-white bg-opacity-30 h-full separator">&nbsp;</div>
 
                 <!-- View on Map -->
-                <a class="p-1 text-sm font-bold leading-4 text-center rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/map#' + player.licenseIdentifier" :title="t('global.view_map')" v-if="this.perm.check(this.perm.PERM_LIVEMAP) && status" target="_blank">
+                <a class="p-1 text-sm font-bold leading-4 text-center rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/map#' + status.source" :title="t('global.view_map')" v-if="status && this.perm.check(this.perm.PERM_LIVEMAP)" target="_blank">
                     <i class="fas fa-map mr-1"></i>
                     Map
                 </a>

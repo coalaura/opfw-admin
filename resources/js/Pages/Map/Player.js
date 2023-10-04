@@ -59,13 +59,6 @@ class Player {
             value: invisible && !shouldIgnoreInvisible(staffMembers, rawData, this.character)
         };
 
-        // Player is afk if they either haven't moved for 15 minutes
-        this.afk = {
-            time: rawData.afk,
-            value: rawData.afk > 15 * 60,
-            staff: this.player.isStaff
-        };
-
         this.onDuty = rawData.duty ? rawData.duty.type : 'none';
 
         this.icon = {
@@ -98,17 +91,6 @@ class Player {
         }
     }
 
-    isAFK() {
-        return !this.afk.staff && this.afk.value;
-    }
-
-    getAFKTitle() {
-        if (this.afk.value) {
-            return 'Player has not moved for more than 15 minutes.'
-        }
-        return 'Player is not considered afk.';
-    }
-
     static getPlayerID(rawData) {
         return rawData.licenseIdentifier;
     }
@@ -133,24 +115,7 @@ class Player {
         return this.character ? this.character.id : null;
     }
 
-    isTracked() {
-        const track = window.location.hash.substr(1).toLowerCase();
-
-        const isTracked = [
-            'server_' + this.player.source,
-            this.player.license.toLowerCase(),
-            this.character ? 'player_' + this.character.id : null,
-            this.vehicle && this.vehicle.plate ? 'plate_' + this.vehicle.plate.toLowerCase() : null
-        ].includes(track);
-
-        if (isTracked && track !== this.player.license) {
-            window.location.hash = this.player.license;
-        }
-
-        return isTracked;
-    }
-
-    getIcon(highlightedPeople) {
+    getIcon(trackServerId) {
         if (Bounds.calibrating) {
             return new L.Icon(
                 {
@@ -167,7 +132,7 @@ class Player {
             }
         );
 
-        if (this.player.license in highlightedPeople) {
+        if (this.player.source == trackServerId) {
             icon = new L.Icon(
                 {
                     iconUrl: '/images/icons/circle_yellow.png',
@@ -223,11 +188,9 @@ class Player {
         return icon;
     }
 
-    getZIndex(highlightedPeople) {
-        if (this.isTracked()) {
+    getZIndex(trackServerId) {
+        if (this.player.source == trackServerId) {
             return 200;
-        } else if (this.player.licnse in highlightedPeople) {
-            return 150;
         } else if (this.icon.passenger) {
             return 102;
         } else if (!this.icon.driving) {
@@ -246,10 +209,10 @@ class Player {
         return marker;
     }
 
-    updateMarker(marker, highlightedPeople, vehicles) {
+    updateMarker(marker, trackServerId, vehicles) {
         const _this = this;
 
-        marker.setIcon(this.getIcon(highlightedPeople));
+        marker.setIcon(this.getIcon(trackServerId));
         marker.setLatLng(this.location.toMap());
 
         // Reset transition for icon
@@ -313,7 +276,7 @@ class Player {
 
         marker._popup.setContent(popup);
 
-        marker.options.forceZIndex = this.getZIndex(highlightedPeople);
+        marker.options.forceZIndex = this.getZIndex(this.trackServerId);
 
         return marker;
     }

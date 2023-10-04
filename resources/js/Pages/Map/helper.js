@@ -62,9 +62,6 @@ module.exports = {
         // Hmm why are they invisible?
         return false;
     },
-    getAFKColor(time, isStaff) {
-        return isStaff ? 'rgb(16, 185, 129)' : '#' + rainbow.colourAt(time);
-    },
     replaceLast(source, what, replacement) {
         if (!source.includes(what)) {
             return source;
