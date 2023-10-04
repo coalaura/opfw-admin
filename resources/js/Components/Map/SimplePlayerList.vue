@@ -1,5 +1,5 @@
 <template>
-    <div v-if="players.length > 0" class="pt-4 mr-4">
+    <div v-if="players.length > 0">
         <h3 class="mb-2">{{ title }} <sup>{{ players.length }}</sup></h3>
 
         <table class="text-sm font-mono font-medium">

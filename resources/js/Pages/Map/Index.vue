@@ -227,12 +227,11 @@
                     </div>
                 </div>
 
-                <div class="flex flex-wrap" v-if="!isTimestampShowing && !isHistoricShowing">
-                    <simple-player-list :title="t('map.duty_list_pd')" :players="container.on_duty.pd" color="text-map-police" @track="track"></simple-player-list>
-
-                    <simple-player-list :title="t('map.duty_list_ems')" :players="container.on_duty.ems" color="text-map-ems" @track="track"></simple-player-list>
-
+                <div class="flex flex-wrap gap-5 mt-3" v-if="!isTimestampShowing && !isHistoricShowing">
                     <simple-player-list :title="t('map.staff_online')" :players="container.staff" color="text-map-staff" :usePlayerName="true" @track="track"></simple-player-list>
+
+                    <simple-player-list :title="t('map.duty_list_pd')" :players="container.on_duty.pd" color="text-map-police" @track="track"></simple-player-list>
+                    <simple-player-list :title="t('map.duty_list_ems')" :players="container.on_duty.ems" color="text-map-ems" @track="track"></simple-player-list>
                 </div>
             </div>
         </template>
