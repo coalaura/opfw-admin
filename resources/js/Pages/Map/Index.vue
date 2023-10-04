@@ -164,7 +164,11 @@
                     <div class="relative w-full">
                         <div id="map" class="w-full relative h-max"></div>
 
-                        <input v-if="!isTimestampShowing && !isHistoricShowing" type="number" class="absolute z-1k leaflet-tl ml-10 w-16 block px-2 font-base text-black font-semibold" @input="updateTrackingInfo" :placeholder="t('map.track_placeholder')" min="0" max="65536" v-model="trackServerId" :class="trackingValid ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-200'" />
+                        <input v-if="!isTimestampShowing && !isHistoricShowing" type="number" class="absolute z-1k leaflet-tl ml-12 w-16 block px-2 font-base text-black font-semibold" @input="updateTrackingInfo" :placeholder="t('map.track_placeholder')" min="0" max="65536" v-model="trackServerId" :class="trackingValid ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-200'" />
+
+                        <button class="absolute z-1k leaflet-tl ml-29 text-white bg-rose-700 hover:bg-rose-800 px-2 font-base" v-if="trackServerId" @click="trackServerId = ''">
+                            <i class="fas fa-trash"></i>
+                        </button>
 
                         <pre class="bg-opacity-70 bg-white coordinate-attr absolute bottom-0 left-0 cursor-pointer z-1k" v-if="clickedCoords"><span @click="copyText($event, clickedCoords)">{{ clickedCoords }}</span> / <span @click="copyText($event, coordsCommand)">{{ t('map.command') }}</span></pre>
                     </div>
@@ -973,7 +977,8 @@ export default {
                 return;
             }
 
-            let isActivelyTracking = false;
+            let isActivelyTracking = false,
+                trackingInfo = false;
 
             data = DataCompressor.decompressData(data);
 
@@ -1016,6 +1021,11 @@ export default {
                             this.map.setView(player.location.toMap(), trackedChanged ? 7 : this.map.getZoom(), {
                                 duration: 0.1
                             });
+
+                            // Convert m/s to mph
+                            const speed = player.speed * 2.23693629;
+
+                            trackingInfo = `${player.location.z.toFixed(1)}m at ${speed.toFixed(1)}mph`;
 
                             isActivelyTracking = true;
                         }
@@ -1093,6 +1103,12 @@ export default {
             } else {
                 this.map.dragging.enable();
             }
+
+            if (trackingInfo) {
+                $("#map .leaflet-bottom.leaflet-left").html(`<div class="leaflet-control-attribution leaflet-control italic">${trackingInfo}</div>`)
+            } else {
+                $("#map .leaflet-bottom.leaflet-left").html("");
+            }
         },
         async buildMap() {
             if (this.map) {
@@ -1109,6 +1125,7 @@ export default {
                 maxZoom: 8,
                 maxBounds: L.latLngBounds(L.latLng(0, 0), L.latLng(-256, 256))
             });
+
             this.map.attributionControl.addAttribution('map by <a href="https://github.com/twooot" target="_blank">Laura</a> <i>accurate to about 1-2m</i>');
 
             L.tileLayer("https://worryfree.host/tiles/tiles_" + Bounds.version + "/{z}/{x}/{y}.png", {

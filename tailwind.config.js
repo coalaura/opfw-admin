@@ -28,6 +28,7 @@ module.exports = {
         extend: {
             spacing: {
                 '17':   '4.25rem',
+                '29':   '7.25rem',
                 'logo': '60px',
                 'base': '24px'
             },
