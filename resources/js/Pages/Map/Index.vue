@@ -164,7 +164,7 @@
                     <div class="relative w-full">
                         <div id="map" class="w-full relative h-max"></div>
 
-                        <input v-if="!isTimestampShowing && !isHistoricShowing" type="number" class="absolute z-1k leaflet-tl ml-10 w-16 block px-2 font-base bg-white text-black font-semibold" :placeholder="t('map.track_placeholder')" min="0" max="65536" v-model="trackServerId" />
+                        <input v-if="!isTimestampShowing && !isHistoricShowing" type="number" class="absolute z-1k leaflet-tl ml-10 w-16 block px-2 font-base bg-white text-black font-semibold" @input="updateTrackingInfo" :placeholder="t('map.track_placeholder')" min="0" max="65536" v-model="trackServerId" :class="trackingValid ? 'text-green-700' : 'text-red-700'" />
 
                         <pre class="bg-opacity-70 bg-white coordinate-attr absolute bottom-0 left-0 cursor-pointer z-1k" v-if="clickedCoords"><span @click="copyText($event, clickedCoords)">{{ clickedCoords }}</span> / <span @click="copyText($event, coordsCommand)">{{ t('map.command') }}</span></pre>
                     </div>
@@ -265,17 +265,17 @@ import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
 import moment from "moment";
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import SimplePlayerList from './../../Components/Map/SimplePlayerList';
 import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-rotatedmarker";
-import 'leaflet-fullscreen';
-import 'leaflet.markercluster';
-import Modal from './../../Components/Modal';
-
+import "leaflet-fullscreen";
+import "leaflet.markercluster";
 import { io } from "socket.io-client";
+
+import Layout from './../../Layouts/App';
+import VSection from './../../Components/Section';
+import SimplePlayerList from './../../Components/Map/SimplePlayerList';
+import Modal from './../../Components/Modal';
 
 import PlayerContainer from './PlayerContainer';
 import Player from './Player';
@@ -367,7 +367,10 @@ export default {
                 "Vehicles": L.layerGroup(),
                 "Blips": L.layerGroup(),
             },
+
             trackServerId: "",
+            trackingValid: false,
+
             lastConnectionError: null,
             characters: {},
             cayoCalibrationMode: false, // Set this to true to recalibrate the cayo perico map
@@ -415,8 +418,13 @@ export default {
 
             this.historicValidLicense = true;
         },
+        updateTrackingInfo() {
+            this.trackingValid = this.trackServerId && this.container.isActive(this.trackServerId);
+        },
         track(source) {
             this.trackServerId = source;
+
+            this.updateTrackingInfo();
         },
         async resolveHistoricLicenseDates() {
             try {
@@ -977,6 +985,8 @@ export default {
 
                     this.container.updatePlayers(data.players, this, this.selectedInstance, data.instance);
 
+                    this.updateTrackingInfo();
+
                     let unknownCharacters = [];
 
                     this.container.eachPlayer((id, player) => {
@@ -1233,7 +1243,7 @@ export default {
         const id = parseInt(window.location.hash.substring(1));
 
         if (id) {
-            this.trackServerId = id;
+            this.track(id);
 
             window.location.hash = "";
         }
