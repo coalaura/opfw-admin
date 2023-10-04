@@ -245,8 +245,8 @@
             </template>
 
             <template #default>
-                <a v-for="player in container.unloadedPlayers" :href="'/players/' + player.licenseIdentifier" target="_blank" class="block text-indigo-700 dark:text-indigo-300 no-underline">
-                    [{{ player.source }}] {{ player.name }}
+                <a v-for="player in container.unloadedPlayers" :href="'/players/' + player.licenseIdentifier" target="_blank" class="block dark:text-blue-300 text-blue-500 no-underline">
+                    <b>{{ player.source }}</b> - <i>{{ player.name }}</i>
                 </a>
 
                 <span class="italic" v-if="container.unloadedPlayers.length === 0">{{ t("map.no_unloaded_players") }}</span>
@@ -297,8 +297,6 @@ import DataCompressor from "./DataCompressor";
     };
     if (global) global.include(MarkerMixin);
 })(L.Marker);
-
-window.instance = null;
 
 export default {
     layout: Layout,
@@ -1062,7 +1060,7 @@ export default {
                     let unloaded = "";
 
                     if (this.container.stats.unloaded > 0) {
-                        unloaded = `, <a href="#" class="view-unloaded text-indigo-700 dark:text-indigo-300 !no-underline">${this.t("map.data_unloaded", this.container.stats.unloaded)}</a>`;
+                        unloaded = `, <a href="#" class="view-unloaded dark:text-blue-300 text-blue-500 !no-underline">${this.t("map.data_unloaded", this.container.stats.unloaded)}</a>`;
                     } else {
                         unloaded = `, ${this.t("map.data_unloaded", 0)}`;
                     }
@@ -1273,8 +1271,6 @@ export default {
         window.renderTimestamp = (timestamp) => {
             this.renderTimestamp(timestamp);
         };
-
-        window.instance = this;
 
         const id = parseInt(window.location.hash.substring(1));
 

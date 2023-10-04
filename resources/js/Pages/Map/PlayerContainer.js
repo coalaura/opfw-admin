@@ -53,7 +53,9 @@ class PlayerContainer {
         };
         this.staff = [];
 
-        this.instances = {};
+        this.instances = {
+            [mainInstance]: 0
+        };
 
         for (let x = 0; x < rawData.length; x++) {
             rawData[x] = Player.fixData(rawData[x]);
