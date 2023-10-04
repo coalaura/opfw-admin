@@ -360,9 +360,6 @@
         "timestamp_parse": "Parsing the Bleeding Timestamp Data...",
         "timestamp_render": "Rendering the Damn Timestamp Data...",
         "bans_fetch": "Bloody fetching Ban Data...",
-        "heatmap_fetch": "Fetching Bleedin' Historic Data...",
-        "heatmap_parse": "Parsing Bleedin' Historic Data...",
-        "heatmap_render": "Rendering Data, innit...",
         "screenshot": "Bleedin' Screenshot Tool",
         "screenshot_id": "Server ID, y'prat",
         "screenshot_create": "Create a Bleedin' Screenshot",
@@ -412,7 +409,10 @@
         "area_not_inside": "not bloody inside the area",
         "advanced_track": "Fancy arse Track",
         "kick_reason": "You sat on your arse for more than {0}, ya might want to bugger off or bugger off to the character selection screen if you're gonna be away for yonks",
-        "marker": "Bollocks! Marked the bleedin' position at {0}"
+        "marker": "Bollocks! Marked the bleedin' position at {0}",
+        "historic_fetch": "Bloody fetching this ancient bollocks...",
+        "historic_parse": "Sodding parsing this useless old data...",
+        "historic_render": "Pissing about rendering this shite..."
     },
     "nav": {
         "dark": "Bleedin' Dark",

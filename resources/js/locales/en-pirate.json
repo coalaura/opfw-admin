@@ -360,9 +360,6 @@
         "timestamp_parse": "Decoding ancient timestamps...",
         "timestamp_render": "Renderin' Timestamp Data...",
         "bans_fetch": "Fetchin' Ban Data...",
-        "heatmap_fetch": "Fetchin' Historic Data...",
-        "heatmap_parse": "Parsin' Historic Data...",
-        "heatmap_render": "Renderin' Data...",
         "screenshot": "Scroll Tool",
         "screenshot_id": "Server ID",
         "screenshot_create": "Create Scroll",
@@ -412,7 +409,10 @@
         "area_not_inside": "be not within area",
         "advanced_track": "Fancy Track",
         "kick_reason": "Ye be idlin' fer more than {0}, consider leavin' the server or goin' to the character selection screen when ye need to be idlin' fer longer periods o' time",
-        "marker": "Marked spot at {0}"
+        "marker": "Marked spot at {0}",
+        "historic_fetch": "Plunderin' Historic Data...",
+        "historic_parse": "Decipherin' Historic Data...",
+        "historic_render": "Showcasing Data..."
     },
     "nav": {
         "dark": "Gloom",

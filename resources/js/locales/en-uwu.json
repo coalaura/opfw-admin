@@ -360,9 +360,6 @@
         "timestamp_parse": "Pawsing UwU Timestamp Data...",
         "timestamp_render": "Wendering Timewstamp Datawu...",
         "bans_fetch": "Fetching Ban Datawu...",
-        "heatmap_fetch": "Fetching Historic Datawu...",
-        "heatmap_parse": "Parsing Historic Datawu...",
-        "heatmap_render": "Wendering Datawu...",
         "screenshot": "Screenshot Toolwu",
         "screenshot_id": "Server IDwu",
         "screenshot_create": "Create Screenshotwu",
@@ -412,7 +409,10 @@
         "area_not_inside": "ish nyot insidey wuzzy awea",
         "advanced_track": "Advawnceed Twack",
         "kick_reason": "UwU, yuw wewe afk fow mowe than {0}, considew weaving the sewvew ow going to the chawactew sewection scween when yuw have to be afk fow wongew pewiods of time",
-        "marker": "Mawked position at {0}"
+        "marker": "Mawked position at {0}",
+        "historic_fetch": "Fetching *notices your historic data* OwO...",
+        "historic_parse": "Parsing historic *blushes* data...",
+        "historic_render": "Rendering data *giggles*..."
     },
     "nav": {
         "dark": "Dawk",

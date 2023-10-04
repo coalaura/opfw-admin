@@ -360,9 +360,6 @@
         "timestamp_parse": "Decipherin' Timestamp Data...",
         "timestamp_render": "Chuckin' in the Timestamp Data...",
         "bans_fetch": "Keen on Fetchin' Ban Data...",
-        "heatmap_fetch": "Grabbin' Historic Data...",
-        "heatmap_parse": "Decipherin' Historic Data...",
-        "heatmap_render": "Chuckin' out the Data...",
         "screenshot": "Snap Tool",
         "screenshot_id": "Server ID",
         "screenshot_create": "Create Snap",
@@ -412,7 +409,10 @@
         "area_not_inside": "ain't even close to the bloody area, mate",
         "advanced_track": "Fancy Track",
         "kick_reason": "You've been idle for more than {0}, reckon ya should bugger off or go to the character select screen if ya gonna be idle for longer",
-        "marker": "Just bloody marked that spot at {0}"
+        "marker": "Just bloody marked that spot at {0}",
+        "historic_fetch": "Gonna grab some olden info, mate...",
+        "historic_parse": "Tryin' to make sense of that good ol' data...",
+        "historic_render": "Showin' ya the goods..."
     },
     "nav": {
         "dark": "Darker than a dingo's arse",

@@ -360,9 +360,6 @@
         "timestamp_parse": "Demoda Gibber Timstat...",
         "timestamp_render": "Zibberish Zimestamp Zata...",
         "bans_fetch": "Fetching Zibberish Zan Zata...",
-        "heatmap_fetch": "Fetching Zibberish Zistoric Zata...",
-        "heatmap_parse": "Parsing Zibberish Zistoric Zata...",
-        "heatmap_render": "Zibberish Zata...",
         "screenshot": "Zibberish Zool",
         "screenshot_id": "Zerver ID",
         "screenshot_create": "Create Zibberish",
@@ -412,7 +409,10 @@
         "area_not_inside": "blamblam gibberish",
         "advanced_track": "oopoop gobbledygook",
         "kick_reason": "bop bop gibberish gibberish gibberish",
-        "marker": "doodle doodle babble babble at babble doodle"
+        "marker": "doodle doodle babble babble at babble doodle",
+        "historic_fetch": "Swizni Frablib Fetching...",
+        "historic_parse": "Glibbly Bliznart Parsing...",
+        "historic_render": "Wibbly Wobblin Data..."
     },
     "nav": {
         "dark": "booboogoo",

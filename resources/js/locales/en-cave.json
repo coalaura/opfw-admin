@@ -360,9 +360,6 @@
         "timestamp_parse": "UG UNDERSTAND SUNS DATA...",
         "timestamp_render": "Ug Rendering Uggabugga Data...",
         "bans_fetch": "Uggabugga Ban Data...",
-        "heatmap_fetch": "Uggabugga Historic Data...",
-        "heatmap_parse": "Uggabugga Historic Data...",
-        "heatmap_render": "Rendering Uggabugga...",
         "screenshot": "Uggabugga Tool",
         "screenshot_id": "Uggabugga ID",
         "screenshot_create": "Create Uggabugga",
@@ -412,7 +409,10 @@
         "area_not_inside": "is not tog area",
         "advanced_track": "Ug-ug Track",
         "kick_reason": "Ug-ga afk for og more than {0}, ugg-ugg leaving ug-ugg server og going tog character selection screen when ug-ga ug-ugg afk for longer ug-ugg uf-uf",
-        "marker": "Ugg-ugg position at {0}"
+        "marker": "Ugg-ugg position at {0}",
+        "historic_fetch": "Me go get History Evolutions...",
+        "historic_parse": "Me decipher Past Evolutions...",
+        "historic_render": "Me display the Data..."
     },
     "nav": {
         "dark": "Uk-uk",

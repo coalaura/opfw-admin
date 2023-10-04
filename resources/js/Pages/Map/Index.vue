@@ -274,8 +274,6 @@ import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-rotatedmarker";
 import 'leaflet-fullscreen';
 import 'leaflet.markercluster';
-import 'leaflet.heat';
-import VueSpeedometer from "vue-speedometer";
 import Modal from './../../Components/Modal';
 
 import { io } from "socket.io-client";
@@ -302,7 +300,6 @@ export default {
     layout: Layout,
     components: {
         VSection,
-        VueSpeedometer,
         SimplePlayerList,
         Modal,
     },
@@ -607,12 +604,12 @@ export default {
             if (this.loadingScreenStatus) {
                 return;
             }
-            this.loadingScreenStatus = this.t('map.heatmap_fetch');
+            this.loadingScreenStatus = this.t('map.historic_fetch');
 
             const server = this.activeServer,
                 history = await this.loadHistory(server, license, from, till);
 
-            this.loadingScreenStatus = this.t('map.heatmap_render');
+            this.loadingScreenStatus = this.t('map.historic_render');
 
             if (this.heatmapLayers) {
                 for (let x = 0; x < this.heatmapLayers.length; x++) {
@@ -748,11 +745,11 @@ export default {
             this.loadingScreenStatus = null;
         },
         async loadHistory(server, license, from, till) {
-            this.loadingScreenStatus = this.t('map.heatmap_fetch');
+            this.loadingScreenStatus = this.t('map.historic_fetch');
             try {
                 const result = await axios.get(this.hostname(false) + '/historic/' + server + '/' + license + '/' + from + '/' + till + '?token=' + this.token);
 
-                this.loadingScreenStatus = this.t('map.heatmap_parse');
+                this.loadingScreenStatus = this.t('map.historic_parse');
                 if (result.data && result.data.status) {
                     const data = result.data.data;
 
@@ -1233,14 +1230,6 @@ export default {
 
             this.viewingUnloadedPlayerList = true;
         });
-
-        window.renderHeatMap = (date) => {
-            this.renderHeatMap(date);
-        };
-
-        window.renderTimestamp = (timestamp) => {
-            this.renderTimestamp(timestamp);
-        };
 
         const id = parseInt(window.location.hash.substring(1));
 

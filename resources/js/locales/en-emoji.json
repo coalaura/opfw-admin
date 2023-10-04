@@ -360,9 +360,6 @@
         "timestamp_parse": "🔍 Parsing Timestamp Data...",
         "timestamp_render": "🖼️ Rendering Timestamp Data...",
         "bans_fetch": "🔄 Fetching Ban Data...",
-        "heatmap_fetch": "🔄 Fetching Historic Data...",
-        "heatmap_parse": "📚️📊 Parsing Historic Data...",
-        "heatmap_render": "🌄️📊 Rendering Data...",
         "screenshot": "📸️ Screenshot Tool",
         "screenshot_id": "🖥️ Server ID",
         "screenshot_create": "📸️ Create Screenshot",
@@ -412,7 +409,10 @@
         "area_not_inside": "📍 is ❌ 🏢",
         "advanced_track": "📈 Track",
         "kick_reason": "🚫 were ⏳ 🔭 more 🌧 than {0}, consider 🚪 the 🖥 or 🚶‍♂️ to the 🎭 selection 🔒 when 🚫 have to be ⏳ for 🌤 periods of 🕓",
-        "marker": "📍 at {0}"
+        "marker": "📍 at {0}",
+        "historic_fetch": "🔍📜📥",
+        "historic_parse": "📖🗒️📝",
+        "historic_render": "🎨📊🖼️"
     },
     "nav": {
         "dark": "🌑",
