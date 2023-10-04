@@ -272,7 +272,6 @@ import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-rotatedmarker";
 import "leaflet-fullscreen";
 import "leaflet.markercluster";
-// import "leaflet-rotate";
 import { io } from "socket.io-client";
 
 import Layout from './../../Layouts/App';
