@@ -351,7 +351,6 @@ export default {
             data: this.t('map.loading'),
             connection: null,
             isPaused: false,
-            firstRefresh: true,
             clickedCoords: '',
             rawClickedCoords: null,
             coordsCommand: '',
@@ -374,15 +373,12 @@ export default {
             },
             trackServerId: "",
             lastConnectionError: null,
-            lastSocketMessage: null,
-            socketStart: 0,
             characters: {},
             cayoCalibrationMode: false, // Set this to true to recalibrate the cayo perico map
 
             heatmapLayers: [],
             historyMarker: null,
             loadingScreenStatus: null,
-            historicCheckedLicense: false,
             historicValidLicense: false,
 
             isTimestamp: false,
@@ -505,14 +501,6 @@ export default {
 
             this.copyToClipboard(text);
         },
-        formatSeconds(sec) {
-            return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
-        },
-        humanizeMilliseconds(ms) {
-            const sec = Math.round(ms / 1000);
-
-            return this.$options.filters.humanizeSeconds(sec) + ' (' + sec + 's)';
-        },
         hostname(isSocket) {
             const isDev = window.location.hostname === 'localhost';
 
@@ -577,23 +565,6 @@ export default {
                     }
                 ));
             }
-        },
-        getAltitudeChartColor(invincible, invisible, frozen, dead) {
-            if (invincible && invisible && frozen) {
-                return "#c567e4";
-            } else if (invincible && invisible || invisible && frozen || invincible && frozen) {
-                return "#e4c567";
-            } else if (invisible) {
-                return "#a6e467";
-            } else if (invincible) {
-                return "#ff99ff";
-            } else if (frozen) {
-                return "#99ccff";
-            } else if (dead) {
-                return "#002db3";
-            }
-
-            return "#8080ff";
         },
         async showTimestamp() {
             const timestamp = this.form.timestamp;
@@ -1248,7 +1219,6 @@ export default {
         $(document).ready(() => {
             $('#server').val(this.activeServer);
 
-            this.firstRefresh = true;
             this.initializeMap();
         });
 
