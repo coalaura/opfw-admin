@@ -130,6 +130,8 @@ class PlayerContainer {
             this.players[id] = new Player(rawPlayer, this.staffMembers);
         }
 
+        this.activePlayerIDs.push(id);
+
         const player = this.players[id];
 
         const vehicle = player.getVehicleID();
@@ -177,7 +179,7 @@ class PlayerContainer {
     }
 
     isActive(id) {
-        return !!this.players[id];
+        return !!this.activePlayerIDs.find(playerID => playerID == id);
     }
 
     get(id) {
