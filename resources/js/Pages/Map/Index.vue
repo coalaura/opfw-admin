@@ -166,7 +166,7 @@
 
                         <input v-if="!isTimestampShowing && !isHistoricShowing" type="number" class="absolute z-1k leaflet-tl ml-12 w-16 block px-2 font-base text-black font-semibold" @input="updateTrackingInfo" :placeholder="t('map.track_placeholder')" min="0" max="65536" v-model="trackServerId" :class="trackingValid ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-200'" />
 
-                        <button class="absolute z-1k leaflet-tl ml-29 text-white bg-rose-700 hover:bg-rose-800 px-2 font-base" v-if="trackServerId" @click="trackServerId = ''">
+                        <button class="absolute z-1k leaflet-tl ml-29 text-white bg-rose-700 hover:bg-rose-800 px-2 font-base" v-if="trackServerId" @click="track('')">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
