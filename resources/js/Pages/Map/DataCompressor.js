@@ -19,6 +19,8 @@ class DataCompressor {
             };
         } else {
             console.debug("Failed decompress", data);
+
+            return data;
         }
 
         return false;

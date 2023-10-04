@@ -29,12 +29,6 @@
 
         <portal to="actions">
             <div class="mb-2">
-                <!-- Show Screenshot -->
-                <button class="px-5 py-2 mr-3 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isScreenshot = true" v-if="this.perm.check(this.perm.PERM_SCREENSHOT) && !isTimestampShowing && !isHistoricShowing">
-                    <i class="fas fa-camera"></i>
-                    {{ t('map.screenshot') }}
-                </button>
-
                 <!-- Show Timestamp -->
                 <button class="px-5 py-2 mr-3 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isTimestamp = true" v-if="this.perm.check(this.perm.PERM_ADVANCED)">
                     <i class="fas fa-vial"></i>
@@ -64,130 +58,6 @@
                 </button>
             </div>
         </portal>
-
-        <!-- Area Add -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k" v-if="isAddingDetectionArea">
-            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded w-alert">
-                <h3 class="mb-2">
-                    {{ t('map.area_title') }}
-                </h3>
-
-                <!-- Radius -->
-                <div class="w-full p-3 flex justify-between px-0">
-                    <label class="mr-4 block w-1/4 pt-2 font-bold" for="area_radius">
-                        {{ t('map.area_radius') }}
-                    </label>
-                    <input class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" min="1" max="5000" id="area_radius" value="5" v-model="form.area_radius" />
-                </div>
-
-                <!-- Type -->
-                <div class="w-full p-3 flex justify-between px-0">
-                    <label class="mr-4 block w-1/4 pt-2 font-bold">
-                        {{ t('map.area_type.title') }}
-                    </label>
-                    <select class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="area_type" v-model="form.area_type">
-                        <option value="normal">{{ t('map.area_type.normal') }}</option>
-                        <option value="persistent">{{ t('map.area_type.persistent') }}</option>
-                    </select>
-                </div>
-
-                <hr>
-
-                <h4 class="my-2">
-                    {{ t('map.area_filter') }}
-                    <sup>
-                        <a href="#" class="text-success dark:text-dark-success font-bold text-lg" @click="addFilter($event)">+</a>
-                    </sup>
-                </h4>
-
-                <!-- Filters -->
-                <div class="w-full flex justify-between mb-2" v-if="form.filters.length === 0">
-                    {{ t('map.filter_none') }}
-                </div>
-                <div class="w-full flex justify-between mb-2" v-for="(filter, index) in form.filters" :key="index" v-else>
-                    <label class="mr-4 block w-1/4 pt-2 font-bold">
-                        {{ t('map.area_filters.title') }} #{{ index }}
-                        <sup>
-                            <a href="#" class="text-red-500 font-bold" @click="removeFilter($event, index)">&#x1F5D9;</a>
-                        </sup>
-                    </label>
-                    <select class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" v-model="form.filters[index]">
-                        <option value="is_vehicle">{{ t('map.area_filters.is_vehicle') }}</option>
-                        <option value="is_not_vehicle">{{ t('map.area_filters.is_not_vehicle') }}</option>
-                        <option value="is_dead">{{ t('map.area_filters.is_dead') }}</option>
-                        <option value="is_not_dead">{{ t('map.area_filters.is_not_dead') }}</option>
-                        <option value="is_staff">{{ t('map.area_filters.is_staff') }}</option>
-                        <option value="is_not_staff">{{ t('map.area_filters.is_not_staff') }}</option>
-                        <option value="is_invisible">{{ t('map.area_filters.is_invisible') }}</option>
-                        <option value="is_not_invisible">{{ t('map.area_filters.is_not_invisible') }}</option>
-                        <option value="is_highlighted">{{ t('map.area_filters.is_highlighted') }}</option>
-                        <option value="is_not_highlighted">{{ t('map.area_filters.is_not_highlighted') }}</option>
-                        <option value="is_male">{{ t('map.area_filters.is_male') }}</option>
-                        <option value="is_female">{{ t('map.area_filters.is_female') }}</option>
-                    </select>
-                </div>
-
-                <hr>
-
-                <p class="my-2">
-                    <span class="font-bold">{{ t('map.area_type.normal') }}</span>:
-                    {{ t('map.area_type.normal_description') }}<br>
-                    <span class="font-bold">{{ t('map.area_type.persistent') }}</span>:
-                    {{ t('map.area_type.persistent_description') }}
-                </p>
-
-                <!-- Buttons -->
-                <div class="flex items-center mt-2">
-                    <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded mr-2" @click="confirmArea">
-                        <i class="mr-1 fas fa-plus"></i>
-                        {{ t('map.area_add') }}
-                    </button>
-                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" @click="isAddingDetectionArea = false">
-                        {{ t('global.cancel') }}
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Notify Add -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k" v-if="isNotification">
-            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded w-alert">
-                <h3 class="mb-2">
-                    {{ t('map.notify_add') }}
-                </h3>
-
-                <!-- license Identifier -->
-                <div class="w-full p-3 flex justify-between px-0">
-                    <label class="mr-4 block w-1/4 pt-2 font-bold" for="notify_license">
-                        {{ t('map.notify_license') }}
-                    </label>
-                    <input class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="notify_license" v-model="form.notify_license" />
-                </div>
-
-                <!-- Type -->
-                <div class="w-full p-3 flex justify-between px-0">
-                    <label class="mr-4 block w-1/4 pt-2 font-bold">
-                        {{ t('map.notify_type') }}
-                    </label>
-                    <select class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="notify_type" v-model="form.notify_type">
-                        <option value="invisible">{{ t('map.notify_invisible') }}</option>
-                        <option value="load">{{ t('map.notify_load') }}</option>
-                        <option value="unload">{{ t('map.notify_unload') }}</option>
-                    </select>
-                </div>
-
-                <!-- Buttons -->
-                <div class="flex items-center mt-2">
-                    <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded mr-2" @click="confirmNotification">
-                        <i class="mr-1 fas fa-plus"></i>
-                        {{ t('global.confirm') }}
-                    </button>
-                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" @click="isNotification = false">
-                        {{ t('global.cancel') }}
-                    </button>
-                </div>
-            </div>
-        </div>
 
         <!-- Historic Data -->
         <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k" v-if="isHistoric">
@@ -272,56 +142,6 @@
             </div>
         </div>
 
-        <!-- Screenshot -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k" v-if="isScreenshot && this.perm.check(this.perm.PERM_SCREENSHOT)">
-            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded w-alert">
-                <h3 class="mb-2">
-                    {{ t('map.screenshot') }}
-                </h3>
-
-                <p v-if="screenshotError" class="text-danger dark:text-dark-danger font-semibold mb-3">
-                    {{ screenshotError }}
-                </p>
-
-                <a v-if="screenshotImage" class="w-full" :href="screenshotImage" target="_blank">
-                    <img :src="screenshotImage" alt="Screenshot" class="w-full" />
-                </a>
-                <p v-if="screenshotImage" class="mt-3 text-sm">
-                    {{ t('map.screenshot_description') }}
-                </p>
-
-                <!-- License Identifier -->
-                <div class="w-full p-3 flex justify-between px-0" v-else>
-                    <label class="mr-4 block w-1/4 pt-2 font-bold" for="screenshot_id">
-                        {{ t('map.screenshot_id') }}
-                    </label>
-                    <input class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="screenshot_id" v-model="form.screenshotId" />
-                </div>
-
-                <!-- Buttons -->
-                <div class="flex justify-end mt-2">
-                    <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded mr-2" @click="createScreenshot" v-if="!screenshotImage">
-                        <span v-if="!isScreenshotLoading">
-                            <i class="fas fa-camera mr-1"></i>
-                            {{ t('map.screenshot_create') }}
-                        </span>
-                        <span v-else>
-                            <i class="fas fa-cog animate-spin mr-1"></i>
-                            {{ t('global.loading') }}
-                        </span>
-                    </button>
-                    <button class="px-5 py-2 rounded bg-primary dark:bg-dark-primary mr-2" @click="isAttachingScreenshot = true" v-if="screenshotImage && screenshotLicense">
-                        {{ t('screenshot.title') }}
-                    </button>
-                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" @click="isScreenshot = false; screenshotImage = null; screenshotError = null; screenshotLicense = null">
-                        {{ t('global.close') }}
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <ScreenshotAttacher :close="screenshotAttached" :license="screenshotLicense" :url="screenshotImage" v-if="isAttachingScreenshot" />
-
         <template>
             <div class="-mt-10 flex flex-wrap">
                 <div class="w-map mr-10" id="map-wrapper">
@@ -367,15 +187,6 @@
                             </button>
                         </div>
                         <div class="flex flex-wrap">
-                            <button class="px-5 py-2 ml-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary mobile:block mobile:w-full mobile:m-0 mobile:mt-1" @click="isNotification = true">
-                                {{ t('map.notify_add') }}
-                            </button>
-                            <button class="px-5 py-2 ml-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary mobile:block mobile:w-full mobile:m-0 mobile:mt-1" @click="addArea(false)">
-                                {{ t('map.area_add') }}
-                            </button>
-                            <button class="px-5 py-2 ml-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary mobile:block mobile:w-full mobile:m-0 mobile:mt-1" @click="addArea(true)" :title="t('map.quick_area_title')">
-                                {{ t('map.quick_area') }}
-                            </button>
                             <button class="px-5 py-2 ml-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary mobile:block mobile:w-full mobile:m-0 mobile:mt-1" @click="advancedTracking = !advancedTracking" :title="advancedTracking ? t('global.enabled') : t('global.disabled')">
                                 {{ t('map.advanced_track') }}
                                 <i class="fas fa-check ml-1" v-if="advancedTracking"></i>
@@ -467,49 +278,6 @@
                     </div>
                 </div>
 
-                <!-- Detection Areas -->
-                <div class="flex flex-wrap" v-if="detectionAreas.length > 0 && !isTimestampShowing && !isHistoricShowing">
-                    <div class="pt-4 mr-4" v-for="(area, index) in detectionAreas" :key="index">
-                        <h3 class="mb-2">
-                            {{ t('map.area_label', index + 1) }}
-                            <sup>
-                                ({{ Object.keys(area.players).length }})
-                                <a href="#" class="text-red-500 font-bold" @click="removeArea($event, index)" :title="t('global.remove')">&#x1F5D9;</a>
-                            </sup>
-                        </h3>
-                        <table class="text-xs font-mono font-medium">
-                            <tr v-if="Object.keys(area.players).length === 0">
-                                {{ t('map.area_none') }}
-                            </tr>
-                            <tr v-for="(player, license) in area.players" :key="license" v-else>
-                                <td class="pr-2">
-                                    <a class="text-yellow-500" target="_blank" :href="'/players/' + player.license">{{ player.name }}</a>
-                                </td>
-                                <td class="pr-2 text-yellow-500">
-                                    ({{ player.source }})
-                                </td>
-                                <td class="pr-2" v-if="player.inside">
-                                    {{ t('map.area_inside') }}
-                                </td>
-                                <td class="pr-2" v-else>
-                                    {{ t('map.area_not_inside') }}
-                                </td>
-                                <td>
-                                    <span class="text-yellow-600" :title="t('map.invisible_time', formatSeconds(Math.round(player.invisible_time / 1000)))" v-if="player.invisible_time > 0">
-                                        [I]
-                                    </span>
-                                    <a class="track-cid text-yellow-600" href="#" @click="trackServerId($event, 'server_' + player.source)" data-popup="true">
-                                        {{ t('map.short.track') }}
-                                    </a>
-                                    <a class="highlight-cid text-yellow-600" href="#" @click="highlightServerId($event, player.license)">
-                                        {{ t('map.short.highlight') }}
-                                    </a>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-
                 <div class="flex flex-wrap">
                     <!-- Invisible Players -->
                     <div v-if="invisiblePeople.length > 0 && !isTimestampShowing && !isHistoricShowing" class="pt-4 mr-4 font-medium">
@@ -582,58 +350,6 @@
                             </tr>
                         </table>
                     </div>
-
-                    <!-- Notifications -->
-                    <div v-if="!container.notifier.isEmpty() && !isTimestampShowing && !isHistoricShowing" class="pt-4">
-                        <h3 class="mb-2">{{ t('map.notify') }}</h3>
-                        <table class="text-sm font-mono font-medium">
-                            <tr v-for="(player, license) in container.notifier.notifications.invisible" :key="'invisible_' + license">
-                                <td class="pr-2">
-                                    <span class="dark:text-yellow-500 text-yellow-600" v-if="license === '*'">* (any)</span>
-                                    <a target="_blank" :href="'/players/' + license" class="dark:text-green-400 text-green-600" v-else-if="player === true">{{
-                                        license
-                                    }}</a>
-                                    <a target="_blank" :href="'/players/' + license" class="dark:text-green-400 text-green-600" v-else>{{ player.name }}</a>
-                                </td>
-                                <td class="pr-2">
-                                    {{ t('map.notify_invisible') }}
-                                </td>
-                                <td>
-                                    <a class="dark:text-red-400 text-red-600" href="#" @click="stopNotify($event, license, 'invisible')">{{ t('map.short.remove') }}</a>
-                                </td>
-                            </tr>
-                            <tr v-for="(player, license) in container.notifier.notifications.load" :key="'load_' + license">
-                                <td class="pr-2">
-                                    <span class="dark:text-yellow-500 text-yellow-600" v-if="license === '*'">* (any)</span>
-                                    <a target="_blank" :href="'/players/' + license" class="dark:text-green-400 text-green-600" v-else-if="player === true">{{
-                                        license
-                                    }}</a>
-                                    <a target="_blank" :href="'/players/' + license" class="dark:text-green-400 text-green-600" v-else>{{ player.name }}</a>
-                                </td>
-                                <td class="pr-2">
-                                    {{ t('map.notify_load') }}
-                                </td>
-                                <td>
-                                    <a class="dark:text-red-400 text-red-600" href="#" @click="stopNotify($event, license, 'load')">{{ t('map.short.remove') }}</a>
-                                </td>
-                            </tr>
-                            <tr v-for="(player, license) in container.notifier.notifications.unload" :key="'unload_' + license">
-                                <td class="pr-2">
-                                    <span class="dark:text-yellow-500 text-yellow-600" v-if="license === '*'">* (any)</span>
-                                    <a target="_blank" :href="'/players/' + license" class="dark:text-green-400 text-green-600" v-else-if="player === true">{{
-                                        license
-                                    }}</a>
-                                    <a target="_blank" :href="'/players/' + license" class="dark:text-green-400 text-green-600" v-else>{{ player.name }}</a>
-                                </td>
-                                <td class="pr-2">
-                                    {{ t('map.notify_unload') }}
-                                </td>
-                                <td>
-                                    <a class="dark:text-red-400 text-red-600" href="#" @click="stopNotify($event, license, 'unload')">{{ t('map.short.remove') }}</a>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
                 </div>
 
                 <div class="flex flex-wrap" v-if="!isTimestampShowing && !isHistoricShowing">
@@ -645,13 +361,6 @@
                 </div>
             </div>
         </template>
-
-        <div v-if="loadingScreenStatus" class="fixed top-0 left-0 right-0 bottom-0 z-2k bg-black bg-opacity-75">
-            <div class="text-2xl text-white absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
-                <i class="fas fa-cog animate-spin mr-1"></i>
-                {{ loadingScreenStatus }}
-            </div>
-        </div>
 
         <modal :show.sync="viewingUnloadedPlayerList">
             <template #header>
@@ -685,7 +394,6 @@ import moment from "moment";
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
 import SimplePlayerList from './../../Components/Map/SimplePlayerList';
-import ScreenshotAttacher from './../../Components/ScreenshotAttacher';
 import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-rotatedmarker";
@@ -702,7 +410,6 @@ import Player from './Player';
 import Vector3 from "./Vector3";
 import Bounds from './map.config';
 import DataCompressor from "./DataCompressor";
-import DetectionArea from "./DetectionArea";
 
 (function (global) {
     let MarkerMixin = {
@@ -724,7 +431,6 @@ export default {
         VSection,
         VueSpeedometer,
         SimplePlayerList,
-        ScreenshotAttacher,
         Modal,
     },
     props: {
@@ -772,7 +478,6 @@ export default {
             data: this.t('map.loading'),
             connection: null,
             isPaused: false,
-            isNotification: false,
             isShowingOnDutyList: false,
             firstRefresh: true,
             clickedCoords: '',
@@ -780,11 +485,8 @@ export default {
             coordsCommand: '',
             afkPeople: [],
             invisiblePeople: [],
-            notifyLoad: {},
-            notifyUnload: {},
             openPopup: null,
             isDragging: false,
-            isAddingDetectionArea: false,
             whereAmI: null,
             rightClickedPlayer: {
                 id: null,
@@ -793,18 +495,7 @@ export default {
                 tracked: false
             },
             form: {
-                area_radius: 0,
-                area_type: 'normal',
-                area_location: {
-                    x: 0,
-                    y: 0
-                },
                 filters: [],
-
-                notify_license: '',
-                notify_type: 'load',
-
-                screenshotId: 0,
 
                 timestamp: Math.floor(Date.now() / 1000),
 
@@ -820,7 +511,6 @@ export default {
                 "Vehicles": L.layerGroup(),
                 "Blips": L.layerGroup(),
             },
-            detectionAreas: [],
             tracking: {
                 id: '',
                 type: 'server_',
@@ -838,13 +528,6 @@ export default {
             highlightedPeople: {},
             advancedTracking: false,
             cayoCalibrationMode: false, // Set this to true to recalibrate the cayo perico map
-
-            isScreenshot: false,
-            isScreenshotLoading: false,
-            screenshotImage: null,
-            screenshotLicense: null,
-            screenshotError: null,
-            isAttachingScreenshot: false,
 
             heatmapLayers: [],
             historyMarker: null,
@@ -964,20 +647,6 @@ export default {
 
             return player && player.player && player.player.isFake;
         },
-        screenshotAttached(status, message) {
-            this.isAttachingScreenshot = false;
-
-            if (message) {
-                alert(message);
-            }
-
-            if (status) {
-                this.isScreenshot = false;
-                this.screenshotImage = null;
-                this.screenshotError = null;
-                this.screenshotLicense = null;
-            }
-        },
         copyText(e, text) {
             if (e !== null) {
                 e.preventDefault();
@@ -1021,92 +690,6 @@ export default {
 
             this.rightClickedPlayer.id = null;
         },
-        stopNotify(e, license, type) {
-            e.preventDefault();
-
-            if (type === 'load') {
-                this.container.notifier.removeNotify('load', license);
-            } else if (type === 'unload') {
-                this.container.notifier.removeNotify('unload', license);
-            }
-        },
-        confirmNotification() {
-            this.container.notifier.on(this.form.notify_type, this.form.notify_license);
-
-            this.form.notify_license = '';
-            this.form.notify_type = 'load';
-
-            this.isNotification = false;
-        },
-        confirmArea() {
-            if (this.form.area_radius < 1 || this.form.area_radius > 5000) {
-                return alert(this.t('map.area_inv_radius'));
-            }
-
-            this.isAddingDetectionArea = false;
-
-            const area = new DetectionArea(
-                this.detectionAreas.length + 1,
-                Vector3.fromGameCoords(parseInt(this.form.area_location.x), parseInt(this.form.area_location.y), 0),
-                parseInt(this.form.area_radius),
-                [...new Set(this.form.filters)],
-                this.form.area_type === 'persistent'
-            );
-
-            const marker = area.getMarker(this);
-            marker.addTo(this.map);
-
-            const circle = area.getCircle();
-            circle.addTo(this.map);
-
-            this.detectionAreas.push(area);
-
-            this.form.area_location = null;
-            this.form.area_type = 'normal';
-            this.form.area_radius = 5;
-            this.form.filters = [];
-        },
-        addArea(quick) {
-            if (quick) {
-                if (!this.whereAmI) {
-                    return alert(this.t('map.area_no_whereami'));
-                }
-
-                this.form.area_location = this.whereAmI;
-                this.form.area_radius = 50;
-                this.form.area_type = 'persistent';
-
-                this.confirmArea();
-                return;
-            }
-
-            if (!this.rawClickedCoords) {
-                return alert(this.t('map.area_no_location'));
-            }
-
-            this.form.area_location = this.rawClickedCoords;
-            this.form.area_radius = 5;
-
-            this.isAddingDetectionArea = true;
-        },
-        removeArea(e, index) {
-            e.preventDefault();
-
-            this.map.removeLayer(this.detectionAreas[index].marker);
-            this.map.removeLayer(this.detectionAreas[index].circle);
-
-            let areas = [];
-            for (let x = 0; x < this.detectionAreas.length; x++) {
-                if (x !== index) {
-                    const area = this.detectionAreas[x];
-                    area.id = areas.length + 1;
-
-                    areas.push(area);
-                }
-            }
-
-            this.detectionAreas = areas;
-        },
         humanizeMilliseconds(ms) {
             const sec = Math.round(ms / 1000);
 
@@ -1119,36 +702,6 @@ export default {
                 return isDev ? 'ws://localhost:9999' : 'wss://' + window.location.host;
             } else {
                 return isDev ? 'http://localhost:9999' : 'https://' + window.location.host;
-            }
-        },
-        async createScreenshot() {
-            if (this.isScreenshotLoading) {
-                return;
-            }
-            this.isScreenshotLoading = true;
-            this.screenshotError = null;
-
-            this.screenshotImage = null;
-            this.screenshotLicense = null;
-
-            try {
-                const result = await axios.post('/api/screenshot/' + this.activeServer + '/' + this.form.screenshotId);
-                this.isScreenshotLoading = false;
-
-                if (result.data) {
-                    if (result.data.status) {
-                        console.info('Screenshot of ID ' + this.form.screenshotId, result.data.data.url, result.data.data.license);
-
-                        this.screenshotImage = result.data.data.url;
-                        this.screenshotLicense = result.data.data.license;
-                    } else {
-                        this.screenshotError = result.data.message ? result.data.message : this.t('map.screenshot_failed');
-                    }
-                }
-            } catch (e) {
-                console.error(e);
-
-                this.screenshotError = this.t('map.screenshot_failed');
             }
         },
         historyRangeButton(move) {
@@ -1942,10 +1495,6 @@ export default {
                                 _this.openPopup = id;
                             }
 
-                            if (!_this.isScreenshot) {
-                                _this.form.screenshotId = player.player.source;
-                            }
-
                             foundTracked = true;
                         }
 
@@ -1973,10 +1522,6 @@ export default {
                             _this.openPopup = null;
                         }
                     });
-
-                    for (let x = 0; x < this.detectionAreas.length; x++) {
-                        this.detectionAreas[x].checkPlayers(Object.values(this.container.players), this.characters, this.highlightedPeople);
-                    }
 
                     for (const id in this.markers) {
                         if (!this.markers.hasOwnProperty(id) || this.container.isActive(id)) {
@@ -2040,13 +1585,13 @@ export default {
                 console.log("Received:", data);
 
                 if (data && data.error) {
-                    let error = data.error + "";
+                    let error = Array.isArray(data.error) ? data.error.pop() : "Something went wrong";
 
                     if (error.length >= 70) {
                         error = error.substr(0, 70) + "...";
                     }
 
-                    this.data += `<span class="block text-xs leading-3">${this.t('map.error_msg', error)}</span>`;
+                    this.data += `<span class="block text-xs leading-3">${error}</span>`;
                 }
             }
         },
