@@ -339,7 +339,13 @@ export default {
                 case 'illegal_damage':
                     if (!metadata.type || metadata.weaponType === undefined || metadata.distance === undefined || metadata.damage === undefined) return false;
 
-                    return `${metadata.type}: ${metadata.weaponType} - **${metadata.damage}hp** (${metadata.distance.toFixed(2)}m)`;
+                    let dmg = metadata.damage + 'hp';
+
+                    if (metadata.type === 'high_damage' && metadata.maxAllowed !== undefined) {
+                        dmg = `${metadata.maxAllowed} + ${metadata.damage - metadata.maxAllowed}hp`;
+                    }
+
+                    return `${metadata.type}: ${metadata.weaponType} - **${dmg}** (${metadata.distance.toFixed(2)}m)`;
                 case 'illegal_vehicle_modifier':
                     return metadata.modifierName;
                 case 'spawned_object':
