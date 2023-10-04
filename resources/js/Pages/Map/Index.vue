@@ -1,9 +1,8 @@
 <template>
     <div>
-
         <portal to="title">
             <div class="mb-6">
-                <h1 class="dark:text-white !mb-2">
+                <h1 class="dark:text-white flex items-middle gap-2">
                     <span id="map_title">{{ t('map.title') }}</span>
                     <select class="inline-block w-90 ml-4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="server">
                         <option v-for="server in servers" :key="server.name" :value="server.name">{{ server.name }}</option>
@@ -14,7 +13,8 @@
                         </option>
                     </select>
                 </h1>
-                <p v-if="!isTimestampShowing && !isHistoricShowing">
+
+                <p v-if="!isTimestampShowing && !isHistoricShowing" class="mt-3">
                     <span v-html="data" class="block"></span>
                     <span class="block text-xxs text-muted dark:text-dark-muted mt-0 leading-3" v-if="lastConnectionError">
                         {{ lastConnectionError }}
@@ -28,25 +28,25 @@
         </portal>
 
         <portal to="actions">
-            <div class="mb-2">
+            <div class="flex gap-2">
                 <!-- Show Timestamp -->
-                <button class="px-5 py-2 mr-3 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isTimestamp = true" v-if="this.perm.check(this.perm.PERM_ADVANCED)">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isTimestamp = true" v-if="this.perm.check(this.perm.PERM_ADVANCED)">
                     <i class="fas fa-vial"></i>
                     {{ t('map.timestamp_title') }}
                 </button>
 
                 <!-- Show Historic -->
-                <button class="px-5 py-2 mr-3 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="showHistoric()" v-if="this.perm.check(this.perm.PERM_ADVANCED)">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="showHistoric()" v-if="this.perm.check(this.perm.PERM_ADVANCED)">
                     <i class="fas fa-map"></i>
                     {{ t('map.historic_title') }}
                 </button>
 
                 <!-- Play/Pause -->
-                <button class="px-5 py-2 mr-3 font-semibold text-white rounded bg-green-600 dark:bg-green-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isPaused = true" v-if="!isPaused && !isTimestampShowing && !isHistoricShowing">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-green-600 dark:bg-green-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isPaused = true" v-if="!isPaused && !isTimestampShowing && !isHistoricShowing">
                     <i class="fas fa-pause"></i>
                     {{ t('map.pause') }}
                 </button>
-                <button class="px-5 py-2 mr-3 font-semibold text-white rounded bg-red-600 dark:bg-red-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isPaused = false" v-if="isPaused && !isTimestampShowing && !isHistoricShowing">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-red-600 dark:bg-red-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isPaused = false" v-if="isPaused && !isTimestampShowing && !isHistoricShowing">
                     <i class="fas fa-play"></i>
                     {{ t('map.play') }}
                 </button>
