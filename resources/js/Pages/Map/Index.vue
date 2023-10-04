@@ -164,7 +164,7 @@
                     <div class="relative w-full">
                         <div id="map" class="w-full relative h-max"></div>
 
-                        <input v-if="!isTimestampShowing && !isHistoricShowing" type="number" class="absolute z-1k leaflet-tl ml-10 w-16 block px-2 font-base bg-white text-black font-semibold" @input="updateTrackingInfo" :placeholder="t('map.track_placeholder')" min="0" max="65536" v-model="trackServerId" :class="trackingValid ? 'text-green-700' : 'text-red-700'" />
+                        <input v-if="!isTimestampShowing && !isHistoricShowing" type="number" class="absolute z-1k leaflet-tl ml-10 w-16 block px-2 font-base text-black font-semibold" @input="updateTrackingInfo" :placeholder="t('map.track_placeholder')" min="0" max="65536" v-model="trackServerId" :class="trackingValid ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-200'" />
 
                         <pre class="bg-opacity-70 bg-white coordinate-attr absolute bottom-0 left-0 cursor-pointer z-1k" v-if="clickedCoords"><span @click="copyText($event, clickedCoords)">{{ clickedCoords }}</span> / <span @click="copyText($event, coordsCommand)">{{ t('map.command') }}</span></pre>
                     </div>
@@ -419,7 +419,7 @@ export default {
             this.historicValidLicense = true;
         },
         updateTrackingInfo() {
-            this.trackingValid = this.trackServerId && this.container.isActive(this.trackServerId);
+            this.trackingValid = this.trackServerId && Object.values(this.container.players).find(player => player.player.source == this.trackServerId);
         },
         track(source) {
             this.trackServerId = source;

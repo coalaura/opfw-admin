@@ -40,8 +40,6 @@ const Classifier = {
 
 			const text = _getTrainingData(character);
 
-			console.log(text);
-
 			return classifier.classify(text);
 		};
 	},

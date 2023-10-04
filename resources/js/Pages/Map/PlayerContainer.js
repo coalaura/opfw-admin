@@ -7,7 +7,6 @@ class PlayerContainer {
         this.staffMembers = staffMembers;
         this.players = {};
         this.vehicles = {};
-        this.activePlayerIDs = [];
 
         this.invisible = [];
         this.on_duty = {
@@ -42,7 +41,6 @@ class PlayerContainer {
 
         this.vehicles = {};
         this.players = {};
-        this.activePlayerIDs = [];
 
         this.unloadedPlayers = [];
 
@@ -130,8 +128,6 @@ class PlayerContainer {
             this.players[id] = new Player(rawPlayer, this.staffMembers);
         }
 
-        this.activePlayerIDs.push(id);
-
         const player = this.players[id];
 
         const vehicle = player.getVehicleID();
@@ -179,7 +175,7 @@ class PlayerContainer {
     }
 
     isActive(id) {
-        return !!this.activePlayerIDs.find(playerID => playerID == id);
+        return !!this.get(id);
     }
 
     get(id) {

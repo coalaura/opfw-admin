@@ -80,10 +80,6 @@ Vue.directive('click-outside', {
     },
 });
 
-/*router.on('beforeHistoryChange', (event) => {
-    console.log('beforeHistoryChange', event);
-});*/
-
 // Create Vue.
 const vue = new Vue({
     el: app,
