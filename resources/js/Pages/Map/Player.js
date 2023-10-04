@@ -42,15 +42,13 @@ class Player {
         this.character = Character.fromRaw(rawData);
         this.vehicle = Vehicle.fromRaw(rawData);
 
-        if (this.heading) {
-            this.lastHeading = this.heading;
-        } else {
-            this.lastHeading = null;
-        }
+        this.lastHeading = this.heading;
 
         this.location = Vector3.fromGameCoords(rawData.coords.x, rawData.coords.y, rawData.coords.z);
-        this.heading = mapNumber(-rawData.heading, -180, 180, 0, 360) - 180;
+        this.bearing = rawData.heading < 0 ? rawData.heading + 360 : rawData.heading;
         this.speed = Math.round(rawData.speed * 2.236936); // Convert to mph
+
+        this.heading = mapNumber(-rawData.heading, -180, 180, 0, 360) - 180; // <- leaflet is weird
 
         const invisible = this.character && this.character.invisible;
 
@@ -210,8 +208,6 @@ class Player {
     }
 
     updateMarker(marker, trackServerId, vehicles) {
-        const _this = this;
-
         marker.setIcon(this.getIcon(trackServerId));
         marker.setLatLng(this.location.toMap());
 
@@ -221,7 +217,7 @@ class Player {
         }
 
         // Check if we have a last heading otherwise just set the rotation
-        if (this.lastHeading !== null && marker._icon) {
+        if ((this.lastHeading || this.lastHeading === 0) && marker._icon) {
             // Calculate the difference between the last and the new heading
             const headingDiff = this.lastHeading - this.heading;
 
@@ -232,7 +228,7 @@ class Player {
                 marker.setRotationAngle(newHeading);
 
                 // Wait for the animation to finish (300ms)
-                setTimeout(function () {
+                setTimeout(() => {
                     if (!marker._icon) {
                         return;
                     }
@@ -241,7 +237,7 @@ class Player {
                     marker._icon.style.transition = '0s';
 
                     // Update the icons rotation with the actual heading while we still have no transition
-                    marker._icon.style.transform = marker._icon.style.transform.replace(/(?<=rotateZ\().+?(?=\))/gm, _this.heading + 'deg');
+                    marker._icon.style.transform = marker._icon.style.transform.replace(/(?<=rotateZ\().+?(?=\))/gm, this.heading + 'deg');
                 }, 300);
             } else {
                 // We are not doing a 360 so no fancy stuff needed

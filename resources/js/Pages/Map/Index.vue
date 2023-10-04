@@ -272,6 +272,7 @@ import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-rotatedmarker";
 import "leaflet-fullscreen";
 import "leaflet.markercluster";
+// import "leaflet-rotate";
 import { io } from "socket.io-client";
 
 import Layout from './../../Layouts/App';
@@ -1006,6 +1007,8 @@ export default {
                         }
 
                         if (player.player.source == this.trackServerId) {
+                            // this.map.setBearing(player.bearing);
+
                             this.map.setView(player.location.toMap(), trackedChanged ? 7 : this.map.getZoom(), {
                                 duration: 0.1
                             });
@@ -1111,7 +1114,8 @@ export default {
                 gestureHandling: true,
                 minZoom: 1,
                 maxZoom: 8,
-                maxBounds: L.latLngBounds(L.latLng(0, 0), L.latLng(-256, 256))
+                maxBounds: L.latLngBounds(L.latLng(0, 0), L.latLng(-256, 256)),
+                rotate: true
             });
 
             this.map.attributionControl.addAttribution('map by <a href="https://github.com/twooot" target="_blank">Laura</a> <i>accurate to about 1-2m</i>');

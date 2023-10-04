@@ -46,6 +46,7 @@
         "leaflet": "^1.7.1",
         "leaflet-fullscreen": "^1.0.2",
         "leaflet-gesture-handling": "^1.2.1",
+        "leaflet-rotate": "^0.2.8",
         "leaflet-rotatedmarker": "^0.2.0",
         "leaflet.heat": "^0.2.0",
         "leaflet.markercluster": "^1.5.3",

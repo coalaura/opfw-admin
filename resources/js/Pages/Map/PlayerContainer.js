@@ -40,7 +40,6 @@ class PlayerContainer {
         this.resetStats();
 
         this.vehicles = {};
-        this.players = {};
 
         this.unloadedPlayers = [];
 
