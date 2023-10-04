@@ -169,8 +169,6 @@
                         <button class="absolute z-1k leaflet-tl ml-29 text-white bg-rose-700 hover:bg-rose-800 px-2 font-base" v-if="trackServerId" @click="trackServerId = ''">
                             <i class="fas fa-trash"></i>
                         </button>
-
-                        <pre class="bg-opacity-70 bg-white coordinate-attr absolute bottom-0 left-0 cursor-pointer z-1k" v-if="clickedCoords"><span @click="copyText($event, clickedCoords)">{{ clickedCoords }}</span> / <span @click="copyText($event, coordsCommand)">{{ t('map.command') }}</span></pre>
                     </div>
 
                     <!-- Map Legend -->
@@ -351,9 +349,6 @@ export default {
             data: this.t('map.loading'),
             connection: null,
             isPaused: false,
-            clickedCoords: '',
-            rawClickedCoords: null,
-            coordsCommand: '',
             invisiblePeople: [],
             isDragging: false,
             form: {
@@ -501,13 +496,6 @@ export default {
             const player = this.container.get(license);
 
             return player && player.player && player.player.isFake;
-        },
-        copyText(e, text) {
-            if (e !== null) {
-                e.preventDefault();
-            }
-
-            this.copyToClipboard(text);
         },
         hostname(isSocket) {
             const isDev = window.location.hostname === 'localhost';
@@ -1194,27 +1182,13 @@ export default {
                 marker.openPopup();
             }
 
-            //this.__debugLocations(require('../../data/tp_locations.json'));
-
-            this.map.on('click', function (e) {
-                const coords = Vector3.fromMapCoords(e.latlng.lng, e.latlng.lat),
-                    map = coords.toMap();
-
-                if (Bounds.calibrating) {
-                    _this.copyText(null, `lng: ${e.latlng.lng}, lat: ${e.latlng.lat}`);
-                }
-
-                _this.clickedCoords = "[X=" + Math.round(coords.x) + ",Y=" + Math.round(coords.y) + "] / [Lng=" + map.lng.toFixed(3) + ",Lat=" + map.lat.toFixed(3) + "]";
-                _this.rawClickedCoords = { x: Math.round(coords.x), y: Math.round(coords.y) };
-                _this.coordsCommand = "/tp_coords " + Math.round(coords.x) + " " + Math.round(coords.y);
-            });
-
             this.map.on('dragstart', function () {
                 _this.isDragging = true;
             });
             this.map.on('dragend', function () {
                 _this.isDragging = false;
             });
+
             this.map.on('fullscreenchange', function () {
                 setTimeout(function () {
                     _this.map._onResize();
