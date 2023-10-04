@@ -132,14 +132,7 @@ class Player {
             }
         );
 
-        if (this.player.source == trackServerId) {
-            icon = new L.Icon(
-                {
-                    iconUrl: '/images/icons/circle_yellow.png',
-                    iconSize: [IconSizes.circle_yellow, IconSizes.circle_yellow]
-                }
-            );
-        } else if (this.icon.invisible) {
+        if (this.icon.invisible) {
             icon = new L.Icon(
                 {
                     iconUrl: '/images/icons/circle_green.png',
@@ -167,6 +160,13 @@ class Player {
                 {
                     iconUrl: '/images/icons/skull.png',
                     iconSize: [IconSizes.skull, IconSizes.skull]
+                }
+            );
+        } else if (this.player.source == trackServerId) {
+            icon = new L.Icon(
+                {
+                    iconUrl: '/images/icons/circle_yellow.png',
+                    iconSize: [IconSizes.circle_yellow, IconSizes.circle_yellow]
                 }
             );
         } else if (this.onDuty === 'police') {
