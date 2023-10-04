@@ -342,7 +342,7 @@ export default {
                     let dmg = metadata.damage + 'hp';
 
                     if (metadata.type === 'high_damage' && metadata.maxAllowed !== undefined) {
-                        dmg = `${metadata.maxAllowed} + ${metadata.damage - metadata.maxAllowed}hp`;
+                        dmg = `${metadata.maxAllowed}+${metadata.damage - metadata.maxAllowed}hp`;
                     }
 
                     return `${metadata.type}: ${metadata.weaponType} - **${dmg}** (${metadata.distance.toFixed(2)}m)`;
