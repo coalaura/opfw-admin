@@ -133,7 +133,7 @@ class Controller extends BaseController
     protected function formatMilliseconds($ms)
     {
         if ($ms < 4000) {
-            return $ms . "ms";
+            return number_format($ms) . "ms";
         }
 
         $fmt = [];
