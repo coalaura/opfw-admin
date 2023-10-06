@@ -29,6 +29,8 @@ class WeaponDamageEvent extends Model
      */
     public $timestamps = false;
 
+	private static $actionNames = null;
+
 	const HitComponents = [
 		// Confirmed (very sure):
 		0 => "center (crotch/butt)",
@@ -87,6 +89,17 @@ class WeaponDamageEvent extends Model
 		return $models['weapons'];
 	}
 
+	public static function getActionName($hash): string
+	{
+		if (!self::$actionNames) {
+			$data = file_get_contents(__DIR__ . '/../helpers/action_names.json');
+
+			self::$actionNames = json_decode($data, true);
+		}
+
+		return self::$actionNames && isset(self::$actionNames[$hash]) ? self::$actionNames[$hash] : "unknown ($hash)";
+	}
+
 	public static function getHitComponent($component)
 	{
 		$component = intval($component);
@@ -127,7 +140,7 @@ class WeaponDamageEvent extends Model
 	public static function getDamaged(string $license, bool $includeNpcs)
 	{
 		$query = self::query()
-			->select(['license_identifier', 'timestamp', 'hit_component', 'damage_type', 'weapon_type', 'distance', 'weapon_damage'])
+			->select(['license_identifier', 'timestamp', 'hit_component', 'action_result_name', 'damage_type', 'weapon_type', 'distance', 'weapon_damage'])
 			->whereRaw("JSON_CONTAINS(hit_players, '\"" . $license . "\"', '$')");
 
 		if (!$includeNpcs) {
@@ -142,7 +155,7 @@ class WeaponDamageEvent extends Model
 	public static function getDamageDealtTo(string $license, bool $includeNpcs)
 	{
 		$query = self::query()
-			->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(hit_players, '$[0]')) as license_identifier, timestamp, hit_component, damage_type, weapon_type, distance, weapon_damage")
+			->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(hit_players, '$[0]')) as license_identifier, timestamp, hit_component, action_result_name, damage_type, weapon_type, distance, weapon_damage")
 			->where('parent_global_id', '=', '0')
 			->where('license_identifier', $license);
 

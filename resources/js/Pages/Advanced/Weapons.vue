@@ -99,7 +99,7 @@ export default {
             const avg = `<i class="text-lime-500">${this.weaponData.damages.avg}hp</i>`,
                 max = `<i class="text-rose-500">${this.weaponData.damages.max}hp</i>`;
 
-            return this.t('weapons.damage_description', this.weaponName, avg, max);
+            return this.t('weapons.damage_description', this.weaponData.name, avg, max);
         }
     },
     methods: {
@@ -122,6 +122,8 @@ export default {
             this.error = false;
             this.weaponData = null;
 
+            const weaponName = this.weaponName;
+
             try {
                 const response = await axios.get('/weapons/' + hash);
 
@@ -129,6 +131,7 @@ export default {
 
                 if (data && data.data && data.status) {
                     this.weaponData = data.data;
+                    this.weaponData.name = weaponName;
                 } else {
                     this.error = data?.message || 'Unknown error';
                 }

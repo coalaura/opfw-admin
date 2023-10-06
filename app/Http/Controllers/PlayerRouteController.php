@@ -643,6 +643,7 @@ class PlayerRouteController extends Controller
                 $log["weapon_type"]   = WeaponDamageEvent::getDamageWeapon($log["weapon_type"]);
                 $log["damage_type"]   = WeaponDamageEvent::getDamageType($log["damage_type"]);
                 $log["hit_component"] = WeaponDamageEvent::getHitComponent($log["hit_component"]);
+                $log["action_result_name"] = WeaponDamageEvent::getActionName($log["action_result_name"]);
 
                 $log["distance"] = number_format($log["distance"], 2) . "m";
 
@@ -659,6 +660,9 @@ class PlayerRouteController extends Controller
             $maxDistance = max(array_map(function ($log) {
                 return strlen($log["distance"]);
             }, $logs));
+            $maxType = max(array_map(function ($log) {
+                return strlen($log["damage_type"]);
+            }, $logs));
 
             $lastDate = false;
 
@@ -673,14 +677,15 @@ class PlayerRouteController extends Controller
                 }
 
                 $name = mb_str_pad($names[$log["license_identifier"]] ?? 'NPC', $maxName);
-                $name = '<a href="/players/' . $log["license_identifier"] . '" style="color:#fff2b3" target="_blank">' . $name . '</a>';
+                $name = '<a href="/players/' . $log["license_identifier"] . '" style="color:#ffe3b3" target="_blank">' . $name . '</a>';
 
-                $weapon    = '<span style="color:#ccffb3">' . str_pad($log["weapon_type"], $maxWeapon) . '</span>';
+                $weapon    = '<span style="color:#bdffb3">' . str_pad($log["weapon_type"], $maxWeapon) . '</span>';
                 $damage    = '<span style="color:#b3ffd9">' . str_pad($log["weapon_damage"] . "hp", 5) . '</span>';
-                $component = '<span style="color:#b3e5ff">' . str_pad($log["hit_component"], $maxComponent) . '</span>';
-                $distance  = '<span style="color:#bfb3ff">' . str_pad($log["distance"], $maxDistance) . '</span>';
+                $component = '<span style="color:#b3f6ff">' . str_pad($log["hit_component"], $maxComponent) . '</span>';
+                $distance  = '<span style="color:#b3c6ff">' . str_pad($log["distance"], $maxDistance) . '</span>';
+                $type = '<span style="color:#cfb3ff">' . str_pad($log["damage_type"], $maxType) . '</span>';
 
-                $list[] = "  " . $time . "    " . $name . "    " . $weapon . "    " . $damage . "    " . $component . "    " . $distance . "    <span style='color:#ffb3ff'>" . $log["damage_type"] . "</span>";
+                $list[] = "  " . $time . "    " . $name . "    " . $weapon . "    " . $damage . "    " . $component . "    " . $distance . "    " . $type . "    <span style='color:#ffb3ff'>" . $log["action_result_name"] . "</span>";
             }
         } else {
             $list[] = 'No damage logs found';
