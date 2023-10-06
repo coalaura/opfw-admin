@@ -189,6 +189,7 @@ export default {
     data() {
         return {
             isLoading: false,
+            isLoadingHashes: false,
 
             showingReasons: false,
 
@@ -205,7 +206,13 @@ export default {
 
                 screenshot.subtitle = this.markdown(this.getSubtitle(screenshot.type, screenshot.metadata), true);
 
-                if (screenshot.subtitle) screenshot.subtitleText = screenshot.subtitle.replace(/(<([^>]+)>)/gi, "");
+                if (screenshot.subtitle) {
+                    screenshot.subtitleText = screenshot.subtitle.replace(/(<([^>]+)>)/gi, "");
+
+                    screenshot.subtitle = screenshot.subtitle.replace(/(?<=^|[^\w:.`])-?\d+(?=[^\w:.`]|$)/gm, match => {
+                        return `<span class="hash underline cursor-help" title="Click to resolve hash">${match}</span>`;
+                    });
+                }
 
                 return screenshot;
             });
@@ -213,9 +220,7 @@ export default {
     },
     methods: {
         refresh: async function () {
-            if (this.isLoading) {
-                return;
-            }
+            if (this.isLoading || this.isLoadingHashes) return;
 
             this.previousIds = this.screenshots.map(screenshot => screenshot.id);
 
@@ -382,10 +387,30 @@ export default {
                     const flags = metadata.playerPed.flags.join(', ') || 'no flags';
 
                     return `${flags}` + (metadata.playerPed.inVehicle ? ' (in vehicle)' : '');
-                }
+            }
 
             return false;
         }
+    },
+    mounted() {
+        $("body").on("click", ".hash", async e => {
+            if (this.isLoading || this.isLoadingHashes) return;
+
+            this.isLoadingHashes = true;
+
+            const el = $(e.target),
+                hash = el.text();
+
+            const { name } = await this.resolveHash(hash);
+
+            if (name) {
+                el.replaceWith(`<i class="cursor-help" title="Hash: ${hash}">${name}</i>`);
+            } else {
+                el.replaceWith(`<span title="Not a valid hash">${hash}</span>`);
+            }
+
+            this.isLoadingHashes = false;
+        });
     }
 };
 </script>
