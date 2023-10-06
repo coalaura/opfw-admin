@@ -685,7 +685,10 @@ class PlayerRouteController extends Controller
                 $distance  = '<span style="color:#b3c6ff" title="distance">' . str_pad($log["distance"], $maxDistance) . '</span>';
                 $type = '<span style="color:#cfb3ff" title="damage_type">' . str_pad($log["damage_type"], $maxType) . '</span>';
 
-                $list[] = "  " . $time . "    " . $name . "    " . $weapon . "    " . $damage . "    " . $component . "    " . $distance . "    " . $type . "    <span style='color:#ffb3ff' title='action_result_name'>" . $log["action_result_name"] . "</span>";
+                $isNoneAction = $log["action_result_name"] === "none";
+                $action = '<span style="color:' . ($isNoneAction ? '#ff7070' : '#ffb3ff') . '" title="action_result_name">' . $log["action_result_name"] . '</span>';
+
+                $list[] = "  " . $time . "    " . $name . "    " . $weapon . "    " . $damage . "    " . $component . "    " . $distance . "    " . $type . "    " . $action;
             }
         } else {
             $list[] = 'No damage logs found';

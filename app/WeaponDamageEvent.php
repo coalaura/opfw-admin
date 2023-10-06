@@ -98,7 +98,7 @@ class WeaponDamageEvent extends Model
 		}
 
 		if ($hash == 0) {
-			return "none (0)";
+			return "none";
 		}
 
 		return self::$actionNames && isset(self::$actionNames[$hash]) ? self::$actionNames[$hash] : "hash_$hash";
