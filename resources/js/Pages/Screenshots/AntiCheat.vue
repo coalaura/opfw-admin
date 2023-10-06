@@ -349,7 +349,7 @@ export default {
                 case 'illegal_vehicle_modifier':
                     if (!metadata.modifierName || metadata.actualValue === undefined || metadata.expectedValue === undefined) return false;
 
-                    return `metadata.modifierName(**${metadata.actualValue}**) - expected **${metadata.expectedValue}**`;
+                    return `${metadata.modifierName}(**${metadata.actualValue}**) - expected **${metadata.expectedValue}**`;
                 case 'spawned_object':
                 case 'illegal_ped_spawn':
                 case 'illegal_vehicle_spawn':
