@@ -97,6 +97,10 @@ class WeaponDamageEvent extends Model
 			self::$actionNames = json_decode($data, true);
 		}
 
+		if ($hash == 0) {
+			return "none (0)";
+		}
+
 		return self::$actionNames && isset(self::$actionNames[$hash]) ? self::$actionNames[$hash] : "unknown ($hash)";
 	}
 
