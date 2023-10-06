@@ -101,7 +101,7 @@ class WeaponDamageEvent extends Model
 			return "none (0)";
 		}
 
-		return self::$actionNames && isset(self::$actionNames[$hash]) ? self::$actionNames[$hash] : "unknown ($hash)";
+		return self::$actionNames && isset(self::$actionNames[$hash]) ? self::$actionNames[$hash] : "hash_$hash";
 	}
 
 	public static function getHitComponent($component)
