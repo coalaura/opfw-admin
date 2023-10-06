@@ -683,7 +683,7 @@ class PlayerRouteController extends Controller
                 $damage    = '<span style="color:#b3ffd9" title="weapon_damage">' . str_pad($log["weapon_damage"] . "hp", 5) . '</span>';
                 $component = '<span style="color:#b3f6ff" title="hit_component">' . str_pad($log["hit_component"], $maxComponent) . '</span>';
                 $distance  = '<span style="color:#b3c6ff" title="distance">' . str_pad($log["distance"], $maxDistance) . '</span>';
-                $type = '<span style="color:#cfb3ff" type="damage_type">' . str_pad($log["damage_type"], $maxType) . '</span>';
+                $type = '<span style="color:#cfb3ff" title="damage_type">' . str_pad($log["damage_type"], $maxType) . '</span>';
 
                 $list[] = "  " . $time . "    " . $name . "    " . $weapon . "    " . $damage . "    " . $component . "    " . $distance . "    " . $type . "    <span style='color:#ffb3ff' title='action_result_name'>" . $log["action_result_name"] . "</span>";
             }
