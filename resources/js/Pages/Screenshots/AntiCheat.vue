@@ -288,7 +288,7 @@ export default {
                 case 'damage_modifier':
                     if (metadata.expected === undefined || metadata.actual === undefined) return false;
 
-                    return `${metadata.expected} / ${metadata.actual}`;
+                    return `**${metadata.actual}** - expected **${metadata.expected}**`;
                 case 'thermal_night_vision':
                     return metadata.nativeName;
                 case 'blacklisted_command':
@@ -347,7 +347,9 @@ export default {
 
                     return `${metadata.type}: ${metadata.weaponType} - **${dmg}** (${metadata.distance.toFixed(2)}m)`;
                 case 'illegal_vehicle_modifier':
-                    return metadata.modifierName;
+                    if (!metadata.modifierName || metadata.actualValue === undefined || metadata.expectedValue === undefined) return false;
+
+                    return `metadata.modifierName(**${metadata.actualValue}**) - expected **${metadata.expectedValue}**`;
                 case 'spawned_object':
                 case 'illegal_ped_spawn':
                 case 'illegal_vehicle_spawn':
