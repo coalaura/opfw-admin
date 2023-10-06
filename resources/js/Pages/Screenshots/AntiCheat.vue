@@ -209,7 +209,7 @@ export default {
                 if (screenshot.subtitle) {
                     screenshot.subtitleText = screenshot.subtitle.replace(/(<([^>]+)>)/gi, "");
 
-                    screenshot.subtitle = screenshot.subtitle.replace(/(?<=^|[^\w:.`])-?\d+(?=[^\w:.`]|$)/gm, match => {
+                    screenshot.subtitle = screenshot.subtitle.replace(/(?<=^|[^\w:.`])-?\d{5,}(?=[^\w:.`+/]|$)/gm, match => {
                         return `<span class="hash underline cursor-help" title="Click to resolve hash">${match}</span>`;
                     });
                 }
