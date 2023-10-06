@@ -452,7 +452,8 @@
         "world_time_desc": "⌚🌍{0}",
         "world_time_use": "🔧👥{0}",
         "world_time_also": "✨🔁{0}",
-        "game_time": "⏰🎮✨💨"
+        "game_time": "⏰🎮✨💨",
+        "debug_collecting": "🔍📊..."
     },
     "pagination": {
         "previous": "⬅️",

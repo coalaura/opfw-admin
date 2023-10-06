@@ -452,7 +452,8 @@
         "world_time_desc": "The floop in the {0} bloo bop zibbity.",
         "world_time_use": "Used by {0} zop bam(s)",
         "world_time_also": "Bing Bleep: {0}",
-        "game_time": "Dwidab-Paki Tothu nusg 12 hoppi wabie thara nusg."
+        "game_time": "Dwidab-Paki Tothu nusg 12 hoppi wabie thara nusg.",
+        "debug_collecting": "Zibbity-zobbity blippity-bloop..."
     },
     "pagination": {
         "previous": "Lomaba",
