@@ -424,6 +424,7 @@
         "refresh_login": "Refresh Login",
         "debug_info": "Debug Info",
         "debug_info_failed": "Failed to fetch debug info.",
+        "debug_collecting": "Collecting info...",
 
         "permissions": "Permissions",
         "perm": "Permission",

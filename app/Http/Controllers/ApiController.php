@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\GeneralHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
 use App\Server;
-use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
@@ -28,12 +30,28 @@ class ApiController extends Controller
             abort(401);
         }
 
-        $data = [
-            'ip' => $request->ip(),
-            'userAgent' => $request->userAgent(),
-            'fingerprint' => $request->fingerprint(),
+        $start = microtime(true);
+        DB::select(DB::raw("SELECT 1"));
+        $selectTime = round((microtime(true) - $start) * 1000);
 
-            'accept' => $request->header('accept'),
+        $server     = Server::getFirstServer();
+        $serverTime = null;
+
+        if ($server) {
+            $start = microtime(true);
+            GeneralHelper::get($server . 'api.json');
+            $serverTime = round((microtime(true) - $start) * 1000);
+        }
+
+        $data = [
+            'ip'             => $request->ip(),
+            'userAgent'      => $request->userAgent(),
+            'fingerprint'    => $request->fingerprint(),
+
+            'SELECT 1'       => $this->formatMilliseconds($selectTime),
+            '/api.json'      => $this->formatMilliseconds($serverTime),
+
+            'accept'         => $request->header('accept'),
             'acceptLanguage' => $request->header('accept-language'),
             'acceptEncoding' => $request->header('accept-encoding'),
         ];

@@ -129,8 +129,15 @@
             </template>
 
             <template #default>
-                <p v-if="loadingDebug" class="py-2 text-center">{{ t("global.loading") }}</p>
-                <p v-else-if="!debugInfo" class="py-2 text-center">{{ t("nav.debug_info_failed") }}</p>
+                <p v-if="loadingDebug" class="py-2 text-center text-xl">
+                    <i class="fas fa-spinner animate-spin mr-2"></i>
+                    {{ t("nav.debug_collecting") }}
+                </p>
+
+                <p v-else-if="!debugInfo" class="py-2 text-center text-xl">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    {{ t("nav.debug_info_failed") }}
+                </p>
 
                 <template v-else>
                     <div class="mb-3" v-for="info in debugInfo" :key="info.key">

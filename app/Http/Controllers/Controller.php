@@ -130,6 +130,32 @@ class Controller extends BaseController
 		return $this->formatSeconds($seconds) . " ago";
 	}
 
+    protected function formatMilliseconds($ms)
+    {
+        if ($ms < 4000) {
+            return $ms . "ms";
+        }
+
+        $fmt = [];
+
+        $seconds = floor($ms / 1000);
+        $ms -= $seconds * 1000;
+
+        $minutes = floor($seconds / 60);
+        $seconds -= $minutes * 60;
+
+        $hours = floor($minutes / 60);
+        $minutes -= $hours * 60;
+
+        $hours > 0 && $fmt[] = $hours . "h";
+        $minutes > 0 && $fmt[] = $minutes . "m";
+        $seconds > 0 && $fmt[] = $seconds . "s";
+
+        ($ms > 0 || empty($fmt)) && $fmt[] = $ms . "ms";
+
+        return implode(" ", $fmt);
+    }
+
 	protected function formatSeconds($seconds)
 	{
 		$string = [
