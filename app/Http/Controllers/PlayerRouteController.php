@@ -679,13 +679,13 @@ class PlayerRouteController extends Controller
                 $name = mb_str_pad($names[$log["license_identifier"]] ?? 'NPC', $maxName);
                 $name = '<a href="/players/' . $log["license_identifier"] . '" style="color:#ffe3b3" target="_blank">' . $name . '</a>';
 
-                $weapon    = '<span style="color:#bdffb3">' . str_pad($log["weapon_type"], $maxWeapon) . '</span>';
-                $damage    = '<span style="color:#b3ffd9">' . str_pad($log["weapon_damage"] . "hp", 5) . '</span>';
-                $component = '<span style="color:#b3f6ff">' . str_pad($log["hit_component"], $maxComponent) . '</span>';
-                $distance  = '<span style="color:#b3c6ff">' . str_pad($log["distance"], $maxDistance) . '</span>';
-                $type = '<span style="color:#cfb3ff">' . str_pad($log["damage_type"], $maxType) . '</span>';
+                $weapon    = '<span style="color:#bdffb3" title="weapon_type">' . str_pad($log["weapon_type"], $maxWeapon) . '</span>';
+                $damage    = '<span style="color:#b3ffd9" title="weapon_damage">' . str_pad($log["weapon_damage"] . "hp", 5) . '</span>';
+                $component = '<span style="color:#b3f6ff" title="hit_component">' . str_pad($log["hit_component"], $maxComponent) . '</span>';
+                $distance  = '<span style="color:#b3c6ff" title="distance">' . str_pad($log["distance"], $maxDistance) . '</span>';
+                $type = '<span style="color:#cfb3ff" type="damage_type">' . str_pad($log["damage_type"], $maxType) . '</span>';
 
-                $list[] = "  " . $time . "    " . $name . "    " . $weapon . "    " . $damage . "    " . $component . "    " . $distance . "    " . $type . "    <span style='color:#ffb3ff'>" . $log["action_result_name"] . "</span>";
+                $list[] = "  " . $time . "    " . $name . "    " . $weapon . "    " . $damage . "    " . $component . "    " . $distance . "    " . $type . "    <span style='color:#ffb3ff' title='action_result_name'>" . $log["action_result_name"] . "</span>";
             }
         } else {
             $list[] = 'No damage logs found';
