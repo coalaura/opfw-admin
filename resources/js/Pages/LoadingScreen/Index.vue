@@ -49,9 +49,10 @@
                 <div class="flex pt-3 pb-3 border-t w-full border-gray-400 dark:border-gray-500 px-2 relative hover:bg-gray-100 dark:hover:bg-gray-700" v-for="(picture, index) in pictures" :key="picture.id">
                     <div>
                         <a clas="block relative" target="_blank" :href="picture.image_url">
-                            <img :src="picture.image_url" class="h-48 border-red-500" @load="imageLoaded($event, picture.id)" @error="imageFailed(picture.id)" :class="{ 'border-4': failedLoad[picture.id] || smallSize[picture.id] }" />
+                            <video :src="picture.image_url" class="w-full max-h-96 border-red-500" @loadstart="imageLoaded($event, picture.id)" @error="imageFailed(picture.id)" :class="{ 'border-4': failedLoad[picture.id] || smallSize[picture.id] }" v-if="isURLVideo(picture.image_url)" controls></video>
+                            <img :src="picture.image_url" class="w-full max-h-96 border-red-500" @load="imageLoaded($event, picture.id)" @error="imageFailed(picture.id)" :class="{ 'border-4': failedLoad[picture.id] || smallSize[picture.id] }" v-else />
 
-                            <span v-if="picture.description" class="block text-sm text-gray-500 mt-2">
+                            <span v-if="picture.description" class="block text-sm text-gray-500 dark:text-gray-400 mt-2">
                                 {{ picture.description }}
                             </span>
 
@@ -87,6 +88,9 @@
             </template>
 
             <template #default>
+                <video :src="image_url" v-if="image_url && image_url.startsWith('https://') && isURLVideo(image_url)" class="w-full max-h-96 mb-3" controls></video>
+                <img v-else-if="image_url && image_url.startsWith('https://')" :src="image_url" class="w-full max-h-96 mb-3" />
+
                 <div>
                     <label class="block mb-3" for="url">
                         {{ t('loading_screen.picture') }}
@@ -120,7 +124,8 @@
             </template>
 
             <template #default>
-                <img v-if="editingPicture.image_url && editingPicture.image_url.startsWith('https://')" :src="editingPicture.image_url" class="w-full mb-3" />
+                <video :src="editingPicture.image_url" v-if="editingPicture.image_url && editingPicture.image_url.startsWith('https://') && isURLVideo(editingPicture.image_url)" class="w-full max-h-96 mb-3" controls></video>
+                <img v-else-if="editingPicture.image_url && editingPicture.image_url.startsWith('https://')" :src="editingPicture.image_url" class="w-full max-h-96 mb-3" />
 
                 <div>
                     <label class="block mb-3" for="image_url">
@@ -129,7 +134,7 @@
                     <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" type="url" id="image_url" placeholder="https://images.unsplash.com/photo-1511044568932-338cba0ad803" v-model="editingPicture.image_url" required>
                 </div>
 
-                <div>
+                <div v-if="!isURLVideo(editingPicture.image_url)">
                     <label class="block mb-3" for="description">
                         {{ t('loading_screen.image_description') }}
                     </label>
@@ -193,6 +198,11 @@ export default {
         };
     },
     methods: {
+        isURLVideo(url) {
+            const test = url.split("?").shift();
+
+            return !!test.match(/\.(mp4|webm)$/);
+        },
         async deletePicture(e, id) {
             e.preventDefault();
 
