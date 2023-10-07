@@ -14,6 +14,8 @@
                         </span>
                     </badge>
                 </div>
+
+                <div class="mt-3 text-sm font-mono" v-if="character.coords && isOffline">{{ character.coords.x.toFixed(1) }}, {{ character.coords.y.toFixed(1) }}, {{ character.coords.z.toFixed(1) }}</div>
             </div>
         </portal>
 
@@ -969,7 +971,8 @@ export default {
             isVehicleEdit: false,
             vehicleEditError: null,
             isVehicleAdd: false,
-            isLicenseEdit: false
+            isLicenseEdit: false,
+            isOffline: false
         };
     },
     computed: {
@@ -1205,9 +1208,16 @@ export default {
             this.balanceForm.bank = this.character.bank;
             this.balanceForm.stocks = this.character.stocksBalance;
         },
+        async loadOfflineStatus() {
+            const status = (await this.requestData("/online/" + this.player.licenseIdentifier)) || {};
+
+            this.isOffline = !status[this.player.licenseIdentifier];
+        }
     },
     mounted() {
         this.setPayCheck();
+
+        this.loadOfflineStatus();
     }
 }
 </script>

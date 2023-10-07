@@ -23,7 +23,7 @@ class CharacterResource extends JsonResource
 
         return [
             'id'                         => $this->character_id,
-            'licenseIdentifier'            => $this->license_identifier,
+            'licenseIdentifier'          => $this->license_identifier,
             'slot'                       => $this->character_slot,
             'gender'                     => $this->gender,
             'firstName'                  => $this->first_name,
@@ -54,6 +54,7 @@ class CharacterResource extends JsonResource
             'mugshot'                    => $this->mugshot_url ?? null,
             'playtime'                   => $this->playtime,
             'lastLoaded'                 => $this->last_loaded,
+            'coords'                     => json_decode($this->coords, true),
         ];
     }
 }
