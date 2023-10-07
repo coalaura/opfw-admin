@@ -14,9 +14,9 @@
                         </span>
                     </badge>
                 </div>
-
-                <div class="mt-3 text-sm font-mono" v-if="character.coords && isOffline">{{ character.coords.x.toFixed(1) }}, {{ character.coords.y.toFixed(1) }}, {{ character.coords.z.toFixed(1) }}</div>
             </div>
+
+            <div class="mt-2 italic text-sm font-mono text-gray-500 dark:text-gray-400" v-if="character.coords && isOffline">{{ character.coords.x.toFixed(1) }}, {{ character.coords.y.toFixed(1) }}, {{ character.coords.z.toFixed(1) }}</div>
         </portal>
 
         <portal to="actions">
