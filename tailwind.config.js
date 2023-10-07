@@ -32,6 +32,9 @@ module.exports = {
                 'logo': '60px',
                 'base': '24px'
             },
+            blur: {
+                'xs': '2.5px'
+            },
             zIndex: {
                 '1k': '1000',
                 '2k': '2000'

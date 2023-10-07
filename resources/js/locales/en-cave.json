@@ -1035,7 +1035,8 @@
                 "fishing": "Fish",
                 "weapon": "Wapen",
                 "mining": "Mine"
-            }
+            },
+            "no_coords": "Last coords not knowed when player be online."
         },
         "edit": {
             "born": "Cavebaby on <b>{0}</b>",

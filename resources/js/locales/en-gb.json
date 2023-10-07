@@ -1035,7 +1035,8 @@
                 "fishing": "Bloody Fishing",
                 "weapon": "Bloody Weapon",
                 "mining": "Bloody Mining"
-            }
+            },
+            "no_coords": "Sorry, but you won't find any bloody coordinates while the git is still online."
         },
         "edit": {
             "born": "Popped out on <b>{0}</b>",

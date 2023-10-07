@@ -1035,7 +1035,8 @@
                 "fishing": "Fishin'",
                 "weapon": "Blunderbuss",
                 "mining": "Diggin'"
-            }
+            },
+            "no_coords": "Avast! The last known whereabouts of ye scurvy dog be hidin' from me while ye be sailin' the high seas."
         },
         "edit": {
             "born": "Set sail on <b>{0}</b>",

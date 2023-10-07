@@ -1035,7 +1035,8 @@
                 "fishing": "🎣 - Fishing",
                 "weapon": "🔫 - Weapon",
                 "mining": "⛏️ - Mining"
-            }
+            },
+            "no_coords": "Last 🌐 are unavailable while the player is 📴."
         },
         "edit": {
             "born": "📍 Born on <b>{0}</b>",

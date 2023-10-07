@@ -1035,7 +1035,8 @@
                 "fishing": "Fishin' Mate",
                 "weapon": "Bloke Battlefield",
                 "mining": "Mined All Day"
-            }
+            },
+            "no_coords": "Bloody hell, we can't bloody find the coordinates mate, player's still online."
         },
         "edit": {
             "born": "'E's from <b>{0}</b>",

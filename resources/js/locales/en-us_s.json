@@ -1035,7 +1035,8 @@
                 "fishing": "Fishin'",
                 "weapon": "Weap'n",
                 "mining": "Minin'"
-            }
+            },
+            "no_coords": "Sorry y'all, I cain't give ya the last known whereabouts of a player while they're online."
         },
         "edit": {
             "born": "Born on <b>{0}</b>, bless their lil' heart",

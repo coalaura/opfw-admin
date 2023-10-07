@@ -1035,7 +1035,8 @@
                 "fishing": "FishyingwU",
                 "weapon": "WeaponwU",
                 "mining": "MiningwU"
-            }
+            },
+            "no_coords": "Wast cwoods awa unwavaiwabwe whiwe the pwayew is onwine."
         },
         "edit": {
             "born": "Bowwn on <b>{0}</b>wU",

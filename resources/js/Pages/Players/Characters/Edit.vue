@@ -16,7 +16,10 @@
                 </div>
             </div>
 
-            <div class="mt-2 italic text-sm font-mono text-gray-500 dark:text-gray-400" v-if="character.coords && isOffline">{{ character.coords.x.toFixed(1) }}, {{ character.coords.y.toFixed(1) }}, {{ character.coords.z.toFixed(1) }}</div>
+            <div class="mt-2 italic text-sm font-mono text-gray-500 dark:text-gray-400" v-if="character.coords">
+                <span v-if="isOffline">{{ character.coords.x.toFixed(1) }}, {{ character.coords.y.toFixed(1) }}, {{ character.coords.z.toFixed(1) }}</span>
+                <span class="blur-xs font-semibold" :title="t('players.characters.no_coords')" v-else>123.4, -567.8, 901.2</span>
+            </div>
         </portal>
 
         <portal to="actions">

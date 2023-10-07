@@ -964,6 +964,7 @@
             "edit_bank": "Bank balance",
             "edit_stocks": "Stocks balance",
             "balance_do": "Update balance",
+            "no_coords": "Last coords are unavailable while the player is online.",
             "reset_spawn": "Reset Spawn-Point",
             "sure_spawn": "Are you sure you want to reset this characters spawn-point?",
             "spawn_point": "Reset location",

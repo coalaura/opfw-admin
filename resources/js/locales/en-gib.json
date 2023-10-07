@@ -1044,7 +1044,8 @@
                 "fishing": "Fishing",
                 "weapon": "Weapon",
                 "mining": "Mining"
-            }
+            },
+            "no_coords": "Flarble flibbity floo flobble flibberish flobberish wobble wabble doobly-woobly."
         },
         "edit": {
             "born": "Burkay by <b>{0}</b>",
