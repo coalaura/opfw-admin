@@ -71,3 +71,18 @@ function redirectWith(string $path, string $type, string $message)
 
     return redirect($path);
 }
+
+function put_contents(string $filename, mixed $content, int $flags = 0): int|false
+{
+    $success = file_put_contents($filename, $content, $flags);
+
+    if (!$success) {
+        return false;
+    }
+
+    // Ensure correct file permissions
+    chmod($filename, 0755);
+    chown($filename, 'www-data');
+
+    return $success;
+}

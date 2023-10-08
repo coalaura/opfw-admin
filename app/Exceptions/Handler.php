@@ -110,10 +110,8 @@ class Handler extends ExceptionHandler
         $stack = get_class($exception) . ': ' . $exception->getMessage() . PHP_EOL . '        ' . implode(PHP_EOL . '        ', array_reverse($stack));
         $path = explode('?', isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '*')[0];
 
-        file_put_contents($log, '[' . $timestamp . '] ' . $path . PHP_EOL .
+        put_contents($log, '[' . $timestamp . '] ' . $path . PHP_EOL .
             '    ' . $stack . PHP_EOL . PHP_EOL, FILE_APPEND);
-
-        chmod($log, 0777);
 
         parent::report($exception);
     }

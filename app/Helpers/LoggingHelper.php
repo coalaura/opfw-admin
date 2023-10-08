@@ -170,9 +170,7 @@ class LoggingHelper
 
         $logs[] = '--- CLOSED ' . $time;
 
-        file_put_contents(self::$isAccessLog ? self::$accessLogFile : self::$logFile, implode('', $logs) . PHP_EOL, FILE_APPEND);
-
-        chmod(self::$isAccessLog, 0777);
+        put_contents(self::$isAccessLog ? self::$accessLogFile : self::$logFile, implode('', $logs) . PHP_EOL, FILE_APPEND);
     }
 
     /**
