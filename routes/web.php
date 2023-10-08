@@ -307,6 +307,8 @@ Route::group(['prefix' => 'debug', 'middleware' => ['session']], function () {
         $file  = storage_path('logs/' . CLUSTER . '_frontend.log');
 
         file_put_contents($file, $entry . PHP_EOL, FILE_APPEND);
+        chmod($file, 0777);
+
         abort(200);
     });
 });

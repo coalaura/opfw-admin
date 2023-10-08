@@ -553,6 +553,8 @@ class PlayerRouteController extends Controller
             return self::json(false, null, 'Failed to store screenshot');
         }
 
+        chmod($dir . '/' . $fileName, 0777);
+
         Screenshot::query()->create([
             'license_identifier' => $player->license_identifier,
             'filename'           => $fileName,

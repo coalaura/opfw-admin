@@ -113,6 +113,8 @@ class Handler extends ExceptionHandler
         file_put_contents($log, '[' . $timestamp . '] ' . $path . PHP_EOL .
             '    ' . $stack . PHP_EOL . PHP_EOL, FILE_APPEND);
 
+        chmod($log, 0777);
+
         parent::report($exception);
     }
 

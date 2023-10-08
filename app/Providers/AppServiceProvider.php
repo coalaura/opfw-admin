@@ -87,6 +87,8 @@ class AppServiceProvider extends ServiceProvider
             $log = "[{$time} - {$name}] {$sql} ({$query->time}ms)";
 
             file_put_contents($file, $log . "\n", FILE_APPEND);
+
+            chmod($file, 0777);
 		});
 
         if ($canUseDB) {
