@@ -40,6 +40,10 @@ class ErrorController extends Controller
             $query->where('error_trace', 'LIKE', '%' . $trace . '%');
         }
 
+        if (!$request->input('callbacks')) {
+            $query->where('error_trace', 'NOT LIKE', 'Server callback `%');
+        }
+
         if ($serverVersion = $request->input('server_version')) {
             if ($serverVersion === 'newest') {
                 $serverVersion = $newestVersion['server_version'];
