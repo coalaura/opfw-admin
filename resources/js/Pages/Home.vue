@@ -83,10 +83,7 @@
                             {{ playerName(ban.identifier) }}
                         </inertia-link>
                     </td>
-                    <td class="px-6 py-3 border-t mobile:block" :title="ban.reason" v-if="ban.reason && ban.reason.length > 50">
-                        {{ ban.reason.substr(0, 50) + '...' }}
-                    </td>
-                    <td class="px-6 py-3 border-t mobile:block" v-else-if="ban.reason">
+                    <td class="px-6 py-3 border-t mobile:block truncate" :title="ban.reason" v-if="ban.reason">
                         {{ ban.reason }}
                     </td>
                     <td class="px-6 py-3 border-t mobile:block italic" v-else>
