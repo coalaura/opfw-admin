@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#" style="background: rgb(17, 24, 39)">
+
+    <head>
+        <!-- Metadata -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="author" content="coalaura">
+        <meta name="description" content="OP-Framework - Admin Panel">
+
+        <!-- Open Graph Protocol -->
+        <meta property="og:title" content="OP-FW - Admin Panel">
+        <meta property="og:type" content="admin.fivem">
+        <meta property="og:image" content="/favicon.jpg">
+
+        <!-- Page title -->
+        <title>OP-FW - Admin</title>
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="/favicon.jpg">
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu+Mono&display=swap" rel="stylesheet">
+
+        <style>
+            html,
+            body {
+                background: #1a202c;
+                margin: 0;
+                height: 100%;
+                width: 100%;
+                font-family: 'Montserrat', sans-serif;
+                color: #a0aec0;
+                line-height: 1.5;
+            }
+
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #page {
+                padding: 2rem;
+                text-align: center;
+                position: relative;
+            }
+
+            #image {
+                width: 12rem;
+                position: absolute;
+                bottom: calc(100% - 1rem);
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .header {
+                font-size: 1.125rem;
+                letter-spacing: .05em;
+                display: flex;
+                text-transform: uppercase;
+            }
+
+            .header .code {
+                padding-right: 1rem;
+                border-right: 1px solid #cbd5e0;
+            }
+
+            .header .info {
+                padding-left: 1rem;
+            }
+
+            #stage {
+                font-size: 1.1rem;
+                line-height: 1.2rem;
+                letter-spacing: .2px;
+                margin-top: .75rem;
+                font-style: italic;
+            }
+
+            #stage span {
+                position: relative;
+            }
+
+            #stage span::after {
+                content: "";
+                position: absolute;
+                left: 100%;
+                bottom: 0;
+                display: block;
+                animation: dots 2s infinite;
+            }
+
+            #stage i {
+                display: block;
+                width: 100%;
+                font-size: .8rem;
+                margin-top: .25rem;
+            }
+
+            @keyframes dots {
+                0% {
+                    content: "";
+                }
+
+                16.6% {
+                    content: ".";
+                }
+
+                33.3% {
+                    content: "..";
+                }
+
+                50% {
+                    content: "...";
+                }
+
+                66.6% {
+                    content: "....";
+                }
+
+                83.3% {
+                    content: ".....";
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="page">
+            <img id="image" />
+
+            <div class="header">
+                <div class="code">418</div>
+                <div class="info">Maintenance</div>
+            </div>
+
+            <div id="stage"></div>
+        </div>
+
+        <script>
+            document.getElementById("image").src = `/images/maintenance/` + Math.ceil(Math.random() * 6) + `.gif`;
+
+            function since(time) {
+                const diff = Math.round(Date.now() / 1000) - time;
+
+                if (diff < 60) {
+                    return `${diff} seconds`;
+                }
+
+                const seconds = diff % 60;
+                const minutes = Math.floor(diff / 60) % 60;
+                const hours = Math.floor(diff / 3600);
+
+                let fmt = [];
+
+                hours > 0 && fmt.push(`${hours} hour${hours > 1 ? "s" : ""}`);
+                minutes > 0 && fmt.push(`${minutes} minute${minutes > 1 ? "s" : ""}`);
+                (seconds > 0 || fmt.length === 0) && fmt.push(`${seconds} second${seconds > 1 ? "s" : ""}`);
+
+                return fmt.join(", ");
+            }
+
+            async function update() {
+                try {
+                    const response = await fetch("/maintenance.json", {
+                        method: "GET",
+                        headers: {
+                            "Accept": "application/json"
+                        }
+                    });
+
+                    const data = await response.json();
+
+                    if (!data.status) {
+                        throw new Error("Invalid response");
+                    }
+
+                    document.getElementById("stage").innerHTML = `<span>${data.status}</span><i>since ${since(data.time)}</i>`;
+                } catch (e) {
+                    window.location.reload();
+
+                    return;
+                }
+
+                setTimeout(update, 1000);
+            }
+
+            update();
+        </script>
+    </body>
+
+</html>

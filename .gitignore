@@ -39,3 +39,5 @@ envs/root-config.json
 /*.tar.gz
 
 update-panels.exe~
+
+/update
