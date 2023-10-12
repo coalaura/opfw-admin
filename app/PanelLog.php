@@ -96,6 +96,27 @@ class PanelLog extends Model
     }
 
     /**
+     * Logs a character balance edit from the panel
+     *
+     * @param string $fromIdentifier
+     * @param string $toIdentifier
+     * @param string $character
+     * @param array $changedFields
+     */
+    public static function logCharacterBalanceEdit(string $fromIdentifier, string $toIdentifier, string $character, array $changedBalance)
+    {
+        if (empty($changedFields)) {
+            return;
+        }
+
+        $from = self::resolvePlayerLogName($fromIdentifier);
+        $to = self::resolvePlayerCharacterLogName($toIdentifier, $character);
+
+        $log = $from . ' edited the balance of ' . $to . ': `' . implode(', ', $changedFields) . '`';
+        self::createLog($fromIdentifier, $toIdentifier, $log, 'Character Balance Edit');
+    }
+
+    /**
      * Logs tattoo removals from the panel
      *
      * @param string $fromIdentifier

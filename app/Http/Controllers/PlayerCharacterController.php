@@ -416,11 +416,34 @@ class PlayerCharacterController extends Controller
             return backWith('error', 'Only super admins can edit a characters balance.');
         }
 
+        $changed = [];
+
+        if ($cash !== $character->cash) {
+            $diff = $cash - $character->cash;
+
+            $changed[] = ($diff > 0 ? '+' : '') . $diff . ' cash';
+        }
+
+        if ($bank !== $character->bank) {
+            $diff = $bank - $character->bank;
+
+            $changed[] = ($diff > 0 ? '+' : '') . $diff . ' bank';
+        }
+
+        if ($stocks !== $character->stocks_balance) {
+            $diff = $stocks - $character->stocks_balance;
+
+            $changed[] = ($diff > 0 ? '+' : '') . $diff . ' stocks';
+        }
+
         $character->update([
             'cash'           => $cash,
             'bank'           => $bank,
             'stocks_balance' => $stocks,
         ]);
+
+        $user = user();
+        PanelLog::logCharacterBalanceEdit($user->license_identifier, $player->license_identifier, $character->character_id, $changed);
 
         return backWith('success', 'Balance has been updated successfully.');
     }
