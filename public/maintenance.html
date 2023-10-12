@@ -142,6 +142,8 @@
         </div>
 
         <script>
+            let time;
+
             document.getElementById("image").src = `/images/maintenance/` + Math.ceil(Math.random() * 6) + `.gif`;
 
             function since(time) {
@@ -164,6 +166,10 @@
                 return fmt.join(", ");
             }
 
+            function updateTime() {
+                document.querySelector("#stage i").innerText = `since ${since(time)}`;
+            }
+
             async function update() {
                 try {
                     const response = await fetch("/maintenance.json", {
@@ -179,17 +185,23 @@
                         throw new Error("Invalid response");
                     }
 
-                    document.getElementById("stage").innerHTML = `<span>${data.status}</span><i>since ${since(data.time)}</i>`;
+                    time = data.time;
+
+                    document.getElementById("stage").innerHTML = `<span>${data.status}</span><i></i>`;
+
+                    updateTime();
                 } catch (e) {
                     window.location.reload();
 
                     return;
                 }
 
-                setTimeout(update, 1000);
+                setTimeout(update, 5000);
             }
 
             update();
+
+            setInterval(updateTime, 1000);
         </script>
     </body>
 
