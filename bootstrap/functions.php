@@ -86,3 +86,12 @@ function put_contents(string $filename, mixed $content, int $flags = 0): int|fal
 
     return $success;
 }
+
+function op_week_identifier(): int
+{
+    $weekZero = 1609113600;
+
+	$difference = time() - $weekZero;
+
+	return floor($difference / 604800);
+}

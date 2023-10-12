@@ -859,6 +859,8 @@
 			"metadata": "Status Info",
             "enabled_commands": "Enabled Commands",
             "last_connection": "Last Connected",
+            "recent_playtime": "Recent Playtime",
+            "recent_playtime_after": "~in the last 4 weeks",
             "average_ping": "Average ping to the server in milliseconds.",
             "average_fps": "Average fps (tracked once a second).",
 

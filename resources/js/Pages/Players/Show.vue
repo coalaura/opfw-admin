@@ -100,6 +100,11 @@
 
                         <a href="#" class="text-indigo-600 dark:text-indigo-400" @click="$event.preventDefault(); isEnablingCommands = true" v-if="$page.auth.player.isSuperAdmin">{{ t('players.show.edit') }}</a>
                     </span>
+                    <span class="block">
+                        <span class="font-bold">{{ t('players.show.recent_playtime') }}:</span>
+                        {{ formatSecondDiff(player.recentPlayTime) }}
+                        <span class="italic text-gray-600 dark:text-gray-400">{{ t('players.show.recent_playtime_after') }}</span>
+                    </span>
                     <span class="block" v-if="player.lastConnection">
                         <span class="font-bold">{{ t('players.show.last_connection') }}:</span>
                         {{ player.lastConnection | formatTime(true) }} ({{ $moment(player.lastConnection).fromNow() }})

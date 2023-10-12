@@ -106,6 +106,7 @@ class Player extends Model
         'total_joins'           => 'integer',
         'priority_level'        => 'integer',
         'panel_settings'        => 'array',
+        'weekly_playtime'       => 'array',
     ];
 
     /**
@@ -288,6 +289,24 @@ class Player extends Model
     public function getSafePlayerName(): string
     {
         return self::getFilteredPlayerName($this->player_name, $this->player_aliases, $this->license_identifier);
+    }
+
+    public function getRecentPlaytime(int $weeks): int
+    {
+        $after = op_week_identifier() - $weeks;
+        $playtime = 0;
+
+        $weeklyPlaytime = $this->weekly_playtime ?? [];
+
+        foreach($weeklyPlaytime as $week => $time) {
+            $week = intval($week);
+
+            if ($week >= $after) {
+                $playtime += $time;
+            }
+        }
+
+        return $playtime;
     }
 
     public static function resolveTags(bool $refreshCache = false): array
