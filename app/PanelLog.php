@@ -101,18 +101,18 @@ class PanelLog extends Model
      * @param string $fromIdentifier
      * @param string $toIdentifier
      * @param string $character
-     * @param array $changedFields
+     * @param array $changedBalance
      */
     public static function logCharacterBalanceEdit(string $fromIdentifier, string $toIdentifier, string $character, array $changedBalance)
     {
-        if (empty($changedFields)) {
+        if (empty($changedBalance)) {
             return;
         }
 
         $from = self::resolvePlayerLogName($fromIdentifier);
         $to = self::resolvePlayerCharacterLogName($toIdentifier, $character);
 
-        $log = $from . ' edited the balance of ' . $to . ': `' . implode(', ', $changedFields) . '`';
+        $log = $from . ' edited the balance of ' . $to . ': `' . implode(', ', $changedBalance) . '`';
         self::createLog($fromIdentifier, $toIdentifier, $log, 'Character Balance Edit', true);
     }
 
