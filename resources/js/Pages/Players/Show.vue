@@ -1174,9 +1174,11 @@
                 <table class="w-full mt-6">
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="py-2 px-4">{{ t('logs.action') }}</th>
+                        <th class="py-2 px-4">{{ t('logs.details') }}</th>
                         <th class="py-2 px-4">{{ t('logs.timestamp') }}</th>
                     </tr>
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="log in panelLogs" :key="log.id">
+                        <td class="py-2 px-4 border-t mobile:block">{{ log.action }}</td>
                         <td class="py-2 px-4 border-t mobile:block" v-html="formatPanelLog(log.log)"></td>
                         <td class="py-2 px-4 border-t w-60 mobile:block">{{ log.timestamp | formatTime(true) }}</td>
                     </tr>

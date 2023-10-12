@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Player;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -19,6 +18,7 @@ class PanelLogResource extends JsonResource
     {
         return [
             'id'        => $this->id,
+            'action'    => $this->action,
             'log'       => $this->log,
             'timestamp' => $this->timestamp,
         ];
