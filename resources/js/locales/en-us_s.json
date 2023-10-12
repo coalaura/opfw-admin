@@ -854,7 +854,9 @@
             "scheduled_details": "The ban's gonna be lifted on <b>{0}</b>.",
             "more_info": "Y'all wanna see more?",
             "less_info": "Y'all wanna see less?",
-            "last_connection": "Last time they was connected"
+            "last_connection": "Last time they was connected",
+            "recent_playtime": "Ruckant Playtime",
+            "recent_playtime_after": "~in the past 4 reckonin's"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

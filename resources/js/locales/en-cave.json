@@ -854,7 +854,9 @@
             "scheduled_details": "Ban is scheduled for removal on <b>{0}</b>.",
             "more_info": "More Big Talk",
             "less_info": "Less Big Talk",
-            "last_connection": "Last Grunt"
+            "last_connection": "Last Grunt",
+            "recent_playtime": "Ugga Playtime",
+            "recent_playtime_after": "~unga unga within last moon cycle"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

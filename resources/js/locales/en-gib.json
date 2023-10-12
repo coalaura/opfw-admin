@@ -863,7 +863,9 @@
             "meta_queue": "Bukele",
             "more_info": "Blibber Blabber",
             "less_info": "Wibber Wabber",
-            "last_connection": "Flibber Floober"
+            "last_connection": "Flibber Floober",
+            "recent_playtime": "Blubbery Porkshank",
+            "recent_playtime_after": "~boop blibber in the flibberbob"
         },
         "ban_reason": "Efoki",
         "ban_time": "Lujemuv",

@@ -854,7 +854,9 @@
             "scheduled_details": "🚫🗓️📅📆🕒🕑{0}",
             "more_info": "📚🔍",
             "less_info": "🔍",
-            "last_connection": "⏳🔗"
+            "last_connection": "⏳🔗",
+            "recent_playtime": "📅🕒",
+            "recent_playtime_after": "~📅🕓❗"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",
