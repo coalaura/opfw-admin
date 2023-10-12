@@ -418,22 +418,19 @@ class PlayerCharacterController extends Controller
 
         $changed = [];
 
-        if ($cash !== $character->cash) {
-            $diff = $cash - $character->cash;
-
-            $changed[] = ($diff > 0 ? '+' : '') . number_format($diff) . '$ cash';
+        $cashDiff = $cash - $character->cash;
+        if ($cashDiff !== 0) {
+            $changed[] = ($cashDiff > 0 ? '+' : '') . number_format($cashDiff) . '$ cash';
         }
 
-        if ($bank !== $character->bank) {
-            $diff = $bank - $character->bank;
-
-            $changed[] = ($diff > 0 ? '+' : '') . number_format($diff) . '$ bank';
+        $bankDiff = $bank - $character->bank;
+        if ($bankDiff !== 0) {
+            $changed[] = ($bankDiff > 0 ? '+' : '') . number_format($bankDiff) . '$ bank';
         }
 
-        if ($stocks !== $character->stocks_balance) {
-            $diff = $stocks - $character->stocks_balance;
-
-            $changed[] = ($diff > 0 ? '+' : '') . number_format($diff) . '$ stocks';
+        $stocksDiff = $stocks - $character->stocks_balance;
+        if ($stocksDiff !== 0) {
+            $changed[] = ($stocksDiff > 0 ? '+' : '') . number_format($stocksDiff) . '$ stocks';
         }
 
         $character->update([
