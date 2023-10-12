@@ -113,7 +113,7 @@ class PanelLog extends Model
         $to = self::resolvePlayerCharacterLogName($toIdentifier, $character);
 
         $log = $from . ' edited the balance of ' . $to . ': `' . implode(', ', $changedFields) . '`';
-        self::createLog($fromIdentifier, $toIdentifier, $log, 'Character Balance Edit');
+        self::createLog($fromIdentifier, $toIdentifier, $log, 'Character Balance Edit', true);
     }
 
     /**
