@@ -54,7 +54,12 @@ const KnownTypes = {
     "lastBelowGround": "ticks",
     "lastFalling": "ms",
     "lastFastMovement": "ticks",
-    "lastHighSpeed": "ms"
+    "lastHighSpeed": "ms",
+    "spawnTime": "ms"
+};
+
+const CustomFormatters = {
+    "closestBlip": data => `"${data.distance.toFixed(1)}m - ${data.label}"`
 };
 
 export default {
@@ -136,22 +141,25 @@ export default {
                 return `${ms}<span class="text-gray-400 ml-0.5">ms</span>`;
             }
 
+            let fmt = [];
+
             let seconds = Math.floor(ms / 1000).toString().padEnd(2, '0');
             ms = ms % 1000;
 
             let minutes = Math.floor(seconds / 60).toString().padEnd(2, '0');
             seconds = seconds % 60;
 
-            let fmt = seconds + (ms ? `.${ms.toString().padEnd(3, '0')}` : '') + '<span class="text-gray-400 ml-0.5">s</span>';
-
-            minutes && (fmt = minutes + '<span class="text-gray-400 ml-0.5">m</span> ' + fmt);
+            seconds > 0 && fmt.unshift(`${seconds}<span class="text-gray-400 ml-0.5">s</span>`);
 
             const hours = Math.floor(minutes / 60).toString().padEnd(2, '0');
             minutes = minutes % 60;
 
-            hours && (fmt = hours + '<span class="text-gray-400 ml-0.5">h</span> ' + fmt);
+            minutes > 0 && fmt.unshift(`${minutes}<span class="text-gray-400 ml-0.5">m</span>`);
+            hours > 0 && fmt.unshift(`${hours}<span class="text-gray-400 ml-0.5">h</span>`);
 
-            return fmt;
+            (ms > 0 || fmt.length === 0) && fmt.push(`${ms}<span class="text-gray-400 ml-0.5">ms</span>`);
+
+            return fmt.join(" ");
         },
         highlightJSON(object) {
             const isArray = Array.isArray(object),
@@ -178,6 +186,8 @@ export default {
                     } else {
                         value += `<span class="text-gray-400 ml-0.5">${type}</span>`;
                     }
+                } else if (key in CustomFormatters) {
+                    value = CustomFormatters[key](object[key]);
                 }
 
                 const line = isArray ? value : `<b>${key.padEnd(maxLine, " ")}</b>: ${value}`;
