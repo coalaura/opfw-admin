@@ -709,7 +709,7 @@ class PlayerRouteController extends Controller
                             $sec = floor($diff / 1000);
                             $ms = $diff % 1000;
 
-                            $diff = $sec . "s " . $ms . "ms";
+                            $diff = $sec . "s " . ($ms > 0 ? $ms . "ms" : "");
                         }
 
                         $list[] = "    <i style='color:rgba(255,179,179,.7);display:inline-block;margin:2px 0;line-height:1'>🡑 " . $diff . "</i>";
