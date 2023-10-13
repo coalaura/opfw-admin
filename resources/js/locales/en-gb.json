@@ -336,8 +336,6 @@
         "notify_license": "License identifier for the pricks",
         "notify_type": "Bloody type of notification",
         "no_notify": "No bleedin' notifications",
-        "historic_title": "Bloody Ancient Data",
-        "timestamp_title": "Bloody Timestamp Data",
         "timestamp_date": "Timestamp, innit",
         "historic_license": "Bloody License Identifier",
         "historic_resolve": "Fetch from and till from the ban timestamp, ya wanker.",
@@ -412,7 +410,9 @@
         "marker": "Bollocks! Marked the bleedin' position at {0}",
         "historic_fetch": "Bloody fetching this ancient bollocks...",
         "historic_parse": "Sodding parsing this useless old data...",
-        "historic_render": "Pissing about rendering this shite..."
+        "historic_render": "Pissing about rendering this shite...",
+        "historic_title": "Bloody track a wanker's buggerin' movements in a bleedin' certain time period",
+        "timestamp_title": "List all tossers who were online at a bleedin' certain time"
     },
     "nav": {
         "dark": "Bleedin' Dark",

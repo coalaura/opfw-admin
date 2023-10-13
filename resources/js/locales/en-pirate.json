@@ -336,8 +336,6 @@
         "notify_license": "License Mark",
         "notify_type": "Summonin' type",
         "no_notify": "No notifications, arrr!",
-        "historic_title": "Historic Tales",
-        "timestamp_title": "Timestamp Tales",
         "timestamp_date": "Time o' Stamp",
         "historic_license": "License Mark",
         "historic_resolve": "Fetch from and till from ban timestamp, ye scurvy dog.",
@@ -412,7 +410,9 @@
         "marker": "Marked spot at {0}",
         "historic_fetch": "Plunderin' Historic Data...",
         "historic_parse": "Decipherin' Historic Data...",
-        "historic_render": "Showcasing Data..."
+        "historic_render": "Showcasing Data...",
+        "historic_title": "Show a scurvy dog's wanderings in a certain time period",
+        "timestamp_title": "Show all scallywags who were sailin' the seas at a certain time"
     },
     "nav": {
         "dark": "Gloom",

@@ -336,8 +336,6 @@
         "notify_license": "License ID",
         "notify_type": "Type of Holler",
         "no_notify": "No hollers",
-        "historic_title": "Historical Data",
-        "timestamp_title": "Time Stamp Data",
         "timestamp_date": "Time Stamp",
         "historic_license": "License ID",
         "historic_resolve": "Go get 'em ban timestamp.",
@@ -412,7 +410,9 @@
         "marker": "Done marked 'er down at {0}",
         "historic_fetch": "Gittin' Historic Data...",
         "historic_parse": "Decodin' Historic Data...",
-        "historic_render": "Showin' Data..."
+        "historic_render": "Showin' Data...",
+        "historic_title": "Reckon the steps of one good ol' feller in a particular stretch o' time",
+        "timestamp_title": "Reveal all them fine folks who were online when the clock struck a certain hour"
     },
     "nav": {
         "dark": "Dim",

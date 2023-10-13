@@ -336,8 +336,6 @@
         "notify_license": "License Identifier unga",
         "notify_type": "Notification unga",
         "no_notify": "Ugh! No talk",
-        "historic_title": "Big History",
-        "timestamp_title": "Timestamps",
         "timestamp_date": "Moon-Sun Time",
         "historic_license": "License Stone Mark",
         "historic_resolve": "Get from and to from ban timestamp.",
@@ -412,7 +410,9 @@
         "marker": "Ugg-ugg position at {0}",
         "historic_fetch": "Me go get History Evolutions...",
         "historic_parse": "Me decipher Past Evolutions...",
-        "historic_render": "Me display the Data..."
+        "historic_render": "Me display the Data...",
+        "historic_title": "Show how one caveman move during specific time",
+        "timestamp_title": "Show all cavemen who were in tribe at specific time"
     },
     "nav": {
         "dark": "Uk-uk",

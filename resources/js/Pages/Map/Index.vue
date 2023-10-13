@@ -4,10 +4,11 @@
             <div class="mb-6">
                 <h1 class="dark:text-white flex items-middle gap-2">
                     <span id="map_title">{{ t('map.title') }}</span>
-                    <select class="inline-block w-90 ml-4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="server">
+
+                    <select class="inline-block w-20 h-9 ml-4 px-2 py-1 text-sm bg-gray-200 dark:bg-gray-600 border rounded" id="server">
                         <option v-for="server in servers" :key="server.name" :value="server.name">{{ server.name }}</option>
                     </select>
-                    <select class="inline-block w-40 ml-2 mr-2 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" v-model="selectedInstance">
+                    <select class="inline-block w-36 h-9 ml-2 mr-2 px-2 py-1 text-sm bg-gray-200 dark:bg-gray-600 border rounded" v-model="selectedInstance">
                         <option v-for="instance in container.instances" :key="instance.id" :value="instance.id">
                             {{ instance.id === container.mainInstance ? t('map.main_instance') : t('map.instance', instance.id, instance.count) }}
                         </option>
@@ -30,25 +31,21 @@
         <portal to="actions">
             <div class="flex gap-2">
                 <!-- Show Timestamp -->
-                <button class="px-5 py-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isTimestamp = true" v-if="this.perm.check(this.perm.PERM_ADVANCED)">
+                <button class="p-2 w-11 text-center font-semibold text-white rounded bg-blue-600 dark:bg-blue-500" :title="t('map.timestamp_title')" @click="isTimestamp = true" v-if="this.perm.check(this.perm.PERM_ADVANCED)">
                     <i class="fas fa-vial"></i>
-                    {{ t('map.timestamp_title') }}
                 </button>
 
                 <!-- Show Historic -->
-                <button class="px-5 py-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="showHistoric()" v-if="this.perm.check(this.perm.PERM_ADVANCED)">
+                <button class="p-2 w-11 text-center font-semibold text-white rounded bg-blue-600 dark:bg-blue-500" :title="t('map.historic_title')" @click="showHistoric()" v-if="this.perm.check(this.perm.PERM_ADVANCED)">
                     <i class="fas fa-map"></i>
-                    {{ t('map.historic_title') }}
                 </button>
 
                 <!-- Play/Pause -->
-                <button class="px-5 py-2 font-semibold text-white rounded bg-green-600 dark:bg-green-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isPaused = true" v-if="!isPaused && !isTimestampShowing && !isHistoricShowing">
+                <button class="p-2 w-11 text-center font-semibold text-white rounded bg-green-600 dark:bg-green-500" :title="t('map.pause')" @click="isPaused = true" v-if="!isPaused && !isTimestampShowing && !isHistoricShowing">
                     <i class="fas fa-pause"></i>
-                    {{ t('map.pause') }}
                 </button>
-                <button class="px-5 py-2 font-semibold text-white rounded bg-red-600 dark:bg-red-500 mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="isPaused = false" v-if="isPaused && !isTimestampShowing && !isHistoricShowing">
+                <button class="p-2 w-11 text-center font-semibold text-white rounded bg-red-600 dark:bg-red-500" :title="t('map.play')" @click="isPaused = false" v-if="isPaused && !isTimestampShowing && !isHistoricShowing">
                     <i class="fas fa-play"></i>
-                    {{ t('map.play') }}
                 </button>
             </div>
         </portal>
@@ -195,11 +192,11 @@
                         </div>
                         <div class="mx-2">
                             <img src="/images/icons/circle_police.png" class="w-map-icon inline-block" alt="police" />
-                            <span class="leading-map-icon">on duty (police)</span>
+                            <span class="leading-map-icon">police</span>
                         </div>
                         <div class="mx-2">
                             <img src="/images/icons/circle_ems.png" class="w-map-icon inline-block" alt="ems" />
-                            <span class="leading-map-icon">on duty (ems)</span>
+                            <span class="leading-map-icon">ems</span>
                         </div>
                     </div>
                 </div>

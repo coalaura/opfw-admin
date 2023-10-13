@@ -336,8 +336,6 @@
         "notify_license": "License Noodlewhack",
         "notify_type": "Flimflam type",
         "no_notify": "Flerm flergams",
-        "historic_title": "Lukrabar Giberish",
-        "timestamp_title": "Tajil Giberish",
         "timestamp_date": "Dalto Giberish",
         "historic_license": "Dalto",
         "historic_resolve": "Joklat Ganbilisku",
@@ -412,7 +410,9 @@
         "marker": "doodle doodle babble babble at babble doodle",
         "historic_fetch": "Swizni Frablib Fetching...",
         "historic_parse": "Glibbly Bliznart Parsing...",
-        "historic_render": "Wibbly Wobblin Data..."
+        "historic_render": "Wibbly Wobblin Data...",
+        "historic_title": "Flibbershabber the flibberishooble glibbers in a zippity doodah flipperywhop",
+        "timestamp_title": "Jibberflibbers quuzlump junkers who jabbled in a dippity flop"
     },
     "nav": {
         "dark": "booboogoo",

@@ -336,8 +336,6 @@
         "notify_license": "🔑📄",
         "notify_type": "📢🔢",
         "no_notify": "🚫📢",
-        "historic_title": "📜📈",
-        "timestamp_title": "⏰📈",
         "timestamp_date": "⏰📅",
         "historic_license": "🆔",
         "historic_resolve": "🔍 🔙 🔙 train ️🔙 🕙 ⏰.",
@@ -412,7 +410,9 @@
         "marker": "📍 at {0}",
         "historic_fetch": "🔍📜📥",
         "historic_parse": "📖🗒️📝",
-        "historic_render": "🎨📊🖼️"
+        "historic_render": "🎨📊🖼️",
+        "historic_title": "📜🚶‍♂️🗓️ - 📏🚶‍♀️🏃‍♂️🤔",
+        "timestamp_title": "⌛️🔝🕓🌍- 🗓🤷‍♂️🚶‍♂️👥"
     },
     "nav": {
         "dark": "🌑",
