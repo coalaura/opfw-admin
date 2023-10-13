@@ -68,7 +68,7 @@
                         <td class="p-3 mobile:block">{{ player.playerName }}</td>
                         <td class="p-3 mobile:block">{{ formatSecondDiff(player.playTime) }}</td>
                         <td class="p-3 mobile:block">
-                            <span v-if="player.character && player.character.danny !== false">
+                            <span v-if="player.character && player.character.danny !== false" :style="dannyColor(player.character.danny)">
                                 {{ (player.character.danny * 100).toFixed(1) }}% Default Danny
                             </span>
                             <span v-else>
@@ -182,6 +182,13 @@ export default {
         },
         escapeHTML(text) {
             return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        },
+        dannyColor(danny) {
+            const h = (1 - danny) * 120;
+
+            return {
+                color: `hsl(${h}, 90%, 60%)`
+            };
         },
         getPlayerList() {
             const sortBy = this.sorting || 'playtime';
