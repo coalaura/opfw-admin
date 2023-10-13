@@ -187,7 +187,7 @@ export default {
             const h = (1 - danny) * 120;
 
             return {
-                color: this.isDarkMode() ? `hsl(${h}, 90%, 68%)` : `hsl(${h}, 75%, 55%)`
+                color: this.isDarkMode() ? `hsl(${h}, 90%, 65%)` : `hsl(${h}, 75%, 55%)`
             };
         },
         getPlayerList() {
