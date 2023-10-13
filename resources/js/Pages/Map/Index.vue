@@ -188,7 +188,7 @@
                         </div>
                         <div class="mx-2">
                             <img src="/images/icons/skull_red.png" class="w-map-icon inline-block" alt="dead passenger" />
-                            <span class="leading-map-icon">dead and a passenger</span>
+                            <span class="leading-map-icon">dead (passenger)</span>
                         </div>
                         <div class="mx-2">
                             <img src="/images/icons/circle_police.png" class="w-map-icon inline-block" alt="police" />
