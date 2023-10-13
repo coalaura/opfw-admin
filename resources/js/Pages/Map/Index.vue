@@ -20,7 +20,7 @@
                     <span class="block text-xxs text-muted dark:text-dark-muted mt-0 leading-3" v-if="lastConnectionError">
                         {{ lastConnectionError }}
                     </span>
-                    <span class="block text-xs text-muted dark:text-dark-muted leading-3 mt-2">
+                    <span class="block text-xs text-muted dark:text-dark-muted leading-3 mt-2" v-if="activeViewers.length > 0">
                         <b>{{ t('map.current_viewers') }}: </b>
                         <span v-html="formatViewers()"></span>
                     </span>
