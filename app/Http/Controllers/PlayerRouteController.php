@@ -640,12 +640,20 @@ class PlayerRouteController extends Controller
             $names = Player::fetchLicensePlayerNameMap($logs, 'license_identifier');
 
             $logs = array_map(function ($log) {
-                $log["weapon_type"]   = WeaponDamageEvent::getDamageWeapon($log["weapon_type"]);
-                $log["damage_type"]   = WeaponDamageEvent::getDamageType($log["damage_type"]);
-                $log["hit_component"] = WeaponDamageEvent::getHitComponent($log["hit_component"]);
+                $log["weapon_type"]        = WeaponDamageEvent::getDamageWeapon($log["weapon_type"]);
+                $log["damage_type"]        = WeaponDamageEvent::getDamageType($log["damage_type"]);
+                $log["hit_component"]      = WeaponDamageEvent::getHitComponent($log["hit_component"]);
                 $log["action_result_name"] = WeaponDamageEvent::getActionName($log["action_result_name"]);
 
                 $log["distance"] = number_format($log["distance"], 2) . "m";
+
+                if (!isset($log["timestamp"])) {
+                    $log["timestamp"] = round($log["timestamp_ms"] / 1000);
+                }
+
+                if (!isset($log["timestamp_ms"])) {
+                    $log["timestamp_ms"] = $log["timestamp"] * 1000;
+                }
 
                 return $log;
             }, $logs);
@@ -666,7 +674,7 @@ class PlayerRouteController extends Controller
 
             $lastDate = false;
 
-            foreach ($logs as $log) {
+            foreach ($logs as $index => $log) {
                 $date = date('D, jS M Y', $log["timestamp"]);
                 $time = '<i style="color:#ffb3b3">' . date('H:i:s', $log["timestamp"]) . '</i>';
 
@@ -683,12 +691,29 @@ class PlayerRouteController extends Controller
                 $damage    = '<span style="color:#b3ffd9" title="weapon_damage">' . str_pad($log["weapon_damage"] . "hp", 5) . '</span>';
                 $component = '<span style="color:#b3f6ff" title="hit_component">' . str_pad($log["hit_component"], $maxComponent) . '</span>';
                 $distance  = '<span style="color:#b3c6ff" title="distance">' . str_pad($log["distance"], $maxDistance) . '</span>';
-                $type = '<span style="color:#cfb3ff" title="damage_type">' . str_pad($log["damage_type"], $maxType) . '</span>';
-
-                $isNoneAction = $log["action_result_name"] === "none";
-                $action = '<span style="color:' . ($isNoneAction ? '#ff7070' : '#ffb3ff') . '" title="action_result_name">' . $log["action_result_name"] . '</span>';
+                $type      = '<span style="color:#cfb3ff" title="damage_type">' . str_pad($log["damage_type"], $maxType) . '</span>';
+                $action    = '<span style="color:#ffb3ff" title="action_result_name">' . $log["action_result_name"] . '</span>';
 
                 $list[] = "  " . $time . "    " . $name . "    " . $weapon . "    " . $damage . "    " . $component . "    " . $distance . "    " . $type . "    " . $action;
+
+                $next = $logs[$index + 1] ?? false;
+
+                if ($next) {
+                    $diff = $log["timestamp_ms"] - $next["timestamp_ms"];
+
+                    if ($diff <= 10000) {
+                        if ($diff < 1000) {
+                            $diff .= "ms";
+                        } else {
+                            $sec = floor($diff / 1000);
+                            $ms = $diff % 1000;
+
+                            $diff = $sec . "s " . $ms . "ms";
+                        }
+
+                        $list[] = "    <i style='color:rgba(255,179,179,.7);display:inline-block;margin:2px 0;line-height:1'>🡑 " . $diff . "</i>";
+                    }
+                }
             }
         } else {
             $list[] = 'No damage logs found';
