@@ -603,7 +603,7 @@ class PlayerRouteController extends Controller
 
         $logs = WeaponDamageEvent::getDamaged($player->license_identifier, $includeNPCs);
 
-        return $this->renderDamageLogs("Who damaged", $player, $logs, false, false);
+        return $this->renderDamageLogs("🡐 🡐 🡐", "Who damaged", $player, $logs, false, false);
     }
 
     /**
@@ -629,10 +629,10 @@ class PlayerRouteController extends Controller
 
         $logs = WeaponDamageEvent::getDamageDealtTo($player->license_identifier, $includeNPCs);
 
-        return $this->renderDamageLogs("Who was damaged by", $player, $logs, $includeNPCs, true);
+        return $this->renderDamageLogs("🡒 🡒 🡒", "Who was damaged by", $player, $logs, $includeNPCs, true);
     }
 
-    private function renderDamageLogs($title, $player, $logs, $includeNPCs, $showNPCToggle)
+    private function renderDamageLogs($type, $title, $player, $logs, $includeNPCs, $showNPCToggle)
     {
         $list = [];
 
@@ -679,7 +679,8 @@ class PlayerRouteController extends Controller
                 $time = '<i style="color:#ffb3b3">' . date('H:i:s', $log["timestamp"]) . '</i>';
 
                 if ($lastDate !== $date) {
-                    $list[] = "\n<b style='border-bottom: 1px dashed #fff;margin: 10px 0 5px;display: inline-block;'>- - - " . $date . " - - -</b>";
+                    $list[] = "\n<b style='border-bottom:1px dashed #fff;margin-top:10px;display:inline-block'>- - - " . $date . " - - -</b>";
+                    $list[] = "<i style='color:rgba(215,215,215,.7);line-height:1;margin-bottom:5px;display:inline-block'>" . $type . "</i>";
 
                     $lastDate = $date;
                 }
