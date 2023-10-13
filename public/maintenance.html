@@ -191,6 +191,8 @@
 
                     updateTime();
                 } catch (e) {
+                    if (window.location.href.endsWith("maintenance.html")) return;
+
                     window.location.reload();
 
                     return;
