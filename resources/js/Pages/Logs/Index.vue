@@ -160,7 +160,7 @@
 			<template>
 				<table class="w-full whitespace-no-wrap">
 					<tr class="font-semibold text-left mobile:hidden">
-						<th class="p-3 pl-8">{{ t('logs.player') }}</th>
+						<th class="p-3 pl-8 max-w-56">{{ t('logs.player') }}</th>
 						<th class="p-3 whitespace-nowrap">{{ t('logs.server_id') }}</th>
 						<th class="p-3">{{ t('logs.action') }}</th>
 						<th class="p-3">{{ t('logs.details') }}</th>
@@ -172,10 +172,10 @@
 						</th>
 					</tr>
 					<tr class="border-t border-gray-300 dark:border-gray-500 relative" :class="getLogColor(log.action, log.metadata)" v-for="(log, index) in logs" :key="log.id">
-						<td class="p-3 pl-8 mobile:block">
+						<td class="p-3 pl-8 mobile:block max-w-56">
 							<div class="absolute top-1 left-1 text-sm leading-3 font-semibold italic" v-html="getLogTag(log.action, log.metadata)"></div>
 
-							<inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.licenseIdentifier">
+							<inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.licenseIdentifier">
 								{{ playerName(log.licenseIdentifier) }}
 							</inertia-link>
 						</td>

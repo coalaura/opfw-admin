@@ -33,7 +33,7 @@
             <template>
                 <table class="w-full whitespace-no-wrap">
                     <tr class="font-semibold text-left mobile:hidden">
-                        <th class="p-3 pl-8 w-56">{{ t('screenshot.player') }}</th>
+                        <th class="p-3 pl-8 max-w-56">{{ t('screenshot.player') }}</th>
                         <th class="p-3 w-40">{{ t('screenshot.screenshot') }}</th>
                         <th class="p-3">{{ t('screenshot.note') }}</th>
                         <th class="p-3 w-32">{{ t('screenshot.ban_status') }}</th>
@@ -41,8 +41,8 @@
                     </tr>
                     <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" :class="{ 'new-entry': screenshot.new }" v-for="screenshot in list" :key="screenshot.url">
                         <template v-if="screenshot.isBan">
-                            <td class="p-3 pl-8 text-center mobile:block">
-                                <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-red-600 rounded dark:bg-red-400" :href="'/players/' + screenshot.license_identifier">
+                            <td class="p-3 pl-8 text-center mobile:block max-w-56">
+                                <inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-red-600 rounded dark:bg-red-400" :href="'/players/' + screenshot.license_identifier">
                                     {{ screenshot.player_name }}
                                 </inertia-link>
                             </td>
@@ -54,8 +54,8 @@
                             </td>
                         </template>
                         <template v-else>
-                            <td class="p-3 pl-8 mobile:block w-56">
-                                <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + screenshot.license_identifier">
+                            <td class="p-3 pl-8 mobile:block max-w-56">
+                                <inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + screenshot.license_identifier">
                                     {{ screenshot.player_name }}
                                 </inertia-link>
                             </td>
