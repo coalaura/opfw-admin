@@ -632,7 +632,7 @@ class PlayerRouteController extends Controller
         return $this->renderDamageLogs("🡒 🡒 🡒", "Who was damaged by", $player, $logs, $includeNPCs, true);
     }
 
-    private function renderDamageLogs($type, $title, $player, $logs, $includeNPCs, $showNPCToggle)
+    private function renderDamageLogs($direction, $title, $player, $logs, $includeNPCs, $showNPCToggle)
     {
         $list = [];
 
@@ -680,7 +680,7 @@ class PlayerRouteController extends Controller
 
                 if ($lastDate !== $date) {
                     $list[] = "\n<b style='border-bottom:1px dashed #fff;margin-top:10px;display:inline-block'>- - - " . $date . " - - -</b>";
-                    $list[] = "<i style='color:rgba(215,215,215,.7);line-height:1;margin-bottom:5px;display:inline-block'>" . $type . "</i>";
+                    $list[] = "<i style='color:rgba(215,215,215,.7);line-height:1;margin-bottom:5px;display:inline-block'>" . $direction . "</i>";
 
                     $lastDate = $date;
                 }
