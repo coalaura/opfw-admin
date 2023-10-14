@@ -146,7 +146,7 @@
                             <p class="italic">{{ info.type }}</p>
                         </div>
 
-                        <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm">{{ info.value }}</pre>
+                        <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm" v-html="info.value"></pre>
                     </div>
                 </template>
             </template>
@@ -392,12 +392,22 @@ export default {
             this.showingDebugInfo = true;
 
             try {
+                const start = Date.now();
+
                 const debugInfo = await axios.get('/api/debug');
+
+                let time = Date.now() - start;
 
                 const data = debugInfo.data;
 
                 if (data.status && data.data) {
-                    this.debugInfo = Object.entries(data.data).map(([key, value]) => {
+                    time -= Math.floor(data.data.time * 1000);
+
+                    this.debugInfo = Object.entries(data.data.info).map(([key, value]) => {
+                        if (!value || value === "unavailable") {
+                            value = `<span class="text-red-600 dark:text-red-400 italic">${value}</span>`;
+                        }
+
                         return {
                             key: key,
                             value: value,
@@ -407,6 +417,12 @@ export default {
 
                     this.debugInfo.sort((a, b) => {
                         return a.key.localeCompare(b.key);
+                    });
+
+                    this.debugInfo.unshift({
+                        key: 'Ping Pong',
+                        value: time + 'ms',
+                        type: 'number'
                     });
                 } else {
                     this.debugInfo = false;

@@ -26,21 +26,28 @@ class ApiController extends Controller
 
     public function debug(Request $request): Response
     {
+        $debugStart = microtime(true);
+
         if (!$this->isRoot($request)) {
             abort(401);
         }
 
+        // Database connection test
         $start = microtime(true);
-        DB::select(DB::raw("SELECT 1"));
-        $selectTime = round((microtime(true) - $start) * 1000);
+        $one = DB::select(DB::raw("SELECT 1 as one"));
+        $selectTime = $this->formatMilliseconds(round((microtime(true) - $start) * 1000));
 
-        $server     = Server::getFirstServer();
-        $serverTime = null;
+        if (!$one || $one[0]->one !== 1) {
+            $selectTime = "unavailable";
+        }
 
-        if ($server) {
-            $start = microtime(true);
-            GeneralHelper::get($server . 'api.json');
-            $serverTime = round((microtime(true) - $start) * 1000);
+        // Server API test
+        $start = microtime(true);
+        $api = OPFWHelper::getApiJSON(Server::getFirstServer());
+        $serverTime = $this->formatMilliseconds(round((microtime(true) - $start) * 1000));
+
+        if (!$api) {
+            $serverTime = "unavailable";
         }
 
         $data = [
@@ -48,14 +55,17 @@ class ApiController extends Controller
             'userAgent'      => $request->userAgent(),
             'fingerprint'    => $request->fingerprint(),
 
-            'SELECT 1'       => $this->formatMilliseconds($selectTime),
-            '/api.json'      => $this->formatMilliseconds($serverTime),
+            'SELECT 1'       => $selectTime,
+            '/api.json'      => $serverTime,
 
             'accept'         => $request->header('accept'),
             'acceptLanguage' => $request->header('accept-language'),
             'acceptEncoding' => $request->header('accept-encoding'),
         ];
 
-        return $this->json(true, $data);
+        return $this->json(true, [
+            'time' => microtime(true) - $debugStart,
+            'info' => $data
+        ]);
     }
 }

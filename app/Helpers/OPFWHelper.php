@@ -446,6 +446,25 @@ class OPFWHelper
     }
 
     /**
+     * Gets the api.json
+     *
+     * @param string $serverIp
+     * @return array|null
+     */
+    public static function getApiJSON(string $serverIp): ?array
+    {
+        $serverIp = Server::fixApiUrl($serverIp);
+
+        $data = self::executeRoute($serverIp, $serverIp . 'api.json', [], 'GET', 1);
+
+        if (!$data->status) {
+            return null;
+        }
+
+        return $data->data;
+    }
+
+    /**
      * Creates a screenshot
      *
      * @param string $serverIp
