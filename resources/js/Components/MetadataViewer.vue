@@ -186,7 +186,7 @@ export default {
                     } else {
                         value += `<span class="text-gray-400 ml-0.5">${type}</span>`;
                     }
-                } else if (key in CustomFormatters) {
+                } else if (key in CustomFormatters && object[key]) {
                     value = CustomFormatters[key](object[key]);
                 }
 
