@@ -53,8 +53,9 @@
                 <p v-else-if="$page.discord" class="italic font-semibold">{{ $page.discord.username }}#{{ $page.discord.discriminator }}</p>
 
                 <div class="w-avatar relative" @contextmenu="showContext" v-click-outside="hideContext">
-                    <inertia-link :href="'/players/' + $page.auth.player.licenseIdentifier">
-                        <img :src="getDiscordAvatar()" class="rounded shadow border-2 border-gray-300" @error="failedDiscordAvatar" />
+                    <inertia-link :href="'/players/' + $page.auth.player.licenseIdentifier" @mouseenter="hoveringAvatar = true" @mouseleave="hoveringAvatar = false">
+                        <img :src="getDiscordAvatar('webp')" class="rounded shadow border-2 border-gray-300" :class="showingContext || hoveringAvatar ? 'hidden' : ''" @error="failedDiscordAvatar" />
+                        <img :src="getDiscordAvatar('gif')" class="rounded shadow border-2 border-gray-300" :class="showingContext || hoveringAvatar ? '' : 'hidden'" @error="failedDiscordAvatar" rel="preload" />
                     </inertia-link>
 
                     <div v-if="showingContext" class="absolute top-full right-0 bg-gray-700 rounded border-2 border-gray-500 min-w-context mt-1 shadow-md z-10 text-sm text-white">
@@ -267,7 +268,9 @@ export default {
 
             gameTime: false,
             gameTimeUpdated: false,
-            now: false
+            now: false,
+
+            hoveringAvatar: false
         }
     },
     mounted() {
@@ -337,14 +340,14 @@ export default {
                     return 'earth-america.png';
             }
         },
-        getDiscordAvatar() {
+        getDiscordAvatar(ext) {
             if (this.failedAvatarLoad) return '/images/discord_failed.png';
 
             const discord = this.$page.discord;
 
             if (!discord || !discord.id) return '/images/discord.webp';
 
-            return `https://cdn.discordapp.com/avatars/${discord.id}/${discord.avatar}.png`;
+            return `https://cdn.discordapp.com/avatars/${discord.id}/${discord.avatar}.${ext}`;
         },
         failedDiscordAvatar() {
             this.failedAvatarLoad = true;
