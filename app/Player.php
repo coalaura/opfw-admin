@@ -212,6 +212,8 @@ class Player extends Model
                 $value = '';
             }
 
+            $previous = $settings[$key] ?? null;
+
             if ($value !== '') {
                 if (!filter_var($value, FILTER_VALIDATE_URL)) {
                     return false;
@@ -219,6 +221,16 @@ class Player extends Model
 
                 if (!preg_match('/^https:\/\/[^\s?]+?\.(png|jpe?g|webp)(\?[^\s]*)?$/mi', $value)) {
                     return false;
+                }
+
+                $path = explode('?', $value)[0];
+                $ext = explode('.', $path);
+                $ext = strtolower(end($ext));
+
+                $value = '/_uploads/' . md5(strtolower($path)) . '.' . $ext;
+
+                if ($previous === $value) {
+                    return true;
                 }
 
                 try {
@@ -236,14 +248,9 @@ class Player extends Model
                     mkdir($dir, 0777, true);
                 }
 
-                $ext = explode('.', explode('?', $value)[0]);
-                $ext = strtolower(end($ext));
-
-                $value = '/_uploads/' . md5($value) . '.' . $ext;
                 file_put_contents(public_path($value), $data);
             }
 
-            $previous = $settings[$key] ?? null;
             if ($previous && preg_match('/^\/_uploads\/[a-f0-9]+\.(png|jpe?g|webp)$/mi', $previous)) {
                 $file = public_path($previous);
 
