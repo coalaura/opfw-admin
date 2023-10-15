@@ -199,12 +199,12 @@ class Player extends Model
         "~bold~",
     ];
 
-    public function setPanelSetting(string $key, $value): bool
+    public function setPanelSetting(string $key, $value)
     {
         $info = self::PlayerSettings[$key] ?? null;
 
         if (!$info) {
-            return false;
+            throw new Exception('Invalid settings key: ' . $key);
         }
 
         $settings = $this->panel_settings ?? [];
@@ -220,31 +220,33 @@ class Player extends Model
 
             if ($value !== '') {
                 if (!filter_var($value, FILTER_VALIDATE_URL)) {
-                    return false;
+                    throw new Exception('Input is not a valid URL.');
                 }
 
                 if (!preg_match('/^https:\/\/[^\s?]+?\.(png|jpe?g|webp)(\?[^\s]*)?$/mi', $value)) {
-                    return false;
+                    throw new Exception('URL is not a valid image.');
                 }
 
-                $path = explode('?', $value)[0];
+                $url = $value;
+
+                $path = explode('?', $url)[0];
                 $ext  = explode('.', $path);
                 $ext  = strtolower(end($ext));
 
                 $value = '/_uploads/' . md5(strtolower($path)) . '.' . $ext;
 
                 if ($previous === $value) {
-                    return true;
+                    return;
                 }
 
                 try {
-                    $data = file_get_contents($value);
+                    $data = file_get_contents($url);
 
                     if (!$data) {
-                        return false;
+                        throw new Exception('Failed to download image.');
                     }
                 } catch (Exception $ex) {
-                    return false;
+                    throw new Exception('Failed to download image: ' . $ex->getMessage());
                 }
 
                 $dir = public_path('/_uploads/');
@@ -263,11 +265,11 @@ class Player extends Model
                 }
             }
         } else if (gettype($value) !== $expected) {
-            return false;
+            throw new Exception('Invalid input type, expected ' . $expected . '.');
         }
 
         if (isset($info['options']) && !isset($info['options'][$value])) {
-            return false;
+            throw new Exception('Input is not a valid option.');
         }
 
         $settings[$key] = $value;
@@ -275,8 +277,6 @@ class Player extends Model
         $this->update([
             'panel_settings' => $settings,
         ]);
-
-        return true;
     }
 
     public function getPanelSetting(string $key)

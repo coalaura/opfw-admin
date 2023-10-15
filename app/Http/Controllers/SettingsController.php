@@ -40,9 +40,17 @@ class SettingsController extends Controller
 
         $value = $request->input('value');
 
-        $success = $user->setPanelSetting($key, $value);
+        $success = true;
+        $error = '';
 
-        return $this->json($success, $user->getPanelSetting($key));
+        try {
+            $user->setPanelSetting($key, $value);
+        } catch (\Exception $e) {
+            $success = false;
+            $error = $e->getMessage();
+        }
+
+        return $this->json($success, $user->getPanelSetting($key), $error);
     }
 
 }
