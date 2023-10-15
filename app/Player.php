@@ -231,7 +231,9 @@ class Player extends Model
                     mkdir($dir, 0777, true);
                 }
 
-                $value = '/_uploads/' . md5($value) . '.' . pathinfo($value, PATHINFO_EXTENSION);
+                $ext = strtolower(pathinfo(explode('?', $value)[0]));
+
+                $value = '/_uploads/' . md5($value) . '.' . $ext;
                 file_put_contents(public_path($value), $data);
             }
 
