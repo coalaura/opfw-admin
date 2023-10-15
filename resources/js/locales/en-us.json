@@ -91,6 +91,7 @@
         "delete_session": "Kill Session",
         "settings": "Settings",
 
+        "banner": "Page Banner (only for you)",
         "parseLogs": "Parse Logs (Highlighting, etc.)",
         "expandCollapsed": "Auto-Expand Collapsed (Notes, etc.)",
         "expandSidenav": "Always fully expand the Side-Navigation",

@@ -117,6 +117,10 @@ class Player extends Model
     private $ban = false;
 
     const PlayerSettings = [
+        "banner"       => [
+            "type"    => "url",
+            "default" => "",
+        ],
         "parseLogs"       => [
             "type"    => "boolean",
             "default" => true,
@@ -199,15 +203,53 @@ class Player extends Model
             return false;
         }
 
-        if (gettype($value) !== $info['type']) {
+        $settings = $this->panel_settings ?? [];
+
+        $expected = $info['type'];
+
+        if ($expected === 'url') {
+            if (!$value) {
+                $value = '';
+            }
+
+            if ($value !== '') {
+                if (!filter_var($value, FILTER_VALIDATE_URL)) {
+                    return false;
+                }
+
+                if (!preg_match('/^https:\/\/[^\s?]+?\.(png|jpe?g|webp)(\?[^\s]*)?$/mi', $value)) {
+                    return false;
+                }
+
+                $data = file_get_contents($value);
+                if (!$data) {
+                    return false;
+                }
+
+                $dir = public_path('/_uploads/');
+                if (!file_exists($dir)) {
+                    mkdir($dir, 0777, true);
+                }
+
+                $value = '/_uploads/' . md5($value) . '.' . pathinfo($value, PATHINFO_EXTENSION);
+                file_put_contents(public_path($value), $data);
+            }
+
+            $previous = $settings[$key] ?? null;
+            if ($previous && preg_match('/^\/_uploads\/[a-f0-9]+\.(png|jpe?g|webp)$/mi', $previous)) {
+                $file = public_path($previous);
+
+                if (file_exists($file)) {
+                    unlink($file);
+                }
+            }
+        } else if (gettype($value) !== $expected) {
             return false;
         }
 
         if (isset($info['options']) && !isset($info['options'][$value])) {
             return false;
         }
-
-        $settings = $this->panel_settings ?? [];
 
         $settings[$key] = $value;
 
@@ -218,17 +260,26 @@ class Player extends Model
         return true;
     }
 
-    public function getPanelSettings(): array
+    public function getPanelSetting(string $key)
     {
         $settings = $this->panel_settings ?? [];
 
+        $setting = self::PlayerSettings[$key] ?? null;
+
+        if (!$setting) {
+            return null;
+        }
+
+        return isset($settings[$key]) ? $settings[$key] : $setting['default'];
+    }
+
+    public function getPanelSettings(): array
+    {
         $list = [];
 
         foreach (self::PlayerSettings as $key => $setting) {
-            $value = isset($settings[$key]) ? $settings[$key] : $setting['default'];
-
             $list[$key] = [
-                'value'   => $value,
+                'value'   => $this->getPanelSetting($key),
                 'type'    => $setting['type'],
                 'options' => $setting['options'] ?? false,
             ];

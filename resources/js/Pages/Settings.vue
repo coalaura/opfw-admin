@@ -147,6 +147,10 @@ export default {
 
                 if (!response.data.status) {
                     alert(response.data.message || 'An error occurred while saving the setting');
+                } else {
+                    this.$page.auth.settings[key].value = response.data.data;
+
+                    this.$bus.$emit('settingsUpdated');
                 }
 
                 if (key === 'locale') {

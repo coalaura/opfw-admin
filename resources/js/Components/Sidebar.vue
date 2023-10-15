@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col w-72 px-3 py-10 pt-2 overflow-y-auto font-semibold text-white bg-indigo-900 mobile:w-full mobile:py-4" :class="{ 'w-10': collapsed }">
+    <div class="flex flex-col w-72 px-3 py-10 pt-2 overflow-y-auto font-semibold text-white bg-gray-900v mobile:w-full mobile:py-4" :class="{ 'w-10': collapsed }">
         <!-- General stuff -->
         <div class="pb-3 text-right" :class="{ '!text-center': collapsed }">
             <a href="#" @click="collapse">
@@ -14,7 +14,7 @@
                         <icon class="w-4 h-4 mr-3 fill-current" :name="link.icon"></icon>
                         {{ link.raw ? link.raw : t(link.label) }}
                     </inertia-link>
-                    <a href="#" class="flex flex-wrap items-center px-5 py-2 mb-3 -mt-1 rounded hover:bg-indigo-700 hover:text-white overflow-hidden" :class="len(link.sub, $page.auth.player.isSuperAdmin)" v-if="link.sub && len(link.sub, $page.auth.player.isSuperAdmin)" @click="$event.preventDefault()">
+                    <a href="#" class="flex flex-wrap items-center px-5 py-2 mb-3 -mt-1 rounded hover:bg-gray-700v hover:text-white overflow-hidden" :class="len(link.sub, $page.auth.player.isSuperAdmin)" v-if="link.sub && len(link.sub, $page.auth.player.isSuperAdmin)" @click="$event.preventDefault()">
                         <span class="block w-full mb-2 whitespace-nowrap">
                             <icon class="w-4 h-4 mr-3 fill-current" :name="link.icon"></icon>
                             {{ link.raw ? link.raw : t(link.label) }}

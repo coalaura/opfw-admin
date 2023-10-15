@@ -113,6 +113,10 @@ module.exports = {
                 'light': defaultTheme.colors.white,
                 'dark':  defaultTheme.colors.gray['900'],
 
+                // Saturated gray variants
+                'gray-900v': 'hsl(242, 47%, 34%)',
+                'gray-700v': 'hsl(245, 58%, 51%)',
+
                 // Map colors
                 'map-staff':     '#46A54B',
                 'map-police':    '#7469FF',

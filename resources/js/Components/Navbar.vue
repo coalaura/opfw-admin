@@ -1,26 +1,26 @@
 <template>
-    <div class="flex">
+    <div class="flex bg-gray-900 shadow bg-cover bg-center" :style="banner ? `background-image: url(${banner})` : ''">
 
         <!-- Branding / Logo -->
-        <div class="flex-shrink-0 px-8 py-3 text-center text-white bg-gray-900 mobile:hidden w-72 overflow-hidden">
+        <div class="flex-shrink-0 px-8 py-3 text-center text-white mobile:hidden w-72 overflow-hidden">
             <inertia-link href="/" class="flex gap-2">
-                <img :src="serverLogo ? serverLogo : '/images/op-logo.png'" class="block w-logo h-logo object-cover" />
+                <img :src="serverLogo ? serverLogo : '/images/op-logo.png'" class="block w-logo h-logo object-cover" :class="{ 'shadow': banner }" />
                 <h1 class="text-lg px-4 flex flex-col text-left justify-center overflow-hidden">
-                    <span class="block leading-5">OP-FW</span>
-                    <span class="block text-xs leading-1 italic whitespace-nowrap overflow-ellipsis overflow-hidden">{{ serverName ? serverName : $page.auth.cluster }}</span>
+                    <span class="block leading-5 drop-shadow">OP-FW</span>
+                    <span class="block text-xs leading-1 italic whitespace-nowrap overflow-ellipsis overflow-hidden drop-shadow">{{ serverName ? serverName : $page.auth.cluster }}</span>
                 </h1>
             </inertia-link>
         </div>
 
         <!-- Nav -->
-        <nav class="flex items-center justify-between w-full px-12 py-4 text-white bg-gray-900 shadow">
+        <nav class="flex items-center justify-between w-full px-12 py-4 text-white">
             <!-- Left side -->
             <p class="italic">
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-green-700 bg-success rounded dark:bg-dark-success float-right cursor-pointer" :title="t('nav.world_time_desc', timezones.length)" @click="showingWorldTime = true" v-if="timezones.length > 0">
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-green-700 bg-success rounded dark:bg-dark-success float-right cursor-pointer" :class="{ 'shadow': banner }" :title="t('nav.world_time_desc', timezones.length)" @click="showingWorldTime = true" v-if="timezones.length > 0">
                     <i class="fas fa-globe"></i>
                 </span>
 
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded float-right" :class="serverStatusLoading ? 'bg-gray-500 border-gray-700' : (serverStatus ? 'bg-green-500 border-green-700' : 'bg-red-500 border-red-700')" :title="!serverStatusLoading ? (!serverStatus ? t('global.server_offline') : t('global.server_online', serverStatus)) : ''">
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded float-right" :class="{ 'shadow': banner, 'bg-gray-500 border-gray-700': serverStatusLoading, 'bg-green-500 border-green-700': !serverStatusLoading && serverStatus, 'bg-red-500 border-red-700': !serverStatusLoading && !serverStatus }" :title="!serverStatusLoading ? (!serverStatus ? t('global.server_offline') : t('global.server_online', serverStatus)) : ''">
                     <i class="fas fa-sync-alt" v-if="serverStatusLoading"></i>
                     <i class="fas fa-server" v-else></i>
 
@@ -28,7 +28,7 @@
                     <span v-else>{{ $page.auth.server }}</span>
                 </span>
 
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-yellow-700 bg-warning rounded dark:bg-dark-warning float-right" :title="t('global.permission')" @click="showPermissions" :class="{ 'cursor-pointer': $page.auth.player.isSuperAdmin }">
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-yellow-700 bg-warning rounded dark:bg-dark-warning float-right" :title="t('global.permission')" @click="showPermissions" :class="{ 'cursor-pointer': $page.auth.player.isSuperAdmin, 'shadow-sm': banner }">
                     <i class="fas fa-tools"></i>
                     <span v-if="$page.auth.player.isRoot">{{ t('global.root') }}</span>
                     <span v-else-if="$page.auth.player.isSuperAdmin">{{ t('global.super') }}</span>
@@ -37,11 +37,11 @@
                 </span>
 
                 <!-- Toggle Dark mode -->
-                <button class="px-4 py-1 focus:outline-none font-semibold text-white text-sm rounded border-2 border-gray-400 bg-gray-700 hover:bg-gray-600 float-right" @click="toggleTheme" v-if="isDarkMode()">
+                <button class="px-4 py-1 focus:outline-none font-semibold text-white text-sm rounded border-2 border-gray-400 bg-gray-700 hover:bg-gray-600 float-right" :class="{ 'shadow': banner }" @click="toggleTheme" v-if="isDarkMode()">
                     <i class="fas fa-moon"></i>
                     {{ t("nav.dark") }}
                 </button>
-                <button class="px-4 py-1 focus:outline-none font-semibold text-black text-sm rounded border-2 border-gray-700 bg-gray-400 hover:bg-gray-300 float-right" @click="toggleTheme" v-else>
+                <button class="px-4 py-1 focus:outline-none font-semibold text-black text-sm rounded border-2 border-gray-700 bg-gray-400 hover:bg-gray-300 float-right" :class="{ 'shadow': banner }" @click="toggleTheme" v-else>
                     <i class="fas fa-sun"></i>
                     {{ t("nav.light") }}
                 </button>
@@ -49,8 +49,8 @@
 
             <!-- Right side -->
             <div class="flex items-center space-x-4">
-                <p v-if="$page.discord && $page.discord.global_name" class="italic font-semibold" :title="$page.discord.username">{{ $page.discord.global_name }}</p>
-                <p v-else-if="$page.discord" class="italic font-semibold">{{ $page.discord.username }}#{{ $page.discord.discriminator }}</p>
+                <p v-if="$page.discord && $page.discord.global_name" class="italic font-semibold drop-shadow" :title="$page.discord.username">{{ $page.discord.global_name }}</p>
+                <p v-else-if="$page.discord" class="italic font-semibold drop-shadow">{{ $page.discord.username }}#{{ $page.discord.discriminator }}</p>
 
                 <div class="w-avatar relative" @contextmenu="showContext" v-click-outside="hideContext">
                     <inertia-link :href="'/players/' + $page.auth.player.licenseIdentifier" @mouseenter="hoveringAvatar = true" @mouseleave="hoveringAvatar = false">
@@ -222,6 +222,23 @@ import moment from 'moment';
 import Icon from './Icon';
 import Modal from './Modal';
 
+import ColorThief from 'colorthief';
+
+const grays = {
+    '100': { l: 96 },
+    '200': { l: 91 },
+    '300': { l: 84 },
+    '400': { l: 65 },
+    '500': { l: 46 },
+    '600': { l: 34 },
+    '700': { l: 27 },
+    '800': { l: 17 },
+    '900': { l: 11 },
+
+    '900v': { s: 47, l: 34 },
+    '700v': { s: 58, l: 51 },
+};
+
 export default {
     components: {
         Icon,
@@ -270,7 +287,8 @@ export default {
             gameTimeUpdated: false,
             now: false,
 
-            hoveringAvatar: false
+            hoveringAvatar: false,
+            banner: false
         }
     },
     mounted() {
@@ -311,6 +329,96 @@ export default {
         }
     },
     methods: {
+        rgbToHsl(r, g, b) {
+            r /= 255, g /= 255, b /= 255;
+
+            let max = Math.max(r, g, b), min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+
+            if (max == min) {
+                h = s = 0; // achromatic
+            } else {
+                let delta = max - min;
+                s = l > 0.5 ? delta / (2 - max - min) : delta / (max + min);
+
+                switch (max) {
+                    case r: h = (g - b) / delta + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / delta + 2; break;
+                    case b: h = (r - g) / delta + 4; break;
+                }
+
+                h /= 6;
+            }
+
+            return {
+                h: (h * 360 + 0.5) | 0,
+                s: (s * 100 + 0.5) | 0,
+                l: (l * 100 + 0.5) | 0
+            };
+        },
+        buildBannerColors() {
+            this.banner = this.$page.auth.settings.banner.value;
+
+            return new Promise((resolve, reject) => {
+                $("#bannerTheme").remove();
+
+                let data;
+
+                try {
+                    data = JSON.parse(localStorage.getItem('banner'));
+                } catch (e) { }
+
+                if (!this.banner) {
+                    if (data) localStorage.removeItem('banner');
+
+                    return resolve();
+                }
+
+                if (!data || !data.style || data.url !== this.banner) {
+                    const banner = new Image();
+
+                    banner.onload = () => {
+                        const thief = new ColorThief(),
+                            color = thief.getColor(banner);
+
+                        const hsl = this.rgbToHsl(color[0], color[1], color[2]);
+
+                        let { h, s } = hsl;
+
+                        if (s < 20) {
+                            s = 0;
+                            h = 0;
+                        } else {
+                            s = 35;
+                        }
+
+                        const style = Object.entries(grays).map(([gray, hue]) => {
+                            const bgColor = `background-color:hsl(${h},${hue.s || s}%,${hue.l}%)`,
+                                borderColor = `border-color:hsl(${h},${hue.s || s}%,${hue.l}%)`;
+
+                            return `.bg-gray-${gray}{${bgColor}}.dark .dark\\:bg-gray-${gray}{${bgColor}}.border-gray-${gray}{${borderColor}}.dark .dark\\:border-gray-${gray}{${borderColor}}`;
+                        }).join("");
+
+                        localStorage.setItem('banner', JSON.stringify({
+                            url: this.banner,
+                            style: style
+                        }));
+
+                        $('head').append(`<style id="bannerTheme">${style}</style>`);
+
+                        resolve();
+                    };
+
+                    banner.onerror = reject;
+
+                    banner.src = this.banner;
+
+                    return;
+                }
+
+                $('head').append(`<style id="bannerTheme">${data.style}</style>`);
+            });
+        },
         getDateForTimezone(pTimezone) {
             const date = new Date((new Date()).toLocaleString('en-US', { timeZone: pTimezone.timezone }));
 
@@ -480,5 +588,12 @@ export default {
             }, 60000);
         }
     },
+    mounted() {
+        this.buildBannerColors();
+
+        this.$bus.$on('settingsUpdated', () => {
+            this.buildBannerColors();
+        });
+    }
 }
 </script>

@@ -80,6 +80,9 @@ Vue.directive('click-outside', {
     },
 });
 
+// Create global event bus.
+Vue.prototype.$bus = new Vue();
+
 // Create Vue.
 const vue = new Vue({
     el: app,

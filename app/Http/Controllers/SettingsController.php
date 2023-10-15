@@ -42,7 +42,7 @@ class SettingsController extends Controller
 
         $success = $user->setPanelSetting($key, $value);
 
-        return $this->json($success, $value);
+        return $this->json($success, $user->getPanelSetting($key));
     }
 
 }
