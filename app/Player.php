@@ -278,7 +278,16 @@ class Player extends Model
             return null;
         }
 
-        return isset($settings[$key]) ? $settings[$key] : $setting['default'];
+        $value = $settings[$key] ?? $setting['default'];
+        if ($value && preg_match('/^\/_uploads\/[a-f0-9]+\.(png|jpe?g|webp)$/mi', $value)) {
+            $file = public_path($value);
+
+            if (!file_exists($file)) {
+                $value = '';
+            }
+        }
+
+        return $value;
     }
 
     public function getPanelSettings(): array
