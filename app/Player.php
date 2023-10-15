@@ -221,8 +221,13 @@ class Player extends Model
                     return false;
                 }
 
-                $data = file_get_contents($value);
-                if (!$data) {
+                try {
+                    $data = file_get_contents($value);
+
+                    if (!$data) {
+                        return false;
+                    }
+                } catch (Exception $ex) {
                     return false;
                 }
 
@@ -231,7 +236,8 @@ class Player extends Model
                     mkdir($dir, 0777, true);
                 }
 
-                $ext = strtolower(pathinfo(explode('?', $value)[0]));
+                $ext = explode('.', explode('?', $value)[0]);
+                $ext = strtolower(end($ext));
 
                 $value = '/_uploads/' . md5($value) . '.' . $ext;
                 file_put_contents(public_path($value), $data);
