@@ -1,7 +1,7 @@
 import ColorThief from 'colorthief';
 
 // Rebuild style on version change
-const Iteration = 2;
+const Iteration = 3;
 
 const colors = {
 	'gray-100': { l: 96 },
@@ -78,7 +78,9 @@ const Style = {
 			style.push(`[type="text"],[type="url"],[type="number"],input,select,textarea{border-color:hsl(${h},${s}%,45%)}input::placeholder,textarea::placeholder{color:hsl(${h},${s}%,50%)}`);
 
 			// Link colors.
-			style.push(`a[class*="text-indigo-"],a[class*="text-blue-"]{color:hsl(${h},${s}%,82%)!important}`);
+			const ls = s === 0 ? 0 : 70;
+
+			style.push(`a[class*="text-indigo-"],a[class*="text-blue-"]{color:hsl(${h},${ls}%,40%)!important}.dark a[class*="text-indigo-"],.dark a[class*="text-blue-"]{color:hsl(${h},${ls}%,80%)!important}`);
 
 			// Actual banner styles.
 			style.push(`.banner-bg{background-image:url(${url});background-size:cover;background-position:center;background-repeat:no-repeat}.sidebar,.navbar{background-color:transparent!important}`)
