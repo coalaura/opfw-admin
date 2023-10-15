@@ -147,7 +147,9 @@ export default {
 
                 if (!response.data.status) {
                     alert(response.data.message || 'An error occurred while saving the setting');
-                } else {
+                }
+
+                if ('data' in response.data) {
                     this.$page.auth.settings[key].value = response.data.data;
 
                     this.$bus.$emit('settingsUpdated');
