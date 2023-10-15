@@ -13,6 +13,7 @@ import UserAgent from './Plugins/user-agent.js';
 import Dictionary from './Plugins/dictionary.js';
 import Permissions from './Plugins/permissions.js';
 import Settings from './Plugins/settings.js';
+import Style from './Plugins/style.js';
 import humanizeSeconds from './Filters/humanizeSeconds.js';
 import formatTime from './Filters/formatTime.js';
 import formatGender from './Filters/formatGender.js';
@@ -48,6 +49,7 @@ Vue.use(Dictionary);
 Vue.use(Markdown);
 Vue.use(Permissions, page);
 Vue.use(Settings, page);
+Vue.use(Style);
 Vue.use(Toast, {
     transition: "Vue-Toastification__slideBlurred",
     maxToasts: 10,

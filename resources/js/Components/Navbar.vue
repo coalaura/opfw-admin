@@ -1,5 +1,5 @@
 <template>
-    <div class="flex bg-gray-900 shadow bg-cover bg-center" :style="banner ? `background-image: url(${banner})` : ''">
+    <div class="flex bg-gray-900 shadow bg-cover bg-center relative z-10" :style="banner ? `background-image: url(${banner})` : ''">
 
         <!-- Branding / Logo -->
         <div class="flex-shrink-0 px-8 py-3 text-center text-white mobile:hidden w-72 overflow-hidden backdrop-filter backdrop-blur-sm">
@@ -222,23 +222,6 @@ import moment from 'moment';
 import Icon from './Icon';
 import Modal from './Modal';
 
-import ColorThief from 'colorthief';
-
-const grays = {
-    '100': { l: 96 },
-    '200': { l: 91 },
-    '300': { l: 84 },
-    '400': { l: 65 },
-    '500': { l: 46 },
-    '600': { l: 34 },
-    '700': { l: 27 },
-    '800': { l: 17 },
-    '900': { l: 11 },
-
-    '900v': { s: 47, l: 34 },
-    '700v': { s: 58, l: 51 },
-};
-
 export default {
     components: {
         Icon,
@@ -329,96 +312,6 @@ export default {
         }
     },
     methods: {
-        rgbToHsl(r, g, b) {
-            r /= 255, g /= 255, b /= 255;
-
-            let max = Math.max(r, g, b), min = Math.min(r, g, b);
-            let h, s, l = (max + min) / 2;
-
-            if (max == min) {
-                h = s = 0; // achromatic
-            } else {
-                let delta = max - min;
-                s = l > 0.5 ? delta / (2 - max - min) : delta / (max + min);
-
-                switch (max) {
-                    case r: h = (g - b) / delta + (g < b ? 6 : 0); break;
-                    case g: h = (b - r) / delta + 2; break;
-                    case b: h = (r - g) / delta + 4; break;
-                }
-
-                h /= 6;
-            }
-
-            return {
-                h: (h * 360 + 0.5) | 0,
-                s: (s * 100 + 0.5) | 0,
-                l: (l * 100 + 0.5) | 0
-            };
-        },
-        buildBannerColors() {
-            this.banner = this.$page.auth.settings.banner.value;
-
-            return new Promise((resolve, reject) => {
-                $("#bannerTheme").remove();
-
-                let data;
-
-                try {
-                    data = JSON.parse(localStorage.getItem('banner'));
-                } catch (e) { }
-
-                if (!this.banner) {
-                    if (data) localStorage.removeItem('banner');
-
-                    return resolve();
-                }
-
-                if (!data || !data.style || data.url !== this.banner) {
-                    const banner = new Image();
-
-                    banner.onload = () => {
-                        const thief = new ColorThief(),
-                            color = thief.getColor(banner);
-
-                        const hsl = this.rgbToHsl(color[0], color[1], color[2]);
-
-                        let { h, s } = hsl;
-
-                        if (s < 20) {
-                            s = 0;
-                            h = 0;
-                        } else {
-                            s = 35;
-                        }
-
-                        const style = Object.entries(grays).map(([gray, hue]) => {
-                            const bgColor = `background-color:hsl(${h},${hue.s || s}%,${hue.l}%)`,
-                                borderColor = `border-color:hsl(${h},${hue.s || s}%,${hue.l}%)`;
-
-                            return `.bg-gray-${gray}{${bgColor}}.dark .dark\\:bg-gray-${gray}{${bgColor}}.border-gray-${gray}{${borderColor}}.dark .dark\\:border-gray-${gray}{${borderColor}}`;
-                        }).join("");
-
-                        localStorage.setItem('banner', JSON.stringify({
-                            url: this.banner,
-                            style: style
-                        }));
-
-                        $('head').append(`<style id="bannerTheme">${style}</style>`);
-
-                        resolve();
-                    };
-
-                    banner.onerror = reject;
-
-                    banner.src = this.banner;
-
-                    return;
-                }
-
-                $('head').append(`<style id="bannerTheme">${data.style}</style>`);
-            });
-        },
         getDateForTimezone(pTimezone) {
             const date = new Date((new Date()).toLocaleString('en-US', { timeZone: pTimezone.timezone }));
 
@@ -498,6 +391,8 @@ export default {
         },
         async showDebugInfo() {
             if (this.loadingDebug) return;
+
+            this.hideContext();
 
             this.loadingDebug = true;
             this.showingDebugInfo = true;
@@ -588,11 +483,11 @@ export default {
             }, 60000);
         }
     },
-    mounted() {
-        this.buildBannerColors();
+    async mounted() {
+        this.banner = await this.refreshStyle();
 
-        this.$bus.$on('settingsUpdated', () => {
-            this.buildBannerColors();
+        this.$bus.$on('settingsUpdated', async () => {
+            this.banner = await this.refreshStyle();
         });
     }
 }
