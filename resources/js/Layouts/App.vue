@@ -8,7 +8,7 @@
             <!-- Navbar -->
             <navbar />
 
-            <div class="flex flex-grow overflow-hidden backdrop-filter backdrop-blur-sm">
+            <div class="flex flex-grow overflow-hidden backdrop-filter backdrop-blur">
                 <!-- Sidebar -->
                 <sidebar class="flex-shrink-0" v-if="!isMobile()" />
 

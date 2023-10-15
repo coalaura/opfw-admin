@@ -1,5 +1,5 @@
 <template>
-    <div class="flex shadow bg-cover bg-gray-900 bg-center relative z-10 backdrop-filter backdrop-blur-sm navbar">
+    <div class="flex shadow bg-cover bg-gray-900 bg-center relative z-10 backdrop-filter backdrop-blur navbar">
         <!-- Branding / Logo -->
         <div class="flex-shrink-0 px-8 py-3 text-center text-white mobile:hidden w-72 overflow-hidden">
             <inertia-link href="/" class="flex gap-2">
