@@ -1,7 +1,7 @@
 import ColorThief from 'colorthief';
 
 // Rebuild style on version change
-const Iteration = 1;
+const Iteration = 2;
 
 const colors = {
 	'gray-100': { l: 96 },
@@ -51,7 +51,7 @@ const Style = {
 			};
 		}
 
-		function buildStyle(hsl) {
+		function buildStyle(hsl, url) {
 			const { h, s } = hsl;
 
 			// Background and border colors.
@@ -80,6 +80,9 @@ const Style = {
 			// Link colors.
 			style.push(`a[class*="text-indigo-"],a[class*="text-blue-"]{color:hsl(${h},${s}%,82%)!important}`);
 
+			// Actual banner styles.
+			style.push(`.banner-bg{background-image:url(${url});background-size:cover;background-position:center;background-repeat:no-repeat}.sidebar,.navbar{background-color:transparent!important}`)
+
 			return style.join("");
 		}
 
@@ -100,7 +103,7 @@ const Style = {
 						hsl.s = 35;
 					}
 
-					const style = buildStyle(hsl);
+					const style = buildStyle(hsl, url);
 
 					localStorage.setItem('banner', JSON.stringify({
 						url: url,

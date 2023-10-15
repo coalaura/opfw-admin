@@ -4,11 +4,11 @@
         <!-- Modals -->
         <portal-target name="modals" />
 
-        <div class="flex flex-col h-screen">
+        <div class="flex flex-col h-screen banner-bg">
             <!-- Navbar -->
             <navbar />
 
-            <div class="flex flex-grow overflow-hidden">
+            <div class="flex flex-grow overflow-hidden backdrop-filter backdrop-blur-sm">
                 <!-- Sidebar -->
                 <sidebar class="flex-shrink-0" v-if="!isMobile()" />
 

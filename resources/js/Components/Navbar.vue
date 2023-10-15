@@ -1,8 +1,7 @@
 <template>
-    <div class="flex bg-gray-900 shadow bg-cover bg-center relative z-10" :style="banner ? `background-image: url(${banner})` : ''">
-
+    <div class="flex shadow bg-cover bg-gray-900 bg-center relative z-10 backdrop-filter backdrop-blur-sm navbar">
         <!-- Branding / Logo -->
-        <div class="flex-shrink-0 px-8 py-3 text-center text-white mobile:hidden w-72 overflow-hidden backdrop-filter backdrop-blur-sm">
+        <div class="flex-shrink-0 px-8 py-3 text-center text-white mobile:hidden w-72 overflow-hidden">
             <inertia-link href="/" class="flex gap-2">
                 <img :src="serverLogo ? serverLogo : '/images/op-logo.png'" class="block w-logo h-logo object-cover" :class="{ 'shadow': banner }" />
                 <h1 class="text-lg px-4 flex flex-col text-left justify-center overflow-hidden">
@@ -13,7 +12,7 @@
         </div>
 
         <!-- Nav -->
-        <nav class="flex items-center justify-between w-full px-12 py-4 text-white backdrop-filter backdrop-blur-sm">
+        <nav class="flex items-center justify-between w-full px-12 py-4 text-white">
             <!-- Left side -->
             <p class="italic">
                 <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-green-700 bg-success rounded dark:bg-dark-success float-right cursor-pointer" :class="{ 'shadow': banner }" :title="t('nav.world_time_desc', timezones.length)" @click="showingWorldTime = true" v-if="timezones.length > 0">
@@ -213,7 +212,6 @@
                 </button>
             </template>
         </modal>
-
     </div>
 </template>
 
