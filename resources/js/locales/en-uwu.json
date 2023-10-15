@@ -94,7 +94,9 @@
         "expandCollapsed": "Auto-Expand Cowwapsed (Notes, etc.) UwU",
         "expandSidenav": "Awuays fuwwy expand the Side-Navigation",
         "showSystemNotes": "Shwuwu syswuwem nowotes by defwault",
-        "locale": "Wanguage"
+        "locale": "Wanguage",
+        "banner": "UwU Pwage Bwanner (ony fow uwU)",
+        "bannerAlpha": "Bwanner-Thweme use Awpha (opwacity)"
     },
     "loading_screen": {
         "remove": "Wemove",

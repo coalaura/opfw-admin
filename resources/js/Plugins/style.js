@@ -1,7 +1,7 @@
 import ColorThief from 'colorthief';
 
 // Rebuild style on version change
-const Iteration = 4;
+const Iteration = 5;
 
 const colors = {
 	'gray-100': { l: 96 },
@@ -51,14 +51,14 @@ const Style = {
 			};
 		}
 
-		function buildStyle(hsl, url) {
+		function buildStyle(hsl, url, useAlpha) {
 			const { h, s } = hsl;
 
 			// Background and border colors.
 			let style = Object.entries(colors).map(([name, hue]) => {
 				if (s === 0) hue.s = 0;
 
-				const background = `background-color:hsl(${h},${hue.s || s}%,${hue.l}%)`,
+				const background = `background-color:hsla(${h},${hue.s || s}%,${hue.l}%,${useAlpha ? 0.6 : 1});${useAlpha ? "backdrop-filter:blur(20px)" : ""}`,
 					border = `border-color:hsl(${h},${hue.s || s}%,${hue.l}%)`;
 
 				return [
@@ -88,7 +88,7 @@ const Style = {
 			return style.join("");
 		}
 
-		function loadStyle(url) {
+		function loadStyle(url, useAlpha) {
 			return new Promise((resolve, reject) => {
 				const banner = new Image();
 
@@ -105,12 +105,13 @@ const Style = {
 						hsl.s = 35;
 					}
 
-					const style = buildStyle(hsl, url);
+					const style = buildStyle(hsl, url, useAlpha);
 
 					localStorage.setItem('banner', JSON.stringify({
 						url: url,
 						style: style,
-						v: Iteration
+						v: Iteration,
+						alpha: useAlpha
 					}));
 
 					resolve(style);
@@ -125,7 +126,8 @@ const Style = {
 		Vue.prototype.refreshStyle = async function () {
 			$("#bannerTheme").remove();
 
-			const banner = this.setting('banner');
+			const banner = this.setting('banner'),
+				bannerAlpha = this.setting('bannerAlpha');
 
 			let data;
 
@@ -141,8 +143,8 @@ const Style = {
 
 			let style;
 
-			if (!data || !data.style || data.url !== banner || data.v !== Iteration) {
-				style = await loadStyle(banner);
+			if (!data || !data.style || data.url !== banner || data.v !== Iteration || data.alpha !== bannerAlpha) {
+				style = await loadStyle(banner, bannerAlpha);
 
 				console.log("Rebuilt style.");
 			} else {

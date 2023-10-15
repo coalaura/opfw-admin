@@ -94,7 +94,9 @@
         "expandCollapsed": "Auto-Uncollapse (Notes, etc.)",
         "expandSidenav": "Me hungry! Always fully expand the Side-Navigation",
         "showSystemNotes": "Me want show system notes by default",
-        "locale": "Me blabber"
+        "locale": "Me blabber",
+        "banner": "Ug Banner (only for you)",
+        "bannerAlpha": "Ug-Theme use Alpha (see-throughness)"
     },
     "loading_screen": {
         "sidebar": "Uggga buggga",

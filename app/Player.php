@@ -117,9 +117,13 @@ class Player extends Model
     private $ban = false;
 
     const PlayerSettings = [
-        "banner"       => [
+        "banner"          => [
             "type"    => "url",
             "default" => "",
+        ],
+        "bannerAlpha"     => [
+            "type"    => "boolean",
+            "default" => false,
         ],
         "parseLogs"       => [
             "type"    => "boolean",
@@ -224,8 +228,8 @@ class Player extends Model
                 }
 
                 $path = explode('?', $value)[0];
-                $ext = explode('.', $path);
-                $ext = strtolower(end($ext));
+                $ext  = explode('.', $path);
+                $ext  = strtolower(end($ext));
 
                 $value = '/_uploads/' . md5(strtolower($path)) . '.' . $ext;
 
@@ -368,12 +372,12 @@ class Player extends Model
 
     public function getRecentPlaytime(int $weeks): int
     {
-        $after = op_week_identifier() - $weeks;
+        $after    = op_week_identifier() - $weeks;
         $playtime = 0;
 
         $weeklyPlaytime = $this->weekly_playtime ?? [];
 
-        foreach($weeklyPlaytime as $week => $time) {
+        foreach ($weeklyPlaytime as $week => $time) {
             $week = intval($week);
 
             if ($week >= $after) {

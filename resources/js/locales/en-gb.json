@@ -94,7 +94,9 @@
         "expandCollapsed": "Bloody Expand Collapsed (Notes, etc.)",
         "expandSidenav": "Make the bloody Side-Navigation always fully expand",
         "showSystemNotes": "Bloody show those sodding system notes by default",
-        "locale": "Language"
+        "locale": "Language",
+        "banner": "Bloody Page Banner (just for you, innit)",
+        "bannerAlpha": "Banner-Theme with a Dash of Bloody Alpha (it's all about the opacity, mate)"
     },
     "loading_screen": {
         "sidebar": "Loading Screen",

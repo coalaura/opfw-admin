@@ -94,7 +94,9 @@
         "expandCollapsed": "Auto-Expand Collapsed (Notes, etc.), heya",
         "expandSidenav": "Chuck a sickie and fully open the Side-Navigation, mate!",
         "showSystemNotes": "Chuck a gander at them system notes, mate",
-        "locale": "Lingo"
+        "locale": "Lingo",
+        "banner": "Page Bunta (just for ya)",
+        "bannerAlpha": "Bunta-Theme use Cobba (sheer opacity)"
     },
     "loading_screen": {
         "sidebar": "Arvo",

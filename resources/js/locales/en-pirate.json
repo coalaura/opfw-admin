@@ -94,7 +94,9 @@
         "expandCollapsed": "Auto-Expand Collapsed (Notes, and such)",
         "expandSidenav": "Always fully expand the Side-Navigation",
         "showSystemNotes": "Ever fully expand the Side-Navigation, matey",
-        "locale": "Show system notes by default"
+        "locale": "Show system notes by default",
+        "banner": "Jolly Roger (only for ye)",
+        "bannerAlpha": "Jolly Roger-Theme use Alpha (tranquility)"
     },
     "loading_screen": {
         "sidebar": "Display system notes by default, me hearties",

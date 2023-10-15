@@ -94,7 +94,9 @@
         "expandCollapsed": "📑 Auto-Expand Collapsed (📝, etc.)",
         "expandSidenav": "📂 Always fully expand the Side-Navigation",
         "showSystemNotes": "📝 Show system notes by default",
-        "locale": "🌍"
+        "locale": "🌍",
+        "banner": "🎉 🚩 🎉 🎊 (🇴🇳🇱🇾 🇫🇴🇷 🇾🇴🇺)",
+        "bannerAlpha": "🚩-🌅 🧩 🍂 🅰️ (🌬️🌟🅾️🅿️🅴️🅸️🆃️🆈️)"
     },
     "loading_screen": {
         "sidebar": "💤",

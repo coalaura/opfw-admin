@@ -94,7 +94,9 @@
         "expandCollapsed": "Splippity Slop Blorp (Nerp, etc.)",
         "expandSidenav": "Flippity Flop zap the Bleep-Blop",
         "showSystemNotes": "Zippity Zop flerp blip bling",
-        "locale": "Talungen"
+        "locale": "Talungen",
+        "banner": "Hobajama Wuzza (shleepa woopa eepa)",
+        "bannerAlpha": "Wuzza-Threpa chaka Alpha (beebleepa)"
     },
     "loading_screen": {
         "sidebar": "Edark Sprotten",
