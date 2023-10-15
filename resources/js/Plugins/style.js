@@ -1,7 +1,7 @@
 import ColorThief from 'colorthief';
 
 // Rebuild style on version change
-const Iteration = 3;
+const Iteration = 4;
 
 const colors = {
 	'gray-100': { l: 96 },
@@ -62,8 +62,8 @@ const Style = {
 					border = `border-color:hsl(${h},${hue.s || s}%,${hue.l}%)`;
 
 				return [
-					`.bg-${name}{${background}}.dark .dark\\:bg-${name}{${background}} .hover\\:bg-${name}:hover{${background}!important} .dark\\:hover\\:bg-${name}:hover{${background}!important}`,
-					`.border-${name}{${border}}.dark .dark\\:border-${name}{${border}} .hover\\:border-${name}:hover{${border}!important} .dark\\:hover\\:border-${name}:hover{${border}!important}`
+					`.bg-${name}{${background}}.dark .dark\\:bg-${name}{${background}}.hover\\:bg-${name}:hover{${background}!important}.dark .dark\\:hover\\:bg-${name}:hover{${background}!important}`,
+					`.border-${name}{${border}}.dark .dark\\:border-${name}{${border}}.hover\\:border-${name}:hover{${border}!important}.dark .dark\\:hover\\:border-${name}:hover{${border}!important}`
 				].join('');
 			});
 
@@ -71,8 +71,8 @@ const Style = {
 			const black = `color:hsl(${h},${s}%,10%)`,
 				white = `color:hsl(${h},${s}%,90%)`;
 
-			style.push(`.text-white{${white}}.dark .dark\\:text-white{${white}} .hover\\:text-white:hover{${white}!important} .dark\\:hover\\:text-white:hover{${white}!important}`),
-				style.push(`.text-black{${black}}.dark .dark\\:text-black{${black}} .hover\\:text-black:hover{${black}!important} .dark\\:hover\\:text-black:hover{${black}!important}`);
+			style.push(`.text-white{${white}}.dark .dark\\:text-white{${white}}.hover\\:text-white:hover{${white}!important}.dark .dark\\:hover\\:text-white:hover{${white}!important}`),
+				style.push(`.text-black{${black}}.dark .dark\\:text-black{${black}}.hover\\:text-black:hover{${black}!important}.dark .dark\\:hover\\:text-black:hover{${black}!important}`);
 
 			// Input and placeholder colors.
 			style.push(`[type="text"],[type="url"],[type="number"],input,select,textarea{border-color:hsl(${h},${s}%,45%)}input::placeholder,textarea::placeholder{color:hsl(${h},${s}%,50%)}`);
