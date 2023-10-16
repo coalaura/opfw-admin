@@ -308,7 +308,7 @@ export default {
                     if (metadata.distance === undefined) return false;
 
                     const closestBlip = metadata.data?.closestBlip,
-                        suffix = closestBlip ? ` - *${closestBlip.label} from ${closestBlip.distance.toFixed(1)}m*` : '';
+                        suffix = closestBlip ? ` - *${closestBlip.distance.toFixed(1)}m from ${closestBlip.label}*` : '';
 
                     return `**${metadata.distance.toFixed(2)}m**${suffix}`;
                 case 'bad_screen_word':
