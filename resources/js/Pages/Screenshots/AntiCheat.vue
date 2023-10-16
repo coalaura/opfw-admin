@@ -307,7 +307,9 @@ export default {
                 case 'distance_taze':
                     if (metadata.distance === undefined) return false;
 
-                    return `${metadata.distance.toFixed(2)}m`;
+                    const suffix = metadata.closestBlip ? ` - ${metadata.closestBlip.distance.toFixed(1)}m - ${metadata.closestBlip.label}` : '';
+
+                    return `${metadata.distance.toFixed(2)}m${suffix}`;
                 case 'bad_screen_word':
                     if (metadata.words === undefined) return false;
 
