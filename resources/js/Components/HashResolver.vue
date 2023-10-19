@@ -1,34 +1,11 @@
 <template>
     <div @click="click">
         <slot />
-
-        <div class="text-xs font-mono px-1 py-0.5 bg-indigo-600 text-white rounded-sm absolute shadow" :style="{ top: top + 'px', left: left + 'px' }" v-if="show" id="hash-resolver">
-            <div v-if="loading">
-                <i class="fas fa-spinner fa-spin"></i> Loading...
-            </div>
-            <div v-else-if="modelName">
-                <b>{{ hash }}:</b> <i>{{ modelName }}</i>
-            </div>
-            <div v-else>
-                <i class="fas fa-times"></i> Invalid hash
-            </div>
-        </div>
     </div>
 </template>
 
 <script>
 export default {
-    data() {
-        return {
-            show: false,
-            loading: false,
-            modelName: false,
-            hash: false,
-
-            top: 0,
-            left: 0
-        }
-    },
     methods: {
         isHash(str) {
             const num = parseInt(str);
@@ -41,37 +18,27 @@ export default {
             return !str.match(/\s/gm) && str.match(/^-?[0-9]+$/m);
         },
         async click(e) {
-            if (this.loading) return;
-
             const target = e.target;
 
-            if ($(target).closest('#hash-resolver').length) {
-                return;
+            if (!target || target.classList.contains('resolved')) return;
+
+            let hash = target.innerText.trim();
+
+            if (!this.isHash(hash)) return;
+
+            target.classList.add('resolved');
+
+            target.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Resolving...`;
+
+            const { name, joaat } = await this.resolveHash(hash);
+
+            hash = hash || joaat;
+
+            if (name) {
+                target.innerHTML = name + ` <i class="font-mono">${hash}</i>`;
+            } else {
+                target.innerHTML = hash + ` <i class="font-mono">(unknown)</i>`;
             }
-
-            this.show = false;
-
-            this.hash = target.innerText.trim();
-
-            if (!this.isHash(this.hash)) {
-                return;
-            }
-
-            const rect = target.getBoundingClientRect();
-
-            this.top = rect.top + window.scrollY + target.offsetHeight;
-            this.left = rect.left + window.scrollX;
-
-            this.show = true;
-
-            this.loading = true;
-
-            const { name, hash } = await this.resolveHash(this.hash);
-
-            this.modelName = name;
-            this.hash = hash || this.hash;
-
-            this.loading = false;
         },
     },
     mounted() {
