@@ -495,8 +495,9 @@ class AdvancedSearchController extends Controller
         $dmgBanned = [];
         $dmgNormal = [];
 
-        $count = 0;
-        $avg   = 0;
+        $count     = 0;
+        $avg       = 0;
+        $maxDamage = 0;
 
         foreach ($data as $entry) {
             $damage = intval($entry['weapon_damage']);
@@ -511,21 +512,23 @@ class AdvancedSearchController extends Controller
                     $avg   = $damage;
                 }
             }
+
+            if ($damage > $maxDamage) {
+                $maxDamage = $damage;
+            }
         }
 
         $max = $this->closest(array_keys($dmgNormal), $avg * 5);
 
         $damages = [
-            'data'       => [
+            'data'   => [
                 [], [],
             ],
-            'labels'     => [],
-            'names'      => ['weapons.damage_normal', 'weapons.damage_banned'],
-            'avg'        => $avg,
-            'max'        => $max[1]
+            'labels' => [],
+            'names'  => ['weapons.damage_normal', 'weapons.damage_banned'],
+            'avg'    => $avg,
+            'max'    => $max[1],
         ];
-
-        $maxDamage = max(array_keys($dmgBanned) + array_keys($dmgNormal));
 
         for ($x = 0; $x <= $maxDamage; $x++) {
             $normal = $dmgNormal[$x] ?? 0;
