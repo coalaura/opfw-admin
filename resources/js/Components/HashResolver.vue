@@ -20,7 +20,7 @@ export default {
         async click(e) {
             const target = e.target;
 
-            if (!target || target.classList.contains('resolved')) return;
+            if (!target || target.classList.contains('resolved') || target.parentElement.classList.contains('resolved')) return;
 
             let hash = target.innerText.trim();
 
@@ -35,9 +35,9 @@ export default {
             hash = hash || joaat;
 
             if (name) {
-                target.innerHTML = name + ` <i class="font-mono">${hash}</i>`;
+                target.innerHTML = `${name} <i class="font-mono">(${hash})</i>`;
             } else {
-                target.innerHTML = hash + ` <i class="font-mono">(unknown)</i>`;
+                target.innerHTML = `${hash} <i class="font-mono">(unknown)</i>`;
             }
         },
     },

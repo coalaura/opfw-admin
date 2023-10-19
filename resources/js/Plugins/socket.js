@@ -51,11 +51,22 @@ const Socket = {
         };
 
         Vue.prototype.resolveHash = async function (hash) {
-            const data = await this.requestData('/hash/' + hash, true);
+            try {
+                const response = await axios.get('https://joaat.sh/api/unjoaat/' + hash);
 
-            if (!data || !data[hash]) return false;
+                if (!response) return false;
 
-            return data[hash];
+                const data = response.data;
+
+                if (!data || !data.hash || !data.string) return false;
+
+                return {
+                    name: data.string,
+                    hash: data.hash
+                };
+            } catch (e) {
+                return false;
+            }
         };
     },
 }
