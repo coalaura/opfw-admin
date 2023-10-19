@@ -485,6 +485,7 @@ class AdvancedSearchController extends Controller
             ->where('is_parent_self', '=', '1')
             ->whereIn('weapon_type', [$hash, $unsigned])
             ->where('hit_players', '!=', '[]')
+            ->whereNotIn('hit_component', [19, 20]) // Neck and head shots
             ->groupBy(['weapon_damage', 'ban_hash'])
             ->get()->toArray();
 
