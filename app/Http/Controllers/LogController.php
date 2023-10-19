@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\CacheHelper;
+use App\Helpers\GeneralHelper;
 use App\Helpers\PermissionHelper;
 use App\Http\Resources\LogResource;
 use App\Http\Resources\MoneyLogResource;
@@ -193,6 +194,8 @@ class LogController extends Controller
         $start = round(microtime(true) * 1000);
 
         $query = MoneyLog::query()->orderByDesc('timestamp');
+
+        $query->whereNotIn('license_identifier', GeneralHelper::getRootUsers());
 
         // Filtering by identifier.
         if ($identifier = $this->multiValues($request->input('identifier'))) {
