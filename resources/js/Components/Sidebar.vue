@@ -120,6 +120,12 @@ export default {
                             url: '/logs',
                         },
                         {
+                            label: 'logs.money_title',
+                            icon: 'money',
+                            url: '/moneyLogs',
+                            hidden: !this.perm.check(this.perm.PERM_MONEY_LOGS),
+                        },
+                        {
                             label: 'casino.title',
                             icon: 'chess',
                             url: '/casino',

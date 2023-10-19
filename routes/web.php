@@ -182,6 +182,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Logs.
     Route::resource('logs', LogController::class);
+    Route::get('/moneyLogs', [LogController::class, 'moneyLogs']);
     Route::get('/searches', [LogController::class, 'searches']);
     Route::get('/screenshot_logs', [LogController::class, 'screenshotLogs']);
 

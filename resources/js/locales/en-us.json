@@ -1160,6 +1160,16 @@
         "money_search": "Money-Logs",
         "connect_search": "Connect-Logs",
         "skipped": "Skipped logs where:",
+        "money_title": "Money Logs",
+        "money_description": "On this page you can view and filter the money logs.",
+        "type": "Type",
+        "types": {
+            "all": "All",
+            "cash": "Cash",
+            "bank": "Bank"
+        },
+        "amount": "Amount",
+        "character_id": "Character ID",
         "metadata": {
             "show": "Show metadata",
             "secondary": "Secondary: {0}",

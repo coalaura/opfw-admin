@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Helpers\CacheHelper;
 use App\Helpers\PermissionHelper;
 use App\Http\Resources\LogResource;
+use App\Http\Resources\MoneyLogResource;
 use App\Log;
+use App\MoneyLog;
 use App\Player;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -177,6 +179,116 @@ class LogController extends Controller
     }
 
     /**
+     * Display money logs.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function moneyLogs(Request $request): Response
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_MONEY_LOGS)) {
+            abort(403);
+        }
+
+        $start = round(microtime(true) * 1000);
+
+        $query = MoneyLog::query()->orderByDesc('timestamp');
+
+        // Filtering by identifier.
+        if ($identifier = $this->multiValues($request->input('identifier'))) {
+            /**
+             * @var $q Builder
+             */
+            $query->where(function ($q) use ($identifier) {
+                foreach ($identifier as $i) {
+                    if (Str::startsWith($i, '=')) {
+                        $i = Str::substr($i, 1);
+                        $q->orWhere('license_identifier', $i);
+                    } else {
+                        $q->orWhere('license_identifier', 'like', "%{$i}%");
+                    }
+                }
+            });
+        }
+
+        // Filtering by character id.
+        if ($characterId = $this->multiValues($request->input('character_id'))) {
+            /**
+             * @var $q Builder
+             */
+            $query->where(function ($q) use ($characterId) {
+                foreach ($characterId as $i) {
+                    if (Str::startsWith($i, '=')) {
+                        $i = Str::substr($i, 1);
+                        $q->orWhere('character_id', $i);
+                    } else {
+                        $q->orWhere('character_id', 'like', "%{$i}%");
+                    }
+                }
+            });
+        }
+
+        // Filtering by details.
+        if ($details = $this->multiValues($request->input('details'))) {
+            /**
+             * @var $q Builder
+             */
+            $query->where(function ($q) use ($details) {
+                foreach ($details as $i) {
+                    if (Str::startsWith($i, '=')) {
+                        $i = Str::substr($i, 1);
+                        $q->orWhere('details', $i);
+                    } else {
+                        $q->orWhere('details', 'like', "%{$i}%");
+                    }
+                }
+            });
+        }
+
+        // Filtering by before.
+        if ($before = $request->input('before')) {
+            $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '<', $before);
+        }
+
+        // Filtering by after.
+        if ($after = $request->input('after')) {
+            $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '>', $after);
+        }
+
+        // Filtering by type.
+        if ($type = $request->input('typ')) {
+            $query->where('type', $type);
+        }
+
+        $query->select(['id', 'type', 'license_identifier', 'character_id', 'amount', 'balance_after', 'details', 'timestamp']);
+
+        $page = Paginator::resolveCurrentPage('page');
+        $query->limit(15)->offset(($page - 1) * 15);
+
+        $logs = $query->get();
+
+        $logs = MoneyLogResource::collection($logs);
+
+        $end = round(microtime(true) * 1000);
+
+        return Inertia::render('Logs/MoneyLogs', [
+            'logs'      => $logs,
+            'filters'   => [
+                'identifier'   => $request->input('identifier', ''),
+                'character_id' => $request->input('character_id', ''),
+                'details'      => $request->input('details', ''),
+                'typ'          => $request->input('typ', ''),
+                'after'        => $request->input('after', ''),
+                'before'       => $request->input('before', ''),
+            ],
+            'links'     => $this->getPageUrls($page),
+            'time'      => $end - $start,
+            'playerMap' => Player::fetchLicensePlayerNameMap($logs->toArray($request), 'licenseIdentifier'),
+            'page'      => $page,
+        ]);
+    }
+
+    /**
      * Display the phone message logs.
      *
      * @param Request $request
@@ -209,7 +321,7 @@ class LogController extends Controller
         }
 
         $query = DB::table("phone_message_logs")->select([
-            'id', 'sender_number', 'receiver_number', 'message', 'timestamp'
+            'id', 'sender_number', 'receiver_number', 'message', 'timestamp',
         ])->orderByDesc('timestamp')->orderByDesc('id');
 
         $number1 = $this->multiValues($request->input('number1'));

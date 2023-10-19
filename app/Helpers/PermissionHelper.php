@@ -22,6 +22,7 @@ class PermissionHelper
         self::PERM_DAMAGE_LOGS    => ['damage_logs', self::LEVEL_SENIOR],
         self::PERM_CRAFTING       => ['crafting', self::LEVEL_SUPERADMIN],
         self::PERM_PHONE_LOGS     => ['phone_logs', self::LEVEL_SUPERADMIN],
+        self::PERM_MONEY_LOGS     => ['money_logs', self::LEVEL_STAFF],
     ];
 
     const PERM_SCREENSHOT     = 'P_SCREENSHOT';
@@ -39,6 +40,7 @@ class PermissionHelper
     const PERM_DAMAGE_LOGS    = 'P_DAMAGE_LOGS';
     const PERM_CRAFTING       = 'P_CRAFTING';
     const PERM_PHONE_LOGS     = 'P_PHONE_LOGS';
+    const PERM_MONEY_LOGS     = 'P_MONEY_LOGS';
 
     const LEVEL_STAFF      = 1;
     const LEVEL_SENIOR     = 2;
