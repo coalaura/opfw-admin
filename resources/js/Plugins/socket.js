@@ -57,14 +57,6 @@ const Socket = {
 
             return data[hash];
         };
-
-        Vue.prototype.resolveHashes = async function (hashes) {
-            const data = await this.requestData('/hash/' + hashes.join(','), true);
-
-            if (!data) return false;
-
-            return data;
-        };
     },
 }
 
