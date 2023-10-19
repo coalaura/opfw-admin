@@ -513,7 +513,6 @@ class AdvancedSearchController extends Controller
             }
         }
 
-        $len = max(sizeof($dmgBanned), sizeof($dmgNormal));
         $max = $this->closest(array_keys($dmgNormal), $avg * 5);
 
         $damages = [
@@ -523,11 +522,7 @@ class AdvancedSearchController extends Controller
             'labels'     => [],
             'names'      => ['weapons.damage_normal', 'weapons.damage_banned'],
             'avg'        => $avg,
-            'max'        => $max[1],
-            'highlights' => [
-                ['from' => false, 'to' => min($max[0] + 1, $len - 1), 'color' => 'rgba(50, 255, 50, 0.1)'],
-                ['from' => min($max[0] + 2, $len - 1), 'to' => false, 'color' => 'rgba(255, 50, 50, 0.1)'],
-            ],
+            'max'        => $max[1]
         ];
 
         $maxDamage = max(array_keys($dmgBanned) + array_keys($dmgNormal));
