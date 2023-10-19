@@ -479,13 +479,13 @@ class AdvancedSearchController extends Controller
         $unsigned = $hash + 4294967296;
 
         $data = WeaponDamageEvent::query()
-            ->select([DB::raw('COUNT(DISTINCT license_identifier) as count'), 'weapon_damage', DB::raw('SUM(IF(ban_hash IS NULL, 1, 0)) as unbanned'), DB::raw('SUM(IF(ban_hash IS NULL, 0, 1)) as banned')])
+            ->select([DB::raw('COUNT(DISTINCT license_identifier) as count'), 'weapon_damage', 'ban_hash'])
             ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
             ->where('weapon_damage_events.timestamp', '>', time() - 60 * 60 * 24 * 120)
             ->where('is_parent_self', '=', '1')
             ->whereIn('weapon_type', [$hash, $unsigned])
             ->where('hit_players', '!=', '[]')
-            ->groupBy('weapon_damage')
+            ->groupBy(['weapon_damage', 'ban_hash'])
             ->get()->toArray();
 
         if (empty($data)) {
@@ -502,11 +502,9 @@ class AdvancedSearchController extends Controller
         foreach ($data as $entry) {
             $damage = intval($entry['weapon_damage']);
 
-            if ($entry['banned'] > 0) {
+            if ($entry['ban_hash']) {
                 $dmgBanned[$damage] = $entry['count'];
-            }
-
-            if ($entry['unbanned'] > 0) {
+            } else {
                 $dmgNormal[$damage] = $entry['count'];
 
                 if ($count < $entry['count']) {
