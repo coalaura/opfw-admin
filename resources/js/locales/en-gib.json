@@ -448,7 +448,8 @@
             "announcement": "Floop Flibbery",
             "damage_logs": "Dibber Dabblerinos",
             "crafting": "Blip Bloopity Bloops",
-            "phone_logs": "Zop Zobberinos"
+            "phone_logs": "Zop Zobberinos",
+            "money_logs": "Geol Skrazz Frelz"
         },
         "world_time": "Doodle Time",
         "world_time_desc": "The floop in the {0} bloo bop zibbity.",
@@ -1182,7 +1183,17 @@
                 "config": "Dizzlewizzle booglewoggle twizzlywizz hubblebubble gibberflip wobbledoodle zibberdibber flibberwhackadoo.",
                 "unknown": "Razzledazzle wibblebobble zibberwizz dinglewhop flapdoodle wockawocka doodlewhacka snickerdoodle."
             }
-        }
+        },
+        "money_title": "Frelz Klorps",
+        "money_description": "Embliz glop-pleen floof klorps skrazz gleem.",
+        "type": "Flob",
+        "types": {
+            "all": "Blex",
+            "cash": "Crorp",
+            "bank": "Flik"
+        },
+        "amount": "Fleem",
+        "character_id": "Klorp ID"
     },
     "panel_logs": {
         "title": "Flog Paks",

@@ -448,7 +448,8 @@
             "announcement": "📣📢",
             "damage_logs": "📈📊",
             "crafting": "🔨📚",
-            "phone_logs": "📱📚"
+            "phone_logs": "📱📚",
+            "money_logs": "💰 View 💰 Logs"
         },
         "world_time": "🌍⏰",
         "world_time_desc": "⌚🌍{0}",
@@ -1173,7 +1174,17 @@
                 "config": "🔁🔌💻❌🛠️😤",
                 "unknown": "❓🤷👨‍💻🆘❓🙇"
             }
-        }
+        },
+        "money_title": "💰 Logs 💰",
+        "money_description": "👀🔍 this page you can 👀 and 🔍 the 💰 logs.",
+        "type": "💻",
+        "types": {
+            "all": "🌐",
+            "cash": "💵",
+            "bank": "🏦"
+        },
+        "amount": "💲",
+        "character_id": "👤 ID"
     },
     "panel_logs": {
         "title": "📋🔒Logs",

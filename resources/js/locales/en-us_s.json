@@ -448,7 +448,8 @@
             "announcement": "Post Announcement",
             "damage_logs": "View Damage Logs",
             "crafting": "View Craftin' Recipes",
-            "phone_logs": "Peep Them Phone Logs"
+            "phone_logs": "Peep Them Phone Logs",
+            "money_logs": "View Money Logs, y'all"
         },
         "world_time": "World Time",
         "world_time_desc": "The time in the {0} most used timezones.",
@@ -1173,7 +1174,17 @@
                 "config": "While connectin', the servers configuration couldn't load, so the user got turned away.",
                 "unknown": "Sorry y'all, but I cain't provide no fancy details 'bout this one! Y'all can ask a developer for some more help if ya need it."
             }
-        }
+        },
+        "money_title": "Money Logs, y'all",
+        "money_description": "On this page y'all can view and filter them money logs.",
+        "type": "Type, suga",
+        "types": {
+            "all": "All, honey",
+            "cash": "Cash, darlin'",
+            "bank": "Bank, baby"
+        },
+        "amount": "Amount, sweetheart",
+        "character_id": "Character ID, sugar plum"
     },
     "panel_logs": {
         "title": "Panel Lahgs",

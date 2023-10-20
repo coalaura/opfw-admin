@@ -448,7 +448,8 @@
             "announcement": "Broadside Announcement",
             "damage_logs": "Sight Damage Scrolls",
             "crafting": "Sight Crafting Secrets",
-            "phone_logs": "View Scoundrel Logs"
+            "phone_logs": "View Scoundrel Logs",
+            "money_logs": "View Booty Logs"
         },
         "world_time": "World O' Time",
         "world_time_desc": "The time in the {0} most used doubloon zones.",
@@ -1173,7 +1174,17 @@
                 "config": "Whilst tryin' to hoist the sails and connect the servers, the configuration be failin' to load, makin' the user walk the plank.",
                 "unknown": "Yarr! No treasure map be present to give ye details. Ye be askin' a developer for a hand, matey."
             }
-        }
+        },
+        "money_title": "Booty Logs",
+        "money_description": "On this page ye can spy wit' ye eye 'n filter the booty logs.",
+        "type": "Category",
+        "types": {
+            "all": "All",
+            "cash": "Scurvy Loot",
+            "bank": "Treasure Chest"
+        },
+        "amount": "Plunder",
+        "character_id": "Scallywag ID"
     },
     "panel_logs": {
         "title": "Boardin' Logs",

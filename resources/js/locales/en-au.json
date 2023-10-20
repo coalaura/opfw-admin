@@ -448,7 +448,8 @@
             "announcement": "Chuck a Message Out There",
             "damage_logs": "Check Out the Damage Records",
             "crafting": "Browse Through the Recipe Book",
-            "phone_logs": "Check Out Phone Dunny Rolls"
+            "phone_logs": "Check Out Phone Dunny Rolls",
+            "money_logs": "Check Out the Money Stuff"
         },
         "world_time": "What's the Time in the Big Wide World",
         "world_time_desc": "The time in all them timezones people use a lot.",
@@ -1173,7 +1174,17 @@
                 "config": "When tryin' to connect, the server's fancy settings and such couldn't load properly, and as a result the user got rejected. Blimey.",
                 "unknown": "Sorry, mate. No strine details available. You can have a yarn with a developer if ya need more help."
             }
-        }
+        },
+        "money_title": "Fancy Money Records",
+        "money_description": "Right here ya can suss out all the dough related shenanigans.",
+        "type": "Category",
+        "types": {
+            "all": "The Whole Shebang",
+            "cash": "Cold Hard Cash",
+            "bank": "Banked Moolah"
+        },
+        "amount": "Doshtags",
+        "character_id": "Bloke's ID Number"
     },
     "panel_logs": {
         "title": "Bossy Boss Logs",

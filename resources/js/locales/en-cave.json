@@ -448,7 +448,8 @@
             "announcement": "Shout Big News",
             "damage_logs": "Look at Hurt Logs",
             "crafting": "Access Crafting Secrets",
-            "phone_logs": "Grok Phone Logs"
+            "phone_logs": "Grok Phone Logs",
+            "money_logs": "See Logs of Green Papers"
         },
         "world_time": "World Time-Big",
         "world_time_desc": "The time in the {0} most used timezones. Listen, sun go up, sun go down.",
@@ -1173,7 +1174,17 @@
                 "config": "Ugga unable to load server config, so user got rejected.",
                 "unknown": "Ugga no description, ask big brain for help."
             }
-        }
+        },
+        "money_title": "Logs of Green Papers",
+        "money_description": "Me show you logs of green papers. You can look and sift through them here.",
+        "type": "Kind",
+        "types": {
+            "all": "All",
+            "cash": "Cold Hard Rocks",
+            "bank": "Safe Rocks"
+        },
+        "amount": "How Many",
+        "character_id": "Character Cave ID"
     },
     "panel_logs": {
         "title": "Ugga Ugga Ugga",

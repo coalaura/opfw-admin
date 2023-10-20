@@ -448,7 +448,8 @@
             "advanced": "Ogle Fancy Search",
             "lock_ban": "Bollocks to Bans",
             "edit_tag": "Mess with Bleedin' Tags",
-            "phone_logs": "Peek at Bloody Phone Logs"
+            "phone_logs": "Peek at Bloody Phone Logs",
+            "money_logs": "Have a nosy at the bloody Money Logs"
         },
         "world_time": "Bloody Global Time",
         "world_time_desc": "The bleeding time in the {0} bloody popular timezones.",
@@ -1173,7 +1174,17 @@
                 "config": "The servers configuration decided it couldn't be arsed to load properly while the user was trying to connect, so it buggered off and told them to piss off.",
                 "unknown": "Can't be bothered to give you a detailed description, mate. Why don't you ask a bloody developer for some more sodding help?"
             }
-        }
+        },
+        "money_title": "Money Logs, Innit",
+        "money_description": "On this bleedin' page you can 'ave a butcher's at the money logs, if you fancy it.",
+        "type": "Type, Y'know",
+        "types": {
+            "all": "All and bloody sundry",
+            "cash": "Cold hard Sterling",
+            "bank": "Oi, look at me bank balance"
+        },
+        "amount": "Amount, like Dosh and all that",
+        "character_id": "Character ID, innit"
     },
     "panel_logs": {
         "title": "Panel Bollocks",

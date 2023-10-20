@@ -448,7 +448,8 @@
             "announcement": "Post Announcementowo",
             "damage_logs": "View Damage Wogs",
             "crafting": "View Cwafting Wecipes",
-            "phone_logs": "View Phwone Wogs"
+            "phone_logs": "View Phwone Wogs",
+            "money_logs": "View Money ÖwÖs"
         },
         "world_time": "Wowld Timeowo",
         "world_time_desc": "The time in the {0} most used timezonesowo.",
@@ -1173,7 +1174,17 @@
                 "config": "Whiwe connecting the sewvews configuwation was unabwe to load causing the usew to get wejected~",
                 "unknown": "No detaiwed descwiption avaiwabwe. You can ask a devewopew fow mowe help! ^w^"
             }
-        }
+        },
+        "money_title": "ÖwÖ Money Logs",
+        "money_description": "On this page yuw can view and fiwtew the ÖwÖ money wogs.",
+        "type": "Type",
+        "types": {
+            "all": "Awl",
+            "cash": "Cwesh",
+            "bank": "Bank"
+        },
+        "amount": "Amownt",
+        "character_id": "Chawactew ID"
     },
     "panel_logs": {
         "title": "Pwanel Wogs",
