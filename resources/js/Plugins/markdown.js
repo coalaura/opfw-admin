@@ -175,6 +175,9 @@ const Markdown = {
             // ~~text~~
             text = text.replace(/~{2}(.+?)~{2}/gi, '<del>$1</del>');
 
+            // --text-- (custom)
+            text = text.replace(/-{2}(.+?)-{2}/gi, '<span>$1</span>');
+
             // ![alt](url)
             text = text.replace(/!\[(.+?)\]\((.+?)\)/gi, (match, p1, p2, offset, string) => {
                 return `<img src="${p2}" alt="${p1}" class="max-w-xs">`;

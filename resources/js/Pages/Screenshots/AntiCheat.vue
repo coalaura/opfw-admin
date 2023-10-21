@@ -31,60 +31,62 @@
         <!-- Table -->
         <v-section class="overflow-x-auto" :noHeader="true">
             <template>
-                <table class="w-full whitespace-no-wrap">
-                    <tr class="font-semibold text-left mobile:hidden">
-                        <th class="p-3 pl-8 max-w-56">{{ t('screenshot.player') }}</th>
-                        <th class="p-3 w-40">{{ t('screenshot.screenshot') }}</th>
-                        <th class="p-3">{{ t('screenshot.note') }}</th>
-                        <th class="p-3 w-32">{{ t('screenshot.ban_status') }}</th>
-                        <th class="p-3 pr-8 w-60">{{ t('screenshot.created_at') }}</th>
-                    </tr>
-                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" :class="{ 'new-entry': screenshot.new }" v-for="screenshot in list" :key="screenshot.url">
-                        <template v-if="screenshot.isBan">
-                            <td class="p-3 pl-8 text-center mobile:block max-w-56">
-                                <inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-red-600 rounded dark:bg-red-400" :href="'/players/' + screenshot.license_identifier">
-                                    {{ screenshot.player_name }}
-                                </inertia-link>
-                            </td>
-                            <td class="p-3 mobile:block italic text-gray-600 dark:text-gray-400 text-sm" colspan="3">
-                                Banned indefinitely for <span class="font-semibold">{{ screenshot.reason }}</span>
-                            </td>
-                            <td class="p-3 pr-8 mobile:block italic text-gray-600 dark:text-gray-400 w-60">
-                                {{ screenshot.timestamp * 1000 | formatTime(true) }}
-                            </td>
-                        </template>
-                        <template v-else>
-                            <td class="p-3 pl-8 mobile:block max-w-56">
-                                <inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + screenshot.license_identifier">
-                                    {{ screenshot.player_name }}
-                                </inertia-link>
-                            </td>
-                            <td class="p-3 mobile:block w-40">
-                                <a :href="screenshot.url" target="_blank" class="text-indigo-600 dark:text-indigo-400">{{ t('screenshot.view', screenshot.url.split(".").pop()) }}</a>
-                            </td>
-                            <td class="p-3 mobile:block">
-                                {{ screenshot.details || 'N/A' }}
+                <HashResolver>
+                    <table class="w-full whitespace-no-wrap">
+                        <tr class="font-semibold text-left mobile:hidden">
+                            <th class="p-3 pl-8 max-w-56">{{ t('screenshot.player') }}</th>
+                            <th class="p-3 w-40">{{ t('screenshot.screenshot') }}</th>
+                            <th class="p-3">{{ t('screenshot.note') }}</th>
+                            <th class="p-3 w-32">{{ t('screenshot.ban_status') }}</th>
+                            <th class="p-3 pr-8 w-60">{{ t('screenshot.created_at') }}</th>
+                        </tr>
+                        <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" :class="{ 'new-entry': screenshot.new }" v-for="screenshot in list" :key="screenshot.url">
+                            <template v-if="screenshot.isBan">
+                                <td class="p-3 pl-8 text-center mobile:block max-w-56">
+                                    <inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-red-600 rounded dark:bg-red-400" :href="'/players/' + screenshot.license_identifier">
+                                        {{ screenshot.player_name }}
+                                    </inertia-link>
+                                </td>
+                                <td class="p-3 mobile:block italic text-gray-600 dark:text-gray-400 text-sm" colspan="3">
+                                    Banned indefinitely for <span class="font-semibold">{{ screenshot.reason }}</span>
+                                </td>
+                                <td class="p-3 pr-8 mobile:block italic text-gray-600 dark:text-gray-400 w-60">
+                                    {{ screenshot.timestamp * 1000 | formatTime(true) }}
+                                </td>
+                            </template>
+                            <template v-else>
+                                <td class="p-3 pl-8 mobile:block max-w-56">
+                                    <inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + screenshot.license_identifier">
+                                        {{ screenshot.player_name }}
+                                    </inertia-link>
+                                </td>
+                                <td class="p-3 mobile:block w-40">
+                                    <a :href="screenshot.url" target="_blank" class="text-indigo-600 dark:text-indigo-400">{{ t('screenshot.view', screenshot.url.split(".").pop()) }}</a>
+                                </td>
+                                <td class="p-3 mobile:block">
+                                    {{ screenshot.details || 'N/A' }}
 
-                                <div v-if="screenshot.subtitle" class="text-xs text-gray-500 dark:text-gray-400 font-mono ac-subtitle" v-html="screenshot.subtitle" :title="screenshot.subtitleText"></div>
+                                    <div v-if="screenshot.subtitle" class="text-xs text-gray-500 dark:text-gray-400 font-mono ac-subtitle" v-html="screenshot.subtitle" :title="screenshot.subtitleText"></div>
+                                </td>
+                                <td class="p-3 mobile:block font-semibold w-32">
+                                    <span class="text-red-600 dark:text-red-400" v-if="screenshot.ban">
+                                        {{ t('global.banned') }}
+                                    </span>
+                                    <span class="text-green-600 dark:text-green-400 whitespace-nowrap" v-else>
+                                        {{ t('global.not_banned') }}
+                                    </span>
+                                </td>
+                                <td class="p-3 mobile:block w-60 italic text-gray-600 dark:text-gray-400" v-if="screenshot.timestamp">{{ screenshot.timestamp * 1000 | formatTime(true) }}</td>
+                                <td class="p-3 pr-8 mobile:block w-60 italic text-gray-600 dark:text-gray-400" v-else>{{ t('global.unknown') }}</td>
+                            </template>
+                        </tr>
+                        <tr v-if="screenshots.length === 0" class="border-t border-gray-300 dark:border-gray-500">
+                            <td class="px-8 py-3 text-center" colspan="100%">
+                                {{ t('screenshot.no_screenshots') }}
                             </td>
-                            <td class="p-3 mobile:block font-semibold w-32">
-                                <span class="text-red-600 dark:text-red-400" v-if="screenshot.ban">
-                                    {{ t('global.banned') }}
-                                </span>
-                                <span class="text-green-600 dark:text-green-400 whitespace-nowrap" v-else>
-                                    {{ t('global.not_banned') }}
-                                </span>
-                            </td>
-                            <td class="p-3 mobile:block w-60 italic text-gray-600 dark:text-gray-400" v-if="screenshot.timestamp">{{ screenshot.timestamp * 1000 | formatTime(true) }}</td>
-                            <td class="p-3 pr-8 mobile:block w-60 italic text-gray-600 dark:text-gray-400" v-else>{{ t('global.unknown') }}</td>
-                        </template>
-                    </tr>
-                    <tr v-if="screenshots.length === 0" class="border-t border-gray-300 dark:border-gray-500">
-                        <td class="px-8 py-3 text-center" colspan="100%">
-                            {{ t('screenshot.no_screenshots') }}
-                        </td>
-                    </tr>
-                </table>
+                        </tr>
+                    </table>
+                </HashResolver>
             </template>
 
             <template #footer>
@@ -156,6 +158,7 @@ import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
 import Pagination from './../../Components/Pagination';
 import Modal from './../../Components/Modal';
+import HashResolver from './../../Components/HashResolver';
 
 export default {
     layout: Layout,
@@ -163,6 +166,7 @@ export default {
         Pagination,
         VSection,
         Modal,
+        HashResolver,
     },
     props: {
         screenshots: {
@@ -189,7 +193,6 @@ export default {
     data() {
         return {
             isLoading: false,
-            isLoadingHashes: false,
 
             showingReasons: false,
 
@@ -206,21 +209,13 @@ export default {
 
                 screenshot.subtitle = this.markdown(this.getSubtitle(screenshot.type, screenshot.metadata), true);
 
-                if (screenshot.subtitle) {
-                    screenshot.subtitleText = screenshot.subtitle.replace(/(<([^>]+)>)/gi, "");
-
-                    screenshot.subtitle = screenshot.subtitle.replace(/(?<=^|[^\w:.`])-?\d{5,}(?=[^\w:.`+/]|$)/gm, match => {
-                        return `<span class="hash underline cursor-help" title="Click to resolve hash">${match}</span>`;
-                    });
-                }
-
                 return screenshot;
             });
         }
     },
     methods: {
         refresh: async function () {
-            if (this.isLoading || this.isLoadingHashes) return;
+            if (this.isLoading) return;
 
             this.previousIds = this.screenshots.map(screenshot => screenshot.id);
 
@@ -323,20 +318,18 @@ export default {
 
                     const args = (metadata.arguments || []).map(arg => {
                         if (typeof arg === 'number') {
-                            return arg.toFixed(2);
-                        }
-
-                        if (typeof arg === 'object') {
+                            arg = arg.toFixed(2);
+                        } else if (typeof arg === 'object') {
                             if ('x' in arg && 'y' in arg && 'z' in arg && 'w' in arg) {
-                                return `vector4(${arg.x.toFixed(1)}, ${arg.y.toFixed(1)}, ${arg.z.toFixed(1)}, ${arg.w.toFixed(1)})`;
+                                arg = `vector4(${arg.x.toFixed(1)}, ${arg.y.toFixed(1)}, ${arg.z.toFixed(1)}, ${arg.w.toFixed(1)})`;
                             } else if ('x' in arg && 'y' in arg && 'z' in arg) {
-                                return `vector3(${arg.x.toFixed(1)}, ${arg.y.toFixed(1)}, ${arg.z.toFixed(1)})`;
+                                arg = `vector3(${arg.x.toFixed(1)}, ${arg.y.toFixed(1)}, ${arg.z.toFixed(1)})`;
                             } else if ('x' in arg && 'y' in arg) {
-                                return `vector2(${arg.x.toFixed(1)}, ${arg.y.toFixed(1)})`;
+                                arg = `vector2(${arg.x.toFixed(1)}, ${arg.y.toFixed(1)})`;
                             }
                         }
 
-                        return arg;
+                        return `--${arg}--`;
                     }).join(', ');
 
                     return `${trace(metadata)} - **${metadata.native}** (${args})`;
@@ -353,7 +346,7 @@ export default {
                         dmg = `${metadata.maxAllowed}+${metadata.damage - metadata.maxAllowed}hp`;
                     }
 
-                    return `${metadata.type}: ${metadata.weaponType} - **${dmg}** (${metadata.distance.toFixed(2)}m)`;
+                    return `${metadata.type}: --${metadata.weaponType}-- - **${dmg}** (${metadata.distance.toFixed(2)}m)`;
                 case 'illegal_vehicle_modifier':
                     if (!metadata.modifierName || metadata.actualValue === undefined || metadata.expectedValue === undefined) return false;
 
@@ -363,7 +356,7 @@ export default {
                 case 'illegal_vehicle_spawn':
                     if (!metadata.distance || !metadata.entity) return false;
 
-                    return `${metadata.entity.model} (${metadata.distance.toFixed(2)}m)`;
+                    return `--${metadata.entity.model}-- (${metadata.distance.toFixed(2)}m)`;
                 case 'invalid_health':
                     if (metadata.health === undefined || metadata.maxHealth === undefined || metadata.armor === undefined || metadata.maxArmor === undefined) return false;
 
@@ -394,26 +387,6 @@ export default {
 
             return false;
         }
-    },
-    mounted() {
-        $("body").on("click", ".hash", async e => {
-            if (this.isLoading || this.isLoadingHashes) return;
-
-            this.isLoadingHashes = true;
-
-            const el = $(e.target),
-                hash = el.text();
-
-            const { name } = await this.resolveHash(hash);
-
-            if (name) {
-                el.replaceWith(`<i class="cursor-help" title="Hash: ${hash}">${name}</i>`);
-            } else {
-                el.replaceWith(`<span title="Not a valid hash">${hash}</span>`);
-            }
-
-            this.isLoadingHashes = false;
-        });
     }
 };
 </script>
