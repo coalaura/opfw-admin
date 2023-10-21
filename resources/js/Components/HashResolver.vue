@@ -35,9 +35,9 @@ export default {
             hash = hash || joaat;
 
             if (name) {
-                target.innerHTML = `${name} <i class="font-mono">(${hash})</i>`;
+                target.innerHTML = `<i class="font-mono cursor-help" title="Hash: ${hash}">${name}</i>`;
             } else {
-                target.innerHTML = `${hash} <i class="font-mono">(unknown)</i>`;
+                target.innerHTML = `<i class="font-mono cursor-help" title="Unknown hash">${hash}</i>`;
             }
         },
     },
