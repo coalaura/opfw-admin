@@ -336,7 +336,7 @@
             </template>
 
             <template #default>
-                <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" type="date" v-model="scheduledUnbanDate">
+                <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" type="date" :min="minDate" v-model="scheduledUnbanDate">
             </template>
 
             <template #actions>
@@ -1518,6 +1518,13 @@ export default {
             const ban = this.player.ban;
 
             return ban && ban.info && ban.info.startsWith('Highly unlikely');
+        },
+        minDate() {
+            const date = new Date();
+
+            date.setDate(date.getDate() + 1);
+
+            return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
         }
     },
     methods: {
