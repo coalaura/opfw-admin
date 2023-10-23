@@ -147,6 +147,7 @@ Artisan::command("cron", function () {
         ->select(["user_id", "ban_hash"])
         ->leftJoin("users", "license_identifier", "=", "identifier")
         ->whereNotNull("user_id")
+        ->whereNotNull("ban_hash")
         ->get();
 
     $toBeDeleted = [];
