@@ -48,7 +48,12 @@ function runQuery(string $cluster, string $query)
     ]);
 
     try {
-        DB::connection($dbName)->getPdo();
+        /**
+         * @var \Illuminate\Database\Connection
+         */
+        $conn = DB::connection($dbName);
+
+        $conn->getPdo();
     } catch (\Exception $e) {
         return [false, "Failed to connect to database: " . $e->getMessage()];
     }
@@ -139,24 +144,29 @@ Artisan::command("cron", function () {
 
     $bans = Ban::query()
         ->where('scheduled_unban', '<=', $time)
-        ->select(["user_id"])
+        ->select(["user_id", "ban_hash"])
         ->leftJoin("users", "license_identifier", "=", "identifier")
+        ->whereNotNull("user_id")
         ->get();
+
+    $toBeDeleted = [];
 
     foreach ($bans as $ban) {
         $id = $ban->user_id;
 
-        if ($id) {
-            Warning::query()->create([
-                'player_id'      => $id,
-                'warning_type'   => 'system',
-                'can_be_deleted' => 0,
-                'message'        => 'I removed this players ban. (Scheduled unban)',
-            ]);
-        }
+        Warning::query()->create([
+            'player_id'      => $id,
+            'warning_type'   => 'system',
+            'can_be_deleted' => 0,
+            'message'        => 'I removed this players ban. (Scheduled unban)',
+        ]);
+
+        $toBeDeleted[] = $ban->ban_hash;
     }
 
-    Ban::query()->where('scheduled_unban', '<=', $time)->delete();
+    if (!empty($toBeDeleted)) {
+        Ban::query()->whereIn("ban_hash", $toBeDeleted)->delete();
+    }
 
     echo stopTime($start);
 })->describe("Runs all cronjobs for a certain cluster.");

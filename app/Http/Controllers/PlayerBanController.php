@@ -319,13 +319,17 @@ class PlayerBanController extends Controller
             return backWith('error', 'Invalid date.');
         }
 
+        if (!$ban->ban_hash) {
+            return backWith('error', 'Invalid ban.');
+        }
+
         $date = new \DateTime();
 
         $date->setTimestamp($time);
 
         $date->setTime(1, 0, 0, 0);
 
-        $ban->update([
+        Ban::query()->where('ban_hash', '=', $ban->ban_hash)->update([
             'scheduled_unban' => $date->getTimestamp()
         ]);
 
