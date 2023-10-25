@@ -217,7 +217,8 @@
         "description": "Recently attached 📸.",
         "player": "👤",
         "label": "📸",
-        "documentation": "Show more ℹ️ about why this 📸/📸 was created."
+        "documentation": "Show more ℹ️ about why this 📸/📸 was created.",
+        "metadata": "📦"
     },
     "changelog": {
         "title": "🆕🔄",

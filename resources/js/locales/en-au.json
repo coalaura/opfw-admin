@@ -217,7 +217,8 @@
         "description": "Recently bloody attached screenies.",
         "player": "Bloke",
         "label": "Snaps",
-        "documentation": "Chuck more info about why this photo was taken, mate."
+        "documentation": "Chuck more info about why this photo was taken, mate.",
+        "metadata": "Bloody Info"
     },
     "changelog": {
         "title": "Latest Bits and Bobs",

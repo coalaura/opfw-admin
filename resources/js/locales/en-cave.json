@@ -217,7 +217,8 @@
         "description": "Magic pictures from a little while ago.",
         "player": "Ug",
         "label": "Stick drawingz",
-        "documentation": "Ug showz more information about why this stick drawingz was drawn."
+        "documentation": "Ug showz more information about why this stick drawingz was drawn.",
+        "metadata": "Ugga"
     },
     "changelog": {
         "title": "Big Uggz",

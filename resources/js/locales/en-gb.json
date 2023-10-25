@@ -217,7 +217,8 @@
         "description": "Recently bloody well attached snaps.",
         "player": "Bloke",
         "label": "Bloody Screenshots",
-        "documentation": "Show more bloody information about why this sodding screenshot was taken."
+        "documentation": "Show more bloody information about why this sodding screenshot was taken.",
+        "metadata": "Bloody Metadata"
     },
     "changelog": {
         "title": "Recent Bollocks",

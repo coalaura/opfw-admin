@@ -217,7 +217,8 @@
         "description": "Recently snoozled zigzags.",
         "player": "Snoozler",
         "label": "Zigzags",
-        "documentation": "Flibber-tigibber blibber-wibble about why this zigzag-snuzzle was schlambadoodled."
+        "documentation": "Flibber-tigibber blibber-wibble about why this zigzag-snuzzle was schlambadoodled.",
+        "metadata": "Fludorash"
     },
     "changelog": {
         "title": "Sdabes neuweuk",

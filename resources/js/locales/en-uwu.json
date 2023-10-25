@@ -217,7 +217,8 @@
         "description": "Wecentwy attached screenshots OwO",
         "player": "Pwayew",
         "label": "Scweenshots",
-        "documentation": "Show mowe infowmation about why dis scweenshot/captuwe was cweated."
+        "documentation": "Show mowe infowmation about why dis scweenshot/captuwe was cweated.",
+        "metadata": "Mewtadata"
     },
     "changelog": {
         "title": "Wecent UwUdates",

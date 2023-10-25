@@ -217,7 +217,8 @@
         "description": "Recently attached snaps.",
         "player": "Player",
         "label": "Snaps",
-        "documentation": "Show more info 'bout why this snap/capture was made."
+        "documentation": "Show more info 'bout why this snap/capture was made.",
+        "metadata": "Metadater"
     },
     "changelog": {
         "title": "Latest Happ'nins",

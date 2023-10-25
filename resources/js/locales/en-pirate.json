@@ -217,7 +217,8 @@
         "description": "Recently attached portraits.",
         "player": "Buccaneer",
         "label": "Portraits",
-        "documentation": "Reveal more details 'bout why this portrait/capture be created."
+        "documentation": "Reveal more details 'bout why this portrait/capture be created.",
+        "metadata": "Bootytreasure"
     },
     "changelog": {
         "title": "Latest Sea Changes",
