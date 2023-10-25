@@ -332,7 +332,9 @@ export default {
                         return `--${arg}--`;
                     }).join(', ');
 
-                    return `${trace(metadata)} - **${metadata.native}** (${args})`;
+                    const native = metadata.native.startsWith('0x') ? `[${metadata.native}](https://docs.fivem.net/natives/?_0x${metadata.native.substr(2).toUpperCase()})` : metadata.native;
+
+                    return `${trace(metadata)} - **${native}** (${args})`;
                 case 'illegal_global':
                     if (!metadata.resource || !metadata.variable) return false;
 
