@@ -860,7 +860,9 @@ export default {
 
                     const playerName = playerNames && playerNames[player.license] ? playerNames[player.license] : player.license;
 
-                    marker.bindPopup('<a href="/players/' + player.license + '" target="_blank">' + playerName + '</a>', {
+                    const speed = "s" in player ? Math.floor(player.s * 2.236936) + "mph" : "-mph";
+
+                    marker.bindPopup('<a href="/players/' + player.license + '" target="_blank">' + playerName + '</a><br><li>' + speed + '</li>', {
                         autoPan: false
                     });
 
