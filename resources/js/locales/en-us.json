@@ -213,6 +213,7 @@
         "anti_cheat": "Anti-Cheat Screenshots",
         "anti_cheat_description": "Automated screenshots and screen captures by the anti cheat.",
         "anti_cheat_reasons": "Ban Reasons",
+        "metadata": "Metadata",
         "no_screenshots": "No screenshots attached",
         "view": "View .{0}",
         "description": "Recently attached screenshots.",

@@ -64,7 +64,7 @@
                                     <a :href="screenshot.url" target="_blank" class="text-indigo-600 dark:text-indigo-400">{{ t('screenshot.view', screenshot.url.split(".").pop()) }}</a>
                                 </td>
                                 <td class="p-3 mobile:block">
-                                    {{ screenshot.details || 'N/A' }}
+                                    <span class="cursor-help" @click="showMetadata(screenshot.metadata, screenshot.url)">{{ screenshot.details || 'N/A' }}</span>
 
                                     <div v-if="screenshot.subtitle" class="text-xs text-gray-500 dark:text-gray-400 font-mono ac-subtitle" v-html="screenshot.subtitle" :title="screenshot.subtitleText"></div>
                                 </td>
@@ -140,6 +140,8 @@
             </template>
         </modal>
 
+        <metadataViewer :title="t('screenshot.metadata')" :image="showingMetadataImage" :metadata="showingMetadata" :show.sync="isShowingMetadata"></metadataViewer>
+
     </div>
 </template>
 
@@ -159,6 +161,7 @@ import VSection from './../../Components/Section';
 import Pagination from './../../Components/Pagination';
 import Modal from './../../Components/Modal';
 import HashResolver from './../../Components/HashResolver';
+import MetadataViewer from './../../Components/MetadataViewer';
 
 export default {
     layout: Layout,
@@ -167,6 +170,7 @@ export default {
         VSection,
         Modal,
         HashResolver,
+        MetadataViewer,
     },
     props: {
         screenshots: {
@@ -195,6 +199,10 @@ export default {
             isLoading: false,
 
             showingReasons: false,
+
+            isShowingMetadata: false,
+            showingMetadata: null,
+            showingMetadataImage: null,
 
             previousIds: false
         };
@@ -230,6 +238,12 @@ export default {
             } catch (e) { }
 
             this.isLoading = false;
+        },
+        showMetadata(metadata, screenshotUrl) {
+            this.showingMetadata = metadata;
+            this.showingMetadataImage = screenshotUrl;
+
+            this.isShowingMetadata = true;
         },
         getBanInfo(licenseIdentifier, key) {
             const ban = licenseIdentifier in this.banMap ? this.banMap[licenseIdentifier] : null;
