@@ -533,7 +533,7 @@ export default {
                     pos && pos.d ? 'dead' : false
                 ].filter(flag => flag).join(", ");
 
-                const speed = pos && "s" in pos ? (pos.s * 2.236936) + "mph" : "N/A";
+                const speed = pos && "s" in pos ? Math.floor(pos.s * 2.236936) + "mph" : "N/A";
 
                 this.historicDetails = "Flags: " + (flags ? flags : 'N/A') + " - Altitude: " + (pos ? pos.z + "m" : "N/A") + " - Speed: " + speed;
 
