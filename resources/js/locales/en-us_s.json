@@ -70,7 +70,8 @@
         },
         "results": "Search done took {0} milliseconds.",
         "entries": "Showin' {0} total entries on {1} page(s).",
-        "loading": "Loadin'..."
+        "loading": "Loadin'...",
+        "any": "Any"
     },
     "steam": {
         "title": "Steam Looker Upper",
@@ -569,8 +570,8 @@
             "plate": "Vehicle Plate",
             "job": "Occupation",
             "phone": "Phone Numbah",
-            "deleted": "Deleted or nah",
-            "dob": "Date o' Birth"
+            "dob": "Date o' Birth",
+            "license": "Done got a license"
         },
         "result": {
             "player": "Playa",
@@ -679,7 +680,6 @@
         "search": "Look fer 'em",
         "name": "Folk Name",
         "license": "License Tracker",
-        "discord": "Discord Handle",
         "identifier": "Other Tracker",
         "server_id": "Current Tracker",
         "enablable": "Kickin' Command",
@@ -1040,7 +1040,9 @@
                 "hunting": "Huntin'",
                 "fishing": "Fishin'",
                 "weapon": "Weap'n",
-                "mining": "Minin'"
+                "mining": "Minin'",
+                "boat": "Gots a boatin' license",
+                "passenger": "PPL - Passenger"
             },
             "no_coords": "Sorry y'all, I cain't give ya the last known whereabouts of a player while they're online."
         },
@@ -1059,7 +1061,8 @@
             "phone": "Phone Number, for reachin' ya",
             "outfits": "This character got {0} outfit(s) saved, all dressed up",
             "gender": "Gender, boy or girl"
-        }
+        },
+        "identifier_type": "Type of ID"
     },
     "casino": {
         "title": "Casino Logs, some gamblin' tales",

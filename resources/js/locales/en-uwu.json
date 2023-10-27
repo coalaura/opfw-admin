@@ -70,7 +70,8 @@
         },
         "results": "Seawch took {0} miwwiseconds nyaa~",
         "entries": "Showing {0} totaw entwies on {1} page(s) uwu",
-        "loading": "Woadwing... kyaa~"
+        "loading": "Woadwing... kyaa~",
+        "any": "Anywu"
     },
     "steam": {
         "title": "Steam Wookup uwu",
@@ -569,8 +570,8 @@
             "plate": "Vehicwe Pwate UwU",
             "job": "Jwob UwU",
             "phone": "Phonye Nyumbew UwU",
-            "deleted": "Is Deweted UwU",
-            "dob": "Date of Bwirth UwU"
+            "dob": "Date of Bwirth UwU",
+            "license": "Haswu License"
         },
         "result": {
             "player": "Pwayer UwU",
@@ -679,7 +680,6 @@
         "search": "S-Search~",
         "name": "Player Nya~me",
         "license": "License Identifier-chan",
-        "discord": "Discord ID-chan",
         "identifier": "Other Nerdy Identifier-desu",
         "server_id": "Current Server ID-chaaaan",
         "enablable": "Enabled Commandnyaa~",
@@ -1040,7 +1040,9 @@
                 "hunting": "HuntingwU",
                 "fishing": "FishyingwU",
                 "weapon": "WeaponwU",
-                "mining": "MiningwU"
+                "mining": "MiningwU",
+                "boat": "Boating Licwense",
+                "passenger": "PPL - Pawsenger"
             },
             "no_coords": "Wast cwoods awa unwavaiwabwe whiwe the pwayew is onwine."
         },
@@ -1059,7 +1061,8 @@
             "phone": "Phone Nyumber",
             "outfits": "This chawactew has {0} saved infit(s).",
             "gender": "Genderw"
-        }
+        },
+        "identifier_type": "Identifiwer Typwu"
     },
     "casino": {
         "title": "Casino Cute Wogs",

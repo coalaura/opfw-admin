@@ -70,7 +70,8 @@
         },
         "results": "Search finished in {0} milliseconds.",
         "entries": "{0} total entries found, shown on {1} page(s).",
-        "loading": "Being loaded..."
+        "loading": "Being loaded...",
+        "any": "Fookin' Any"
     },
     "steam": {
         "title": "Steam Exploration",
@@ -569,8 +570,8 @@
             "plate": "Vehicle Plate, mate",
             "job": "Bloody Job, you wanker",
             "phone": "Phone Number, you tosser",
-            "deleted": "Is Deleted or what?",
-            "dob": "Date of Birth, yeah?"
+            "dob": "Date of Birth, yeah?",
+            "license": "Has a Bleedin' License"
         },
         "result": {
             "player": "Player, you bloody idiot",
@@ -679,7 +680,6 @@
         "search": "Have a bloody gander",
         "name": "Wanker Name",
         "license": "Bleeding License Identifier",
-        "discord": "Bloody Discord ID",
         "identifier": "Other Bleeding Identifier",
         "server_id": "Current Wanker ID",
         "enablable": "Enabled Gobshite Command",
@@ -1040,7 +1040,9 @@
                 "hunting": "Bloody Hunting",
                 "fishing": "Bloody Fishing",
                 "weapon": "Bloody Weapon",
-                "mining": "Bloody Mining"
+                "mining": "Bloody Mining",
+                "boat": "Boatin' License",
+                "passenger": "PPL - Passenger"
             },
             "no_coords": "Sorry, but you won't find any bloody coordinates while the git is still online."
         },
@@ -1059,7 +1061,8 @@
             "phone": "Phone Ruddy Number",
             "outfits": "This blimey character 'as {0} saved bleedin' outfit(s).",
             "gender": "Fookin' Gender"
-        }
+        },
+        "identifier_type": "Bloody Identifier Type"
     },
     "casino": {
         "title": "Bloody Casino Logs",

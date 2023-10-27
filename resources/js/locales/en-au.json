@@ -70,7 +70,8 @@
         },
         "results": "Search took {0} bloody milliseconds.",
         "entries": "Showing {0} total entries on {1} flamin' page(s).",
-        "loading": "Fair dinkum mate, hold your horses..."
+        "loading": "Fair dinkum mate, hold your horses...",
+        "any": "Mate"
     },
     "steam": {
         "title": "Bloody Steam Lookup",
@@ -569,8 +570,8 @@
             "plate": "Vehicle Docket",
             "job": "Dunny Job",
             "phone": "Mobile Number",
-            "deleted": "Is Buggered",
-            "dob": "Date of Getting On the Piss"
+            "dob": "Date of Getting On the Piss",
+            "license": "Got License"
         },
         "result": {
             "player": "Lad",
@@ -679,7 +680,6 @@
         "search": "Have a butchers",
         "name": "Bloke Name",
         "license": "License Digger",
-        "discord": "Discord ID, mate",
         "identifier": "Other Digger",
         "server_id": "Current Server Digger",
         "enablable": "Enabled Gobbledygook",
@@ -1040,7 +1040,9 @@
                 "hunting": "Bloke Smash",
                 "fishing": "Fishin' Mate",
                 "weapon": "Bloke Battlefield",
-                "mining": "Mined All Day"
+                "mining": "Mined All Day",
+                "boat": "Boat License",
+                "passenger": "PPL - Mate on Board"
             },
             "no_coords": "Bloody hell, we can't bloody find the coordinates mate, player's still online."
         },
@@ -1059,7 +1061,8 @@
             "phone": "Dingo blower blower",
             "outfits": "This legend has {0} sick getups.",
             "gender": "Mate-ness"
-        }
+        },
+        "identifier_type": "Type of Bloke"
     },
     "casino": {
         "title": "Pokies Logs",

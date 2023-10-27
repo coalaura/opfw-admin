@@ -70,7 +70,8 @@
         },
         "results": "Ug-Ug took {0} milliseconds.",
         "entries": "Showing {0} total entries on {1} page(s).",
-        "loading": "Ug-Ug..."
+        "loading": "Ug-Ug...",
+        "any": "Ugg"
     },
     "steam": {
         "title": "Steam Uggabugga",
@@ -569,8 +570,8 @@
             "plate": "Ugga Car Plate",
             "job": "Ugga Work",
             "phone": "Ugga Call Number",
-            "deleted": "Ugga Gone",
-            "dob": "Ugga Birth Date"
+            "dob": "Ugga Birth Date",
+            "license": "Ugga Ugga"
         },
         "result": {
             "player": "Ugga Player",
@@ -679,7 +680,6 @@
         "search": "Uggur",
         "name": "Uggur Name",
         "license": "License Scratch-Maker",
-        "discord": "Caveman ID",
         "identifier": "Fire Stick",
         "server_id": "Current Uggur ID",
         "enablable": "Uggur command-enabled",
@@ -1040,7 +1040,9 @@
                 "hunting": "Hunt",
                 "fishing": "Fish",
                 "weapon": "Wapen",
-                "mining": "Mine"
+                "mining": "Mine",
+                "boat": "Ugga Ugga - Boat",
+                "passenger": "Ugga Ugga - Traveler"
             },
             "no_coords": "Last coords not knowed when player be online."
         },
@@ -1059,7 +1061,8 @@
             "phone": "Ug Communicator",
             "outfits": "This Ug has {0} fashions.",
             "gender": "Ug Gender"
-        }
+        },
+        "identifier_type": "Ugga Ugga Type"
     },
     "casino": {
         "title": "Logs of the Big Cave",

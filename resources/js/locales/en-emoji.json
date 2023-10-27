@@ -70,7 +70,8 @@
         },
         "results": "🔍🎉 {0} ⏳",
         "entries": "👀🔢 {0} ➡️ {1} 📃📚",
-        "loading": "⏳⏳⏳⏳⏳..."
+        "loading": "⏳⏳⏳⏳⏳...",
+        "any": "🔀"
     },
     "steam": {
         "title": "🚂🔎",
@@ -569,8 +570,8 @@
             "plate": "🚗 Vehicle Plate",
             "job": "💼 Job",
             "phone": "📞 Phone Number",
-            "deleted": "❌ Is Deleted",
-            "dob": "🎂 Date of Birth"
+            "dob": "🎂 Date of Birth",
+            "license": "✅🅰️📜"
         },
         "result": {
             "player": "👤 Player",
@@ -679,7 +680,6 @@
         "search": "🔍",
         "name": "👤 👥",
         "license": "🚫",
-        "discord": "🎮 🔔",
         "identifier": "🆔",
         "server_id": "🖥️ ID",
         "enablable": "🔨 ⚙️",
@@ -1040,7 +1040,9 @@
                 "hunting": "🦌 - Hunting",
                 "fishing": "🎣 - Fishing",
                 "weapon": "🔫 - Weapon",
-                "mining": "⛏️ - Mining"
+                "mining": "⛏️ - Mining",
+                "boat": "⛵️📜",
+                "passenger": "✈️🆔📜"
             },
             "no_coords": "Last 🌐 are unavailable while the player is 📴."
         },
@@ -1059,7 +1061,8 @@
             "phone": "📞 Phone Number",
             "outfits": "This character has {0} 👗 saved outfit(s).",
             "gender": "♂️♀️ Gender"
-        }
+        },
+        "identifier_type": "🔑🆔📝"
     },
     "casino": {
         "title": "🎰 Casino Logs",

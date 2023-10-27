@@ -70,7 +70,8 @@
         },
         "results": "Searcill tillook gillook {0} millillisillsecondsillgib.",
         "entries": "Shillowinggib {0} tigilltal entillrillis ongib {1} pigillag(gib).",
-        "loading": "Lillollillagadinggib..."
+        "loading": "Lillollillagadinggib...",
+        "any": "Kumadrip"
     },
     "steam": {
         "title": "Stillillag Loogopgib",
@@ -578,8 +579,8 @@
             "plate": "Relikahrel Kix",
             "job": "Foj",
             "phone": "Wuqin Kuyuq Wuqyax",
-            "deleted": "Yz Kuzaycu",
-            "dob": "Fonyexu Dybah"
+            "dob": "Fonyexu Dybah",
+            "license": "Duvoczon Sprek"
         },
         "result": {
             "player": "Wutayex Abal",
@@ -688,7 +689,6 @@
         "search": "Zippityzop",
         "name": "Plibberdob Name",
         "license": "Glubbersnatchet Gibberlebop",
-        "discord": "Dibberdop Badoop",
         "identifier": "Flibberdobber Eepledorp",
         "server_id": "Plibberdobber Glibbersnop",
         "enablable": "Zigzaggydobber Zibberzab",
@@ -1049,7 +1049,9 @@
                 "hunting": "Hunting",
                 "fishing": "Fishing",
                 "weapon": "Weapon",
-                "mining": "Mining"
+                "mining": "Mining",
+                "boat": "Gubidim Plumski",
+                "passenger": "Modumbak - Schmatopi"
             },
             "no_coords": "Flarble flibbity floo flobble flibberish flobberish wobble wabble doobly-woobly."
         },
@@ -1068,7 +1070,8 @@
             "phone": "Flubberson",
             "outfits": "Blorf morf {0} zibberflab(s).",
             "gender": "Globberdor"
-        }
+        },
+        "identifier_type": "Galadapitus Enquo"
     },
     "casino": {
         "title": "Zludzor Zabs",

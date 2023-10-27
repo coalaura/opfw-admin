@@ -70,7 +70,8 @@
         "results": "Scrounge took {0} ticks o' the lock.",
         "entries": "Showin' {0} total entries on {1} piece(s) o' the treasure map.",
         "loading": "Loadin'...",
-        "staff_title": "Me Hearties have access to all matey commands."
+        "staff_title": "Me Hearties have access to all matey commands.",
+        "any": "Anythin'"
     },
     "steam": {
         "title": "Steam Buccaneer",
@@ -569,8 +570,8 @@
             "plate": "Vessel Plate",
             "job": "Occupation",
             "phone": "Communications Number",
-            "deleted": "Be Walkin' the Plank",
-            "dob": "Day o' Bein' Born"
+            "dob": "Day o' Bein' Born",
+            "license": "Be 'avin' License"
         },
         "result": {
             "player": "Sailor",
@@ -679,7 +680,6 @@
         "search": "Scour",
         "name": "Scallywag Name",
         "license": "Letter of Marque Identifier",
-        "discord": "Discord Scuttlebutt",
         "identifier": "Other Identifier",
         "server_id": "Current Ship ID",
         "enablable": "Ready Command",
@@ -1040,7 +1040,9 @@
                 "hunting": "Plunderin'",
                 "fishing": "Fishin'",
                 "weapon": "Blunderbuss",
-                "mining": "Diggin'"
+                "mining": "Diggin'",
+                "boat": "Boatin' License",
+                "passenger": "PPL - Passenger"
             },
             "no_coords": "Avast! The last known whereabouts of ye scurvy dog be hidin' from me while ye be sailin' the high seas."
         },
@@ -1059,7 +1061,8 @@
             "phone": "Code o' Parley",
             "outfits": "This pirate has {0} stashed outfit(s).",
             "gender": "Sailor's Pivot"
-        }
+        },
+        "identifier_type": "Identifier Ship"
     },
     "casino": {
         "title": "Log o' Casino Aberrations",
