@@ -1,10 +1,10 @@
 <template>
-    <div class="bg-white">
+    <div class="bg-white banner-bg">
 
         <!-- Modals -->
         <portal-target name="modals" />
 
-        <div class="flex flex-col h-screen banner-bg">
+        <div class="flex flex-col h-screen">
             <!-- Navbar -->
             <navbar />
 

@@ -1,7 +1,7 @@
 import ColorThief from 'colorthief';
 
 // Rebuild style on version change
-const Iteration = 7;
+const Iteration = 8;
 
 const colors = {
 	'gray-100': { l: 96 },
@@ -86,7 +86,7 @@ const Style = {
 			style.push(`.banner-bg{background-image:url(${url});background-size:cover;background-position:center;background-repeat:no-repeat}.sidebar,.navbar{background-color:transparent!important}`);
 
 			// Backdrop blur.
-			style.push(`.banner-bg::before{content:'';position:absolute;top:0;left:0;bottom:0;right:0;backdrop-filter:blur(20px);z-index:-1}`);
+			style.push(`.banner-bg>*{backdrop-filter:blur(20px)}`);
 
 			return style.join("");
 		}
