@@ -691,7 +691,7 @@
                     <i class="fas fa-calendar-day mr-1"></i>
                     {{ t('players.show.scheduled_unban') }}
                 </span>
-                <span class="text-sm italic" v-html="t('players.show.scheduled_details', player.ban.scheduled)"></span>
+                <span class="text-sm italic" v-html="t('players.show.scheduled_details', moment.utc(player.ban.scheduled).format('MM/DD/YYYY - H:mm A'))"></span>
             </div>
 
             <!-- Viewing -->
