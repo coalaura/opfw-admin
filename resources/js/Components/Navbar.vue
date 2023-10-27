@@ -272,24 +272,6 @@ export default {
             banner: false
         }
     },
-    mounted() {
-        this.updateServerStatus();
-        this.updateGameTime();
-
-        setInterval(() => {
-            this.timezones = this.timezones.map(timezone => {
-                timezone.time = this.getDateForTimezone(timezone);
-
-                return timezone;
-            });
-        }, 1000);
-
-        setInterval(() => {
-            if (!this.showingWorldTime) return;
-
-            this.now = Date.now();
-        }, Math.floor(1000 / 12));
-    },
     computed: {
         formattedGameTime() {
             const baseTime = (this.gameTime + (((this.now - this.gameTimeUpdated) / 1000) * 0.2)) % 1440;
@@ -482,6 +464,23 @@ export default {
         }
     },
     async mounted() {
+        this.updateServerStatus();
+        this.updateGameTime();
+
+        setInterval(() => {
+            this.timezones = this.timezones.map(timezone => {
+                timezone.time = this.getDateForTimezone(timezone);
+
+                return timezone;
+            });
+        }, 1000);
+
+        setInterval(() => {
+            if (!this.showingWorldTime) return;
+
+            this.now = Date.now();
+        }, Math.floor(1000 / 12));
+
         this.banner = await this.refreshStyle();
 
         this.$bus.$on('settingsUpdated', async () => {
