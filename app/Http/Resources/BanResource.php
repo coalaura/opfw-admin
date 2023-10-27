@@ -33,7 +33,7 @@ class BanResource extends JsonResource
             'issuer'     => $this->creator_name ?? null,
             'locked'     => $this->locked,
             'accuracy'   => $this->reason ? Ban::getAccuracy($this->reason) : false,
-            'scheduled'  => $this->scheduled_unban ? date("m/d/Y", $this->scheduled_unban) : false
+            'scheduled'  => $this->scheduled_unban ?? false
         ];
     }
 

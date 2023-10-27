@@ -691,7 +691,7 @@
                     <i class="fas fa-calendar-day mr-1"></i>
                     {{ t('players.show.scheduled_unban') }}
                 </span>
-                <span class="text-sm italic" v-html="t('players.show.scheduled_details', moment.utc(player.ban.scheduled).format('MM/DD/YYYY - H:mm A'))"></span>
+                <span class="text-sm italic" v-html="t('players.show.scheduled_details', scheduledUnban, scheduledUnbanIn)"></span>
             </div>
 
             <!-- Viewing -->
@@ -1525,7 +1525,21 @@ export default {
             date.setDate(date.getDate() + 1);
 
             return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-        }
+        },
+        scheduledUnban() {
+            if (!this.player.ban || !this.player.ban.scheduled) {
+                return false;
+            }
+
+            return this.$moment.utc(this.player.ban.scheduled * 1000).format('MM/DD/YYYY - H:mm A');
+        },
+        scheduledUnbanIn() {
+            if (!this.player.ban || !this.player.ban.scheduled) {
+                return false;
+            }
+
+            return this.$moment.utc(this.player.ban.scheduled * 1000).fromNow();
+        },
     },
     methods: {
         updatePlayerTime() {
@@ -1590,16 +1604,16 @@ export default {
         async scheduleUnban() {
             if (this.isLoading || !this.scheduledUnbanDate) return;
 
-            const timestamp = (new Date(this.scheduledUnbanDate)).getTime();
+            const timestamp = this.$moment.utc(this.scheduledUnbanDate).unix();
 
-            if (timestamp < Date.now()) return;
+            if (timestamp*1000 < Date.now()) return;
 
             this.isLoading = true;
             this.isSchedulingUnban = false;
 
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/bans/' + this.player.ban.id + '/schedule', {
-                date: this.scheduledUnbanDate
+                timestamp: timestamp
             });
 
             this.isLoading = false;

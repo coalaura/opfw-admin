@@ -313,7 +313,7 @@ class PlayerBanController extends Controller
 
     public function schedule(Player $player, Ban $ban, Request $request): RedirectResponse
     {
-        $time = strtotime($request->input('date'));
+        $time = intval($request->input('timestamp'));
 
         if (!$time || $time < time()) {
             return backWith('error', 'Invalid date.');
@@ -323,14 +323,8 @@ class PlayerBanController extends Controller
             return backWith('error', 'Invalid ban.');
         }
 
-        $date = new \DateTime();
-
-        $date->setTimestamp($time);
-
-        $date->setTime(1, 0, 0, 0);
-
         Ban::query()->where('ban_hash', '=', $ban->ban_hash)->update([
-            'scheduled_unban' => $date->getTimestamp()
+            'scheduled_unban' => $time
         ]);
 
         $user = user();
@@ -338,7 +332,7 @@ class PlayerBanController extends Controller
         // Automatically log the ban update as a warning.
         $player->warnings()->create([
             'issuer_id' => $user->user_id,
-            'message' => 'I scheduled the removal of this players ban for ' . date('m/d/Y', $date->getTimestamp()) . '.',
+            'message' => 'I scheduled the removal of this players ban for ' . gmdate('m/d/Y', $time) . '.',
         ]);
 
         return backWith('success', 'The ban has been successfully scheduled for removal.');

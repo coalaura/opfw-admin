@@ -766,7 +766,7 @@
             "schedule_unban": "Schedule",
             "remove_schedule": "Un-Schedule",
             "scheduled_unban": "Scheduled Unban",
-            "scheduled_details": "Ban is scheduled for removal on <b>{0} UTC</b>.",
+            "scheduled_details": "Ban is scheduled for removal on <b>{0} UTC</b> (<i>{1}</i>).",
             "issue": "Issue Ban",
             "lock_ban": "Lock Ban",
             "unlock_ban": "Unlock Ban",

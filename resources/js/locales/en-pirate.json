@@ -855,12 +855,12 @@
             "schedule_unban": "Chart a Course",
             "remove_schedule": "Avast, Un-Schedule",
             "scheduled_unban": "Scheduled Pardon",
-            "scheduled_details": "Blackmark be scheduled to be lifted on <b>{0}</b>.",
             "more_info": "Avast!",
             "less_info": "Avast, ye!",
             "last_connection": "Last Touched",
             "recent_playtime": "Arrr, Recent Sailin'",
-            "recent_playtime_after": "~in the past 4 fortnights"
+            "recent_playtime_after": "~in the past 4 fortnights",
+            "scheduled_details": "Avast! The scurvy ban be settin' t' be removed on <b>{0} UTC</b> (<i>{1}</i>)."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

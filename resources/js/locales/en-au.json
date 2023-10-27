@@ -855,12 +855,12 @@
             "schedule_unban": "Get Me Bloody Diary",
             "remove_schedule": "Ballsed Up the Schedule",
             "scheduled_unban": "Oi, It's Gonna Get Unbanned",
-            "scheduled_details": "Ban's gettin' the boot on <b>{0}</b>.",
             "more_info": "Gimme the Goss",
             "less_info": "Aussie Info",
             "last_connection": "Latest Hangout",
             "recent_playtime": "G'day Mate!",
-            "recent_playtime_after": "~in the bloody last 4 weeks"
+            "recent_playtime_after": "~in the bloody last 4 weeks",
+            "scheduled_details": "Yer ban gonna be gone on <b>{0} Straya time</b> (<i>{1}</i>)."
         },
         "ban_reason": "Sorry mate",
         "ban_time": "Runs out",

@@ -757,7 +757,6 @@
             "schedule_unban": "Scheldule",
             "remove_schedule": "Un-Scheldule",
             "scheduled_unban": "Schelduled Unbab",
-            "scheduled_details": "Ban is schelduled for Rimovern on <b>{0}</b>.",
             "issue": "Issue Ban",
             "lock_ban": "Loch Ban",
             "unlock_ban": "Unloch Ban",
@@ -869,7 +868,8 @@
             "less_info": "Wibber Wabber",
             "last_connection": "Flibber Floober",
             "recent_playtime": "Blubbery Porkshank",
-            "recent_playtime_after": "~boop blibber in the flibberbob"
+            "recent_playtime_after": "~boop blibber in the flibberbob",
+            "scheduled_details": "Gunk is flibbabbled for skrebil on <p>{0} MCT</p> (<f>{1}</f>)."
         },
         "ban_reason": "Efoki",
         "ban_time": "Lujemuv",

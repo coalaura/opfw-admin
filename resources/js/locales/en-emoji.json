@@ -855,12 +855,12 @@
             "schedule_unban": "📅",
             "remove_schedule": "⌛",
             "scheduled_unban": "⏰🚫",
-            "scheduled_details": "🚫🗓️📅📆🕒🕑{0}",
             "more_info": "📚🔍",
             "less_info": "🔍",
             "last_connection": "⏳🔗",
             "recent_playtime": "📅🕒",
-            "recent_playtime_after": "~📅🕓❗"
+            "recent_playtime_after": "~📅🕓❗",
+            "scheduled_details": "Ban is scheduled for removal on ⏰<b>{0} UTC</b> (📅<i>{1}</i>)."
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

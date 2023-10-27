@@ -855,12 +855,12 @@
             "schedule_unban": "Meep",
             "remove_schedule": "Un-Meep",
             "scheduled_unban": "Scheduled Meep",
-            "scheduled_details": "Ban is scheduled for removal on <b>{0}</b>.",
             "more_info": "More Big Talk",
             "less_info": "Less Big Talk",
             "last_connection": "Last Grunt",
             "recent_playtime": "Ugga Playtime",
-            "recent_playtime_after": "~unga unga within last moon cycle"
+            "recent_playtime_after": "~unga unga within last moon cycle",
+            "scheduled_details": "Ban go bye-bye on <b>{0} UTC</b> (<i>{1}</i>)."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",
