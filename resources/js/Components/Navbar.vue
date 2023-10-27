@@ -3,7 +3,8 @@
         <!-- Branding / Logo -->
         <div class="flex-shrink-0 px-8 py-3 text-center text-white mobile:hidden w-72 overflow-hidden">
             <inertia-link href="/" class="flex gap-2">
-                <img :src="serverLogo ? serverLogo : '/images/op-logo.png'" class="block w-logo h-logo object-cover" :class="{ 'shadow': banner }" />
+                <img :src="serverLogo ? serverLogo : '/images/op-logo.png'" class="block w-logo h-logo object-cover" :class="{ 'drop-shadow': banner }" />
+
                 <h1 class="text-lg px-4 flex flex-col text-left justify-center overflow-hidden">
                     <span class="block leading-5 drop-shadow">OP-FW</span>
                     <span class="block text-xs leading-1 italic whitespace-nowrap overflow-ellipsis overflow-hidden drop-shadow">{{ serverName ? serverName : $page.auth.cluster }}</span>
