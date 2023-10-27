@@ -1,7 +1,7 @@
 import ColorThief from 'colorthief';
 
 // Rebuild style on version change
-const Iteration = 5;
+const Iteration = 6;
 
 const colors = {
 	'gray-100': { l: 96 },
@@ -58,7 +58,7 @@ const Style = {
 			let style = Object.entries(colors).map(([name, hue]) => {
 				if (s === 0) hue.s = 0;
 
-				const background = `background-color:hsla(${h},${hue.s || s}%,${hue.l}%,${useAlpha ? 0.6 : 1});${useAlpha ? "backdrop-filter:blur(20px)" : ""}`,
+				const background = `background-color:hsla(${h},${hue.s || s}%,${hue.l}%,${useAlpha ? 0.6 : 1})`,
 					border = `border-color:hsl(${h},${hue.s || s}%,${hue.l}%)`;
 
 				return [
@@ -143,7 +143,7 @@ const Style = {
 
 			let style;
 
-			if (!data || !data.style || data.url !== banner || data.v !== Iteration || data.alpha !== bannerAlpha) {
+			if (!data || !data.style || data.url !== banner || data.v !== Iteration || data.alpha !== bannerAlpha || window.location.hostname === "localhost") {
 				style = await loadStyle(banner, bannerAlpha);
 
 				console.log("Rebuilt style.");
