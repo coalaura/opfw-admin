@@ -4,7 +4,7 @@
         <!-- Modals -->
         <portal-target name="modals" />
 
-        <div class="flex flex-col h-screen banner-bg backdrop-filter backdrop-blur">
+        <div class="flex flex-col h-screen banner-bg">
             <!-- Navbar -->
             <navbar />
 

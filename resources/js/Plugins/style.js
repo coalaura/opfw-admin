@@ -1,7 +1,7 @@
 import ColorThief from 'colorthief';
 
 // Rebuild style on version change
-const Iteration = 6;
+const Iteration = 7;
 
 const colors = {
 	'gray-100': { l: 96 },
@@ -83,7 +83,10 @@ const Style = {
 			style.push(`a[class*="text-indigo-"],a[class*="text-blue-"]{color:hsl(${h},${ls}%,40%)!important}.dark a[class*="text-indigo-"],.dark a[class*="text-blue-"]{color:hsl(${h},${ls}%,80%)!important}`);
 
 			// Actual banner styles.
-			style.push(`.banner-bg{background-image:url(${url});background-size:cover;background-position:center;background-repeat:no-repeat}.sidebar,.navbar{background-color:transparent!important}`)
+			style.push(`.banner-bg{background-image:url(${url});background-size:cover;background-position:center;background-repeat:no-repeat}.sidebar,.navbar{background-color:transparent!important}`);
+
+			// Backdrop blur.
+			style.push(`.banner-bg::before{content:'';position:absolute;top:0;left:0;bottom:0;right:0;backdrop-filter:blur(20px);z-index:-1}`);
 
 			return style.join("");
 		}
