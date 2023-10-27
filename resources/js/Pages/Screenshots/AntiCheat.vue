@@ -240,7 +240,7 @@ export default {
             this.isLoading = false;
         },
         showMetadata(metadata, screenshotUrl) {
-            this.showingMetadata = metadata;
+            this.showingMetadata = JSON.parse(JSON.stringify(metadata));
             this.showingMetadataImage = screenshotUrl;
 
             this.isShowingMetadata = true;
