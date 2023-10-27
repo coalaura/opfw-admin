@@ -41,23 +41,25 @@
                             <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="server_id" name="server" type="number" min="0" max="9999" placeholder="123" v-model="filters.server">
                         </div>
                         <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
-                            <label class="block mb-2 mt-3" for="discord">
-                                {{ t('players.discord') }}
-                                <sup class="text-muted dark:text-dark-muted">
-                                    <a class="dark:text-blue-300 text-blue-500" href="https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID" target="_blank" :title="t('players.discord_description')">[?]</a>
-                                    *
-                                </sup>
-                            </label>
-                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="discord" name="discord" placeholder="150219115892703232" v-model="filters.discord">
-                        </div>
-                        <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2 mt-3" for="identifier">
                                 {{ t('players.identifier') }}
                                 <sup class="text-muted dark:text-dark-muted">
-                                    **
+                                    *
                                 </sup>
                             </label>
-                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="identifier" name="identifier" placeholder="steam:11000010d322da9" v-model="filters.identifier">
+                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="identifier" name="identifier" placeholder="669523636423622686" v-model="filters.identifier" @input="guessIdentifierType">
+                        </div>
+                        <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
+                            <label class="block mb-2 mt-3" for="identifier_type">
+                                {{ t('players.identifier_type') }}
+                                <sup class="text-muted dark:text-dark-muted">
+                                    *
+                                </sup>
+                            </label>
+                            <select class="block w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="identifier_type" name="identifier_type" v-model="filters.identifier_type">
+                                <option value="">Unknown / Any</option>
+                                <option :value="typ" v-for="typ in getIdentifierTypes()" :key="typ" v-if="isIdentifierOfType(filters.identifier, typ)">{{ typ.substr(0, 1).toUpperCase() + typ.substr(1) }}</option>
+                            </select>
                         </div>
                         <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2 mt-3" for="enablable">
@@ -211,6 +213,7 @@ export default {
             discord: String,
             server: Number,
             identifier: String,
+            identifier_type: String,
             enablable: String,
         },
         time: {
@@ -240,14 +243,22 @@ export default {
     },
     mounted() {
         this.updateStatus();
+
+        this.guessIdentifierType();
     },
     methods: {
+        guessIdentifierType() {
+            const identifier = this.filters.identifier;
+
+            this.filters.identifier_type = this.detectIdentifierType(identifier) || '';
+        },
         refresh: async function () {
             if (this.isLoading) {
                 return;
             }
 
             this.isLoading = true;
+
             try {
                 await this.$inertia.replace('/players', {
                     data: this.filters,

@@ -694,7 +694,7 @@
         "search": "Search",
         "name": "Player Name",
         "license": "License Identifier",
-        "discord": "Discord ID",
+        "identifier_type": "Identifier Type",
 		"identifier": "Other Identifier",
         "server_id": "Current Server ID",
         "enablable": "Enabled Command",

@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Ban;
 use App\BlacklistedIdentifier;
+use App\Character;
 use App\Helpers\GeneralHelper;
+use App\Http\Controllers\PlayerRouteController;
 use App\Http\Resources\CharacterResource;
+use App\Http\Resources\PanelLogResource;
 use App\Http\Resources\PlayerIndexResource;
 use App\Http\Resources\PlayerResource;
-use App\Http\Controllers\PlayerRouteController;
 use App\Player;
-use App\Character;
+use App\Screenshot;
 use App\Warning;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -18,8 +20,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Screenshot;
-use App\Http\Resources\PanelLogResource;
 
 class PlayerController extends Controller
 {
@@ -30,7 +30,7 @@ class PlayerController extends Controller
      */
     public function index(Request $request)
     {
-		$start = round(microtime(true) * 1000);
+        $start = round(microtime(true) * 1000);
 
         $query = Player::query();
 
@@ -47,9 +47,21 @@ class PlayerController extends Controller
             }
         }
 
-        // Filtering by identifier.
-        if ($identifier = $request->input('identifier')) {
-            $query->where('identifiers', 'like', "%{$identifier}%");
+        // Filtering by identifier & type.
+        $identifier = $request->input('identifier');
+        $identifier = $identifier ? preg_replace('/[^a-z0-9:]/i', '', $identifier) : null;
+
+        $type = $request->input('identifier_type');
+        $type = $type && !Str::contains($identifier, ':') ? preg_replace('/[^a-z0-9]/i', '', $type) : null;
+
+        if ($identifier) {
+            $id = '"' . $identifier . '"';
+
+            if ($type) {
+                $id = '"' . $type . ':' . $identifier . '"';
+            }
+
+            $query->where(DB::raw("JSON_CONTAINS(identifiers, '$id')"), '=', '1');
         }
 
         // Filtering by license_identifier.
@@ -63,11 +75,6 @@ class PlayerController extends Controller
             } else {
                 $query->where('license_identifier', $license);
             }
-        }
-
-        // Filtering by discord.
-        if ($discord = $request->input('discord')) {
-            $query->where('identifiers', 'LIKE', '%discord:' . $discord . '%');
         }
 
         // Filtering by serer-id.
@@ -88,7 +95,7 @@ class PlayerController extends Controller
         $query->orderBy("player_name");
 
         $query->select([
-            'license_identifier', 'player_name', 'playtime', 'identifiers', 'player_aliases'
+            'license_identifier', 'player_name', 'playtime', 'identifiers', 'player_aliases',
         ]);
         $query->selectSub('SELECT COUNT(`id`) FROM `warnings` WHERE `player_id` = `user_id` AND `warning_type` IN (\'' . Warning::TypeWarning . '\', \'' . Warning::TypeStrike . '\')', 'warning_count');
 
@@ -107,23 +114,23 @@ class PlayerController extends Controller
             return $player['license_identifier'];
         }, $players->toArray()));
 
-		$end = round(microtime(true) * 1000);
+        $end = round(microtime(true) * 1000);
 
         return Inertia::render('Players/Index', [
-            'players' => PlayerIndexResource::collection($players),
-            'banMap'  => Ban::getAllBans(false, $identifiers, true),
-            'filters' => [
-                'name'    => $request->input('name'),
-                'license' => $request->input('license'),
-                'discord' => $request->input('discord'),
-                'server'  => $request->input('server'),
-                'identifier' => $request->input('identifier'),
-                'enablable' => $request->input('enablable') ?? "all",
+            'players'   => PlayerIndexResource::collection($players),
+            'banMap'    => Ban::getAllBans(false, $identifiers, true),
+            'filters'   => [
+                'name'            => $request->input('name'),
+                'license'         => $request->input('license'),
+                'server'          => $request->input('server'),
+                'identifier'      => $request->input('identifier'),
+                'identifier_type' => $request->input('identifier_type') ?? '',
+                'enablable'       => $request->input('enablable') ?? "all",
             ],
-            'links'   => $this->getPageUrls($page),
-            'time'    => $end - $start,
-            'page'    => $page,
-            'enablable' => PlayerRouteController::EnablableCommands
+            'links'     => $this->getPageUrls($page),
+            'time'      => $end - $start,
+            'page'      => $page,
+            'enablable' => PlayerRouteController::EnablableCommands,
         ]);
     }
 
@@ -137,7 +144,7 @@ class PlayerController extends Controller
         $query = Player::query();
 
         $playerList = Player::getAllOnlinePlayers(false) ?? [];
-        $players = array_keys($playerList);
+        $players    = array_keys($playerList);
 
         $query->whereIn('license_identifier', $players);
         $query->where('playtime', '<=', 60 * 60 * 12);
@@ -180,20 +187,20 @@ class PlayerController extends Controller
             $status = Player::getOnlineStatus($player->license_identifier, true);
 
             $playerList[] = [
-                'serverId' => $status && $status->serverId ? $status->serverId : null,
-                'character' => [
-                    'name' => $character->first_name . ' ' . $character->last_name,
-                    'backstory' => $character->backstory,
+                'serverId'          => $status && $status->serverId ? $status->serverId : null,
+                'character'         => [
+                    'name'                    => $character->first_name . ' ' . $character->last_name,
+                    'backstory'               => $character->backstory,
                     'character_creation_time' => $character->character_creation_time,
-                    'gender' => $character->gender == 1 ? 'female' : 'male',
-                    'date_of_birth' => $character->date_of_birth,
-                    'ped_model_hash' => $character->ped_model_hash,
-                    'creationTime' => intval($character->character_creation_time),
-                    'danny' => GeneralHelper::dannyPercentageCreationTime(intval($character->character_creation_time)),
-                    'data' => $status->characterMetadata ?? [],
+                    'gender'                  => $character->gender == 1 ? 'female' : 'male',
+                    'date_of_birth'           => $character->date_of_birth,
+                    'ped_model_hash'          => $character->ped_model_hash,
+                    'creationTime'            => intval($character->character_creation_time),
+                    'danny'                   => GeneralHelper::dannyPercentageCreationTime(intval($character->character_creation_time)),
+                    'data'                    => $status->characterMetadata ?? [],
                 ],
-                'playerName' => $player->getSafePlayerName(),
-                'playTime' => $player->playtime,
+                'playerName'        => $player->getSafePlayerName(),
+                'playTime'          => $player->playtime,
                 'licenseIdentifier' => $player->license_identifier,
             ];
         }
@@ -212,44 +219,44 @@ class PlayerController extends Controller
      */
     public function show(Request $request, string $player)
     {
-		if (Str::startsWith($player, 'steam:')) {
-			$player = $player = Player::findPlayerBySteam($player);
+        if (Str::startsWith($player, 'steam:')) {
+            $player = $player = Player::findPlayerBySteam($player);
 
-			if (!$player) {
-				return abort(404);
-			}
+            if (!$player) {
+                return abort(404);
+            }
 
-			return redirect('/players/' . $player->license_identifier);
-		}
+            return redirect('/players/' . $player->license_identifier);
+        }
 
         $resolved = Player::resolvePlayer($player, $request);
 
         if ($resolved) {
-			$whitelisted = DB::table('user_whitelist')
-				->select(['license_identifier'])
-				->where('license_identifier', '=', $resolved->license_identifier)
-				->first();
+            $whitelisted = DB::table('user_whitelist')
+                ->select(['license_identifier'])
+                ->where('license_identifier', '=', $resolved->license_identifier)
+                ->first();
 
-			$identifiers = $resolved instanceof Player ? $resolved->getIdentifiers() : null;
+            $identifiers = $resolved instanceof Player ? $resolved->getIdentifiers() : null;
 
-			$blacklisted = !empty($identifiers) ? BlacklistedIdentifier::query()
-				->select(['identifier'])
-				->whereIn('identifier', $identifiers)
-				->first() : false;
+            $blacklisted = !empty($identifiers) ? BlacklistedIdentifier::query()
+                ->select(['identifier'])
+                ->whereIn('identifier', $identifiers)
+                ->first() : false;
 
-			$isSenior = $this->isSeniorStaff($request);
+            $isSenior = $this->isSeniorStaff($request);
 
-			return Inertia::render('Players/Show', [
-				'player'            => new PlayerResource($resolved),
-				'characters'        => CharacterResource::collection($resolved->characters),
-				'warnings'          => $resolved->fasterWarnings($isSenior),
-				'kickReason'        => trim($request->query('kick')) ?? '',
-				'whitelisted'       => !!$whitelisted,
-				'blacklisted'       => !!$blacklisted,
-				'tags'              => Player::resolveTags(),
-				'allowRoleEdit'     => env('ALLOW_ROLE_EDITING', false) && $this->isSuperAdmin($request),
-				'enablableCommands' => PlayerRouteController::EnablableCommands
-			]);
+            return Inertia::render('Players/Show', [
+                'player'            => new PlayerResource($resolved),
+                'characters'        => CharacterResource::collection($resolved->characters),
+                'warnings'          => $resolved->fasterWarnings($isSenior),
+                'kickReason'        => trim($request->query('kick')) ?? '',
+                'whitelisted'       => !!$whitelisted,
+                'blacklisted'       => !!$blacklisted,
+                'tags'              => Player::resolveTags(),
+                'allowRoleEdit'     => env('ALLOW_ROLE_EDITING', false) && $this->isSuperAdmin($request),
+                'enablableCommands' => PlayerRouteController::EnablableCommands,
+            ]);
         } else {
             if (Str::endsWith($player, "69") || Str::endsWith($player, "420")) {
                 return $this->rickroll();
@@ -268,8 +275,8 @@ class PlayerController extends Controller
     public function extraData(Player $player)
     {
         $data = [
-            'panelLogs' => PanelLogResource::collection($player->panelLogs()->orderByDesc('timestamp')->limit(10)->get()),
-            'screenshots' => Screenshot::getAllScreenshotsForPlayer($player->license_identifier, 10)
+            'panelLogs'   => PanelLogResource::collection($player->panelLogs()->orderByDesc('timestamp')->limit(10)->get()),
+            'screenshots' => Screenshot::getAllScreenshotsForPlayer($player->license_identifier, 10),
         ];
 
         return $this->json(true, $data);
