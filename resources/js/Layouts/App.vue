@@ -1,12 +1,12 @@
 <template>
     <div class="bg-white banner-bg">
 
-        <!-- Modals -->
-        <portal-target name="modals" />
-
         <div class="flex flex-col h-screen">
             <!-- Navbar -->
             <navbar />
+
+            <!-- Modals -->
+            <portal-target name="modals" />
 
             <div class="flex flex-grow overflow-hidden">
                 <!-- Sidebar -->
