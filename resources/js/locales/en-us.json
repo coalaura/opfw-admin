@@ -3,6 +3,7 @@
         "male": "Male",
         "female": "Female",
         "none": "None",
+        "any": "Any",
         "banned": "Banned",
         "not_banned": "Not banned",
         "by": "by {0}",
@@ -584,7 +585,7 @@
             "plate": "Vehicle Plate",
             "job": "Job",
             "phone": "Phone Number",
-            "deleted": "Is Deleted",
+            "license": "Has License",
             "dob": "Date of Birth"
         },
         "result": {
@@ -1062,7 +1063,9 @@
                 "hunting": "Hunting",
                 "fishing": "Fishing",
                 "weapon": "Weapon",
-                "mining": "Mining"
+                "mining": "Mining",
+                "boat": "Boating License",
+                "passenger": "PPL - Passenger"
             }
         },
         "edit": {

@@ -57,7 +57,7 @@
                                 </sup>
                             </label>
                             <select class="block w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="identifier_type" name="identifier_type" v-model="filters.identifier_type">
-                                <option value="">Unknown / Any</option>
+                                <option value="">{{ t('global.any') }}</option>
                                 <option :value="typ" v-for="typ in getIdentifierTypes()" :key="typ" v-if="isIdentifierOfType(filters.identifier, typ)">{{ typ.substr(0, 1).toUpperCase() + typ.substr(1) }}</option>
                             </select>
                         </div>

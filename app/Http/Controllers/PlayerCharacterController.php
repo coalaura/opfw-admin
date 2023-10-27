@@ -28,7 +28,7 @@ class PlayerCharacterController extends Controller
     ];
 
     const Licenses = [
-        "heli", "fw", "cfi", "hw", "hwh", "perf", "management", "military", "utility", "commercial", "special", "hunting", "fishing", "weapon", "mining",
+        "heli", "fw", "cfi", "hw", "hwh", "perf", "management", "military", "utility", "commercial", "special", "passenger", "hunting", "fishing", "weapon", "mining", "boat",
     ];
 
     /**
@@ -100,15 +100,14 @@ class PlayerCharacterController extends Controller
             }
         }
 
-        // Filtering isDeleted.
-        if ($deleted = $request->input('deleted')) {
-            if ($deleted === 'yes' || $deleted === 'no') {
-                if ($deleted === 'yes') {
-                    $query->where('character_deleted', '=', '1');
-                } else if ($deleted === 'no') {
-                    $query->where('character_deleted', '=', '0');
-                }
-            }
+        // Filtering license.
+        $license = $request->input('license');
+        $license = $license && in_array($license, self::Licenses) ? $license : null;
+
+        if ($license) {
+            $license = '"' . $license . '"';
+
+            $query->where(DB::raw("JSON_CONTAINS(character_data, '$license', '$.licenses')"), '=', '1');
         }
 
         if ($request->input('new')) {
@@ -145,10 +144,11 @@ class PlayerCharacterController extends Controller
                 'phone'         => $request->input('phone'),
                 'dob'           => $request->input('dob'),
                 'job'           => $request->input('job'),
-                'deleted'       => $request->input('deleted') ?: 'all',
+                'license'       => $request->input('license') ?? '',
             ],
             'time'       => $end - $start,
             'playerMap'  => Player::fetchLicensePlayerNameMap($characters->toArray($request), 'licenseIdentifier'),
+            'licenses'   => self::Licenses,
         ]);
     }
 

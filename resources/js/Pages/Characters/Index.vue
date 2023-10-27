@@ -63,15 +63,14 @@
                             </label>
                             <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="job" placeholder="Law Enforcement SASP Cadet" v-model="filters.job">
                         </div>
-                        <!-- Deletion status -->
+                        <!-- Licenses -->
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
-                            <label class="block mb-2" for="deleted">
-                                {{ t('characters.form.deleted') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+                            <label class="block mb-2" for="license">
+                                {{ t('characters.form.license') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <select class="block w-full px-4 py-3 mb-3 bg-gray-200 dark:bg-gray-600 border rounded" id="deleted" name="deleted" v-model="filters.deleted">
-                                <option value="all">{{ t('global.all') }}</option>
-                                <option value="yes">{{ t('global.yes') }}</option>
-                                <option value="no">{{ t('global.no') }}</option>
+                            <select class="block w-full px-4 py-3 mb-3 bg-gray-200 dark:bg-gray-600 border rounded" id="license" name="license" v-model="filters.license">
+                                <option value="">{{ t('global.any') }}</option>
+                                <option :value="license" v-for="license in licenses" :key="license">{{ t('players.characters.license.' + license) }}</option>
                             </select>
                         </div>
                         <!-- Description -->
@@ -182,7 +181,7 @@ export default {
             dob: String,
             phone: String,
             job: String,
-            deleted: String,
+            license: String,
         },
         playerMap: {
             type: Object,
@@ -191,7 +190,11 @@ export default {
         time: {
             type: Number,
             required: true,
-        }
+        },
+        licenses: {
+            type: Array,
+            required: true,
+        },
     },
     data() {
         return {
