@@ -1711,7 +1711,7 @@ export default {
 
             if (!echo) return;
 
-            const steam = this.player.steam.map(s => parseInt(s.split(':').pop(), 16));
+            const steam = this.player.steam.map(s => BigInt(`0x${s.split(':').pop()}`));
 
             if (steam.length === 0) {
                 this.echo = {
