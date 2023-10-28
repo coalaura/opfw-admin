@@ -1,7 +1,7 @@
 <template>
     <portal to="modals" v-if="show">
         <!-- Backdrop -->
-        <div class="absolute inset-0 flex items-start justify-center overflow-hidden" style="z-index: 9999; background-color: rgba(0, 0, 0, .85);" tabindex="-1" role="dialog" @mousedown.self="hide">
+        <div class="absolute inset-0 flex items-start justify-center overflow-hidden modal" style="z-index: 9999; background-color: rgba(0, 0, 0, .85);" tabindex="-1" role="dialog" @mousedown.self="hide">
             <!-- Container -->
             <div :class="{ 'w-full': !small }" class="max-w-3xl my-20 max-h-modal-max relative flex flex-col bg-white rounded-md shadow dark:bg-dark-secondary dark:text-white" role="document" v-bind="$attrs">
                 <!-- Content part -->
