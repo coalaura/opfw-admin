@@ -862,7 +862,8 @@
             "recent_playtime_after": "~in the past 4 fortnights",
             "scheduled_details": "Avast! The scurvy ban be settin' t' be removed on <b>{0} UTC</b> (<i>{1}</i>).",
             "echo_failed": "Arrr, 'twas a failure to load Echo data, matey.",
-            "echo": "Spied: {0} | Strangely: {1} | Tidy: {2}"
+            "echo_failed_steam": "Arrr, no available steam accounts to check, matey.",
+            "echo": "Spotted: {0} | Peculiar: {1} | Shipshape: {2} | Accounts: {3}"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

@@ -862,7 +862,8 @@
             "recent_playtime_after": "~in the bloody last 4 weeks",
             "scheduled_details": "Yer ban gonna be gone on <b>{0} Straya time</b> (<i>{1}</i>).",
             "echo_failed": "G'day mate, couldn't bloomin' load the Echo data, ay?",
-            "echo": "Strewth, mate: {0} | Bloody bonza: {1} | Ripper: {2}"
+            "echo_failed_steam": "No bloody steam accounts to have a squizz at, mate.",
+            "echo": "Bloody ripper, mate! Detected: {0} | Unusual: {1} | Clean: {2} | Accounts: {3}"
         },
         "ban_reason": "Sorry mate",
         "ban_time": "Runs out",

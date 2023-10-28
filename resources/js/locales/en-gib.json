@@ -871,7 +871,8 @@
             "recent_playtime_after": "~boop blibber in the flibberbob",
             "scheduled_details": "Gunk is flibbabbled for skrebil on <p>{0} MCT</p> (<f>{1}</f>).",
             "echo_failed": "Thlipthop gloom flobbity-blitz Quibber-oo data.",
-            "echo": "Flibbity: {0} | Zibber: {1} | Plop: {2}"
+            "echo_failed_steam": "Zimzam flibber flabber flob, napoo nana bippity bop.",
+            "echo": "Hajam: {0} | Rindum: {1} | Noodle: {2} | Biddums: {3}"
         },
         "ban_reason": "Efoki",
         "ban_time": "Lujemuv",

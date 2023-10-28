@@ -862,7 +862,8 @@
             "recent_playtime_after": "~in the bloody last 4 weeks",
             "scheduled_details": "That bleedin' ban is slated for pissin' removal on <b>{0} UTC</b> (<i>{1}</i>).",
             "echo_failed": "Can't be arsed to load Echo data, mate.",
-            "echo": "Spotted: {0} | Dodgy: {1} | Pristine: {2}"
+            "echo_failed_steam": "Sorry, we can't be arsed to check your bloody Steam accounts.",
+            "echo": "Spotted: {0} | Dodgy: {1} | Proper: {2} | Bollocks: {3}"
         },
         "ban_reason": "Give us the bleedin' reason",
         "ban_time": "Expires in yonks",

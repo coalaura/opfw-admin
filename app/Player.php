@@ -539,11 +539,22 @@ class Player extends Model
      */
     public function getSteamIdentifiers(): array
     {
-        $identifiers   = $this->getIdentifiers();
+        $lastUsed = array_values(
+            array_filter(
+                $this->getLastUsedIdentifiers(),
+                function ($identifier) {
+                    return Str::startsWith($identifier, 'steam:');
+                }
+            )
+        );
+
+        if (!empty($lastUsed)) {
+            return $lastUsed;
+        }
 
         return array_values(
             array_filter(
-                $identifiers,
+                $this->getIdentifiers(),
                 function ($identifier) {
                     return Str::startsWith($identifier, 'steam:');
                 }

@@ -87,7 +87,7 @@
                     {{ player.playerAliases.join(", ") }}
                 </span>
             </div>
-            <div class="mt-3 overflow-hidden" :class="{'h-4': !showingMoreInfo}">
+            <div class="mt-3 overflow-hidden" :class="{ 'h-4': !showingMoreInfo }">
                 <div class="text-sm italic font-semibold">
                     <span @click="showingMoreInfo = !showingMoreInfo" class="cursor-pointer">
                         <span v-if="showingMoreInfo"><i class="fas fa-chevron-down"></i> {{ t('players.show.less_info') }}</span>
@@ -1613,7 +1613,7 @@ export default {
 
             const timestamp = this.$moment.utc(this.scheduledUnbanDate).unix();
 
-            if (timestamp*1000 < Date.now()) return;
+            if (timestamp * 1000 < Date.now()) return;
 
             this.isLoading = true;
             this.isSchedulingUnban = false;
@@ -1713,7 +1713,15 @@ export default {
 
             const steam = this.player.steam.map(s => parseInt(s.split(':').pop(), 16));
 
-            if (steam.length === 0) return;
+            if (steam.length === 0) {
+                this.echo = {
+                    color: "border-teal-300 bg-teal-200 dark:bg-teal-700",
+                    icon: "fas fa-heart-broken",
+                    title: this.t('players.show.echo_failed_steam')
+                };
+
+                return;
+            }
 
             this.echo = {
                 color: "border-gray-300 bg-gray-200 dark:bg-gray-700",
@@ -1721,39 +1729,61 @@ export default {
                 title: this.t('global.loading')
             };
 
-            try {
-                const url = echo.replace(/\/?$/, '/') + steam[0];
+            const resolve = async steam => {
+                try {
+                    const url = echo.replace(/\/?$/, '/') + steam;
 
-                const response = await axios.get(url);
+                    const response = await axios.get(url);
 
-                if (response.data && response.data.game === "fivem") {
-                    const data = response.data;
-
-                    if (data.detected > 0) {
-                        data.color = "border-red-300 bg-red-200 dark:bg-red-700";
-                        data.icon = "fas fa-skull-crossbones";
-                    } else if (data.unusual > 0) {
-                        data.color = "border-yellow-300 bg-yellow-200 dark:bg-yellow-700";
-                        data.icon = "fas fa-exclamation-triangle";
-                    } else {
-                        data.color = "border-green-300 bg-green-200 dark:bg-green-700";
-                        data.icon = "fas fa-check";
+                    if (response.data && response.data.game === "fivem") {
+                        return response.data;
                     }
-
-                    data.title = this.t('players.show.echo', data.detected, data.unusual, data.clean);
-
-                    this.echo = data;
-
-                    return;
+                } catch (e) {
                 }
-            } catch (e) {
-            }
 
-            this.echo = {
-                color: "border-rose-300 bg-rose-200 dark:bg-rose-700",
-                icon: "fas fa-question",
-                title: this.t('players.show.echo_failed')
+                return false;
             };
+
+            const data = (await Promise.all(steam.map(resolve)))
+                .map(d => d || false)
+                .filter(Boolean)
+                .reduce((a, b) => {
+                    a.detected += b.detected;
+                    a.unusual += b.unusual;
+                    a.clean += b.clean;
+
+                    a.total++;
+
+                    return a;
+                }, {
+                    detected: 0,
+                    unusual: 0,
+                    clean: 0,
+                    total: 0
+                });
+
+            if (data && data.total > 0) {
+                if (data.detected > 0) {
+                    data.color = "border-red-300 bg-red-200 dark:bg-red-700";
+                    data.icon = "fas fa-skull-crossbones";
+                } else if (data.unusual > 0) {
+                    data.color = "border-yellow-300 bg-yellow-200 dark:bg-yellow-700";
+                    data.icon = "fas fa-exclamation-triangle";
+                } else {
+                    data.color = "border-green-300 bg-green-200 dark:bg-green-700";
+                    data.icon = "fas fa-check";
+                }
+
+                data.title = this.t('players.show.echo', data.detected, data.unusual, data.clean, data.total);
+
+                this.echo = data;
+            } else {
+                this.echo = {
+                    color: "border-teal-300 bg-teal-200 dark:bg-teal-700",
+                    icon: "fas fa-question",
+                    title: this.t('players.show.echo_failed')
+                };
+            }
         },
         async loadStatus() {
             this.statusLoading = true;

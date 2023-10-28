@@ -862,7 +862,8 @@
             "recent_playtime_after": "~in tha last 4 weeksie",
             "scheduled_details": "Ban uwu is scheduwed fow wemovaw on <b>{0} UTC</b> (<i>{1}</i>).",
             "echo_failed": "OwO Oopsie! Faiwed to woad Echo data!",
-            "echo": "Detectedy wewy: {0} | Unusuaw: {1} | Cweany: {2}"
+            "echo_failed_steam": "No avawyabwe steam accounts to check. UwU",
+            "echo": "Detected: {0} | Unusuaw: {1} | Cwean: {2} | Accounts: {3} UwU"
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

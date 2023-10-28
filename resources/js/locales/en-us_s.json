@@ -862,7 +862,8 @@
             "recent_playtime_after": "~in the past 4 reckonin's",
             "scheduled_details": "Ban is fixin' to be took off on <b>{0} UTC</b> (<i>{1}</i>).",
             "echo_failed": "Done messed up tryna fetch them Echo data.",
-            "echo": "Done found: {0} | Mighty peculiar: {1} | Clean as a whistle: {2}"
+            "echo_failed_steam": "Ain't got no steam accounts to check, darlin'.",
+            "echo": "Done caught: {0} | Right peculiar: {1} | Pure as a daisy: {2} | Accounts: {3}"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

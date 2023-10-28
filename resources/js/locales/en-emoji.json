@@ -862,7 +862,8 @@
             "recent_playtime_after": "~📅🕓❗",
             "scheduled_details": "Ban is scheduled for removal on ⏰<b>{0} UTC</b> (📅<i>{1}</i>).",
             "echo_failed": "❌🔄 📂 📥 Echo 📊 ❌🔃.",
-            "echo": "🔍: {0} | 🌀: {1} | 🧼: {2}"
+            "echo_failed_steam": "🚫🔍👤💨👻🆓🔒🔍❌.👤𝒩🔓🆓",
+            "echo": "🔍𝒟🗝𝒞💜𝟎 | ❗️𝒰🔛💤𝒟😊 | 🆗✨ | 👤𝒜🆔: 3"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

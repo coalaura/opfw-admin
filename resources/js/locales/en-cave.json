@@ -862,7 +862,8 @@
             "recent_playtime_after": "~unga unga within last moon cycle",
             "scheduled_details": "Ban go bye-bye on <b>{0} UTC</b> (<i>{1}</i>).",
             "echo_failed": "Ugg! Echo data no load!",
-            "echo": "Ugga ugga: {0} | Weird: {1} | Neat: {2}"
+            "echo_failed_steam": "No fire! Steam accounts gone!",
+            "echo": "Found: {0} | Strange: {1} | Pristine: {2} | Accounts: {3}"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",
