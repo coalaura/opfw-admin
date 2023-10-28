@@ -1763,12 +1763,12 @@ export default {
             this.loadingExtraData = false;
         },
         showEchoInfo() {
-            console.log("Huh")
             if (!this.echo || !this.echo.raw) return;
 
-            console.log("hello")
-
             this.showingEchoInfo = true;
+
+            // Usernames:
+            // https://steamcommunity.com/actions/ajaxresolveusers?steamids=76561198306882980
         },
         getEchoColor(info) {
             // Modal colors
