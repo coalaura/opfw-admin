@@ -863,7 +863,13 @@
             "scheduled_details": "Ban go bye-bye on <b>{0} UTC</b> (<i>{1}</i>).",
             "echo_failed": "Ugg! Echo data no load!",
             "echo_failed_steam": "No fire! Steam accounts gone!",
-            "echo": "Found: {0} | Strange: {1} | Pristine: {2} | Accounts: {3}"
+            "echo_title": "Ugga click for more grunts.",
+            "echo_info": "Echo",
+            "echo_not_scanned": "Ugga Steam account not scanned by Echo yet.",
+            "echo_last": "Ugga Last Scanned",
+            "echo_clean": "Ugga Clean",
+            "echo_unusual": "Ugga Unusual",
+            "echo_detected": "Ugga Detected"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

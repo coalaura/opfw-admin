@@ -872,7 +872,13 @@
             "scheduled_details": "Gunk is flibbabbled for skrebil on <p>{0} MCT</p> (<f>{1}</f>).",
             "echo_failed": "Thlipthop gloom flobbity-blitz Quibber-oo data.",
             "echo_failed_steam": "Zimzam flibber flabber flob, napoo nana bippity bop.",
-            "echo": "Hajam: {0} | Rindum: {1} | Noodle: {2} | Biddums: {3}"
+            "echo_title": "Zalor gorp zot yatuyi.",
+            "echo_info": "Epizo",
+            "echo_not_scanned": "Mukinaborn aladone mejino Epizo yanipinuh.",
+            "echo_last": "Starnec Selnal",
+            "echo_clean": "Bonom",
+            "echo_unusual": "Rigalun",
+            "echo_detected": "Detiknu"
         },
         "ban_reason": "Efoki",
         "ban_time": "Lujemuv",

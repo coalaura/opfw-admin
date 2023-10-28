@@ -71,9 +71,9 @@
                         <span class="font-semibold">{{ player.tag }}</span>
                     </badge>
 
-                    <badge :class="echo.color" v-if="echo" :title="echo.title">
+                    <badge :class="`border-${echo.color}-300 bg-${echo.color}-200 dark:bg-${echo.color}-700 ${echo.raw ? 'cursor-pointer' : ''}`" v-if="echo" :click="showEchoInfo" :title="echo.title">
                         <i :class="echo.icon" class="mr-1"></i>
-                        <span class="font-semibold">Echo</span>
+                        <span class="font-semibold">{{ t('players.show.echo_info') }}</span>
                     </badge>
                 </div>
             </div>
@@ -331,6 +331,56 @@
                 </div>
             </div>
         </div>
+
+        <!-- Echo Info -->
+        <modal :show.sync="showingEchoInfo">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.show.echo_info') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="flex flex-col gap-3 text-left font-mono">
+                    <div v-for="info in echo.raw" :key="info.identifier" class="py-4 px-6 rounded-lg shadow-lg border-2" :class="`border-${info.color}-500 bg-${info.color}-100 dark:bg-${info.color}-950`">
+                        <h1 class="text-lg border-b mb-1">
+                            <a class="hover:underline" :href="'https://steamcommunity.com/profiles/' + info.steam" target="_blank">{{ info.identifier }}</a>
+                        </h1>
+
+                        <template v-if="info.lastScanned">
+                            <p class="text-xs italic text-gray-600 dark:text-gray-400 mb-3">
+                                <span class="font-semibold">{{ t('players.show.echo_last') }}:</span>
+                                {{ info.lastScanned.local().format('dddd, Mo MMMM YYYY, HH:mm:ss') }}
+                            </p>
+
+                            <div class="flex gap-3">
+                                <div class="py-1 px-2 bg-black dark:bg-white !bg-opacity-10 rounded font-semibold" v-if="info.clean > 0">
+                                    <i class="fas fa-check mr-1"></i> {{ info.clean }} {{ t('players.show.echo_clean') }}
+                                </div>
+
+                                <div class="py-1 px-2 bg-black dark:bg-white !bg-opacity-10 rounded font-semibold" v-if="info.unusual > 0">
+                                    <i class="fas fa-exclamation-triangle mr-1"></i> {{ info.unusual }} {{ t('players.show.echo_unusual') }}
+                                </div>
+
+                                <div class="py-1 px-2 bg-black dark:bg-white !bg-opacity-10 rounded font-semibold" v-if="info.detected">
+                                    <i class="fas fa-skull-crossbones mr-1"></i> {{ info.detected }} {{ t('players.show.echo_detected') }}
+                                </div>
+                            </div>
+                        </template>
+
+                        <template v-else>
+                            <p class="italic text-gray-600 dark:text-gray-400 mt-3">{{ t('players.show.echo_not_scanned') }}</p>
+                        </template>
+                    </div>
+                </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showingEchoInfo = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
 
         <!-- Scheduled Unban -->
         <modal :show.sync="isSchedulingUnban">
@@ -1502,6 +1552,7 @@ export default {
             status: {},
 
             echo: false,
+            showingEchoInfo: false,
 
             playerTime: false,
 
@@ -1704,6 +1755,58 @@ export default {
 
             this.loadingExtraData = false;
         },
+        showEchoInfo() {
+            console.log("Huh")
+            if (!this.echo || !this.echo.raw) return;
+
+            console.log("hello")
+
+            this.showingEchoInfo = true;
+        },
+        getEchoColor(info) {
+            // Modal colors
+            // border-gray-500 bg-gray-100 dark:bg-gray-950
+            // border-teal-500 bg-teal-100 dark:bg-teal-950
+            // border-green-500 bg-green-100 dark:bg-green-950
+            // border-yellow-500 bg-yellow-100 dark:bg-yellow-950
+            // border-red-500 bg-red-100 dark:bg-red-950
+
+            // Badge colors
+            // border-gray-300 bg-gray-200 dark:bg-gray-700
+            // border-teal-300 bg-teal-200 dark:bg-teal-700
+            // border-green-300 bg-green-200 dark:bg-green-700
+            // border-yellow-300 bg-yellow-200 dark:bg-yellow-700
+            // border-red-300 bg-gray-200 dark:bg-red-700
+
+            const total = info.detected + info.unusual + info.clean;
+
+            if (total > 0 && info.lastScanned) {
+                if (info.detected > 0) {
+                    return "red";
+                } else if (info.unusual > 0) {
+                    return "yellow";
+                } else if (info.clean > 0) {
+                    return "green";
+                }
+            }
+
+            return "teal";
+        },
+        getEchoIcon(info) {
+            const total = info.detected + info.unusual + info.clean;
+
+            if (total > 0 && info.lastScanned) {
+                if (info.detected > 0) {
+                    return "fas fa-skull-crossbones";
+                } else if (info.unusual > 0) {
+                    return "fas fa-exclamation-triangle";
+                } else if (info.clean > 0) {
+                    return "fas fa-check";
+                }
+            }
+
+            return "fas fa-user-slash";
+        },
         async loadEchoStatus() {
             if (!this.$page.auth.player.isSeniorStaff) return;
 
@@ -1711,11 +1814,16 @@ export default {
 
             if (!echo) return;
 
-            const steam = this.player.steam.map(s => BigInt(`0x${s.split(':').pop()}`));
+            const steam = this.player.steam.map(s => {
+                return {
+                    raw: s,
+                    int: BigInt(`0x${s.split(':').pop()}`)
+                };
+            });
 
             if (steam.length === 0) {
                 this.echo = {
-                    color: "border-teal-300 bg-teal-200 dark:bg-teal-700",
+                    color: "teal",
                     icon: "fas fa-heart-broken",
                     title: this.t('players.show.echo_failed_steam')
                 };
@@ -1724,19 +1832,33 @@ export default {
             }
 
             this.echo = {
-                color: "border-gray-300 bg-gray-200 dark:bg-gray-700",
+                color: "gray",
                 icon: "fas fa-spinner animate-spin",
                 title: this.t('global.loading')
             };
 
             const resolve = async steam => {
                 try {
-                    const url = echo.replace(/\/?$/, '/') + steam;
+                    const url = echo.replace(/\/?$/, '/') + steam.int;
 
                     const response = await axios.get(url);
 
                     if (response.data && response.data.game === "fivem") {
-                        return response.data;
+                        const data = response.data;
+
+                        data.identifier = steam.raw;
+                        data.steam = steam.int;
+
+                        data.lastScanned = this.$moment(data.lastScanned);
+
+                        if (data.lastScanned.unix() <= 0) {
+                            data.lastScanned = false;
+                        }
+
+                        data.color = this.getEchoColor(data);
+                        data.icon = this.getEchoIcon(data);
+
+                        return data;
                     }
                 } catch (e) {
                 }
@@ -1744,39 +1866,34 @@ export default {
                 return false;
             };
 
-            const data = (await Promise.all(steam.map(resolve)))
-                .map(d => d || false)
-                .filter(Boolean)
-                .reduce((a, b) => {
-                    a.detected += b.detected;
-                    a.unusual += b.unusual;
-                    a.clean += b.clean;
+            const data = (await Promise.all(steam.map(resolve))),
+                joined = data
+                    .map(d => d || false)
+                    .filter(Boolean)
+                    .reduce((a, b) => {
+                        a.detected += b.detected;
+                        a.unusual += b.unusual;
+                        a.clean += b.clean;
 
-                    a.total++;
+                        a.total++;
 
-                    return a;
-                }, {
-                    detected: 0,
-                    unusual: 0,
-                    clean: 0,
-                    total: 0
-                });
+                        return a;
+                    }, {
+                        detected: 0,
+                        unusual: 0,
+                        clean: 0,
+                        total: 0
+                    });
 
-            if (data && data.total > 0) {
-                if (data.detected > 0) {
-                    data.color = "border-red-300 bg-red-200 dark:bg-red-700";
-                    data.icon = "fas fa-skull-crossbones";
-                } else if (data.unusual > 0) {
-                    data.color = "border-yellow-300 bg-yellow-200 dark:bg-yellow-700";
-                    data.icon = "fas fa-exclamation-triangle";
-                } else {
-                    data.color = "border-green-300 bg-green-200 dark:bg-green-700";
-                    data.icon = "fas fa-check";
-                }
+            if (joined && joined.total > 0) {
+                joined.title = this.t('players.show.echo_title');
 
-                data.title = this.t('players.show.echo', data.detected, data.unusual, data.clean, data.total);
+                joined.raw = data;
 
-                this.echo = data;
+                joined.color = this.getEchoColor(joined);
+                joined.icon = this.getEchoIcon(joined);
+
+                this.echo = joined;
             } else {
                 this.echo = {
                     color: "border-teal-300 bg-teal-200 dark:bg-teal-700",

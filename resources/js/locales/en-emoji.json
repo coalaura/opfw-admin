@@ -863,7 +863,13 @@
             "scheduled_details": "Ban is scheduled for removal on ⏰<b>{0} UTC</b> (📅<i>{1}</i>).",
             "echo_failed": "❌🔄 📂 📥 Echo 📊 ❌🔃.",
             "echo_failed_steam": "🚫🔍👤💨👻🆓🔒🔍❌.👤𝒩🔓🆓",
-            "echo": "🔍𝒟🗝𝒞💜𝟎 | ❗️𝒰🔛💤𝒟😊 | 🆗✨ | 👤𝒜🆔: 3"
+            "echo_title": "🔍 For more information.",
+            "echo_info": "🔄",
+            "echo_not_scanned": "🛡️ This ️🎮 account has not been scanned by 🔄 yet.",
+            "echo_last": "⌛ Scanned recently",
+            "echo_clean": "✨ Clean",
+            "echo_unusual": "🌀 Unusual",
+            "echo_detected": "❗ Detected"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

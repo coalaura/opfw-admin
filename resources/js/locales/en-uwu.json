@@ -863,7 +863,13 @@
             "scheduled_details": "Ban uwu is scheduwed fow wemovaw on <b>{0} UTC</b> (<i>{1}</i>).",
             "echo_failed": "OwO Oopsie! Faiwed to woad Echo data!",
             "echo_failed_steam": "No avawyabwe steam accounts to check. UwU",
-            "echo": "Detected: {0} | Unusuaw: {1} | Cwean: {2} | Accounts: {3} UwU"
+            "echo_title": "Cwicc fow mowe infowmation, uwu.",
+            "echo_info": "Echo, uwu",
+            "echo_not_scanned": "Dis Steam account has not been scanned by Echo yet, uwu.",
+            "echo_last": "Wast Scanned, uwu",
+            "echo_clean": "Cwean, uwu",
+            "echo_unusual": "Uwuusual, uwu",
+            "echo_detected": "Detected, uwu"
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

@@ -863,7 +863,13 @@
             "scheduled_details": "That bleedin' ban is slated for pissin' removal on <b>{0} UTC</b> (<i>{1}</i>).",
             "echo_failed": "Can't be arsed to load Echo data, mate.",
             "echo_failed_steam": "Sorry, we can't be arsed to check your bloody Steam accounts.",
-            "echo": "Spotted: {0} | Dodgy: {1} | Proper: {2} | Bollocks: {3}"
+            "echo_title": "Click 'ere for more sodding information.",
+            "echo_info": "Echo",
+            "echo_not_scanned": "This Steam bleedin' account 'asn't been scanned by Echo yet.",
+            "echo_last": "Last Scanned",
+            "echo_clean": "Bleedin' Clean",
+            "echo_unusual": "Bloody Unusual",
+            "echo_detected": "Smelly Detected"
         },
         "ban_reason": "Give us the bleedin' reason",
         "ban_time": "Expires in yonks",

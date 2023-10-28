@@ -863,7 +863,13 @@
             "scheduled_details": "Ban is fixin' to be took off on <b>{0} UTC</b> (<i>{1}</i>).",
             "echo_failed": "Done messed up tryna fetch them Echo data.",
             "echo_failed_steam": "Ain't got no steam accounts to check, darlin'.",
-            "echo": "Done caught: {0} | Right peculiar: {1} | Pure as a daisy: {2} | Accounts: {3}"
+            "echo_title": "Click fer more info, y'all.",
+            "echo_info": "Echo",
+            "echo_not_scanned": "This here Steam account ain't been scanned by Echo yet.",
+            "echo_last": "Last Scanned",
+            "echo_clean": "Clean",
+            "echo_unusual": "Unusual",
+            "echo_detected": "Detected"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",
