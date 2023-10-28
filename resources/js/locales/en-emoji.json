@@ -869,7 +869,8 @@
             "echo_last": "⌛ Scanned recently",
             "echo_clean": "✨ Clean",
             "echo_unusual": "🌀 Unusual",
-            "echo_detected": "❗ Detected"
+            "echo_detected": "❗ Detected",
+            "echo_no_data": "❌📥🗣️🚫📊"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

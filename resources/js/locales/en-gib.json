@@ -878,7 +878,8 @@
             "echo_last": "Starnec Selnal",
             "echo_clean": "Bonom",
             "echo_unusual": "Rigalun",
-            "echo_detected": "Detiknu"
+            "echo_detected": "Detiknu",
+            "echo_no_data": "Fluffity bobbity bopity boop"
         },
         "ban_reason": "Efoki",
         "ban_time": "Lujemuv",

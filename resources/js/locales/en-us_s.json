@@ -869,7 +869,8 @@
             "echo_last": "Last Scanned",
             "echo_clean": "Clean",
             "echo_unusual": "Unusual",
-            "echo_detected": "Detected"
+            "echo_detected": "Detected",
+            "echo_no_data": "Done gone and failed to load up that Echo data, y'all"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

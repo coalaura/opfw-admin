@@ -869,7 +869,8 @@
             "echo_last": "Wast Scanned, uwu",
             "echo_clean": "Cwean, uwu",
             "echo_unusual": "Uwuusual, uwu",
-            "echo_detected": "Detected, uwu"
+            "echo_detected": "Detected, uwu",
+            "echo_no_data": "OwO Oh nuu! Failed to woad Echo data~ >w<"
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

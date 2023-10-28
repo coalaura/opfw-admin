@@ -869,7 +869,8 @@
             "echo_last": "Last Scanned",
             "echo_clean": "Bleedin' Clean",
             "echo_unusual": "Bloody Unusual",
-            "echo_detected": "Smelly Detected"
+            "echo_detected": "Smelly Detected",
+            "echo_no_data": "Bollocks! Couldn't be arsed to load any Echo data"
         },
         "ban_reason": "Give us the bleedin' reason",
         "ban_time": "Expires in yonks",

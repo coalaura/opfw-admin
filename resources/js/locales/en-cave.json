@@ -869,7 +869,8 @@
             "echo_last": "Ugga Last Scanned",
             "echo_clean": "Ugga Clean",
             "echo_unusual": "Ugga Unusual",
-            "echo_detected": "Ugga Detected"
+            "echo_detected": "Ugga Detected",
+            "echo_no_data": "Ugh! Me no find Echo data!"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",
