@@ -368,6 +368,13 @@
                             </div>
                         </template>
 
+                        <template v-else-if="info.failed">
+                            <p class="italic text-gray-600 dark:text-gray-400 mt-3">
+                                <span class="font-semibold">{{ t('players.show.echo_no_data') }}:</span>
+                                <span class="italic">{{ info.failed }}</span>
+                            </p>
+                        </template>
+
                         <template v-else>
                             <p class="italic text-gray-600 dark:text-gray-400 mt-3">{{ t('players.show.echo_not_scanned') }}</p>
                         </template>
@@ -1780,7 +1787,7 @@ export default {
 
             const total = info.detected + info.unusual + info.clean;
 
-            if (total > 0 && info.lastScanned) {
+            if (total > 0 && info.lastScanned !== false) {
                 if (info.detected > 0) {
                     return "red";
                 } else if (info.unusual > 0) {
@@ -1795,7 +1802,7 @@ export default {
         getEchoIcon(info) {
             const total = info.detected + info.unusual + info.clean;
 
-            if (total > 0 && info.lastScanned) {
+            if (total > 0 && info.lastScanned !== false) {
                 if (info.detected > 0) {
                     return "fas fa-skull-crossbones";
                 } else if (info.unusual > 0) {
@@ -1823,7 +1830,7 @@ export default {
 
             if (steam.length === 0) {
                 this.echo = {
-                    color: "teal",
+                    color: "gray",
                     icon: "fas fa-heart-broken",
                     title: this.t('players.show.echo_failed_steam')
                 };
@@ -1838,6 +1845,8 @@ export default {
             };
 
             const resolve = async steam => {
+                let error;
+
                 try {
                     const url = echo.replace(/\/?$/, '/') + steam.int;
 
@@ -1861,15 +1870,21 @@ export default {
                         return data;
                     }
                 } catch (e) {
+                    error = e.message;
                 }
 
-                return false;
+                return {
+                    identifier: steam.raw,
+                    steam: steam.int,
+                    color: "gray",
+                    icon: "fas fa-question",
+                    failed: error || "Unknown error"
+                };
             };
 
             const data = (await Promise.all(steam.map(resolve))),
                 joined = data
-                    .map(d => d || false)
-                    .filter(Boolean)
+                    .filter(d => !d.failed)
                     .reduce((a, b) => {
                         a.detected += b.detected;
                         a.unusual += b.unusual;
@@ -1896,9 +1911,10 @@ export default {
                 this.echo = joined;
             } else {
                 this.echo = {
-                    color: "border-teal-300 bg-teal-200 dark:bg-teal-700",
+                    color: "gray",
                     icon: "fas fa-question",
-                    title: this.t('players.show.echo_failed')
+                    title: this.t('players.show.echo_failed'),
+                    raw: data
                 };
             }
         },

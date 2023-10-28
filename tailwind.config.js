@@ -164,6 +164,7 @@ module.exports = {
                 'yellow-950': 'rgb(69, 26, 3)',
                 'green-950': 'rgb(5, 46, 22)',
                 'teal-950': 'rgb(4, 47, 46)',
+                'gray-950': 'rgb(18, 22, 33)',
 
                 // Theme colors.
                 'primary':   defaultTheme.colors.indigo['600'],
