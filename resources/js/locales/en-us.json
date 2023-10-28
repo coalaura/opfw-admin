@@ -798,6 +798,7 @@
             "linked": "Show linked accounts",
             "drug_department_title": "Player has access to all drug related server logs.",
             "drug_department": "Drug-Logs",
+            "echo_failed": "Failed to load Echo data.",
             "anti_cheat": "Anti-Cheat",
             "anti_cheat_title": "Anti-Cheat Events",
             "anti_cheat_metadata": "Metadata",

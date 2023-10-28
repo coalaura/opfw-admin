@@ -61,6 +61,7 @@ class PlayerResource extends JsonResource
             'averageFps'          => $this->average_fps,
             'staffToggled'        => $this->isStaffToggled(),
             'staffHidden'         => $this->isStaffHidden(),
+            'steam'               => $this->getSteamIdentifiers(),
         ];
     }
 

@@ -70,6 +70,11 @@
                     <badge class="border-pink-300 bg-pink-200 dark:bg-pink-700" v-if="player.tag">
                         <span class="font-semibold">{{ player.tag }}</span>
                     </badge>
+
+                    <badge :class="echo.color" v-if="echo" :title="echo.title">
+                        <i :class="echo.icon" class="mr-1"></i>
+                        <span class="font-semibold">Echo</span>
+                    </badge>
                 </div>
             </div>
             <div class="text-sm italic mt-4">
@@ -1496,6 +1501,8 @@ export default {
             statusLoading: true,
             status: {},
 
+            echo: false,
+
             playerTime: false,
 
             charactersCollapsed: false,
@@ -1696,6 +1703,57 @@ export default {
             }
 
             this.loadingExtraData = false;
+        },
+        async loadEchoStatus() {
+            if (!this.$page.auth.player.isSeniorStaff) return;
+
+            const echo = this.$page.echo;
+
+            if (!echo) return;
+
+            const steam = this.player.steam.map(s => parseInt(s.split(':').pop(), 16));
+
+            if (steam.length === 0) return;
+
+            this.echo = {
+                color: "border-gray-300 bg-gray-200 dark:bg-gray-700",
+                icon: "fas fa-spinner animate-spin",
+                title: this.t('global.loading')
+            };
+
+            try {
+                const url = echo.replace(/\/?$/, '/') + steam[0];
+
+                const response = await axios.get(url);
+
+                if (response.data && response.data.game === "fivem") {
+                    const data = response.data;
+
+                    if (data.detected > 0) {
+                        data.color = "border-red-300 bg-red-200 dark:bg-red-700";
+                        data.icon = "fas fa-skull-crossbones";
+                    } else if (data.unusual > 0) {
+                        data.color = "border-yellow-300 bg-yellow-200 dark:bg-yellow-700";
+                        data.icon = "fas fa-exclamation-triangle";
+                    } else {
+                        data.color = "border-green-300 bg-green-200 dark:bg-green-700";
+                        data.icon = "fas fa-check";
+                    }
+
+                    data.title = `Detected: ${data.detected} | Unusual: ${data.unusual} | Clean: ${data.clean}`;
+
+                    this.echo = data;
+
+                    return;
+                }
+            } catch (e) {
+            }
+
+            this.echo = {
+                color: "border-rose-300 bg-rose-200 dark:bg-rose-700",
+                icon: "fas fa-question",
+                title: this.t('players.show.echo_failed')
+            };
         },
         async loadStatus() {
             this.statusLoading = true;
@@ -2235,9 +2293,13 @@ export default {
             this.form.kick.reason = this.kickReason;
         }
 
-        this.loadExtraData();
-        this.loadHWIDLink();
-        this.loadStatus();
+        // Delay loading of extra data since it blocks other resources from loading
+        setTimeout(() => {
+            this.loadExtraData();
+            this.loadHWIDLink();
+            this.loadStatus();
+            this.loadEchoStatus();
+        }, 500);
 
         this.updatePlayerTime();
 
@@ -2247,7 +2309,7 @@ export default {
 
         const _this = this;
 
-        // Delay loading of character images since it blocks other resources from loading for some reason
+        // Delay loading of character images since it blocks other resources from loading
         $(document).ready(() => {
             setTimeout(() => {
                 $("img[data-lazy]").each((i, img) => {

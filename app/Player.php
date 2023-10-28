@@ -533,6 +533,25 @@ class Player extends Model
     }
 
     /**
+     * Gets all the steam identifiers.
+     *
+     * @return array
+     */
+    public function getSteamIdentifiers(): array
+    {
+        $identifiers   = $this->getIdentifiers();
+
+        return array_values(
+            array_filter(
+                $identifiers,
+                function ($identifier) {
+                    return Str::startsWith($identifier, 'steam:');
+                }
+            )
+        );
+    }
+
+    /**
      * Gets all the identifiers.
      *
      * @return array

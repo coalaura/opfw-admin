@@ -135,6 +135,8 @@ class AppServiceProvider extends ServiceProvider
                 return $session->get('discord') ?: null;
             },
 
+            'echo' => env('ECHO_SERVER', null),
+
             // Authentication.
             'auth'  => function () {
                 $player = user();
