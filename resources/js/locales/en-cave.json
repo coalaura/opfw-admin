@@ -860,7 +860,9 @@
             "last_connection": "Last Grunt",
             "recent_playtime": "Ugga Playtime",
             "recent_playtime_after": "~unga unga within last moon cycle",
-            "scheduled_details": "Ban go bye-bye on <b>{0} UTC</b> (<i>{1}</i>)."
+            "scheduled_details": "Ban go bye-bye on <b>{0} UTC</b> (<i>{1}</i>).",
+            "echo_failed": "Ugg! Echo data no load!",
+            "echo": "Ugga ugga: {0} | Weird: {1} | Neat: {2}"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

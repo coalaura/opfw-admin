@@ -799,6 +799,7 @@
             "drug_department_title": "Player has access to all drug related server logs.",
             "drug_department": "Drug-Logs",
             "echo_failed": "Failed to load Echo data.",
+            "echo": "Detected: {0} | Unusual: {1} | Clean: {2}",
             "anti_cheat": "Anti-Cheat",
             "anti_cheat_title": "Anti-Cheat Events",
             "anti_cheat_metadata": "Metadata",

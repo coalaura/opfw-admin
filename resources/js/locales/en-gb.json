@@ -860,7 +860,9 @@
             "last_connection": "Last Bloody Time They Logged In",
             "recent_playtime": "Recent Bollocks",
             "recent_playtime_after": "~in the bloody last 4 weeks",
-            "scheduled_details": "That bleedin' ban is slated for pissin' removal on <b>{0} UTC</b> (<i>{1}</i>)."
+            "scheduled_details": "That bleedin' ban is slated for pissin' removal on <b>{0} UTC</b> (<i>{1}</i>).",
+            "echo_failed": "Can't be arsed to load Echo data, mate.",
+            "echo": "Spotted: {0} | Dodgy: {1} | Pristine: {2}"
         },
         "ban_reason": "Give us the bleedin' reason",
         "ban_time": "Expires in yonks",

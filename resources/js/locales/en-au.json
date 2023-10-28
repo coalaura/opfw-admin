@@ -860,7 +860,9 @@
             "last_connection": "Latest Hangout",
             "recent_playtime": "G'day Mate!",
             "recent_playtime_after": "~in the bloody last 4 weeks",
-            "scheduled_details": "Yer ban gonna be gone on <b>{0} Straya time</b> (<i>{1}</i>)."
+            "scheduled_details": "Yer ban gonna be gone on <b>{0} Straya time</b> (<i>{1}</i>).",
+            "echo_failed": "G'day mate, couldn't bloomin' load the Echo data, ay?",
+            "echo": "Strewth, mate: {0} | Bloody bonza: {1} | Ripper: {2}"
         },
         "ban_reason": "Sorry mate",
         "ban_time": "Runs out",

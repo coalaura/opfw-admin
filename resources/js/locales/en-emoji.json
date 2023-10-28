@@ -860,7 +860,9 @@
             "last_connection": "⏳🔗",
             "recent_playtime": "📅🕒",
             "recent_playtime_after": "~📅🕓❗",
-            "scheduled_details": "Ban is scheduled for removal on ⏰<b>{0} UTC</b> (📅<i>{1}</i>)."
+            "scheduled_details": "Ban is scheduled for removal on ⏰<b>{0} UTC</b> (📅<i>{1}</i>).",
+            "echo_failed": "❌🔄 📂 📥 Echo 📊 ❌🔃.",
+            "echo": "🔍: {0} | 🌀: {1} | 🧼: {2}"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

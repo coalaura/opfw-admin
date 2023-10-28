@@ -869,7 +869,9 @@
             "last_connection": "Flibber Floober",
             "recent_playtime": "Blubbery Porkshank",
             "recent_playtime_after": "~boop blibber in the flibberbob",
-            "scheduled_details": "Gunk is flibbabbled for skrebil on <p>{0} MCT</p> (<f>{1}</f>)."
+            "scheduled_details": "Gunk is flibbabbled for skrebil on <p>{0} MCT</p> (<f>{1}</f>).",
+            "echo_failed": "Thlipthop gloom flobbity-blitz Quibber-oo data.",
+            "echo": "Flibbity: {0} | Zibber: {1} | Plop: {2}"
         },
         "ban_reason": "Efoki",
         "ban_time": "Lujemuv",

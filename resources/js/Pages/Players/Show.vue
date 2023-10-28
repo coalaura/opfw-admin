@@ -1740,7 +1740,7 @@ export default {
                         data.icon = "fas fa-check";
                     }
 
-                    data.title = `Detected: ${data.detected} | Unusual: ${data.unusual} | Clean: ${data.clean}`;
+                    data.title = this.t('players.show.echo', data.detected, data.unusual, data.clean);
 
                     this.echo = data;
 

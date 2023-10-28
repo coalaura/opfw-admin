@@ -860,7 +860,9 @@
             "last_connection": "Last time they was connected",
             "recent_playtime": "Ruckant Playtime",
             "recent_playtime_after": "~in the past 4 reckonin's",
-            "scheduled_details": "Ban is fixin' to be took off on <b>{0} UTC</b> (<i>{1}</i>)."
+            "scheduled_details": "Ban is fixin' to be took off on <b>{0} UTC</b> (<i>{1}</i>).",
+            "echo_failed": "Done messed up tryna fetch them Echo data.",
+            "echo": "Done found: {0} | Mighty peculiar: {1} | Clean as a whistle: {2}"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",
