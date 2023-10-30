@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <portal to="title">
             <div class="flex items-start space-x-10 mobile:flex-wrap">
                 <h1 class="dark:text-white">
@@ -35,7 +34,7 @@
                     {{ t('players.characters.reset_spawn') }}
                 </a>
                 <!-- Back -->
-                <a class="px-5 py-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary mobile:block mobile:w-full mobile:m-0 mobile:mb-3" :href="'/players/' + returnTo">
+                <a class="px-5 py-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary mobile:block mobile:w-full mobile:m-0 mobile:mb-3" :href="returnTo" v-if="returnTo">
                     <i class="fas fa-backward"></i>
                     {{ t('global.back') }}
                 </a>
@@ -828,10 +827,6 @@ export default {
             type: Number,
             required: true,
         },
-        returnTo: {
-            type: String,
-            required: true,
-        }
     },
     data() {
         jobsObject = [];
@@ -984,6 +979,9 @@ export default {
                 formLicenses = this.licenseForm.licenses.sort();
 
             return JSON.stringify(licenses) !== JSON.stringify(formLicenses);
+        },
+        returnTo() {
+            return document.referrer || `/players/${this.player.licenseIdentifier}`;
         }
     },
     methods: {

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Helpers\CacheHelper;
 use App\Helpers\GeneralHelper;
 use Exception;
@@ -9,7 +10,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -420,22 +420,27 @@ class Player extends Model
         ];
     }
 
-    /**
-     * @param string $player
-     * @param Request $request
-     * @return Player|array|null
-     */
-    public static function resolvePlayer(string $player, Request $request)
-    {
-        $resolved = Player::query()->select()->where('license_identifier', '=', $player)->leftJoin('ip_checks', function ($join) {
-            $join->on(DB::raw("CONCAT('ip:', last_ip_identifier)"), '=', 'ip_identifier');
-        })->first();
-
-        if ($resolved and $resolved instanceof Player) {
-            return $resolved;
+    public function resolveRouteBinding($value, $field = null) {
+        // Steam Identifier
+        if (Str::startsWith($value, 'steam:')) {
+            return Player::query()->where('identifiers', 'LIKE', "%\"" . $value . "\"%")->get();
         }
 
-        return null;
+        // License Identifier
+        if (Str::startsWith($value, 'license:')) {
+            return Player::query()->select()->where('license_identifier', '=', $value)->first();
+        }
+
+        // User ID hex
+        if (Str::startsWith($value, '0x')) {
+            $id = hexdec($value);
+        } else {
+            $id = intval($value);
+        }
+
+        if (!$id) return null;
+
+        return Player::query()->select()->where('user_id', '=', $id)->first();
     }
 
     /**
@@ -1013,27 +1018,6 @@ class Player extends Model
         }
 
         return $playerMap;
-    }
-
-    public static function findPlayerBySteam(string $steamIdentifier): ?Player
-    {
-        $players = Player::query()->where('identifiers', 'LIKE', "%\"" . $steamIdentifier . "\"%")->get();
-
-        foreach ($players as $player) {
-            $identifiers = $player->identifiers ?? [];
-
-            foreach ($identifiers as $identifier) {
-                if (Str::startsWith($identifier, 'steam:')) {
-                    if ($identifier === $steamIdentifier) {
-                        return $player;
-                    }
-
-                    break;
-                }
-            }
-        }
-
-        return null;
     }
 
     public static function getIdentifierLabel(string $identifier): ?string

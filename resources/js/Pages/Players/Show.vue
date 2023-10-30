@@ -2451,6 +2451,11 @@ export default {
         }
     },
     mounted() {
+        const url = window.location.href.replace(/(?<=\/players\/).+?(?=[/?#]|$)/gm, this.player.licenseIdentifier);
+        if (url !== window.location.href) {
+            window.history.replaceState({}, document.title, url);
+        }
+
         if (this.kickReason) {
             this.isKicking = true;
             this.form.kick.reason = this.kickReason;
@@ -2470,8 +2475,6 @@ export default {
             this.updatePlayerTime();
         }, 1000);
 
-        const _this = this;
-
         // Delay loading of character images since it blocks other resources from loading
         $(document).ready(() => {
             setTimeout(() => {
@@ -2490,7 +2493,7 @@ export default {
                         $(img).attr("src", "/images/no_mugshot.png");
                     });
                 });
-            }, 200);
+            }, 250);
         });
 
         $(document).on("visibilitychange", e => {

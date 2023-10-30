@@ -214,56 +214,36 @@ class PlayerController extends Controller
      * Display the specified resource.
      *
      * @param Request $request
-     * @param string $player
+     * @param Player $player
      * @return Response|void
      */
-    public function show(Request $request, string $player)
+    public function show(Request $request, Player $player)
     {
-        if (Str::startsWith($player, 'steam:')) {
-            $player = $player = Player::findPlayerBySteam($player);
+        $whitelisted = DB::table('user_whitelist')
+            ->select(['license_identifier'])
+            ->where('license_identifier', '=', $player->license_identifier)
+            ->first();
 
-            if (!$player) {
-                return abort(404);
-            }
+        $identifiers = $player->getIdentifiers();
 
-            return redirect('/players/' . $player->license_identifier);
-        }
+        $blacklisted = !empty($identifiers) ? BlacklistedIdentifier::query()
+            ->select(['identifier'])
+            ->whereIn('identifier', $identifiers)
+            ->first() : false;
 
-        $resolved = Player::resolvePlayer($player, $request);
+        $isSenior = $this->isSeniorStaff($request);
 
-        if ($resolved) {
-            $whitelisted = DB::table('user_whitelist')
-                ->select(['license_identifier'])
-                ->where('license_identifier', '=', $resolved->license_identifier)
-                ->first();
-
-            $identifiers = $resolved instanceof Player ? $resolved->getIdentifiers() : null;
-
-            $blacklisted = !empty($identifiers) ? BlacklistedIdentifier::query()
-                ->select(['identifier'])
-                ->whereIn('identifier', $identifiers)
-                ->first() : false;
-
-            $isSenior = $this->isSeniorStaff($request);
-
-            return Inertia::render('Players/Show', [
-                'player'            => new PlayerResource($resolved),
-                'characters'        => CharacterResource::collection($resolved->characters),
-                'warnings'          => $resolved->fasterWarnings($isSenior),
-                'kickReason'        => trim($request->query('kick')) ?? '',
-                'whitelisted'       => !!$whitelisted,
-                'blacklisted'       => !!$blacklisted,
-                'tags'              => Player::resolveTags(),
-                'allowRoleEdit'     => env('ALLOW_ROLE_EDITING', false) && $this->isSuperAdmin($request),
-                'enablableCommands' => PlayerRouteController::EnablableCommands,
-            ]);
-        } else {
-            if (Str::endsWith($player, "69") || Str::endsWith($player, "420")) {
-                return $this->rickroll();
-            }
-
-            abort(404);
-        }
+        return Inertia::render('Players/Show', [
+            'player'            => new PlayerResource($player),
+            'characters'        => CharacterResource::collection($player->characters),
+            'warnings'          => $player->fasterWarnings($isSenior),
+            'kickReason'        => trim($request->query('kick')) ?? '',
+            'whitelisted'       => !!$whitelisted,
+            'blacklisted'       => !!$blacklisted,
+            'tags'              => Player::resolveTags(),
+            'allowRoleEdit'     => env('ALLOW_ROLE_EDITING', false) && $this->isSuperAdmin($request),
+            'enablableCommands' => PlayerRouteController::EnablableCommands,
+        ]);
     }
 
     /**

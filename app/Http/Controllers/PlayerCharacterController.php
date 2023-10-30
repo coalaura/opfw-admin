@@ -181,7 +181,6 @@ class PlayerCharacterController extends Controller
             'jobs'         => $jobs ? $jobs['jobs'] : [],
             'resetCoords'  => $resetCoords ? array_keys($resetCoords) : [],
             'vehicleValue' => Vehicle::getTotalVehicleValue($character->character_id),
-            'returnTo'     => $_GET['returnTo'] ?? $player->license_identifier,
         ]);
     }
 
