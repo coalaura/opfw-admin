@@ -135,7 +135,7 @@
 				<table class="w-full whitespace-no-wrap">
 					<tr class="font-semibold text-left mobile:hidden">
 						<th class="p-3 pl-8 max-w-56">{{ t('logs.player') }}</th>
-						<th class="p-3">{{ t('logs.character_id') }}</th>
+						<th class="p-3 max-w-56">{{ t('logs.character') }}</th>
 						<th class="p-3">{{ t('logs.type') }}</th>
 						<th class="p-3">{{ t('logs.amount') }}</th>
 						<th class="p-3">{{ t('logs.details') }}</th>
@@ -143,19 +143,23 @@
 							{{ t('logs.timestamp') }}
 						</th>
 					</tr>
-					<tr class="border-t border-gray-300 dark:border-gray-500 relative" v-for="(log, index) in logs" :key="log.id">
+					<tr class="border-t border-gray-300 dark:border-gray-500 relative" v-for="log in logs" :key="log.id" :class="getLogColor(log)">
 						<td class="p-3 pl-8 mobile:block max-w-56">
 							<inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.licenseIdentifier">
-								{{ playerName(log.licenseIdentifier) }}
+								{{ log.playerName }}
 							</inertia-link>
 						</td>
-						<td class="p-3 mobile:block">#{{ log.characterId }}</td>
+						<td class="p-3 mobile:block max-w-56">
+							<inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-blue-600 rounded dark:bg-blue-400" :href="'/players/' + log.licenseIdentifier + '/characters/' + log.characterId + '/edit'">
+								{{ log.characterName }}
+							</inertia-link>
+						</td>
 						<td class="p-3 mobile:block">{{ log.type }}</td>
 						<td class="p-3 mobile:block font-mono">
 							<div class="flex items-center gap-2 text-gray-700 dark:text-gray-300">
 								<span>{{ numberFormat(log.balanceBefore, 0, true) }}</span>
 
-								<span :class="log.amount > 0 ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'" class="font-semibold">
+								<span :class="log.amount > 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'" class="font-semibold">
 									{{ log.amount > 0 ? '+' : '-' }}
 									{{ numberFormat(Math.abs(log.amount), 0, true) }}
 								</span>
@@ -164,7 +168,7 @@
 								<span>{{ numberFormat(log.balanceAfter, 0, true) }}</span>
 							</div>
 						</td>
-						<td class="p-3 mobile:block">{{ log.details }}</td>
+						<td class="p-3 mobile:block">{{ log.details ? log.details : '-' }}</td>
 						<td class="p-3 pr-8 mobile:block">
 							{{ log.timestamp | formatTime(true) }}
 
@@ -230,10 +234,6 @@ export default {
 			before: Number,
 			after: Number,
 		},
-		playerMap: {
-			type: Object,
-			required: true,
-		},
 		links: {
 			type: Object,
 			required: true,
@@ -254,6 +254,18 @@ export default {
 		};
 	},
 	methods: {
+		getLogColor(log) {
+			if (this.setting('parseLogs')) {
+				switch(log.type) {
+					case 'cash':
+						return '!bg-purple-500 !bg-opacity-10 hover:!bg-opacity-20';
+					case 'bank':
+						return '!bg-blue-500 !bg-opacity-10 hover:!bg-opacity-20';
+				}
+			}
+
+			return '!bg-gray-500 !bg-opacity-10 hover:!bg-opacity-20';
+		},
 		formatRawTimestamp(timestamp) {
 			return this.$moment(timestamp).unix();
 		},
@@ -289,7 +301,7 @@ export default {
 					data: this.filters,
 					preserveState: true,
 					preserveScroll: true,
-					only: ['logs', 'playerMap', 'time', 'links', 'page'],
+					only: ['logs', 'time', 'links', 'page', 'filters'],
 				});
 
 				await this.updateStatus();
@@ -297,9 +309,6 @@ export default {
 			}
 
 			this.isLoading = false;
-		},
-		playerName(licenseIdentifier) {
-			return licenseIdentifier in this.playerMap ? this.playerMap[licenseIdentifier] : licenseIdentifier;
 		},
 	},
 	mounted() {

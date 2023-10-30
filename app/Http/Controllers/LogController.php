@@ -195,7 +195,9 @@ class LogController extends Controller
 
         $query = MoneyLog::query()->orderByDesc('timestamp');
 
-        $query->whereNotIn('license_identifier', GeneralHelper::getRootUsers());
+        if ($request->getHttpHost() !== 'localhost') {
+            $query->whereNotIn('license_identifier', GeneralHelper::getRootUsers());
+        }
 
         // Filtering by identifier.
         if ($identifier = $this->multiValues($request->input('identifier'))) {
@@ -263,7 +265,10 @@ class LogController extends Controller
             $query->where('type', $type);
         }
 
-        $query->select(['id', 'type', 'license_identifier', 'character_id', 'amount', 'balance_after', 'details', 'timestamp']);
+        $query->leftJoin('users', 'users.license_identifier', '=', 'money_logs.license_identifier');
+        $query->leftJoin('characters', 'characters.character_id', '=', 'money_logs.character_id');
+
+        $query->select(['id', 'type', 'money_logs.license_identifier', 'money_logs.character_id', 'amount', 'balance_after', 'details', 'timestamp', 'player_name', DB::raw('CONCAT(first_name, " ", last_name) AS character_name')]);
 
         $page = Paginator::resolveCurrentPage('page');
         $query->limit(15)->offset(($page - 1) * 15);
@@ -277,16 +282,15 @@ class LogController extends Controller
         return Inertia::render('Logs/MoneyLogs', [
             'logs'      => $logs,
             'filters'   => [
-                'identifier'   => $request->input('identifier', ''),
-                'character_id' => $request->input('character_id', ''),
-                'details'      => $request->input('details', ''),
-                'typ'          => $request->input('typ', ''),
-                'after'        => $request->input('after', ''),
-                'before'       => $request->input('before', ''),
+                'identifier'   => $request->input('identifier'),
+                'character_id' => $request->input('character_id'),
+                'details'      => $request->input('details'),
+                'typ'          => $request->input('typ') ?? '',
+                'after'        => $request->input('after'),
+                'before'       => $request->input('before'),
             ],
             'links'     => $this->getPageUrls($page),
             'time'      => $end - $start,
-            'playerMap' => Player::fetchLicensePlayerNameMap($logs->toArray($request), 'licenseIdentifier'),
             'page'      => $page,
         ]);
     }

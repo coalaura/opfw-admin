@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Player;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -28,6 +27,7 @@ class MoneyLogResource extends JsonResource
             'details'           => $this->details,
             'timestamp'         => $this->timestamp,
             'playerName'        => $this->player_name,
+            'characterName'     => $this->character_name,
         ];
     }
 

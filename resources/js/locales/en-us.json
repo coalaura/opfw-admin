@@ -1185,6 +1185,7 @@
         },
         "amount": "Amount",
         "character_id": "Character ID",
+        "character": "Character",
         "metadata": {
             "show": "Show metadata",
             "secondary": "Secondary: {0}",

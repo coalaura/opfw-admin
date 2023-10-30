@@ -69,7 +69,7 @@
                                 </sup>
                             </label>
                             <select class="block w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="enablable" name="enablable" v-model="filters.enablable">
-                                <option value="all">{{ t('global.all') }}</option>
+                                <option value="">{{ t('global.all') }}</option>
                                 <option :value="command" v-for="command in enablable">/{{ command }}</option>
                             </select>
                         </div>
@@ -264,7 +264,7 @@ export default {
                     data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
-                    only: ['players', 'time', 'banMap', 'links', 'page'],
+                    only: ['players', 'time', 'banMap', 'links', 'page', 'filters'],
                 });
 
                 await this.updateStatus();

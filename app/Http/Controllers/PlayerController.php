@@ -125,7 +125,7 @@ class PlayerController extends Controller
                 'server'          => $request->input('server'),
                 'identifier'      => $request->input('identifier'),
                 'identifier_type' => $request->input('identifier_type') ?? '',
-                'enablable'       => $request->input('enablable') ?? "all",
+                'enablable'       => $request->input('enablable') ?? '',
             ],
             'links'     => $this->getPageUrls($page),
             'time'      => $end - $start,
