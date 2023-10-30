@@ -28,12 +28,14 @@ class StaffMiddleware
 
         if (!$player) {
             $session->clearAuth();
+            $session->put('returnTo', $request->fullUrl());
 
             return redirectWith('/login', 'error', 'You have to have connected to the server at least once before trying to log-in (Player not found).');
         }
 
         if (!$player->isStaff()) {
             $session->clearAuth();
+            $session->put('returnTo', $request->fullUrl());
 
             return redirectWith(
                 '/login',
@@ -46,6 +48,7 @@ class StaffMiddleware
 
         if (!$discord) {
             $session->clearAuth();
+            $session->put('returnTo', $request->fullUrl());
 
             return redirectWith(
                 '/login',
