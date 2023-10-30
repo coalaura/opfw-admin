@@ -372,7 +372,11 @@ export default {
                 case 'illegal_vehicle_spawn':
                     if (!metadata.distance || !metadata.entity) return false;
 
-                    return `--${metadata.entity.model}-- (${metadata.distance.toFixed(2)}m)` + (metadata.isAddon ? ' (**addon**)' : '');
+                    return `${metadata.script ? metadata.script + ':' : ''} --${metadata.entity.model}-- (${metadata.distance.toFixed(2)}m)` + (metadata.isAddon ? ' (**addon**)' : '');
+                case 'not_networked_driver':
+                    if (!metadata.model) return false;
+
+                    return `${metadata.script ? metadata.script + ':' : ''} --${metadata.model}--` + (metadata.isAddon ? ' (**addon**)' : '');
                 case 'invalid_health':
                     if (metadata.health === undefined || metadata.maxHealth === undefined || metadata.armor === undefined || metadata.maxArmor === undefined) return false;
 
