@@ -1,5 +1,6 @@
 const mix = require('laravel-mix');
 require('laravel-mix-clean');
+require('./scripts/clean-emit.js');
 
 const TerserPlugin = require('terser-webpack-plugin');
 
@@ -30,21 +31,42 @@ mix.postCss('resources/css/app.pcss', 'public/css', [
     require('tailwindcss'),
 ]);
 
+// Extract & cleanup.
 mix.extract();
-mix.clean();
+mix.clean({
+    protectWebpackAssets: false,
+
+    cleanOnceBeforeBuildPatterns: [
+        'css/*',
+        'js/*',
+    ],
+});
+mix.cleanEmit({
+    remove: [
+        /\.LICENSE\.txt$/m,
+    ],
+    stripComments: true,
+});
 
 // Config.
 mix.webpackConfig({
     output: {
-        chunkFilename: 'js/[chunkhash].js',
+        chunkFilename: fileHash,
     },
     devtool: false,
     optimization: {
         minimize: mix.inProduction(),
         minimizer: [
             new TerserPlugin({
+                minify: TerserPlugin.swcMinify,
                 extractComments: false,
             }),
         ],
     },
 });
+
+function fileHash(chunk) {
+    const hash = chunk.chunk.hash.slice(0, 8);
+
+    return `js/chunk.${hash}.js`;
+}
