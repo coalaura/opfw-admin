@@ -373,7 +373,7 @@ export default {
                     if (!metadata.distance || !metadata.entity) return false;
 
                     return `${metadata.script ? metadata.script + ':' : ''} --${metadata.entity.model}-- (${metadata.distance.toFixed(2)}m)` + (metadata.isAddon ? ' (**addon**)' : '');
-                case 'not_networked_driver':
+                case 'illegal_local_vehicle':
                     if (!metadata.model) return false;
 
                     return `${metadata.script ? metadata.script + ':' : ''} --${metadata.model}--` + (metadata.isAddon ? ' (**addon**)' : '');
