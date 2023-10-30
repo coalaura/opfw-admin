@@ -354,7 +354,7 @@ class AdvancedSearchController extends Controller
                 ],
                 [
                     'link' => [
-                        'target' => '/players/' . $entry['license_identifier'] . '/characters/' . $entry['character_id'] . '/edit',
+                        'target' => '/players/' . $entry['license_identifier'] . '/characters/' . $entry['character_id'],
                         'label'  => $entry['first_name'] . ' ' . $entry['last_name'] . ' (' . $entry['character_id'] . ')',
                     ],
                 ],
@@ -402,7 +402,7 @@ class AdvancedSearchController extends Controller
 
         return [
             'target' => $character
-            ? '/players/' . $character['license_identifier'] . '/characters/' . $character['character_id'] . '/edit'
+            ? '/players/' . $character['license_identifier'] . '/characters/' . $character['character_id']
             : '',
             'label'  => $character
             ? $character['first_name'] . ' ' . $character['last_name']

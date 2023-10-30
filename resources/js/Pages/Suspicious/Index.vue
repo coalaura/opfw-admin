@@ -126,7 +126,7 @@
                             </inertia-link>
                         </td>
                         <td class="p-3">
-                            <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.license_identifier + '/characters/' + log.character_id + '/edit'">
+                            <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.license_identifier + '/characters/' + log.character_id">
                                 {{ log.first_name + ' ' + log.last_name }}
                             </inertia-link>
                         </td>
@@ -149,7 +149,7 @@
                             </inertia-link>
                         </td>
                         <td class="p-3">
-                            <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.license_identifier + '/characters/' + log.character_id + '/edit'">
+                            <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.license_identifier + '/characters/' + log.character_id">
                                 {{ log.first_name + ' ' + log.last_name }}
                             </inertia-link>
                         </td>

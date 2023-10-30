@@ -150,7 +150,7 @@
 							</inertia-link>
 						</td>
 						<td class="p-3 mobile:block max-w-56">
-							<inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-blue-600 rounded dark:bg-blue-400" :href="'/players/' + log.licenseIdentifier + '/characters/' + log.characterId + '/edit'">
+							<inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-blue-600 rounded dark:bg-blue-400" :href="'/players/' + log.licenseIdentifier + '/characters/' + log.characterId">
 								{{ log.characterName }}
 							</inertia-link>
 						</td>

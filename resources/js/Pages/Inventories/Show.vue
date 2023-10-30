@@ -69,7 +69,7 @@
                         <template #footer>
                             <inertia-link
                                 class="px-4 py-3 mb-3 block text-center text-white bg-indigo-600 dark:bg-indigo-400 rounded"
-                                :href="'/players/' + inventory.character.license_identifier + '/characters/' + inventory.character.character_id + '/edit'">
+                                :href="'/players/' + inventory.character.license_identifier + '/characters/' + inventory.character.character_id">
                                 {{ t('inventories.show.view_character') }}
                             </inertia-link>
                             <inertia-link
@@ -172,7 +172,7 @@
                         <template #footer>
                             <inertia-link
                                 class="px-4 py-3 mb-3 block text-center text-white bg-indigo-600 dark:bg-indigo-400 rounded"
-                                :href="'/players/' + inventory.character.license_identifier + '/characters/' + inventory.character.character_id + '/edit'">
+                                :href="'/players/' + inventory.character.license_identifier + '/characters/' + inventory.character.character_id">
                                 {{ t('inventories.show.view_character') }}
                             </inertia-link>
                             <inertia-link
@@ -280,7 +280,7 @@
                         <template #footer>
                             <inertia-link
                                 class="px-4 py-3 mb-3 block text-center text-white bg-indigo-600 dark:bg-indigo-400 rounded"
-                                :href="'/players/' + inventory.character.license_identifier + '/characters/' + inventory.character.character_id + '/edit'">
+                                :href="'/players/' + inventory.character.license_identifier + '/characters/' + inventory.character.character_id">
                                 {{ t('inventories.show.view_character') }}
                             </inertia-link>
                             <inertia-link
@@ -329,7 +329,7 @@
                         <template #footer>
                             <inertia-link
                                 class="px-4 py-3 mb-3 block text-center text-white bg-indigo-600 dark:bg-indigo-400 rounded"
-                                :href="'/players/' + inventory.character.license_identifier + '/characters/' + inventory.character.character_id + '/edit'">
+                                :href="'/players/' + inventory.character.license_identifier + '/characters/' + inventory.character.character_id">
                                 {{ t('inventories.show.view_character') }}
                             </inertia-link>
                             <inertia-link

@@ -153,14 +153,14 @@ class PlayerCharacterController extends Controller
     }
 
     /**
-     * Display the specified resource for editing.
+     * Display the specified resource.
      *
      * @param Request $request
      * @param Player $player
      * @param Character $character
      * @return Response
      */
-    public function edit(Request $request, Player $player, Character $character): Response
+    public function show(Request $request, Player $player, Character $character): Response
     {
         $resetCoords = json_decode(file_get_contents(__DIR__ . '/../../../helpers/coords_reset.json'), true);
         $motels      = Motel::query()->where('cid', $character->character_id)->get()->sortBy(['motel', 'room_id']);
@@ -171,7 +171,7 @@ class PlayerCharacterController extends Controller
         $jobs     = OPFWHelper::getJobsJSON(Server::getFirstServer() ?? '');
         $vehicles = OPFWHelper::getVehiclesJSON(Server::getFirstServer() ?? '');
 
-        return Inertia::render('Players/Characters/Edit', [
+        return Inertia::render('Players/Characters/Show', [
             'player'       => new PlayerResource($player),
             'character'    => new CharacterResource($character),
             'motels'       => $motels->toArray(),
@@ -216,7 +216,7 @@ class PlayerCharacterController extends Controller
             abort(404);
         }
 
-        return redirect('/players/' . $character->license_identifier . '/characters/' . $character->character_id . '/edit');
+        return redirect('/players/' . $character->license_identifier . '/characters/' . $character->character_id);
     }
 
     /**

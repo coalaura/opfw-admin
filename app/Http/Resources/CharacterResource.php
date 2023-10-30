@@ -19,7 +19,7 @@ class CharacterResource extends JsonResource
      */
     public function toArray($request): array
     {
-        $isView = Str::contains($request->path(), '/edit');
+        $isView = Str::contains($request->path(), '/characters/');
 
         return [
             'id'                         => $this->character_id,

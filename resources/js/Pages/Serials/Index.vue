@@ -68,7 +68,7 @@
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4">
                         <th class="px-6 py-4">{{ t('serials.table.character') }}</th>
                         <td class="px-6 py-3" v-if="result.character">
-                            <inertia-link class="text-indigo-600 dark:text-indigo-400" :href="'/players/' + result.character.license + '/characters/' + result.character.id + '/edit'">{{ result.character.name }}</inertia-link>
+                            <inertia-link class="text-indigo-600 dark:text-indigo-400" :href="'/players/' + result.character.license + '/characters/' + result.character.id">{{ result.character.name }}</inertia-link>
 
                             <sup v-if="result.registered">{{ t('serials.registered') }}</sup>
                             <sup v-else>{{ t('serials.un_registered') }}</sup>

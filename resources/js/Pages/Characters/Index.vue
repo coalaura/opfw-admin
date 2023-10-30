@@ -142,7 +142,7 @@
                             {{ character.positionName || t('global.none') }}
                         </td>
                         <td class="p-3 pr-8 mobile:block">
-                            <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" v-bind:href="'/players/' + character.licenseIdentifier + '/characters/' + character.id + '/edit'">
+                            <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" v-bind:href="'/players/' + character.licenseIdentifier + '/characters/' + character.id">
                                 <i class="fas fa-chevron-right"></i>
                             </inertia-link>
                         </td>

@@ -7,7 +7,7 @@
                     <img class="block w-24 h-24 rounded-full" :src="user.avatar_url" @error="avatarError" />
                 </div>
                 <div>
-                    <inertia-link :href="'/players/' + player.licenseIdentifier + '/characters/' + character.id + '/edit'" class="hover:underline text-xl dark:text-white">
+                    <inertia-link :href="'/players/' + player.licenseIdentifier + '/characters/' + character.id" class="hover:underline text-xl dark:text-white">
                         {{ character.name }}
                         <sup>{{ character.id }}</sup>
                     </inertia-link>

@@ -988,7 +988,7 @@
                         <template #footer>
                             <div class="flex justify-between flex-wrap">
                                 <div class="flex justify-between gap-2 w-full">
-                                    <inertia-link class="block w-full px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/players/' + (player.overrideLicense ? player.overrideLicense : player.licenseIdentifier) + '/characters/' + character.id + '/edit?returnTo=' + player.licenseIdentifier">
+                                    <inertia-link class="block w-full px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/players/' + (player.overrideLicense ? player.overrideLicense : player.licenseIdentifier) + '/characters/' + character.id">
                                         <i class="fas fa-eye mr-1"></i>
                                         {{ t('global.view') }}
                                     </inertia-link>
