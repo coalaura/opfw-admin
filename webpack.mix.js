@@ -1,9 +1,7 @@
 const mix = require('laravel-mix');
+require('laravel-mix-clean');
 
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-
-const WebpackCleanupPlugin = require('./scripts/cleanup.js');
 
 /*
  |--------------------------------------------------------------------------
@@ -24,24 +22,23 @@ mix.version();
 mix.sourceMaps(false);
 
 // Assets.
-mix.js('resources/js/app.js', 'public/js').vue();
+mix.js('resources/js/app.js', 'public/js')
+    .vue();
+
 mix.postCss('resources/css/app.pcss', 'public/css', [
     require('postcss-import'),
     require('tailwindcss'),
 ]);
 
+mix.extract();
+mix.clean();
+
 // Config.
 mix.webpackConfig({
     output: {
-        chunkFilename: 'js/[name].js?id=[chunkhash]',
+        chunkFilename: 'js/[chunkhash].js',
     },
     devtool: false,
-    plugins: [
-        new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns: ['public/js/*', 'public/css/*'],
-        }),
-        new WebpackCleanupPlugin(),
-    ],
     optimization: {
         minimize: mix.inProduction(),
         minimizer: [

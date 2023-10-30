@@ -19,6 +19,8 @@ const Localization = {
         }
 
         Vue.prototype.loadLocale = function (locale) {
+            locale = locale.toLowerCase();
+
             if (locale === "en-us") {
                 lang = base;
 
