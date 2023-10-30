@@ -1198,7 +1198,8 @@
             "bank": "🏦"
         },
         "amount": "💲",
-        "character_id": "👤 ID"
+        "character_id": "👤 ID",
+        "character": "🌟🎭"
     },
     "panel_logs": {
         "title": "📋🔒Logs",

@@ -1198,7 +1198,8 @@
             "bank": "Treasure Chest"
         },
         "amount": "Plunder",
-        "character_id": "Scallywag ID"
+        "character_id": "Scallywag ID",
+        "character": "Scallywag"
     },
     "panel_logs": {
         "title": "Boardin' Logs",

@@ -1198,7 +1198,8 @@
             "bank": "Oi, look at me bank balance"
         },
         "amount": "Amount, like Dosh and all that",
-        "character_id": "Character ID, innit"
+        "character_id": "Character ID, innit",
+        "character": "Bloody Wanker"
     },
     "panel_logs": {
         "title": "Panel Bollocks",

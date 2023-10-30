@@ -1207,7 +1207,8 @@
             "bank": "Flik"
         },
         "amount": "Fleem",
-        "character_id": "Klorp ID"
+        "character_id": "Klorp ID",
+        "character": "Glibberject"
     },
     "panel_logs": {
         "title": "Flog Paks",

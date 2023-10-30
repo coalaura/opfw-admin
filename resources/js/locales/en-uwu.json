@@ -1198,7 +1198,8 @@
             "bank": "Bank"
         },
         "amount": "Amownt",
-        "character_id": "Chawactew ID"
+        "character_id": "Chawactew ID",
+        "character": "Chawactew"
     },
     "panel_logs": {
         "title": "Pwanel Wogs",

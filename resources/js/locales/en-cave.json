@@ -1198,7 +1198,8 @@
             "bank": "Safe Rocks"
         },
         "amount": "How Many",
-        "character_id": "Character Cave ID"
+        "character_id": "Character Cave ID",
+        "character": "Cavepal"
     },
     "panel_logs": {
         "title": "Ugga Ugga Ugga",

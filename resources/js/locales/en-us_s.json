@@ -1198,7 +1198,8 @@
             "bank": "Bank, baby"
         },
         "amount": "Amount, sweetheart",
-        "character_id": "Character ID, sugar plum"
+        "character_id": "Character ID, sugar plum",
+        "character": "Feller"
     },
     "panel_logs": {
         "title": "Panel Lahgs",

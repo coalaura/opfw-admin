@@ -1198,7 +1198,8 @@
             "bank": "Banked Moolah"
         },
         "amount": "Doshtags",
-        "character_id": "Bloke's ID Number"
+        "character_id": "Bloke's ID Number",
+        "character": "Bloke"
     },
     "panel_logs": {
         "title": "Bossy Boss Logs",
