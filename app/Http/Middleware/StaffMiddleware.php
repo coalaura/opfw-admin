@@ -30,7 +30,7 @@ class StaffMiddleware
             $session->clearAuth();
             $session->put('returnTo', $request->fullUrl());
 
-            return redirectWith('/login', 'error', 'You have to have connected to the server at least once before trying to log-in (Player not found).');
+            return redirectWith('/login', 'error', 'You are not logged in.');
         }
 
         if (!$player->isStaff()) {
