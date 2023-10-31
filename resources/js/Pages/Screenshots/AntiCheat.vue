@@ -390,7 +390,17 @@ export default {
                         return true;
                     }).length;
 
-                    return `**${changed}** propert${changed === 1 ? 'y' : 'ies'} changed`;
+                    const copied = metadata.copiedPlayers && metadata.copiedPlayers.length > 0 ? '- Copied ' + metadata.copiedPlayers.map(p => {
+                        const regex = / \[\d+\] \((.+?)\)$/gm,
+                            match = regex.exec(p),
+                            license = match ? match[1] : '#';
+
+                        const name = p.replace(regex, '');
+
+                        return `*[${name}](/players/${license})*`;
+                    }).join(', ') : '';
+
+                    return `**${changed}** propert${changed === 1 ? 'y' : 'ies'} changed ${copied}`;
                 case 'advanced_noclip':
                     if (metadata.aboveGround === undefined) return false;
 
