@@ -185,7 +185,7 @@ const Markdown = {
 
             // [text](url)
             text = text.replace(/\[(.+?)\]\((.+?)\)/gi, (match, p1, p2, offset, string) => {
-                return `<a href="${p2}" target="_blank" class="text-indigo-600 dark:text-indigo-400" title="${p2}">${p1}</a>`;
+                return `<a href="${p2}" target="_blank" class="text-indigo-600 dark:text-indigo-400" title="${!p2.startsWith('/') ? p2 : ''}">${p1}</a>`;
             });
 
             // urls
