@@ -63,6 +63,9 @@ body {
 .message {
     padding: 1vh 2.2vh;
     border-radius: 1.2vh;
+    overflow: hidden;
+    max-width: 100%;
+    word-wrap: break-word;
 
     .title {
         font-weight: 500;
