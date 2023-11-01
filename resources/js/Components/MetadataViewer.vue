@@ -58,8 +58,33 @@ const KnownTypes = {
     "spawnTime": "ms"
 };
 
+const CustomPreProcessors = {
+    "trace": data => data.split("\n"),
+    "modifications": data => data.split("\n"),
+
+    "changes": data => {
+        const changes = {};
+
+        data.split("\n").forEach(line => {
+            const regex = /^(.+?) (.+?) -> (.+?)$/gm,
+                match = regex.exec(line);
+
+            if (match) {
+                const [_, key, oldValue, newValue] = match;
+
+                changes[key] = {
+                    before: JSON.parse(oldValue),
+                    after: JSON.parse(newValue)
+                };
+            }
+        });
+
+        return changes;
+    }
+};
+
 const CustomFormatters = {
-    "closestBlip": data => `"${data.distance.toFixed(1)}m - ${data.label}"`
+    "closestBlip": data => `"${data.distance.toFixed(1)}m - ${data.label}"`,
 };
 
 export default {
@@ -98,8 +123,8 @@ export default {
                 for (const key in metadata) {
                     let value = metadata[key];
 
-                    if (key === "trace" || key === "modifications") {
-                        value = value.split("\n");
+                    if (key in CustomPreProcessors) {
+                        value = CustomPreProcessors[key](value);
                     }
 
                     if (typeof value === "object") {
@@ -168,9 +193,10 @@ export default {
             const lines = [];
 
             for (const key in object) {
-                const type = key in KnownTypes && object[key] !== false ? KnownTypes[key] : null;
+                const type = key in KnownTypes && object[key] !== false ? KnownTypes[key] : null,
+                    raw = object[key];
 
-                let value = JSON.stringify(object[key])
+                let value = JSON.stringify(raw)
                     .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?)}/gm, 'vector2($1, $3)') // vector2
                     .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?), ?"z": ?(-?\d+(\.\d+)?)}/gm, 'vector3($1, $3, $5)') // vector3
                     .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?), ?"z": ?(-?\d+(\.\d+)?), ?"w": ?(-?\d+(\.\d+)?)}/gm, 'vector4($1, $3, $5, $7)') // vector4
@@ -180,14 +206,19 @@ export default {
 
                 if (type) {
                     if (['ms', 's'].includes(type)) {
-                        const actual = object[key] * (type === 'ms' ? 1 : 1000);
+                        const actual = raw * (type === 'ms' ? 1 : 1000);
 
-                        value = `<span class="hljs-number" title="${object[key]} ${type}">${this.msToTime(actual)}</span>`;
+                        value = `<span class="hljs-number" title="${raw} ${type}">${this.msToTime(actual)}</span>`;
                     } else {
                         value += `<span class="text-gray-400 ml-0.5">${type}</span>`;
                     }
-                } else if (key in CustomFormatters && object[key]) {
-                    value = CustomFormatters[key](object[key]);
+                } else if (typeof raw === 'object' && 'before' in raw && 'after' in raw) {
+                    const before = JSON.stringify(raw.before),
+                        after = JSON.stringify(raw.after);
+
+                    value = `<span class="hljs-number">${before} <span class="text-gray-400">-></span> ${after}</span>`;
+                } else if (key in CustomFormatters && raw) {
+                    value = CustomFormatters[key](raw);
                 }
 
                 const line = isArray ? value : `<b>${key.padEnd(maxLine, " ")}</b>: ${value}`;
