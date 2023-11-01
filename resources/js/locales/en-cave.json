@@ -870,7 +870,9 @@
             "echo_clean": "Ugga Clean",
             "echo_unusual": "Ugga Unusual",
             "echo_detected": "Ugga Detected",
-            "echo_no_data": "Ugh! Me no find Echo data!"
+            "echo_no_data": "Ugh! Me no find Echo data!",
+            "global_info": "UNG UNG",
+            "global_title": "Player get bonk on {0} big bad servers."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

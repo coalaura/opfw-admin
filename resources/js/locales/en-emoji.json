@@ -870,7 +870,9 @@
             "echo_clean": "✨ Clean",
             "echo_unusual": "🌀 Unusual",
             "echo_detected": "❗ Detected",
-            "echo_no_data": "❌📥🗣️🚫📊"
+            "echo_no_data": "❌📥🗣️🚫📊",
+            "global_info": "🌍",
+            "global_title": "👮‍♂️🚫🔒{0}🖥️👞⚠️🗂️🔒.🔥"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

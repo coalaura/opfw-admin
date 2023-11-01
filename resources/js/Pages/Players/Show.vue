@@ -75,6 +75,11 @@
                         <i :class="echo.icon" class="mr-1"></i>
                         <span class="font-semibold">{{ t('players.show.echo_info') }}</span>
                     </badge>
+
+                    <badge class="border-red-300 bg-red-200 dark:bg-red-700" v-if="globalBans.length > 0" :title="t('players.show.global_title', globalBans.length)">
+                        <i class="fas fa-x-ray mr-1"></i>
+                        <span class="font-semibold">{{ t('players.show.global_info') }}</span>
+                    </badge>
                 </div>
             </div>
             <div class="text-sm italic mt-4">
@@ -1561,6 +1566,9 @@ export default {
             echo: false,
             showingEchoInfo: false,
 
+            // Not actually opfw bans but rather bans on other subdivisions.
+            globalBans: [],
+
             playerTime: false,
 
             charactersCollapsed: false,
@@ -1916,6 +1924,22 @@ export default {
                     title: this.t('players.show.echo_failed'),
                     raw: data
                 };
+            }
+        },
+        async loadGlobalBans() {
+            const global = this.$page.global;
+
+            if (!global) return;
+
+            try {
+                const url = global.replace(/\/?$/, '/') + `bans/${this.player.licenseIdentifier}`;
+
+                const response = await axios.get(url);
+
+                if (response.data && Array.isArray(response.data)) {
+                    this.globalBans = response.data;
+                }
+            } catch (e) {
             }
         },
         async loadStatus() {
@@ -2466,6 +2490,7 @@ export default {
             this.loadExtraData();
             this.loadHWIDLink();
             this.loadStatus();
+            this.loadGlobalBans();
             this.loadEchoStatus();
         }, 500);
 

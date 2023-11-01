@@ -4,14 +4,14 @@ namespace App\Providers;
 
 use App\Helpers\GeneralHelper;
 use App\Helpers\PermissionHelper;
+use App\Helpers\SessionHelper;
 use App\Http\Resources\PlayerResource;
 use App\Server;
-use App\Helpers\SessionHelper;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
@@ -41,15 +41,15 @@ class AppServiceProvider extends ServiceProvider
         $canUseDB = !app()->runningInConsole() && env('DB_CONNECTION');
 
         $discord = $canUseDB ? SessionHelper::getInstance()->getDiscord() : null;
-        $name = $discord ? $discord['username'] : 'Guest';
+        $name    = $discord ? $discord['username'] : 'Guest';
 
-		DB::listen(function ($query) use ($name) {
-			if (!env('LOG_QUERIES') || !CLUSTER) {
+        DB::listen(function ($query) use ($name) {
+            if (!env('LOG_QUERIES') || !CLUSTER) {
                 return;
             }
 
             $time = date("H:i:s");
-            $day = date("Y_m_d");
+            $day  = date("Y_m_d");
 
             $file = storage_path("logs/" . CLUSTER . "_query_{$day}.log");
 
@@ -58,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
             foreach ($query->bindings as $binding) {
                 if (is_string($binding)) {
                     $first = substr($binding, 0, 1);
-                    $last = substr($binding, -1);
+                    $last  = substr($binding, -1);
 
                     if ($first == '{' && $last == '}') {
                         $binding = '{...}';
@@ -76,7 +76,7 @@ class AppServiceProvider extends ServiceProvider
                 $sql = preg_replace('/\?/', "{$binding}", $sql, 1);
             }
 
-            $sql = preg_replace_callback('/in \((.+?)\)/m', function($matches) {
+            $sql = preg_replace_callback('/in \((.+?)\)/m', function ($matches) {
                 $values = explode(',', $matches[1]);
 
                 return 'in (...' . count($values) . ' values...)';
@@ -87,12 +87,12 @@ class AppServiceProvider extends ServiceProvider
             $log = "[{$time} - {$name}] {$sql} ({$query->time}ms)";
 
             put_contents($file, $log . "\n", FILE_APPEND);
-		});
+        });
 
         if ($canUseDB) {
             Inertia::share([
                 'timezones' => GeneralHelper::getCommonTimezones(),
-                'update' => GeneralHelper::isPanelUpdateAvailable(),
+                'update'    => GeneralHelper::isPanelUpdateAvailable(),
             ]);
         }
     }
@@ -107,11 +107,11 @@ class AppServiceProvider extends ServiceProvider
         // Shared inertia data.
         Inertia::share([
             // Current and previous url.
-            'url'   => Str::start(str_replace(url('/'), '', URL::current()), '/'),
-            'back'  => Str::start(str_replace(url('/'), '', URL::previous('/')), '/'),
+            'url'        => Str::start(str_replace(url('/'), '', URL::current()), '/'),
+            'back'       => Str::start(str_replace(url('/'), '', URL::previous('/')), '/'),
 
             // Flash messages.
-            'flash' => function () {
+            'flash'      => function () {
                 $helper = sessionHelper();
 
                 $success = $helper->get('flash_success');
@@ -126,19 +126,20 @@ class AppServiceProvider extends ServiceProvider
                 ];
             },
 
-            'serverIp' => $ip,
+            'serverIp'   => $ip,
             'serverName' => Server::getServerName($ip),
 
-            'discord' => function() {
+            'discord'    => function () {
                 $session = sessionHelper();
 
                 return $session->get('discord') ?: null;
             },
 
-            'echo' => env('ECHO_SERVER', null),
+            'echo'       => env('ECHO_SERVER', null),
+            'global'     => env('GLOBAL_SERVER', null),
 
             // Authentication.
-            'auth'  => function () {
+            'auth'       => function () {
                 $player = user();
 
                 return [
@@ -152,7 +153,7 @@ class AppServiceProvider extends ServiceProvider
                 ];
             },
 
-            'lang' => env('VUE_APP_LOCALE', 'en-us'),
+            'lang'       => env('VUE_APP_LOCALE', 'en-us'),
         ]);
     }
 

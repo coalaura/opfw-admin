@@ -870,7 +870,9 @@
             "echo_clean": "Bonza",
             "echo_unusual": "Struth",
             "echo_detected": "Bloody Snagged",
-            "echo_no_data": "Oi mate, couldn't load any Echo data, sorry about that"
+            "echo_no_data": "Oi mate, couldn't load any Echo data, sorry about that",
+            "global_info": "Globey",
+            "global_title": "Bloke is nicked on {0} dodgy servers."
         },
         "ban_reason": "Sorry mate",
         "ban_time": "Runs out",

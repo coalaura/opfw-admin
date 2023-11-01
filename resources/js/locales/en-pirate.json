@@ -870,7 +870,9 @@
             "echo_clean": "Purrrr",
             "echo_unusual": "Uncommon",
             "echo_detected": "Spotted",
-            "echo_no_data": "Arr, be cursed! Failed to loot Echo data"
+            "echo_no_data": "Arr, be cursed! Failed to loot Echo data",
+            "global_info": "Ahoy Matey",
+            "global_title": "Bilge rat be scurvy on {0} op-fw servers."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

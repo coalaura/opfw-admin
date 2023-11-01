@@ -870,7 +870,9 @@
             "echo_clean": "Cwean, uwu",
             "echo_unusual": "Uwuusual, uwu",
             "echo_detected": "Detected, uwu",
-            "echo_no_data": "OwO Oh nuu! Failed to woad Echo data~ >w<"
+            "echo_no_data": "OwO Oh nuu! Failed to woad Echo data~ >w<",
+            "global_info": "Gwobaw",
+            "global_title": "Pwayew is bawned on {0} op-fw sewvews."
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

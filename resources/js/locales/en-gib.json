@@ -879,7 +879,9 @@
             "echo_clean": "Bonom",
             "echo_unusual": "Rigalun",
             "echo_detected": "Detiknu",
-            "echo_no_data": "Fluffity bobbity bopity boop"
+            "echo_no_data": "Fluffity bobbity bopity boop",
+            "global_info": "Flibber",
+            "global_title": "Klankle is glarbed on {0} snop-scoot servers."
         },
         "ban_reason": "Efoki",
         "ban_time": "Lujemuv",

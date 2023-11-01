@@ -870,7 +870,9 @@
             "echo_clean": "Clean",
             "echo_unusual": "Unusual",
             "echo_detected": "Detected",
-            "echo_no_data": "Done gone and failed to load up that Echo data, y'all"
+            "echo_no_data": "Done gone and failed to load up that Echo data, y'all",
+            "global_info": "Global, y'all",
+            "global_title": "Player is banned on {0} op-fw servers, bless their heart."
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",
