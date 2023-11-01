@@ -15,8 +15,15 @@
             <hashResolver>
                 <template #default>
                     <div class="mt-4" v-for="meta in metadataJSON">
-                        <p class="font-semibold mb-1 font-mono">{{ meta.key }}</p>
-                        <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm hljs" v-html="meta.value" v-if="meta.value"></pre>
+                        <p class="font-semibold mb-1 font-mono cursor-pointer" @click="meta.open = !meta.open">
+                            <i class="fas fa-caret-right" v-if="!meta.open"></i>
+                            <i class="fas fa-caret-down" v-else></i>
+
+                            {{ meta.key }}
+                        </p>
+
+                        <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm hljs cursor-pointer" @click="meta.open = true" v-if="!meta.open"><span class="hljs-number">...</span></pre>
+                        <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm hljs" v-html="meta.value" v-else-if="meta.value"></pre>
                         <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm italic" v-else>empty</pre>
                     </div>
                 </template>
@@ -130,7 +137,8 @@ export default {
                     if (typeof value === "object") {
                         metadataJSON.push({
                             key: `metadata.${key}`,
-                            value: this.highlightJSON(value)
+                            value: this.highlightJSON(value),
+                            open: false
                         });
 
                         delete metadata[key];
@@ -139,7 +147,8 @@ export default {
 
                 metadataJSON.unshift({
                     key: 'metadata',
-                    value: this.highlightJSON(metadata)
+                    value: this.highlightJSON(metadata),
+                    open: true
                 });
             }
 
