@@ -94,9 +94,13 @@ const Markdown = {
             if (url.match(/^https:\/\/medal.tv\/games\/[\w-]+\/clips/gm)) {
                 url = url.split('?').shift();
 
+                const id = find(/clips\/(.+?)\/(.+?)$/gm, url);
+
+                if (!id) return false;
+
                 return {
                     text: url,
-                    url: url
+                    url: `https://medal.tv/clip/${id}`
                 };
             }
 
