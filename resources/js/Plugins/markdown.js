@@ -92,7 +92,7 @@ const Markdown = {
 
             // Medal.TV clips
             if (url.match(/^https:\/\/medal.tv\/games\/[\w-]+\/clips/gm)) {
-                url = url.split('?').pop();
+                url = url.split('?').shift();
 
                 return {
                     text: url,
