@@ -219,7 +219,8 @@
         "player": "Snoozler",
         "label": "Zigzags",
         "documentation": "Flibber-tigibber blibber-wibble about why this zigzag-snuzzle was schlambadoodled.",
-        "metadata": "Fludorash"
+        "metadata": "Fludorash",
+        "logs": "Blogs"
     },
     "changelog": {
         "title": "Sdabes neuweuk",
@@ -451,7 +452,8 @@
             "damage_logs": "Dibber Dabblerinos",
             "crafting": "Blip Bloopity Bloops",
             "phone_logs": "Zop Zobberinos",
-            "money_logs": "Geol Skrazz Frelz"
+            "money_logs": "Geol Skrazz Frelz",
+            "anti_cheat": "Doozle Gloop Anti-Prox & Flibberjibber"
         },
         "world_time": "Doodle Time",
         "world_time_desc": "The floop in the {0} bloo bop zibbity.",

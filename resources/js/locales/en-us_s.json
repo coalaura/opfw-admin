@@ -219,7 +219,8 @@
         "player": "Player",
         "label": "Snaps",
         "documentation": "Show more info 'bout why this snap/capture was made.",
-        "metadata": "Metadater"
+        "metadata": "Metadater",
+        "logs": "Git yer eyes on them there logs, y'all"
     },
     "changelog": {
         "title": "Latest Happ'nins",
@@ -451,7 +452,8 @@
             "damage_logs": "View Damage Logs",
             "crafting": "View Craftin' Recipes",
             "phone_logs": "Peep Them Phone Logs",
-            "money_logs": "View Money Logs, y'all"
+            "money_logs": "View Money Logs, y'all",
+            "anti_cheat": "Peep at them Anti-Cheat Logs & Screenshots"
         },
         "world_time": "World Time",
         "world_time_desc": "The time in the {0} most used timezones.",

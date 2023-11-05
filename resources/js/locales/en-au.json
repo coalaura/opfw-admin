@@ -219,7 +219,8 @@
         "player": "Bloke",
         "label": "Snaps",
         "documentation": "Chuck more info about why this photo was taken, mate.",
-        "metadata": "Bloody Info"
+        "metadata": "Bloody Info",
+        "logs": "Timber Records"
     },
     "changelog": {
         "title": "Latest Bits and Bobs",
@@ -451,7 +452,8 @@
             "damage_logs": "Check Out the Damage Records",
             "crafting": "Browse Through the Recipe Book",
             "phone_logs": "Check Out Phone Dunny Rolls",
-            "money_logs": "Check Out the Money Stuff"
+            "money_logs": "Check Out the Money Stuff",
+            "anti_cheat": "Have a Butcher's at the Anti-Cheat Timber Records & Snapshots"
         },
         "world_time": "What's the Time in the Big Wide World",
         "world_time_desc": "The time in all them timezones people use a lot.",

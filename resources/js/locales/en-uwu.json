@@ -219,7 +219,8 @@
         "player": "Pwayew",
         "label": "Scweenshots",
         "documentation": "Show mowe infowmation about why dis scweenshot/captuwe was cweated.",
-        "metadata": "Mewtadata"
+        "metadata": "Mewtadata",
+        "logs": "Wogs"
     },
     "changelog": {
         "title": "Wecent UwUdates",
@@ -451,7 +452,8 @@
             "damage_logs": "View Damage Wogs",
             "crafting": "View Cwafting Wecipes",
             "phone_logs": "View Phwone Wogs",
-            "money_logs": "View Money ÖwÖs"
+            "money_logs": "View Money ÖwÖs",
+            "anti_cheat": "View Anti-Cheat Wogs & Screenshots"
         },
         "world_time": "Wowld Timeowo",
         "world_time_desc": "The time in the {0} most used timezonesowo.",

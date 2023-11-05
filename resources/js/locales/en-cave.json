@@ -219,7 +219,8 @@
         "player": "Ug",
         "label": "Stick drawingz",
         "documentation": "Ug showz more information about why this stick drawingz was drawn.",
-        "metadata": "Ugga"
+        "metadata": "Ugga",
+        "logs": "Rock Carvings"
     },
     "changelog": {
         "title": "Big Uggz",
@@ -451,7 +452,8 @@
             "damage_logs": "Look at Hurt Logs",
             "crafting": "Access Crafting Secrets",
             "phone_logs": "Grok Phone Logs",
-            "money_logs": "See Logs of Green Papers"
+            "money_logs": "See Logs of Green Papers",
+            "anti_cheat": "Peek at cave drawings of Anti-Cheat & Scheming"
         },
         "world_time": "World Time-Big",
         "world_time_desc": "The time in the {0} most used timezones. Listen, sun go up, sun go down.",

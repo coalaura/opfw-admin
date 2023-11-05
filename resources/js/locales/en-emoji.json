@@ -219,7 +219,8 @@
         "player": "👤",
         "label": "📸",
         "documentation": "Show more ℹ️ about why this 📸/📸 was created.",
-        "metadata": "📦"
+        "metadata": "📦",
+        "logs": "📜s"
     },
     "changelog": {
         "title": "🆕🔄",
@@ -451,7 +452,8 @@
             "damage_logs": "📈📊",
             "crafting": "🔨📚",
             "phone_logs": "📱📚",
-            "money_logs": "💰 View 💰 Logs"
+            "money_logs": "💰 View 💰 Logs",
+            "anti_cheat": "👀 🚫-⚖️ 📜s & 📷s"
         },
         "world_time": "🌍⏰",
         "world_time_desc": "⌚🌍{0}",

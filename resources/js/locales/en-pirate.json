@@ -219,7 +219,8 @@
         "player": "Buccaneer",
         "label": "Portraits",
         "documentation": "Reveal more details 'bout why this portrait/capture be created.",
-        "metadata": "Bootytreasure"
+        "metadata": "Bootytreasure",
+        "logs": "Scrolls"
     },
     "changelog": {
         "title": "Latest Sea Changes",
@@ -451,7 +452,8 @@
             "damage_logs": "Sight Damage Scrolls",
             "crafting": "Sight Crafting Secrets",
             "phone_logs": "View Scoundrel Logs",
-            "money_logs": "View Booty Logs"
+            "money_logs": "View Booty Logs",
+            "anti_cheat": "Behold Anti-Cheat Scrolls & Scrawls"
         },
         "world_time": "World O' Time",
         "world_time_desc": "The time in the {0} most used doubloon zones.",

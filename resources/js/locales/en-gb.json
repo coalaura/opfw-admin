@@ -219,7 +219,8 @@
         "player": "Bloke",
         "label": "Bloody Screenshots",
         "documentation": "Show more bloody information about why this sodding screenshot was taken.",
-        "metadata": "Bloody Metadata"
+        "metadata": "Bloody Metadata",
+        "logs": "Bloody Logs"
     },
     "changelog": {
         "title": "Recent Bollocks",
@@ -451,7 +452,8 @@
             "lock_ban": "Bollocks to Bans",
             "edit_tag": "Mess with Bleedin' Tags",
             "phone_logs": "Peek at Bloody Phone Logs",
-            "money_logs": "Have a nosy at the bloody Money Logs"
+            "money_logs": "Have a nosy at the bloody Money Logs",
+            "anti_cheat": "Have a gander at the Anti-Cheat Logs & Bloody Screenshots"
         },
         "world_time": "Bloody Global Time",
         "world_time_desc": "The bleeding time in the {0} bloody popular timezones.",
