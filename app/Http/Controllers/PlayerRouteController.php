@@ -194,6 +194,10 @@ class PlayerRouteController extends Controller
      */
     public function antiCheat(Player $player, Request $request): Response
     {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_ANTI_CHEAT)) {
+            abort(401);
+        }
+
         $events = DB::table("anti_cheat_events")->where('license_identifier', $player->license_identifier)->orderByDesc("timestamp")->limit(200)->get()->toArray();
 
         return (new Response([

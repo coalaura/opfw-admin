@@ -39,6 +39,7 @@ const Permissions = {
             PERM_CRAFTING: 'crafting',
             PERM_PHONE_LOGS: 'phone_logs',
             PERM_MONEY_LOGS: 'money_logs',
+            PERM_ANTI_CHEAT: 'anti_cheat',
 
             level(permission) {
                 if (!(permission in permissions)) {

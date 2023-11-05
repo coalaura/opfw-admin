@@ -233,6 +233,7 @@ export default {
                             label: 'screenshot.anti_cheat_title',
                             icon: 'ghost',
                             url: '/anti_cheat',
+                            hidden: !this.perm.check(this.perm.PERM_ANTI_CHEAT),
                         }
                     ]
                 },

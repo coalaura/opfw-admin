@@ -903,7 +903,7 @@
                     <i class="mr-1 fab fa-steam"></i>
                     {{ t('players.show.steam') }}
                 </a>
-                <button class="flex-1 block p-5 m-2 font-semibold text-white bg-rose-700 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" @click="showAntiCheat">
+                <button class="flex-1 block p-5 m-2 font-semibold text-white bg-rose-700 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" @click="showAntiCheat" v-if="canSeeAntiCheat">
                     <i class="mr-1 fas fa-bullseye"></i>
                     <span>
                         {{ t('players.show.anti_cheat') }}
@@ -2203,6 +2203,9 @@ export default {
             }
 
             this.isShowingLinkedLoading = false;
+        },
+        canSeeAntiCheat() {
+            return this.perm.check(this.perm.PERM_ANTI_CHEAT);
         },
         async showAntiCheat() {
             this.isShowingAntiCheatLoading = true;
