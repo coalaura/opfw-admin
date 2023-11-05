@@ -1293,7 +1293,7 @@
                 <div v-if="screenCaptureLogs" class="mb-5">
                     <h4 class="text-base mb-1 mt-2 pt-2 border-t border-gray-500">{{ t('screenshot.logs') }}</h4>
 
-                    <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm">{{ screenCaptureLogs.join("\n") }}</pre>
+                    <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm" v-html="screenCaptureLogs.join('\n')"></pre>
                 </div>
 
                 <!-- Buttons -->
@@ -1367,7 +1367,7 @@
                 <div v-if="screenCaptureLogs" class="mb-5">
                     <h4 class="text-base mb-1 mt-2 pt-2 border-t border-gray-500">{{ t('screenshot.logs') }}</h4>
 
-                    <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm">{{ screenCaptureLogs.join("\n") }}</pre>
+                    <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm" v-html="screenCaptureLogs.join('\n')"></pre>
                 </div>
 
                 <!-- Buttons -->
@@ -1984,10 +1984,27 @@ export default {
 
             this.loadingHWIDLink = false;
         },
+        formatScreenCaptureLogs(logs) {
+            if (!logs) return false;
+
+            return logs.map(log => {
+                return log.replace(/^(\[\d+:\d+:\d+\]) (.+?)$/gm, (match, time, message) => {
+                    message = message.replace(/\d+/g, number => {
+                        number = parseInt(number).toLocaleString("en-US");
+
+                        return `<span class="text-teal-700 dark:text-teal-300">${number}</span>`;
+                    });
+
+                    return `<span class="text-gray-700 dark:text-gray-300">${time}</span> ${message}`;
+                });
+            });
+        },
         async createScreenCapture() {
             if (this.screenCaptureStatus) {
                 return;
             }
+
+            this.captureData.duration = parseInt(this.captureData.duration) || 0;
 
             if (!Number.isInteger(this.captureData.duration) || this.captureData.duration < 1 || this.captureData.duration > 30) {
                 alert(this.t("screenshot.invalid_duration"));
@@ -2024,7 +2041,7 @@ export default {
                         console.info('Screen capture of ID ' + this.status.source, result.data.data.url, result.data.data.license);
 
                         this.screenCaptureVideo = result.data.data.url;
-                        this.screenCaptureLogs = result.data.data.logs;
+                        this.screenCaptureLogs = this.formatScreenCaptureLogs(result.data.data.logs);
                     } else {
                         this.screenshotError = result.data.message ? result.data.message : this.t('screenshot.screencapture_failed');
                     }
@@ -2102,7 +2119,7 @@ export default {
                         this.screenshotImage = result.data.data.url;
                         this.screenshotLicense = result.data.data.license;
 
-                        this.screenCaptureLogs = result.data.data.logs;
+                        this.screenCaptureLogs = this.formatScreenCaptureLogs(result.data.data.logs);
 
                         cb && cb(true);
                     } else {
