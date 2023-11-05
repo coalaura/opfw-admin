@@ -198,6 +198,7 @@
         "attach": "Attach",
 		"continuous": "Continuous",
 		"continuous_stop": "Stop",
+        "logs": "Logs",
         "note": "Note",
         "screenshot": "Screenshot",
         "screencapture": "Screen Capture",

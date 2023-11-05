@@ -430,6 +430,7 @@ class PlayerRouteController extends Controller
 
             return self::json(true, [
                 'url'     => $data->data['screenshotURL'],
+                'logs'    => $data->data['logs'] ?? false,
                 'license' => $license,
             ]);
         } else {
@@ -457,8 +458,8 @@ class PlayerRouteController extends Controller
             return self::json(false, null, 'Invalid server');
         }
 
-        if ($duration < 3 || $duration > 30) {
-            return self::json(false, null, 'Invalid duration');
+        if ($duration < 1 || $duration > 30) {
+            return self::json(false, null, 'Invalid duration (1-30)');
         }
 
         $license = Server::isServerIDValid($id);
@@ -486,6 +487,7 @@ class PlayerRouteController extends Controller
 
             return self::json(true, [
                 'url'     => $data->data['screenshotURL'],
+                'logs'    => $data->data['logs'] ?? false,
                 'license' => $license,
             ]);
         } else {
@@ -707,7 +709,7 @@ class PlayerRouteController extends Controller
                             $diff .= "ms";
                         } else {
                             $sec = floor($diff / 1000);
-                            $ms = $diff % 1000;
+                            $ms  = $diff % 1000;
 
                             $diff = $sec . "s " . ($ms > 0 ? $ms . "ms" : "");
                         }

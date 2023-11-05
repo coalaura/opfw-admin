@@ -274,7 +274,7 @@
                 <div class="w-px bg-white bg-opacity-30 h-full separator">&nbsp;</div>
 
                 <!-- Create screen capture -->
-                <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block" @click="isScreenCapture = true" :title="t('screenshot.screencapture')" v-if="status && this.perm.check(this.perm.PERM_SCREENSHOT)">
+                <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 block" @click="isScreenCapture = true; screenCaptureLogs = null" :title="t('screenshot.screencapture')" v-if="status && this.perm.check(this.perm.PERM_SCREENSHOT)">
                     <i class="fas fa-video"></i>
                 </button>
 
@@ -1285,9 +1285,16 @@
                         <i class="fas fa-cog animate-spin text-3xl"></i>
                     </div>
                 </div>
+
                 <p v-if="screenshotImage" class="mt-3 text-sm">
                     {{ t('map.screenshot_description') }}
                 </p>
+
+                <div v-if="screenCaptureLogs" class="mb-5">
+                    <h4 class="text-base mb-1 mt-2 pt-2 border-t border-gray-500">{{ t('screenshot.logs') }}</h4>
+
+                    <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm">{{ screenCaptureLogs.join("\n") }}</pre>
+                </div>
 
                 <!-- Buttons -->
                 <div class="flex justify-end mt-2">
@@ -1326,7 +1333,7 @@
                     <label class="mr-4 block w-1/4 pt-2 font-bold" for="capture_duration">
                         {{ t('screenshot.capture_duration') }}
                     </label>
-                    <input class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="capture_duration" min="3" max="30" type="number" v-model="captureData.duration" />
+                    <input class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="capture_duration" min="1" max="30" type="number" v-model="captureData.duration" />
                 </div>
 
                 <p v-if="screenCaptureError" class="text-danger dark:text-dark-danger font-semibold mb-3">
@@ -1339,9 +1346,7 @@
                     </video>
 
                     <div class="w-full" v-if="screenCaptureStatus === 'capturing'">
-                        <span class="text-sm block mb-1">{{
-                            t('screenshot.capturing', Math.ceil(captureRemaining / 10))
-                        }}</span>
+                        <span class="text-sm block mb-1">{{ t('screenshot.capturing', Math.ceil(captureRemaining / 10)) }}</span>
                         <div class="bg-green-700 dark:bg-green-400" :style="`height: 4px; width: ${(1 - (captureRemaining / (captureData.duration * 10))) * 100}%`"></div>
                     </div>
 
@@ -1358,6 +1363,12 @@
                 <p v-if="screenCaptureVideo" class="mt-3 text-sm">
                     {{ t('map.screecapture_description') }}
                 </p>
+
+                <div v-if="screenCaptureLogs" class="mb-5">
+                    <h4 class="text-base mb-1 mt-2 pt-2 border-t border-gray-500">{{ t('screenshot.logs') }}</h4>
+
+                    <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm">{{ screenCaptureLogs.join("\n") }}</pre>
+                </div>
 
                 <!-- Buttons -->
                 <div class="flex justify-end mt-2">
@@ -1553,6 +1564,8 @@ export default {
             screenshotLicense: null,
             screenshotError: null,
             isAttachingScreenshot: false,
+
+            screenCaptureLogs: null,
 
             loadingExtraData: false,
             loadingHWIDLink: false,
@@ -1976,7 +1989,7 @@ export default {
                 return;
             }
 
-            if (!Number.isInteger(this.captureData.duration) && this.captureData.duration < 3 && this.captureData.duration > 30) {
+            if (!Number.isInteger(this.captureData.duration) || this.captureData.duration < 1 || this.captureData.duration > 30) {
                 alert(this.t("screenshot.invalid_duration"));
 
                 return;
@@ -1991,6 +2004,8 @@ export default {
                     clearInterval(interval);
                 }
             }, 100);
+
+            this.screenCaptureLogs = null;
 
             this.captureRemaining = this.captureData.duration * 10;
             this.screenCaptureStatus = "capturing";
@@ -2009,6 +2024,7 @@ export default {
                         console.info('Screen capture of ID ' + this.status.source, result.data.data.url, result.data.data.license);
 
                         this.screenCaptureVideo = result.data.data.url;
+                        this.screenCaptureLogs = result.data.data.logs;
                     } else {
                         this.screenshotError = result.data.message ? result.data.message : this.t('screenshot.screencapture_failed');
                     }
@@ -2072,6 +2088,7 @@ export default {
             this.isScreenshotLoading = true;
             this.screenshotError = null;
 
+            this.screenCaptureLogs = null;
             this.screenshotLicense = null;
 
             try {
@@ -2084,6 +2101,8 @@ export default {
 
                         this.screenshotImage = result.data.data.url;
                         this.screenshotLicense = result.data.data.license;
+
+                        this.screenCaptureLogs = result.data.data.logs;
 
                         cb && cb(true);
                     } else {
@@ -2112,6 +2131,7 @@ export default {
             if (status) {
                 this.isScreenshot = false;
                 this.screenshotImage = null;
+                this.screenshotTimings = null;
                 this.screenshotError = null;
                 this.screenshotLicense = null;
             }
