@@ -1,7 +1,7 @@
 import ColorThief from 'colorthief';
 
 // Rebuild style on version change
-const Iteration = 8;
+const Iteration = 9;
 
 const colors = {
 	'gray-100': { l: 96 },
@@ -59,11 +59,15 @@ const Style = {
 				if (s === 0) hue.s = 0;
 
 				const background = `background-color:hsla(${h},${hue.s || s}%,${hue.l}%,${useAlpha ? 0.6 : 1})`,
+					backgroundPlain = `background-color:hsl(${h},${hue.s || s}%,${hue.l}%)`,
 					border = `border-color:hsl(${h},${hue.s || s}%,${hue.l}%)`;
 
 				return [
 					`.bg-${name}{${background}}.dark .dark\\:bg-${name}{${background}}.hover\\:bg-${name}:hover{${background}!important}.dark .dark\\:hover\\:bg-${name}:hover{${background}!important}`,
-					`.border-${name}{${border}}.dark .dark\\:border-${name}{${border}}.hover\\:border-${name}:hover{${border}!important}.dark .dark\\:hover\\:border-${name}:hover{${border}!important}`
+					`.border-${name}{${border}}.dark .dark\\:border-${name}{${border}}.hover\\:border-${name}:hover{${border}!important}.dark .dark\\:hover\\:border-${name}:hover{${border}!important}`,
+
+					// Absolute positioned elements should never have alpha.
+					useAlpha ? `.bg-${name}.absolute{${backgroundPlain}}.dark .dark\\:bg-${name}.absolute{${backgroundPlain}}.hover\\:bg-${name}.absolute:hover{${backgroundPlain}!important}.dark .dark\\:hover\\:bg-${name}.absolute:hover{${backgroundPlain}!important}` : ''
 				].join('');
 			});
 
