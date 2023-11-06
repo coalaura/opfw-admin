@@ -58,7 +58,7 @@ class ScreenshotController extends Controller
             "SELECT CONCAT('s_', id) as id, license_identifier, screenshot_url as url, type as details, metadata, timestamp FROM anti_cheat_events WHERE screenshot_url IS NOT NULL AND type != 'modified_fov'" .
             " UNION " .
             "SELECT CONCAT('b_', id) as id, identifier, ban_hash, reason, null as metadata, MAX(timestamp) FROM user_bans WHERE SUBSTRING_INDEX(identifier, ':', 1) = 'license' AND SUBSTRING_INDEX(reason, '-', 1) = 'MODDING' AND smurf_account IS NULL GROUP BY identifier" .
-            ") data LEFT JOIN users ON data.license_identifier = users.license_identifier ORDER BY timestamp DESC LIMIT 20 OFFSET " . (($page - 1) * 20);
+            ") data LEFT JOIN users ON data.license_identifier = users.license_identifier WHERE users.license_identifier IS NOT NULL ORDER BY timestamp DESC LIMIT 20 OFFSET " . (($page - 1) * 20);
 
         $system = DB::select(DB::raw($query));
 
