@@ -69,6 +69,8 @@ class Controller extends BaseController
                 'status' => false,
                 'message' => $error,
             ];
+
+            if ($data) $resp['data'] = $data;
         }
 
         return (new Response($resp, 200))->header('Content-Type', 'application/json');
