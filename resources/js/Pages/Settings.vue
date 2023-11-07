@@ -151,46 +151,50 @@ export default {
                 }, 200);
             }
         },
-        async saveSetting(key, setting, overrideValue = null) {
+        saveSetting(key, setting, overrideValue = null) {
             if (setting.disabled) return;
 
-            setting.disabled = true;
+            clearTimeout(setting.timeout);
 
-            let valueToSave = setting.value;
+            setting.timeout = setTimeout(async () => {
+                setting.disabled = true;
 
-            if (overrideValue) {
-                if (setting.type === 'url') overrideValue = window.location.origin + overrideValue;
+                let valueToSave = setting.value;
 
-                valueToSave = overrideValue;
-            }
+                if (overrideValue) {
+                    if (setting.type === 'url') overrideValue = window.location.origin + overrideValue;
 
-            try {
-                const response = await axios.put('/settings/' + key, {
-                    value: valueToSave
-                });
-
-                if (!response.data.status) {
-                    alert(response.data.message || 'An error occurred while saving the setting');
+                    valueToSave = overrideValue;
                 }
 
-                if ('data' in response.data) {
-                    setting.value = response.data.data;
-                    this.$page.auth.settings[key].value = response.data.data;
+                try {
+                    const response = await axios.put('/settings/' + key, {
+                        value: valueToSave
+                    });
 
-                    this.$bus.$emit('settingsUpdated');
+                    if (!response.data.status) {
+                        alert(response.data.message || 'An error occurred while saving the setting');
+                    }
+
+                    if ('data' in response.data) {
+                        setting.value = response.data.data;
+                        this.$page.auth.settings[key].value = response.data.data;
+
+                        this.$bus.$emit('settingsUpdated');
+                    }
+
+                    if (key === 'locale') {
+                        this.refreshLocales(setting.value);
+                    }
+                } catch (e) {
+                    alert(e.message || 'An error occurred while saving the setting (Status: ' + e.response.status + ')');
                 }
 
-                if (key === 'locale') {
-                    this.refreshLocales(setting.value);
-                }
-            } catch (e) {
-                alert(e.message || 'An error occurred while saving the setting (Status: ' + e.response.status + ')');
-            }
+                setting.disabled = false;
 
-            setting.disabled = false;
-
-            // For some reason it doesn't auto-refresh
-            this.$forceUpdate();
+                // For some reason it doesn't auto-refresh
+                this.$forceUpdate();
+            }, 500);
         }
     }
 }
