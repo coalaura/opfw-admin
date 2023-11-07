@@ -1,9 +1,12 @@
 import ColorThief from 'colorthief';
 
 // Rebuild style on version change
-const Iteration = 10;
+const Iteration = 11;
 
 const colors = {
+	'white': { l: 99 },
+	'black': { l: 1 },
+
 	'gray-100': { l: 96 },
 	'gray-200': { l: 91 },
 	'gray-300': { l: 84 },
