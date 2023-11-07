@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Helpers\CacheHelper;
 use App\Helpers\GeneralHelper;
 use Exception;
@@ -120,6 +119,12 @@ class Player extends Model
         "banner"          => [
             "type"    => "url",
             "default" => "",
+            "presets" => [
+                "Cat"    => "/images/themes/cat.jpg",
+                "Clouds" => "/images/themes/clouds.jpg",
+                "Forest" => "/images/themes/forest.jpg",
+                "Space"  => "/images/themes/space.jpg",
+            ],
         ],
         "bannerAlpha"     => [
             "type"    => "boolean",
@@ -224,7 +229,7 @@ class Player extends Model
                 }
 
                 if (!preg_match('/^https:\/\/[^\s?]+?\.(png|jpe?g|webp)(\?[^\s]*)?$/mi', $value)) {
-                    throw new Exception('URL is not a valid image.');
+                    //throw new Exception('URL is not a valid image.');
                 }
 
                 $url = $value;
@@ -306,11 +311,19 @@ class Player extends Model
         $list = [];
 
         foreach (self::PlayerSettings as $key => $setting) {
-            $list[$key] = [
-                'value'   => $this->getPanelSetting($key),
-                'type'    => $setting['type'],
-                'options' => $setting['options'] ?? false,
+            $type = $setting['type'];
+
+            $entry = [
+                'value'    => $this->getPanelSetting($key),
+                'type'     => $type,
+                'options'  => $setting['options'] ?? false,
+                'presets'  => $setting['presets'] ?? false,
+
+                'disabled' => false,
+                'focus'    => false,
             ];
+
+            $list[$key] = $entry;
         }
 
         return $list;
@@ -420,7 +433,8 @@ class Player extends Model
         ];
     }
 
-    public function resolveRouteBinding($value, $field = null) {
+    public function resolveRouteBinding($value, $field = null)
+    {
         // Steam Identifier
         if (Str::startsWith($value, 'steam:')) {
             return Player::query()->where('identifiers', 'LIKE', "%\"" . $value . "\"%")->get();
@@ -438,7 +452,9 @@ class Player extends Model
             $id = intval($value);
         }
 
-        if (!$id) return null;
+        if (!$id) {
+            return null;
+        }
 
         return Player::query()->select()->where('user_id', '=', $id)->first();
     }

@@ -92,8 +92,8 @@
         "delete_session": "Kill Session",
         "settings": "Settings",
 
-        "banner": "Page Banner (only for you)",
-        "bannerAlpha": "Banner-Theme use Alpha (opacity)",
+        "banner": "Page Theme Image",
+        "bannerAlpha": "Page Theme use Alpha (opacity)",
         "parseLogs": "Parse Logs (Highlighting, etc.)",
         "expandCollapsed": "Auto-Expand Collapsed (Notes, etc.)",
         "expandSidenav": "Always fully expand the Side-Navigation",

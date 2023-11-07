@@ -52,13 +52,20 @@
             <table class="whitespace-no-wrap bg-white !bg-opacity-10">
                 <tr class="border-t border-gray-300 dark:border-gray-500" v-for="(setting, key) in $page.auth.settings" :key="key">
                     <td class="p-3 pl-8">{{ t('settings.' + key) }}</td>
-                    <td class="p-3">
-                        <select v-if="setting.options" v-model="setting.value" class="p-1 min-w-base block border-2 bg-gray-200 dark:bg-gray-800" :disabled="setting.disabled" @change="saveSetting(key, setting)">
+
+                    <td class="p-3" v-if="setting.options">
+                        <select v-model="setting.value" class="p-1 min-w-base block border-2 bg-gray-200 dark:bg-gray-800" :disabled="setting.disabled" @change="saveSetting(key, setting)">
                             <option v-for="(value, key) in setting.options" :value="key">{{ value }}</option>
                         </select>
-
-                        <input v-else v-model="setting.value" :type="getSettingsType(setting.type)" :disabled="setting.disabled" class="p-1 h-base min-w-base block border-2 bg-gray-200 dark:bg-gray-800" @change="saveSetting(key, setting)" />
                     </td>
+                    <td class="p-3 relative" v-else>
+                        <input v-model="setting.value" :type="getSettingsType(setting.type)" :disabled="setting.disabled" class="p-1 h-base min-w-base block border-2 border-gray-500 bg-gray-200 dark:bg-gray-800" @change="saveSetting(key, setting)" @focus="setSettingActive(setting, true)" @blur="setSettingActive(setting, false)" />
+
+                        <div class="absolute right-0 top-18 left-0 border-gray-500 bg-gray-200 dark:bg-gray-800 mx-3 border-2 shadow z-10" v-if="!setting.value && setting.focus && setting.presets">
+                            <div class="px-2 py-1 cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700" v-for="(preset, name) in setting.presets" :key="name" @click="saveSetting(key, setting, preset)">{{ name }}</div>
+                        </div>
+                    </td>
+
                     <td class="p-3">
                         <img :src="'/images/settings/' + key + '.png'" class="h-20" />
                     </td>
@@ -135,10 +142,25 @@ export default {
                 preserveScroll: true
             });
         },
-        async saveSetting(key, setting) {
+        setSettingActive(setting, active) {
+            if (active) {
+                setting.focus = true;
+            } else {
+                setTimeout(() => {
+                    setting.focus = false;
+                }, 200);
+            }
+        },
+        async saveSetting(key, setting, overrideValue = null) {
             if (setting.disabled) return;
 
             setting.disabled = true;
+
+            if (overrideValue) {
+                if (setting.type === 'url') overrideValue = window.location.origin + overrideValue;
+
+                setting.value = overrideValue;
+            }
 
             try {
                 const response = await axios.put('/settings/' + key, {
