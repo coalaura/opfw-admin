@@ -50,7 +50,7 @@
             </h3>
 
             <table class="whitespace-no-wrap bg-white dark:bg-black !bg-opacity-10">
-                <tr class="border-t border-gray-300 dark:border-gray-500" v-for="(setting, key) in $page.auth.settings" :key="key" :class="{'opacity-75': setting.disabled}">
+                <tr class="border-t border-gray-300 dark:border-gray-500" v-for="(setting, key) in $page.auth.settings" :key="key" :class="{'opacity-30': setting.disabled}">
                     <td class="p-3 pl-8">{{ t('settings.' + key) }}</td>
 
                     <td class="p-3" v-if="setting.options">
