@@ -71,7 +71,13 @@
         },
         "results": "Search took {0} milliseconds.",
         "entries": "Showing {0} total entries on {1} page(s).",
-        "loading": "Loading..."
+        "loading": "Loading...",
+
+        "restricted_to_staff": "Restricted to staff members only.",
+        "restricted_to_senior_staff": "Restricted to senior-staff members only.",
+        "restricted_to_super": "Restricted to super-admins only.",
+        "restricted_to_root": "Restricted to root users only.",
+        "not_restricted": "Not restricted."
     },
 	"steam": {
 		"title": "Steam Lookup",

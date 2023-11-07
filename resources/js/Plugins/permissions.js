@@ -50,11 +50,24 @@ const Permissions = {
             },
 
             check(permission) {
-                if (!(permission in permissions)) {
-                    return true;
+                return this.level(permission) <= permissionLevel;
+            },
+
+            restriction(permission) {
+                const level = this.level(permission);
+
+                switch (level) {
+                    case 1:
+                        return Vue.prototype.t('global.restricted_to_staff');
+                    case 2:
+                        return Vue.prototype.t('global.restricted_to_senior_staff');
+                    case 3:
+                        return Vue.prototype.t('global.restricted_to_super');
+                    case 4:
+                        return Vue.prototype.t('global.restricted_to_root');
                 }
 
-                return permissions[permission] <= permissionLevel;
+                return Vue.prototype.t('global.not_restricted');
             }
         };
     },

@@ -3,6 +3,8 @@
         <portal to="title">
             <div class="mb-6">
                 <h1 class="dark:text-white flex items-middle gap-2">
+                    <i class="mr-3 fas fa-unlock-alt" :title="perm.restriction(perm.PERM_LIVEMAP)"></i>
+
                     <span id="map_title">{{ t('map.title') }}</span>
 
                     <select class="inline-block w-20 h-8 ml-4 px-2 py-1 text-sm bg-gray-200 dark:bg-gray-600 border rounded" id="server">

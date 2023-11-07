@@ -3,6 +3,8 @@
 
         <portal to="title">
             <h1 class="dark:text-white">
+                <i class="mr-3 fas fa-unlock-alt" :title="perm.restriction(perm.PERM_ANTI_CHEAT)"></i>
+
                 {{ t('screenshot.anti_cheat') }}
             </h1>
             <p>
