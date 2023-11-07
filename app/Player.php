@@ -120,10 +120,13 @@ class Player extends Model
             "type"    => "url",
             "default" => "",
             "presets" => [
-                "Cat"    => "/images/themes/cat.jpg",
-                "Clouds" => "/images/themes/clouds.jpg",
-                "Forest" => "/images/themes/forest.jpg",
-                "Space"  => "/images/themes/space.jpg",
+                "Blossom" => "/images/themes/blossom.jpg",
+                "Cat"     => "/images/themes/cat.jpg",
+                "Coffee"  => "/images/themes/coffee.jpg",
+                "Desert"  => "/images/themes/desert.jpg",
+                "Forest"  => "/images/themes/forest.jpg",
+                "Space"   => "/images/themes/space.jpg",
+                "Sunrise" => "/images/themes/sunrise.jpg",
             ],
         ],
         "bannerAlpha"     => [
@@ -225,19 +228,17 @@ class Player extends Model
 
             $presets = $info['presets'] ?? [];
 
-            $isPreset = in_array($value, $presets);
+            $isPreset  = in_array($value, $presets);
             $wasPreset = in_array($previous, $presets);
 
-            if ($value !== '') {
-                // We only need to validate the URL if it's not a preset
-                if (!$isPreset) {
-                    if (!filter_var($value, FILTER_VALIDATE_URL)) {
-                        throw new Exception('Input is not a valid URL.');
-                    }
+            // We only need to validate the URL if it's not a preset
+            if ($value !== '' && !$isPreset) {
+                if (!filter_var($value, FILTER_VALIDATE_URL)) {
+                    throw new Exception('Input is not a valid URL.');
+                }
 
-                    if (!preg_match('/^https:\/\/[^\s?]+?\.(png|jpe?g|webp)(\?[^\s]*)?$/mi', $value)) {
-                        throw new Exception('URL is not a valid image.');
-                    }
+                if (!preg_match('/^https:\/\/[^\s?]+?\.(png|jpe?g|webp)(\?[^\s]*)?$/mi', $value)) {
+                    throw new Exception('URL is not a valid image.');
                 }
 
                 $url = $value;
@@ -252,24 +253,22 @@ class Player extends Model
                     return;
                 }
 
-                if (!$isPreset) {
-                    try {
-                        $data = file_get_contents($url);
+                try {
+                    $data = file_get_contents($url);
 
-                        if (!$data) {
-                            throw new Exception('Failed to download image.');
-                        }
-                    } catch (Exception $ex) {
-                        throw new Exception('Failed to download image: ' . $ex->getMessage());
+                    if (!$data) {
+                        throw new Exception('Failed to download image.');
                     }
-
-                    $dir = public_path('/_uploads/');
-                    if (!file_exists($dir)) {
-                        mkdir($dir, 0777, true);
-                    }
-
-                    file_put_contents(public_path($value), $data);
+                } catch (Exception $ex) {
+                    throw new Exception('Failed to download image: ' . $ex->getMessage());
                 }
+
+                $dir = public_path('/_uploads/');
+                if (!file_exists($dir)) {
+                    mkdir($dir, 0777, true);
+                }
+
+                file_put_contents(public_path($value), $data);
             }
 
             if ($previous && !$wasPreset && preg_match('/^\/_uploads\/[a-f0-9]+\.(png|jpe?g|webp)$/mi', $previous)) {
