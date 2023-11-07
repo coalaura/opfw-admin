@@ -49,7 +49,7 @@
                 {{ t('settings.settings') }}
             </h3>
 
-            <table class="whitespace-no-wrap bg-white !bg-opacity-10">
+            <table class="whitespace-no-wrap bg-white dark:bg-black !bg-opacity-10">
                 <tr class="border-t border-gray-300 dark:border-gray-500" v-for="(setting, key) in $page.auth.settings" :key="key">
                     <td class="p-3 pl-8">{{ t('settings.' + key) }}</td>
 
