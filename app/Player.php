@@ -225,16 +225,19 @@ class Player extends Model
 
             $presets = $info['presets'] ?? [];
 
+            $isPreset = in_array($value, $presets);
             $wasPreset = in_array($previous, $presets);
 
             if ($value !== '') {
-                if (!filter_var($value, FILTER_VALIDATE_URL)) {
-                    throw new Exception('Input is not a valid URL.');
-                }
-                $isPreset = in_array($value, $presets);
+                // We only need to validate the URL if it's not a preset
+                if (!$isPreset) {
+                    if (!filter_var($value, FILTER_VALIDATE_URL)) {
+                        throw new Exception('Input is not a valid URL.');
+                    }
 
-                if (!preg_match('/^https:\/\/[^\s?]+?\.(png|jpe?g|webp)(\?[^\s]*)?$/mi', $value) && !$isPreset) {
-                    throw new Exception('URL is not a valid image.');
+                    if (!preg_match('/^https:\/\/[^\s?]+?\.(png|jpe?g|webp)(\?[^\s]*)?$/mi', $value)) {
+                        throw new Exception('URL is not a valid image.');
+                    }
                 }
 
                 $url = $value;
