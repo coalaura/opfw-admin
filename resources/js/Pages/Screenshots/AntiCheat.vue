@@ -415,6 +415,7 @@ export default {
 
                     return `**${metadata.aboveGround.toFixed(2)}m** AGL @ **${speed}m/s**`;
                 case 'freecam_detected':
+                case 'illegal_freeze':
                     if (metadata.playerPed === undefined) return false;
 
                     const flags = metadata.playerPed.flags.join(', ') || 'no flags';
