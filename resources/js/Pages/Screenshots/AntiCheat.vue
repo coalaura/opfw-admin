@@ -35,7 +35,7 @@
                     <table class="w-full whitespace-no-wrap">
                         <tr class="font-semibold text-left mobile:hidden">
                             <th class="p-3 pl-8 max-w-56">{{ t('screenshot.player') }}</th>
-                            <th class="p-3 w-28">{{ t('screenshot.playtime') }}</th>
+                            <th class="p-3 w-32">{{ t('screenshot.playtime') }}</th>
                             <th class="p-3 w-40">{{ t('screenshot.screenshot') }}</th>
                             <th class="p-3">{{ t('screenshot.note') }}</th>
                             <th class="p-3 w-32">{{ t('screenshot.ban_status') }}</th>
@@ -61,7 +61,7 @@
                                         {{ screenshot.player_name }}
                                     </inertia-link>
                                 </td>
-                                <td class="p-3 mobile:block w-28">
+                                <td class="p-3 mobile:block w-32">
                                     {{ screenshot.playtime | humanizeSeconds }}
                                 </td>
                                 <td class="p-3 mobile:block w-40">
