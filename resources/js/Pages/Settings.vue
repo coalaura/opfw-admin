@@ -156,15 +156,17 @@ export default {
 
             setting.disabled = true;
 
+            let valueToSave = setting.value;
+
             if (overrideValue) {
                 if (setting.type === 'url') overrideValue = window.location.origin + overrideValue;
 
-                setting.value = overrideValue;
+                valueToSave = overrideValue;
             }
 
             try {
                 const response = await axios.put('/settings/' + key, {
-                    value: setting.value
+                    value: valueToSave
                 });
 
                 if (!response.data.status) {
@@ -172,6 +174,7 @@ export default {
                 }
 
                 if ('data' in response.data) {
+                    setting.value = response.data.data;
                     this.$page.auth.settings[key].value = response.data.data;
 
                     this.$bus.$emit('settingsUpdated');
