@@ -219,8 +219,6 @@ class Player extends Model
 
         $expected = $info['type'];
 
-        sleep(2);
-
         if ($expected === 'url') {
             if (!$value) {
                 $value = '';
