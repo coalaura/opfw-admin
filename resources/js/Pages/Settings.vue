@@ -148,7 +148,7 @@ export default {
             } else {
                 setTimeout(() => {
                     setting.focus = false;
-                }, 200);
+                }, 250);
             }
         },
         saveSetting(key, setting, overrideValue = null) {
@@ -159,13 +159,7 @@ export default {
             setting.timeout = setTimeout(async () => {
                 setting.disabled = true;
 
-                let valueToSave = setting.value;
-
-                if (overrideValue) {
-                    if (setting.type === 'url') overrideValue = window.location.origin + overrideValue;
-
-                    valueToSave = overrideValue;
-                }
+                const valueToSave = overrideValue || setting.value;
 
                 try {
                     const response = await axios.put('/settings/' + key, {
@@ -194,7 +188,7 @@ export default {
 
                 // For some reason it doesn't auto-refresh
                 this.$forceUpdate();
-            }, 500);
+            }, 250);
         }
     }
 }

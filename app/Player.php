@@ -223,13 +223,18 @@ class Player extends Model
 
             $previous = $settings[$key] ?? null;
 
+            $presets = $info['presets'] ?? [];
+
+            $wasPreset = in_array($previous, $presets);
+
             if ($value !== '') {
                 if (!filter_var($value, FILTER_VALIDATE_URL)) {
                     throw new Exception('Input is not a valid URL.');
                 }
+                $isPreset = in_array($value, $presets);
 
-                if (!preg_match('/^https:\/\/[^\s?]+?\.(png|jpe?g|webp)(\?[^\s]*)?$/mi', $value)) {
-                    //throw new Exception('URL is not a valid image.');
+                if (!preg_match('/^https:\/\/[^\s?]+?\.(png|jpe?g|webp)(\?[^\s]*)?$/mi', $value) && !$isPreset) {
+                    throw new Exception('URL is not a valid image.');
                 }
 
                 $url = $value;
@@ -244,25 +249,27 @@ class Player extends Model
                     return;
                 }
 
-                try {
-                    $data = file_get_contents($url);
+                if (!$isPreset) {
+                    try {
+                        $data = file_get_contents($url);
 
-                    if (!$data) {
-                        throw new Exception('Failed to download image.');
+                        if (!$data) {
+                            throw new Exception('Failed to download image.');
+                        }
+                    } catch (Exception $ex) {
+                        throw new Exception('Failed to download image: ' . $ex->getMessage());
                     }
-                } catch (Exception $ex) {
-                    throw new Exception('Failed to download image: ' . $ex->getMessage());
-                }
 
-                $dir = public_path('/_uploads/');
-                if (!file_exists($dir)) {
-                    mkdir($dir, 0777, true);
-                }
+                    $dir = public_path('/_uploads/');
+                    if (!file_exists($dir)) {
+                        mkdir($dir, 0777, true);
+                    }
 
-                file_put_contents(public_path($value), $data);
+                    file_put_contents(public_path($value), $data);
+                }
             }
 
-            if ($previous && preg_match('/^\/_uploads\/[a-f0-9]+\.(png|jpe?g|webp)$/mi', $previous)) {
+            if ($previous && !$wasPreset && preg_match('/^\/_uploads\/[a-f0-9]+\.(png|jpe?g|webp)$/mi', $previous)) {
                 $file = public_path($previous);
 
                 if (file_exists($file)) {
