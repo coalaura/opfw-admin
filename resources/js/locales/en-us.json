@@ -209,6 +209,7 @@
         "processing": "Processing video...",
         "processing_description": "This step may take a while depending on the players connection speed and processing power.",
         "created_at": "Created at",
+        "playtime": "Playtime",
         "ban_status": "Ban Status",
         "screenshots": "Attached Screenshots",
         "anti_cheat_title": "Anti-Cheat",

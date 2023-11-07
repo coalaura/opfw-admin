@@ -35,6 +35,7 @@
                     <table class="w-full whitespace-no-wrap">
                         <tr class="font-semibold text-left mobile:hidden">
                             <th class="p-3 pl-8 max-w-56">{{ t('screenshot.player') }}</th>
+                            <th class="p-3 w-28">{{ t('screenshot.playtime') }}</th>
                             <th class="p-3 w-40">{{ t('screenshot.screenshot') }}</th>
                             <th class="p-3">{{ t('screenshot.note') }}</th>
                             <th class="p-3 w-32">{{ t('screenshot.ban_status') }}</th>
@@ -47,7 +48,7 @@
                                         {{ screenshot.player_name }}
                                     </inertia-link>
                                 </td>
-                                <td class="p-3 mobile:block italic text-gray-600 dark:text-gray-400 text-sm" colspan="3">
+                                <td class="p-3 mobile:block italic text-gray-600 dark:text-gray-400 text-sm" colspan="4">
                                     Banned indefinitely for <span class="font-semibold">{{ screenshot.reason }}</span>
                                 </td>
                                 <td class="p-3 pr-8 mobile:block italic text-gray-600 dark:text-gray-400 w-60">
@@ -59,6 +60,9 @@
                                     <inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + screenshot.license_identifier">
                                         {{ screenshot.player_name }}
                                     </inertia-link>
+                                </td>
+                                <td class="p-3 mobile:block w-28">
+                                    {{ screenshot.playtime | humanizeSeconds }}
                                 </td>
                                 <td class="p-3 mobile:block w-40">
                                     <a :href="screenshot.url" target="_blank" class="text-indigo-600 dark:text-indigo-400">{{ t('screenshot.view', screenshot.url.split(".").pop()) }}</a>
@@ -238,6 +242,9 @@ export default {
             } catch (e) { }
 
             this.isLoading = false;
+        },
+        formatSecondDiff(sec) {
+            return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
         },
         showMetadata(metadata, screenshotUrl) {
             this.showingMetadata = JSON.parse(JSON.stringify(metadata));

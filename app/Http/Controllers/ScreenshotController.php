@@ -54,7 +54,7 @@ class ScreenshotController extends Controller
 
         $page = Paginator::resolveCurrentPage('page');
 
-        $query = "SELECT id, player_name, users.license_identifier, users.player_aliases, url, details, metadata, timestamp FROM (" .
+        $query = "SELECT id, player_name, users.license_identifier, users.player_aliases, url, details, metadata, timestamp, users.playtime FROM (" .
             "SELECT CONCAT('s_', id) as id, license_identifier, screenshot_url as url, type as details, metadata, timestamp FROM anti_cheat_events WHERE screenshot_url IS NOT NULL AND type != 'modified_fov'" .
             " UNION " .
             "SELECT CONCAT('b_', id) as id, identifier, ban_hash, reason, null as metadata, MAX(timestamp) FROM user_bans WHERE SUBSTRING_INDEX(identifier, ':', 1) = 'license' AND SUBSTRING_INDEX(reason, '-', 1) = 'MODDING' AND smurf_account IS NULL GROUP BY identifier" .
