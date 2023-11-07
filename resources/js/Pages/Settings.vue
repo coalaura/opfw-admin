@@ -61,7 +61,7 @@
                     <td class="p-3 relative" v-else>
                         <input v-model="setting.value" :type="getSettingsType(setting.type)" :disabled="setting.disabled" class="p-1 h-base min-w-base block border-2 border-gray-500 bg-gray-200 dark:bg-gray-800" @change="saveSetting(key, setting)" @focus="setSettingActive(setting, true)" @blur="setSettingActive(setting, false)" />
 
-                        <div class="absolute right-0 top-18 left-0 border-gray-500 bg-gray-200 dark:bg-gray-800 mx-3 border-2 shadow z-10" v-if="!setting.value && setting.focus && setting.presets">
+                        <div class="absolute right-0 top-18 left-0 border-gray-500 bg-gray-200 dark:bg-gray-800 mx-3 border-2 shadow z-10" v-if="setting.focus && setting.presets">
                             <div class="px-2 py-1 cursor-pointer hover:bg-gray-300 dark:hover:bg-gray-700" v-for="(preset, name) in setting.presets" :key="name" @click="saveSetting(key, setting, preset)">{{ name }}</div>
                         </div>
                     </td>
@@ -151,44 +151,40 @@ export default {
                 }, 250);
             }
         },
-        saveSetting(key, setting, overrideValue = null) {
+        async saveSetting(key, setting, overrideValue = null) {
             if (setting.disabled) return;
 
-            clearTimeout(setting.timeout);
+            setting.disabled = true;
 
-            setting.timeout = setTimeout(async () => {
-                setting.disabled = true;
+            if (overrideValue) setting.value = overrideValue;
 
-                const valueToSave = overrideValue || setting.value;
+            try {
+                const response = await axios.put('/settings/' + key, {
+                    value: setting.value
+                });
 
-                try {
-                    const response = await axios.put('/settings/' + key, {
-                        value: valueToSave
-                    });
-
-                    if (!response.data.status) {
-                        alert(response.data.message || 'An error occurred while saving the setting');
-                    }
-
-                    if ('data' in response.data) {
-                        setting.value = response.data.data;
-                        this.$page.auth.settings[key].value = response.data.data;
-
-                        this.$bus.$emit('settingsUpdated');
-                    }
-
-                    if (key === 'locale') {
-                        this.refreshLocales(setting.value);
-                    }
-                } catch (e) {
-                    alert(e.message || 'An error occurred while saving the setting (Status: ' + e.response.status + ')');
+                if (!response.data.status) {
+                    alert(response.data.message || 'An error occurred while saving the setting');
                 }
 
-                setting.disabled = false;
+                if ('data' in response.data) {
+                    setting.value = response.data.data;
+                    this.$page.auth.settings[key].value = response.data.data;
 
-                // For some reason it doesn't auto-refresh
-                this.$forceUpdate();
-            }, 250);
+                    this.$bus.$emit('settingsUpdated');
+                }
+
+                if (key === 'locale') {
+                    this.refreshLocales(setting.value);
+                }
+            } catch (e) {
+                alert(e.message || 'An error occurred while saving the setting (Status: ' + e.response.status + ')');
+            }
+
+            setting.disabled = false;
+
+            // For some reason it doesn't auto-refresh
+            this.$forceUpdate();
         }
     }
 }
