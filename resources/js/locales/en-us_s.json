@@ -71,7 +71,12 @@
         "results": "Search done took {0} milliseconds.",
         "entries": "Showin' {0} total entries on {1} page(s).",
         "loading": "Loadin'...",
-        "any": "Any"
+        "any": "Any",
+        "restricted_to_staff": "Restricted to folks on staff only, y'all.",
+        "restricted_to_senior_staff": "Restricted to them senior-staff folks only, now.",
+        "restricted_to_super": "Restricted just for them super-admins, bless their hearts.",
+        "restricted_to_root": "Restricted to the root users, y'all.",
+        "not_restricted": "Ain't no restrictions, honey."
     },
     "steam": {
         "title": "Steam Looker Upper",
@@ -220,7 +225,8 @@
         "label": "Snaps",
         "documentation": "Show more info 'bout why this snap/capture was made.",
         "metadata": "Metadater",
-        "logs": "Git yer eyes on them there logs, y'all"
+        "logs": "Git yer eyes on them there logs, y'all",
+        "playtime": "Playtime, y'all"
     },
     "changelog": {
         "title": "Latest Happ'nins",
@@ -892,7 +898,8 @@
             "do_strike": "Stick as strike",
             "do_warn": "Stick as wrang",
             "do_note": "Stick as note",
-            "do_hidden_note": "Stick as hush-hush note"
+            "do_hidden_note": "Stick as hush-hush note",
+            "remember": "<b>Y'all remember now!</b> Make sure to choose <u>Strike</u> or <u>Warning</u> when handin' them out. We only use notes for, well, notes."
         },
         "job": {
             "job": "Work",

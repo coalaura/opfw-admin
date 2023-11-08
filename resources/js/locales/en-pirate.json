@@ -71,7 +71,12 @@
         "entries": "Showin' {0} total entries on {1} piece(s) o' the treasure map.",
         "loading": "Loadin'...",
         "staff_title": "Me Hearties have access to all matey commands.",
-        "any": "Anythin'"
+        "any": "Anythin'",
+        "restricted_to_staff": "Restricted to scurvy dogs on me crew only.",
+        "restricted_to_senior_staff": "Restricted to me senior scurvy dogs only.",
+        "restricted_to_super": "Restricted to me super-captains only.",
+        "restricted_to_root": "Restricted to me ship's captains only.",
+        "not_restricted": "Not restricted, ya scallywags."
     },
     "steam": {
         "title": "Steam Buccaneer",
@@ -220,7 +225,8 @@
         "label": "Portraits",
         "documentation": "Reveal more details 'bout why this portrait/capture be created.",
         "metadata": "Bootytreasure",
-        "logs": "Scrolls"
+        "logs": "Scrolls",
+        "playtime": "Adventure Time"
     },
     "changelog": {
         "title": "Latest Sea Changes",
@@ -892,7 +898,8 @@
             "do_strike": "Mark as Strike",
             "do_warn": "Mark as Warning",
             "do_note": "Make a Note",
-            "do_hidden_note": "Make a Secret Note"
+            "do_hidden_note": "Make a Secret Note",
+            "remember": "<b>Yo Ho Ho!</b> Make sure to select <u>Strike</u> or <u>Warning</u> when givin' 'em out. Notes should only be used for... well... notes, me hearties."
         },
         "job": {
             "job": "Pirate Vocation",

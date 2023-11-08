@@ -917,6 +917,7 @@
         },
         "warning": {
             "give": "Add warning/note",
+            "remember": "<b>Remember!</b> Make sure to select <u>Strike</u> or <u>Warning</u> when handing them out. Notes should only be used for... well... notes",
             "placeholder": "{0} did an oopsie.",
             "do_strike": "Add as strike",
             "do_warn": "Add as warning",

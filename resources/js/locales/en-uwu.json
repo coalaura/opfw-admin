@@ -71,7 +71,12 @@
         "results": "Seawch took {0} miwwiseconds nyaa~",
         "entries": "Showing {0} totaw entwies on {1} page(s) uwu",
         "loading": "Woadwing... kyaa~",
-        "any": "Anywu"
+        "any": "Anywu",
+        "restricted_to_staff": "Westricted to staff membews onwy.",
+        "restricted_to_senior_staff": "Westricted to seniow-staff membews onwy.",
+        "restricted_to_super": "Westricted to supew-admins onwy.",
+        "restricted_to_root": "Westricted to woot usews onwy.",
+        "not_restricted": "Nyot westwicted."
     },
     "steam": {
         "title": "Steam Wookup uwu",
@@ -220,7 +225,8 @@
         "label": "Scweenshots",
         "documentation": "Show mowe infowmation about why dis scweenshot/captuwe was cweated.",
         "metadata": "Mewtadata",
-        "logs": "Wogs"
+        "logs": "Wogs",
+        "playtime": "Pwaytime"
     },
     "changelog": {
         "title": "Wecent UwUdates",
@@ -892,7 +898,8 @@
             "do_strike": "Add as stwike",
             "do_warn": "Add as oopsie",
             "do_note": "Add as notice",
-            "do_hidden_note": "Add as hidden notice"
+            "do_hidden_note": "Add as hidden notice",
+            "remember": "<b>Wemembew!</b> Make suwe to sewect <u>Stwike</u> ow <u>Wawning</u> when handing them out. Nyotes shouwd onwy be used fow... weww... nyotes"
         },
         "job": {
             "job": "Jwob",

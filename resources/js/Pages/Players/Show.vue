@@ -1162,11 +1162,12 @@
             </template>
 
             <template #footer>
-                <h3 class="mb-2">
+                <h3>
                     {{ t('players.warning.give') }}
                 </h3>
                 <form @submit.prevent="submitWarning">
-                    <label for="message"></label>
+                    <label for="message" class="mb-3 italic text-gray-800 dark:text-gray-200 block text-sm" v-html="t('players.warning.remember')"></label>
+
                     <textarea class="w-full p-5 mb-5 bg-gray-200 rounded shadow dark:bg-gray-600" id="message" name="message" rows="4" :placeholder="t('players.warning.placeholder', player.playerName)" v-model="form.warning.message" required>
                     </textarea>
 

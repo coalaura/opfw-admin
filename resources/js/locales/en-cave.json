@@ -71,7 +71,12 @@
         "results": "Ug-Ug took {0} milliseconds.",
         "entries": "Showing {0} total entries on {1} page(s).",
         "loading": "Ug-Ug...",
-        "any": "Ugg"
+        "any": "Ugg",
+        "restricted_to_staff": "Restricted to grug members only.",
+        "restricted_to_senior_staff": "Restricted to big brain grug members only.",
+        "restricted_to_super": "Restricted to alpha grug-admins only.",
+        "restricted_to_root": "Restricted to grug leaders only.",
+        "not_restricted": "Not restricted, me gusta."
     },
     "steam": {
         "title": "Steam Uggabugga",
@@ -220,7 +225,8 @@
         "label": "Stick drawingz",
         "documentation": "Ug showz more information about why this stick drawingz was drawn.",
         "metadata": "Ugga",
-        "logs": "Rock Carvings"
+        "logs": "Rock Carvings",
+        "playtime": "Grugtime"
     },
     "changelog": {
         "title": "Big Uggz",
@@ -892,7 +898,8 @@
             "do_strike": "Give a strike",
             "do_warn": "Give a warnin'",
             "do_note": "Make a note",
-            "do_hidden_note": "Sneaky note"
+            "do_hidden_note": "Sneaky note",
+            "remember": "<b>Grug remember!</b> Make sure to select <u>Club</u> or <u>Eat</u> when handing them out. Grug should only write grug-thoughts in notes."
         },
         "job": {
             "job": "What people do",

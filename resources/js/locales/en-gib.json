@@ -71,7 +71,12 @@
         "results": "Searcill tillook gillook {0} millillisillsecondsillgib.",
         "entries": "Shillowinggib {0} tigilltal entillrillis ongib {1} pigillag(gib).",
         "loading": "Lillollillagadinggib...",
-        "any": "Kumadrip"
+        "any": "Kumadrip",
+        "restricted_to_staff": "Flibberdeedoo",
+        "restricted_to_senior_staff": "Zigglywazz",
+        "restricted_to_super": "Bippity-flap uppity-boop",
+        "restricted_to_root": "Splickly-wap plopply-boop snip",
+        "not_restricted": "Quibitty-doo doopity-loo"
     },
     "steam": {
         "title": "Stillillag Loogopgib",
@@ -220,7 +225,8 @@
         "label": "Zigzags",
         "documentation": "Flibber-tigibber blibber-wibble about why this zigzag-snuzzle was schlambadoodled.",
         "metadata": "Fludorash",
-        "logs": "Blogs"
+        "logs": "Blogs",
+        "playtime": "Voofly-gapp poofly-bipp floop"
     },
     "changelog": {
         "title": "Sdabes neuweuk",
@@ -901,7 +907,8 @@
             "do_strike": "Glik as blartop",
             "do_warn": "Juible as fratzop",
             "do_note": "Drizzor as plundop",
-            "do_hidden_note": "Dwopp as skiznark plundop"
+            "do_hidden_note": "Dwopp as skiznark plundop",
+            "remember": "<b>Quackin!</b> Snippity-wipp wopply dribble-dy do"
         },
         "job": {
             "job": "Flipük",

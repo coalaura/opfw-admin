@@ -71,7 +71,12 @@
         "results": "Search finished in {0} milliseconds.",
         "entries": "{0} total entries found, shown on {1} page(s).",
         "loading": "Being loaded...",
-        "any": "Fookin' Any"
+        "any": "Fookin' Any",
+        "restricted_to_staff": "Fuck off, this is only for wankers who work here.",
+        "restricted_to_senior_staff": "Piss off, this is only for bloody important twats who work here.",
+        "restricted_to_super": "Bugger off, this is only for sodding super-admin bastards.",
+        "restricted_to_root": "Sod off, this is only for proper wankers who are root users.",
+        "not_restricted": "No restrictions, you lucky sods."
     },
     "steam": {
         "title": "Steam Exploration",
@@ -220,7 +225,8 @@
         "label": "Bloody Screenshots",
         "documentation": "Show more bloody information about why this sodding screenshot was taken.",
         "metadata": "Bloody Metadata",
-        "logs": "Bloody Logs"
+        "logs": "Bloody Logs",
+        "playtime": "Arse about time"
     },
     "changelog": {
         "title": "Recent Bollocks",
@@ -892,7 +898,8 @@
             "do_strike": "Give a Good Smack",
             "do_warn": "Condemn to Misery",
             "do_note": "Jot Down Silly Mistake",
-            "do_hidden_note": "Record Stealthy Blunder"
+            "do_hidden_note": "Record Stealthy Blunder",
+            "remember": "<b>Bloody remember, you wankers!</b> Make sure to pick <u>Strike</u> or <u>Warning</u> when dishing them out. Notes are only for... well... twatting notes."
         },
         "job": {
             "job": "Slave Occupation",

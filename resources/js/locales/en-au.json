@@ -71,7 +71,12 @@
         "results": "Search took {0} bloody milliseconds.",
         "entries": "Showing {0} total entries on {1} flamin' page(s).",
         "loading": "Fair dinkum mate, hold your horses...",
-        "any": "Mate"
+        "any": "Mate",
+        "restricted_to_staff": "Only for bloody staff members.",
+        "restricted_to_senior_staff": "Only for bloody senior-staff members.",
+        "restricted_to_super": "Only for bloody super-admins.",
+        "restricted_to_root": "Only for bloody root users.",
+        "not_restricted": "No bloody restrictions."
     },
     "steam": {
         "title": "Bloody Steam Lookup",
@@ -220,7 +225,8 @@
         "label": "Snaps",
         "documentation": "Chuck more info about why this photo was taken, mate.",
         "metadata": "Bloody Info",
-        "logs": "Timber Records"
+        "logs": "Timber Records",
+        "playtime": "Bloody playtime"
     },
     "changelog": {
         "title": "Latest Bits and Bobs",
@@ -892,7 +898,8 @@
             "do_strike": "Give 'Em a Strike, Mate",
             "do_warn": "Give 'Em a Warning, Ya Know",
             "do_note": "Make a Note, Mate",
-            "do_hidden_note": "Write a Hidden Note, Ya Know"
+            "do_hidden_note": "Write a Hidden Note, Ya Know",
+            "remember": "<b>Oi, remember!</b> Don't forget to choose <u>Strike</u> or <u>Warning</u> when you're dishing them out. Notes are only for... well... taking bloody notes."
         },
         "job": {
             "job": "What's the Payscale for This Gig?",

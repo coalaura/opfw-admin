@@ -71,7 +71,12 @@
         "results": "🔍🎉 {0} ⏳",
         "entries": "👀🔢 {0} ➡️ {1} 📃📚",
         "loading": "⏳⏳⏳⏳⏳...",
-        "any": "🔀"
+        "any": "🔀",
+        "restricted_to_staff": "❌ Restricted to 💼 members only.",
+        "restricted_to_senior_staff": "❌ Restricted to 👴-💼 members only.",
+        "restricted_to_super": "❌ Restricted to 🦸-👾 only.",
+        "restricted_to_root": "❌ Restricted to 🌱👤 only.",
+        "not_restricted": "📛 Not restricted."
     },
     "steam": {
         "title": "🚂🔎",
@@ -220,7 +225,8 @@
         "label": "📸",
         "documentation": "Show more ℹ️ about why this 📸/📸 was created.",
         "metadata": "📦",
-        "logs": "📜s"
+        "logs": "📜s",
+        "playtime": "⌛ Playtime"
     },
     "changelog": {
         "title": "🆕🔄",
@@ -892,7 +898,8 @@
             "do_strike": "⚡",
             "do_warn": "⚠️",
             "do_note": "🗒️",
-            "do_hidden_note": "🗒️🙈"
+            "do_hidden_note": "🗒️🙈",
+            "remember": "<b>🔔 Remember!</b> Make sure to select <u>⚡</u> or <u>❗</u> when handing them out. 📝 should only be used for... well... 📝"
         },
         "job": {
             "job": "💼",
