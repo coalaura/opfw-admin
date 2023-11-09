@@ -1025,14 +1025,12 @@ export default {
                     });
 
                     for (const id in this.markers) {
-                        if (!this.markers.hasOwnProperty(id) || this.container.isActive(id)) {
+                        if (!this.markers.hasOwnProperty(id) || this.container.hasCharacterLoaded(id)) {
                             continue;
                         }
 
                         this.map.removeLayer(this.markers[id]);
                         delete this.markers[id];
-
-                        this.container.remove(id);
                     }
 
                     this.invisiblePeople = this.container.invisible;

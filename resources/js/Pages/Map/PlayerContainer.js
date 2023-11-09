@@ -60,6 +60,14 @@ class PlayerContainer {
             this.updatePlayer(rawData[x], selectedInstance);
         }
 
+        for (const id in this.players) {
+            const exists = rawData.find(player => player.source === id);
+
+            if (!exists) {
+                this.remove(id);
+            }
+        }
+
         this.instances = Object.entries(this.instances).map(entry => {
             return {
                 id: parseInt(entry[0]),
@@ -175,6 +183,10 @@ class PlayerContainer {
 
     isActive(id) {
         return !!this.get(id);
+    }
+
+    hasCharacterLoaded(id) {
+        return !!(this.get(id)?.character);
     }
 
     get(id) {
