@@ -61,7 +61,7 @@ class PlayerContainer {
         }
 
         for (const id in this.players) {
-            const exists = rawData.find(player => player.source === id);
+            const exists = rawData.find(player => player.licenseIdentifier === id);
 
             if (!exists) {
                 this.remove(id);
@@ -183,6 +183,10 @@ class PlayerContainer {
 
     isActive(id) {
         return !!this.get(id);
+    }
+
+    isActiveWithCharacter(id) {
+        return !!(this.get(id)?.character);
     }
 
     get(id) {
