@@ -1025,7 +1025,7 @@ export default {
                     });
 
                     for (const id in this.markers) {
-                        if (!this.markers.hasOwnProperty(id) || this.container.isActive(id)) {
+                        if (!this.markers.hasOwnProperty(id) || this.container.shouldDrawPlayerMarker(id, this.selectedInstance)) {
                             continue;
                         }
 

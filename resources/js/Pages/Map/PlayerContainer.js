@@ -185,8 +185,14 @@ class PlayerContainer {
         return !!this.get(id);
     }
 
-    isActiveWithCharacter(id) {
-        return !!(this.get(id)?.character);
+    shouldDrawPlayerMarker(id, instance) {
+        const player = this.get(id);
+
+        if (!player || !player.character) return false;
+
+        if (player.instance !== parseInt(instance)) return false;
+
+        return true;
     }
 
     get(id) {
