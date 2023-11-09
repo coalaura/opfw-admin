@@ -185,10 +185,6 @@ class PlayerContainer {
         return !!this.get(id);
     }
 
-    hasCharacterLoaded(id) {
-        return !!(this.get(id)?.character);
-    }
-
     get(id) {
         return id in this.players ? this.players[id] : null;
     }

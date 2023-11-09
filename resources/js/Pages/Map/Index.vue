@@ -1025,7 +1025,7 @@ export default {
                     });
 
                     for (const id in this.markers) {
-                        if (!this.markers.hasOwnProperty(id) || this.container.hasCharacterLoaded(id)) {
+                        if (!this.markers.hasOwnProperty(id) || this.container.isActive(id)) {
                             continue;
                         }
 
