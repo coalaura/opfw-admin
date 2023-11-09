@@ -465,8 +465,11 @@ export default {
         }
     },
     async mounted() {
-        this.updateServerStatus();
-        this.updateGameTime();
+        // Delay loading of extra data since it blocks other resources from loading
+        setTimeout(() => {
+            this.updateServerStatus();
+            this.updateGameTime();
+        }, 500);
 
         setInterval(() => {
             this.timezones = this.timezones.map(timezone => {

@@ -130,9 +130,10 @@ export default {
             setTimeout(update, 3000);
         }
 
-        this.$nextTick(function () {
+        // Delay loading of extra data since it blocks other resources from loading
+        setTimeout(() => {
             update();
-        });
+        }, 500);
     }
 }
 </script>

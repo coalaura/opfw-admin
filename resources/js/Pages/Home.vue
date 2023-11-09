@@ -295,13 +295,14 @@ export default {
     mounted() {
         clearInterval(this.refreshInterval);
 
-        this.$nextTick(() => {
+        // Delay loading of extra data since it blocks other resources from loading
+        setTimeout(() => {
             this.refresh();
 
             this.refreshInterval = setInterval(() => {
                 this.refresh();
             }, 30 * 1000);
-        });
+        }, 500);
     },
     beforeDestroy() {
         clearInterval(this.refreshInterval);
