@@ -36,6 +36,9 @@
 
     <script defer type="application/javascript" src="https://kit.fontawesome.com/0074643143.js" crossorigin="anonymous"></script>
 
+    <!-- Screen Reader styles so we don't have weird flickering -->
+    <style>.sr-only{border:0;clip:rect(0,0,0,0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}</style>
+
     <!-- Extra header -->
     {!! extraHeader() !!}
 </head>
