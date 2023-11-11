@@ -425,7 +425,7 @@ export default {
         async updateServerStatus() {
             this.serverStatusLoading = true;
 
-            const info = await this.requestData("/info");
+            const info = await this.requestGenerated("/info.json");
 
             if (info && info.uptime) {
                 this.serverStatus = this.formatUptime(info.uptime);
@@ -452,7 +452,7 @@ export default {
             }, 20000);
         },
         async updateGameTime() {
-            const world = await this.requestData("/world");
+            const world = await this.requestGenerated("/world.json");
 
             if (world && 'baseTime' in world) {
                 this.gameTime = world.baseTime;

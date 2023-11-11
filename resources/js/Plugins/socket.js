@@ -68,6 +68,27 @@ const Socket = {
                 return false;
             }
         };
+
+        Vue.prototype.requestGenerated = async function (route) {
+            if (!route.startsWith('/')) route = '/' + route;
+
+            const isDev = window.location.hostname === 'localhost',
+                host = isDev ? 'http://localhost:9999' : 'https://' + window.location.host,
+                server = this.$page.auth.server;
+
+            const url = host + '/generated/' + server + route;
+
+            try {
+                const response = await axios.get(url),
+                    data = response.data;
+
+                if (!data || typeof data !== 'object') return false;
+
+                return data;
+            } catch (e) {
+                return false;
+            }
+        };
     },
 }
 
