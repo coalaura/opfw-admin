@@ -162,6 +162,18 @@ server {
         proxy_set_header Host $host;
     }
 
+    location ~ ^/generated/.+\.json$ {
+        root /path/to/admin-panel-socket;
+
+        add_header 'Pragma' 'no-cache';
+
+        try_files $uri =404;
+
+        if (!-d $request_filename){
+            rewrite ^/(.*)/$ /$1 permanent;
+        }
+    }
+
     location ~ ^/_data {
         expires 30d;
         add_header Pragma "public";
