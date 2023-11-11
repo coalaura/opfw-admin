@@ -937,6 +937,8 @@ export default {
                     }
                 });
 
+                const pause = () => connection.emit("pause", document.visibilityState === "hidden");
+
                 let lastTrackedId = "";
 
                 connection.on("message", async (buffer) => {
@@ -958,7 +960,18 @@ export default {
                     this.firstFrame = false;
 
                     this.data = this.t('map.closed_expected', this.activeServer);
+
+                    window.removeEventListener("blur", pause);
+                    window.removeEventListener("focus", unpause);
                 });
+
+                connection.on("connect", () => {
+                    if (document.visibilityState === "visible") return;
+
+                    pause();
+                });
+
+                document.addEventListener("visibilitychange", pause);
             } catch (e) {
                 this.data = this.t('map.closed_unexpected', this.activeServer);
 
