@@ -423,7 +423,8 @@
         "historic_parse": "Me decipher Past Evolutions...",
         "historic_render": "Me display the Data...",
         "historic_title": "Show how one caveman move during specific time",
-        "timestamp_title": "Show all cavemen who were in tribe at specific time"
+        "timestamp_title": "Show all cavemen who were in tribe at specific time",
+        "fpm_title": "Ugga ugga per sun go down"
     },
     "nav": {
         "dark": "Uk-uk",

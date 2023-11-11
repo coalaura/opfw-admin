@@ -423,7 +423,8 @@
         "historic_parse": "Tryin' to make sense of that good ol' data...",
         "historic_render": "Showin' ya the goods...",
         "historic_title": "Check out one bloke's fancy footwork during a specific time slot",
-        "timestamp_title": "Reveal all the legends who were online at a particular tick of the clock"
+        "timestamp_title": "Reveal all the legends who were online at a particular tick of the clock",
+        "fpm_title": "Bloody ripper frames per minute"
     },
     "nav": {
         "dark": "Darker than a dingo's arse",

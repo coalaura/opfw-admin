@@ -423,7 +423,8 @@
         "historic_parse": "Decipherin' Historic Data...",
         "historic_render": "Showcasing Data...",
         "historic_title": "Show a scurvy dog's wanderings in a certain time period",
-        "timestamp_title": "Show all scallywags who were sailin' the seas at a certain time"
+        "timestamp_title": "Show all scallywags who were sailin' the seas at a certain time",
+        "fpm_title": "Frames per pirate minute"
     },
     "nav": {
         "dark": "Gloom",

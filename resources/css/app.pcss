@@ -32,6 +32,22 @@ body {
     font-size: 15px;
 }
 
+.leaflet-container {
+    font-family: 'Montserrat', sans-serif !important;
+}
+
+.leaflet-control-layers-list label > span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 2px;
+}
+
+.leaflet-control-layers-selector {
+    margin-top: 0 !important;
+    top: 0 !important;
+}
+
 .font-mono {
     font-family: 'Ubuntu Mono', monospace;
     letter-spacing: 0.15px;
@@ -40,6 +56,19 @@ body {
 .text-xs {
     font-size: .85rem;
     line-height: 1rem;
+}
+
+.map-lowerleft {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 0 5px;
+    color: #333;
+    line-height: 1.4;
+    z-index: 800;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    font-size: 0.75rem;
+    min-width: 55px;
 }
 
 /* Hide number input arrows */

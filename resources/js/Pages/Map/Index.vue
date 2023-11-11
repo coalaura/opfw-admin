@@ -163,6 +163,8 @@
                     <div class="relative w-full">
                         <div id="map" class="w-full relative h-max"></div>
 
+                        <div class="map-lowerleft" v-if="currentFPM" :title="t('map.fpm_title')">{{ currentFPM }} fpm</div>
+
                         <input v-if="!isTimestampShowing && !isHistoricShowing" type="number" class="absolute z-1k leaflet-tl ml-12 w-16 block px-2 font-base text-black font-semibold" @input="updateTrackingInfo" :placeholder="t('map.track_placeholder')" min="0" max="65536" v-model="trackServerId" :class="trackingValid ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-200'" />
 
                         <button class="absolute z-1k leaflet-tl ml-29 text-white bg-rose-700 hover:bg-rose-800 px-2 font-base" v-if="trackServerId" @click="track('')">
@@ -401,10 +403,28 @@ export default {
 
             selectedInstance: false,
 
-            viewingUnloadedPlayerList: false
+            viewingUnloadedPlayerList: false,
+
+            receivedFrames: [],
+            firstFrame: false,
+            lastFrame: 0
         };
     },
+    computed: {
+        currentFPM() {
+            if (!this.firstFrame || this.firstFrame > this.lastFrame) return false;
+
+            return this.receivedFrames.filter(frame => frame > this.lastFrame).length;
+        }
+    },
     methods: {
+        receivedFrame() {
+            this.firstFrame = this.firstFrame || Date.now();
+
+            this.receivedFrames.push(Date.now());
+
+            this.receivedFrames = this.receivedFrames.filter(frame => frame > this.lastFrame);
+        },
         checkHistoricLicense() {
             const license = this.form.historic_license;
 
@@ -920,6 +940,8 @@ export default {
                 let lastTrackedId = "";
 
                 connection.on("message", async (buffer) => {
+                    this.receivedFrame();
+
                     try {
                         const data = await DataCompressor.GUnZIP(buffer);
 
@@ -932,6 +954,9 @@ export default {
                 });
 
                 connection.on("disconnect", async () => {
+                    this.receivedFrames = [];
+                    this.firstFrame = false;
+
                     this.data = this.t('map.closed_expected', this.activeServer);
                 });
             } catch (e) {
@@ -1242,6 +1267,10 @@ export default {
 
             window.location.hash = "";
         }
+
+        setInterval(() => {
+            this.lastFrame = Date.now() - (60 * 1000);
+        }, 250);
     }
 };
 </script>

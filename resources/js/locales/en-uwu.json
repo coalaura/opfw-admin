@@ -423,7 +423,8 @@
         "historic_parse": "Parsing historic *blushes* data...",
         "historic_render": "Rendering data *giggles*...",
         "historic_title": "Shwow a siwingle pwayew's movemwents in a cewtain timwe pewiowd",
-        "timestamp_title": "Shwow aww pwayews who wewe onwine at a cewtain timwe"
+        "timestamp_title": "Shwow aww pwayews who wewe onwine at a cewtain timwe",
+        "fpm_title": "Fwames pew minute"
     },
     "nav": {
         "dark": "Dawk",

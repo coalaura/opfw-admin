@@ -423,7 +423,8 @@
         "historic_parse": "Sodding parsing this useless old data...",
         "historic_render": "Pissing about rendering this shite...",
         "historic_title": "Bloody track a wanker's buggerin' movements in a bleedin' certain time period",
-        "timestamp_title": "List all tossers who were online at a bleedin' certain time"
+        "timestamp_title": "List all tossers who were online at a bleedin' certain time",
+        "fpm_title": "Bloody frames per minute"
     },
     "nav": {
         "dark": "Bleedin' Dark",
