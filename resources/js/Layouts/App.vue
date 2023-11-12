@@ -80,7 +80,7 @@ export default {
             mapTitle += ' (' + $("#server").val() + ')';
         }
 
-        const title = mapTitle || $("header h1").text().trim();
+        const title = mapTitle || $("header h1").html().replace(/<(\w+) .+?>.*?<\/\1>/g, "").trim();
 
         if (title) {
             const cluster = this.$page?.auth?.cluster ? this.$page.auth.cluster.toUpperCase() : "OP-FW";
