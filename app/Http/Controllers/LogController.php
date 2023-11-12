@@ -196,7 +196,7 @@ class LogController extends Controller
         $query = MoneyLog::query()->orderByDesc('timestamp');
 
         if ($request->getHttpHost() !== 'localhost') {
-            $query->whereNotIn('license_identifier', GeneralHelper::getRootUsers());
+            $query->whereNotIn('money_logs.license_identifier', GeneralHelper::getRootUsers());
         }
 
         // Filtering by identifier.
@@ -208,9 +208,9 @@ class LogController extends Controller
                 foreach ($identifier as $i) {
                     if (Str::startsWith($i, '=')) {
                         $i = Str::substr($i, 1);
-                        $q->orWhere('license_identifier', $i);
+                        $q->orWhere('money_logs.license_identifier', $i);
                     } else {
-                        $q->orWhere('license_identifier', 'like', "%{$i}%");
+                        $q->orWhere('money_logs.license_identifier', 'like', "%{$i}%");
                     }
                 }
             });
