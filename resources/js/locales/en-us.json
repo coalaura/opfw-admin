@@ -854,6 +854,7 @@
             "pm_confirm": "Send StaffPM",
             "logs_and_screenshots": "Panel Logs & Screenshots",
             "delete_character": "Are you sure you want to delete this character?",
+            "delete_warning": "Are you sure you want to delete this strike/warning/note?",
             "unload": "Unload",
             "unload_msg": "Unload Message",
             "unload_msg_description": "This message will be displayed on the character selection screen.",

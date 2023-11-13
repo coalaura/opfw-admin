@@ -881,7 +881,8 @@
             "echo_detected": "Detected, uwu",
             "echo_no_data": "OwO Oh nuu! Failed to woad Echo data~ >w<",
             "global_info": "Gwobaw",
-            "global_title": "Pwayew is bawned on {0} op-fw sewvews."
+            "global_title": "Pwayew is bawned on {0} op-fw sewvews.",
+            "delete_warning": "Awu yuwu suwe yuwu wantwu tuwu dewete this stwike/wawniwnyote?"
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

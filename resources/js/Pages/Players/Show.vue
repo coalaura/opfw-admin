@@ -1099,14 +1099,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="flex items-center justify-end py-4 pl-4 border-l border-gray-200 dark:border-gray-400">
-                                        <span class="italic text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap blobk w-32 text-right">
+                                    <div class="flex items-center justify-end py-4 pl-4 border-l border-gray-200 dark:border-gray-400 gap-3">
+                                        <span class="italic text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap block w-36 text-right">
                                             {{ warning.createdAt | formatTime }}
                                         </span>
 
-                                        <inertia-link class="px-3 py-1 ml-3 text-sm font-semibold text-white bg-red-500 rounded hover:bg-red-600" method="DELETE" v-bind:href="'/players/' + player.licenseIdentifier + '/warnings/' + warning.id" v-if="warning.canDelete || $page.auth.player.isSeniorStaff">
+                                        <button class="block px-3 py-1 text-sm font-semibold text-white bg-red-500 rounded hover:bg-red-600" @click="deleteWarning(warning.id)" v-bind:href="'/players/' + player.licenseIdentifier + '/warnings/' + warning.id" v-if="warning.canDelete || $page.auth.player.isSeniorStaff">
                                             <i class="fas fa-trash"></i>
-                                        </inertia-link>
+                                        </button>
                                     </div>
                                 </div>
                             </header>
@@ -2433,6 +2433,14 @@ export default {
 
             // Reset.
             this.warningEditId = 0;
+        },
+        async deleteWarning(id) {
+            if (!confirm(this.t('players.show.delete_warning'))) {
+                return;
+            }
+
+            // Send request.
+            await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/warnings/' + id);
         },
         hideDeleted(e) {
             e.preventDefault();

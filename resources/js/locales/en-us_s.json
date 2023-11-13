@@ -881,7 +881,8 @@
             "echo_detected": "Detected",
             "echo_no_data": "Done gone and failed to load up that Echo data, y'all",
             "global_info": "Global, y'all",
-            "global_title": "Player is banned on {0} op-fw servers, bless their heart."
+            "global_title": "Player is banned on {0} op-fw servers, bless their heart.",
+            "delete_warning": "Ya'll sure 'bout deletin' this here strike/warnin'/note?"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",
