@@ -11,7 +11,7 @@
             <i class="fas fa-minus" v-else></i>
         </button>
 
-        <div class="overflow-y-auto max-h-statistics">
+        <div class="overflow-y-auto max-h-statistics inline-block pr-2">
             <table>
                 <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
                     <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.date') }}</th>
