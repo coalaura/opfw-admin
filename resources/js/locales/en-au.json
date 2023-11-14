@@ -295,7 +295,8 @@
         "gem": "Gemstone Sales",
         "gem_details": "Combined revenue from all Gemstone sales.",
         "pawn": "Bloke Shop Cash",
-        "pawn_details": "Total dollarydoos earned from floggin' stuff at the Bloke Shop."
+        "pawn_details": "Total dollarydoos earned from floggin' stuff at the Bloke Shop.",
+        "average": "Fair dinkum"
     },
     "map": {
         "title": "Bloody Live-Map",
