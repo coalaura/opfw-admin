@@ -18,9 +18,11 @@
                     <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.count') }}</th>
                     <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.amount') }}</th>
                     <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.difference') }}</th>
+                    <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.average') }}</th>
                 </tr>
 
                 <tr class="border-t border-gray-500" v-if="collapsed">
+                    <td class="px-2 py-0.5">...</td>
                     <td class="px-2 py-0.5">...</td>
                     <td class="px-2 py-0.5">...</td>
                     <td class="px-2 py-0.5">...</td>
@@ -32,6 +34,7 @@
                     <td class="px-2 py-0.5">{{ numberFormat(entry.count, false, false) }}x</td>
                     <td class="px-2 py-0.5">{{ numberFormat(entry.amount, false, true) }}</td>
                     <td class="px-2 py-0.5" v-html="previous(index, 'amount')"></td>
+                    <td class="px-2 py-0.5">{{ numberFormat(entry.amount / entry.count, false, true) }}</td>
                 </tr>
             </table>
         </div>
