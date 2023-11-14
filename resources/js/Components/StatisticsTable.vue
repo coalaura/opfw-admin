@@ -2,7 +2,7 @@
     <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mt-5">
         <h2 class="text-lg">
             {{ title }}
-            <sup v-if="totalCount > 0">{{ numberFormat(totalAmount, false, true) }} - {{ numberFormat(totalCount, false, true) }}</sup>
+            <sup v-if="totalCount > 0">{{ numberFormat(totalAmount, false, true) }} - x{{ numberFormat(totalCount, false, false) }}</sup>
         </h2>
         <p class="text-sm italic mb-3">{{ details }}</p>
 
