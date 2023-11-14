@@ -73,9 +73,9 @@ export default {
     },
     methods: {
         previous(index, key) {
-            if (index === 0) return '-';
+            if (index >= this.data.length) return '-';
 
-            const before = this.data[index - 1][key],
+            const before = this.data[index + 1][key],
                 after = this.data[index][key];
 
             const diff = after - before,
