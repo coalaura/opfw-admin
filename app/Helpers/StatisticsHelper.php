@@ -6,5 +6,47 @@ use Illuminate\Support\Facades\DB;
 
 class StatisticsHelper
 {
+    // PDM Purchase & PDM Finance
+    public static function collectPDMStatistics(): array
+    {
+        return self::collectFinanceStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'paid $', -1), '.', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action IN ('Vehicle Purchased', 'Vehicle Financed') GROUP BY date ORDER BY timestamp DESC");
+    }
 
+    private static function collectFinanceStatistics(string $query): array
+    {
+        $result = [];
+
+        $data = DB::select($query);
+
+        for ($i = 0; $i <= 30; $i++) {
+            $time = strtotime("-$i days");
+            $date = date('n/d/Y', $time);
+
+            $entry = self::findEntry($data, $date);
+
+            $amount = $entry && $entry->amount ? intval($entry->amount) : 0;
+            $count = $entry && $entry->count ? intval($entry->count) : 0;
+
+            $result[] = [
+                'date'   => date('jS F Y', $time),
+                'amount' => $amount,
+                'count'  => $count,
+            ];
+        }
+
+        array_reverse($result);
+
+        return $result;
+    }
+
+    private static function findEntry(array $data, string $date)
+    {
+        foreach ($data as $entry) {
+            if ($entry->date === $date) {
+                return $entry;
+            }
+        }
+
+        return null;
+    }
 }

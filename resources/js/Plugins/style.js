@@ -1,7 +1,7 @@
 import ColorThief from 'colorthief';
 
 // Rebuild style on version change
-const Iteration = 11;
+const Iteration = 12;
 
 const colors = {
 	'white': { l: 99 },
@@ -70,7 +70,7 @@ const Style = {
 					`.border-${name}{${border}}.dark .dark\\:border-${name}{${border}}.hover\\:border-${name}:hover{${border}!important}.dark .dark\\:hover\\:border-${name}:hover{${border}!important}`,
 
 					// Absolute positioned elements should never have alpha.
-					useAlpha ? `.bg-${name}.absolute{${backgroundPlain}}.dark .dark\\:bg-${name}.absolute{${backgroundPlain}}.hover\\:bg-${name}.absolute:hover{${backgroundPlain}!important}.dark .dark\\:hover\\:bg-${name}.absolute:hover{${backgroundPlain}!important}` : ''
+					useAlpha ? `.bg-${name}.absolute,.bg-${name}.no-alpha{${backgroundPlain}}.dark .dark\\:bg-${name}.absolute,.dark .dark\\:bg-${name}.no-alpha{${backgroundPlain}}.hover\\:bg-${name}.absolute:hover,.hover\\:bg-${name}.no-alpha:hover{${backgroundPlain}!important}.dark .dark\\:hover\\:bg-${name}.absolute:hover,.dark .dark\\:hover\\:bg-${name}.no-alpha:hover{${backgroundPlain}!important}` : ''
 				].join('');
 			});
 

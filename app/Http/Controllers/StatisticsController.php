@@ -18,9 +18,8 @@ class StatisticsController extends Controller
      */
     public function render(Request $request): Response
     {
-        $license = license();
-
         return Inertia::render('Statistics/Index', [
+            'pdm' => StatisticsHelper::collectPDMStatistics(),
         ]);
     }
 

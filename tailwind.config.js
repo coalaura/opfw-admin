@@ -60,7 +60,6 @@ module.exports = {
                 'large-alert':        '1000px',
                 'vlarge-alert':       '1200px',
                 '90':                 '90px',
-                //'map':                '1160px',
                 'map':                '100%',
                 'split':              'calc(50% - 10px)',
                 'tp':                 '170px',
@@ -96,10 +95,11 @@ module.exports = {
                 '56': '14rem',
             },
             maxHeight: {
-                'max':       'calc(100% - 60px)',
-                'img':       '500px',
-                'modal-max': 'calc(100% - 10rem)',
-                'lg':        '40rem'
+                'max':        'calc(100% - 60px)',
+                'img':        '500px',
+                'modal-max':  'calc(100% - 10rem)',
+                'lg':         '40rem',
+                'statistics': '15.5rem'
             },
             listStyleType: {
                 'dash': "'–'"

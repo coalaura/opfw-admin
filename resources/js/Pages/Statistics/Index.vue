@@ -11,8 +11,7 @@
         </portal>
 
         <template>
-            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full w-map -mt-7 dark:bg-gray-700">
-            </div>
+            <StatisticsTable :data="pdm" :title="t('statistics.pdm')" :details="t('statistics.pdm_details')" />
         </template>
 
     </div>
@@ -20,10 +19,18 @@
 
 <script>
 import Layout from './../../Layouts/App';
+import StatisticsTable from '../../Components/StatisticsTable.vue';
 
 export default {
     layout: Layout,
-    props: {
+    components: {
+        StatisticsTable,
     },
+    props: {
+        pdm: {
+            type: Array,
+            required: true,
+        }
+    }
 }
 </script>

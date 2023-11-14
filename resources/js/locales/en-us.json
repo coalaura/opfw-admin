@@ -284,35 +284,14 @@
     "statistics": {
         "title": "Statistics",
         "description": "Some general statistics",
-        "bans": "Active Bans",
-        "warnings": "Warnings/Strikes",
-        "notes": "Notes",
-        "creations": "Character creations",
-        "deletions": "Character deletions",
-        "total_joins": "Total joins",
-        "max_joined": "Max joined",
-        "unique_joins": "Unique joins",
-		"max_queue": "Max queue",
-        "lucky_wheel": "Lucky Wheel Spins",
-		"casino_revenue": "Total Casino Revenue in the last 6 months:",
-        "min_money_return": "Min. Return",
-        "max_money_return": "Max. Return",
-        "avg_bet_placed": "Avg. Bet",
-        "avg_money_return": "Avg. Win",
-        "best_players": "Best 5 Players in the last 2 days",
-        "worst_players": "Worst 5 Players in the last 2 days",
-        "your_spot": "Your Ranking",
-        "return_rate": "Return Rate",
-        "titles": {
-            "ban_warn": "30-Day average of Bans, Warnings/Strikes & Notes",
-            "character": "Character creations & deletions",
-            "lucky_wheel": "Lucky Wheel Spins",
-            "blackjack": "Blackjack Bets vs. Returns",
-            "slots": "Slots Bets vs. Returns",
-            "tracks": "Tracks Bets vs. Returns",
-            "user_statistics": "User Statistics",
-            "command_statistics": "Command Usage Statistics"
-        }
+
+        "date": "Date",
+        "count": "Count",
+        "amount": "Amount",
+        "difference": "Difference",
+
+        "pdm": "PDM Sales",
+        "pdm_details": "Combined revenue from PDM upfront and finance sales."
     },
     "map": {
         "title": "Live-Map",
