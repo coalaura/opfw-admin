@@ -2,7 +2,7 @@
     <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mt-5">
         <h2 class="text-lg">
             {{ title }}
-            <sup v-if="total > 0">{{ numberFormat(total, false, true) }}</sup>
+            <sup v-if="totalCount > 0">{{ numberFormat(totalAmount, false, true) }} - {{ numberFormat(totalCount, false, true) }}</sup>
         </h2>
         <p class="text-sm italic mb-3">{{ details }}</p>
 
@@ -34,7 +34,7 @@
                     <td class="px-2 py-0.5">{{ numberFormat(entry.count, false, false) }}x</td>
                     <td class="px-2 py-0.5">{{ numberFormat(entry.amount, false, true) }}</td>
                     <td class="px-2 py-0.5" v-html="previous(index, 'amount')"></td>
-                    <td class="px-2 py-0.5">{{ numberFormat(entry.amount / entry.count, false, true) }}</td>
+                    <td class="px-2 py-0.5">{{ entry.count > 0 ? numberFormat(entry.amount / entry.count, false, true) : '-' }}</td>
                 </tr>
             </table>
         </div>
@@ -59,8 +59,11 @@ export default {
         }
     },
     computed: {
-        total() {
+        totalAmount() {
             return this.data.reduce((a, b) => a + b.amount, 0);
+        },
+        totalCount() {
+            return this.data.reduce((a, b) => a + b.count, 0);
         }
     },
     data() {
