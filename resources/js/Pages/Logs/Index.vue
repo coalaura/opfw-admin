@@ -293,7 +293,8 @@ const MoneyTransferActions = [
 const DisconnectActions = [
 	'User Disconnected',
 	'Character Unloaded',
-	'Unloaded Character'
+	'Unloaded Character',
+	'Dropped Timed Out Player'
 ];
 
 const ConnectActions = [
