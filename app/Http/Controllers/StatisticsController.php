@@ -19,7 +19,11 @@ class StatisticsController extends Controller
     public function render(Request $request): Response
     {
         return Inertia::render('Statistics/Index', [
-            'pdm' => StatisticsHelper::collectPDMStatistics(),
+            'pdm'    => StatisticsHelper::collectPDMStatistics(),
+            'edm'    => StatisticsHelper::collectEDMStatistics(),
+            'gem'    => StatisticsHelper::collectGemSaleStatistics(),
+            'pawn'   => StatisticsHelper::collectPawnshopStatistics(),
+            'casino' => StatisticsHelper::collectCasinoStatistics(),
         ]);
     }
 

@@ -290,8 +290,20 @@
         "amount": "Amount",
         "difference": "Difference",
 
+        "casino": "Casino Revenue",
+        "casino_details": "Combined revenue from all available games in the casino.",
+
         "pdm": "PDM Sales",
-        "pdm_details": "Combined revenue from PDM upfront and finance sales."
+        "pdm_details": "Combined revenue from all PDM upfront and finance sales.",
+
+        "edm": "EDM Sales",
+        "edm_details": "Combined revenue from all EDM purchases.",
+
+        "gem": "Gemstone Sales",
+        "gem_details": "Combined revenue from all Gemstone sales.",
+
+        "pawn": "Pawn Shop Sales",
+        "pawn_details": "Combined revenue from all Pawn Shop sales."
     },
     "map": {
         "title": "Live-Map",

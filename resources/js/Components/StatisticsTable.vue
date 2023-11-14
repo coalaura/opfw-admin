@@ -1,6 +1,9 @@
 <template>
-    <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative">
-        <h2 class="text-lg">{{ title }}</h2>
+    <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mt-5">
+        <h2 class="text-lg">
+            {{ title }}
+            <sup v-if="total > 0">{{ numberFormat(total, false, true) }}</sup>
+        </h2>
         <p class="text-sm italic mb-3">{{ details }}</p>
 
         <button @click="collapsed = !collapsed" class="icon-button text-white bg-red-600" :class="{'!bg-green-600': collapsed}">
@@ -50,6 +53,11 @@ export default {
         data: {
             type: Array,
             required: true,
+        }
+    },
+    computed: {
+        total() {
+            return this.data.reduce((a, b) => a + b.amount, 0);
         }
     },
     data() {
