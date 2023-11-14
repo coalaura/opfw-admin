@@ -290,6 +290,7 @@
         "amount": "Amount",
         "difference": "Difference",
         "average": "Average",
+        "trend": "Trend",
 
         "casino": "Casino Revenue",
         "casino_details": "Combined revenue from all available games in the casino.",

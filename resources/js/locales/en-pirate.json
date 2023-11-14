@@ -296,7 +296,8 @@
         "gem_details": "Plunder from all treasure sales.",
         "pawn": "Buccaneer Shop Booty",
         "pawn_details": "Plunder earned from all Buccaneer Shop transactions.",
-        "average": "Aaarrrage"
+        "average": "Aaarrrage",
+        "trend": "Jolly Roger"
     },
     "map": {
         "title": "Sailin' Map",

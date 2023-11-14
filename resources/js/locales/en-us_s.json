@@ -296,7 +296,8 @@
         "gem_details": "Grand total from all them gemstone sales.",
         "pawn": "Pawn Shop Dealin's",
         "pawn_details": "All the cash flow from sellin' stuff at the Pawn Shop.",
-        "average": "Ternin' average"
+        "average": "Ternin' average",
+        "trend": "Trendin' "
     },
     "map": {
         "title": "Active Map",
