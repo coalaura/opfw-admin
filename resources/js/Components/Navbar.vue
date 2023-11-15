@@ -15,9 +15,23 @@
         <!-- Nav -->
         <nav class="flex items-center justify-between w-full px-12 py-4 text-white">
             <!-- Left side -->
-            <p class="italic">
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-green-700 bg-success rounded dark:bg-dark-success float-right cursor-pointer" :class="{ 'shadow': banner }" :title="t('nav.world_time_desc', timezones.length)" @click="showingWorldTime = true" v-if="timezones.length > 0">
-                    <i class="fas fa-globe"></i>
+            <div class="flex items-center space-x-4">
+                <!-- Toggle Dark mode -->
+                <button class="px-4 py-1 focus:outline-none font-semibold text-white text-sm rounded border-2 border-gray-400 bg-gray-700 hover:bg-gray-600 float-right" :class="{ 'shadow': banner }" @click="toggleTheme" v-if="isDarkMode()">
+                    <i class="fas fa-moon"></i>
+                    {{ t("nav.dark") }}
+                </button>
+                <button class="px-4 py-1 focus:outline-none font-semibold text-black text-sm rounded border-2 border-gray-700 bg-gray-400 hover:bg-gray-300 float-right" :class="{ 'shadow': banner }" @click="toggleTheme" v-else>
+                    <i class="fas fa-sun"></i>
+                    {{ t("nav.light") }}
+                </button>
+
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-yellow-700 bg-warning rounded dark:bg-dark-warning float-right" :title="t('global.permission')" @click="showPermissions" :class="{ 'cursor-pointer': $page.auth.player.isSuperAdmin, 'shadow-sm': banner }">
+                    <i class="fas fa-tools"></i>
+                    <span v-if="$page.auth.player.isRoot">{{ t('global.root') }}</span>
+                    <span v-else-if="$page.auth.player.isSuperAdmin">{{ t('global.super') }}</span>
+                    <span v-else-if="$page.auth.player.isSeniorStaff">{{ t('global.senior_staff') }}</span>
+                    <span v-else>{{ t('global.staff') }}</span>
                 </span>
 
                 <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded float-right" :class="{ 'shadow': banner, 'bg-gray-500 border-gray-700': serverStatusLoading, 'bg-green-500 border-green-700': !serverStatusLoading && serverStatus, 'bg-red-500 border-red-700': !serverStatusLoading && !serverStatus }" :title="!serverStatusLoading ? (!serverStatus ? t('global.server_offline') : t('global.server_online', serverStatus)) : ''">
@@ -28,24 +42,10 @@
                     <span v-else>{{ $page.auth.server }}</span>
                 </span>
 
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-yellow-700 bg-warning rounded dark:bg-dark-warning float-right" :title="t('global.permission')" @click="showPermissions" :class="{ 'cursor-pointer': $page.auth.player.isSuperAdmin, 'shadow-sm': banner }">
-                    <i class="fas fa-tools"></i>
-                    <span v-if="$page.auth.player.isRoot">{{ t('global.root') }}</span>
-                    <span v-else-if="$page.auth.player.isSuperAdmin">{{ t('global.super') }}</span>
-                    <span v-else-if="$page.auth.player.isSeniorStaff">{{ t('global.senior_staff') }}</span>
-                    <span v-else>{{ t('global.staff') }}</span>
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-green-700 bg-success rounded dark:bg-dark-success float-right cursor-pointer" :class="{ 'shadow': banner }" :title="t('nav.world_time_desc', timezones.length)" @click="showingWorldTime = true" v-if="timezones.length > 0">
+                    <i class="fas fa-globe"></i>
                 </span>
-
-                <!-- Toggle Dark mode -->
-                <button class="px-4 py-1 focus:outline-none font-semibold text-white text-sm rounded border-2 border-gray-400 bg-gray-700 hover:bg-gray-600 float-right" :class="{ 'shadow': banner }" @click="toggleTheme" v-if="isDarkMode()">
-                    <i class="fas fa-moon"></i>
-                    {{ t("nav.dark") }}
-                </button>
-                <button class="px-4 py-1 focus:outline-none font-semibold text-black text-sm rounded border-2 border-gray-700 bg-gray-400 hover:bg-gray-300 float-right" :class="{ 'shadow': banner }" @click="toggleTheme" v-else>
-                    <i class="fas fa-sun"></i>
-                    {{ t("nav.light") }}
-                </button>
-            </p>
+            </div>
 
             <!-- Right side -->
             <div class="flex items-center space-x-4">
@@ -170,7 +170,7 @@
                 <div class="mb-3 pb-3 border-b-2 border-dashed border-gray-400" v-if="gameTime !== false">
                     <div class="flex py-4 px-6 bg-white dark:bg-gray-600 rounded-lg shadow-sm gap-10 relative">
                         <div class="text-7xl">
-                            <img src="/images/earth/san-andreas.png" class="w-20" />
+                            <img :src="gameTimeClock" class="w-20" />
                         </div>
 
                         <div class="flex items-center overflow-hidden">
@@ -290,6 +290,13 @@ export default {
             } else {
                 return `${hour - 12}:${minute}:${second} PM`;
             }
+        },
+        gameTimeClock() {
+            const baseTime = (this.gameTime + (((this.now - this.gameTimeUpdated) / 1000) * 0.2)) % 1440;
+
+            const frame = Math.ceil((((baseTime + 720) % 1440) / 1440) * 64);
+
+            return `/images/clock/clock_${frame}.png`;
         }
     },
     methods: {
