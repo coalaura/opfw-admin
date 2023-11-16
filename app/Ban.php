@@ -221,36 +221,8 @@ class Ban extends Model
         return $this->timestamp->getTimestamp();
     }
 
-    public static function deprecatedGenerateHash(): string
-    {
-        $getHash = function () {
-            $letters = 'abcdefghijklmnopqrstuvwxyz0123456789';
-
-            $hash = '';
-
-            for ($i = 0; $i < 8; $i++) {
-                $hash .= $letters[rand(0, strlen($letters) - 1)];
-            }
-
-            return $hash;
-        };
-
-        while (true) {
-            $hash = $getHash();
-
-            if (!Ban::query()->where('ban_hash', '=', $hash)->exists()) {
-                return $hash;
-            }
-        }
-    }
-
     public static function generateHash(): string
     {
-        // Temporary, until the fivem server is updated
-        if (true) {
-            return self::deprecatedGenerateHash();
-        }
-
         $words = json_decode(file_get_contents(__DIR__ . '/../helpers/human-words.json'), true);
 
         while (true) {
