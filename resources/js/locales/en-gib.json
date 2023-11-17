@@ -967,7 +967,6 @@
             "edit_cash": "Flarb Flim",
             "edit_bank": "Flarb Blob",
             "edit_stocks": "Flarb Banner",
-            "balance_do": "Banner Do",
             "reset_spawn": "Reset Splish-Splash",
             "sure_spawn": "Flibberly gibberly sploof?",
             "spawn_point": "Gibblets",
@@ -1063,7 +1062,8 @@
                 "boat": "Gubidim Plumski",
                 "passenger": "Modumbak - Schmatopi"
             },
-            "no_coords": "Flarble flibbity floo flobble flibberish flobberish wobble wabble doobly-woobly."
+            "no_coords": "Flarble flibbity floo flobble flibberish flobberish wobble wabble doobly-woobly.",
+            "save_changes": "Flobdoodly bloom"
         },
         "edit": {
             "born": "Burkay by <b>{0}</b>",
@@ -1075,7 +1075,6 @@
             "backstory": "Blibberblop",
             "dob": "Plonkdor",
             "deleted": "Plibberplab",
-            "update": "Flipskibber",
             "job": "Jobbernoop",
             "phone": "Flubberson",
             "outfits": "Blorf morf {0} zibberflab(s).",

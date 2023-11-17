@@ -958,7 +958,6 @@
             "edit_cash": "Shiny Rocks",
             "edit_bank": "Big Cave",
             "edit_stocks": "Stamper Stocks",
-            "balance_do": "Make Big",
             "reset_spawn": "Fresh Start",
             "sure_spawn": "Ungabunga, you wanna change dis caveman's spawn place?",
             "spawn_point": "Reset spot",
@@ -1054,7 +1053,8 @@
                 "boat": "Ugga Ugga - Boat",
                 "passenger": "Ugga Ugga - Traveler"
             },
-            "no_coords": "Last coords not knowed when player be online."
+            "no_coords": "Last coords not knowed when player be online.",
+            "save_changes": "Ugga bugga changes"
         },
         "edit": {
             "born": "Cavebaby on <b>{0}</b>",
@@ -1066,7 +1066,6 @@
             "backstory": "Ug Story",
             "dob": "Rock of Birth",
             "deleted": "Ug Smash",
-            "update": "Ug Character",
             "job": "Ug Job",
             "phone": "Ug Communicator",
             "outfits": "This Ug has {0} fashions.",

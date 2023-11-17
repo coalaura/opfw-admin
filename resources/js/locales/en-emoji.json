@@ -958,7 +958,6 @@
             "edit_cash": "💵💰",
             "edit_bank": "🏦💰",
             "edit_stocks": "📈💰",
-            "balance_do": "💼🔄",
             "reset_spawn": "📦🔄",
             "sure_spawn": "⚠️❓🔄 reset characters 🏢𝑠🔃𝑎🔄-🅿🆙?",
             "spawn_point": "🔄 🌍",
@@ -1054,7 +1053,8 @@
                 "boat": "⛵️📜",
                 "passenger": "✈️🆔📜"
             },
-            "no_coords": "Last 🌐 are unavailable while the player is 📴."
+            "no_coords": "Last 🌐 are unavailable while the player is 📴.",
+            "save_changes": "💾🔄"
         },
         "edit": {
             "born": "📍 Born on <b>{0}</b>",
@@ -1066,7 +1066,6 @@
             "backstory": "📖 Backstory",
             "dob": "🎂 Date of Birth",
             "deleted": "💣 Deleted",
-            "update": "✏️ Update Character",
             "job": "👔 Job",
             "phone": "📞 Phone Number",
             "outfits": "This character has {0} 👗 saved outfit(s).",

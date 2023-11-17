@@ -147,6 +147,12 @@
                         <textarea class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="backstory" v-model="form.backstory"></textarea>
                     </div>
 
+                    <div class="px-3 my-6 flex justify-end" v-if="characterEdited">
+                        <button class="px-5 py-3 font-semibold text-center text-white bg-green-600 rounded dark:bg-green-500 w-1/4" type="submit">
+                            {{ t('players.characters.save_changes') }}
+                        </button>
+                    </div>
+
                     <hr class="border-gray-200 dark:border-gray-600">
 
                     <div class="flex flex-wrap mb-6 mt-6">
@@ -164,7 +170,7 @@
                             </ul>
 
                             <!-- Add License -->
-                            <button type="button" class="block w-full px-5 py-2 mt-6 hover:shadow-xl font-semibold text-white rounded bg-primary mr-3 dark:bg-dark-primary" @click="isLicenseEdit = true">
+                            <button type="button" class="block w-full px-5 py-2 mt-6 hover:shadow-xl font-semibold text-white rounded bg-primary mr-3 dark:bg-dark-primary">
                                 {{ t('players.characters.license.add') }}
                             </button>
                         </div>
@@ -230,24 +236,16 @@
                                         <span class="block border-gray-500 border-b-2 px-3 py-2" v-else>{{ numberFormat(balanceForm.stocks, 0, true) }}</span>
                                     </td>
                                 </tr>
-                                <tr v-if="$page.auth.player.isSuperAdmin">
-                                    <td class="p-2" colspan="2">
-                                        <button type="button" class="block w-full px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-warning mr-3 dark:bg-dark-warning" @click="editBalance">
-                                            {{ t('players.characters.balance_do') }}
+                                <tr v-if="$page.auth.player.isSuperAdmin && balanceEdited">
+                                    <td class="p-2">&nbsp;</td>
+                                    <td class="p-2">
+                                        <button type="button" class="block w-full px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-green-600 mr-3 dark:bg-green-500" @click="editBalance">
+                                            {{ t('players.characters.save_changes') }}
                                         </button>
                                     </td>
                                 </tr>
                             </table>
                         </div>
-                    </div>
-
-                    <hr class="border-gray-200 dark:border-gray-600">
-
-                    <!-- Submit -->
-                    <div class="px-3 mt-6">
-                        <button class="px-5 py-3 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400 w-1/4" type="submit">
-                            {{ t('players.edit.update') }}
-                        </button>
                     </div>
                 </form>
             </template>
@@ -982,6 +980,22 @@ export default {
         },
         returnTo() {
             return document.referrer || `/players/${this.player.licenseIdentifier}`;
+        },
+        characterEdited() {
+            if (this.form.first_name.trim() !== this.character.firstName) return true;
+            if (this.form.last_name.trim() !== this.character.lastName) return true;
+            if (this.form.date_of_birth !== this.character.dateOfBirth) return true;
+            if (parseInt(this.form.gender) !== this.character.gender) return true;
+            if (this.form.backstory.trim() !== this.character.backstory) return true;
+
+            return false;
+        },
+        balanceEdited() {
+            if (parseInt(this.balanceForm.cash) !== this.character.cash) return true;
+            if (parseInt(this.balanceForm.bank) !== this.character.bank) return true;
+            if (parseInt(this.balanceForm.stocks) !== this.character.stocksBalance) return true;
+
+            return false;
         }
     },
     methods: {

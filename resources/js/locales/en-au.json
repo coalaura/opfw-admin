@@ -958,7 +958,6 @@
             "edit_cash": "Kachinga",
             "edit_bank": "Money Vault",
             "edit_stocks": "Dodgy Investments",
-            "balance_do": "Give it a Top Up",
             "reset_spawn": "Send me Back to Me Bush",
             "sure_spawn": "Ya reckon ya wanna reset this character's place to start mate?",
             "spawn_point": "Reset spot",
@@ -1054,7 +1053,8 @@
                 "boat": "Boat License",
                 "passenger": "PPL - Mate on Board"
             },
-            "no_coords": "Bloody hell, we can't bloody find the coordinates mate, player's still online."
+            "no_coords": "Bloody hell, we can't bloody find the coordinates mate, player's still online.",
+            "save_changes": "Chuck a sickie"
         },
         "edit": {
             "born": "'E's from <b>{0}</b>",
@@ -1066,7 +1066,6 @@
             "backstory": "G'day Background",
             "dob": "Date of Hatching",
             "deleted": "Bonza'd",
-            "update": "Tweak Character",
             "job": "Arvo",
             "phone": "Dingo blower blower",
             "outfits": "This legend has {0} sick getups.",

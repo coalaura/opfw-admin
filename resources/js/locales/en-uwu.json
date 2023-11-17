@@ -958,7 +958,6 @@
             "edit_cash": "Kawaii Cash balance",
             "edit_bank": "Kawaii Bank balance",
             "edit_stocks": "Kawaii Stocks balance",
-            "balance_do": "UwU Update balance",
             "reset_spawn": "Reset Kawaii Spawn-Point",
             "sure_spawn": "Are you sugoi sure you want to reset this kawaii characters spawn-point?",
             "spawn_point": "Reset sugoi location",
@@ -1054,7 +1053,8 @@
                 "boat": "Boating Licwense",
                 "passenger": "PPL - Pawsenger"
             },
-            "no_coords": "Wast cwoods awa unwavaiwabwe whiwe the pwayew is onwine."
+            "no_coords": "Wast cwoods awa unwavaiwabwe whiwe the pwayew is onwine.",
+            "save_changes": "Vewwy important! Save changies"
         },
         "edit": {
             "born": "Bowwn on <b>{0}</b>wU",
@@ -1066,7 +1066,6 @@
             "backstory": "Pwefewenced Hissy",
             "dob": "Day of UwUth",
             "deleted": "Scratched",
-            "update": "Update Chawactew",
             "job": "Occupawion",
             "phone": "Phone Nyumber",
             "outfits": "This chawactew has {0} saved infit(s).",

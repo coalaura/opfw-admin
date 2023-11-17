@@ -958,7 +958,6 @@
             "edit_cash": "Booty Chest",
             "edit_bank": "Treasure Chest",
             "edit_stocks": "Booty Stocks",
-            "balance_do": "Adjust Booty",
             "reset_spawn": "Reset Ship-Spot",
             "sure_spawn": "Be ye sure ye be wantin' to reset this scurvy dog's spawn-point?",
             "spawn_point": "Reset spot",
@@ -1054,7 +1053,8 @@
                 "boat": "Boatin' License",
                 "passenger": "PPL - Passenger"
             },
-            "no_coords": "Avast! The last known whereabouts of ye scurvy dog be hidin' from me while ye be sailin' the high seas."
+            "no_coords": "Avast! The last known whereabouts of ye scurvy dog be hidin' from me while ye be sailin' the high seas.",
+            "save_changes": "Preserve Changes, Matey"
         },
         "edit": {
             "born": "Set sail on <b>{0}</b>",
@@ -1066,7 +1066,6 @@
             "backstory": "Tale o' Adventure",
             "dob": "Day 'o Birth",
             "deleted": "Walked th' plank",
-            "update": "Chart th' Course",
             "job": "Occupation",
             "phone": "Code o' Parley",
             "outfits": "This pirate has {0} stashed outfit(s).",

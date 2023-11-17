@@ -958,7 +958,6 @@
             "edit_cash": "Money in the pocket",
             "edit_bank": "Money in the bank",
             "edit_stocks": "Stocks in the portfolio",
-            "balance_do": "Update the ole' balance",
             "reset_spawn": "Set spawnin' point back to square one",
             "sure_spawn": "Y'all reckon ya wanna reset this here character's spawn-point?",
             "spawn_point": "Reset spot",
@@ -1054,7 +1053,8 @@
                 "boat": "Gots a boatin' license",
                 "passenger": "PPL - Passenger"
             },
-            "no_coords": "Sorry y'all, I cain't give ya the last known whereabouts of a player while they're online."
+            "no_coords": "Sorry y'all, I cain't give ya the last known whereabouts of a player while they're online.",
+            "save_changes": "Save y'all's changes"
         },
         "edit": {
             "born": "Born on <b>{0}</b>, bless their lil' heart",
@@ -1066,7 +1066,6 @@
             "backstory": "Life Story, y'all",
             "dob": "Date of Birth, born 'n raised",
             "deleted": "Done gone and deleted",
-            "update": "Update Character, fix 'em up",
             "job": "Job, where ya workin' at",
             "phone": "Phone Number, for reachin' ya",
             "outfits": "This character got {0} outfit(s) saved, all dressed up",

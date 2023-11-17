@@ -958,7 +958,6 @@
             "edit_cash": "Wad of Cash",
             "edit_bank": "Bloody Bank Account",
             "edit_stocks": "Fancy Stocks",
-            "balance_do": "Sodding Update Balance",
             "reset_spawn": "Bugger Off Spawn-Point",
             "sure_spawn": "You wanna move this wanker's spawn point, yeah?",
             "spawn_point": "Where should this sod spawn?",
@@ -1054,7 +1053,8 @@
                 "boat": "Boatin' License",
                 "passenger": "PPL - Passenger"
             },
-            "no_coords": "Sorry, but you won't find any bloody coordinates while the git is still online."
+            "no_coords": "Sorry, but you won't find any bloody coordinates while the git is still online.",
+            "save_changes": "Quit bloody tinkering"
         },
         "edit": {
             "born": "Popped out on <b>{0}</b>",
@@ -1066,7 +1066,6 @@
             "backstory": "Bloody Backstory",
             "dob": "Date of Ruddy Birth",
             "deleted": "Fookin' Deleted",
-            "update": "Update the Blimey Character",
             "job": "Bleedin' Job",
             "phone": "Phone Ruddy Number",
             "outfits": "This blimey character 'as {0} saved bleedin' outfit(s).",
