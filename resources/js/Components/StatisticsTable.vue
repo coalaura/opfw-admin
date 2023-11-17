@@ -130,7 +130,7 @@ export default {
 
             const width = canvas.width - 2,
                 height = canvas.height - 2,
-                step = width / data.length,
+                step = width / (data.length - 1),
                 ceiling = this.calculateCeiling(data),
                 floor = this.calculateFloor(data);
 
@@ -155,8 +155,6 @@ export default {
 
                 ctx.lineTo(x, yi);
             }
-
-            ctx.lineTo(1 + width, y(data[data.length - 1]));
 
             ctx.lineWidth = 2;
             ctx.strokeStyle = this.themeColor('gray-400');
