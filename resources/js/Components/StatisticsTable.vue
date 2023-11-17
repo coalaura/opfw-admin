@@ -149,8 +149,8 @@ export default {
             ctx.beginPath();
             ctx.moveTo(1, y(data[0]));
 
-            for (let i = 0; i < data.length; i++) {
-                const x = 1 + (i+1) * step,
+            for (let i = 1; i < data.length; i++) {
+                const x = 1 + i * step,
                     yi = y(data[i]);
 
                 ctx.lineTo(x, yi);
