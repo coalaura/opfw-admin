@@ -44,6 +44,8 @@ class StatisticsHelper
 
     private static function collectFinanceStatistics(string $query): array
     {
+        $start = microtime(true);
+
         $result = [];
 
         $data = DB::select($query);
@@ -55,7 +57,7 @@ class StatisticsHelper
             $entry = self::findEntry($data, $date);
 
             $amount = $entry && $entry->amount ? intval($entry->amount) : 0;
-            $count = $entry && $entry->count ? intval($entry->count) : 0;
+            $count  = $entry && $entry->count ? intval($entry->count) : 0;
 
             $result[] = [
                 'date'   => date('jS F Y', $time),
@@ -66,7 +68,10 @@ class StatisticsHelper
 
         array_reverse($result);
 
-        return $result;
+        return [
+            'data' => $result,
+            'time' => (microtime(true) - $start) * 1000,
+        ];
     }
 
     private static function findEntry(array $data, string $date)

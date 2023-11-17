@@ -6,6 +6,8 @@
         </h2>
         <p class="text-sm italic mb-3">{{ details }}</p>
 
+        <span class="absolute bottom-1 right-2 text-xs">{{ numberFormat(time, false, false) }}ms</span>
+
         <button @click="collapsed = !collapsed" class="icon-button text-white bg-red-600" :class="{'!bg-green-600': collapsed}">
             <i class="fas fa-plus" v-if="collapsed"></i>
             <i class="fas fa-minus" v-else></i>
@@ -56,8 +58,8 @@ export default {
             type: String,
             required: true,
         },
-        data: {
-            type: Array,
+        source: {
+            type: Object,
             required: true,
         }
     },
@@ -72,6 +74,9 @@ export default {
     data() {
         return {
             collapsed: true,
+
+            data: this.source.data,
+            time: Math.round(this.source.time)
         };
     },
     methods: {

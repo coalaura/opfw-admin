@@ -11,12 +11,12 @@
         </portal>
 
         <template>
-            <StatisticsTable :data="casino" :title="t('statistics.casino')" :details="t('statistics.casino_details')" />
-            <StatisticsTable :data="pdm" :title="t('statistics.pdm')" :details="t('statistics.pdm_details')" />
-            <StatisticsTable :data="edm" :title="t('statistics.edm')" :details="t('statistics.edm_details')" />
-            <StatisticsTable :data="gem" :title="t('statistics.gem')" :details="t('statistics.gem_details')" />
-            <StatisticsTable :data="pawn" :title="t('statistics.pawn')" :details="t('statistics.pawn_details')" />
-            <StatisticsTable :data="drugs" :title="t('statistics.drugs')" :details="t('statistics.drugs_details')" />
+            <StatisticsTable :source="casino" :title="t('statistics.casino')" :details="t('statistics.casino_details')" />
+            <StatisticsTable :source="pdm" :title="t('statistics.pdm')" :details="t('statistics.pdm_details')" />
+            <StatisticsTable :source="edm" :title="t('statistics.edm')" :details="t('statistics.edm_details')" />
+            <StatisticsTable :source="gem" :title="t('statistics.gem')" :details="t('statistics.gem_details')" />
+            <StatisticsTable :source="pawn" :title="t('statistics.pawn')" :details="t('statistics.pawn_details')" />
+            <StatisticsTable :source="drugs" :title="t('statistics.drugs')" :details="t('statistics.drugs_details')" />
         </template>
 
     </div>
@@ -33,27 +33,27 @@ export default {
     },
     props: {
         casino: {
-            type: Array,
+            type: Object,
             required: true,
         },
         pdm: {
-            type: Array,
+            type: Object,
             required: true,
         },
         edm: {
-            type: Array,
+            type: Object,
             required: true,
         },
         gem: {
-            type: Array,
+            type: Object,
             required: true,
         },
         pawn: {
-            type: Array,
+            type: Object,
             required: true,
         },
         drugs: {
-            type: Array,
+            type: Object,
             required: true,
         },
     }
