@@ -180,21 +180,19 @@ export default {
             ctx.stroke();
             ctx.closePath();
 
-            // Draw the y axis line (if needed)
-            if (floor < 0) {
-                const y0 = y(0);
+            // Draw the y axis line
+            const y0 = y(0);
 
-                ctx.beginPath();
+            ctx.beginPath();
 
-                ctx.moveTo(0, y0);
-                ctx.lineTo(canvas.width, y0);
+            ctx.moveTo(0, y0);
+            ctx.lineTo(canvas.width, y0);
 
-                ctx.lineWidth = 1;
-                ctx.strokeStyle = this.themeColor('gray-400', 0.4);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = this.themeColor('gray-400', 0.4);
 
-                ctx.stroke();
-                ctx.closePath();
-            }
+            ctx.stroke();
+            ctx.closePath();
         },
         getDiffToPrevious(index, key) {
             if (index >= this.data.length - 1) return null;
