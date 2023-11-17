@@ -173,10 +173,10 @@ const Style = {
 			return banner;
 		};
 
-		Vue.prototype.themeColor = color => {
+		Vue.prototype.themeColor = (color, alpha = 1) => {
 			const { s, l } = colors[color];
 
-			return `hsl(${Hue},${s || 35}%,${l}%)`;
+			return `hsla(${Hue},${s || 35}%,${l}%,${alpha})`;
 		};
 	}
 }

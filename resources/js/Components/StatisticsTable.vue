@@ -96,10 +96,22 @@ export default {
             });
         },
         calculateCeiling(data) {
-            const max = Math.max(...data),
-                log = Math.pow(10, Math.floor(Math.log10(max)));
+            const max = Math.max(...data);
+
+            if (max === 0) return 0;
+
+            const log = Math.pow(10, Math.floor(Math.log10(max)));
 
             return Math.ceil(max / log) * log;
+        },
+        calculateFloor(data) {
+            const min = Math.min(...data);
+
+            if (min >= 0) return 0;
+
+            const log = Math.pow(10, Math.floor(Math.log10(Math.abs(min))));
+
+            return Math.floor(Math.abs(min) / log) * log * -1;
         },
         renderChart() {
             const canvas = this.$refs.chart,
@@ -119,29 +131,51 @@ export default {
             const width = canvas.width - 2,
                 height = canvas.height - 2,
                 step = width / data.length,
-                ceiling = this.calculateCeiling(data);
+                ceiling = this.calculateCeiling(data),
+                floor = this.calculateFloor(data);
 
-            ctx.beginPath();
-
-            ctx.moveTo(1, 1 + (1 - (data[0] / ceiling)) * height);
-
-            for (let i = 0; i < data.length; i++) {
-                const amount = data[i];
-
-                const x = 1 + (i+1) * step,
-                    y = 1 + (1 - (amount / ceiling)) * height;
-
-                ctx.lineTo(x, y);
+            // Map floor<->ceiling to 0<->1
+            function map(value) {
+                return (value - floor) / (ceiling - floor);
             }
 
-            ctx.lineTo(1 + width, 1 + (1 - (data[data.length] / ceiling)) * height);
+            function y(value) {
+                if (ceiling === 0 && floor === 0) return 1 + height;
+
+                return 1 + (height - (map(value - 1) * height));
+            }
+
+            ctx.beginPath();
+            ctx.moveTo(1, y(data[0]));
+
+            for (let i = 0; i < data.length; i++) {
+                const x = 1 + (i+1) * step;
+
+                ctx.lineTo(x, y(data[i]));
+            }
+
+            ctx.lineTo(1 + width, y(data[data.length - 1]));
 
             ctx.lineWidth = 2;
             ctx.strokeStyle = this.themeColor('gray-400');
 
             ctx.stroke();
-
             ctx.closePath();
+
+            if (floor < 0) {
+                const y0 = y(0);
+
+                ctx.beginPath();
+
+                ctx.moveTo(0, y0);
+                ctx.lineTo(canvas.width, y0);
+
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = this.themeColor('gray-400', 0.5);
+
+                ctx.stroke();
+                ctx.closePath();
+            }
         },
         getDiffToPrevious(index, key) {
             if (index >= this.data.length - 1) return null;
