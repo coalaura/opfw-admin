@@ -1,7 +1,7 @@
 import ColorThief from 'colorthief';
 
 // Rebuild style on version change
-const Iteration = 12;
+const Iteration = 13;
 
 const colors = {
 	'white': { l: 99 },
@@ -26,6 +26,8 @@ const colors = {
 
 const Style = {
 	async install(Vue) {
+		let Hue = 215;
+
 		function rgbToHsl(r, g, b) {
 			r /= 255, g /= 255, b /= 255;
 
@@ -115,9 +117,12 @@ const Style = {
 						hsl.s = 35;
 					}
 
+					Hue = hsl.h;
+
 					const style = buildStyle(hsl, url, useAlpha);
 
 					localStorage.setItem('banner', JSON.stringify({
+						hue: hsl.h,
 						url: url,
 						style: style,
 						v: Iteration,
@@ -159,11 +164,19 @@ const Style = {
 				console.log("Rebuilt style.");
 			} else {
 				style = data.style;
+
+				Hue = data.hue;
 			}
 
 			$('head').append(`<style id="bannerTheme">${style}</style>`);
 
 			return banner;
+		};
+
+		Vue.prototype.themeColor = color => {
+			const { s, l } = colors[color];
+
+			return `hsl(${Hue},${s || 35}%,${l}%)`;
 		};
 	}
 }
