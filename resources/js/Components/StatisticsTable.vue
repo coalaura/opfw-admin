@@ -149,9 +149,14 @@ export default {
             ctx.moveTo(1, y(data[0]));
 
             for (let i = 0; i < data.length; i++) {
-                const x = 1 + (i+1) * step;
+                const x = 1 + (i+1) * step,
+                    yi = y(data[i]);
 
-                ctx.lineTo(x, y(data[i]));
+                ctx.lineTo(x, yi);
+
+                ctx.moveTo(x, yi - 2);
+                ctx.lineTo(x, yi + 2);
+                ctx.moveTo(x, yi);
             }
 
             ctx.lineTo(1 + width, y(data[data.length - 1]));
