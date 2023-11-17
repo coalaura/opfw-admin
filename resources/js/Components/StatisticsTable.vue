@@ -145,6 +145,7 @@ export default {
                 return 1 + (height - (map(value - 1) * height));
             }
 
+            // Draw the line graph
             ctx.beginPath();
             ctx.moveTo(1, y(data[0]));
 
@@ -153,10 +154,6 @@ export default {
                     yi = y(data[i]);
 
                 ctx.lineTo(x, yi);
-
-                ctx.moveTo(x, yi - 2);
-                ctx.lineTo(x, yi + 2);
-                ctx.moveTo(x, yi);
             }
 
             ctx.lineTo(1 + width, y(data[data.length - 1]));
@@ -167,6 +164,23 @@ export default {
             ctx.stroke();
             ctx.closePath();
 
+            // Draw the x axis lines
+            ctx.beginPath();
+
+            for (let i = 0; i < data.length; i++) {
+                const x = 1 + (i+1) * step;
+
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+            }
+
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = this.themeColor('gray-400', 0.25);
+
+            ctx.stroke();
+            ctx.closePath();
+
+            // Draw the y axis line (if needed)
             if (floor < 0) {
                 const y0 = y(0);
 
