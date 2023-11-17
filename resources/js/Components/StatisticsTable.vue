@@ -167,15 +167,15 @@ export default {
             // Draw the x axis lines
             ctx.beginPath();
 
-            for (let i = 0; i < data.length; i++) {
-                const x = 1 + (i+1) * step;
+            for (let i = 0; i <= data.length; i++) {
+                const x = 1 + i * step;
 
                 ctx.moveTo(x, 0);
                 ctx.lineTo(x, canvas.height);
             }
 
             ctx.lineWidth = 1;
-            ctx.strokeStyle = this.themeColor('gray-400', 0.25);
+            ctx.strokeStyle = this.themeColor('gray-400', 0.2);
 
             ctx.stroke();
             ctx.closePath();
@@ -190,7 +190,7 @@ export default {
                 ctx.lineTo(canvas.width, y0);
 
                 ctx.lineWidth = 1;
-                ctx.strokeStyle = this.themeColor('gray-400', 0.5);
+                ctx.strokeStyle = this.themeColor('gray-400', 0.4);
 
                 ctx.stroke();
                 ctx.closePath();
