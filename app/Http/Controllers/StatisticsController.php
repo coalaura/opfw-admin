@@ -24,6 +24,7 @@ class StatisticsController extends Controller
             'gem'    => StatisticsHelper::collectGemSaleStatistics(),
             'pawn'   => StatisticsHelper::collectPawnshopStatistics(),
             'casino' => StatisticsHelper::collectCasinoStatistics(),
+            'drugs'  => StatisticsHelper::collectDrugSaleStatistics(),
         ]);
     }
 

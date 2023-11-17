@@ -297,7 +297,9 @@
         "pawn": "Ooga Booga Collector's Hut",
         "pawn_details": "Big fire get green for all things Ooga Booga.",
         "average": "Grunt",
-        "trend": "Big-Big Path"
+        "trend": "Big-Big Path",
+        "drugs": "Caveman Talk: Drugs Make Big Grunt",
+        "drugs_details": "Caveman Talk: Big grunt made from selling all kinds of drugs."
     },
     "map": {
         "title": "Ooga-Map",

@@ -305,7 +305,10 @@
         "gem_details": "Combined revenue from all Gemstone sales.",
 
         "pawn": "Pawn Shop Sales",
-        "pawn_details": "Combined revenue from all Pawn Shop sales."
+        "pawn_details": "Combined revenue from all Pawn Shop sales.",
+
+        "drugs": "Drug Sales",
+        "drugs_details": "Combined revenue from all Drug sales."
     },
     "map": {
         "title": "Live-Map",

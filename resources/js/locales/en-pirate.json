@@ -297,7 +297,9 @@
         "pawn": "Buccaneer Shop Booty",
         "pawn_details": "Plunder earned from all Buccaneer Shop transactions.",
         "average": "Aaarrrage",
-        "trend": "Jolly Roger"
+        "trend": "Jolly Roger",
+        "drugs": "Booty Sales",
+        "drugs_details": "Combined doubloons from all Booty sales."
     },
     "map": {
         "title": "Sailin' Map",

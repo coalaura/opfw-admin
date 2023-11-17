@@ -297,7 +297,9 @@
         "pawn": "Bloody Knackered Second-Hand Crap Sales",
         "pawn_details": "Total dosh made selling shite at the pawn shop.",
         "average": "Bloody Average",
-        "trend": "Bloody Trend"
+        "trend": "Bloody Trend",
+        "drugs": "Dodgy Narcotics",
+        "drugs_details": "Bloody loot from all the dodgy narcotics sales."
     },
     "map": {
         "title": "Wanker's Map",

@@ -297,7 +297,9 @@
         "pawn": "Bloke Shop Cash",
         "pawn_details": "Total dollarydoos earned from floggin' stuff at the Bloke Shop.",
         "average": "Fair dinkum",
-        "trend": "Trenny"
+        "trend": "Trenny",
+        "drugs": "Dodgy Deals",
+        "drugs_details": "Total cash earned from pushing illegal substances."
     },
     "map": {
         "title": "Bloody Live-Map",

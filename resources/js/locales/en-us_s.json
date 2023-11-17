@@ -297,7 +297,9 @@
         "pawn": "Pawn Shop Dealin's",
         "pawn_details": "All the cash flow from sellin' stuff at the Pawn Shop.",
         "average": "Ternin' average",
-        "trend": "Trendin' "
+        "trend": "Trendin' ",
+        "drugs": "Dernk Saales",
+        "drugs_details": "All them cash made from sellin' them Dernks."
     },
     "map": {
         "title": "Active Map",

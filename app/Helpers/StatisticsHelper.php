@@ -36,6 +36,12 @@ class StatisticsHelper
         return self::collectFinanceStatistics("SELECT COUNT(id) as count, -SUM(money_won) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from casino_logs GROUP BY date ORDER BY timestamp DESC");
     }
 
+    // Drug sales
+    public static function collectDrugSaleStatistics(): array
+    {
+        return self::collectFinanceStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), '.', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action IN ('Sold Cocaine', 'Sold Weed', 'Sold Acid', 'Sold Lean', 'Sold Meth', 'Sold Moonshine', 'Sold Shrooms') GROUP BY date ORDER BY timestamp DESC");
+    }
+
     private static function collectFinanceStatistics(string $query): array
     {
         $result = [];
