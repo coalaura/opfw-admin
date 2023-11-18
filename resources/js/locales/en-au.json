@@ -670,7 +670,9 @@
         "placeholder_message": "Oi, wanna buy some dodgy gear?",
         "placeholder_username": "AussieCriminal",
         "filter": "Chuck out any dodgy posts",
-        "delete_tweet": "Ya reckon ya wanna bin this tweet?"
+        "delete_tweet": "Ya reckon ya wanna bin this tweet?",
+        "verify": "Chuck a tick on the user",
+        "un_verify": "Chuck the user's verified status"
     },
     "players": {
         "title": "Blokes",

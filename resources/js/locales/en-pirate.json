@@ -670,7 +670,9 @@
         "placeholder_message": "Sellin' keys, me hearties!",
         "placeholder_username": "iPlunderBanks",
         "filter": "Scour fer posts",
-        "delete_tweet": "Arr ye sure ye be wantin' t' delete this tweet?"
+        "delete_tweet": "Arr ye sure ye be wantin' t' delete this tweet?",
+        "verify": "Dub user as verified",
+        "un_verify": "Release users verified status"
     },
     "players": {
         "title": "Scallywags",

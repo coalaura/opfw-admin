@@ -670,7 +670,9 @@
         "placeholder_message": "🔑🔑 hmu",
         "placeholder_username": "💰💰",
         "filter": "🔍 posts",
-        "delete_tweet": "❓ ➡️ delete tweet?"
+        "delete_tweet": "❓ ➡️ delete tweet?",
+        "verify": "🔐👤🔵",
+        "un_verify": "🔓👥🔴"
     },
     "players": {
         "title": "🧍",

@@ -7,6 +7,7 @@ use App\Helpers\PermissionHelper;
 use App\Http\Resources\CharacterResource;
 use App\Http\Resources\PlayerIndexResource;
 use App\Http\Resources\TwitterPostResource;
+use App\Http\Resources\TwitterUserResource;
 use App\TwitterPost;
 use App\TwitterUser;
 use Illuminate\Http\RedirectResponse;
@@ -121,7 +122,7 @@ class TwitterController extends Controller
             'tweets'    => TwitterPostResource::collection($tweets),
             'character' => new CharacterResource($character),
             'player'    => new PlayerIndexResource($character->player()->get()->first()),
-            'user'      => $user->toArray(),
+            'user'      => new TwitterUserResource($user),
             'links'     => $this->getPageUrls($page),
             'page'      => $page,
         ]);
@@ -148,6 +149,25 @@ class TwitterController extends Controller
         TwitterPost::query()->whereIn('id', $ids)->delete();
 
         return backWith('success', 'Successfully deleted tweets');
+    }
+
+    /**
+     * Toggle a users verification
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function verify(Request $request, TwitterUser $user): RedirectResponse
+    {
+		if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_TWITTER_VERIFY)) {
+            abort(401);
+        }
+
+        $user->update([
+            'is_verified' => $user->is_verified ? 0 : 1,
+        ]);
+
+        return backWith('success', 'Successfully changed verification status');
     }
 
 }

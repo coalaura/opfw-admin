@@ -3,9 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 /**
  * @package App
@@ -23,6 +23,13 @@ class TwitterUser extends Authenticatable
     protected $table = 'twitter_accounts';
 
     /**
+     * Whether to use timestamps.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -33,6 +40,7 @@ class TwitterUser extends Authenticatable
         'password',
         'avatar_url',
         'creator_cid',
+        'is_verified',
     ];
 
     /**
@@ -43,6 +51,14 @@ class TwitterUser extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function getAvatar() {
+        if (empty($this->avatar_url) || Str::contains($this->avatar_url, 'cfx-nui-gcphone')) {
+            return '/images/default_profile.png';
+        }
+
+        return $this->avatar_url;
+    }
 
     /**
      * Returns a map of twitter_userid->twitter_user
@@ -62,13 +78,14 @@ class TwitterUser extends Authenticatable
         }
 
         $users = self::query()->whereIn('id', $ids)->select([
-            'id', 'username', 'avatar_url',
+            'id', 'username', 'avatar_url', 'is_verified',
         ])->get();
         $userMap = [];
         foreach ($users as $user) {
             $userMap[$user->id] = [
-                'username'  => $user->username,
-                'avatar_url' => $user->avatar_url,
+                'username'    => $user->username,
+                'avatar_url'  => $user->getAvatar(),
+                'is_verified' => $user->is_verified,
             ];
         }
 

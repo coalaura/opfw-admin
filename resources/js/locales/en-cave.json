@@ -670,7 +670,9 @@
         "placeholder_message": "Selling keys hmu",
         "placeholder_username": "iRobBanks",
         "filter": "Filter posts",
-        "delete_tweet": "Are you sure you want to delete this tweet?"
+        "delete_tweet": "Are you sure you want to delete this tweet?",
+        "verify": "Ugga ugga, make user big chief",
+        "un_verify": "Ugga ugga, take away big chief status"
     },
     "players": {
         "title": "Uggur",

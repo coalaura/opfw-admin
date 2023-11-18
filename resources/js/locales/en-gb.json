@@ -670,7 +670,9 @@
         "placeholder_message": "Buy these bloody keys, innit?",
         "placeholder_username": "iBloodyRobBanks",
         "filter": "Bollocks posts",
-        "delete_tweet": "You reckon you wanna delete this bleeding tweet?"
+        "delete_tweet": "You reckon you wanna delete this bleeding tweet?",
+        "verify": "Bloody hell, grant the wanker’s bloody verification",
+        "un_verify": "Bugger off and strip the bloody wanker of his verified status"
     },
     "players": {
         "title": "Wankers",

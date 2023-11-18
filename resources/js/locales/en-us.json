@@ -688,6 +688,8 @@
         "time": "Time",
         "tweets": "Tweets",
         "search": "Search",
+        "verify": "Set user as verified",
+        "un_verify": "Remove users verified status",
         "delete_selected": "Delete selected tweets",
         "delete_selected_confirm": "Are you sure you want to delete the selected tweets?",
         "placeholder_message": "Selling keys hmu",

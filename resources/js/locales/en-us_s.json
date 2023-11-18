@@ -670,7 +670,9 @@
         "placeholder_message": "Sellin' keys y'all hit me up",
         "placeholder_username": "iRobBanks",
         "filter": "Sort 'em posts",
-        "delete_tweet": "Ya shore 'bout deletin' this tweet?"
+        "delete_tweet": "Ya shore 'bout deletin' this tweet?",
+        "verify": "Bless user as verified",
+        "un_verify": "Take away users verified status"
     },
     "players": {
         "title": "Folks",

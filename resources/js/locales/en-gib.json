@@ -679,7 +679,9 @@
         "placeholder_message": "Dokoth winkiedoodle hnu",
         "placeholder_username": "Dobbleflink",
         "filter": "Flibber glubbers",
-        "delete_tweet": "Makadooble zog zidelyzoom?"
+        "delete_tweet": "Makadooble zog zidelyzoom?",
+        "verify": "Flamet florf duvunosh frabla",
+        "un_verify": "Flipflop trilchle borkdu flarbush"
     },
     "players": {
         "title": "Plibberdoos",

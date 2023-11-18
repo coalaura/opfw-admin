@@ -16,10 +16,12 @@
         <div>
             <div v-if="dontLink" class="block mb-2 font-bold">
                 {{ user.username }}
+                <span class="verified" v-if="user.is_verified">&nbsp;</span>
                 <span :title="post.time | formatTime(true)" class="text-gray-400 dark:text-gray-500 font-normal">- {{ formatDate(post.time) }}</span>
             </div>
             <inertia-link :href="'/twitter/' + post.authorId" class="block mb-2 font-bold" v-else>
                 <span class="hover:underline">{{ user.username }}</span>
+                <span class="verified" v-if="user.is_verified">&nbsp;</span>
                 <span :title="post.time | formatTime(true)" class="text-gray-400 dark:text-gray-500 font-normal">- {{ formatDate(post.time) }}</span>
             </inertia-link>
 
@@ -70,25 +72,17 @@ export default {
         },
         avatarError(e) {
             // Replace with default
-            e.target.src = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wgARCAAgACADASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABAcABv/EABYBAQEBAAAAAAAAAAAAAAAAAAABBf/aAAwDAQACEAMQAAAByyULWyeIJQp6akTd0vdTdwT/xAAaEAEBAAMBAQAAAAAAAAAAAAADBAECEAAT/9oACAEBAAEFAvTgj7UAgbcjL4z2Fhp+DvhCbfBlyepQ9RUr8//EABgRAAIDAAAAAAAAAAAAAAAAAAADARMh/9oACAEDAQE/AUKsnR6q5wQ2udHtsnD/xAAYEQACAwAAAAAAAAAAAAAAAAAAAwETIf/aAAgBAgEBPwF7a4wQ2yNHqsjBCq40/8QAHxAAAgECBwAAAAAAAAAAAAAAAQIAEDEDESEiQVGB/9oACAEBAAY/Aplhj2ZYg9qi83MdebiqMLER2NgK7Dp0ZvOnQp//xAAaEAEAAgMBAAAAAAAAAAAAAAABABEQITFx/9oACAEBAAE/IYqs11aCCqN8GxyAhx6LEIceCZYvQYxdIc2Id9pWShDrsKjH/9oADAMBAAIAAwAAABDzzzz/xAAZEQEBAAMBAAAAAAAAAAAAAAABABEhMUH/2gAIAQMBAT8QBzggM4Y28MZYaL//xAAZEQEBAAMBAAAAAAAAAAAAAAABABEhMUH/2gAIAQIBAT8QQ3pkd6Jy9E7Zbb//xAAfEAEAAQMFAQEAAAAAAAAAAAABEQAxURAhQYHBYXH/2gAIAQEAAT8QoUw3t+OXy9CmG9v1w+aLAuKOcIvhSvnVGOQ3wpHzuhkHNNmL0fZGRwxCdMlH23M5YgO2CixN9CVj3E5Dh/KJGNcTlOX90//Z';
+            e.target.src = '/images/default_profile.png';
         },
         formatBody(body) {
-            const urlRegex = /(https?:\/\/[^\s]+)/g;
-            return body.replace(urlRegex, function (url) {
-                const tmp = url.split('?')[0].toLowerCase().split('.'),
-                    ext = tmp[tmp.length - 1];
+            body = body.trim();
 
-                switch (ext) {
-                    case 'jpg':
-                    case 'jpeg':
-                    case 'png':
-                    case 'gif':
-                        return '<div class="max-w-screen-sm"><img src="' + url + '" class="block max-w-full max-h-img" /></div>';
-                }
+            if (body.match(/^https?:\/\/[^\s]+?\.(png|jpe?g|gif|bmp|webp)(\?[^\s]*)?$/i)) {
+                return '<div class="max-w-screen-sm"><img src="' + body + '" class="block max-w-full max-h-img" /></div>';
+            }
 
-                return '<a href="' + url + '" class="text-indigo-600 dark:text-indigo-400" target="_blank">' + url + '</a>';
-            })
+            return body;
         }
-    }
+    },
 }
 </script>

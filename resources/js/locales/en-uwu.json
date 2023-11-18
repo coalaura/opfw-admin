@@ -670,7 +670,9 @@
         "placeholder_message": "Awooo~ I haz keys for sale uwu",
         "placeholder_username": "iStealHeartz",
         "filter": "Filter posts for extra cuteness",
-        "delete_tweet": "A-are you sure you wanna delete this super kawaii tweet? OwO"
+        "delete_tweet": "A-are you sure you wanna delete this super kawaii tweet? OwO",
+        "verify": "UwUify user as vewified",
+        "un_verify": "UwUove users vewified status"
     },
     "players": {
         "title": "Kawaii Players~",

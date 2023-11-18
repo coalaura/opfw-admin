@@ -2,7 +2,7 @@
     <div>
 
         <template>
-            <div class="w-full items-center flex flex-wrap mb-6 max-w-screen-md m-auto">
+            <div class="w-full items-center flex flex-wrap mb-6 max-w-screen-md m-auto relative">
                 <div class="mr-3">
                     <img class="block w-24 h-24 rounded-full" :src="user.avatar_url" @error="avatarError" />
                 </div>
@@ -12,10 +12,17 @@
                         <sup>{{ character.id }}</sup>
                     </inertia-link>
                     <h3 class="text-base text-gray-500 dark:text-gray-400">
-                        @{{ user.username }} -
+                        @{{ user.username }}
+                        <span class="verified" v-if="user.is_verified">&nbsp;</span>
+                        -
                         <inertia-link :href="'/players/' + player.licenseIdentifier" class="hover:underline">{{ player.playerName }}</inertia-link>
                     </h3>
                 </div>
+
+                <button @click="toggleVerify" class="p-1 top-1 right-1 absolute font-semibold flex items-center justify-center drop-shadow" :title="user.is_verified ? t('twitter.un_verify') : t('twitter.verify')">
+                    <img v-if="user.is_verified" class="w-7" src="/images/un_verify.png" />
+                    <img v-else class="w-7" src="/images/verify.png" />
+                </button>
             </div>
         </template>
 
@@ -99,6 +106,22 @@ export default {
                 });
 
                 this.selectedPosts = [];
+            } catch (e) { }
+
+            this.isLoading = false;
+        },
+        async toggleVerify() {
+            if (this.isLoading) {
+                return;
+            }
+
+            this.isLoading = true;
+
+            try {
+                await this.$inertia.post('/twitter/' + this.user.id + '/verify', {}, {
+                    preserveState: true,
+                    preserveScroll: true
+                });
             } catch (e) { }
 
             this.isLoading = false;

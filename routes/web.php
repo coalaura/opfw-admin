@@ -178,6 +178,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     // Twitter.
     Route::get('twitter', [TwitterController::class, 'index']);
     Route::get('twitter/{user}', [TwitterController::class, 'user']);
+    Route::post('twitter/{user}/verify', [TwitterController::class, 'verify']);
     Route::post('tweets/delete', [TwitterController::class, 'deleteTweets']);
 
     // Logs.
