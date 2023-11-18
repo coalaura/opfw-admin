@@ -170,7 +170,7 @@
                             </ul>
 
                             <!-- Add License -->
-                            <button type="button" class="block w-full px-5 py-2 mt-6 hover:shadow-xl font-semibold text-white rounded bg-primary mr-3 dark:bg-dark-primary">
+                            <button type="button" class="block w-full px-5 py-2 mt-6 hover:shadow-xl font-semibold text-white rounded bg-primary mr-3 dark:bg-dark-primary" @click="isLicenseEdit = true">
                                 {{ t('players.characters.license.add') }}
                             </button>
                         </div>
