@@ -1602,7 +1602,9 @@ export default {
             hwidBan: null,
 
             isLoading: false,
-            showingMoreInfo: false
+            showingMoreInfo: false,
+
+            showingUserVariables: false
         }
     },
     computed: {
