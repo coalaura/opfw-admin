@@ -449,7 +449,8 @@
             "edit_tag": "Mess with Bleedin' Tags",
             "phone_logs": "Peek at Bloody Phone Logs",
             "money_logs": "Have a nosy at the bloody Money Logs",
-            "anti_cheat": "Have a gander at the Anti-Cheat Logs & Bloody Screenshots"
+            "anti_cheat": "Have a gander at the Anti-Cheat Logs & Bloody Screenshots",
+            "twitter_verify": "Bloody Verify These Wankers on Twitter"
         },
         "world_time": "Bloody Global Time",
         "world_time_desc": "The bleeding time in the {0} bloody popular timezones.",

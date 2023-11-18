@@ -449,7 +449,8 @@
             "crafting": "Sight Crafting Secrets",
             "phone_logs": "View Scoundrel Logs",
             "money_logs": "View Booty Logs",
-            "anti_cheat": "Behold Anti-Cheat Scrolls & Scrawls"
+            "anti_cheat": "Behold Anti-Cheat Scrolls & Scrawls",
+            "twitter_verify": "Verify Swashbucklin' Scallawags"
         },
         "world_time": "World O' Time",
         "world_time_desc": "The time in the {0} most used doubloon zones.",

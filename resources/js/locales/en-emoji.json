@@ -449,7 +449,8 @@
             "crafting": "🔨📚",
             "phone_logs": "📱📚",
             "money_logs": "💰 View 💰 Logs",
-            "anti_cheat": "👀 🚫-⚖️ 📜s & 📷s"
+            "anti_cheat": "👀 🚫-⚖️ 📜s & 📷s",
+            "twitter_verify": "🔐🐦👤"
         },
         "world_time": "🌍⏰",
         "world_time_desc": "⌚🌍{0}",

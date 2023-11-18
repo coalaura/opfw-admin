@@ -449,7 +449,8 @@
             "crafting": "View Craftin' Recipes",
             "phone_logs": "Peep Them Phone Logs",
             "money_logs": "View Money Logs, y'all",
-            "anti_cheat": "Peep at them Anti-Cheat Logs & Screenshots"
+            "anti_cheat": "Peep at them Anti-Cheat Logs & Screenshots",
+            "twitter_verify": "Verify Y'all's Twitter Folks"
         },
         "world_time": "World Time",
         "world_time_desc": "The time in the {0} most used timezones.",
