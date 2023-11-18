@@ -13,9 +13,11 @@ class UpdateUserBansTable3 extends Migration
 	 */
 	public function up()
 	{
-		Schema::table('user_bans', function (Blueprint $table) {
-			$table->integer('scheduled_unban')->nullable();
-		});
+		if (!Schema::hasColumn('user_bans', 'scheduled_unban')) {
+			Schema::table('user_bans', function (Blueprint $table) {
+				$table->integer('scheduled_unban')->nullable();
+			});
+		}
 	}
 
 	/**
@@ -25,8 +27,10 @@ class UpdateUserBansTable3 extends Migration
 	 */
 	public function down()
 	{
-		Schema::table('user_bans', function (Blueprint $table) {
-			$table->dropColumn('scheduled_unban');
-		});
+		if (!Schema::hasColumn('user_bans', 'scheduled_unban')) {
+			Schema::table('user_bans', function (Blueprint $table) {
+				$table->dropColumn('scheduled_unban');
+			});
+		}
 	}
 }

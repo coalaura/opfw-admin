@@ -13,9 +13,11 @@ class UpdateTwitterAccountsTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::table('twitter_accounts', function (Blueprint $table) {
-			$table->tinyInteger('is_verified')->default(0);
-		});
+		if (!Schema::hasColumn('twitter_accounts', 'is_verified')) {
+			Schema::table('twitter_accounts', function (Blueprint $table) {
+				$table->tinyInteger('is_verified')->default(0);
+			});
+		}
 	}
 
 	/**
@@ -25,8 +27,10 @@ class UpdateTwitterAccountsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::table('twitter_accounts', function (Blueprint $table) {
-			$table->dropColumn('is_verified');
-		});
+		if (Schema::hasColumn('twitter_accounts', 'is_verified')) {
+			Schema::table('twitter_accounts', function (Blueprint $table) {
+				$table->dropColumn('is_verified');
+			});
+		}
 	}
 }
