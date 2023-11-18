@@ -871,7 +871,8 @@
             "echo_no_data": "❌📥🗣️🚫📊",
             "global_info": "🌍",
             "global_title": "👮‍♂️🚫🔒{0}🖥️👞⚠️🗂️🔒.🔥",
-            "delete_warning": "❓ 🔨/⚠️/📝?"
+            "delete_warning": "❓ 🔨/⚠️/📝?",
+            "user_variables": "👤🔣"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",
