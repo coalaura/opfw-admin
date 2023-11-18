@@ -814,6 +814,7 @@
             "echo_unusual": "Unusual",
             "echo_detected": "Detected",
             "echo_no_data": "Failed to load Echo data",
+            "user_variables": "User Variables",
             "global_info": "Global",
             "global_title": "Player is banned on {0} op-fw servers.",
             "anti_cheat": "Anti-Cheat",

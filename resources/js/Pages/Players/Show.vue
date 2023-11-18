@@ -242,6 +242,14 @@
                     <i class="fas fa-passport mr-1"></i>
                     Idf
                 </a>
+
+                <div class="w-px bg-white bg-opacity-30 h-full separator">&nbsp;</div>
+
+                <!-- User Variables -->
+                <button class="p-1 text-sm font-bold leading-4 text-center rounded border-teal-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" @click="showingUserVariables = true" :title="t('players.show.user_variables')">
+                    <i class="fas fa-memory mr-1"></i>
+                    UVs
+                </button>
             </div>
 
             <!-- Small icon buttons top right -->
@@ -336,6 +344,8 @@
                 </div>
             </div>
         </div>
+
+        <metadataViewer :title="t('players.show.user_variables')" :metadata="player.variables" :show.sync="showingUserVariables"></metadataViewer>
 
         <!-- Echo Info -->
         <modal :show.sync="showingEchoInfo">
