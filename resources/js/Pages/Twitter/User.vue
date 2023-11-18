@@ -4,7 +4,7 @@
         <template>
             <div class="w-full items-center flex flex-wrap mb-6 max-w-screen-md m-auto relative">
                 <div class="mr-3">
-                    <img class="block w-24 h-24 rounded-full" :src="user.avatar_url" @error="avatarError" />
+                    <img class="block w-24 h-24 rounded-full object-contain" :src="user.avatar_url" @error="avatarError" />
                 </div>
                 <div>
                     <inertia-link :href="'/players/' + player.licenseIdentifier + '/characters/' + character.id" class="hover:underline text-xl dark:text-white">
