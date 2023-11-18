@@ -52,7 +52,8 @@
             "online": "Sailin'",
             "offline": "Gone Missing",
             "unavailable": "Lost at sea",
-            "unavailable_info": "The player's status or id be lost at this moment"
+            "unavailable_info": "The player's status or id be lost at this moment",
+            "afk": "Avast, Me Hearties!"
         },
         "all": "All hands",
         "back": "Avast",

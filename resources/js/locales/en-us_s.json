@@ -53,7 +53,8 @@
             "online": "Online",
             "offline": "Offline",
             "unavailable": "Don't know",
-            "unavailable_info": "Player status or id is unavailable 'bout now"
+            "unavailable_info": "Player status or id is unavailable 'bout now",
+            "afk": "Gone Fishin'"
         },
         "all": "Y'all",
         "back": "Git on back",

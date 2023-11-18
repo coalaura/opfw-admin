@@ -53,7 +53,8 @@
             "online": "Up and about",
             "offline": "Not a sausage",
             "unavailable": "Gone walkabout",
-            "unavailable_info": "No clue where that player is, cobber."
+            "unavailable_info": "No clue where that player is, cobber.",
+            "afk": "Gone walkabout"
         },
         "all": "Bloody heaps",
         "back": "Chuck a U-ey",

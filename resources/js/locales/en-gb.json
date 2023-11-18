@@ -53,7 +53,8 @@
             "online": "Fancy Being Online",
             "offline": "Piss Off! Offline!",
             "unavailable": "Bugger Me! Unavailable!",
-            "unavailable_info": "Sod it. Player status or id is unavailable at this moment."
+            "unavailable_info": "Sod it. Player status or id is unavailable at this moment.",
+            "afk": "Buggered Off"
         },
         "all": "Bloody hell",
         "back": "Bugger off",

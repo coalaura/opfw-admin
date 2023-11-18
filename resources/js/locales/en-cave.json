@@ -53,7 +53,8 @@
             "online": "Ugga",
             "offline": "Eek",
             "unavailable": "No Find",
-            "unavailable_info": "Player no exist or me no have id now"
+            "unavailable_info": "Player no exist or me no have id now",
+            "afk": "Ugg"
         },
         "all": "Grog",
         "back": "Ugga",

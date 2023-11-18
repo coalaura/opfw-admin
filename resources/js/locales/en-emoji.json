@@ -53,7 +53,8 @@
             "online": "🟢",
             "offline": "🔴",
             "unavailable": "🔒",
-            "unavailable_info": "🔒"
+            "unavailable_info": "🔒",
+            "afk": "😴"
         },
         "all": "🌍",
         "back": "⬅️",

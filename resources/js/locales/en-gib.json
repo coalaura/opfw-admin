@@ -53,7 +53,8 @@
             "online": "Fizzbuzzamania",
             "offline": "Blippity blop",
             "unavailable": "Flippity Foo",
-            "unavailable_info": "Blippity Bloop"
+            "unavailable_info": "Blippity Bloop",
+            "afk": "Bizurzi"
         },
         "all": "Fizzbuzzazam",
         "back": "Bloopity Blop",

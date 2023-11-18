@@ -52,6 +52,7 @@
         "permission": "Your current permission level",
         "status": {
             "online": "Online",
+            "afk": "AFK",
             "offline": "Offline",
             "unavailable": "Unavailable",
             "unavailable_info": "Player status or id is unavailable at this moment"

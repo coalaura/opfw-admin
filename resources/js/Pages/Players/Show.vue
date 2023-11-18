@@ -38,8 +38,17 @@
                     <badge class="border-yellow-200 bg-yellow-400 dark:bg-yellow-600" v-if="statusLoading">
                         <span class="font-semibold">{{ t('global.loading') }}</span>
                     </badge>
-                    <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" v-else-if="status">
+                    <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" v-else-if="status && status.character">
                         <span class="font-semibold">{{ t('global.status.online') }}
+                            <sup>[{{ status.source }}]</sup>
+                        </span>
+
+                        <span class="font-semibold cursor-pointer ml-1" @click="loadStatus()">
+                            <i class="fas fa-sync-alt"></i>
+                        </span>
+                    </badge>
+                    <badge class="border-lime-200 bg-lime-100 dark:bg-lime-700" v-else-if="status">
+                        <span class="font-semibold">{{ t('global.status.afk') }}
                             <sup>[{{ status.source }}]</sup>
                         </span>
 
