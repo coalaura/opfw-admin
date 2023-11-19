@@ -47,11 +47,11 @@ export default {
     },
     data() {
         const serverList = this.servers.map(server => {
-            server.info = server
-                ? this.t('servers.server_info', server.serverUptime, server.joinedAmount, server.maxClients)
+            server.info = server.information
+                ? this.t('servers.server_info', server.information.serverUptime, server.information.joinedAmount, server.information.maxClients)
                 : this.t('servers.no_server_data');
 
-            server.version = server ? server.serverVersion : false;
+            server.version = server.information ? server.information.serverVersion : false;
 
             return server;
         });
