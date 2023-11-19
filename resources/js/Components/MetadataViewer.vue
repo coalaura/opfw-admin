@@ -135,8 +135,10 @@ export default {
                     }
 
                     if (typeof value === "object") {
+                        const label = key + Array.isArray(value) ? ` (${value.length})` : "";
+
                         metadataJSON.push({
-                            key: `metadata.${key}`,
+                            key: `metadata.${label}`,
                             value: this.highlightJSON(value),
                             open: false
                         });
