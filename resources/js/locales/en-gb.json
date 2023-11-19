@@ -1227,7 +1227,7 @@
         "description": "An overview of the bloody game servers, innit.",
         "no_data": "Sorry mate, no API data available at the moment.",
         "no_server_data": "Bollocks! The server is currently unavailable, mate.",
-        "server_info": "Oi, this bleedin' server 'as been up for <b>{0}</b> bloomin' hours with <b>{1} out of {2}</b> wankers online."
+        "server_data": "This bloody server has been up for a pathetic <b>{0}</b> at a lousy <b>{1}</b> with a rubbish max capacity of <b>{2}</b> wankers."
     },
     "login": {
         "title": "Login with your sodding Discord account.",

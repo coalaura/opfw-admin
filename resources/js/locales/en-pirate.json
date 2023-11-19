@@ -1227,7 +1227,7 @@
         "description": "A mighty look at th' game servers, arrr!",
         "no_data": "Avast! No API data be available.",
         "no_server_data": "Arr! Th' server be currently unavailable.",
-        "server_info": "Aye, the ship be sailin' fer <b>{0}</b> wit' <b>{1} o' {2}</b> scallywags aboard."
+        "server_data": "Arr, the ship has been sailin' fer <b>{0}</b> at <b>{1}</b> wi' a max capacity o' <b>{2}</b> swashbucklers."
     },
     "login": {
         "title": "Set yer sails an' login wit' yer Discord account.",

@@ -1256,7 +1256,7 @@
         "title": "Servers",
         "description": "An overview of the game servers.",
         "no_data": "No API data available",
-		"server_info": "The server has been up for <b>{0}</b> with <b>{1} of {2}</b> players online.",
+		"server_data": "The server has been up for <b>{0}</b> at <b>{1}</b> with a max capacity of <b>{2}</b> players.",
 		"no_server_data": "The server is currently unavailable."
     },
     "login": {
