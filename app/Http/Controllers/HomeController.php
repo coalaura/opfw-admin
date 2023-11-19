@@ -104,49 +104,6 @@ class HomeController extends Controller
         return $response->redirect();
 	}
 
-    /**
-     * Returns player count info as json
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function playerCountApi(): \Illuminate\Http\Response
-    {
-        $data = $this->playerCount();
-
-        return (new \Illuminate\Http\Response(json_encode($data), 200))
-            ->header('Content-Type', 'application/json');
-    }
-
-    /**
-     * Returns player count info
-     *
-     * @return array|null
-     */
-    private function playerCount(): ?array
-    {
-        $totalPlayers = 0;
-        $joinedPlayers = 0;
-        $queuePlayers = 0;
-
-        $data = Server::collectAllApiData();
-        if (!$data) {
-            return null;
-        }
-
-        foreach ($data as $server) {
-            $totalPlayers += $server['total'];
-            $joinedPlayers += $server['joined'];
-            $queuePlayers += $server['queue'];
-        }
-
-        return [
-            'totalPlayers'  => $totalPlayers,
-            'joinedPlayers' => $joinedPlayers,
-            'queuePlayers'  => $queuePlayers,
-            'serverCount'   => sizeof($data),
-        ];
-    }
-
 	private function getDaysWithoutModdersImage()
 	{
 		$ban = DB::select("SELECT timestamp FROM user_bans WHERE SUBSTRING_INDEX(reason, '-', 1) IN ('MODDING', 'INJECTION', 'NO_PERMISSIONS', 'ILLEGAL_VALUES', 'TIMEOUT_BYPASS') ORDER BY timestamp DESC LIMIT 1");

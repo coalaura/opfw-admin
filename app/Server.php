@@ -5,7 +5,6 @@ namespace App;
 use App\Helpers\CacheHelper;
 use App\Helpers\GeneralHelper;
 use App\Helpers\OPFWHelper;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Throwable;
 
@@ -27,7 +26,7 @@ class Server
      */
     public function fetchApi(): array
     {
-        $data = GeneralHelper::get(self::fixApiUrl($this->url) . 'api.json') ?? null;
+        $data = GeneralHelper::get(self::fixApiUrl($this->url) . 'variables.json') ?? null;
 
         $response = OPFWHelper::parseResponse($data);
 
@@ -225,57 +224,6 @@ class Server
         $rawServerIps = explode(',', env('OP_FW_SERVERS', ''));
 
         return empty($rawServerIps) ? null : $rawServerIps[0];
-    }
-
-    /**
-     * Collects all the /api.json data from all servers
-     *
-     * @return array|null
-     */
-    public static function collectAllApiData(): ?array
-    {
-        $serverIps = explode(',', env('OP_FW_SERVERS', ''));
-
-        if (!$serverIps) {
-            return [];
-        }
-
-        if (CacheHelper::exists('server_all_api')) {
-            return CacheHelper::read('server_all_api', []);
-        }
-
-        $result = [];
-        foreach ($serverIps as $serverIp) {
-            if ($serverIp) {
-                $serverIp = self::fixApiUrl($serverIp);
-
-                try {
-                    $json = GeneralHelper::get($serverIp . 'api.json') ?? [];
-
-                    if (!$json) {
-                        $result = null;
-                        break;
-                    } else {
-                        $response = OPFWHelper::parseResponse($json);
-
-                        if ($response->status && $response->data) {
-                            $json = $response->data;
-
-                            $result[] = [
-                                'joined' => isset($json['joinedAmount']) ? intval($json['joinedAmount']) : 0,
-                                'total'  => isset($json['maxClients']) ? intval($json['maxClients']) : 0,
-                                'queue'  => isset($json['queueAmount']) ? intval($json['queueAmount']) : 0,
-                            ];
-                        }
-                    }
-                } catch (Throwable $t) {
-                }
-            }
-        }
-
-        CacheHelper::write('server_all_api', $result, 5 * CacheHelper::MINUTE);
-
-        return $result;
     }
 
 }

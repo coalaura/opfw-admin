@@ -271,9 +271,6 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 });
 
 Route::group(['middleware' => ['staff', 'session'], 'prefix' => 'api'], function () {
-    // Player count api
-    Route::get('players', [HomeController::class, 'playerCountApi']);
-
     // Character info api
     Route::post('characters', [PlayerCharacterController::class, 'getCharacters']);
 

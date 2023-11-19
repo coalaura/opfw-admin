@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\GeneralHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
 use App\Server;
@@ -33,8 +32,8 @@ class ApiController extends Controller
         }
 
         // Database connection test
-        $start = microtime(true);
-        $one = DB::select(DB::raw("SELECT 1 as one"));
+        $start      = microtime(true);
+        $one        = DB::select(DB::raw("SELECT 1 as one"));
         $selectTime = $this->formatMilliseconds(round((microtime(true) - $start) * 1000));
 
         if (!$one || $one[0]->one !== 1) {
@@ -42,8 +41,8 @@ class ApiController extends Controller
         }
 
         // Server API test
-        $start = microtime(true);
-        $api = OPFWHelper::getApiJSON(Server::getFirstServer());
+        $start      = microtime(true);
+        $api        = OPFWHelper::getVariablesJSON(Server::getFirstServer());
         $serverTime = $this->formatMilliseconds(round((microtime(true) - $start) * 1000));
 
         if (!$api) {
@@ -51,21 +50,21 @@ class ApiController extends Controller
         }
 
         $data = [
-            'ip'             => $request->ip(),
-            'userAgent'      => $request->userAgent(),
-            'fingerprint'    => $request->fingerprint(),
+            'ip'              => $request->ip(),
+            'userAgent'       => $request->userAgent(),
+            'fingerprint'     => $request->fingerprint(),
 
-            'SELECT 1'       => $selectTime,
-            '/api.json'      => $serverTime,
+            'SELECT 1'        => $selectTime,
+            '/variables.json' => $serverTime,
 
-            'accept'         => $request->header('accept'),
-            'acceptLanguage' => $request->header('accept-language'),
-            'acceptEncoding' => $request->header('accept-encoding'),
+            'accept'          => $request->header('accept'),
+            'acceptLanguage'  => $request->header('accept-language'),
+            'acceptEncoding'  => $request->header('accept-encoding'),
         ];
 
         return $this->json(true, [
             'time' => microtime(true) - $debugStart,
-            'info' => $data
+            'info' => $data,
         ]);
     }
 }

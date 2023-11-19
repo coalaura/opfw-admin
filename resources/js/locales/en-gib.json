@@ -1235,8 +1235,8 @@
         "title": "Swarmkers",
         "description": "An overview of the shmon dzurilbs.",
         "no_data": "Ip foza sitad elbavae lataid.",
-        "server_data": "Eht revres sah neeb pu rof <b>{0}</b> htiw <b>{1} fo {2}</b> sreyaelp enilno dna <b>{3}</b> ni eht euqeeq.",
-        "no_server_data": "Eht revres si yltcudorp ,ynamtluvni."
+        "no_server_data": "Eht revres si yltcudorp ,ynamtluvni.",
+        "server_info": "The flimble has been nork for <b>{0}</b> blorple with <b>{1} of {2}</b> zurglesorks skrindle."
     },
     "login": {
         "title": "Nigol htiw ruoy drociaD tnauqE.",

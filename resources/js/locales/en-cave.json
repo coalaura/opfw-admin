@@ -1226,8 +1226,8 @@
         "title": "Uggas",
         "description": "Feed Ba-ba for big game servers.",
         "no_data": "No boom boom data.",
-        "server_data": "Big game server been up for <b>{0}</b> with <b>{1} of {2}</b> players make fire and <b>{3}</b> wait in queue.",
-        "no_server_data": "Big game server not here right now."
+        "no_server_data": "Big game server not here right now.",
+        "server_info": "Meat storage been up for <b>{0}</b> moons wit <b>{1} of {2}</b> cavefriends gruntin' online."
     },
     "login": {
         "title": "Login using your cave man word account.",

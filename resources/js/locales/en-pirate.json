@@ -1226,8 +1226,8 @@
         "title": "Warships",
         "description": "A mighty look at th' game servers, arrr!",
         "no_data": "Avast! No API data be available.",
-        "server_data": "Th' server be sailin' fer <b>{0}</b> wit' <b>{1} o' {2}</b> scurvy dogs aboard an' <b>{3}</b> in th' queue.",
-        "no_server_data": "Arr! Th' server be currently unavailable."
+        "no_server_data": "Arr! Th' server be currently unavailable.",
+        "server_info": "Aye, the ship be sailin' fer <b>{0}</b> wit' <b>{1} o' {2}</b> scallywags aboard."
     },
     "login": {
         "title": "Set yer sails an' login wit' yer Discord account.",

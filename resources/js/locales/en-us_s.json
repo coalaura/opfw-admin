@@ -1226,8 +1226,8 @@
         "title": "Servahs",
         "description": "A lil' overview of them game servers, darlin'.",
         "no_data": "No API data available, bless your heart.",
-        "server_data": "The server has been up for <b>{0}</b> with <b>{1} of y'all outta {2}</b> players online and <b>{3}</b> waitin' in the queue.",
-        "no_server_data": "Bless your heart, the server ain't available right now."
+        "no_server_data": "Bless your heart, the server ain't available right now.",
+        "server_info": "Th' server done been up fer <b>{0}</b> with <b>{1} of {2}</b> players online."
     },
     "login": {
         "title": "Login with y'alls Discord account, sugah.",

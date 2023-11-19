@@ -446,16 +446,16 @@ class OPFWHelper
     }
 
     /**
-     * Gets the api.json
+     * Gets the variables.json
      *
      * @param string $serverIp
      * @return array|null
      */
-    public static function getApiJSON(string $serverIp): ?array
+    public static function getVariablesJSON(string $serverIp): ?array
     {
         $serverIp = Server::fixApiUrl($serverIp);
 
-        $data = self::executeRoute($serverIp, $serverIp . 'api.json', [], 'GET', 1);
+        $data = self::executeRoute($serverIp, $serverIp . 'variables.json', [], 'GET', 1);
 
         if (!$data->status) {
             return null;
@@ -580,12 +580,6 @@ class OPFWHelper
         if (!$token) {
             return new OPFWResponse(false, 'Invalid OP-FW configuration.');
         }
-
-        /*
-        if (!CacheHelper::getServerStatus($serverIp)) {
-            return new OPFWResponse(false, 'Server is offline (cached).');
-        }
-        */
 
         if (Str::contains($route, 'localhost')) {
             $route = str_replace('https://', 'http://', $route);

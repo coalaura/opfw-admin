@@ -73,42 +73,6 @@ class CacheHelper
     }
 
     /**
-     * boolean with the server status
-     *
-     * @return array
-     */
-    public static function getServerStatus(string $serverIp, bool $doRefresh = false): bool
-    {
-        $serverIp = Server::fixApiUrl($serverIp);
-
-        if (!$doRefresh) {
-            return self::read("status__" . $serverIp, true);
-        }
-
-        $data = json_decode(GeneralHelper::get($serverIp . "api.json", 5, 3), true);
-        if (!$data) {
-            echo "Trying again...";
-
-            $data = json_decode(GeneralHelper::get($serverIp . "api.json", 10, 5), true);
-            if (!$data) {
-                echo "Trying again...";
-
-                $data = json_decode(GeneralHelper::get($serverIp . "api.json", 15, 10), true);
-            }
-        }
-
-        $status = false;
-
-        if ($data && $data["statusCode"] === 200 && $data["data"] && $data["data"]["serverVersion"]) {
-            $status = true;
-        }
-
-        self::write("status__" . $serverIp, $status, self::MINUTE * 5);
-
-        return $status;
-    }
-
-    /**
      * Forget something in the cache
      *
      * @param string $key
