@@ -324,7 +324,15 @@
         "ooc": "OOC Messages",
         "ooc_details": "Amount of local and global ooc messages sent.",
         "reports": "Reports",
-        "reports_details": "Amount of reports created."
+        "reports_details": "Amount of reports created.",
+        "impounds": "Impounds",
+        "impounds_details": "Amount of vehicles impounded.",
+        "robbed_peds": "Robbed Peds",
+        "robbed_peds_details": "Amount of peds robbed.",
+        "daily_tasks": "Daily Tasks",
+        "daily_tasks_details": "Amount of daily tasks completed.",
+        "deaths": "Deaths",
+        "deaths_details": "Amount of deaths."
     },
     "map": {
         "title": "Live-Map",

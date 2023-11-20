@@ -35,6 +35,10 @@
             <StatisticsTable source="joins" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="ooc" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="reports" tag="amount" :currency="false" :search="search" />
+            <StatisticsTable source="impounds" tag="amount" :currency="false" :search="search" />
+            <StatisticsTable source="robbed_peds" tag="amount" :currency="false" :search="search" />
+            <StatisticsTable source="daily_tasks" tag="amount" :currency="false" :search="search" />
+            <StatisticsTable source="deaths" tag="amount" :currency="false" :search="search" />
         </template>
 
     </div>

@@ -72,16 +72,40 @@ class StatisticsHelper
         return self::collectUserLogsCountStatistics("User Joined");
     }
 
-    // Joins (count)
+    // OOC Messages (count)
     public static function collectOOCMessagesStatistics(): array
     {
         return self::collectUserLogsCountStatistics("Global OOC message", "Local OOC message");
     }
 
-    // Joins (count)
+    // Reports (count)
     public static function collectReportsStatistics(): array
     {
         return self::collectUserLogsCountStatistics("Report");
+    }
+
+    // Impounds (count)
+    public static function collectImpoundsStatistics(): array
+    {
+        return self::collectUserLogsCountStatistics("Impound");
+    }
+
+    // Robbed Peds (count)
+    public static function collectRobbedPedsStatistics(): array
+    {
+        return self::collectUserLogsCountStatistics("Robbed Ped");
+    }
+
+    // Daily Tasks (count)
+    public static function collectDailyTasksStatistics(): array
+    {
+        return self::collectUserLogsCountStatistics("Daily Task Completed");
+    }
+
+    // Deaths (count)
+    public static function collectDeathsStatistics(): array
+    {
+        return self::collectUserLogsCountStatistics("Player Killed", "Player Died");
     }
 
     private static function collectUserLogsCountStatistics(string ...$action): array
