@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\GeneralHelper;
 use App\Helpers\OPFWHelper;
 use App\Server;
 use Illuminate\Http\Response;
@@ -93,7 +94,7 @@ class GraphController extends Controller
 			$monthPlaytime += $ban->playtime * $percentage;
 
             $percentage = str_pad(number_format(($percentage) * 100, 1) . "%", 6);
-            $playtime = str_pad($this->formatSecondsMinimal($ban->playtime), 13);
+            $playtime = str_pad(GeneralHelper::formatSecondsMinimal($ban->playtime), 13);
 
             $leaderboard[] = str_pad(($x + 1) . "", 2, "0", STR_PAD_LEFT) . ". " . $percentage . " " . $count . " " . $playtime . " " . $ban->reason;
         }
@@ -109,12 +110,12 @@ class GraphController extends Controller
 			$totalPlaytime += $ban->playtime * $percentage;
 
             $percentage = str_pad(number_format(($percentage) * 100, 1) . "%", 6);
-            $playtime = str_pad($this->formatSecondsMinimal($ban->playtime), 13);
+            $playtime = str_pad(GeneralHelper::formatSecondsMinimal($ban->playtime), 13);
 
             $leaderboard2[] = str_pad(($x + 1) . "", 2, "0", STR_PAD_LEFT) . ". " . $percentage . " " . $count . " " . $playtime . " " . $ban->reason;
         }
 
-        $text = $image . "Last 30 days (" . $this->formatSecondsMinimal($monthPlaytime) . ")\n\n" . implode("\n", $leaderboard) . "\n\n- - -\n\nAll time (" . $this->formatSecondsMinimal($totalPlaytime) . ")\n\n" . implode("\n", $leaderboard2);
+        $text = $image . "Last 30 days (" . GeneralHelper::formatSecondsMinimal($monthPlaytime) . ")\n\n" . implode("\n", $leaderboard) . "\n\n- - -\n\nAll time (" . GeneralHelper::formatSecondsMinimal($totalPlaytime) . ")\n\n" . implode("\n", $leaderboard2);
 
 		return $this->fakeText(200, $text);
     }

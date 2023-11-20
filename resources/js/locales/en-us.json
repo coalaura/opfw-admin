@@ -436,6 +436,15 @@
         "debug_info_failed": "Failed to fetch debug info.",
         "debug_collecting": "Collecting info...",
 
+        "debug_ping": "Ping Ping",
+        "debug_system": "System Info",
+        "debug_system_uptime": "System Uptime",
+        "debug_php_version": "PHP Version",
+        "debug_database_check": "Query Time",
+        "debug_api_variables": "API Time",
+        "debug_request_ip": "Request IP",
+        "debug_user_agent": "User-Agent",
+
         "permissions": "Permissions",
         "perm": "Permission",
         "perm_level": "Level",

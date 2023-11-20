@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\GeneralHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
 use App\Server;
@@ -34,32 +35,35 @@ class ApiController extends Controller
         // Database connection test
         $start      = microtime(true);
         $one        = DB::select(DB::raw("SELECT 1 as one"));
-        $selectTime = $this->formatMilliseconds(round((microtime(true) - $start) * 1000));
+        $selectTime = GeneralHelper::formatMilliseconds(round((microtime(true) - $start) * 1000));
 
         if (!$one || $one[0]->one !== 1) {
-            $selectTime = "unavailable";
+            $selectTime = false;
         }
 
         // Server API test
         $start      = microtime(true);
         $api        = OPFWHelper::getVariablesJSON(Server::getFirstServer());
-        $serverTime = $this->formatMilliseconds(round((microtime(true) - $start) * 1000));
+        $serverTime = GeneralHelper::formatMilliseconds(round((microtime(true) - $start) * 1000));
 
         if (!$api) {
-            $serverTime = "unavailable";
+            $serverTime = false;
         }
 
         $data = [
-            'ip'              => $request->ip(),
-            'userAgent'       => $request->userAgent(),
-            'fingerprint'     => $request->fingerprint(),
+            ['system', php_uname()],
+            ['system_uptime', GeneralHelper::getLastSystemRestartTime()],
+            ['php_version', phpversion()],
 
-            'SELECT 1'        => $selectTime,
-            '/variables.json' => $serverTime,
+            [], // separator
 
-            'accept'          => $request->header('accept'),
-            'acceptLanguage'  => $request->header('accept-language'),
-            'acceptEncoding'  => $request->header('accept-encoding'),
+            ['database_check', $selectTime],
+            ['api_variables', $serverTime],
+
+            [], // separator
+
+            ['request_ip', $request->ip()],
+            ['user_agent', $request->userAgent()],
         ];
 
         return $this->json(true, [

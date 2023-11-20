@@ -2,15 +2,17 @@
 
 namespace App\Helpers;
 
+use App\Player;
+use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
-use App\Player;
+use Illuminate\Support\Carbon;
 
 class GeneralHelper
 {
     const DefaultDannies = [
         -1667301416 => ["headBlendData" => ["skinSecondId" => 0, "shapeSecondId" => 0, "shapeMix" => 0.0, "isParent" => false, "skinMix" => 0.0, "thirdMix" => 0.0, "shapeThirdId" => 0, "shapeFirstId" => 0, "skinFirstId" => 0, "skinThirdId" => 0], "headOverlay" => [], "hairColor" => ["colorId" => -1, "highlightColorId" => -1], "components" => ["1" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "2" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "3" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "4" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "5" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "6" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "7" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "8" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 240], "9" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "10" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "11" => ["drawableId" => 6, "paletteId" => 0, "textureId" => 1], "0" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0]], "props" => ["1" => ["textureId" => -1, "drawableId" => -1], "2" => ["textureId" => -1, "drawableId" => -1], "0" => ["textureId" => -1, "drawableId" => -1], "7" => ["textureId" => -1, "drawableId" => -1], "6" => ["textureId" => -1, "drawableId" => -1]], "faceFeatures" => ["1" => 0.0, "2" => 0.0, "3" => 0.0, "4" => 0.0, "5" => 0.0, "6" => 0.0, "7" => 0.0, "8" => 0.0, "9" => 0.0, "10" => 0.0, "11" => 0.0, "12" => 0.0, "13" => 0.0, "14" => 0.0, "15" => 0.0, "16" => 0.0, "17" => 0.0, "18" => 0.0, "19" => 0.0, "0" => 0.0], "eyeColor" => -1],
-        1885233650 => ["headBlendData" => ["skinSecondId" => 0, "shapeSecondId" => 0, "shapeMix" => 0.0, "isParent" => false, "skinMix" => 0.0, "thirdMix" => 0.0, "shapeThirdId" => 0, "shapeFirstId" => 0, "skinFirstId" => 0, "skinThirdId" => 0], "headOverlay" => [], "hairColor" => ["colorId" => -1, "highlightColorId" => -1], "components" => ["1" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "2" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "3" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "4" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "5" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "6" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "7" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "8" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 240], "9" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "10" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "11" => ["drawableId" => 6, "paletteId" => 0, "textureId" => 1], "0" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0]], "props" => ["1" => ["textureId" => -1, "drawableId" => -1], "2" => ["textureId" => -1, "drawableId" => -1], "0" => ["textureId" => -1, "drawableId" => -1], "7" => ["textureId" => -1, "drawableId" => -1], "6" => ["textureId" => -1, "drawableId" => -1]], "faceFeatures" => ["1" => 0.0, "2" => 0.0, "3" => 0.0, "4" => 0.0, "5" => 0.0, "6" => 0.0, "7" => 0.0, "8" => 0.0, "9" => 0.0, "10" => 0.0, "11" => 0.0, "12" => 0.0, "13" => 0.0, "14" => 0.0, "15" => 0.0, "16" => 0.0, "17" => 0.0, "18" => 0.0, "19" => 0.0, "0" => 0.0], "eyeColor" => -1]
+        1885233650  => ["headBlendData" => ["skinSecondId" => 0, "shapeSecondId" => 0, "shapeMix" => 0.0, "isParent" => false, "skinMix" => 0.0, "thirdMix" => 0.0, "shapeThirdId" => 0, "shapeFirstId" => 0, "skinFirstId" => 0, "skinThirdId" => 0], "headOverlay" => [], "hairColor" => ["colorId" => -1, "highlightColorId" => -1], "components" => ["1" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "2" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "3" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "4" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "5" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "6" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "7" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "8" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 240], "9" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "10" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0], "11" => ["drawableId" => 6, "paletteId" => 0, "textureId" => 1], "0" => ["drawableId" => 0, "paletteId" => 0, "textureId" => 0]], "props" => ["1" => ["textureId" => -1, "drawableId" => -1], "2" => ["textureId" => -1, "drawableId" => -1], "0" => ["textureId" => -1, "drawableId" => -1], "7" => ["textureId" => -1, "drawableId" => -1], "6" => ["textureId" => -1, "drawableId" => -1]], "faceFeatures" => ["1" => 0.0, "2" => 0.0, "3" => 0.0, "4" => 0.0, "5" => 0.0, "6" => 0.0, "7" => 0.0, "8" => 0.0, "9" => 0.0, "10" => 0.0, "11" => 0.0, "12" => 0.0, "13" => 0.0, "14" => 0.0, "15" => 0.0, "16" => 0.0, "17" => 0.0, "18" => 0.0, "19" => 0.0, "0" => 0.0], "eyeColor" => -1],
     ];
 
     const PedComponents = [
@@ -175,12 +177,12 @@ class GeneralHelper
             unset($info['status']);
 
             $info = [
-                'ip' => $ip,
-                'country' => $info['country'] ?? 'N/A',
-                'isp' => $info['isp'] ?? 'N/A',
-                'proxy' => $info['proxy'] ? 1 : 0,
-                'hosting' => $info['hosting'] ? 1 : 0,
-                'last_crawled' => time()
+                'ip'           => $ip,
+                'country'      => $info['country'] ?? 'N/A',
+                'isp'          => $info['isp'] ?? 'N/A',
+                'proxy'        => $info['proxy'] ? 1 : 0,
+                'hosting'      => $info['hosting'] ? 1 : 0,
+                'last_crawled' => time(),
             ];
 
             DB::table('panel_ip_infos')->insert($info);
@@ -221,7 +223,9 @@ class GeneralHelper
         $changed = 0;
 
         foreach ($modelData["components"] as $componentId => $component) {
-            if (!in_array(intval($componentId), self::PedComponents)) continue;
+            if (!in_array(intval($componentId), self::PedComponents)) {
+                continue;
+            }
 
             $defaultValue = $default["components"][$componentId] ?? null;
 
@@ -231,7 +235,9 @@ class GeneralHelper
         }
 
         foreach ($modelData["headOverlay"] as $overlayId => $overlay) {
-            if (!in_array(intval($overlayId), self::PedOverlays)) continue;
+            if (!in_array(intval($overlayId), self::PedOverlays)) {
+                continue;
+            }
 
             if ($overlay["overlayOpacity"] >= 0.3 && $overlay["overlayValue"] !== 255) {
                 $changed++;
@@ -239,7 +245,9 @@ class GeneralHelper
         }
 
         foreach ($modelData["props"] as $propId => $prop) {
-            if (!in_array(intval($propId), self::PedProps)) continue;
+            if (!in_array(intval($propId), self::PedProps)) {
+                continue;
+            }
 
             $defaultValue = $default["props"][$propId] ?? null;
 
@@ -248,7 +256,7 @@ class GeneralHelper
             }
         }
 
-        $total = sizeof(self::PedComponents) + sizeof(self::PedOverlays) + sizeof(self::PedProps);
+        $total      = sizeof(self::PedComponents) + sizeof(self::PedOverlays) + sizeof(self::PedProps);
         $percentage = 1 - ($changed / $total);
 
         $defaultHeadBlend = $default["headBlendData"];
@@ -269,7 +277,7 @@ class GeneralHelper
      */
     public static function inspiring(): array
     {
-        $key = 'inspiring_quote';
+        $key   = 'inspiring_quote';
         $quote = null;
         if (CacheHelper::exists($key)) {
             $quote = CacheHelper::read($key, []);
@@ -280,8 +288,8 @@ class GeneralHelper
 
             if (!$quote || !isset($quote['expires'])) {
                 $quote = [
-                    'quote' => null,
-                    'author' => null,
+                    'quote'   => null,
+                    'author'  => null,
                     'expires' => null,
                 ];
             }
@@ -289,13 +297,13 @@ class GeneralHelper
             if ($json) {
                 unset($quote['expires']);
 
-                $quote = self::randomElement($json, $quote, 'quote');
+                $quote            = self::randomElement($json, $quote, 'quote');
                 $quote['expires'] = time() + (12 * 60 * 60);
 
                 CacheHelper::write($key, $quote);
             } else {
                 $quote = [
-                    'quote' => 'Quote machine broke',
+                    'quote'  => 'Quote machine broke',
                     'author' => 'Twoot',
                 ];
             }
@@ -342,7 +350,7 @@ class GeneralHelper
             return null;
         }
 
-        $lines = explode("\n", $contents);
+        $lines  = explode("\n", $contents);
         $result = [];
         foreach ($lines as $line) {
             $re = '/^({.+?}) (.+?) (.+)$/m';
@@ -352,13 +360,13 @@ class GeneralHelper
                 continue;
             }
 
-            $icon = $matches[2];
-            $obj = $matches[1];
+            $icon  = $matches[2];
+            $obj   = $matches[1];
             $label = $matches[3];
 
             $result[] = [
-                'icon' => $icon,
-                'label' => $label,
+                'icon'   => $icon,
+                'label'  => $label,
                 'coords' => $obj,
             ];
         }
@@ -389,7 +397,7 @@ class GeneralHelper
             );
 
             $res = $client->request('GET', $url, [
-                'timeout' => $timeout,
+                'timeout'         => $timeout,
                 'connect_timeout' => $connectTimeout,
             ]);
 
@@ -425,5 +433,99 @@ class GeneralHelper
         } else {
             return $cluster;
         }
+    }
+
+    public static function formatTimestamp($timestamp)
+	{
+		if ($timestamp instanceof Carbon) {
+			$timestamp = $timestamp->getTimestamp();
+		}
+
+		$seconds = time() - $timestamp;
+
+		return self::formatSeconds($seconds) . " ago";
+	}
+
+    public static function formatMilliseconds($ms)
+    {
+        if ($ms < 4000) {
+            return number_format($ms) . "ms";
+        }
+
+        $fmt = self::formatSecondsMinimal(floor($ms / 1000));
+
+        $ms = $ms % 1000;
+
+        $ms > 0 && $fmt .= " " . $ms . "ms";
+
+        return $fmt;
+    }
+
+	public static function formatSeconds($seconds)
+	{
+		$string = [
+			'year' => 60*60*24*365,
+			'month' => 60*60*24*30,
+			'week' => 60*60*24*7,
+			'day' => 60*60*24,
+			'hour' => 60*60,
+			'minute' => 60
+		];
+
+		foreach ($string as $label => $divisor) {
+			$value = floor($seconds / $divisor);
+
+			if ($value > 0) {
+				$label = $value > 1 ? $label . 's' : $label;
+
+				return $value . ' ' . $label;
+			}
+		}
+
+		return $seconds . ' second' . ($seconds > 1 ? 's' : '');
+	}
+
+    public static function formatSecondsMinimal($seconds)
+    {
+        if ($seconds === 0) return '0s';
+
+        $interval = new \DateInterval('PT' . $seconds . 'S');
+
+        $fmt = $interval->format('%ad %hh %im %ss');
+
+        return trim(preg_replace('/\b0\w /m', '', $fmt));
+    }
+
+    public static function getLastSystemRestartTime()
+    {
+        $os = PHP_OS;
+
+        if (stripos($os, 'WIN') !== false) { // For Windows
+            $output = shell_exec('systeminfo | findstr /C:"System Boot Time"');
+
+            if ($output) {
+                $parts = explode(":", $output, 2);
+
+                $restartTime = strtotime(trim($parts[1]));
+            } else {
+                return false;
+            }
+        } else { // For Linux/Unix
+            $uptime = shell_exec('uptime -s');
+
+            if ($uptime) {
+                $restartTime = strtotime(trim($uptime));
+            } else {
+                return false;
+            }
+        }
+
+        $now = new \DateTime();
+
+        $then = new \DateTime();
+        $then->setTimestamp($restartTime);
+
+        // Format the restart time
+        return $now->diff($then)->format('%ad %hh %im %ss');
     }
 }

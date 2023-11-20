@@ -220,7 +220,7 @@ class PlayerBanController extends Controller
             ? 'I banned this person with the reason: `' . $request->input('reason') . '`'
             : 'I banned this person without a reason';
 
-        $reason .= ($ban['expire'] ? ' for ' . $this->formatSeconds(intval($ban['expire'])) : ' indefinitely') . '.';
+        $reason .= ($ban['expire'] ? ' for ' . GeneralHelper::formatSeconds(intval($ban['expire'])) : ' indefinitely') . '.';
 
         // Automatically log the ban as a warning.
         $player->warnings()->create([
@@ -457,8 +457,8 @@ class PlayerBanController extends Controller
         $user = user();
         $reason = $request->input('reason') ?: 'No reason.';
 
-        $expireBefore = $ban->getExpireTimeInSeconds() ? $this->formatSeconds($ban->getExpireTimeInSeconds()) : 'permanent';
-        $expireAfter = $request->input('expire') ? $this->formatSeconds(intval($request->input('expire')) + (time() - $ban->getTimestamp())) : 'permanent';
+        $expireBefore = $ban->getExpireTimeInSeconds() ? GeneralHelper::formatSeconds($ban->getExpireTimeInSeconds()) : 'permanent';
+        $expireAfter = $request->input('expire') ? GeneralHelper::formatSeconds(intval($request->input('expire')) + (time() - $ban->getTimestamp())) : 'permanent';
 
 		$before = $ban->getExpireTimeInSeconds() || null;
 		$after = $request->input('expire') ? intval($request->input('expire')) + (time() - $ban->getTimestamp()) : null;
@@ -651,10 +651,10 @@ class PlayerBanController extends Controller
 
 				$counts = '<span style="color:#ff5b5b">' . $count . '</span>/<span style="color:#5bc2ff">' . $countIps . '</span>/<span style="color:#65d54e">' . $countIdentifiers . '</span>/<span style="color:#f0c622">' . $countFingerprint . '</span>';
 
-				$playtime = "Playtime is about " . $this->formatSeconds($found->playtime);
+				$playtime = "Playtime is about " . GeneralHelper::formatSeconds($found->playtime);
 
                 $raw[] = [
-					'label' => '[' . $counts . '] - ' . $this->formatTimestamp($found->last_connection) . ' - <a href="/players/' . $found->license_identifier . '" target="_blank" title="' . $playtime . '">' . $found->player_name . '</a>',
+					'label' => '[' . $counts . '] - ' . GeneralHelper::formatTimestamp($found->last_connection) . ' - <a href="/players/' . $found->license_identifier . '" target="_blank" title="' . $playtime . '">' . $found->player_name . '</a>',
 					'connection' => $found->last_connection,
 					'count' => $total,
 					'banned' => $found->ban_hash !== null

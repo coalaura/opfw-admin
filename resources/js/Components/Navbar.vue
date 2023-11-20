@@ -121,7 +121,7 @@
             </template>
         </modal>
 
-        <modal :show.sync="showingDebugInfo">
+        <modal :show.sync="showingDebugInfo" class="relative">
             <template #header>
                 <h1 class="dark:text-white">
                     {{ t('nav.debug_info') }}
@@ -129,6 +129,8 @@
             </template>
 
             <template #default>
+                <div v-if="debugTime" class="absolute top-1 right-2 text-sm">{{ debugTime }}ms</div>
+
                 <p v-if="loadingDebug" class="py-2 text-center text-xl">
                     <i class="fas fa-spinner animate-spin mr-2"></i>
                     {{ t("nav.debug_collecting") }}
@@ -140,13 +142,19 @@
                 </p>
 
                 <template v-else>
-                    <div class="mb-3" v-for="info in debugInfo" :key="info.key">
-                        <div class="font-mono mr-1 flex justify-between">
-                            <p class="font-semibold">{{ info.key }}</p>
-                            <p class="italic">{{ info.type }}</p>
-                        </div>
+                    <div class="mb-3" v-for="info in debugInfo">
+                        <template v-if="info.length === 2">
+                            <div class="font-semibold mb-1">
+                                {{ t("nav.debug_" + info[0]) }}
+                            </div>
 
-                        <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm" v-html="info.value"></pre>
+                            <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm text-red-600 dark:text-red-400 italic" v-if="!info[1]">N/A</pre>
+                            <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm" v-else>{{ info[1] }}</pre>
+                        </template>
+
+                        <template v-else>
+                            <div class="w-full border-t border-gray-500 my-6"></div>
+                        </template>
                     </div>
                 </template>
             </template>
@@ -260,6 +268,7 @@ export default {
             loadingDebug: false,
             showingDebugInfo: false,
             debugInfo: false,
+            debugTime: false,
 
             showingWorldTime: false,
             timezones: timezones,
@@ -384,6 +393,9 @@ export default {
             this.loadingDebug = true;
             this.showingDebugInfo = true;
 
+            this.debugTime = false;
+            this.debugInfo = false;
+
             try {
                 const start = Date.now();
 
@@ -396,34 +408,11 @@ export default {
                 if (data.status && data.data) {
                     time -= Math.floor(data.data.time * 1000);
 
-                    this.debugInfo = Object.entries(data.data.info).map(([key, value]) => {
-                        if (!value || value === "unavailable") {
-                            value = `<span class="text-red-600 dark:text-red-400 italic">${value}</span>`;
-                        }
-
-                        return {
-                            key: key,
-                            value: value,
-                            type: typeof value
-                        };
-                    });
-
-                    this.debugInfo.sort((a, b) => {
-                        return a.key.localeCompare(b.key);
-                    });
-
-                    this.debugInfo.unshift({
-                        key: 'Ping Pong',
-                        value: time + 'ms',
-                        type: 'number'
-                    });
-                } else {
-                    this.debugInfo = false;
+                    this.debugInfo = data.data.info;
+                    this.debugTime = time;
                 }
             } catch (e) {
                 console.error(e);
-
-                this.debugInfo = false;
             }
 
             this.loadingDebug = false;

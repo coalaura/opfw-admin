@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
 
 class Controller extends BaseController
 {
@@ -119,94 +118,6 @@ class Controller extends BaseController
         $player = user();
 
         return $player && $player->isRoot();
-    }
-
-	protected function formatTimestamp($timestamp)
-	{
-		if ($timestamp instanceof Carbon) {
-			$timestamp = $timestamp->getTimestamp();
-		}
-
-		$seconds = time() - $timestamp;
-
-		return $this->formatSeconds($seconds) . " ago";
-	}
-
-    protected function formatMilliseconds($ms)
-    {
-        if ($ms < 4000) {
-            return number_format($ms) . "ms";
-        }
-
-        $fmt = [];
-
-        $seconds = floor($ms / 1000);
-        $ms -= $seconds * 1000;
-
-        $minutes = floor($seconds / 60);
-        $seconds -= $minutes * 60;
-
-        $hours = floor($minutes / 60);
-        $minutes -= $hours * 60;
-
-        $hours > 0 && $fmt[] = $hours . "h";
-        $minutes > 0 && $fmt[] = $minutes . "m";
-        $seconds > 0 && $fmt[] = $seconds . "s";
-
-        ($ms > 0 || empty($fmt)) && $fmt[] = $ms . "ms";
-
-        return implode(" ", $fmt);
-    }
-
-	protected function formatSeconds($seconds)
-	{
-		$string = [
-			'year' => 60*60*24*365,
-			'month' => 60*60*24*30,
-			'week' => 60*60*24*7,
-			'day' => 60*60*24,
-			'hour' => 60*60,
-			'minute' => 60
-		];
-
-		foreach ($string as $label => $divisor) {
-			$value = floor($seconds / $divisor);
-
-			if ($value > 0) {
-				$label = $value > 1 ? $label . 's' : $label;
-
-				return $value . ' ' . $label;
-			}
-		}
-
-		return $seconds . ' second' . ($seconds > 1 ? 's' : '');
-	}
-
-    protected function formatSecondsMinimal($seconds)
-    {
-        $seconds = floor($seconds);
-
-        $hours = floor($seconds / 3600);
-        $seconds -= $hours * 3600;
-
-        $minutes = floor($seconds / 60);
-        $seconds -= $minutes * 60;
-
-        $time = "";
-
-        if ($hours > 0) {
-            $time .= $hours . "h ";
-        }
-
-        if ($minutes > 0) {
-            $time .= $minutes . "m ";
-        }
-
-        if ($seconds > 0) {
-            $time .= $seconds . "s";
-        }
-
-        return "~" . $time;
     }
 
 	private function brighten($rgb, $amount) {
