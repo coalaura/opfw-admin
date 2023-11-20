@@ -29,6 +29,7 @@ class StatisticsController extends Controller
         $result = false;
 
         switch ($source) {
+            // Currency statistics
             case 'pdm':
                 $result = StatisticsHelper::collectPDMStatistics();
                 break;
@@ -49,6 +50,11 @@ class StatisticsController extends Controller
                 break;
             case 'store':
                 $result = StatisticsHelper::collectStoreSaleStatistics();
+                break;
+
+            // Non currency statistics
+            case 'robberies':
+                $result = StatisticsHelper::collectRobberiesStatistics();
                 break;
         }
 

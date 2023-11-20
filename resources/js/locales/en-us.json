@@ -294,6 +294,7 @@
         "trend": "Trend",
 
         "tag_money": "Money",
+        "tag_amount": "Amount",
         "failed_load": "Failed to load statistics.",
 
         "casino": "Casino Revenue",
@@ -315,7 +316,10 @@
         "drugs_details": "Combined revenue from all Drug sales.",
 
         "store": "Store Sales",
-        "store_details": "Combined revenue from all Store sales (grocery, tool, pd, ems, etc.)."
+        "store_details": "Combined revenue from all Store sales (grocery, tool, pd, ems, etc.).",
+
+        "robberies": "Robberies",
+        "robberies_details": "Amount of store, bank and jewelry store robberies."
     },
     "map": {
         "title": "Live-Map",

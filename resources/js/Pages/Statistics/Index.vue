@@ -18,6 +18,8 @@
             <StatisticsTable source="pawn" tag="money" :currency="true" />
             <StatisticsTable source="drugs" tag="money" :currency="true" />
             <StatisticsTable source="store" tag="money" :currency="true" />
+
+            <StatisticsTable source="robberies" tag="amount" :currency="false" />
         </template>
 
     </div>

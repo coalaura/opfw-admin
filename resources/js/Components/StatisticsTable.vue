@@ -3,6 +3,7 @@
         <h2 class="text-lg flex gap-2">
             <div class="flex items-center" v-if="tag">
                 <span class="bg-lime-400 dark:bg-lime-700 py-0.5 px-2 text-xs rounded-sm shadow-sm" v-if="tag === 'money'">{{ t("statistics.tag_money") }}</span>
+                <span class="bg-teal-400 dark:bg-teal-700 py-0.5 px-2 text-xs rounded-sm shadow-sm" v-else-if="tag === 'amount'">{{ t("statistics.tag_amount") }}</span>
             </div>
 
             <span>
@@ -195,7 +196,7 @@ export default {
             function y(value) {
                 if (ceiling === 0 && floor === 0) return 1 + height;
 
-                return 1 + (height - (map(value - 1) * height));
+                return 1 + (height - (map(value) * height));
             }
 
             // Draw the line graph
@@ -258,7 +259,7 @@ export default {
 
             if (diff === null) return '-';
 
-            const format = this.numberFormat(diff, false, true);
+            const format = this.numberFormat(diff, false, this.currency);
 
             if (diff < 0) return `<span class="text-red-700 dark:text-red-300">${format}</span>`;
             else if (diff > 0) return `<span class="text-green-700 dark:text-green-300">+${format}</span>`;
