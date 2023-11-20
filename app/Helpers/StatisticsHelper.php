@@ -48,6 +48,12 @@ class StatisticsHelper
         return self::collectStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), 'with', 1) + SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'additional $', -1), 'due', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Item(s) Purchased' GROUP BY date ORDER BY timestamp DESC");
     }
 
+    // Store paychecks
+    public static function collectPaycheckStatistics(): array
+    {
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM(amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM money_logs WHERE details = 'hourly-salary' GROUP BY date ORDER BY timestamp DESC");
+    }
+
     // Robberies (count)
     public static function collectRobberiesStatistics(): array
     {

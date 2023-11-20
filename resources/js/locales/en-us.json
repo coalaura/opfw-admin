@@ -320,6 +320,9 @@
         "store": "Store Sales",
         "store_details": "Combined revenue from all Store sales (grocery, tool, pd, ems, etc.).",
 
+        "paycheck": "Paychecks",
+        "paycheck_details": "Combined amount of all received hourly paychecks.",
+
         "robberies": "Robberies",
         "robberies_details": "Amount of store, bank and jewelry store robberies."
     },

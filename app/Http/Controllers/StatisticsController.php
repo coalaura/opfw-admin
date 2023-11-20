@@ -51,6 +51,9 @@ class StatisticsController extends Controller
             case 'store':
                 $result = StatisticsHelper::collectStoreSaleStatistics();
                 break;
+            case 'paycheck':
+                $result = StatisticsHelper::collectPaycheckStatistics();
+                break;
 
             // Non currency statistics
             case 'robberies':
