@@ -28,7 +28,7 @@
             <StatisticsTable source="pawn" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="drugs" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="store" tag="money" :currency="true" :search="search" />
-            <StatisticsTable source="paychecks" tag="money" :currency="true" :search="search" />
+            <StatisticsTable source="paycheck" tag="money" :currency="true" :search="search" />
 
             <StatisticsTable source="robberies" tag="amount" :currency="false" :search="search" />
         </template>
