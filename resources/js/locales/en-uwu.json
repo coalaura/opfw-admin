@@ -318,7 +318,15 @@
         "ooc": "OOC Mewssagesies",
         "ooc_details": "Amount of wocaw and gwobaw ooc mewssagesies sent uwu",
         "reports": "Wepowtsies",
-        "reports_details": "Amount of wepowtsies cweated uwu"
+        "reports_details": "Amount of wepowtsies cweated uwu",
+        "impounds": "Impownds OwO",
+        "impounds_details": "Amownt of vehicles impownded. *giggles*",
+        "robbed_peds": "Wobbed Peds UwU",
+        "robbed_peds_details": "Amownt of peds wobbed. *snickers*",
+        "daily_tasks": "Daiwy Tasks >w<",
+        "daily_tasks_details": "Amownt of daiwy tasks completed. *blushes*",
+        "deaths": "DeffaUwUs",
+        "deaths_details": "Amownt of deffas owo."
     },
     "map": {
         "title": "Wive-Map UwU",

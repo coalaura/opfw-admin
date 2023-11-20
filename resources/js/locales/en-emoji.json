@@ -318,7 +318,15 @@
         "ooc": "🗯️",
         "ooc_details": "📨🗺️🗯️",
         "reports": "📋",
-        "reports_details": "🗂️📥"
+        "reports_details": "🗂️📥",
+        "impounds": "🚗🔒",
+        "impounds_details": "📈🚗🔒",
+        "robbed_peds": "👥💰",
+        "robbed_peds_details": "📈👥💰",
+        "daily_tasks": "🗓️🔧",
+        "daily_tasks_details": "📈🗓️🔧",
+        "deaths": "☠️",
+        "deaths_details": "📈☠️"
     },
     "map": {
         "title": "🌍 Live-Map",

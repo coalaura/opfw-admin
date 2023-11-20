@@ -318,7 +318,15 @@
         "ooc": "Caveman Talk",
         "ooc_details": "How many cave talk and bigger cave talk messages sent.",
         "reports": "Uh-ohs",
-        "reports_details": "Amount of uh-oh moments reported."
+        "reports_details": "Amount of uh-oh moments reported.",
+        "impounds": "Ugga ugga",
+        "impounds_details": "Heap of wagmas impounded.",
+        "robbed_peds": "Ugga peds nabbed",
+        "robbed_peds_details": "Amount of peds nabbed by clubba.",
+        "daily_tasks": "Sunrise chores",
+        "daily_tasks_details": "Amount of tasks for the Sun completed.",
+        "deaths": "Ugga ugga",
+        "deaths_details": "Amount of times clubba go bye-bye."
     },
     "map": {
         "title": "Ooga-Map",

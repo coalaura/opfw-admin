@@ -318,7 +318,15 @@
         "ooc": "Sheila Chatter",
         "ooc_details": "How many times ya copped an earful of blokes yakking away in the local and global chats.",
         "reports": "Whinger Reports",
-        "reports_details": "How many times some bloke complained and reported other blokes for doin' dodgy stuff."
+        "reports_details": "How many times some bloke complained and reported other blokes for doin' dodgy stuff.",
+        "impounds": "Snagged Rides",
+        "impounds_details": "Number of confiscated vehicles.",
+        "robbed_peds": "Pilfered Blokes",
+        "robbed_peds_details": "Number of unsuspecting pedestrians robbed.",
+        "daily_tasks": "Arvo Chores",
+        "daily_tasks_details": "Number of daily tasks ticked off.",
+        "deaths": "Bit the Dust",
+        "deaths_details": "Number of times kicked the bucket."
     },
     "map": {
         "title": "Bloody Live-Map",

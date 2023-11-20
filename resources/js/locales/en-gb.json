@@ -318,7 +318,15 @@
         "ooc": "Bloody OOC Messages",
         "ooc_details": "Amount of bloody local and global OOC messages sent by twats.",
         "reports": "Bollocks Reports",
-        "reports_details": "Amount of useless reports created by total wankers."
+        "reports_details": "Amount of useless reports created by total wankers.",
+        "impounds": "Confiscations",
+        "impounds_details": "Bloody hell, we've impounded quite a few vehicles, haven't we?",
+        "robbed_peds": "Mugged Chavs",
+        "robbed_peds_details": "Oh, we've had a right laugh nicking wallets off the poor sods!",
+        "daily_tasks": "Boring Chores",
+        "daily_tasks_details": "Ugh, we've actually bothered to complete some mundane tasks today, can you believe it?",
+        "deaths": "Kicked the Bucket",
+        "deaths_details": "Well, we've had a few tossers meet their untimely demise, haven't we?"
     },
     "map": {
         "title": "Wanker's Map",

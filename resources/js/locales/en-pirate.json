@@ -318,7 +318,15 @@
         "ooc": "Landlubber Messages",
         "ooc_details": "Amount of local and global landlubber messages sent.",
         "reports": "Bilge Rat Reports",
-        "reports_details": "Amount of bilge rat reports created."
+        "reports_details": "Amount of bilge rat reports created.",
+        "impounds": "Imparrrs",
+        "impounds_details": "Amount o' vessels impounded.",
+        "robbed_peds": "Pirrrate Booty",
+        "robbed_peds_details": "Amount o' booty pilfered from peds.",
+        "daily_tasks": "Pirate Duties",
+        "daily_tasks_details": "Amount o' daily duties completed.",
+        "deaths": "Walkin' the Plank",
+        "deaths_details": "Amount o' deaths at sea."
     },
     "map": {
         "title": "Sailin' Map",
