@@ -11,12 +11,13 @@
         </portal>
 
         <template>
-            <StatisticsTable :source="casino" :title="t('statistics.casino')" :details="t('statistics.casino_details')" />
-            <StatisticsTable :source="pdm" :title="t('statistics.pdm')" :details="t('statistics.pdm_details')" />
-            <StatisticsTable :source="edm" :title="t('statistics.edm')" :details="t('statistics.edm_details')" />
-            <StatisticsTable :source="gem" :title="t('statistics.gem')" :details="t('statistics.gem_details')" />
-            <StatisticsTable :source="pawn" :title="t('statistics.pawn')" :details="t('statistics.pawn_details')" />
-            <StatisticsTable :source="drugs" :title="t('statistics.drugs')" :details="t('statistics.drugs_details')" />
+            <StatisticsTable :source="casino" :title="t('statistics.casino')" :details="t('statistics.casino_details')" tag="money" />
+            <StatisticsTable :source="edm" :title="t('statistics.edm')" :details="t('statistics.edm_details')" tag="money" />
+            <StatisticsTable :source="pdm" :title="t('statistics.pdm')" :details="t('statistics.pdm_details')" tag="money" />
+            <StatisticsTable :source="gem" :title="t('statistics.gem')" :details="t('statistics.gem_details')" tag="money" />
+            <StatisticsTable :source="pawn" :title="t('statistics.pawn')" :details="t('statistics.pawn_details')" tag="money" />
+            <StatisticsTable :source="drugs" :title="t('statistics.drugs')" :details="t('statistics.drugs_details')" tag="money" />
+            <StatisticsTable :source="store" :title="t('statistics.store')" :details="t('statistics.store_details')" tag="money" />
         </template>
 
     </div>
@@ -53,6 +54,10 @@ export default {
             required: true,
         },
         drugs: {
+            type: Object,
+            required: true,
+        },
+        store: {
             type: Object,
             required: true,
         },

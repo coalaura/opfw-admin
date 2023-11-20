@@ -300,7 +300,10 @@
         "average": "📊🔢",
         "trend": "📈",
         "drugs": "💊📉",
-        "drugs_details": "💰🔀💊📉 🎩🔀 🔄 💊💰."
+        "drugs_details": "💰🔀💊📉 🎩🔀 🔄 💊💰.",
+        "tag_money": "💰",
+        "store": "🏪",
+        "store_details": "💵💼📧🚒👩‍⚕️"
     },
     "map": {
         "title": "🌍 Live-Map",
@@ -458,7 +461,15 @@
         "world_time_use": "🔧👥{0}",
         "world_time_also": "✨🔁{0}",
         "game_time": "⏰🎮✨💨",
-        "debug_collecting": "🔍📊..."
+        "debug_collecting": "🔍📊...",
+        "debug_ping": "🏓🏓",
+        "debug_system": "💻📊",
+        "debug_system_uptime": "⏰⬆️",
+        "debug_php_version": "📚🐘🔢",
+        "debug_database_check": "⏳⬅️",
+        "debug_api_variables": "📊⌛️",
+        "debug_request_ip": "🌐🆔",
+        "debug_user_agent": "🕵️‍♂️💻📋"
     },
     "pagination": {
         "previous": "⬅️",

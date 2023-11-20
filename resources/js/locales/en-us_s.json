@@ -300,7 +300,10 @@
         "average": "Ternin' average",
         "trend": "Trendin' ",
         "drugs": "Dernk Saales",
-        "drugs_details": "All them cash made from sellin' them Dernks."
+        "drugs_details": "All them cash made from sellin' them Dernks.",
+        "tag_money": "Moolah",
+        "store": "Peddlin' Profits",
+        "store_details": "All the money earned from sellin' goods at the store (grocery, tool, pd, ems, etc.)."
     },
     "map": {
         "title": "Active Map",
@@ -458,7 +461,15 @@
         "world_time_use": "Used by {0} player(s)",
         "world_time_also": "Same as: {0}",
         "game_time": "In-Game Time runs 12 times faster than real time.",
-        "debug_collecting": "Gatherin' intel..."
+        "debug_collecting": "Gatherin' intel...",
+        "debug_ping": "Ping Pong",
+        "debug_system": "System Info Y'all",
+        "debug_system_uptime": "System Uptime Ya'll",
+        "debug_php_version": "PHP Version",
+        "debug_database_check": "Query Time Partner",
+        "debug_api_variables": "API Time Ya Hear",
+        "debug_request_ip": "Request IP Y'all",
+        "debug_user_agent": "User-Agent Y'all"
     },
     "pagination": {
         "previous": "Aforehand",

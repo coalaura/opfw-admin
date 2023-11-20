@@ -300,7 +300,10 @@
         "average": "Bloody Average",
         "trend": "Bloody Trend",
         "drugs": "Dodgy Narcotics",
-        "drugs_details": "Bloody loot from all the dodgy narcotics sales."
+        "drugs_details": "Bloody loot from all the dodgy narcotics sales.",
+        "tag_money": "Peeve",
+        "store": "Bloody Shop Sales",
+        "store_details": "Bollocks revenue from all Shop sales (bloody grocery, flaming tool, police department, sodding EMS, etc.)."
     },
     "map": {
         "title": "Wanker's Map",
@@ -458,7 +461,15 @@
         "world_time_use": "Abused by {0} bloody wankers",
         "world_time_also": "Same as: {0}",
         "game_time": "In-Game Time runs 12 bloody times faster than real time.",
-        "debug_collecting": "Bloody hell, gathering some bloody information..."
+        "debug_collecting": "Bloody hell, gathering some bloody information...",
+        "debug_ping": "Ping Pong",
+        "debug_system": "System Bollocks",
+        "debug_system_uptime": "System Bloke Time",
+        "debug_php_version": "Bloody PHP Version",
+        "debug_database_check": "Query Pecker",
+        "debug_api_variables": "API Wanker Time",
+        "debug_request_ip": "Request Bollocks IP",
+        "debug_user_agent": "User-Bloody-Agent"
     },
     "pagination": {
         "previous": "Bollocks",

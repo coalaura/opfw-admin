@@ -293,6 +293,8 @@
         "average": "Average",
         "trend": "Trend",
 
+        "tag_money": "Money",
+
         "casino": "Casino Revenue",
         "casino_details": "Combined revenue from all available games in the casino.",
 
@@ -309,7 +311,10 @@
         "pawn_details": "Combined revenue from all Pawn Shop sales.",
 
         "drugs": "Drug Sales",
-        "drugs_details": "Combined revenue from all Drug sales."
+        "drugs_details": "Combined revenue from all Drug sales.",
+
+        "store": "Store Sales",
+        "store_details": "Combined revenue from all Store sales (grocery, tool, pd, ems, etc.)."
     },
     "map": {
         "title": "Live-Map",

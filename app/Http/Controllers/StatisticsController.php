@@ -25,6 +25,7 @@ class StatisticsController extends Controller
             'pawn'   => StatisticsHelper::collectPawnshopStatistics(),
             'casino' => StatisticsHelper::collectCasinoStatistics(),
             'drugs'  => StatisticsHelper::collectDrugSaleStatistics(),
+            'store'  => StatisticsHelper::collectStoreSaleStatistics(),
         ]);
     }
 

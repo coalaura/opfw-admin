@@ -300,7 +300,10 @@
         "average": "Mibriplo",
         "trend": "Flibber",
         "drugs": "Flibber-Flab Sales",
-        "drugs_details": "Blippity blop blop blop from all Flibber-Flab sales."
+        "drugs_details": "Blippity blop blop blop from all Flibber-Flab sales.",
+        "tag_money": "Wibberish",
+        "store": "Dibo Sales",
+        "store_details": "Combinudan ravernu frumdun all Dibo sales (gognab, flultip, rd, mse, etc.)."
     },
     "map": {
         "title": "Flerf-Pobot",
@@ -458,7 +461,15 @@
         "world_time_use": "Used by {0} zop bam(s)",
         "world_time_also": "Bing Bleep: {0}",
         "game_time": "Dwidab-Paki Tothu nusg 12 hoppi wabie thara nusg.",
-        "debug_collecting": "Zibbity-zobbity blippity-bloop..."
+        "debug_collecting": "Zibbity-zobbity blippity-bloop...",
+        "debug_ping": "Ping Pong",
+        "debug_system": "Vini Info",
+        "debug_system_uptime": "Vini Uptime",
+        "debug_php_version": "Wester Version",
+        "debug_database_check": "Plombi Tormal",
+        "debug_api_variables": "Bipo Tormal",
+        "debug_request_ip": "Dundu-Jan IP",
+        "debug_user_agent": "Pollox-Gond"
     },
     "pagination": {
         "previous": "Lomaba",
