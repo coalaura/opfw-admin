@@ -310,7 +310,15 @@
         "paycheck": "Booty",
         "paycheck_details": "Total haul from all the hourly paychecks ye received.",
         "robberies": "Plunderin'",
-        "robberies_details": "Number o' successful raids on stores, banks, and jewelers."
+        "robberies_details": "Number o' successful raids on stores, banks, and jewelers.",
+        "tuner": "Tunershop Booty",
+        "tuner_details": "Me booty gained from all Tunershop vessel sales.",
+        "joins": "Scallywag Joins",
+        "joins_details": "Amount of scallywags that joined the server.",
+        "ooc": "Landlubber Messages",
+        "ooc_details": "Amount of local and global landlubber messages sent.",
+        "reports": "Bilge Rat Reports",
+        "reports_details": "Amount of bilge rat reports created."
     },
     "map": {
         "title": "Sailin' Map",

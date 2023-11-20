@@ -310,7 +310,15 @@
         "paycheck": "Paydays",
         "paycheck_details": "All the dosh you've raked in from your hourly paychecks.",
         "robberies": "Heists",
-        "robberies_details": "The tally of all those dodgy jobs you've pulled off at shops, banks, and jewellery stores."
+        "robberies_details": "The tally of all those dodgy jobs you've pulled off at shops, banks, and jewellery stores.",
+        "tuner": "Ozzy's Car Emporium",
+        "tuner_details": "Total dosh made from flogging all them fancy cars at Ozzy's Car Emporium.",
+        "joins": "New Bloke Counter",
+        "joins_details": "Amount of cobbers who rocked up to the server for a cheeky gander.",
+        "ooc": "Sheila Chatter",
+        "ooc_details": "How many times ya copped an earful of blokes yakking away in the local and global chats.",
+        "reports": "Whinger Reports",
+        "reports_details": "How many times some bloke complained and reported other blokes for doin' dodgy stuff."
     },
     "map": {
         "title": "Bloody Live-Map",

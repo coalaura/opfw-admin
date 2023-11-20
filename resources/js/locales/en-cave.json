@@ -310,7 +310,15 @@
         "paycheck": "Uggabuggas",
         "paycheck_details": "Ugga ugga gugga dugga uggnak uggnak gugga ugga.",
         "robberies": "Guggagas",
-        "robberies_details": "Ugga gugga uggnak, uggnak ugga gugga uggnak."
+        "robberies_details": "Ugga gugga uggnak, uggnak ugga gugga uggnak.",
+        "tuner": "Ugga Ugga Shop Sellings",
+        "tuner_details": "All Ugga Ugga Shop vehicle sellings mashed together.",
+        "joins": "Caveman Tribe Members",
+        "joins_details": "How many new tribe members join big fire circle.",
+        "ooc": "Caveman Talk",
+        "ooc_details": "How many cave talk and bigger cave talk messages sent.",
+        "reports": "Uh-ohs",
+        "reports_details": "Amount of uh-oh moments reported."
     },
     "map": {
         "title": "Ooga-Map",

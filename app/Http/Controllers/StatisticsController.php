@@ -70,6 +70,15 @@ class StatisticsController extends Controller
                 case 'robberies':
                     $result = StatisticsHelper::collectRobberiesStatistics();
                     break;
+                case 'joins':
+                    $result = StatisticsHelper::collectJoinsStatistics();
+                    break;
+                case 'ooc':
+                    $result = StatisticsHelper::collectOOCMessagesStatistics();
+                    break;
+                case 'reports':
+                    $result = StatisticsHelper::collectReportsStatistics();
+                    break;
             }
 
             CacheHelper::write($key, $result, CacheHelper::HOUR);

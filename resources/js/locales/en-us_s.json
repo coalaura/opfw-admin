@@ -310,7 +310,15 @@
         "paycheck": "Paychecks",
         "paycheck_details": "Combined ammount of all received hourly paychecks.",
         "robberies": "Robbries",
-        "robberies_details": "Ammount of store, bank and jewelry stohr robberies."
+        "robberies_details": "Ammount of store, bank and jewelry stohr robberies.",
+        "tuner": "Tunashop Deals",
+        "tuner_details": "The total income from all them pimped-out whips at the Tunashop.",
+        "joins": "Y'all Joiners",
+        "joins_details": "The count of people who done showed up to the server.",
+        "ooc": "Chit-Chat",
+        "ooc_details": "How many times folks done talked outta character in the local or global chat.",
+        "reports": "Trouble-makin'",
+        "reports_details": "How many times folks done caused a ruckus and snitched on each other."
     },
     "map": {
         "title": "Active Map",

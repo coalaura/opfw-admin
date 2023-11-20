@@ -32,6 +32,9 @@
             <StatisticsTable source="paycheck" tag="money" :currency="true" :search="search" />
 
             <StatisticsTable source="robberies" tag="amount" :currency="false" :search="search" />
+            <StatisticsTable source="joins" tag="amount" :currency="false" :search="search" />
+            <StatisticsTable source="ooc" tag="amount" :currency="false" :search="search" />
+            <StatisticsTable source="reports" tag="amount" :currency="false" :search="search" />
         </template>
 
     </div>

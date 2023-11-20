@@ -63,7 +63,36 @@ class StatisticsHelper
     // Robberies (count)
     public static function collectRobberiesStatistics(): array
     {
-        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action IN ('Store Robbery', 'Bank Robbery', 'Jewelry Store') GROUP BY date ORDER BY timestamp DESC");
+        return self::collectUserLogsCountStatistics("Store Robbery", "Bank Robbery", "Jewelry Store");
+    }
+
+    // Joins (count)
+    public static function collectJoinsStatistics(): array
+    {
+        return self::collectUserLogsCountStatistics("User Joined");
+    }
+
+    // Joins (count)
+    public static function collectOOCMessagesStatistics(): array
+    {
+        return self::collectUserLogsCountStatistics("Global OOC message", "Local OOC message");
+    }
+
+    // Joins (count)
+    public static function collectReportsStatistics(): array
+    {
+        return self::collectUserLogsCountStatistics("Report");
+    }
+
+    private static function collectUserLogsCountStatistics(string ...$action): array
+    {
+        if (sizeof($action) === 1) {
+            return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = '{$action}' GROUP BY date ORDER BY timestamp DESC");
+        }
+
+        $action = implode("', '", $action);
+
+        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action IN ('{$action}') GROUP BY date ORDER BY timestamp DESC");
     }
 
     private static function collectStatistics(string $query): array

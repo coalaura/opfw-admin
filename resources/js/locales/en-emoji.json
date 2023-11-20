@@ -310,7 +310,15 @@
         "paycheck": "💸",
         "paycheck_details": "💰💰💰",
         "robberies": "🏦🔫",
-        "robberies_details": "💸🤑💎"
+        "robberies_details": "💸🤑💎",
+        "tuner": "🛠️🏎️",
+        "tuner_details": "💸 🚗",
+        "joins": "👥🔗",
+        "joins_details": "👥 🚪",
+        "ooc": "🗯️",
+        "ooc_details": "📨🗺️🗯️",
+        "reports": "📋",
+        "reports_details": "🗂️📥"
     },
     "map": {
         "title": "🌍 Live-Map",
