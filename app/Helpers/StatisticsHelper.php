@@ -87,13 +87,13 @@ class StatisticsHelper
     // Impounds (count)
     public static function collectImpoundsStatistics(): array
     {
-        return self::collectUserLogsCountStatistics("Impound");
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'got $', -1), '.', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Impound' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Robbed Peds (count)
     public static function collectRobbedPedsStatistics(): array
     {
-        return self::collectUserLogsCountStatistics("Robbed Ped");
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'received $', -1), '.', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Robbed Ped' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Daily Tasks (count)
