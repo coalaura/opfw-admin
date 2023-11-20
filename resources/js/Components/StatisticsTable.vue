@@ -1,19 +1,21 @@
 <template>
     <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mt-5" v-if="shown">
-        <h2 class="text-lg flex gap-2">
-            <div class="flex items-center" v-if="tag">
-                <span class="bg-lime-400 dark:bg-lime-700 py-0.5 px-2 text-xs rounded-sm shadow-sm" v-if="tag === 'money'">{{ t("statistics.tag_money") }}</span>
-                <span class="bg-teal-400 dark:bg-teal-700 py-0.5 px-2 text-xs rounded-sm shadow-sm" v-else-if="tag === 'amount'">{{ t("statistics.tag_amount") }}</span>
-            </div>
+        <div class="flex">
+            <h2 class="text-lg flex gap-2" @click="collapsed && toggleCollapsed()" :class="{'cursor-pointer': collapsed}">
+                <div class="flex items-center" v-if="tag">
+                    <span class="bg-lime-400 dark:bg-lime-700 py-0.5 px-2 text-xs rounded-sm shadow-sm" v-if="tag === 'money'">{{ t("statistics.tag_money") }}</span>
+                    <span class="bg-teal-400 dark:bg-teal-700 py-0.5 px-2 text-xs rounded-sm shadow-sm" v-else-if="tag === 'amount'">{{ t("statistics.tag_amount") }}</span>
+                </div>
 
-            <span>
-                {{ t('statistics.' + source) }}
-                <sup v-if="totalAmount > 0 || totalCount > 0">
-                    {{ numberFormat(totalAmount, false, currency) }}
-                    <span v-if="currency">- x{{ numberFormat(totalCount, false, false) }}</span>
-                </sup>
-            </span>
-        </h2>
+                <span>
+                    {{ t('statistics.' + source) }}
+                    <sup v-if="totalAmount > 0 || totalCount > 0">
+                        {{ numberFormat(totalAmount, false, currency) }}
+                        <span v-if="currency">- x{{ numberFormat(totalCount, false, false) }}</span>
+                    </sup>
+                </span>
+            </h2>
+        </div>
 
         <p class="text-sm italic mb-3">{{ t('statistics.' + source + '_details') }}</p>
 
