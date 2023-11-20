@@ -305,6 +305,9 @@
         "pdm": "PDM Sales",
         "pdm_details": "Combined revenue from all PDM upfront and finance sales.",
 
+        "tuner": "Tunershop Sales",
+        "tuner_details": "Combined revenue from all Tunershop vehicle sales.",
+
         "edm": "EDM Sales",
         "edm_details": "Combined revenue from all EDM purchases.",
 

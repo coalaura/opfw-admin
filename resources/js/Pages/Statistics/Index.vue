@@ -24,6 +24,7 @@
             <StatisticsTable source="casino" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="edm" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="pdm" tag="money" :currency="true" :search="search" />
+            <StatisticsTable source="tuner" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="gem" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="pawn" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="drugs" tag="money" :currency="true" :search="search" />

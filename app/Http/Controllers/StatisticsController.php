@@ -44,6 +44,9 @@ class StatisticsController extends Controller
                 case 'edm':
                     $result = StatisticsHelper::collectEDMStatistics();
                     break;
+                case 'tuner':
+                    $result = StatisticsHelper::collectTunerStatistics();
+                    break;
                 case 'gem':
                     $result = StatisticsHelper::collectGemSaleStatistics();
                     break;
