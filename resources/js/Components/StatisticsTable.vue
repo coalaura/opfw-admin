@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mt-5">
+    <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mt-5" v-if="shown">
         <h2 class="text-lg flex gap-2">
             <div class="flex items-center" v-if="tag">
                 <span class="bg-lime-400 dark:bg-lime-700 py-0.5 px-2 text-xs rounded-sm shadow-sm" v-if="tag === 'money'">{{ t("statistics.tag_money") }}</span>
@@ -88,7 +88,11 @@ export default {
         },
         currency: {
             type: Boolean,
-        }
+        },
+
+        search: {
+            type: String,
+        },
     },
     computed: {
         totalAmount() {
@@ -100,6 +104,12 @@ export default {
             if (!this.data) return "-";
 
             return this.data.reduce((a, b) => a + b.count, 0);
+        },
+        shown() {
+            const title = this.t('statistics.' + this.source).toLowerCase(),
+                search = this.search.toLowerCase().trim();
+
+            return !search || title.includes(search);
         }
     },
     data() {
