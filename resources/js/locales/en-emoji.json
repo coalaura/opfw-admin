@@ -326,7 +326,9 @@
         "daily_tasks": "🗓️🔧",
         "daily_tasks_details": "📈🗓️🔧",
         "deaths": "☠️",
-        "deaths_details": "📈☠️"
+        "deaths_details": "📈☠️",
+        "airlifts": "✈️🏥",
+        "airlifts_details": "🔢 of ✈️🏥"
     },
     "map": {
         "title": "🌍 Live-Map",

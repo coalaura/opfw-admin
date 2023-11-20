@@ -326,7 +326,9 @@
         "daily_tasks": "Pirate Duties",
         "daily_tasks_details": "Amount o' daily duties completed.",
         "deaths": "Walkin' the Plank",
-        "deaths_details": "Amount o' deaths at sea."
+        "deaths_details": "Amount o' deaths at sea.",
+        "airlifts": "Scallywag Hoists",
+        "airlifts_details": "Amount of scallywag hoists to the infirmary."
     },
     "map": {
         "title": "Sailin' Map",

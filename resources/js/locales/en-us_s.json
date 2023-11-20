@@ -326,7 +326,9 @@
         "daily_tasks": "Everyday Chores",
         "daily_tasks_details": "Number of daily tasks ticked off.",
         "deaths": "Six Feet Under",
-        "deaths_details": "Number of times we bit the dust."
+        "deaths_details": "Number of times we bit the dust.",
+        "airlifts": "Air-hoists",
+        "airlifts_details": "Amount o' air-hoists t' the hospital."
     },
     "map": {
         "title": "Active Map",

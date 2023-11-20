@@ -326,7 +326,9 @@
         "daily_tasks": "Boring Chores",
         "daily_tasks_details": "Ugh, we've actually bothered to complete some mundane tasks today, can you believe it?",
         "deaths": "Kicked the Bucket",
-        "deaths_details": "Well, we've had a few tossers meet their untimely demise, haven't we?"
+        "deaths_details": "Well, we've had a few tossers meet their untimely demise, haven't we?",
+        "airlifts": "Bloody Airlifts",
+        "airlifts_details": "Bollocks amount of airlifts to the sodding hospital."
     },
     "map": {
         "title": "Wanker's Map",
