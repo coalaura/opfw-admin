@@ -21,6 +21,7 @@
 
             <div class="w-full border-t border-gray-500 mb-4"></div>
 
+            <StatisticsTable source="airlifts" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="casino" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="daily_tasks" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="deaths" tag="amount" :currency="false" :search="search" />

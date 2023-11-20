@@ -108,6 +108,12 @@ class StatisticsHelper
         return self::collectUserLogsCountStatistics("Player Killed", "Player Died");
     }
 
+    // Airlifts (count)
+    public static function collectAirliftsStatistics(): array
+    {
+        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = 'Hospitalization' AND details LIKE '%airlifted%' GROUP BY date ORDER BY timestamp DESC");
+    }
+
     private static function collectUserLogsCountStatistics(string ...$action): array
     {
         if (sizeof($action) === 1) {

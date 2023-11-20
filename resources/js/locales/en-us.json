@@ -332,7 +332,9 @@
         "daily_tasks": "Daily Tasks",
         "daily_tasks_details": "Amount of daily tasks completed.",
         "deaths": "Deaths",
-        "deaths_details": "Amount of deaths."
+        "deaths_details": "Amount of deaths.",
+        "airlifts": "Airlifts",
+        "airlifts_details": "Amount of airlifts to the hospital."
     },
     "map": {
         "title": "Live-Map",
