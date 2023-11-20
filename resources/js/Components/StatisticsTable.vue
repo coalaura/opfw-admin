@@ -8,7 +8,7 @@
 
             <span>
                 {{ t('statistics.' + source) }}
-                <sup v-if="totalCount > 0">
+                <sup v-if="totalAmount > 0 || totalCount > 0">
                     {{ numberFormat(totalAmount, false, currency) }}
                     <span v-if="currency">- x{{ numberFormat(totalCount, false, false) }}</span>
                 </sup>
