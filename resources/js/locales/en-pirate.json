@@ -303,7 +303,14 @@
         "drugs_details": "Combined doubloons from all Booty sales.",
         "tag_money": "Pieces o' Eight",
         "store": "Booty Sales",
-        "store_details": "Gathered loot from all Booty sales (supplies, weapons, guards, healers, etc.)."
+        "store_details": "Gathered loot from all Booty sales (supplies, weapons, guards, healers, etc.).",
+        "tag_amount": "Blimey",
+        "search": "Scour",
+        "failed_load": "Arrr, couldn't load the statistics.",
+        "paycheck": "Booty",
+        "paycheck_details": "Total haul from all the hourly paychecks ye received.",
+        "robberies": "Plunderin'",
+        "robberies_details": "Number o' successful raids on stores, banks, and jewelers."
     },
     "map": {
         "title": "Sailin' Map",

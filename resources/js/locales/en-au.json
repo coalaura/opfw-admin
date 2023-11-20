@@ -303,7 +303,14 @@
         "drugs_details": "Total cash earned from pushing illegal substances.",
         "tag_money": "Cash",
         "store": "New Inventory",
-        "store_details": "Total sales from every shop (supermarket, hardware, police department, ambulance, etc.)."
+        "store_details": "Total sales from every shop (supermarket, hardware, police department, ambulance, etc.).",
+        "tag_amount": "Bloody Oath",
+        "search": "Have a Gander",
+        "failed_load": "Couldn't load the bloody statistics, mate.",
+        "paycheck": "Paydays",
+        "paycheck_details": "All the dosh you've raked in from your hourly paychecks.",
+        "robberies": "Heists",
+        "robberies_details": "The tally of all those dodgy jobs you've pulled off at shops, banks, and jewellery stores."
     },
     "map": {
         "title": "Bloody Live-Map",

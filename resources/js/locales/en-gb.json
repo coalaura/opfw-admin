@@ -303,7 +303,14 @@
         "drugs_details": "Bloody loot from all the dodgy narcotics sales.",
         "tag_money": "Peeve",
         "store": "Bloody Shop Sales",
-        "store_details": "Bollocks revenue from all Shop sales (bloody grocery, flaming tool, police department, sodding EMS, etc.)."
+        "store_details": "Bollocks revenue from all Shop sales (bloody grocery, flaming tool, police department, sodding EMS, etc.).",
+        "tag_amount": "Bleedin' Quantity",
+        "search": "Sift Through",
+        "failed_load": "Couldn't be arsed to load the sodding statistics.",
+        "paycheck": "Bloody Wages",
+        "paycheck_details": "Total dosh from all the bleedin' hourly paychecks you've nicked.",
+        "robberies": "Robbery Fiasco",
+        "robberies_details": "Bloody count of all the dodgy store, bank, and jewelry store jobs you've pulled off."
     },
     "map": {
         "title": "Wanker's Map",

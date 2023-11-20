@@ -303,7 +303,14 @@
         "drugs_details": "💰🔀💊📉 🎩🔀 🔄 💊💰.",
         "tag_money": "💰",
         "store": "🏪",
-        "store_details": "💵💼📧🚒👩‍⚕️"
+        "store_details": "💵💼📧🚒👩‍⚕️",
+        "tag_amount": "💰",
+        "search": "🔍",
+        "failed_load": "❌📊",
+        "paycheck": "💸",
+        "paycheck_details": "💰💰💰",
+        "robberies": "🏦🔫",
+        "robberies_details": "💸🤑💎"
     },
     "map": {
         "title": "🌍 Live-Map",

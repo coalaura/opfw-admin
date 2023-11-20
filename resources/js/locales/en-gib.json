@@ -303,7 +303,14 @@
         "drugs_details": "Blippity blop blop blop from all Flibber-Flab sales.",
         "tag_money": "Wibberish",
         "store": "Dibo Sales",
-        "store_details": "Combinudan ravernu frumdun all Dibo sales (gognab, flultip, rd, mse, etc.)."
+        "store_details": "Combinudan ravernu frumdun all Dibo sales (gognab, flultip, rd, mse, etc.).",
+        "tag_amount": "Benucr",
+        "search": "Monpo",
+        "failed_load": "Failed toonahoox gobladox.",
+        "paycheck": "Banonoochs",
+        "paycheck_details": "Comblooxy bonxarf of all crafled hourly banonoochs.",
+        "robberies": "Blornonish",
+        "robberies_details": "Bonxarf of tocrab, blonk and gwarfery snorbononish."
     },
     "map": {
         "title": "Flerf-Pobot",

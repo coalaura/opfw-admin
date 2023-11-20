@@ -303,7 +303,14 @@
         "drugs_details": "Caveman Talk: Big grunt made from selling all kinds of drugs.",
         "tag_money": "Rock",
         "store": "Store Smash",
-        "store_details": "Big rocks collected from all Store smashings (grocery, tool, pd, ems, etc.)."
+        "store_details": "Big rocks collected from all Store smashings (grocery, tool, pd, ems, etc.).",
+        "tag_amount": "Ugga",
+        "search": "Uggnak",
+        "failed_load": "Ugga gugga fail grabgug.",
+        "paycheck": "Uggabuggas",
+        "paycheck_details": "Ugga ugga gugga dugga uggnak uggnak gugga ugga.",
+        "robberies": "Guggagas",
+        "robberies_details": "Ugga gugga uggnak, uggnak ugga gugga uggnak."
     },
     "map": {
         "title": "Ooga-Map",

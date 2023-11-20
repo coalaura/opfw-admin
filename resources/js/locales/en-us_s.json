@@ -303,7 +303,14 @@
         "drugs_details": "All them cash made from sellin' them Dernks.",
         "tag_money": "Moolah",
         "store": "Peddlin' Profits",
-        "store_details": "All the money earned from sellin' goods at the store (grocery, tool, pd, ems, etc.)."
+        "store_details": "All the money earned from sellin' goods at the store (grocery, tool, pd, ems, etc.).",
+        "tag_amount": "Ammount",
+        "search": "Search",
+        "failed_load": "Failed to load statistahs.",
+        "paycheck": "Paychecks",
+        "paycheck_details": "Combined ammount of all received hourly paychecks.",
+        "robberies": "Robbries",
+        "robberies_details": "Ammount of store, bank and jewelry stohr robberies."
     },
     "map": {
         "title": "Active Map",
