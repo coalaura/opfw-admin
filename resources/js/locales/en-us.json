@@ -294,6 +294,7 @@
         "trend": "Trend",
 
         "tag_money": "Money",
+        "failed_load": "Failed to load statistics.",
 
         "casino": "Casino Revenue",
         "casino_details": "Combined revenue from all available games in the casino.",

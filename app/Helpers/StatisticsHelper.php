@@ -76,7 +76,7 @@ class StatisticsHelper
 
         return [
             'data' => $result,
-            'time' => (microtime(true) - $start) * 1000,
+            'time' => round((microtime(true) - $start) * 1000),
         ];
     }
 

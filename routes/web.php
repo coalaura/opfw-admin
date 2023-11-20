@@ -217,6 +217,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Statistics.
     Route::get('/statistics', [StatisticsController::class, 'render']);
+    Route::get('/statistics/{source}', [StatisticsController::class, 'source']);
 
     // Overwatch.
     Route::get('/overwatch', [OverwatchController::class, 'index']);
