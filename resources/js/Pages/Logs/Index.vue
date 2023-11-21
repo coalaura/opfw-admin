@@ -734,8 +734,6 @@ export default {
 			}, 2000));
 		});
 
-		if (this.filters.minigames !== "none") this.filters.minigames = "";
-
 		if (this.filters.before) {
 			const d = new Date(this.filters.before * 1000);
 
