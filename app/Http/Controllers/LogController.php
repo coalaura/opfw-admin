@@ -70,6 +70,17 @@ class LogController extends Controller
         // Filtering by server.
         $this->searchQuery($request, $query, 'server', DB::raw("JSON_EXTRACT(metadata, '$.playerServerId')"));
 
+        // Filtering by minigames.
+        if ($request->input('minigames') === 'none') {
+            $query->where(function ($subQuery) {
+                // The only actions where we even use minigames are Player Died and Player Killed.
+                $subQuery->whereNotIn('action', ['Player Died', 'Player Killed']);
+
+                // If the action is Player Died or Player Killed, we have to check.
+                $subQuery->orWhereNotIn(DB::raw("JSON_UNQUOTE(JSON_EXTRACT(metadata, '$.minigames[0]'))"), ['arena', 'battle_royale', 'training']);
+            });
+        }
+
         // Filtering by before.
         if ($before = intval($request->input('before'))) {
             $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '<', $before);
@@ -125,6 +136,7 @@ class LogController extends Controller
                 'server',
                 'action',
                 'details',
+                'minigames',
                 'after',
                 'before'
             ),

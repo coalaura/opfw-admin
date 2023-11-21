@@ -1200,6 +1200,8 @@
         "identifier": "Player Identifier",
         "action": "Action",
         "server_id": "Server ID",
+        "minigames": "Minigames",
+        "minigame_none": "Exclude All",
         "details": "Details",
         "player": "Player",
         "timestamp": "Timestamp",

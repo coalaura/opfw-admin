@@ -54,44 +54,55 @@
 								</div>
 							</div>
 						</div>
+						<!-- Details -->
+						<div class="w-1/3 px-3">
+							<label class="block mb-2" for="details">
+								{{ t('logs.details') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+							</label>
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="details" :placeholder="t('logs.placeholder_details')" v-model="filters.details">
+						</div>
+
 						<!-- Server -->
-						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
+						<div class="w-1/6 px-3 mobile:w-full mobile:mb-3 mt-3">
 							<label class="block mb-2" for="server">
 								{{ t('logs.server_id') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="server" placeholder="3" v-model="filters.server">
 						</div>
-						<!-- Details -->
-						<div class="w-1/3 px-3">
-							<label class="block mb-3 mt-3" for="details">
-								{{ t('logs.details') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+						<!-- Minigames -->
+						<div class="w-1/6 px-3 mobile:w-full mobile:mb-3 mt-3">
+							<label class="block mb-2" for="minigames">
+								{{ t('logs.minigames') }}
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="details" :placeholder="t('logs.placeholder_details')" v-model="filters.details">
+                            <select class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="minigames" v-model="filters.minigames">
+                                <option value="">{{ t('global.all') }}</option>
+                                <option value="none">{{ t('logs.minigame_none') }}</option>
+                            </select>
 						</div>
 						<!-- After Date -->
-						<div class="w-1/6 px-3 pr-1 mobile:w-full mobile:mb-3">
-							<label class="block mb-3 mt-3" for="after-date">
+						<div class="w-1/6 px-3 pr-1 mobile:w-full mobile:mb-3 mt-3">
+							<label class="block mb-2" for="after-date">
 								{{ t('logs.after-date') }}
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="after-date" type="date" placeholder="">
 						</div>
 						<!-- After Time -->
-						<div class="w-1/6 px-3 pl-1 mobile:w-full mobile:mb-3">
-							<label class="block mb-3 mt-3" for="after-time">
+						<div class="w-1/6 px-3 pl-1 mobile:w-full mobile:mb-3 mt-3">
+							<label class="block mb-2" for="after-time">
 								{{ t('logs.after-time') }}
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="after-time" type="time" placeholder="">
 						</div>
 						<!-- Before Date -->
-						<div class="w-1/6 px-3 pr-1 mobile:w-full mobile:mb-3">
-							<label class="block mb-3 mt-3" for="before-date">
+						<div class="w-1/6 px-3 pr-1 mobile:w-full mobile:mb-3 mt-3">
+							<label class="block mb-2" for="before-date">
 								{{ t('logs.before-date') }}
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="before-date" type="date" placeholder="">
 						</div>
 						<!-- Before Time -->
-						<div class="w-1/6 px-3 pl-1 mobile:w-full mobile:mb-3">
-							<label class="block mb-3 mt-3" for="before-time">
+						<div class="w-1/6 px-3 pl-1 mobile:w-full mobile:mb-3 mt-3">
+							<label class="block mb-2" for="before-time">
 								{{ t('logs.before-time') }}
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="before-time" type="time" placeholder="">
@@ -319,8 +330,9 @@ export default {
 		filters: {
 			identifier: String,
 			action: String,
-			server: String,
 			details: String,
+			server: String,
+			minigames: String,
 			before: Number,
 			after: Number,
 		},
@@ -721,6 +733,8 @@ export default {
 				$(this).text(original);
 			}, 2000));
 		});
+
+		if (!this.filters.minigames) this.filters.minigames = "";
 
 		if (this.filters.before) {
 			const d = new Date(this.filters.before * 1000);
