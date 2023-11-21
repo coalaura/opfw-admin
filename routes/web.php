@@ -317,7 +317,7 @@ Route::get('hash/{hash}', function (string $hash) {
 
     $identifier = false;
 
-    if ($hash && preg_match('/^[a-z0-9]+$/im', $hash)) {
+    if ($hash && preg_match('/^[a-z0-9-]+$/im', $hash)) {
         $identifier = Ban::find($hash);
     }
 
