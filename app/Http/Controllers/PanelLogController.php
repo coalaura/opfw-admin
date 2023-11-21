@@ -26,34 +26,16 @@ class PanelLogController extends Controller
         $query = PanelLog::query()->orderByDesc('timestamp');
 
         // Filtering by source_identifier.
-        if ($source = $request->input('source')) {
-            $query->where('source_identifier', $source);
-        }
+        $this->searchQuery($request, $query, 'source', 'source_identifier');
 
         // Filtering by target_identifier.
-        if ($target = $request->input('target')) {
-            $query->where('target_identifier', $target);
-        }
+        $this->searchQuery($request, $query, 'target', 'target_identifier');
 
         // Filtering by action.
-        if ($action = $request->input('action')) {
-            if (Str::startsWith($action, '=')) {
-                $action = Str::substr($action, 1);
-                $query->where('action', $action);
-            } else {
-                $query->where('action', 'like', "%{$action}%");
-            }
-        }
+        $this->searchQuery($request, $query, 'action', 'action');
 
         // Filtering by log.
-        if ($log = $request->input('log')) {
-            if (Str::startsWith($log, '=')) {
-                $log = Str::substr($log, 1);
-                $query->where('log', $log);
-            } else {
-                $query->where('log', 'like', "%{$log}%");
-            }
-        }
+        $this->searchQuery($request, $query, 'log', 'log');
 
         $page = Paginator::resolveCurrentPage('page');
 

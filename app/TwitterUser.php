@@ -52,12 +52,17 @@ class TwitterUser extends Authenticatable
         'password',
     ];
 
-    public function getAvatar() {
-        if (empty($this->avatar_url) || Str::contains($this->avatar_url, 'cfx-nui-gcphone')) {
+    public static function cleanupAvatar($avatar)
+    {
+        if (empty($avatar) || Str::contains($avatar, 'cfx-nui-gcphone')) {
             return '/images/default_profile.png';
         }
 
-        return $this->avatar_url;
+        return $avatar;
+    }
+
+    public function getAvatar() {
+        return self::cleanupAvatar($this->avatar_url);
     }
 
     /**

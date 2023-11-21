@@ -37,7 +37,7 @@
                         <!-- Details -->
                         <div class="w-1/2 px-3">
                             <label class="block mb-3 mt-3" for="trace">
-                                {{ t('errors.trace') }} <sup class="text-muted dark:text-dark-muted">**</sup>
+                                {{ t('errors.trace') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
                             <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="trace" placeholder="attempted to index a nil value" v-model="filters.trace">
                         </div>
@@ -45,7 +45,7 @@
                         <!-- Version -->
                         <div class="w-1/2 px-3">
                             <label class="block mb-3 mt-3">
-                                {{ t('errors.server_version') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+                                {{ t('errors.server_version') }}
                             </label>
                             <select v-model="filters.server_version" class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600">
                                 <option value="">{{ t('errors.no_version_filter') }}</option>
@@ -55,12 +55,7 @@
                     </div>
                     <!-- Description -->
                     <div class="w-full px-3 mt-3">
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">*
-                            {{ t('global.search.exact') }}</small>
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">**
-                            {{ t('global.search.like') }} {{ t('global.search.like_prepend') }}</small>
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">C
-                            {{ t('global.search.comma') }}</small>
+                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block" v-html="t('global.search.custom')"></small>
                     </div>
                     <!-- Search button -->
                     <div class="w-full px-3 mt-3">

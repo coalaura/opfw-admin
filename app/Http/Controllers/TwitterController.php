@@ -33,37 +33,16 @@ class TwitterController extends Controller
         $query = TwitterPost::query()->orderByDesc('time')->where('is_deleted', '=', '0');
 
         // Filtering by username.
-        if ($username = $request->input('username')) {
-            $subQuery = TwitterUser::query();
-
-            if (Str::startsWith($username, '=')) {
-                $username = Str::substr($username, 1);
-                $subQuery->where('username', $username);
-            } else {
-                $subQuery->where('username', 'like', "%{$username}%");
-            }
-
-            $users = $subQuery->select(['id'])->get()->toArray();
-            $ids = !empty($users) ? array_values(array_map(function ($user) {
-                return $user['id'];
-            }, $users)) : [];
-
-            $query->whereIn('authorId', $ids);
-        }
+        $this->searchQuery($request, $query, 'username', 'username');
 
         // Filtering by message.
-        if ($message = $request->input('message')) {
-            if (Str::startsWith($message, '=')) {
-                $message = Str::substr($message, 1);
-                $query->where('message', $message);
-            } else {
-                $query->where('message', 'like', "%{$message}%");
-            }
-        }
+        $this->searchQuery($request, $query, 'message', 'message');
+
+        $query->leftJoin('twitter_accounts', 'twitter_accounts.id', '=', 'authorId');
 
         $page = Paginator::resolveCurrentPage('page');
 
-        $query->select(['id', 'authorId', 'realUser', 'message', 'time', 'likes']);
+        $query->select(['twitter_tweets.id', 'authorId', 'realUser', 'message', 'time', 'likes', 'username', 'is_verified', 'avatar_url']);
         $query->limit(15)->offset(($page - 1) * 15);
 
         $posts = TwitterPostResource::collection($query->get());
@@ -78,7 +57,6 @@ class TwitterController extends Controller
             ),
             'links'        => $this->getPageUrls($page),
             'time'         => $end - $start,
-            'userMap'      => TwitterUser::fetchIdMap($posts->toArray($request), 'authorId'),
             'page'         => $page,
         ]);
     }

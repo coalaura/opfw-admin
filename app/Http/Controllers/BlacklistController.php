@@ -25,7 +25,6 @@ class BlacklistController extends Controller
     public function index(Request $request): Response
     {
         $start = round(microtime(true) * 1000);
-        $isOrdered = false;
 
         $query = BlacklistedIdentifier::query();
 
@@ -35,29 +34,13 @@ class BlacklistController extends Controller
         }
 
         // Filtering by identifier.
-        if ($identifier = $request->input('identifier')) {
-            $query->where('identifier', '=', $identifier);
-        }
+        $this->searchQuery($request, $query, 'identifier', 'identifier');
 
         // Filtering by reason.
-        if ($reason = $request->input('reason')) {
-            if (Str::startsWith($reason, '=')) {
-                $reason = Str::substr($reason, 1);
-                $query->where('reason', '=', $reason);
-            } else {
-                $query->where('reason', 'like', "%{$reason}%");
-            }
-        }
+        $this->searchQuery($request, $query, 'reason', 'reason');
 
         // Filtering by note.
-        if ($note = $request->input('note')) {
-            if (Str::startsWith($note, '=')) {
-                $note = Str::substr($note, 1);
-                $query->where('note', '=', $note);
-            } else {
-                $query->where('note', 'like', "%{$note}%");
-            }
-        }
+        $this->searchQuery($request, $query, 'note', 'note');
 
         $query->select([
             'blacklist_id', 'identifier', 'creator_identifier', 'reason', 'note', 'timestamp',

@@ -54,7 +54,7 @@
                         <!-- Action -->
                         <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="action">
-                                {{ t('panel_logs.action') }} <sup class="text-muted dark:text-dark-muted">**</sup>
+                                {{ t('panel_logs.action') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
                             <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="action" :placeholder="t('panel_logs.placeholder_action')" v-model="filters.action">
                         </div>
@@ -62,14 +62,13 @@
                     <!-- Details -->
                     <div class="w-full px-3">
                         <label class="block mb-3" for="log">
-                            {{ t('panel_logs.log') }} <sup class="text-muted dark:text-dark-muted">**</sup>
+                            {{ t('panel_logs.log') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                         </label>
                         <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="log" :placeholder="t('panel_logs.placeholder_log')" v-model="filters.log">
                     </div>
                     <!-- Description -->
                     <div class="w-full px-3 mt-3">
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">* {{ t('global.search.exact') }}</small>
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">** {{ t('global.search.like') }} {{ t('global.search.like_prepend') }}</small>
+                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block" v-html="t('global.search.custom')"></small>
                     </div>
                     <!-- Search button -->
                     <div class="w-full px-3 mt-3">

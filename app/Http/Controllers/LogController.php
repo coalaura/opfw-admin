@@ -13,7 +13,6 @@ use App\Player;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -60,64 +59,25 @@ class LogController extends Controller
         }
 
         // Filtering by identifier.
-        if ($identifier = $this->multiValues($request->input('identifier'))) {
-            /**
-             * @var $q Builder
-             */
-            $query->where(function ($q) use ($identifier) {
-                foreach ($identifier as $i) {
-                    $q->orWhere('identifier', $i);
-                }
-            });
-        }
+        $this->searchQuery($request, $query, 'identifier', 'identifier');
+
+        // Filtering by action.
+        $this->searchQuery($request, $query, 'action', 'action');
+
+        // Filtering by details.
+        $this->searchQuery($request, $query, 'details', 'details');
+
+        // Filtering by server.
+        $this->searchQuery($request, $query, 'server', DB::raw("JSON_EXTRACT(metadata, '$.playerServerId')"));
 
         // Filtering by before.
-        if ($before = $request->input('before')) {
+        if ($before = intval($request->input('before'))) {
             $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '<', $before);
         }
 
         // Filtering by after.
-        if ($after = $request->input('after')) {
+        if ($after = intval($request->input('after'))) {
             $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '>', $after);
-        }
-
-        // Filtering by server.
-        if ($server = $this->multiValues($request->input('server'))) {
-            /**
-             * @var $q Builder
-             */
-            $query->where(function ($q) use ($server) {
-                foreach ($server as $s) {
-                    $q->orWhere('details', 'LIKE', '% [' . intval($s) . '] %');
-                }
-            });
-        }
-
-        // Filtering by action.
-        if ($action = $this->multiValues($request->input('action'))) {
-            /**
-             * @var $q Builder
-             */
-            $query->where(function ($q) use ($action) {
-                foreach ($action as $a) {
-                    if (Str::startsWith($a, '=')) {
-                        $a = Str::substr($a, 1);
-                        $q->orWhere('action', $a);
-                    } else {
-                        $q->orWhere('action', 'like', "%{$a}%");
-                    }
-                }
-            });
-        }
-
-        // Filtering by details.
-        if ($details = $request->input('details')) {
-            if (Str::startsWith($details, '=')) {
-                $details = Str::substr($details, 1);
-                $query->where('details', $details);
-            } else {
-                $query->where('details', 'like', "%{$details}%");
-            }
         }
 
         $actionInput     = $request->input('action');
@@ -200,55 +160,13 @@ class LogController extends Controller
         }
 
         // Filtering by identifier.
-        if ($identifier = $this->multiValues($request->input('identifier'))) {
-            /**
-             * @var $q Builder
-             */
-            $query->where(function ($q) use ($identifier) {
-                foreach ($identifier as $i) {
-                    if (Str::startsWith($i, '=')) {
-                        $i = Str::substr($i, 1);
-                        $q->orWhere('money_logs.license_identifier', $i);
-                    } else {
-                        $q->orWhere('money_logs.license_identifier', 'like', "%{$i}%");
-                    }
-                }
-            });
-        }
+        $this->searchQuery($request, $query, 'identifier', 'money_logs.license_identifier');
 
         // Filtering by character id.
-        if ($characterId = $this->multiValues($request->input('character_id'))) {
-            /**
-             * @var $q Builder
-             */
-            $query->where(function ($q) use ($characterId) {
-                foreach ($characterId as $i) {
-                    if (Str::startsWith($i, '=')) {
-                        $i = Str::substr($i, 1);
-                        $q->orWhere('character_id', $i);
-                    } else {
-                        $q->orWhere('character_id', 'like', "%{$i}%");
-                    }
-                }
-            });
-        }
+        $this->searchQuery($request, $query, 'character_id', 'character_id');
 
         // Filtering by details.
-        if ($details = $this->multiValues($request->input('details'))) {
-            /**
-             * @var $q Builder
-             */
-            $query->where(function ($q) use ($details) {
-                foreach ($details as $i) {
-                    if (Str::startsWith($i, '=')) {
-                        $i = Str::substr($i, 1);
-                        $q->orWhere('details', $i);
-                    } else {
-                        $q->orWhere('details', 'like', "%{$i}%");
-                    }
-                }
-            });
-        }
+        $this->searchQuery($request, $query, 'details', 'details');
 
         // Filtering by before.
         if ($before = $request->input('before')) {
@@ -360,15 +278,7 @@ class LogController extends Controller
         }
 
         // Filtering by message.
-        if ($message = $request->input('message')) {
-            if (Str::startsWith($message, '=')) {
-                $message = Str::substr($message, 1);
-
-                $query->where('message', $message);
-            } else {
-                $query->where('message', 'like', "%{$message}%");
-            }
-        }
+        $this->searchQuery($request, $query, 'message', 'message');
 
         if ($before = intval($request->input('before'))) {
             $query->where('id', '<', $before);
@@ -390,37 +300,10 @@ class LogController extends Controller
         $query = DB::table('panel_log_searches')->orderByDesc('timestamp')->select();
 
         // Filtering by identifier.
-        if ($identifier = $this->multiValues($request->input('identifier'))) {
-            /**
-             * @var $q Builder
-             */
-            $query->where(function ($q) use ($identifier) {
-                foreach ($identifier as $i) {
-                    $q->orWhere('license_identifier', $i);
-                }
-            });
-        }
+        $this->searchQuery($request, $query, 'identifier', 'license_identifier');
 
         // Filtering by search query.
-        if ($details = $this->multiValues($request->input('details'))) {
-            /**
-             * @var $q Builder
-             */
-            $query->where(function ($q) use ($details) {
-                foreach ($details as $a) {
-                    if (Str::startsWith($a, '=')) {
-                        $a = Str::substr($a, 1);
-                        $q->orWhere('action', $a);
-                        $q->orWhere('details', $a);
-                        $q->orWhere('identifier', $a);
-                    } else {
-                        $q->orWhere('action', 'like', "%{$a}%");
-                        $q->orWhere('details', 'like', "%{$a}%");
-                        $q->orWhere('identifier', 'like', "%{$a}%");
-                    }
-                }
-            });
-        }
+        $this->searchQuery($request, $query, 'details', 'details');
 
         // Filtering by before.
         if ($before = $request->input('before')) {
@@ -461,28 +344,10 @@ class LogController extends Controller
         $query = DB::table('panel_screenshot_logs')->orderByDesc('timestamp')->select();
 
         // Filtering by identifier.
-        if ($identifier = $this->multiValues($request->input('identifier'))) {
-            /**
-             * @var $q Builder
-             */
-            $query->where(function ($q) use ($identifier) {
-                foreach ($identifier as $i) {
-                    $q->orWhere('source_license', $i);
-                }
-            });
-        }
+        $this->searchQuery($request, $query, 'identifier', 'source_license');
 
         // Filtering by character.
-        if ($character = $this->multiValues($request->input('character'))) {
-            /**
-             * @var $q Builder
-             */
-            $query->where(function ($q) use ($character) {
-                foreach ($character as $i) {
-                    $q->orWhere('target_character', $i);
-                }
-            });
-        }
+        $this->searchQuery($request, $query, 'character', 'target_character');
 
         // Filtering by before.
         if ($before = $request->input('before')) {

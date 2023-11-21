@@ -19,10 +19,11 @@ class Controller extends BaseController
         "green"  => '66c653',
         "yellow" => 'c6b353',
         "red"    => 'c65353',
-        "purple" => '9f53c6'
+        "purple" => '9f53c6',
     ];
 
-    public function rickroll() {
+    public function rickroll()
+    {
         return redirect("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     }
 
@@ -61,15 +62,18 @@ class Controller extends BaseController
         if ($status) {
             $resp = [
                 'status' => true,
-                'data' => $data,
+                'data'   => $data,
             ];
         } else {
             $resp = [
-                'status' => false,
+                'status'  => false,
                 'message' => $error,
             ];
 
-            if ($data) $resp['data'] = $data;
+            if ($data) {
+                $resp['data'] = $data;
+            }
+
         }
 
         return (new Response($resp, 200))->header('Content-Type', 'application/json');
@@ -92,9 +96,9 @@ class Controller extends BaseController
      */
     protected static function fakeText(int $status, string $text): Response
     {
-		$style = 'html,body{width:100%;background:#1C1B22;color:#fbfbfe;font-family:monospace;font-size:13px;white-space:pre-wrap;margin:0;box-sizing:border-box}body{padding:8px}a{text-decoration:none;color:#909bff}';
+        $style = 'html,body{width:100%;background:#1C1B22;color:#fbfbfe;font-family:monospace;font-size:13px;white-space:pre-wrap;margin:0;box-sizing:border-box}body{padding:8px}a{text-decoration:none;color:#909bff}';
 
-		$text = '<style>' . $style . '</style>' . $text;
+        $text = '<style>' . $style . '</style>' . $text;
 
         return (new Response($text, $status))->header('Content-Type', 'text/html');
     }
@@ -120,16 +124,17 @@ class Controller extends BaseController
         return $player && $player->isRoot();
     }
 
-	private function brighten($rgb, $amount) {
+    private function brighten($rgb, $amount)
+    {
         foreach ($rgb as &$color) {
             $color = max(0, min(255, $color + $amount));
         }
 
         return $rgb;
-	}
+    }
 
-	protected function renderGraph(array $entries, string $title, array $colors = ["blue"])
-	{
+    protected function renderGraph(array $entries, string $title, array $colors = ["blue"])
+    {
         if (!function_exists('imagecreatetruecolor')) {
             return 'GD library is not installed';
         }
@@ -142,20 +147,20 @@ class Controller extends BaseController
             return $entry;
         }, $entries);
 
-		$size = max(1024, sizeof($entries));
-		$entryWidth = floor($size / sizeof($entries));
+        $size       = max(1024, sizeof($entries));
+        $entryWidth = floor($size / sizeof($entries));
 
-        $size = $entryWidth * sizeof($entries);
-		$height = floor($size * 0.6);
+        $size   = $entryWidth * sizeof($entries);
+        $height = floor($size * 0.6);
 
-		$max = ceil(max(array_map(function ($entry) {
+        $max = ceil(max(array_map(function ($entry) {
             return array_sum($entry);
         }, $entries)) * 1.1);
 
-		$image = imagecreatetruecolor($size, $height);
+        $image = imagecreatetruecolor($size, $height);
 
-		$black = imagecolorallocate($image, 28, 27, 34);
-		imagefill($image, 0, 0, $black);
+        $black = imagecolorallocate($image, 28, 27, 34);
+        imagefill($image, 0, 0, $black);
 
         if ($max > 0) {
             for ($g = 0; $g < sizeof($entries[0]); $g++) {
@@ -171,8 +176,10 @@ class Controller extends BaseController
 
                 $y = $height;
 
-                foreach($entry as $index => $value) {
-                    if ($value === 0) continue;
+                foreach ($entry as $index => $value) {
+                    if ($value === 0) {
+                        continue;
+                    }
 
                     $percentage = $value / $max;
 
@@ -199,23 +206,25 @@ class Controller extends BaseController
                 if ($entryWidth >= 17) {
                     $m = round(array_sum($entry));
 
-                    if ($m <= 0) continue;
+                    if ($m <= 0) {
+                        continue;
+                    }
 
                     $p = $y - 12;
                     $x = ($i * $entryWidth) + (($entryWidth / 2.0) - (strlen($m) * 3));
 
                     $text = imagecolorallocate($image, 255, 220, 220);
-                    imagestring($image, 2, $x, $p, $m."", $text);
+                    imagestring($image, 2, $x, $p, $m . "", $text);
                 }
             }
         } else {
             $noDataText = imagecolorallocate($image, 231, 177, 177);
 
-		    imagestring($image, 4, floor($size / 2) - 26, floor($height / 2), "No Data", $noDataText);
+            imagestring($image, 4, floor($size / 2) - 26, floor($height / 2), "No Data", $noDataText);
         }
 
-		$text = imagecolorallocate($image, 177, 198, 231);
-		imagestring($image, 2, 4, 2, $title, $text);
+        $text = imagecolorallocate($image, 177, 198, 231);
+        imagestring($image, 2, 4, 2, $title, $text);
 
         if ($entryWidth < 17) {
             $text = imagecolorallocate($image, 255, 220, 220);
@@ -225,20 +234,102 @@ class Controller extends BaseController
             $p = $height - ($height * ($m / $max)) - 12;
 
             $text = imagecolorallocate($image, 255, 220, 220);
-            imagestring($image, 2, 3, $p, $m."", $text);
+            imagestring($image, 2, 3, $p, $m . "", $text);
         }
 
-		ob_start();
+        ob_start();
 
-		imagepng($image);
+        imagepng($image);
 
-		$image_data = ob_get_contents();
-		ob_end_clean();
+        $image_data = ob_get_contents();
+        ob_end_clean();
 
-		$image_data_base64 = base64_encode($image_data);
+        $image_data_base64 = base64_encode($image_data);
 
-		imagedestroy($image);
+        imagedestroy($image);
 
-		return "data:image/png;base64,{$image_data_base64}";
-	}
+        return "data:image/png;base64,{$image_data_base64}";
+    }
+
+    /**
+     * Search values in a column. Available operators are =, !=, >, <, !, default is LIKE
+     */
+    protected function searchQuery(Request $request, &$query, string $input, string $column)
+    {
+        $search = $request->input($input);
+
+        if (!$search) {
+            return;
+        }
+
+        $search = array_map(function ($entry) {
+            return trim($entry);
+        }, explode(',', $search));
+
+        $query->where(function ($subQuery) use ($search, $column) {
+            foreach ($search as $index => $value) {
+                $parts = preg_split('/(?<=!=|[!=><])(?!=)/', $value);
+
+                $operator = sizeof($parts) > 1 ? $parts[0] : false;
+                $value    = trim($operator ? $parts[1] : $value);
+
+                // No need to search for empty values
+                if (!$value) {
+                    continue;
+                }
+
+                switch ($operator) {
+                    case "!=":
+                    case "!":
+                    case "=":
+                        // These are fine as-is
+                        break;
+                    case ">":
+                    case "<":
+                        // Only works with numeric values
+                        if (!is_numeric($value)) {
+                            continue 2;
+                        }
+
+                        break;
+                    default:
+                        // Why use slow LIKE when we can use fast = ?
+                        if ($this->isFullLicenseIdentifier($value)) {
+                            $operator = '=';
+
+                            break;
+                        }
+
+                        $operator = 'LIKE';
+                        $value    = "%{$value}%";
+
+                        break;
+                }
+
+                if ($index === 0) {
+                    $subQuery->where($column, $operator, $value);
+                } else {
+                    $subQuery->orWhere($column, $operator, $value);
+                }
+            }
+        });
+    }
+
+    protected function isFullLicenseIdentifier(string $identifier): bool
+    {
+        return preg_match('/^(license2?:)[a-z0-9]{40}$/i', $identifier) === 1;
+    }
+
+    protected function whereSql($query): ?string
+    {
+        $sql = $query->toSql();
+
+        preg_match('/(?<=where).+?(?=group by|order by|limit|$)/im', $sql, $matches);
+
+        if (isset($matches[0])) {
+            return strtolower($matches[0]);
+        }
+
+        return null;
+    }
 }

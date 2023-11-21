@@ -35,17 +35,10 @@ class PlayerController extends Controller
         $query = Player::query();
 
         // Filtering by name.
-        if ($name = $request->input('name')) {
-            if (Str::startsWith($name, '=')) {
-                $name = Str::substr($name, 1);
-                $query->where('player_name', $name);
-            } else {
-                $query->where(function ($q) use ($name) {
-                    $q->where('player_name', 'like', "%{$name}%");
-                    $q->orWhere('player_aliases', 'like', "%{$name}%");
-                });
-            }
-        }
+        $this->searchQuery($request, $query, 'name', 'player_name');
+
+        // Filtering by license_identifier.
+        $this->searchQuery($request, $query, 'license', 'license_identifier');
 
         // Filtering by identifier & type.
         $identifier = $request->input('identifier');
@@ -62,19 +55,6 @@ class PlayerController extends Controller
             }
 
             $query->where(DB::raw("JSON_CONTAINS(identifiers, '$id')"), '=', '1');
-        }
-
-        // Filtering by license_identifier.
-        if ($license = $request->input('license')) {
-            if (!Str::startsWith($license, 'license:')) {
-                $license = 'license:' . $license;
-            }
-
-            if (strlen($license) !== 48) {
-                $query->where('license_identifier', 'LIKE', '%' . $license);
-            } else {
-                $query->where('license_identifier', $license);
-            }
         }
 
         // Filtering by serer-id.

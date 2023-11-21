@@ -23,7 +23,7 @@
                             <!-- Participant 1 -->
                             <div class="w-full px-3 mb-4">
                                 <label class="block mb-2" for="number1">
-                                    {{ t('phone.number1') }} <sup class="text-muted dark:text-dark-muted">*, C</sup>
+                                    {{ t('phone.number1') }}
                                 </label>
                                 <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="number1" placeholder="123-4567" v-model="filters.number1">
                             </div>
@@ -31,7 +31,7 @@
                             <!-- Participant 2 -->
                             <div class="w-full px-3 mb-4">
                                 <label class="block mb-2" for="number2">
-                                    {{ t('phone.number2') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+                                    {{ t('phone.number2') }}
                                 </label>
                                 <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="number2" placeholder="987-6543" v-model="filters.number2">
                             </div>
@@ -39,10 +39,15 @@
                             <!-- Message -->
                             <div class="w-full px-3 mb-4">
                                 <label class="block mb-2" for="message">
-                                    {{ t('phone.message') }} <sup class="text-muted dark:text-dark-muted">**</sup>
+                                    {{ t('phone.message') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                                 </label>
                                 <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" placeholder="Some text message" v-model="filters.message">
                             </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="w-full px-3 mt-3">
+                            <small class="text-muted dark:text-dark-muted mt-1 leading-4 block" v-html="t('global.search.custom')"></small>
                         </div>
 
                         <!-- Search button -->

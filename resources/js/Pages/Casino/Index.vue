@@ -37,21 +37,21 @@
                         <!-- Identifier -->
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="identifier">
-                                {{ t('casino.identifier') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+                                {{ t('casino.identifier') }}
                             </label>
                             <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier">
                         </div>
                         <!-- Character ID -->
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="character">
-                                {{ t('casino.character_id') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+                                {{ t('casino.character_id') }}
                             </label>
                             <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="character" placeholder="12345" v-model="filters.character">
                         </div>
                         <!-- Game -->
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2">
-                                {{ t('casino.game') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+                                {{ t('casino.game') }}
                             </label>
                             <select class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="game" v-model="filters.game">
                                 <option value="">{{ t('global.all') }}</option>
@@ -63,7 +63,7 @@
                         <!-- Game -->
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2">
-                                {{ t('casino.result') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+                                {{ t('casino.result') }}
                             </label>
                             <select class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="result" v-model="filters.result">
                                 <option value="">{{ t('global.all') }}</option>
@@ -72,15 +72,6 @@
                                 <option value="draw">{{ t('casino.results.draw') }}</option>
                             </select>
                         </div>
-                    </div>
-                    <!-- Description -->
-                    <div class="w-full px-3 mt-3">
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">*
-                            {{ t('global.search.exact') }}</small>
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">**
-                            {{ t('global.search.like') }} {{ t('global.search.like_prepend') }}</small>
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">C
-                            {{ t('global.search.comma') }}</small>
                     </div>
                     <!-- Search button -->
                     <div class="w-full px-3 mt-3">

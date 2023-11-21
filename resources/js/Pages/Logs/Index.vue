@@ -33,14 +33,14 @@
 						<!-- Identifier -->
 						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2" for="identifier">
-								{{ t('logs.identifier') }} <sup class="text-muted dark:text-dark-muted">*, C</sup>
+								{{ t('logs.identifier') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier">
 						</div>
 						<!-- Action -->
 						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3 relative">
 							<label class="block mb-2" for="action">
-								{{ t('logs.action') }} <sup class="text-muted dark:text-dark-muted">**, C</sup>
+								{{ t('logs.action') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="action" :placeholder="t('logs.placeholder_action')" v-model="filters.action" @keyup="searchActions()" @blur="cancelActionSearch()" @focus="searchActions()">
 							<div class="w-full absolute top-full left-0 px-3 z-10" v-if="searchingActions && searchableActions.length > 0">
@@ -57,54 +57,49 @@
 						<!-- Server -->
 						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2" for="server">
-								{{ t('logs.server_id') }} <sup class="text-muted dark:text-dark-muted">*, C</sup>
+								{{ t('logs.server_id') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="server" placeholder="3" v-model="filters.server">
 						</div>
 						<!-- Details -->
 						<div class="w-1/3 px-3">
 							<label class="block mb-3 mt-3" for="details">
-								{{ t('logs.details') }} <sup class="text-muted dark:text-dark-muted">**</sup>
+								{{ t('logs.details') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="details" :placeholder="t('logs.placeholder_details')" v-model="filters.details">
 						</div>
 						<!-- After Date -->
 						<div class="w-1/6 px-3 pr-1 mobile:w-full mobile:mb-3">
 							<label class="block mb-3 mt-3" for="after-date">
-								{{ t('logs.after-date') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+								{{ t('logs.after-date') }}
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="after-date" type="date" placeholder="">
 						</div>
 						<!-- After Time -->
 						<div class="w-1/6 px-3 pl-1 mobile:w-full mobile:mb-3">
 							<label class="block mb-3 mt-3" for="after-time">
-								{{ t('logs.after-time') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+								{{ t('logs.after-time') }}
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="after-time" type="time" placeholder="">
 						</div>
 						<!-- Before Date -->
 						<div class="w-1/6 px-3 pr-1 mobile:w-full mobile:mb-3">
 							<label class="block mb-3 mt-3" for="before-date">
-								{{ t('logs.before-date') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+								{{ t('logs.before-date') }}
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="before-date" type="date" placeholder="">
 						</div>
 						<!-- Before Time -->
 						<div class="w-1/6 px-3 pl-1 mobile:w-full mobile:mb-3">
 							<label class="block mb-3 mt-3" for="before-time">
-								{{ t('logs.before-time') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+								{{ t('logs.before-time') }}
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="before-time" type="time" placeholder="">
 						</div>
 					</div>
 					<!-- Description -->
 					<div class="w-full px-3 mt-3">
-						<small class="text-muted dark:text-dark-muted mt-1 leading-4 block">*
-							{{ t('global.search.exact') }}</small>
-						<small class="text-muted dark:text-dark-muted mt-1 leading-4 block">**
-							{{ t('global.search.like') }} {{ t('global.search.like_prepend') }}</small>
-						<small class="text-muted dark:text-dark-muted mt-1 leading-4 block">C
-							{{ t('global.search.comma') }}</small>
+						<small class="text-muted dark:text-dark-muted mt-1 leading-4 block" v-html="t('global.search.custom')"></small>
 					</div>
 					<!-- Search button -->
 					<div class="w-full px-3 mt-3">

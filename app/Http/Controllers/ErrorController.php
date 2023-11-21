@@ -36,13 +36,7 @@ class ErrorController extends Controller
         $query = ClientError::query()->orderByDesc('timestamp');
 
         // Filtering by error_trace.
-        if ($trace = $request->input('trace')) {
-            $query->where('error_trace', 'LIKE', '%' . $trace . '%');
-        }
-
-        if (!$request->input('callbacks')) {
-            $query->where('error_trace', 'NOT LIKE', 'Server callback `%');
-        }
+        $this->searchQuery($request, $query, 'trace', 'error_trace');
 
         if ($serverVersion = $request->input('server_version')) {
             if ($serverVersion === 'newest') {
@@ -91,9 +85,7 @@ class ErrorController extends Controller
         $query = ServerError::query()->orderByDesc('timestamp');
 
         // Filtering by error_trace.
-        if ($trace = $request->input('trace')) {
-            $query->where('trace', 'LIKE', '%' . $trace . '%');
-        }
+        $this->searchQuery($request, $query, 'trace', 'trace');
 
         $cycle = intval($request->input('cycle')) ?? 0;
         if (!is_numeric($cycle) || $cycle < 0) {

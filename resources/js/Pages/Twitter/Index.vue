@@ -37,22 +37,21 @@
                         <!-- Details -->
                         <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-3" for="username">
-                                {{ t('twitter.account') }} <sup class="text-muted dark:text-dark-muted">**</sup>
+                                {{ t('twitter.account') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
                             <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="username" :placeholder="t('twitter.placeholder_username')" v-model="filters.username">
                         </div>
                         <!-- Details -->
                         <div class="w-2/3 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-3" for="message">
-                                {{ t('twitter.message') }} <sup class="text-muted dark:text-dark-muted">**</sup>
+                                {{ t('twitter.message') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
                             <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" :placeholder="t('twitter.placeholder_message')" v-model="filters.message">
                         </div>
                     </div>
                     <!-- Description -->
                     <div class="w-full px-3 mt-3">
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">* {{ t('global.search.exact') }}</small>
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">** {{ t('global.search.like') }} {{ t('global.search.like_prepend') }}</small>
+                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block" v-html="t('global.search.custom')"></small>
                     </div>
                     <!-- Search button -->
                     <div class="w-full px-3 mt-3">
@@ -75,7 +74,7 @@
             <h2 class="mb-4 max-w-screen-md m-auto text-2xl">{{ t('twitter.title') }}</h2>
 
             <div class="w-full flex flex-wrap max-w-screen-md m-auto">
-                <TwitterPost v-for="post in posts" :key="post.id" :post="post" :user="user(post.authorId)" :selectionChange="selectPost" />
+                <TwitterPost v-for="post in posts" :key="post.id" :post="post" :user="post" :selectionChange="selectPost" />
 
                 <div class="mt-3" v-if="selectedPosts.length > 0">
                     <button class="px-5 py-2 font-semibold text-white bg-danger dark:bg-dark-danger rounded hover:shadow-lg" @click="deleteSelected">
@@ -131,10 +130,6 @@ export default {
         filters: {
             message: String,
         },
-        userMap: {
-            type: Object,
-            required: true,
-        },
         links: {
             type: Object,
             required: true,
@@ -186,9 +181,6 @@ export default {
             } catch (e) { }
 
             this.isLoading = false;
-        },
-        user(id) {
-            return id in this.userMap ? this.userMap[id] : null;
         },
         refresh: async function () {
             if (this.isLoading) {

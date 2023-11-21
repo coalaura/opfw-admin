@@ -63,12 +63,7 @@
         "server_timeout": "Server ID is cached for 5 minutes",
         "info": "Info",
         "search": {
-            "like": "Returns all rows where this field contains your query.",
-            "exact": "Returns all rows where this field exactly matches your query.",
-            "comma": "You can search for multiple values by separating them with a comma.",
-            "like_prepend": "If you put \"=\" in front of your query, it will search for an exact match which is faster in some occasions.",
-            "players": "You can put \"name=\" or \"identifier=\" in front of your query and it will look for an exact match in that field.",
-			"starts_with": "Returns all rows where this field starts with your query."
+            "custom": "* By default returns all rows where the column <u>contains</u> your search. You can use operators such as: <b>=</b> (equals), <b>!=</b> (does not equal), <b>&gt;</b> (greater than), <b>&lt;</b> (less than) or <b>!</b> (doesn't contain) at the <u>beginning</u> of your search string."
         },
         "results": "Search took {0} milliseconds.",
         "entries": "Showing {0} total entries on {1} page(s).",

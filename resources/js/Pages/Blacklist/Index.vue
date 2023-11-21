@@ -23,7 +23,7 @@
                     <div class="flex flex-wrap mb-4">
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-4 font-semibold" for="creator">
-                                {{ t('blacklist.creator') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+                                {{ t('blacklist.creator') }}
                             </label>
                             <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="creator" name="creator" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.creator">
                         </div>
@@ -34,22 +34,21 @@
                             <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="identifier" name="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier">
                         </div>
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
-                            <label class="block mb-4 font-semibold" for="identifier">
-                                {{ t('blacklist.reason') }} <sup class="text-muted dark:text-dark-muted">**</sup>
+                            <label class="block mb-4 font-semibold" for="reason">
+                                {{ t('blacklist.reason') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
                             <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="reason" name="reason" placeholder="Really bad guy i don't like him." v-model="filters.reason">
                         </div>
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
-                            <label class="block mb-4 font-semibold" for="identifier">
-                                {{ t('blacklist.note') }} <sup class="text-muted dark:text-dark-muted">**</sup>
+                            <label class="block mb-4 font-semibold" for="note">
+                                {{ t('blacklist.note') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
                             <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="note" name="note" placeholder="Really bad guy i don't like him." v-model="filters.note">
                         </div>
                     </div>
                     <!-- Description -->
                     <div class="w-full px-3 mt-3">
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">* {{ t('global.search.exact') }}</small>
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">** {{ t('global.search.like') }} {{ t('global.search.like_prepend') }}</small>
+                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block" v-html="t('global.search.custom')"></small>
                     </div>
                 </form>
                 <!-- Search button -->

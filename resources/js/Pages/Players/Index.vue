@@ -23,38 +23,31 @@
                     <div class="flex flex-wrap mb-4">
                         <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="name">
-                                {{ t('players.name') }} <sup class="text-muted dark:text-dark-muted">**</sup>
+                                {{ t('players.name') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
                             <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="name" name="name" placeholder="Marius Truckster" v-model="filters.name">
                         </div>
                         <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="license">
-                                {{ t('players.license') }} <sup class="text-muted dark:text-dark-muted">*, S</sup>
+                                {{ t('players.license') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
                             <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="license" name="license" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.license">
                         </div>
                         <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="server_id">
                                 {{ t('players.server_id') }}
-                                <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
                             <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="server_id" name="server" type="number" min="0" max="9999" placeholder="123" v-model="filters.server">
                         </div>
                         <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2 mt-3" for="identifier">
                                 {{ t('players.identifier') }}
-                                <sup class="text-muted dark:text-dark-muted">
-                                    *
-                                </sup>
                             </label>
                             <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="identifier" name="identifier" placeholder="669523636423622686" v-model="filters.identifier" @input="guessIdentifierType">
                         </div>
                         <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2 mt-3" for="identifier_type">
                                 {{ t('players.identifier_type') }}
-                                <sup class="text-muted dark:text-dark-muted">
-                                    *
-                                </sup>
                             </label>
                             <select class="block w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="identifier_type" name="identifier_type" v-model="filters.identifier_type">
                                 <option value="">{{ t('global.any') }}</option>
@@ -64,9 +57,6 @@
                         <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2 mt-3" for="enablable">
                                 {{ t('players.enablable') }}
-                                <sup class="text-muted dark:text-dark-muted">
-                                    *
-                                </sup>
                             </label>
                             <select class="block w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="enablable" name="enablable" v-model="filters.enablable">
                                 <option value="">{{ t('global.all') }}</option>
@@ -76,9 +66,7 @@
                     </div>
                     <!-- Description -->
                     <div class="w-full px-3 mt-3">
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">* {{ t('global.search.exact') }}</small>
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">** {{ t('global.search.like') }} {{ t('global.search.like_prepend') }}</small>
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">S {{ t('global.search.starts_with') }}</small>
+                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block" v-html="t('global.search.custom')"></small>
                     </div>
                 </form>
                 <!-- Search button -->
