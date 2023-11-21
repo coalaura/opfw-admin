@@ -254,7 +254,7 @@ class Controller extends BaseController
     /**
      * Search values in a column. Available operators are =, !=, >, <, !, default is LIKE
      */
-    protected function searchQuery(Request $request, &$query, string $input, string $column)
+    protected function searchQuery(Request $request, &$query, string $input, $column)
     {
         $search = $request->input($input);
 
