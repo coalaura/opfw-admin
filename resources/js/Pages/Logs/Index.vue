@@ -75,7 +75,7 @@
 								{{ t('logs.minigames') }}
 							</label>
                             <select class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="minigames" v-model="filters.minigames">
-                                <option value="">{{ t('global.all') }}</option>
+                                <option :value="null">{{ t('global.all') }}</option>
                                 <option value="none">{{ t('logs.minigame_none') }}</option>
                             </select>
 						</div>
@@ -552,8 +552,6 @@ export default {
 				await this.updateStatus();
 			} catch (e) {
 			}
-
-			this.filters.minigames = this.filters.minigames || '';
 
 			this.isLoading = false;
 		},
