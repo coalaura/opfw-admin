@@ -1236,7 +1236,9 @@
         },
         "amount": "Amount, sweetheart",
         "character_id": "Character ID, sugar plum",
-        "character": "Feller"
+        "character": "Feller",
+        "minigames": "Li'l ol' Games",
+        "minigame_none": "Nary a one"
     },
     "panel_logs": {
         "title": "Panel Lahgs",

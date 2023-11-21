@@ -1236,7 +1236,9 @@
         },
         "amount": "Amount, like Dosh and all that",
         "character_id": "Character ID, innit",
-        "character": "Bloody Wanker"
+        "character": "Bloody Wanker",
+        "minigames": "Bloody Minigames",
+        "minigame_none": "Bugger Off, None"
     },
     "panel_logs": {
         "title": "Panel Bollocks",

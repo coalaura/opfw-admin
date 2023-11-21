@@ -1236,7 +1236,9 @@
         },
         "amount": "💲",
         "character_id": "👤 ID",
-        "character": "🌟🎭"
+        "character": "🌟🎭",
+        "minigames": "🎮",
+        "minigame_none": "🚫"
     },
     "panel_logs": {
         "title": "📋🔒Logs",

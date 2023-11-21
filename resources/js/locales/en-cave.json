@@ -1236,7 +1236,9 @@
         },
         "amount": "How Many",
         "character_id": "Character Cave ID",
-        "character": "Cavepal"
+        "character": "Cavepal",
+        "minigames": "Tiny Games",
+        "minigame_none": "No Include"
     },
     "panel_logs": {
         "title": "Ugga Ugga Ugga",

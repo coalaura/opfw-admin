@@ -1236,7 +1236,9 @@
         },
         "amount": "Amownt",
         "character_id": "Chawactew ID",
-        "character": "Chawactew"
+        "character": "Chawactew",
+        "minigames": "Mwiniwames",
+        "minigame_none": "UwUxclude UwUw UwUw"
     },
     "panel_logs": {
         "title": "Pwanel Wogs",

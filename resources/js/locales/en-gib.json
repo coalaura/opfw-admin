@@ -1245,7 +1245,9 @@
         },
         "amount": "Fleem",
         "character_id": "Klorp ID",
-        "character": "Glibberject"
+        "character": "Glibberject",
+        "minigames": "Zimblyzorks",
+        "minigame_none": "Floopadoodle"
     },
     "panel_logs": {
         "title": "Flog Paks",

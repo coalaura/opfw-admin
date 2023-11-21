@@ -1236,7 +1236,9 @@
         },
         "amount": "Doshtags",
         "character_id": "Bloke's ID Number",
-        "character": "Bloke"
+        "character": "Bloke",
+        "minigames": "Mateship Challenges",
+        "minigame_none": "Fair Dinkum None"
     },
     "panel_logs": {
         "title": "Bossy Boss Logs",

@@ -1236,7 +1236,9 @@
         },
         "amount": "Plunder",
         "character_id": "Scallywag ID",
-        "character": "Scallywag"
+        "character": "Scallywag",
+        "minigames": "Pirate Games",
+        "minigame_none": "Shiver Me Timbers"
     },
     "panel_logs": {
         "title": "Boardin' Logs",
