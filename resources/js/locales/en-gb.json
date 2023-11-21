@@ -61,14 +61,6 @@
         "server_id": "Sodding Server ID",
         "server_timeout": "Server ID is cached for 5 bleeding minutes",
         "info": "Bleedin' Information",
-        "search": {
-            "like": "Returns all sodding rows where this tosser field contains your bleedin' query.",
-            "exact": "Returns all sodding rows where this tosser field exactly matches your bleedin' query.",
-            "comma": "You can search for multiple wankers by separating them with a bloody comma.",
-            "like_prepend": "If you put \"=\" in front of your bloody query, it will search for an exact match which is faster in some bleeding occasions.",
-            "players": "Stick \"name=\" or \"identifier=\" before your search term for a precise match in that category.",
-            "starts_with": "Displays all entries where this category starts with your search term."
-        },
         "results": "Search finished in {0} milliseconds.",
         "entries": "{0} total entries found, shown on {1} page(s).",
         "loading": "Being loaded...",
@@ -77,7 +69,10 @@
         "restricted_to_senior_staff": "Piss off, this is only for bloody important twats who work here.",
         "restricted_to_super": "Bugger off, this is only for sodding super-admin bastards.",
         "restricted_to_root": "Sod off, this is only for proper wankers who are root users.",
-        "not_restricted": "No restrictions, you lucky sods."
+        "not_restricted": "No restrictions, you lucky sods.",
+        "search": {
+            "custom": "<b>*</b> By default returns all rows where the fucking column <u>bloody well contains</u> your shitty search. You can use wankers like: <b>=</b> (equals), <b>!=</b> (does not equal), <b>&gt;</b> (greater than), <b>&lt;</b> (less than) or <b>!</b> (doesn't contain) at the bloody <u>beginning</u> of your sodding search string. You can also search for <u>multiple wankers</u> by separating the tossers with a comma."
+        }
     },
     "steam": {
         "title": "Steam Exploration",

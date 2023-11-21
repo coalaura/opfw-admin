@@ -61,14 +61,6 @@
         "server_id": "Server Wanker ID",
         "server_timeout": "Server ID's stuck in cache for 5 minutes",
         "info": "Goss",
-        "search": {
-            "like": "Spits out all the rows where this field's got a bit of your query.",
-            "exact": "Spits out all the rows where this field's an exact bloody match to your query.",
-            "comma": "You can chuck in multiple values separated by a comma. Fair dinkum.",
-            "like_prepend": "If you chuck \"=\" right up front, it'll spit out an exact match. Good for some situations, quicker too.",
-            "players": "Chuck a \"name=\" or \"identifier=\" in front of your query and it'll have a squiz for an exact match in that field.",
-            "starts_with": "Finds all rows where this field starts with your query, mate."
-        },
         "results": "Search took {0} bloody milliseconds.",
         "entries": "Showing {0} total entries on {1} flamin' page(s).",
         "loading": "Fair dinkum mate, hold your horses...",
@@ -77,7 +69,10 @@
         "restricted_to_senior_staff": "Only for bloody senior-staff members.",
         "restricted_to_super": "Only for bloody super-admins.",
         "restricted_to_root": "Only for bloody root users.",
-        "not_restricted": "No bloody restrictions."
+        "not_restricted": "No bloody restrictions.",
+        "search": {
+            "custom": "<b>*</b> Yer defo gonna get all rows where the bloomin' column <u'stocks</u> wif the word ya searched. You can use fancy operators like: <b>=</b> (same as), <b>!=</b> (ain't the same as), <b>&gt;</b> (bigger than), <b>&lt;</b> (smaller than) or <b>!</b> (ain't got) at the <u>start</u> of yer search word. Ya can also look for <u>loads of different values</u> by stickin' a comma between 'em."
+        }
     },
     "steam": {
         "title": "Bloody Steam Lookup",

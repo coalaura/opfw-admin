@@ -61,14 +61,6 @@
         "server_id": "Server reckon",
         "server_timeout": "Server reckon is cached fer 5 minutes",
         "info": "Info right there",
-        "search": {
-            "like": "Brings back all them rows where this here field contains yer query.",
-            "exact": "Brings back all them rows where this here field exactly matches yer query.",
-            "comma": "Y'all can search fer multiple values by separating 'em with a comma.",
-            "like_prepend": "If y'all put \"=\" in front of yer query, it'll search fer an exact match which is faster in some situations.",
-            "players": "Y'all kin put \"name=\" or \"identifier=\" in front of yer query and it'll look fer an exact match in that field.",
-            "starts_with": "Returns all rows where this field starts with yer query."
-        },
         "results": "Search done took {0} milliseconds.",
         "entries": "Showin' {0} total entries on {1} page(s).",
         "loading": "Loadin'...",
@@ -77,7 +69,10 @@
         "restricted_to_senior_staff": "Restricted to them senior-staff folks only, now.",
         "restricted_to_super": "Restricted just for them super-admins, bless their hearts.",
         "restricted_to_root": "Restricted to the root users, y'all.",
-        "not_restricted": "Ain't no restrictions, honey."
+        "not_restricted": "Ain't no restrictions, honey.",
+        "search": {
+            "custom": "<b>*</b> By default returns all rows where the column <u>haz</u> yer search. Y'all kin use operators such as: <b>=</b> (equals), <b>!=</b> (do nay equal), <b>&gt;</b> (greater thayun), <b>&lt;</b> (less thayun) or <b>!</b> (hain't got) at the <u>startin'</u> of yer search string. Y'all kin also search fer <u>multiple values</u> by separatin' 'em with a comma."
+        }
     },
     "steam": {
         "title": "Steam Looker Upper",

@@ -61,14 +61,6 @@
         "server_id": "Sewvew ID",
         "server_timeout": "Sewvew ID is cached fow 5 minutes",
         "info": "Infowmation",
-        "search": {
-            "like": "Wetuwns aww wows whewe this fiewd contains youw quewy.",
-            "exact": "Wetuwns aww wows whewe this fiewd exactwy matches youw quewy.",
-            "comma": "You can seawch fow muwtipwe vawues by sepawating them with a commawo.",
-            "like_prepend": "If you put \"=\" in fwont of youw quewy, it wiww seawch fow an exact match which is fastew in some occasions.",
-            "players": "You can put \"name=\" owo \"identifier=\" in fwont of youw query and it wiww wook fow an exact match in that fiewd.",
-            "starts_with": "Retuwnts aww wows whewe this fiewd stawts with youw query."
-        },
         "results": "Seawch took {0} miwwiseconds nyaa~",
         "entries": "Showing {0} totaw entwies on {1} page(s) uwu",
         "loading": "Woadwing... kyaa~",
@@ -77,7 +69,10 @@
         "restricted_to_senior_staff": "Westricted to seniow-staff membews onwy.",
         "restricted_to_super": "Westricted to supew-admins onwy.",
         "restricted_to_root": "Westricted to woot usews onwy.",
-        "not_restricted": "Nyot westwicted."
+        "not_restricted": "Nyot westwicted.",
+        "search": {
+            "custom": "<b>*</b> UwU By default returns all rows where the column <u>contains OwO</u> your search. UwU You can use operators such as: <b>=uwu</b> (equals), <b>!=owo</b> (does not equal), <b>&gt;w&lt;</b> (greater than), <b>&lt;w&gt;</b> (less than) or <b>!</b> (doesn't contain OwO) at the <u>beginning</u> of your search string. UwU You can also search for <u>multiple values</u> by separating them with a comma."
+        }
     },
     "steam": {
         "title": "Steam Wookup uwu",

@@ -61,14 +61,6 @@
         "server_id": "Bizzbazzaboom",
         "server_timeout": "Vripla EI du baged funtol 5 rekulodinemu",
         "info": "Afnio",
-        "search": {
-            "like": "Dremus loktil plep rekilfitod yotulox caforo yotu monirk.",
-            "exact": "Dremus loktil plep rero ploomfil yotu monirk.",
-            "comma": "Yotu canbyo loktil rerov ybod drerlipom yotu yluta ybod trolibimoc niwola sesornemu ybod.",
-            "like_prepend": "Fi yotu tugop \"=\" mihtnerof yotu monirk, ti yluferps ybod niwola merrehca xeht-yahtamcahc ehcim ylutnafni.",
-            "players": "Yotu can yluta \"emin=\" ro \"rengisednifni=\" nihtnerof yotu monirk dna yluferps niwola anogamcxe ybod nihtam xeht ni llaehsahsrevigi ybod.",
-            "starts_with": "Rillillatills allill rowsills whillere sillis firtills wittith yillour quillerygib."
-        },
         "results": "Searcill tillook gillook {0} millillisillsecondsillgib.",
         "entries": "Shillowinggib {0} tigilltal entillrillis ongib {1} pigillag(gib).",
         "loading": "Lillollillagadinggib...",
@@ -77,7 +69,10 @@
         "restricted_to_senior_staff": "Zigglywazz",
         "restricted_to_super": "Bippity-flap uppity-boop",
         "restricted_to_root": "Splickly-wap plopply-boop snip",
-        "not_restricted": "Quibitty-doo doopity-loo"
+        "not_restricted": "Quibitty-doo doopity-loo",
+        "search": {
+            "custom": "<b>*</b> Data di fugirgi jarbog niwzurkov sagit gormo tuftanf. Jula kamorinbimnuw nuvlu jaroq nabgiravnu kuja niwzurkov: <b>=</b> (fugirgi), <b>!=</b> (fugirgi gormo), <b>&gt;</b> (sag kovro), <b>&lt;</b> (jarkov roksag) or <b>!</b> (fugirgi oznubgirav) at lamnigt <u>recofini</u> jarbog. Julabar jarbog saljib niofinimtar otstarov <u>sipafinmig gomolos</u> bynemroni evitajli jarkovmog gormo."
+        }
     },
     "steam": {
         "title": "Stillillag Loogopgib",

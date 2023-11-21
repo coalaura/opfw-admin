@@ -61,14 +61,6 @@
         "server_id": "🆔",
         "server_timeout": "⏰ 🆔 🔒 5️⃣ ⏰",
         "info": "📰",
-        "search": {
-            "like": "🔍 ☑️ 🔢 🔤 ⚡",
-            "exact": "🔍 ☑️ 🔢 🔤 =",
-            "comma": "🔍 ✅ 🆔 ,",
-            "like_prepend": "🔍 ☑️ 🔢 🔤 = 💨",
-            "players": "🔍 🎮 🎭 = 🔢 🖐️ 🆔",
-            "starts_with": "🔍➡️🌱💭"
-        },
         "results": "🔍🎉 {0} ⏳",
         "entries": "👀🔢 {0} ➡️ {1} 📃📚",
         "loading": "⏳⏳⏳⏳⏳...",
@@ -77,7 +69,10 @@
         "restricted_to_senior_staff": "❌ Restricted to 👴-💼 members only.",
         "restricted_to_super": "❌ Restricted to 🦸-👾 only.",
         "restricted_to_root": "❌ Restricted to 🌱👤 only.",
-        "not_restricted": "📛 Not restricted."
+        "not_restricted": "📛 Not restricted.",
+        "search": {
+            "custom": "<b>*</b> By default returns all rows where the column <u>contains</u> your search. You can use operators such as: <b>=</b> (equals), <b>!=</b> (does not equal), <b>&gt;</b> (greater than), <b>&lt;</b> (less than) or <b>!</b> (doesn't contain) at the <u>beginning</u> of your search string. You can also search for <u>multiple values</u> by separating them with a comma."
+        }
     },
     "steam": {
         "title": "🚂🔎",

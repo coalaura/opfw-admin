@@ -61,14 +61,6 @@
         "server_id": "Fire ID",
         "server_timeout": "Fire ID stay in cave for 5 moons",
         "info": "Big Rock",
-        "search": {
-            "like": "Ugga ugga all rocks where this stick has your query.",
-            "exact": "Ugga ugga all rocks where this stick exactly matches your query.",
-            "comma": "Ugga ugga, you search many rocks by separating them with stick.",
-            "like_prepend": "Ugga ugga if you put \"=\" in front of your query, it will search for exact match which is faster in some suns.",
-            "players": "Ug ug put \"name=\" ug \"identifier=\" in frunt uf your query and it will look fur an exact match in that field.",
-            "starts_with": "Ug returns all rows where this field starts with your query."
-        },
         "results": "Ug-Ug took {0} milliseconds.",
         "entries": "Showing {0} total entries on {1} page(s).",
         "loading": "Ug-Ug...",
@@ -77,7 +69,10 @@
         "restricted_to_senior_staff": "Restricted to big brain grug members only.",
         "restricted_to_super": "Restricted to alpha grug-admins only.",
         "restricted_to_root": "Restricted to grug leaders only.",
-        "not_restricted": "Not restricted, me gusta."
+        "not_restricted": "Not restricted, me gusta.",
+        "search": {
+            "custom": "<b>*</b> Grok-grok-grok returns all rows where the column <u>holds</u> your search. You can use grok-grok like: <b>=</b> (same), <b>!=</b> (opposite), <b>&gt;</b> (more), <b>&lt;</b> (less), or <b>!</b> (doesn't hold) at the <u>start</u>-grok of your search string. You can also grok-grok for <u>many things</u> by comma-grok them-grok."
+        }
     },
     "steam": {
         "title": "Steam Uggabugga",

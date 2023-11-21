@@ -60,14 +60,6 @@
         "server_id": "Ship ID",
         "server_timeout": "Ship ID be cached fer 5 minutes",
         "info": "Scuttlebutt",
-        "search": {
-            "like": "Returns all doubloons where this field contains yer query.",
-            "exact": "Returns all doubloons where this field exactly matches yer query.",
-            "comma": "Ye can search fer multiple values by separatin' 'em with a comma.",
-            "like_prepend": "If ye put \"=\" afore yer query, it will search fer an exact match which be faster in some occasions.",
-            "players": "Ye can put \"name=\" or \"identifier=\" in front o' yer query an' it will scrounge fer an exact match in that field, arr.",
-            "starts_with": "Returns all rows where this field starts wit' yer query, ye scurvy dog."
-        },
         "results": "Scrounge took {0} ticks o' the lock.",
         "entries": "Showin' {0} total entries on {1} piece(s) o' the treasure map.",
         "loading": "Loadin'...",
@@ -77,7 +69,10 @@
         "restricted_to_senior_staff": "Restricted to me senior scurvy dogs only.",
         "restricted_to_super": "Restricted to me super-captains only.",
         "restricted_to_root": "Restricted to me ship's captains only.",
-        "not_restricted": "Not restricted, ya scallywags."
+        "not_restricted": "Not restricted, ya scallywags.",
+        "search": {
+            "custom": "<b>*</b> Booty default returns all rows where the column <u>contains</u> yer treasure. Ye can use operators such as: <b>=</b> (equals), <b>!=</b> (does not equal), <b>&gt;</b> (greater than), <b>&lt;</b> (less than) or <b>!</b> (doesn't contain) at the <u>beginning</u> of yer treasure string. Ye can also search for <u>multiple treasures</u> by separating 'em with a doubloon."
+        }
     },
     "steam": {
         "title": "Steam Buccaneer",
