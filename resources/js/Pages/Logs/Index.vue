@@ -553,6 +553,8 @@ export default {
 			} catch (e) {
 			}
 
+			this.filters.minigames = this.filters.minigames || '';
+
 			this.isLoading = false;
 		},
 		parseOtherLog(details, action, metadata) {

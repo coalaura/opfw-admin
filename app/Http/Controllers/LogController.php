@@ -131,15 +131,15 @@ class LogController extends Controller
 
         return Inertia::render('Logs/Index', [
             'logs'           => $logs,
-            'filters'        => [
-                'identifier' => $request->input('identifier'),
-                'server'     => $request->input('server'),
-                'action'     => $request->input('action'),
-                'details'    => $request->input('details'),
-                'minigames'  => $request->input('minigames') ?? '',
-                'after'      => $request->input('after'),
-                'before'     => $request->input('before'),
-            ],
+            'filters'        => $request->all(
+                'identifier',
+                'server',
+                'action',
+                'details',
+                'minigames',
+                'after',
+                'before'
+            ),
             'links'          => $this->getPageUrls($page),
             'time'           => $end - $start,
             'playerMap'      => Player::fetchLicensePlayerNameMap($logs->toArray($request), 'licenseIdentifier'),
@@ -210,8 +210,8 @@ class LogController extends Controller
         $end = round(microtime(true) * 1000);
 
         return Inertia::render('Logs/MoneyLogs', [
-            'logs'    => $logs,
-            'filters' => [
+            'logs'      => $logs,
+            'filters'   => [
                 'identifier'   => $request->input('identifier'),
                 'character_id' => $request->input('character_id'),
                 'details'      => $request->input('details'),
@@ -219,9 +219,9 @@ class LogController extends Controller
                 'after'        => $request->input('after'),
                 'before'       => $request->input('before'),
             ],
-            'links'   => $this->getPageUrls($page),
-            'time'    => $end - $start,
-            'page'    => $page,
+            'links'     => $this->getPageUrls($page),
+            'time'      => $end - $start,
+            'page'      => $page,
         ]);
     }
 
