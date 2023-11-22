@@ -225,6 +225,8 @@ class Ban extends Model
     {
         $words = json_decode(file_get_contents(__DIR__ . '/../helpers/human-words.json'), true);
 
+        $choices = [];
+
         while (true) {
             $wordOne = $words[array_rand($words)];
             $wordTwo = $words[array_rand($words)];
@@ -232,8 +234,22 @@ class Ban extends Model
 
             $hash = $wordOne . '-' . $wordTwo . '-' . $wordThree;
 
-            if (!Ban::query()->where('ban_hash', '=', $hash)->exists()) {
-                return $hash;
+            if (in_array($hash, $choices)) {
+                continue;
+            }
+
+            $choices[] = $hash;
+
+            if (count($choices) >= 20) {
+                $unavailable = Ban::query()->select(['ban_hash'])->whereIn('ban_hash', $choices)->get()->toArray();
+
+                $available = array_values(array_diff($choices, array_column($unavailable, 'ban_hash')));
+
+                if (!empty($available)) {
+                    return $available[0];
+                }
+
+                $choices = [];
             }
         }
     }
