@@ -850,6 +850,7 @@
             "user_variables": "User Variables",
             "global_info": "Global",
             "global_title": "Player is banned on {0} op-fw servers.",
+            "indefinitely": "indefinitely",
             "anti_cheat": "Anti-Cheat",
             "anti_cheat_title": "Anti-Cheat Events",
             "anti_cheat_metadata": "Metadata",

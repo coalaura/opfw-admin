@@ -907,7 +907,8 @@
             "global_info": "🌍",
             "global_title": "👮‍♂️🚫🔒{0}🖥️👞⚠️🗂️🔒.🔥",
             "delete_warning": "❓ 🔨/⚠️/📝?",
-            "user_variables": "👤🔣"
+            "user_variables": "👤🔣",
+            "indefinitely": "🔁"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

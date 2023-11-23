@@ -907,7 +907,8 @@
             "global_info": "Global, y'all",
             "global_title": "Player is banned on {0} op-fw servers, bless their heart.",
             "delete_warning": "Ya'll sure 'bout deletin' this here strike/warnin'/note?",
-            "user_variables": "Y'all Variables"
+            "user_variables": "Y'all Variables",
+            "indefinitely": "fer good"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

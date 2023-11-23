@@ -1,7 +1,7 @@
 import ColorThief from 'colorthief';
 
 // Rebuild style on version change
-const Iteration = 13;
+const Iteration = 14;
 
 const colors = {
 	'white': { l: 99 },
@@ -75,13 +75,6 @@ const Style = {
 					useAlpha ? `.bg-${name}.absolute,.bg-${name}.no-alpha{${backgroundPlain}}.dark .dark\\:bg-${name}.absolute,.dark .dark\\:bg-${name}.no-alpha{${backgroundPlain}}.hover\\:bg-${name}.absolute:hover,.hover\\:bg-${name}.no-alpha:hover{${backgroundPlain}!important}.dark .dark\\:hover\\:bg-${name}.absolute:hover,.dark .dark\\:hover\\:bg-${name}.no-alpha:hover{${backgroundPlain}!important}` : ''
 				].join('');
 			});
-
-			// Black and white text colors.
-			const black = `color:hsl(${h},${s}%,10%)`,
-				white = `color:hsl(${h},${s}%,90%)`;
-
-			style.push(`.text-white{${white}}.dark .dark\\:text-white{${white}}.hover\\:text-white:hover{${white}!important}.dark .dark\\:hover\\:text-white:hover{${white}!important}`),
-				style.push(`.text-black{${black}}.dark .dark\\:text-black{${black}}.hover\\:text-black:hover{${black}!important}.dark .dark\\:hover\\:text-black:hover{${black}!important}`);
 
 			// Input and placeholder colors.
 			style.push(`[type="text"],[type="url"],[type="number"],input,select,textarea{border-color:hsl(${h},${s}%,45%)}input::placeholder,textarea::placeholder{color:hsl(${h},${s}%,50%)}`);

@@ -85,7 +85,7 @@
                         <span class="font-semibold">{{ t('players.show.echo_info') }}</span>
                     </badge>
 
-                    <badge class="border-red-300 bg-red-200 dark:bg-red-700" v-if="globalBans.length > 0" :title="t('players.show.global_title', globalBans.length)">
+                    <badge class="border-red-300 bg-red-200 dark:bg-red-700 cursor-pointer" v-if="globalBans.length > 0" :title="t('players.show.global_title', globalBans.length)" :click="showGlobalBans">
                         <i class="fas fa-x-ray mr-1"></i>
                         <span class="font-semibold">{{ t('players.show.global_info') }}</span>
                     </badge>
@@ -356,6 +356,40 @@
 
         <metadataViewer :title="t('players.show.user_variables')" :metadata="player.variables" :show.sync="showingUserVariables"></metadataViewer>
 
+        <!-- Global bans -->
+        <modal :show.sync="showingGlobalBans">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.show.global_info') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="flex flex-col gap-3 text-left">
+                    <div v-for="ban in globalBans" :key="ban.serverId" class="py-4 px-6 rounded-lg shadow-lg border-2 border-red-500 bg-red-100 dark:bg-red-950">
+                        <h1 class="text-lg border-b border-gray-700 dark:border-gray-200">
+                            {{ ban.serverName }}
+                        </h1>
+
+                        <div class="text-xs mb-1 flex justify-between opacity-70">
+                            <span>{{ ban.timestamp * 1000 | formatTime }}</span>
+
+                            <span v-if="ban.expire">{{ ban.expire | humanizeSeconds }}</span>
+                            <span v-else>{{ t('players.show.indefinitely') }}</span>
+                        </div>
+
+                        <div class="italic">{{ ban.reason }}</div>
+                    </div>
+                </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showingGlobalBans = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
+
         <!-- Echo Info -->
         <modal :show.sync="showingEchoInfo">
             <template #header>
@@ -367,7 +401,7 @@
             <template #default>
                 <div class="flex flex-col gap-3 text-left font-mono">
                     <div v-for="info in echo.raw" :key="info.identifier" class="py-4 px-6 rounded-lg shadow-lg border-2" :class="`border-${info.color}-500 bg-${info.color}-100 dark:bg-${info.color}-950`">
-                        <h1 class="text-lg border-b mb-1">
+                        <h1 class="text-lg border-b mb-1 border-gray-700 dark:border-gray-200">
                             <a class="hover:underline" :href="'https://steamcommunity.com/profiles/' + info.steam" target="_blank">{{ info.identifier }}</a>
                         </h1>
 
@@ -1601,6 +1635,7 @@ export default {
 
             // Not actually opfw bans but rather bans on other subdivisions.
             globalBans: [],
+            showingGlobalBans: false,
 
             playerTime: false,
 
@@ -1650,6 +1685,9 @@ export default {
         },
     },
     methods: {
+        showGlobalBans() {
+            this.showingGlobalBans = true;
+        },
         updatePlayerTime() {
             const timezoneOffset = this.player.variables?.timezoneOffset;
 

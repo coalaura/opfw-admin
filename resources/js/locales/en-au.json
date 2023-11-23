@@ -907,7 +907,8 @@
             "global_info": "Globey",
             "global_title": "Bloke is nicked on {0} dodgy servers.",
             "delete_warning": "Ya reckon you wanna chuck this bluddy strike/warning/note in the bin?",
-            "user_variables": "Blokes 'n Sheilas Yarn Factors"
+            "user_variables": "Blokes 'n Sheilas Yarn Factors",
+            "indefinitely": "forever and ever"
         },
         "ban_reason": "Sorry mate",
         "ban_time": "Runs out",

@@ -907,7 +907,8 @@
             "global_info": "Bloody Global",
             "global_title": "This wanker is banned on {0} op-fw servers, innit.",
             "delete_warning": "Oi, you really wanna toss this bleedin' strike/warning/note in the rubbish?",
-            "user_variables": "Bloody User Bollocks"
+            "user_variables": "Bloody User Bollocks",
+            "indefinitely": "bloody forever"
         },
         "ban_reason": "Give us the bleedin' reason",
         "ban_time": "Expires in yonks",

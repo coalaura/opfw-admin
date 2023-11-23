@@ -907,7 +907,8 @@
             "global_info": "Ahoy Matey",
             "global_title": "Bilge rat be scurvy on {0} op-fw servers.",
             "delete_warning": "Be ye sure ye want to purge this strike/warning/note, matey?",
-            "user_variables": "Crew Mate Variables"
+            "user_variables": "Crew Mate Variables",
+            "indefinitely": "forev'r"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",
