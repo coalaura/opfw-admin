@@ -263,6 +263,11 @@ export default {
             this.isLoading = false;
 
             this.sortList();
+
+            // Bruh moment
+            this.$nextTick(() => {
+                this.sortList();
+            });
         },
         wait(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
