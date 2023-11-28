@@ -451,7 +451,8 @@ export default {
                 const data = response.data;
 
                 if (data && data.data && data.status) {
-                    const date = moment(data.data.timestamp * 1000);
+                    // Round to next minute
+                    const date = moment((data.data.timestamp + 60) * 1000);
 
                     this.form.historic_till_date = date.format("YYYY-MM-DD");
                     this.form.historic_till_time = date.format("HH:mm");
@@ -493,7 +494,7 @@ export default {
         },
         showHistoric() {
             const fromDate = this.$moment().subtract(1, 'hours'),
-                tillDate = this.$moment();
+                tillDate = this.$moment().add(1, 'minutes');
 
             if (!this.form.historic_from_date) {
                 this.form.historic_from_date = fromDate.format("YYYY-MM-DD");
