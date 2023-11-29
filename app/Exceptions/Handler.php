@@ -50,6 +50,11 @@ class Handler extends ExceptionHandler
             return;
         }
 
+        // [2006] MySQL server has gone away
+        if ($exception->getCode() === 2006) {
+            abort(503, 'Database connection unavailable');
+        }
+
         $log = storage_path('logs/' . CLUSTER . '_error-' . date('Y-m-d') . '.log');
         $timestamp = date(\DateTimeInterface::RFC3339);
         $trace = $exception->getTrace();
