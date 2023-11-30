@@ -144,14 +144,14 @@ class WeaponDamageEvent extends Model
 	public static function getDamaged(string $license, bool $includeNpcs)
 	{
 		$query = self::query()
-			->select(['license_identifier', 'timestamp', 'timestamp_ms', 'hit_component', 'action_result_name', 'damage_type', 'weapon_type', 'distance', 'weapon_damage'])
+			->select(['license_identifier', 'timestamp_ms', 'hit_component', 'action_result_name', 'damage_type', 'weapon_type', 'distance', 'weapon_damage'])
 			->whereRaw("JSON_CONTAINS(hit_players, '\"" . $license . "\"', '$')");
 
 		if (!$includeNpcs) {
 			$query->where('is_parent_self', '=', '1');
 		}
 
-		return $query->orderByDesc(DB::raw('IF(timestamp_ms IS NULL, timestamp * 1000, timestamp_ms)'))
+		return $query->orderByDesc('timestamp_ms')
 			->limit(500)
 			->get()->toArray();
 	}
@@ -159,7 +159,7 @@ class WeaponDamageEvent extends Model
 	public static function getDamageDealtTo(string $license, bool $includeNpcs)
 	{
 		$query = self::query()
-			->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(hit_players, '$[0]')) as license_identifier, timestamp, timestamp_ms, hit_component, action_result_name, damage_type, weapon_type, distance, weapon_damage")
+			->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(hit_players, '$[0]')) as license_identifier, timestamp_ms, hit_component, action_result_name, damage_type, weapon_type, distance, weapon_damage")
 			->where('parent_global_id', '=', '0')
 			->where('license_identifier', $license);
 
@@ -167,7 +167,7 @@ class WeaponDamageEvent extends Model
 			$query->where('is_parent_self', '=', '1');
 		}
 
-		return $query->orderByDesc(DB::raw('IF(timestamp_ms IS NULL, timestamp * 1000, timestamp_ms)'))
+		return $query->orderByDesc('timestamp_ms')
 			->orderByDesc('timestamp_ms')
 			->limit(500)
 			->get()->toArray();

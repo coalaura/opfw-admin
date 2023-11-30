@@ -653,14 +653,6 @@ class PlayerRouteController extends Controller
 
                 $log["distance"] = number_format($log["distance"], 2) . "m";
 
-                if (!isset($log["timestamp"])) {
-                    $log["timestamp"] = round($log["timestamp_ms"] / 1000);
-                }
-
-                if (!isset($log["timestamp_ms"])) {
-                    $log["timestamp_ms"] = $log["timestamp"] * 1000;
-                }
-
                 return $log;
             }, $logs);
 
@@ -681,8 +673,10 @@ class PlayerRouteController extends Controller
             $lastDate = false;
 
             foreach ($logs as $index => $log) {
-                $date = date('D, jS M Y', $log["timestamp"]);
-                $time = '<i style="color:#ffb3b3">' . date('H:i:s', $log["timestamp"]) . '</i>';
+                $timestampSec = round($log["timestamp_ms"] / 1000);
+
+                $date = date('D, jS M Y', $timestampSec);
+                $time = '<i style="color:#ffb3b3">' . date('H:i:s', $timestampSec) . '</i>';
 
                 if ($lastDate !== $date) {
                     $list[] = "\n<b style='border-bottom:1px dashed #fff;margin-top:10px;display:inline-block'>- - - " . $date . " - - -</b>";
