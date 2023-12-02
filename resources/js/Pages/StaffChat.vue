@@ -19,15 +19,16 @@
             <div ref="scrollTo"></div>
         </div>
 
-        <div>
+        <div v-if="!isLoading && socket">
             <p class="notice" v-html="t('staff_chat.notice')"></p>
 
-            <div class="input-wrap" :class="{ 'opacity-75': isSendingChat }" v-if="!isLoading && socket">
+            <div class="input-wrap" :class="{ 'opacity-75': isSendingChat }">
                 <div class="prefix">
-                    <i class="fas fa-spinner fa-spin" v-if="isSendingChat" ref="chat"></i>
+                    <i class="fas fa-spinner fa-spin" v-if="isSendingChat"></i>
                     <span v-else>➤</span>
                 </div>
-                <input class="input !outline-none" v-model="chatInput" spellcheck="false" @keydown="keydown" :disabled="isSendingChat" />
+
+                <input class="input !outline-none" v-model="chatInput" spellcheck="false" @keydown="keydown" :disabled="isSendingChat" ref="chat" />
             </div>
         </div>
     </div>
@@ -51,7 +52,6 @@ body {
     font-size: 2.15vh;
     color: white;
     line-height: 4vh;
-    padding-bottom: 14vh;
     display: flex;
     flex-direction: column;
     gap: 2vh;
