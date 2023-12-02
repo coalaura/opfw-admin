@@ -159,7 +159,8 @@
         "title": "Staff Chat",
         "voice_chat": "Voice Chat",
         "connecting": "Connecting to the voice server. Sending voice data to relevant players.",
-        "disconnected": "Disconnected from the voice server. Waiting for connection."
+        "disconnected": "Disconnected from the voice server. Waiting for connection.",
+        "notice": "<b>Note:</b> Staff chat may be delayed by up to 3 seconds."
     },
     "overwatch": {
         "title": "Overwatch",

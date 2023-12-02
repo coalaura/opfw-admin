@@ -19,12 +19,16 @@
             <div ref="scrollTo"></div>
         </div>
 
-        <div class="input-wrap" :class="{ 'opacity-75': isSendingChat }" v-if="!isLoading && socket">
-            <div class="prefix">
-                <i class="fas fa-spinner fa-spin" v-if="isSendingChat" ref="chat"></i>
-                <span v-else>➤</span>
+        <div>
+            <p class="notice" v-html="t('staff_chat.notice')"></p>
+
+            <div class="input-wrap" :class="{ 'opacity-75': isSendingChat }" v-if="!isLoading && socket">
+                <div class="prefix">
+                    <i class="fas fa-spinner fa-spin" v-if="isSendingChat" ref="chat"></i>
+                    <span v-else>➤</span>
+                </div>
+                <input class="input !outline-none" v-model="chatInput" spellcheck="false" @keydown="keydown" :disabled="isSendingChat" />
             </div>
-            <input class="input !outline-none" v-model="chatInput" spellcheck="false" @keydown="keydown" :disabled="isSendingChat" />
         </div>
     </div>
 </template>
@@ -48,6 +52,9 @@ body {
     color: white;
     line-height: 4vh;
     padding-bottom: 14vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
 }
 
 .messages {
@@ -84,15 +91,18 @@ body {
     background: rgba(140, 50, 35, 0.85);
 }
 
+.notice {
+    line-height: 2vh;
+    font-size: 1.8vh;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 0.7vh;
+}
+
 .input-wrap {
-    position: absolute;
-    bottom: 5vh;
-    left: 5vh;
-    right: 5vh;
     background: rgba(44, 62, 80, 0.7);
     border: 1px solid rgb(77, 144, 254);
     box-shadow: 0 0 2px rgb(77, 144, 254);
-    margin-top: 2vh;
     padding: 1vh 2.2vh;
     border-radius: 1.2vh;
     display: flex;
@@ -207,7 +217,7 @@ export default {
 
                         return {
                             license: user.licenseIdentifier,
-                            title: (type === "staff" ? "STAFF " : "REPORT ") + user.playerName + (type === "staff" ? "" : " (" + user.source + ")"),
+                            title: (type === "staff" ? "STAFF " : `REPORT-${message.reportId} `) + user.playerName + (type === "staff" ? "" : " (" + user.source + ")"),
                             text: text,
                             color: type === "staff" ? "purple" : "green",
                             createdAt: message.createdAt

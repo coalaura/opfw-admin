@@ -157,7 +157,8 @@
         "voice_chat": "Yarn Yarn",
         "disconnected": "Arvo mate, got disconnected from the voice server. Just hang tight, we'll sort it out soon.",
         "connecting": "G'day, mate! Connecting to the bloody voice server. Chucking voice data straight to the fair dinkum players.",
-        "title": "Bloody Staff Yarn"
+        "title": "Bloody Staff Yarn",
+        "notice": "<b>Yarn:</b> Staff yakka might take up to 3 ticks to reach ya."
     },
     "overwatch": {
         "title": "Undercover",

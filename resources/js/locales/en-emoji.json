@@ -157,7 +157,8 @@
         "voice_chat": "🔊📢",
         "disconnected": "🔌📵",
         "connecting": "🔌🗣️🚀. 💌🗣️🎮📁 to 🎯🆔 players.",
-        "title": "👥💬"
+        "title": "👥💬",
+        "notice": "<b>📝:</b> 💼 chat 🕰️ be 🔄 by ⬆️ 3 ⏲️."
     },
     "overwatch": {
         "title": "👁️‍🗨️",

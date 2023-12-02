@@ -157,7 +157,8 @@
         "voice_chat": "Grunt Grunt",
         "disconnected": "Me no hear other cavemen. Wait for connection.",
         "connecting": "Ug. Me go connect to voice cave. Me send voice grunt to other players who need to hear.",
-        "title": "Ugga Ugga Chat"
+        "title": "Ugga Ugga Chat",
+        "notice": "<b>Ungabunga:</b> Staff caveman grug might take up to 3 moons to come."
     },
     "overwatch": {
         "title": "Bugga bugga",

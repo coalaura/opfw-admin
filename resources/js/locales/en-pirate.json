@@ -157,7 +157,8 @@
         "voice_chat": "Parrot Squawk",
         "disconnected": "Marooned from the voice server. Waitin' for a matey to reconnect.",
         "connecting": "We be settin' sail fer th' voice server. Sendin' voice data t' relevant scallywags.",
-        "title": "Matey Chatter"
+        "title": "Matey Chatter",
+        "notice": "<b>Blimey:</b> Yer messages in staff chat may take up to 3 seconds longer to reach their destination, ye scallywags."
     },
     "overwatch": {
         "title": "Spyglass",

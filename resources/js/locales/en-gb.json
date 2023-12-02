@@ -157,7 +157,8 @@
         "voice_chat": "Bloody Voice Bollocks",
         "disconnected": "Disconnected from the bloody voice server. Waiting for a sodding connection.",
         "connecting": "Bloody hell, we're connectin' to the bleedin' voice server. Blabberin' on like a bunch o' tossers to the right tosspots.",
-        "title": "Bloody Wankers Chat"
+        "title": "Bloody Wankers Chat",
+        "notice": "<b>Listen up, you wankers:</b> Staff chat might take a bleeding eternity of 3 seconds to reach your thick skulls."
     },
     "overwatch": {
         "auto_refresh": "Fancy a bleedin' toggle for the auto-refresh.",
