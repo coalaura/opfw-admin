@@ -51,7 +51,7 @@ body {
     font-family: "Rubik", sans-serif;
     font-size: 2.15vh;
     color: white;
-    line-height: 4vh;
+    line-height: 3.2vh;
     display: flex;
     flex-direction: column;
     gap: 2vh;
@@ -68,7 +68,7 @@ body {
 }
 
 .message {
-    padding: 1vh 2.2vh;
+    padding: 1.4vh 2.2vh;
     border-radius: 1.2vh;
     overflow: hidden;
     max-width: 100%;
@@ -95,8 +95,12 @@ body {
     line-height: 2vh;
     font-size: 1.8vh;
     font-style: italic;
-    color: rgba(255, 255, 255, 0.75);
+    color: #ddd;
     margin-bottom: 0.7vh;
+}
+
+.notice b {
+    font-style: normal;
 }
 
 .input-wrap {
@@ -115,9 +119,8 @@ body {
     border: none;
     background: none;
     font-weight: 500;
-
-    padding-left: 1.3vh;
-    padding-right: 1.3vh;
+    padding: 0.3vh 1.3vh;
+    outline: none !important;
 
     &:focus {
         outline: none;
