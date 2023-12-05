@@ -154,14 +154,14 @@ class Player extends Model
             "default" => "en-us",
             "options" => [
                 "en-us"     => "English",
-                "en-gb"     => "Rude British",
-                "en-au"     => "Australian",
+                "no"        => "Norwegian",
+                "hi-lat"    => "Hindi",
+
                 "en-cave"   => "Caveman Speak",
                 "en-uwu"    => "UwU Language",
                 "en-pirate" => "Pirate Speak",
                 "en-us_s"   => "Southern Accent",
                 "en-emoji"  => "Emojis",
-                "en-gib"    => "Gibberish",
             ],
         ],
     ];
