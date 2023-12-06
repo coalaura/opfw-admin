@@ -692,7 +692,8 @@ class PlayerRouteController extends Controller
                 $modifier = $log["damage_modifier"] ?? "-";
 
                 $name = mb_str_pad($names[$log["license_identifier"]] ?? 'NPC', $maxName);
-                $name = '<a href="/players/' . $log["license_identifier"] . '" style="color:#ffe6b3" target="_blank">' . $name . '</a>';
+                $nameStyle = !isset($names[$log["license_identifier"]]) ? 'font-style:italic' : '';
+                $name = '<a href="/players/' . $log["license_identifier"] . '" style="color:#ffe6b3;' . $nameStyle . '" target="_blank">' . $name . '</a>';
 
                 $weapon    = '<span style="color:#e5ffb3" title="weapon_type">' . str_pad($log["weapon_type"], $maxWeapon) . '</span>';
                 $damage    = '<span style="color:#b3ffb3" title="weapon_damage">' . str_pad($log["weapon_damage"] . "hp", 5) . '</span>';
