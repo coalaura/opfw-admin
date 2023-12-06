@@ -653,6 +653,10 @@ class PlayerRouteController extends Controller
 
                 $log["distance"] = number_format($log["distance"], 2) . "m";
 
+                if (!empty($log['bonus_damage'])) {
+                    $log['weapon_damage'] .= " +" . $log['bonus_damage'];
+                }
+
                 return $log;
             }, $logs);
 
@@ -685,21 +689,20 @@ class PlayerRouteController extends Controller
                     $lastDate = $date;
                 }
 
-                $health = first($log["hit_healths"]);
-                $health = $health ? $health . "hp" : "-";
+                $modifier = $log["damage_modifier"] ?? "-";
 
                 $name = mb_str_pad($names[$log["license_identifier"]] ?? 'NPC', $maxName);
                 $name = '<a href="/players/' . $log["license_identifier"] . '" style="color:#ffe6b3" target="_blank">' . $name . '</a>';
 
                 $weapon    = '<span style="color:#e5ffb3" title="weapon_type">' . str_pad($log["weapon_type"], $maxWeapon) . '</span>';
                 $damage    = '<span style="color:#b3ffb3" title="weapon_damage">' . str_pad($log["weapon_damage"] . "hp", 5) . '</span>';
-                $health    = '<span style="color:#b3ffe6" title="health before hit">' . str_pad($health, 5) . '</span>';
+                $modifier    = '<span style="color:#b3ffe6" title="damage_modifier">' . str_pad($modifier, 5) . '</span>';
                 $component = '<span style="color:#b3e5ff" title="hit_component">' . str_pad($log["hit_component"], $maxComponent) . '</span>';
                 $distance  = '<span style="color:#b3b3ff" title="distance">' . str_pad($log["distance"], $maxDistance) . '</span>';
                 $type      = '<span style="color:#e6b3ff" title="damage_type">' . str_pad($log["damage_type"], $maxType) . '</span>';
                 $action    = '<span style="color:#ffb3e5" title="action_result_name">' . $log["action_result_name"] . '</span>';
 
-                $list[] = "  " . $time . "    " . $name . "    " . $weapon . "    " . $damage . "    " . $health . "    " . $component . "    " . $distance . "    " . $type . "    " . $action;
+                $list[] = "  " . $time . "    " . $name . "    " . $weapon . "    " . $damage . "    " . $modifier . "    " . $component . "    " . $distance . "    " . $type . "    " . $action;
 
                 $next = $logs[$index + 1] ?? false;
 
