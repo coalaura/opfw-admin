@@ -144,7 +144,7 @@ class WeaponDamageEvent extends Model
 	public static function getDamaged(string $license, bool $includeNpcs)
 	{
 		$query = self::query()
-			->select(['license_identifier', 'timestamp_ms', 'hit_component', 'action_result_name', 'damage_type', 'weapon_type', 'distance', 'weapon_damage'])
+			->select(['license_identifier', 'timestamp_ms', 'hit_component', 'action_result_name', 'damage_type', 'weapon_type', 'distance', 'weapon_damage', 'hit_healths'])
 			->whereRaw("JSON_CONTAINS(hit_players, '\"" . $license . "\"', '$')");
 
 		if (!$includeNpcs) {
@@ -159,7 +159,7 @@ class WeaponDamageEvent extends Model
 	public static function getDamageDealtTo(string $license, bool $includeNpcs)
 	{
 		$query = self::query()
-			->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(hit_players, '$[0]')) as license_identifier, timestamp_ms, hit_component, action_result_name, damage_type, weapon_type, distance, weapon_damage")
+			->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(hit_players, '$[0]')) as license_identifier, timestamp_ms, hit_component, action_result_name, damage_type, weapon_type, distance, weapon_damage, hit_healths")
 			->where('parent_global_id', '=', '0')
 			->where('license_identifier', $license);
 
