@@ -685,7 +685,7 @@ class PlayerRouteController extends Controller
                     $lastDate = $date;
                 }
 
-                $health = array_shift($log["hit_healths"]);
+                $health = first($log["hit_healths"]);
                 $health = $health ? $health . "hp" : "-";
 
                 $name = mb_str_pad($names[$log["license_identifier"]] ?? 'NPC', $maxName);

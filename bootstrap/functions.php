@@ -1,5 +1,14 @@
 <?php
 
+function first($array)
+{
+    if (!is_array($array) || empty($array)) {
+        return null;
+    }
+
+    return $array[0];
+}
+
 function mb_str_pad($input, $pad_length, $pad_string = ' ', $pad_type = STR_PAD_RIGHT, $encoding = 'UTF-8')
 {
     $input_length = mb_strlen($input, $encoding);
