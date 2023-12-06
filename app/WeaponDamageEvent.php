@@ -168,7 +168,6 @@ class WeaponDamageEvent extends Model
     {
         $query = self::query()
             ->selectRaw("JSON_UNQUOTE(JSON_EXTRACT(hit_players, '$[0]')) as license_identifier, timestamp_ms, hit_component, action_result_name, damage_type, weapon_type, distance, weapon_damage")
-            ->where('parent_global_id', '=', '0')
             ->where('license_identifier', $license);
 
         if (!$includeNpcs) {
