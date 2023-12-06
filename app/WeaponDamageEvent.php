@@ -149,15 +149,12 @@ class WeaponDamageEvent extends Model
         return "$hash/$signed";
     }
 
-    public static function getDamaged(string $license, bool $includeNpcs)
+    public static function getDamaged(string $license)
     {
         $query = self::query()
             ->select(['license_identifier', 'timestamp_ms', 'hit_component', 'action_result_name', 'damage_type', 'weapon_type', 'distance', 'weapon_damage'])
-            ->whereRaw("JSON_CONTAINS(hit_players, '\"" . $license . "\"', '$')");
-
-        if (!$includeNpcs) {
-            $query->where('is_parent_self', '=', '1');
-        }
+            ->whereRaw("JSON_CONTAINS(hit_players, '\"" . $license . "\"', '$')")
+			->where('is_parent_self', '=', '1');
 
         return $query->orderByDesc('timestamp_ms')
             ->limit(500)
@@ -172,6 +169,7 @@ class WeaponDamageEvent extends Model
 
         if (!$includeNpcs) {
             $query->where('is_parent_self', '=', '1');
+			$query->where("hit_players", "!=", "[]");
         }
 
         return $query->orderByDesc('timestamp_ms')
