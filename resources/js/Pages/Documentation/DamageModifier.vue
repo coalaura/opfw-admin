@@ -1,9 +1,9 @@
 <template>
-    <portal to="title">
-        <h1>Anti-Cheat: Invalid Damage Modifier</h1>
-    </portal>
-
     <div>
+        <portal to="title">
+            <h1>Anti-Cheat: Invalid Damage Modifier</h1>
+        </portal>
+
         <v-section class="overflow-x-auto" :noFooter="true" :noHeader="true">
             <div class="w-full flex flex-wrap max-w-screen-md m-auto text-justify">
                 <h1 class="dark:text-white mb-5">
