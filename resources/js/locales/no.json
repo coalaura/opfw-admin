@@ -72,7 +72,8 @@
         "restricted_to_senior_staff": "Begrenset til kun senior-personalet.",
         "restricted_to_super": "Begrenset til kun super-administratorer.",
         "restricted_to_root": "Begrenset til kun rotbrukere.",
-        "not_restricted": "Ikke begrenset."
+        "not_restricted": "Ikke begrenset.",
+        "support_markdown": "De fleste grunnleggende markdown-syntaksene støttes. Klikk for å lære mer."
     },
     "steam": {
         "title": "Steam-søk",

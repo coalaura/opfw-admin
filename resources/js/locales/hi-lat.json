@@ -72,7 +72,8 @@
         "restricted_to_senior_staff": "Sirf varishth staff sadasyon ke liye prati-bandhit.",
         "restricted_to_super": "Sirf super-admins ke liye prati-bandhit.",
         "restricted_to_root": "Sirf root users ke liye prati-bandhit.",
-        "not_restricted": "Prati-bandhit nahi."
+        "not_restricted": "Prati-bandhit nahi.",
+        "support_markdown": "Adhiktar moolbhoot markdown syntax ka samarthan kiya jaata hai. Jaankaari ke liye click karein."
     },
     "steam": {
         "title": "Steam Lookup",
