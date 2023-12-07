@@ -52,7 +52,7 @@
                 <p v-if="$page.discord && $page.discord.global_name" class="italic font-semibold drop-shadow" :title="$page.discord.username">{{ $page.discord.global_name }}</p>
                 <p v-else-if="$page.discord" class="italic font-semibold drop-shadow">{{ $page.discord.username }}#{{ $page.discord.discriminator }}</p>
 
-                <div class="w-avatar relative" @contextmenu="showContext" v-click-outside="hideContext">
+                <div class="w-avatar relative flex-shrink-0" @contextmenu="showContext" v-click-outside="hideContext">
                     <inertia-link :href="'/players/' + $page.auth.player.licenseIdentifier">
                         <img :src="getDiscordAvatar('webp')" class="rounded shadow border-2 border-gray-300" @error="failedDiscordAvatar" />
                     </inertia-link>

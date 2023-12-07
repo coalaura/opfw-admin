@@ -1,4 +1,8 @@
 <template>
+    <portal to="title">
+        <h1>Anti-Cheat: Invalid Damage Modifier</h1>
+    </portal>
+
     <div>
         <v-section class="overflow-x-auto" :noFooter="true" :noHeader="true">
             <div class="w-full flex flex-wrap max-w-screen-md m-auto text-justify">
@@ -10,7 +14,7 @@
                     Every weapon has its damage hardcoded in its respective .meta file. This value defines the base damage of each weapon.
                 </p>
 
-                <img src="/images/docs/damage_meta.png" class="w-full" />
+                <img src="/images/docs/damage_meta.png" class="w-full shadow-md border border-gray-500 mb-1" />
                 <caption class="mb-3 text-gray-700 dark:text-gray-200 text-xs">
                     Example of the base damage being set in a .meta file
                 </caption>
@@ -26,7 +30,7 @@
                     screencapture and notify online staff members.
                 </p>
 
-                <img src="/images/docs/damage_modifier.png" class="w-full" />
+                <img src="/images/docs/damage_modifier.png" class="w-full shadow-md border border-gray-500 mb-1" />
                 <caption class="mb-3 text-gray-700 dark:text-gray-200 text-xs">
                     Example anti-cheat log. (Modifier is supposed to be 0.5 but was set to 10.0)
                 </caption>
@@ -49,15 +53,11 @@ header {
 <script>
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
-import Badge from './../../Components/Badge';
-import Pagination from './../../Components/Pagination';
 
 export default {
     layout: Layout,
     components: {
         VSection,
-        Badge,
-        Pagination,
     },
 }
 </script>

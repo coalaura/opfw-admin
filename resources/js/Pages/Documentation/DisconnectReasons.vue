@@ -1,4 +1,8 @@
 <template>
+    <portal to="title">
+        <h1>Server-Logs: Disconnect reasons</h1>
+    </portal>
+
     <div>
         <v-section class="overflow-x-auto" :noFooter="true" :noHeader="true">
             <div class="w-full flex flex-wrap max-w-screen-md m-auto text-justify">
@@ -92,15 +96,11 @@
 <script>
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
-import Badge from './../../Components/Badge';
-import Pagination from './../../Components/Pagination';
 
 export default {
     layout: Layout,
     components: {
         VSection,
-        Badge,
-        Pagination,
     },
 }
 </script>

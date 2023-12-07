@@ -73,7 +73,8 @@
         "restricted_to_senior_staff": "Restricted to senior-staff members only.",
         "restricted_to_super": "Restricted to super-admins only.",
         "restricted_to_root": "Restricted to root users only.",
-        "not_restricted": "Not restricted."
+        "not_restricted": "Not restricted.",
+        "support_markdown": "Most basic markdown syntax is supported. Click to learn more."
     },
 	"steam": {
 		"title": "Steam Lookup",

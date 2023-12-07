@@ -1221,8 +1221,13 @@
                 <form @submit.prevent="submitWarning">
                     <label for="message" class="mb-3 italic text-gray-800 dark:text-gray-200 block text-sm" v-html="t('players.warning.remember')"></label>
 
-                    <textarea class="w-full p-5 mb-5 bg-gray-200 rounded shadow dark:bg-gray-600" id="message" name="message" rows="4" :placeholder="t('players.warning.placeholder', player.playerName)" v-model="form.warning.message" required>
-                    </textarea>
+                    <div class="relative">
+                        <inertia-link class="text-black dark:text-white no-underline absolute top-0.5 right-1.5" :title="t('global.support_markdown')" href="/docs/markdown">
+                            <i class="fab fa-markdown"></i>
+                        </inertia-link>
+
+                        <textarea class="w-full p-5 mb-5 bg-gray-200 rounded shadow dark:bg-gray-600" id="message" name="message" rows="4" :placeholder="t('players.warning.placeholder', player.playerName)" v-model="form.warning.message" required></textarea>
+                    </div>
 
                     <button class="px-5 py-2 font-semibold text-white bg-red-500 dark:bg-red-500 rounded" @click="form.warning.warning_type = 'strike'" type="submit">
                         <i class="mr-1 fas fa-bolt"></i>

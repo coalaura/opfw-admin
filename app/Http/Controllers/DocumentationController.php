@@ -7,10 +7,11 @@ use Inertia\Response;
 
 class DocumentationController extends Controller
 {
-	const Documentations = [
-		'damage_modifier' => 'DamageModifier',
-		'disconnect_reasons' => 'DisconnectReasons'
-	];
+    const Documentations = [
+        'damage_modifier'    => 'DamageModifier',
+        'disconnect_reasons' => 'DisconnectReasons',
+        'markdown'           => 'Markdown',
+    ];
 
     /**
      * Random documentations.
@@ -20,11 +21,11 @@ class DocumentationController extends Controller
      */
     public function docs(Request $request, string $type): Response
     {
-		$page = self::Documentations[$type];
+        $page = self::Documentations[$type];
 
-		if (empty($page)) {
-			abort(404);
-		}
+        if (empty($page)) {
+            abort(404);
+        }
 
         return Inertia::render('Documentation/' . $page);
     }
