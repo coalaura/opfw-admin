@@ -10,7 +10,7 @@ class TranscriptHelper
     {
         if (empty($warning->message)) return;
 
-        $re = '/https:\/\/tickettool\.xyz\/direct\?url=(https:\/\/cdn\.discordapp\.com\/.+?\/transcript-\w+-(\d+)\.html\?[\w=%&]+)/m';
+        $re = '/https:\/\/tickettool\.xyz\/direct\?url=(https:\/\/cdn\.discordapp\.com\/.+?\/transcript-\w+-(\d+)\.html(\?[\w=%&]+)?)/m';
 
         $message = preg_replace_callback($re, function ($matches) {
             $url = $matches[0];
