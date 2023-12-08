@@ -74,7 +74,6 @@ export default {
         }
     },
     updated() {
-        console.log("hello")
         let mapTitle = $("#map_title").text().trim();
 
         if (mapTitle) {
@@ -82,8 +81,6 @@ export default {
         }
 
         const title = mapTitle || $("header h1").html()?.replace(/<(\w+) .+?>.*?<\/\1>/g, "")?.trim();
-
-        console.log(title)
 
         if (title) {
             const cluster = this.$page?.auth?.cluster ? this.$page.auth.cluster.toUpperCase() : "OP-FW";
