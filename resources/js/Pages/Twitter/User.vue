@@ -1,5 +1,8 @@
 <template>
     <div>
+        <portal to="title">
+            <h1>@{{ user.username }}</h1>
+        </portal>
 
         <template>
             <div class="w-full items-center flex flex-wrap mb-6 max-w-screen-md m-auto relative">
@@ -63,9 +66,14 @@
 
             </div>
         </template>
-
     </div>
 </template>
+
+<style>
+header {
+    display: none !important;
+}
+</style>
 
 <script>
 import Layout from './../../Layouts/App';
