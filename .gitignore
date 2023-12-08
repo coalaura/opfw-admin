@@ -6,6 +6,7 @@
 /public/mix-manifest.json
 /public/images/vendor/
 /public/_uploads
+/public/_transcripts
 
 # env
 .env

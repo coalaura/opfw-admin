@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\WarningStoreRequest;
 use App\Player;
 use App\Warning;
+use App\Helpers\TranscriptHelper;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -35,9 +36,13 @@ class PlayerWarningController extends Controller
             abort(401);
         }
 
-        $player->warnings()->create(array_merge($data, [
+        $warning = $player->warnings()->create(array_merge($data, [
             'issuer_id' => user()->user_id,
         ]));
+
+        if ($warning) {
+            TranscriptHelper::ensureMessageTranscripts($warning);
+        }
 
         return backWith('success', 'Warning/Note has been added successfully.');
     }
@@ -63,7 +68,12 @@ class PlayerWarningController extends Controller
             return backWith('error', 'You can only edit your own warnings/notes!');
         }
 
+        $messageBefore = $warning->message;
+
         $warning->update($request->validated());
+
+        TranscriptHelper::garbageCollectTranscripts($messageBefore, $warning->message);
+        TranscriptHelper::ensureMessageTranscripts($warning);
 
         return backWith('success', 'Successfully updated warning/note');
     }
@@ -83,6 +93,8 @@ class PlayerWarningController extends Controller
         if (!$warning->can_be_deleted && !$isSenior) {
             abort(401);
         }
+
+        TranscriptHelper::unlinkMessageTranscripts($warning);
 
         $warning->forceDelete();
 

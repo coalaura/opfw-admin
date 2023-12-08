@@ -90,6 +90,20 @@ const Markdown = {
                 };
             }
 
+            // Stored Transcript URLs
+            const host = window.location.origin + "/_transcripts/";
+
+            if (url.startsWith(host)) {
+                const ticket = find(/_transcripts\/(\d+)\.html/gm, url);
+
+                if (!ticket) return false;
+
+                return {
+                    text: `local/ticket-${ticket}`,
+                    url: url
+                };
+            }
+
             // Medal.TV clips
             if (url.match(/^https:\/\/medal.tv\/games\/[\w-]+\/clips/gm)) {
                 url = url.split('?').shift();
