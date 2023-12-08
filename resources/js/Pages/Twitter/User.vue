@@ -12,7 +12,7 @@
                         <span class="verified" v-if="user.is_verified">&nbsp;</span>
                     </h2>
 
-                    <inertia-link :href="'/players/' + player.licenseIdentifier + '/characters/' + character.id" class="hover:underline text-base text-gray-500 dark:text-gray-400" v-if="character">
+                    <inertia-link :href="'/players/' + character.licenseIdentifier + '/characters/' + character.id" class="hover:underline text-base text-gray-500 dark:text-gray-400" v-if="character">
                         {{ character.name }} #{{ character.id }}
                     </inertia-link>
 
