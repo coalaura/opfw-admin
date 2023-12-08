@@ -707,7 +707,9 @@
         "filter": "Filter posts",
         "delete_tweet": "Are you sure you want to delete this tweet?",
         "verify": "Ugga ugga, make user big chief",
-        "un_verify": "Ugga ugga, take away big chief status"
+        "un_verify": "Ugga ugga, take away big chief status",
+        "unknown_character": "Thing not known",
+        "no_tweets": "This one no show word-sounds yet."
     },
     "players": {
         "title": "Uggur",

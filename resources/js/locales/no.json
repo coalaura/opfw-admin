@@ -716,7 +716,9 @@
         "placeholder_message": "Selger nøkler, kontakt meg",
         "placeholder_username": "JegRankerBanker",
         "filter": "Filtrer innlegg",
-        "delete_tweet": "Er du sikker på at du vil slette denne tweeten?"
+        "delete_tweet": "Er du sikker på at du vil slette denne tweeten?",
+        "unknown_character": "Ukjent tegn",
+        "no_tweets": "Denne kontoen har ikke postet noen tweets ennå."
     },
     "players": {
         "title": "Spillere",

@@ -707,7 +707,9 @@
         "filter": "Scour fer posts",
         "delete_tweet": "Arr ye sure ye be wantin' t' delete this tweet?",
         "verify": "Dub user as verified",
-        "un_verify": "Release users verified status"
+        "un_verify": "Release users verified status",
+        "unknown_character": "Arr, who be this scallywag?",
+        "no_tweets": "Yarrr, this seafarer ain't hoisted any messages on the crow's nest."
     },
     "players": {
         "title": "Scallywags",

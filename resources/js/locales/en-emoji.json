@@ -707,7 +707,9 @@
         "filter": "🔍 posts",
         "delete_tweet": "❓ ➡️ delete tweet?",
         "verify": "🔐👤🔵",
-        "un_verify": "🔓👥🔴"
+        "un_verify": "🔓👥🔴",
+        "unknown_character": "🚫❓🎭",
+        "no_tweets": "📑🧑‍🚀🚫🐦✍️🔄📱💬👤."
     },
     "players": {
         "title": "🧍",

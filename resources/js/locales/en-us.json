@@ -728,7 +728,9 @@
         "placeholder_message": "Selling keys hmu",
         "placeholder_username": "iRobBanks",
         "filter": "Filter posts",
-        "delete_tweet": "Are you sure you want to delete this tweet?"
+        "delete_tweet": "Are you sure you want to delete this tweet?",
+        "unknown_character": "Unknown Character",
+        "no_tweets": "This account has not posted any tweets yet."
     },
     "players": {
         "title": "Players",

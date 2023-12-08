@@ -13,7 +13,6 @@ use App\TwitterUser;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -50,14 +49,14 @@ class TwitterController extends Controller
         $end = round(microtime(true) * 1000);
 
         return Inertia::render('Twitter/Index', [
-            'posts'        => $posts,
-            'filters'      => $request->all(
+            'posts'   => $posts,
+            'filters' => $request->all(
                 'message',
                 'username'
             ),
-            'links'        => $this->getPageUrls($page),
-            'time'         => $end - $start,
-            'page'         => $page,
+            'links'   => $this->getPageUrls($page),
+            'time'    => $end - $start,
+            'page'    => $page,
         ]);
     }
 
@@ -79,27 +78,24 @@ class TwitterController extends Controller
             ->limit(15)->offset(($page - 1) * 15)
             ->get();
 
-        $tweet = $tweets->first();
+        $creatorCid = $user->creator_cid;
 
-        if (!$tweet) {
-            abort(404);
+        if (!$creatorCid) {
+            $tweet = $tweets->first();
+
+            $creatorCid = $tweet ? $tweet->realUser : null;
         }
 
         /**
          * @var $character Character|null
          */
-        $character = Character::query()
-            ->where('character_id', '=', $user->creator_cid ?? $tweet->realUser)
-            ->get()->first();
-
-        if (!$character) {
-            abort(404);
-        }
+        $character = $creatorCid ? Character::query()
+            ->where('character_id', '=', $creatorCid)
+            ->get()->first() : null;
 
         return Inertia::render('Twitter/User', [
             'tweets'    => TwitterPostResource::collection($tweets),
-            'character' => new CharacterResource($character),
-            'player'    => new PlayerIndexResource($character->player()->get()->first()),
+            'character' => $character ? new CharacterResource($character) : null,
             'user'      => new TwitterUserResource($user),
             'links'     => $this->getPageUrls($page),
             'page'      => $page,
@@ -114,7 +110,7 @@ class TwitterController extends Controller
      */
     public function deleteTweets(Request $request): RedirectResponse
     {
-		if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_TWITTER)) {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_TWITTER)) {
             abort(401);
         }
 
@@ -137,7 +133,7 @@ class TwitterController extends Controller
      */
     public function verify(Request $request, TwitterUser $user): RedirectResponse
     {
-		if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_TWITTER_VERIFY)) {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_TWITTER_VERIFY)) {
             abort(401);
         }
 

@@ -7,16 +7,16 @@
                     <img class="block w-24 h-24 rounded-full object-cover" :src="user.avatar_url" @error="avatarError" />
                 </div>
                 <div>
-                    <inertia-link :href="'/players/' + player.licenseIdentifier + '/characters/' + character.id" class="hover:underline text-xl dark:text-white">
-                        {{ character.name }}
-                        <sup>{{ character.id }}</sup>
-                    </inertia-link>
-                    <h3 class="text-base text-gray-500 dark:text-gray-400">
+                    <h2 class="text-xl dark:text-white">
                         @{{ user.username }}
                         <span class="verified" v-if="user.is_verified">&nbsp;</span>
-                        -
-                        <inertia-link :href="'/players/' + player.licenseIdentifier" class="hover:underline">{{ player.playerName }}</inertia-link>
-                    </h3>
+                    </h2>
+
+                    <inertia-link :href="'/players/' + player.licenseIdentifier + '/characters/' + character.id" class="hover:underline text-base text-gray-500 dark:text-gray-400" v-if="character">
+                        {{ character.name }} #{{ character.id }}
+                    </inertia-link>
+
+                    <div class="text-base text-gray-500 dark:text-gray-400 italic" v-else>{{ t('twitter.unknown_character') }}</div>
                 </div>
 
                 <button @click="toggleVerify" class="p-1 top-1 right-1 absolute font-semibold flex items-center justify-center drop-shadow" :title="user.is_verified ? t('twitter.un_verify') : t('twitter.verify')" v-if="this.perm.check(this.perm.PERM_TWITTER_VERIFY)">
@@ -28,7 +28,9 @@
 
         <template>
             <div class="w-full flex flex-wrap max-w-screen-md m-auto">
-                <TwitterPost v-for="post in tweets" :key="post.id" :post="post" :user="user" :dont-link="true" :selectionChange="selectPost" />
+                <div v-if="tweets.length === 0" class="p-2 italic">{{ t('twitter.no_tweets') }}</div>
+
+                <TwitterPost v-for="post in tweets" :key="post.id" :post="post" :user="user" :dont-link="true" :selectionChange="selectPost" v-else />
 
                 <div class="mt-3 flex justify-end w-full" v-if="selectedPosts.length > 0">
                     <button class="px-3 py-1 font-semibold text-sm text-white bg-danger dark:bg-dark-danger rounded hover:shadow-lg" @click="deleteSelected">
@@ -39,7 +41,7 @@
             </div>
         </template>
 
-        <template>
+        <template v-if="tweets.length === 15 || page > 1">
             <div class="flex items-center justify-between mt-6 mb-1">
 
                 <!-- Navigation -->
@@ -149,11 +151,6 @@ export default {
         },
         character: {
             type: Object,
-            required: true,
-        },
-        player: {
-            type: Object,
-            required: true,
         },
         links: {
             type: Object,

@@ -707,7 +707,9 @@
         "filter": "Filter posts for extra cuteness",
         "delete_tweet": "A-are you sure you wanna delete this super kawaii tweet? OwO",
         "verify": "UwUify user as vewified",
-        "un_verify": "UwUove users vewified status"
+        "un_verify": "UwUove users vewified status",
+        "unknown_character": "Unyknown Chawactew",
+        "no_tweets": "Dis account has nyot posted any tweets yet."
     },
     "players": {
         "title": "Kawaii Players~",

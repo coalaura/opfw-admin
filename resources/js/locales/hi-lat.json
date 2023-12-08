@@ -716,7 +716,9 @@
         "placeholder_message": "Selling keys hmu",
         "placeholder_username": "iRobBanks",
         "filter": "Posts ko filter karein",
-        "delete_tweet": "Kya aap nishchit hain ke aap is tweet ko delete karna chahte hain?"
+        "delete_tweet": "Kya aap nishchit hain ke aap is tweet ko delete karna chahte hain?",
+        "unknown_character": "Ajnyaat Charitra",
+        "no_tweets": "Is account ne abhi tak koi tweets post nahi kiye hain."
     },
     "players": {
         "title": "Khiladi",
