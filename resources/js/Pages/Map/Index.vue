@@ -457,7 +457,7 @@ export default {
                     this.form.historic_till_date = date.format("YYYY-MM-DD");
                     this.form.historic_till_time = date.format("HH:mm");
 
-                    date.subtract(1, 'hours');
+                    date.subtract(20, 'minutes');
 
                     this.form.historic_from_date = date.format("YYYY-MM-DD");
                     this.form.historic_from_time = date.format("HH:mm");
