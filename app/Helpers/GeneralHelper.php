@@ -3,7 +3,6 @@
 namespace App\Helpers;
 
 use App\Player;
-use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
