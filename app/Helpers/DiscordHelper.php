@@ -61,6 +61,8 @@ class DiscordHelper
             $data = json_decode($response, true);
 
             if (!$data) {
+                LoggingHelper::log("Invalid response from `$path` api route: " . $response);
+
                 throw new \Exception("Invalid response from `$path` api route.");
             } else if (!empty($data['message'])) {
                 throw new \Exception($data['message']);
@@ -68,8 +70,7 @@ class DiscordHelper
 
             return $data;
         } catch (\Throwable $e) {
-            // Root user can see the error
-            if (user()->isRoot()) throw $e;
+            LoggingHelper::log("Failed to execute `$path` api route: " . $e->getMessage());
         }
 
         throw new \Exception("Failed to execute `$path` api route.");
