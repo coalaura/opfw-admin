@@ -36,7 +36,11 @@ class DiscordHelper
             }
         }
 
-        return null;
+        $guildNames = array_map(function ($guild) {
+            return $guild['name'];
+        }, $guilds);
+
+        throw new \Exception("No user found. Searched guilds: " . implode(', ', $guildNames) . ".");
     }
 
     private static function doRequest(string $method, string $path): ?array
