@@ -60,7 +60,7 @@ class DiscordHelper
 
             $data = json_decode($response, true);
 
-            if (!$data) {
+            if (!$data && $data !== []) {
                 LoggingHelper::log("Invalid response from `$path` api route: " . trim($response));
 
                 throw new \Exception("Invalid response from `$path` api route.");
