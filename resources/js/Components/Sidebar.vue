@@ -10,11 +10,11 @@
         <nav v-if="!collapsed">
             <ul v-if="!isMobile()">
                 <li v-for="link in links" :key="link.label" v-if="(!link.private || $page.auth.player.isSuperAdmin) && !link.hidden">
-                    <inertia-link class="flex items-center px-5 py-2 mb-3 rounded hover:bg-gray-900 hover:text-white whitespace-nowrap drop-shadow" :class="isUrl(link.url) ? ['bg-gray-900', 'text-white'] : ''" :href="link.url" v-if="!('sub' in link)">
+                    <inertia-link class="flex items-center px-5 py-2 mb-2 rounded hover:bg-gray-900 hover:text-white whitespace-nowrap drop-shadow" :class="isUrl(link.url) ? ['bg-gray-900', 'text-white'] : ''" :href="link.url" v-if="!('sub' in link)">
                         <icon class="w-4 h-4 mr-3 fill-current" :name="link.icon"></icon>
                         {{ link.raw ? link.raw : t(link.label) }}
                     </inertia-link>
-                    <a href="#" class="flex flex-wrap items-center px-5 py-2 mb-3 -mt-1 rounded hover:bg-gray-700v hover:text-white overflow-hidden" :class="len(link.sub, $page.auth.player.isSuperAdmin)" v-if="link.sub && len(link.sub, $page.auth.player.isSuperAdmin)" @click="$event.preventDefault()">
+                    <a href="#" class="flex flex-wrap items-center px-5 py-2 mb-2 -mt-1 rounded hover:bg-gray-700v hover:text-white overflow-hidden" :class="len(link.sub, $page.auth.player.isSuperAdmin)" v-if="link.sub && len(link.sub, $page.auth.player.isSuperAdmin)" @click="$event.preventDefault()">
                         <span class="block w-full mb-2 whitespace-nowrap drop-shadow">
                             <icon class="w-4 h-4 mr-3 fill-current" :name="link.icon"></icon>
                             {{ link.raw ? link.raw : t(link.label) }}
@@ -32,10 +32,10 @@
             </ul>
             <ul v-else class="mobile:flex mobile:flex-wrap mobile:justify-between">
                 <template v-for="link in links">
-                    <inertia-link class="flex items-center px-5 py-2 mb-3 rounded hover:bg-gray-900 hover:text-white text-sm drop-shadow" :class="isUrl(link.url) ? ['bg-gray-900', 'text-white'] : ''" :href="link.url" v-if="!('sub' in link) && (!link.private || $page.auth.player.isSuperAdmin) && !link.hidden">
+                    <inertia-link class="flex items-center px-5 py-2 mb-2 rounded hover:bg-gray-900 hover:text-white text-sm drop-shadow" :class="isUrl(link.url) ? ['bg-gray-900', 'text-white'] : ''" :href="link.url" v-if="!('sub' in link) && (!link.private || $page.auth.player.isSuperAdmin) && !link.hidden">
                         {{ link.raw ? link.raw : t(link.label) }}
                     </inertia-link>
-                    <inertia-link v-for="sub in link.sub" class="flex items-center px-5 py-2 mb-3 rounded hover:bg-gray-900 hover:text-white text-sm drop-shadow" :class="isUrl(sub.url) ? ['bg-gray-900', 'text-white'] : ''" :href="sub.url" :key="sub.label" v-if="'sub' in link && (!(sub.private || link.private) || $page.auth.player.isSuperAdmin) && !(sub.hidden || link.hidden)">
+                    <inertia-link v-for="sub in link.sub" class="flex items-center px-5 py-2 mb-2 rounded hover:bg-gray-900 hover:text-white text-sm drop-shadow" :class="isUrl(sub.url) ? ['bg-gray-900', 'text-white'] : ''" :href="sub.url" :key="sub.label" v-if="'sub' in link && (!(sub.private || link.private) || $page.auth.player.isSuperAdmin) && !(sub.hidden || link.hidden)">
                         {{ sub.raw ? sub.raw : t(sub.label) }}
                     </inertia-link>
                 </template>
@@ -325,6 +325,12 @@ export default {
             data.links.push(queue);
         }
 
+        if (this.setting('expandSidenav')) {
+            const flattened = data.links.reduce((acc, val) => acc.concat(val.sub ? val.sub : val), []);
+
+            data.links = flattened;
+        }
+
         data.collapsed = false;
 
         return data;
@@ -341,8 +347,6 @@ export default {
             return this.url.startsWith(url);
         },
         len(sub, isSuperAdmin) {
-            if (this.setting('expandSidenav')) return 'h-auto';
-
             const length = sub.filter(l => (!l.private || isSuperAdmin) && !l.hidden).length;
 
             switch (length) {
