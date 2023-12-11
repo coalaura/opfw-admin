@@ -73,12 +73,23 @@ export default {
                     url: '/',
                 },
                 {
-                    label: 'steam.title',
-                    icon: 'steam',
-                    url: '/steam',
+                    label: 'sidebar.lookup',
+                    icon: 'glasses',
+                    sub: [
+                        {
+                            label: 'steam.title',
+                            icon: 'steam',
+                            url: '/steam',
+                        },
+                        {
+                            label: 'discord.title',
+                            icon: 'discord',
+                            url: '/discord',
+                        }
+                    ]
                 },
                 {
-                    label: 'sidebar.management',
+                    label: 'sidebar.community',
                     icon: 'users',
                     sub: [
                         {
@@ -97,16 +108,9 @@ export default {
                             url: '/characters',
                         },
                         {
-                            label: 'blacklist.title',
-                            icon: 'shield',
-                            private: true,
-                            url: '/blacklist',
-                        },
-                        {
-                            label: 'loading_screen.sidebar',
-                            icon: 'spinner',
-                            hidden: !this.perm.check(this.perm.PERM_LOADING_SCREEN),
-                            url: '/loading_screen',
+                            label: 'twitter.title',
+                            icon: 'twitter',
+                            url: '/twitter',
                         }
                     ]
                 },
@@ -126,20 +130,15 @@ export default {
                             hidden: !this.perm.check(this.perm.PERM_MONEY_LOGS),
                         },
                         {
-                            label: 'casino.title',
-                            icon: 'chess',
-                            url: '/casino',
-                        },
-                        {
-                            label: 'panel_logs.title',
-                            icon: 'paperstack',
-                            url: '/panel_logs',
-                        },
-                        {
                             label: 'phone.title',
                             icon: 'phone',
                             url: '/phoneLogs',
                             hidden: !this.perm.check(this.perm.PERM_PHONE_LOGS),
+                        },
+                        {
+                            label: 'casino.title',
+                            icon: 'chess',
+                            url: '/casino',
                         }
                     ]
                 },
@@ -165,46 +164,25 @@ export default {
                     ]
                 },
                 {
-                    label: 'sidebar.data',
-                    icon: 'server',
+                    label: 'sidebar.administration',
+                    icon: 'tasks',
                     sub: [
                         {
-                            label: 'map.title',
-                            icon: 'map',
-                            url: '/map',
-                            hidden: !this.perm.check(this.perm.PERM_LIVEMAP),
+                            label: 'blacklist.title',
+                            icon: 'shield',
+                            private: true,
+                            url: '/blacklist',
                         },
                         {
-                            label: 'statistics.title',
-                            icon: 'statistics',
-                            url: '/statistics',
+                            label: 'loading_screen.sidebar',
+                            icon: 'spinner',
+                            hidden: !this.perm.check(this.perm.PERM_LOADING_SCREEN),
+                            url: '/loading_screen',
                         },
                         {
-                            label: 'twitter.title',
-                            icon: 'twitter',
-                            url: '/twitter',
-                        },
-                        {
-                            label: 'screenshot.label',
-                            icon: 'images',
-                            url: '/screenshots',
-                        }
-                    ]
-                },
-                {
-                    label: 'sidebar.csi',
-                    icon: 'prints',
-                    sub: [
-                        {
-                            label: 'sidebar.serials',
-                            icon: 'fingerprint',
-                            url: '/serials',
-                        },
-                        {
-                            label: 'sidebar.overwatch',
-                            icon: 'camera',
-                            url: '/overwatch',
-                            hidden: !this.perm.check(this.perm.PERM_SCREENSHOT),
+                            label: 'panel_logs.title',
+                            icon: 'paperstack',
+                            url: '/panel_logs',
                         },
                         {
                             label: 'search_logs.title',
@@ -221,19 +199,52 @@ export default {
                     ]
                 },
                 {
-                    label: 'sidebar.random',
-                    icon: 'random',
+                    label: 'sidebar.data_stats',
+                    icon: 'server',
                     sub: [
                         {
-                            label: 'backstories.title',
-                            icon: 'box-open',
-                            url: '/backstories',
+                            label: 'map.title',
+                            icon: 'map',
+                            url: '/map',
+                            hidden: !this.perm.check(this.perm.PERM_LIVEMAP),
+                        },
+                        {
+                            label: 'statistics.title',
+                            icon: 'statistics',
+                            url: '/statistics',
+                        },
+                        {
+                            label: 'screenshot.label',
+                            icon: 'images',
+                            url: '/screenshots',
                         },
                         {
                             label: 'screenshot.anti_cheat_title',
                             icon: 'ghost',
                             url: '/anti_cheat',
                             hidden: !this.perm.check(this.perm.PERM_ANTI_CHEAT),
+                        }
+                    ]
+                },
+                {
+                    label: 'sidebar.tools',
+                    icon: 'tools',
+                    sub: [
+                        {
+                            label: 'sidebar.serial_numbers',
+                            icon: 'fingerprint',
+                            url: '/serials',
+                        },
+                        {
+                            label: 'sidebar.overwatch',
+                            icon: 'camera',
+                            url: '/overwatch',
+                            hidden: !this.perm.check(this.perm.PERM_SCREENSHOT),
+                        },
+                        {
+                            label: 'backstories.title',
+                            icon: 'box-open',
+                            url: '/backstories',
                         }
                     ]
                 },

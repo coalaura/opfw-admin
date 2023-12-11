@@ -84,6 +84,7 @@ module.exports = {
                 'inventory_slot':  '100px'
             },
             minWidth: {
+                'box':     '350px',
                 'input':   '200px',
                 'context': '140px',
                 'base':    '24px'

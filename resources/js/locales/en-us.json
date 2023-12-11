@@ -77,7 +77,7 @@
         "support_markdown": "Most basic markdown syntax is supported. Click to learn more."
     },
 	"steam": {
-		"title": "Steam Lookup",
+		"title": "Steam",
 		"description": "Lookup players using their steam account.",
 		"search": "Search",
 		"result": "Lookup Result",
@@ -87,6 +87,15 @@
 		"steam3": "Steam3",
 		"steam_hex": "Steam Hex",
 		"steam_url": "Profile URL"
+	},
+	"discord": {
+		"title": "Discord",
+		"description": "Lookup players using their discord account.",
+		"search": "Search",
+		"result": "Lookup Result",
+		"no_result": "Failed to resolve discord account.",
+        "no_players": "No linked players found.",
+        "linked_players": "Linked Players"
 	},
     "settings": {
         "title": "User Settings",
@@ -127,20 +136,21 @@
     },
     "sidebar": {
         "logs": "Logs",
-        "management": "Management",
+        "community": "Community",
+        "lookup": "Lookup",
+        "administration": "Administration",
         "advanced": "Advanced",
         "advanced_search": "Search",
         "suspicious": "Suspicious",
-        "data": "Data",
-        "serials": "Serial Lookup",
-        "csi": "CSI Tools",
+        "data_stats": "Data & Stats",
+        "serial_numbers": "Serial Numbers",
+        "tools": "Tools",
         "overwatch": "Overwatch",
         "errors": "Errors",
         "bans": "Bans",
         "all_bans": "Staff bans",
         "my_bans": "My bans",
-        "system_bans": "System bans",
-        "random": "Random Stuff"
+        "system_bans": "System bans"
     },
     "queue": {
         "title": "Queue",

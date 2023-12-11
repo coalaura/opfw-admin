@@ -79,6 +79,10 @@
     <i class="fas fa-portrait" v-else-if="name === 'portrait'"></i>
     <i class="fas fa-house-damage" v-else-if="name === 'damage'"></i>
     <i class="fas fa-money-check-alt" v-else-if="name === 'money'"></i>
+    <i class="fas fa-tasks" v-else-if="name === 'tasks'"></i>
+    <i class="fas fa-tools" v-else-if="name === 'tools'"></i>
+    <i class="fas fa-glasses" v-else-if="name === 'glasses'"></i>
+    <i class="fab fa-discord" v-else-if="name === 'discord'"></i>
 </template>
 
 <script>

@@ -41,7 +41,7 @@ use App\Http\Controllers\ServerController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StaffChatController;
 use App\Http\Controllers\StatisticsController;
-use App\Http\Controllers\SteamLookupController;
+use App\Http\Controllers\LookupController;
 use App\Http\Controllers\SuspiciousController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TwitterController;
@@ -72,8 +72,10 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::post('/announcement', [HomeController::class, 'serverAnnouncement']);
 
     // Steam Lookup.
-    Route::get('/steam', [SteamLookupController::class, 'render']);
-    Route::post('/steam', [SteamLookupController::class, 'playerInfo']);
+    Route::get('/steam', [LookupController::class, 'renderSteam']);
+    Route::post('/steam', [LookupController::class, 'playerInfoSteam']);
+    Route::get('/discord', [LookupController::class, 'renderDiscord']);
+    Route::post('/discord', [LookupController::class, 'playerInfoDiscord']);
 
     Route::get('/chat', [StaffChatController::class, 'chat']);
     Route::post('/chat', [StaffChatController::class, 'sendChat']);
