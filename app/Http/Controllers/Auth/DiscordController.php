@@ -81,7 +81,7 @@ class DiscordController extends Controller
                 return redirectWith('/login', 'error', "Player with last-used discord-id $id: \"" . $player->getSafePlayerName() . "\" is not a staff member.");
             }
         } else {
-            return redirectWith('/login', 'error', "No player with last-used discord-id $id not found.");
+            return redirectWith('/login', 'error', "No player with last-used discord-id $id not found. Connect to the FiveM server with your discord linked first.");
         }
 
         $session->put('user', $player->user_id);
