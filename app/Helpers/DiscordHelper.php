@@ -68,6 +68,8 @@ class DiscordHelper
 
             return $data;
         } catch (\Throwable $e) {
+            // Root user can see the error
+            if (user()->isRoot()) throw $e;
         }
 
         throw new \Exception("Failed to execute `$path` api route.");
