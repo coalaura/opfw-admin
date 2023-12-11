@@ -24,7 +24,7 @@ class DiscordHelper
             $name = substr($name, 1);
         }
 
-        $guilds = self::doRequest('GET', 'users/@me/guilds');
+        $guilds = self::getMyGuilds();
 
         if (empty($guilds)) {
             throw new \Exception("Bot is not in any guilds, unable to perform search.");
@@ -47,6 +47,22 @@ class DiscordHelper
         throw new \Exception("No user found. Searched guilds: " . implode(', ', $guildNames) . ".");
     }
 
+    private static function getMyGuilds(): ?array
+    {
+        $guild = env("DISCORD_GUILD_ID");
+
+        if ($guild && is_numeric($guild)) {
+            return [
+                [
+                    'id'   => $guild,
+                    'name' => '#' . $guild,
+                ],
+            ];
+        }
+
+        return self::doRequest('GET', 'users/@me/guilds');
+    }
+
     private static function doRequest(string $method, string $path): ?array
     {
         $token = env("DISCORD_BOT_TOKEN");
@@ -61,7 +77,7 @@ class DiscordHelper
             $res = $client->request($method, 'https://discord.com/api/v10/' . $path, [
                 'headers' => [
                     'Authorization' => 'Bot ' . $token,
-                ]
+                ],
             ]);
 
             $response = $res->getBody()->getContents();
