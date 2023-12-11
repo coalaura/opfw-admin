@@ -125,20 +125,21 @@
     },
     "sidebar": {
         "logs": "Wogs",
-        "management": "Mawnagement",
         "advanced": "Advanced UwU",
         "advanced_search": "Seawch UwU",
         "suspicious": "Suspicious UwU",
-        "data": "Data UwU",
-        "serials": "Sewiaw Wookup UwU",
-        "csi": "CSI Toows UwU",
         "overwatch": "Ovewwatch UwU",
         "errors": "Ewwows UwU",
         "bans": "Bans UwU",
         "all_bans": "Staff bans UwU",
         "my_bans": "My bans UwU",
         "system_bans": "System banwus",
-        "random": "Wandom Stuffuwu"
+        "community": "Community",
+        "lookup": "Wookup",
+        "administration": "Administwation",
+        "data_stats": "Data & Stats",
+        "serial_numbers": "Sewiaw Numbews",
+        "tools": "Toows"
     },
     "queue": {
         "title": "Quewueue",
@@ -1280,5 +1281,14 @@
         "damage_description": "<i>{0}</i> usuawwy does abouwt {1} and not mowe than abouwt {2} damage.",
         "damage_normal": "Nyowmal",
         "damage_banned": "Bwanned"
+    },
+    "discord": {
+        "title": "Discowd",
+        "description": "Wookup pwayews using deiw discowd account.",
+        "search": "Seawch",
+        "result": "Wookup Wesuwt",
+        "no_result": "Faiwed to wesowve discowd account.",
+        "no_players": "No winked pwayews found.",
+        "linked_players": "Winked Pwayews"
     }
 }

@@ -125,20 +125,21 @@
     },
     "sidebar": {
         "logs": "Logger",
-        "management": "Administrasjon",
         "advanced": "Avansert",
         "advanced_search": "Søk",
         "suspicious": "Mistenkelig",
-        "data": "Data",
-        "serials": "Serielloppslag",
-        "csi": "CSI-verktøy",
         "overwatch": "Overvåkning",
         "errors": "Feil",
         "bans": "Forbud",
         "all_bans": "Admin utestengelser",
         "my_bans": "Mine utestengelser",
         "system_bans": "System utestengelser",
-        "random": "Tilfeldig Materiale"
+        "community": "Fellesskap",
+        "lookup": "Søk opp",
+        "administration": "Administrasjon",
+        "data_stats": "Data og statistikk",
+        "serial_numbers": "Serienumre",
+        "tools": "Verktøy"
     },
     "queue": {
         "title": "Kø",
@@ -1280,5 +1281,14 @@
         "title": "Logg inn med din Discord-konto.",
         "description": "Vennligst logg inn med samme Discord-konto som er koblet til brukeren du har dine ansattrettigheter på. Å bruke en annen vil resultere i at du ikke kan få tilgang til serverpanelet.",
         "login": "Logg inn med Discord"
+    },
+    "discord": {
+        "title": "Discord",
+        "description": "Søk opp spillere ved å bruke Discord-kontoen deres.",
+        "search": "Søk",
+        "result": "Søkeresultat",
+        "no_result": "Klarte ikke å løse opp Discord-konto.",
+        "no_players": "Ingen tilknyttede spillere funnet.",
+        "linked_players": "Tilknyttede spillere"
     }
 }

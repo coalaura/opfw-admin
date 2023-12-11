@@ -125,20 +125,21 @@
     },
     "sidebar": {
         "logs": "Log",
-        "management": "Prabandhan",
         "advanced": "Unnat",
         "advanced_search": "Khoj",
         "suspicious": "Sandehajanak",
-        "data": "Data",
-        "serials": "Serial Anveshan",
-        "csi": "CSI Upkaran",
         "overwatch": "Overwatch",
         "errors": "Trutiyan",
         "bans": "Pratibandh",
         "all_bans": "Staff ke Pratibandh",
         "my_bans": "Mere Pratibandh",
         "system_bans": "System ke Pratibandh",
-        "random": "Yadrichhik Samagri"
+        "community": "Samaaj",
+        "lookup": "Khoj",
+        "administration": "Prashasan",
+        "data_stats": "Aankada aur Aankde",
+        "serial_numbers": "Kramank Sankhya",
+        "tools": "Upkaran"
     },
     "queue": {
         "title": "Pankti",
@@ -1280,5 +1281,14 @@
         "title": "Apne Discord account se login karein.",
         "description": "Kripaya usi Discord account se login karein jo aapke user ke saath staff anumatiyon ke liye link hai. Alag account ka upyog karne par aapko server panel tak pahunchane mein asamarthta ho sakti hai.",
         "login": "Discord ke saath Login karein"
+    },
+    "discord": {
+        "title": "Discord",
+        "description": "Unke discord account ka upayog karke players ko dekhein.",
+        "search": "Khoj",
+        "result": "Khoj Parinaam",
+        "no_result": "Discord account ka pata lagane mein asafal.",
+        "no_players": "Koi juda hua players nahi mila.",
+        "linked_players": "Juda Huye Players"
     }
 }

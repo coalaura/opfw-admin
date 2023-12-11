@@ -125,20 +125,21 @@
     },
     "sidebar": {
         "logs": "📜 Logs",
-        "management": "👥 Management",
         "advanced": "🔍 Advanced",
         "advanced_search": "🔎 Search",
         "suspicious": "🧐 Suspicious",
-        "data": "📊 Data",
-        "serials": "🔍 Serial Lookup",
-        "csi": "🔬 CSI Tools",
         "overwatch": "👀 Overwatch",
         "errors": "⚠️ Errors",
         "bans": "🚫 Bans",
         "all_bans": "👥 Staff bans",
         "my_bans": "🔒 My bans",
         "system_bans": "🌐 System bans",
-        "random": "🎲 Random Stuff"
+        "community": "8. 👥🌐",
+        "lookup": "9. 🔍",
+        "administration": "10. 🏛️",
+        "data_stats": "11. 📊📈",
+        "serial_numbers": "12. 🔢🔢",
+        "tools": "13. 🛠️"
     },
     "queue": {
         "title": "🔄 Queue",
@@ -1280,5 +1281,14 @@
         "damage_description": "<i>{0}</i> 💥 usually does about {1} and not more than about {2} 💥 damage.",
         "damage_normal": "🆗",
         "damage_banned": "🚫"
+    },
+    "discord": {
+        "title": "1. 💬",
+        "description": "2. 🔍👤🎮🔧💬👤🔍",
+        "search": "3. 🔍",
+        "result": "4. 🔍📈",
+        "no_result": "5. ❌⚙️💡💬👤",
+        "no_players": "6. ❌🔗👥🔍",
+        "linked_players": "7. 🔗👥"
     }
 }

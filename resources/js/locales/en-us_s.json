@@ -125,20 +125,21 @@
     },
     "sidebar": {
         "logs": "Wood Haulin's",
-        "management": "Bossin'",
         "advanced": "Fancy",
         "advanced_search": "Huntin'",
         "suspicious": "Shady Lookin'",
-        "data": "Info",
-        "serials": "Sneak Peek",
-        "csi": "Investigatin' Tools",
         "overwatch": "Watchful Eyes",
         "errors": "Dangit Moments",
         "bans": "Gettin' Booted",
         "all_bans": "Staff Bootins",
         "my_bans": "My Bootins",
         "system_bans": "Automated Bootins",
-        "random": "Wild Stuff"
+        "community": "Communiteh",
+        "lookup": "Lookup",
+        "administration": "Administration",
+        "data_stats": "Data & Stats",
+        "serial_numbers": "Serial Numbers",
+        "tools": "Tools"
     },
     "queue": {
         "title": "Waitin' List",
@@ -1280,5 +1281,14 @@
         "damage_description": "<i>{0}</i> us'ally do 'bout {1} 'n no more 'n 'bout {2} damage.",
         "damage_normal": "Regular",
         "damage_banned": "Forbidden"
+    },
+    "discord": {
+        "title": "Discawd",
+        "description": "Look up players usin' their discawd account.",
+        "search": "S'arch",
+        "result": "Lookup Result",
+        "no_result": "Failed to resolve discawd account.",
+        "no_players": "No linked players found.",
+        "linked_players": "Linked Players"
     }
 }

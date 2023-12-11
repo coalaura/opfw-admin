@@ -125,20 +125,21 @@
     },
     "sidebar": {
         "logs": "Logs of Shrugs and Grunts",
-        "management": "Ugga Bugga Boss",
         "advanced": "Ugga Bugga Smart Stuff",
         "advanced_search": "Ugga Bugga Lookings",
         "suspicious": "Ugga Buggas Looking Funny",
-        "data": "Ugga Bugga Information",
-        "serials": "Ugga Bugga Finders",
-        "csi": "Ugga Bugga Detective Tools",
         "overwatch": "Ugga Bugga Overlooking",
         "errors": "Ugga Bugga Oopsies",
         "bans": "Ugga Bugga Banned",
         "all_bans": "Ugga Bugga Boss Bans",
         "my_bans": "Ugga Bugga My Bans",
         "system_bans": "System make big angry at you",
-        "random": "Random grunty things"
+        "community": "Tribe of many",
+        "lookup": "Findy",
+        "administration": "Big tribe rule stuff",
+        "data_stats": "Count and number stuff",
+        "serial_numbers": "Many number marks",
+        "tools": "Use things"
     },
     "queue": {
         "title": "Me wait",
@@ -1280,5 +1281,14 @@
         "damage_description": "<i>{0}</i> usual ooga booga around {1} thunk thunk, no more than {2} thunk.",
         "damage_normal": "Ooga",
         "damage_banned": "No thunk thunk"
+    },
+    "discord": {
+        "title": "Talky-speak-y thing",
+        "description": "Find tribe-folk by talky-speak-y thing name.",
+        "search": "Searchy",
+        "result": "Findy-thing show",
+        "no_result": "No findy talky-speak-y thing.",
+        "no_players": "No findy tribe-folk linked.",
+        "linked_players": "Tribe-folk tied"
     }
 }

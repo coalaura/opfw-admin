@@ -125,20 +125,21 @@
     },
     "sidebar": {
         "logs": "Logbooks",
-        "management": "Cap'n's Duties",
         "advanced": "Jolly Roger's Secrets",
         "advanced_search": "Treasure Hunt",
         "suspicious": "Suspicion",
-        "data": "Booty",
-        "serials": "Scroll o' Riddles",
-        "csi": "Sea Rats' Tools",
         "overwatch": "Sight o' the Crow's Nest",
         "errors": "Errors o' the Ship",
         "bans": "Blacklisted Scallywags",
         "all_bans": "Cap'n's bans",
         "my_bans": "Me own bans",
         "system_bans": "Arr, Blacklisted Scoundrels",
-        "random": "Foolish Folks"
+        "community": "Crew",
+        "lookup": "Scour",
+        "administration": "Ship's Management",
+        "data_stats": "Figures & Tally",
+        "serial_numbers": "Series o' Numbers",
+        "tools": "Implements"
     },
     "queue": {
         "title": "Crow's Nest",
@@ -1280,5 +1281,14 @@
         "damage_description": "<i>{0}</i> usually be dishin' out 'bout {1} 'n' nothin' more than 'bout {2} damage.",
         "damage_normal": "Regular",
         "damage_banned": "Doomed"
+    },
+    "discord": {
+        "title": "Parley Channel",
+        "description": "Scour fer hearties usin' their parley handle.",
+        "search": "Scour",
+        "result": "Scourin' Outcome",
+        "no_result": "Failed to ascertain parley handle.",
+        "no_players": "No mates spied with connections.",
+        "linked_players": "Connected Hearties"
     }
 }
