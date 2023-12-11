@@ -66,13 +66,19 @@ class DiscordController extends Controller
         $id = $user['id'];
         $identifier = 'discord:' . $id;
 
-        $player = Player::query()
+        $players = Player::query()
             ->where('last_used_identifiers', 'LIKE', '%' . $identifier . '%')
-            ->first();
+            ->get();
+
+        $player = $players ? $players->first() : null;
 
         if ($player) {
+            if ($players->count() > 1) {
+                return redirectWith('/login', 'error', "Multiple players with last-used discord-id $id found.");
+            }
+
             if (!$player->isStaff()) {
-                return redirectWith('/login', 'error', "Player with last-used discord-id $id is not a staff member.");
+                return redirectWith('/login', 'error', "Player with last-used discord-id $id: \"" . $player->getSafePlayerName() . "\" is not a staff member.");
             }
         } else {
             return redirectWith('/login', 'error', "No player with last-used discord-id $id not found.");
