@@ -27,7 +27,7 @@ class DiscordHelper
         $guilds = self::doRequest('GET', 'users/@me/guilds');
 
         if (empty($guilds)) {
-            throw new \Exception("Bot is not in any guilds.");
+            throw new \Exception("Bot is not in any guilds, unable to perform search.");
         }
 
         foreach ($guilds as $guild) {
