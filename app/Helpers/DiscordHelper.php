@@ -26,6 +26,10 @@ class DiscordHelper
 
         $guilds = self::doRequest('GET', 'users/@me/guilds');
 
+        if (empty($guilds)) {
+            throw new \Exception("No guilds found.");
+        }
+
         foreach ($guilds as $guild) {
             $id = $guild['id'];
 
@@ -64,9 +68,9 @@ class DiscordHelper
 
             $data = json_decode($response, true);
 
-            if (!$data && $data !== []) {
-                LoggingHelper::log("Invalid response from `$path` api route: " . trim($response));
+            LoggingHelper::log("Discord API response `$path`: " . trim($response));
 
+            if (!$data && $data !== []) {
                 throw new \Exception("Invalid response from `$path` api route.");
             } else if (!empty($data['message'])) {
                 throw new \Exception($data['message']);
