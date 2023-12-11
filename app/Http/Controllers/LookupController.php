@@ -160,7 +160,7 @@ class LookupController extends Controller
                         $user = $user['user'];
                     } else {
                         $user  = false;
-                        $error = "Unable to find user with that name.";
+                        $error = "No user found with that name.";
                     }
                 } catch (\Exception $ex) {
                     $error = $ex->getMessage();
