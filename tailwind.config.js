@@ -81,7 +81,8 @@ module.exports = {
                 'side-open-four':  '210px',
                 'side-open-five':  '250px',
                 'max':             'calc(100vh - (210px + 120px))',
-                'inventory_slot':  '100px'
+                'inventory_slot':  '100px',
+                'box':             '15px',
             },
             minWidth: {
                 'box':     '350px',

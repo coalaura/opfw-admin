@@ -25,16 +25,16 @@
                 <span :title="post.time | formatTime(true)" class="text-gray-400 dark:text-gray-500 font-normal">- {{ formatDate(post.time) }}</span>
             </inertia-link>
 
-            <div class="relative">
-                <button class="text-black dark:text-white no-underline absolute top-0.5 right-1.5 drop-shadow" @click="editingPost = true" v-if="canSeeEdit()">
-                    <i class="fas fa-pen-square"></i>
-                </button>
-
-                <div class="text-sm block" v-html="formatBody(post.message)"></div>
-            </div>
+            <div class="text-sm block" v-html="formatBody(post.message)"></div>
         </div>
 
-        <input type="checkbox" class="absolute top-1 right-1 !outline-none" @change="selectionChange($event, post.id)" v-if="selectionChange && canSeeDelete()" />
+        <div class="absolute top-1 right-1 flex gap-1 items-center">
+            <button class="text-yellow-500 dark:text-yellow-400 no-underline drop-shadow-sm leading-none" @click="editingPost = true" v-if="canSeeEdit()">
+                <i class="fas fa-pen-square"></i>
+            </button>
+
+            <input type="checkbox" class="!outline-none drop-shadow-sm" @change="selectionChange($event, post.id)" v-if="selectionChange && canSeeDelete()" />
+        </div>
 
         <modal :show="editingPost">
             <template #header>
