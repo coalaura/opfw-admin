@@ -94,7 +94,7 @@ const Markdown = {
             const host = window.location.origin + "/_transcripts/";
 
             if (url.startsWith(host)) {
-                const ticket = find(/_transcripts\/(\d+)\.html/gm, url);
+                const ticket = find(/_transcripts\/(\d+(-[a-f0-9]+)?)\.html/gm, url);
 
                 if (!ticket) return false;
 

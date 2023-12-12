@@ -94,9 +94,9 @@ class PlayerWarningController extends Controller
             abort(401);
         }
 
-        TranscriptHelper::unlinkMessageTranscripts($warning);
-
         $warning->forceDelete();
+
+        TranscriptHelper::unlinkMessageTranscripts($warning);
 
         return backWith('success', 'The warning/note has successfully been deleted from the player\'s record.');
     }

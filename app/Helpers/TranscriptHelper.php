@@ -10,14 +10,15 @@ class TranscriptHelper
     {
         if (empty($warning->message)) return;
 
-        $re = '/https:\/\/tickettool\.xyz\/direct\?url=(https:\/\/cdn\.discordapp\.com\/.+?\/transcript-\w+-(\d+)\.html(\?[\w=%&]+)?)/m';
+        $re = '/https:\/\/tickettool\.xyz\/direct\?url=(https:\/\/cdn\.discordapp\.com\/.+?\/(\d+)\/transcript-\w+-(\d+)\.html(\?[\w=%&]+)?)/m';
 
         $message = preg_replace_callback($re, function ($matches) {
             $url = $matches[0];
             $cdn = $matches[1];
-            $id = $matches[2];
+            $msgId = $matches[2];
+            $id = $matches[3];
 
-            $path = TranscriptHelper::ensureTranscript($id, $cdn);
+            $path = TranscriptHelper::ensureTranscript($msgId, $id, $cdn);
             if (!$path) {
                 return $url;
             }
@@ -32,14 +33,17 @@ class TranscriptHelper
         }
     }
 
-    private static function ensureTranscript(int $id, string $cdn): ?string
+    private static function ensureTranscript(int $msgId, int $id, string $cdn): ?string
     {
         $dir = public_path('/_transcripts/');
         if (!file_exists($dir)) {
             mkdir($dir, 0777, true);
         }
 
-        $relative = '/_transcripts/'. $id . '.html';
+        $hash = md5($id . '-' . $msgId);
+        $hash = substr($hash, 0, 3) . substr($hash, -3);
+
+        $relative = '/_transcripts/'. $id . '-' . $hash . '.html';
         $path = public_path($relative);
 
         if (file_exists($path)) {
@@ -65,7 +69,7 @@ class TranscriptHelper
 
         $host = preg_quote(url('/'), '/');
 
-        $re = '/https:\/\/tickettool\.xyz\/direct\?url=' . $host . '\/_transcripts\/(\d+)\.html/m';
+        $re = '/' . $host . '\/_transcripts\/(\d+(-[a-f0-9]+)?)\.html/m';
 
         preg_match_all($re, $message, $matches, PREG_SET_ORDER, 0);
 
@@ -101,7 +105,7 @@ class TranscriptHelper
         }
     }
 
-    private static function unlinkTranscript(int $id)
+    private static function unlinkTranscript(string $id)
     {
         $path = '/_transcripts/' . $id . '.html';
 
