@@ -499,6 +499,7 @@
             "view_queue": "View Queue",
             "twitter": "Edit Twitter",
             "twitter_verify": "Verify Twitter Users",
+            "twitter_edit": "Edit Twitter Posts",
             "linked": "Show Linked Accounts",
             "announcement": "Post Announcement",
             "damage_logs": "View Damage Logs",
@@ -740,7 +741,9 @@
         "filter": "Filter posts",
         "delete_tweet": "Are you sure you want to delete this tweet?",
         "unknown_character": "Unknown Character",
-        "no_tweets": "This account has not posted any tweets yet."
+        "no_tweets": "This account has not posted any tweets yet.",
+        "edit_post": "Edit Post",
+        "save": "Save"
     },
     "players": {
         "title": "Players",

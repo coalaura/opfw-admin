@@ -8,7 +8,7 @@
                 <div class="px-10 py-4 flex flex-col overflow-hidden">
 
                     <!-- Header -->
-                    <header class="max-w-full prose text-center pt-4 mb-6">
+                    <header class="max-w-full prose text-center pt-4 mb-6 !block">
                         <slot name="header" />
                     </header>
 

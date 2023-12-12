@@ -34,6 +34,7 @@ const Permissions = {
             PERM_VIEW_QUEUE: 'view_queue',
             PERM_TWITTER: 'twitter',
             PERM_TWITTER_VERIFY: 'twitter_verify',
+            PERM_TWITTER_EDIT: 'twitter_edit',
             PERM_LINKED: 'linked',
             PERM_ANNOUNCEMENT: 'announcement',
             PERM_DAMAGE_LOGS: 'damage_logs',

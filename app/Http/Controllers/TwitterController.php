@@ -103,6 +103,37 @@ class TwitterController extends Controller
     }
 
     /**
+     * Edit the specified resource from storage.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function editTweet(Request $request, TwitterPost $post): RedirectResponse
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_TWITTER_EDIT)) {
+            abort(401);
+        }
+
+        $update = [];
+
+        if ($request->has('message')) {
+            $update['message'] = $request->input('message');
+        }
+
+        if ($request->has('likes')) {
+            $likes = intval($request->input('likes'));
+
+            if (is_int($likes) && $likes >= 0) {
+                $update['likes'] = $likes;
+            }
+        }
+
+        $post->update($update);
+
+        return backWith('success', 'Successfully edited tweet');
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param Request $request

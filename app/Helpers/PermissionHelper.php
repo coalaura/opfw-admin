@@ -18,6 +18,7 @@ class PermissionHelper
         self::PERM_VIEW_QUEUE     => ['view_queue', self::LEVEL_SENIOR],
         self::PERM_TWITTER        => ['twitter', self::LEVEL_SUPERADMIN],
         self::PERM_TWITTER_VERIFY => ['twitter_verify', self::LEVEL_SUPERADMIN],
+        self::PERM_TWITTER_EDIT   => ['twitter_edit', self::LEVEL_SUPERADMIN],
         self::PERM_LINKED         => ['linked', self::LEVEL_ROOT],
         self::PERM_ANNOUNCEMENT   => ['announcement', self::LEVEL_SUPERADMIN],
         self::PERM_DAMAGE_LOGS    => ['damage_logs', self::LEVEL_SENIOR],
@@ -38,6 +39,7 @@ class PermissionHelper
     const PERM_VIEW_QUEUE     = 'P_VIEW_QUEUE';
     const PERM_TWITTER        = 'P_TWITTER';
     const PERM_TWITTER_VERIFY = 'P_TWITTER_VERIFY';
+    const PERM_TWITTER_EDIT   = 'P_TWITTER_EDIT';
     const PERM_LINKED         = 'P_LINKED';
     const PERM_ANNOUNCEMENT   = 'P_ANNOUNCEMENT';
     const PERM_DAMAGE_LOGS    = 'P_DAMAGE_LOGS';

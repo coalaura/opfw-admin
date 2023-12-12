@@ -25,15 +25,63 @@
                 <span :title="post.time | formatTime(true)" class="text-gray-400 dark:text-gray-500 font-normal">- {{ formatDate(post.time) }}</span>
             </inertia-link>
 
-            <div class="text-sm block" v-html="formatBody(post.message)"></div>
+            <div class="relative">
+                <button class="text-black dark:text-white no-underline absolute top-0.5 right-1.5 drop-shadow" @click="editingPost = true" v-if="canSeeEdit()">
+                    <i class="fas fa-pen-square"></i>
+                </button>
+
+                <div class="text-sm block" v-html="formatBody(post.message)"></div>
+            </div>
         </div>
 
         <input type="checkbox" class="absolute top-1 right-1 !outline-none" @change="selectionChange($event, post.id)" v-if="selectionChange && canSeeDelete()" />
+
+        <modal :show="editingPost">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('twitter.edit_post') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="w-full p-3 flex justify-between px-0">
+                    <label class="mr-4 block w-1/4 pt-2 font-bold">
+                        {{ t('twitter.likes') }}
+                        <span v-if="hasEdited('likes')">*</span>
+                    </label>
+                    <input class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border-2 border-gray-500 rounded" :class="{'border-lime-500': hasEdited('likes')}" id="likes" type="number" step="1" min="0" max="10000000" v-model="edit.likes" />
+                </div>
+
+                <div class="w-full p-3 flex justify-between px-0">
+                    <label class="mr-4 block w-1/4 pt-2 font-bold">
+                        {{ t('twitter.message') }}
+                        <span v-if="hasEdited('message')">*</span>
+                    </label>
+                    <textarea class="block w-3/4 py-2 bg-gray-200 dark:bg-gray-600 border-2 border-gray-500 rounded" :class="{'border-lime-500': hasEdited('message')}" id="message" placeholder="meow :)" rows="4" v-model="edit.message"></textarea>
+                </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded hover:bg-blue-200 dark:bg-blue-600 dark:hover:bg-blue-400" @click="updatePost()">
+                    {{ t('twitter.save') }}
+                </button>
+
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="editingPost = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
     </div>
 </template>
+
 <script>
+import Modal from './Modal';
+
 export default {
     name: 'TwitterPost',
+    components: {
+        Modal
+    },
     props: {
         post: {
             type: Object,
@@ -51,9 +99,49 @@ export default {
             type: Function
         }
     },
+    data() {
+        return {
+            isLoading: false,
+            editingPost: false,
+
+            edit: {
+                message: this.post.message,
+                likes: this.post.likes
+            }
+        };
+    },
     methods: {
+        canSeeEdit() {
+            return this.perm.check(this.perm.PERM_TWITTER_EDIT);
+        },
         canSeeDelete() {
             return this.perm.check(this.perm.PERM_TWITTER);
+        },
+        hasEdited(field) {
+            return this.edit[field] != this.post[field];
+        },
+        async updatePost() {
+            const data = {};
+
+            if (this.hasEdited('message')) {
+                data.message = this.edit.message.trim();
+            }
+
+            if (this.hasEdited('likes')) {
+                data.likes = this.edit.likes;
+            }
+
+            // Nothing changed lol
+            if (Object.keys(data).length === 0) return;
+
+            if (this.isLoading) return;
+
+            this.isLoading = true;
+            this.editingPost = false;
+
+            await this.$inertia.post('/tweets/edit/' + this.post.id, data);
+
+            this.isLoading = false;
         },
         formatDate(date) {
             const d = this.$moment.utc(date).local(),
