@@ -477,7 +477,8 @@
             "phone_logs": "Peep Them Phone Logs",
             "money_logs": "View Money Logs, y'all",
             "anti_cheat": "Peep at them Anti-Cheat Logs & Screenshots",
-            "twitter_verify": "Verify Y'all's Twitter Folks"
+            "twitter_verify": "Verify Y'all's Twitter Folks",
+            "twitter_edit": "Edit them Twitter Posts"
         },
         "world_time": "World Time",
         "world_time_desc": "The time in the {0} most used timezones.",
@@ -710,7 +711,9 @@
         "verify": "Bless user as verified",
         "un_verify": "Take away users verified status",
         "unknown_character": "Unkown Fella",
-        "no_tweets": "This here account ain't posted no tweets yet, y'all."
+        "no_tweets": "This here account ain't posted no tweets yet, y'all.",
+        "edit_post": "Tweak Yer Post",
+        "save": "Save it"
     },
     "players": {
         "title": "Folks",

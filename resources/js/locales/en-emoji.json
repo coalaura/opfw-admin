@@ -477,7 +477,8 @@
             "phone_logs": "📱📚",
             "money_logs": "💰 View 💰 Logs",
             "anti_cheat": "👀 🚫-⚖️ 📜s & 📷s",
-            "twitter_verify": "🔐🐦👤"
+            "twitter_verify": "🔐🐦👤",
+            "twitter_edit": "✏️🐦📝"
         },
         "world_time": "🌍⏰",
         "world_time_desc": "⌚🌍{0}",
@@ -710,7 +711,9 @@
         "verify": "🔐👤🔵",
         "un_verify": "🔓👥🔴",
         "unknown_character": "🚫❓🎭",
-        "no_tweets": "📑🧑‍🚀🚫🐦✍️🔄📱💬👤."
+        "no_tweets": "📑🧑‍🚀🚫🐦✍️🔄📱💬👤.",
+        "edit_post": "✏️📝",
+        "save": "💾"
     },
     "players": {
         "title": "🧍",

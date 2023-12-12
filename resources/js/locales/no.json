@@ -486,7 +486,8 @@
             "crafting": "Vis Oppskrifter for Håndverk",
             "phone_logs": "Vis Telefonslogger",
             "money_logs": "Vis Pengelogg",
-            "anti_cheat": "Vis Anti-Cheat Logger og Skjermbilder"
+            "anti_cheat": "Vis Anti-Cheat Logger og Skjermbilder",
+            "twitter_edit": "Rediger Twitter-innlegg"
         },
         "world_time": "Verdenstid",
         "world_time_desc": "Tiden i de {0} mest brukte tidssonene.",
@@ -719,7 +720,9 @@
         "filter": "Filtrer innlegg",
         "delete_tweet": "Er du sikker på at du vil slette denne tweeten?",
         "unknown_character": "Ukjent tegn",
-        "no_tweets": "Denne kontoen har ikke postet noen tweets ennå."
+        "no_tweets": "Denne kontoen har ikke postet noen tweets ennå.",
+        "edit_post": "Rediger innlegg",
+        "save": "Lagre"
     },
     "players": {
         "title": "Spillere",

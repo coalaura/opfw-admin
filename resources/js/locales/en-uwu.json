@@ -477,7 +477,8 @@
             "phone_logs": "View Phwone Wogs",
             "money_logs": "View Money ÖwÖs",
             "anti_cheat": "View Anti-Cheat Wogs & Screenshots",
-            "twitter_verify": "Vewify Twittew Usews"
+            "twitter_verify": "Vewify Twittew Usews",
+            "twitter_edit": "Edit Twittew Posts"
         },
         "world_time": "Wowld Timeowo",
         "world_time_desc": "The time in the {0} most used timezonesowo.",
@@ -710,7 +711,9 @@
         "verify": "UwUify user as vewified",
         "un_verify": "UwUove users vewified status",
         "unknown_character": "Unyknown Chawactew",
-        "no_tweets": "Dis account has nyot posted any tweets yet."
+        "no_tweets": "Dis account has nyot posted any tweets yet.",
+        "edit_post": "Edit Pwost",
+        "save": "Save"
     },
     "players": {
         "title": "Kawaii Players~",

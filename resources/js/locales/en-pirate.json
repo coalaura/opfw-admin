@@ -477,7 +477,8 @@
             "phone_logs": "View Scoundrel Logs",
             "money_logs": "View Booty Logs",
             "anti_cheat": "Behold Anti-Cheat Scrolls & Scrawls",
-            "twitter_verify": "Verify Swashbucklin' Scallawags"
+            "twitter_verify": "Verify Swashbucklin' Scallawags",
+            "twitter_edit": "Amend yer Twitter Messages"
         },
         "world_time": "World O' Time",
         "world_time_desc": "The time in the {0} most used doubloon zones.",
@@ -710,7 +711,9 @@
         "verify": "Dub user as verified",
         "un_verify": "Release users verified status",
         "unknown_character": "Arr, who be this scallywag?",
-        "no_tweets": "Yarrr, this seafarer ain't hoisted any messages on the crow's nest."
+        "no_tweets": "Yarrr, this seafarer ain't hoisted any messages on the crow's nest.",
+        "edit_post": "Amend Yer Message",
+        "save": "Stow it"
     },
     "players": {
         "title": "Scallywags",

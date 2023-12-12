@@ -477,7 +477,8 @@
             "phone_logs": "Grok Phone Logs",
             "money_logs": "See Logs of Green Papers",
             "anti_cheat": "Peek at cave drawings of Anti-Cheat & Scheming",
-            "twitter_verify": "Make sure Twitter peeps is legit"
+            "twitter_verify": "Make sure Twitter peeps is legit",
+            "twitter_edit": "Change Tweet Things"
         },
         "world_time": "World Time-Big",
         "world_time_desc": "The time in the {0} most used timezones. Listen, sun go up, sun go down.",
@@ -710,7 +711,9 @@
         "verify": "Ugga ugga, make user big chief",
         "un_verify": "Ugga ugga, take away big chief status",
         "unknown_character": "Thing not known",
-        "no_tweets": "This one no show word-sounds yet."
+        "no_tweets": "This one no show word-sounds yet.",
+        "edit_post": "Change Thing",
+        "save": "Keep"
     },
     "players": {
         "title": "Uggur",

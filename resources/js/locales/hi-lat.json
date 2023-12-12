@@ -486,7 +486,8 @@
             "crafting": "Crafting Recipes Dekhein",
             "phone_logs": "Phone Logs Dekhein",
             "money_logs": "Money Logs Dekhein",
-            "anti_cheat": "Anti-Cheat Logs aur Screenshots Dekhein"
+            "anti_cheat": "Anti-Cheat Logs aur Screenshots Dekhein",
+            "twitter_edit": "Twitter Posts Sampadit Karein"
         },
         "world_time": "Vishwa Samay",
         "world_time_desc": "{0} sabse adhik upayog kiye jaane waale samay kshetron ka samay.",
@@ -719,7 +720,9 @@
         "filter": "Posts ko filter karein",
         "delete_tweet": "Kya aap nishchit hain ke aap is tweet ko delete karna chahte hain?",
         "unknown_character": "Ajnyaat Charitra",
-        "no_tweets": "Is account ne abhi tak koi tweets post nahi kiye hain."
+        "no_tweets": "Is account ne abhi tak koi tweets post nahi kiye hain.",
+        "edit_post": "Post Sampadit Karein",
+        "save": "Sahējaēṁ"
     },
     "players": {
         "title": "Khiladi",
