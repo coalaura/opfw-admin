@@ -722,7 +722,11 @@
         "unknown_character": "Ukjent tegn",
         "no_tweets": "Denne kontoen har ikke postet noen tweets ennå.",
         "edit_post": "Rediger innlegg",
-        "save": "Lagre"
+        "save": "Lagre",
+        "edit_post_title": "Rediger tweetinnhold og likerklikk.",
+        "delete_quick": "Slett bare denne tweeten raskt.",
+        "delete_mark": "Velg denne tweeten for sletting i bulk.",
+        "delete_confirm": "Er du sikker på at du vil slette denne tweeten? Dette kan ikke angres."
     },
     "players": {
         "title": "Spillere",

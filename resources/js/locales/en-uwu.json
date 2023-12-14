@@ -713,7 +713,11 @@
         "unknown_character": "Unyknown Chawactew",
         "no_tweets": "Dis account has nyot posted any tweets yet.",
         "edit_post": "Edit Pwost",
-        "save": "Save"
+        "save": "Save",
+        "edit_post_title": "Edit tweet content and wikes.",
+        "delete_quick": "Dewete just this tweet quickwy.",
+        "delete_mark": "Sewect this tweet fow buwk dewetion.",
+        "delete_confirm": "Awe you suwe you want to dewete this tweet? This cannot be undone."
     },
     "players": {
         "title": "Kawaii Players~",

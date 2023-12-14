@@ -743,7 +743,11 @@
         "unknown_character": "Unknown Character",
         "no_tweets": "This account has not posted any tweets yet.",
         "edit_post": "Edit Post",
-        "save": "Save"
+        "save": "Save",
+        "edit_post_title": "Edit tweet content and likes.",
+        "delete_quick": "Delete just this tweet quickly.",
+        "delete_mark": "Select this tweet for bulk deletion.",
+        "delete_confirm": "Are you sure you want to delete this tweet? This cannot be undone."
     },
     "players": {
         "title": "Players",

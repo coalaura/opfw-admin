@@ -722,7 +722,11 @@
         "unknown_character": "Ajnyaat Charitra",
         "no_tweets": "Is account ne abhi tak koi tweets post nahi kiye hain.",
         "edit_post": "Post Sampadit Karein",
-        "save": "Sahējaēṁ"
+        "save": "Sahējaēṁ",
+        "edit_post_title": "Tweet ke content aur likes ko edit karein.",
+        "delete_quick": "Sirf is tweet ko jaldi se delete karein.",
+        "delete_mark": "Is tweet ko bulk deletion ke liye chunen.",
+        "delete_confirm": "Kya aap sach mein is tweet ko delete karna chahte hain? Yeh action paltaya nahi ja sakta."
     },
     "players": {
         "title": "Khiladi",

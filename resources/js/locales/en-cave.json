@@ -713,7 +713,11 @@
         "unknown_character": "Thing not known",
         "no_tweets": "This one no show word-sounds yet.",
         "edit_post": "Change Thing",
-        "save": "Keep"
+        "save": "Keep",
+        "edit_post_title": "Change tweet thing and good clicks.",
+        "delete_quick": "Remove this tweet now fast.",
+        "delete_mark": "Pick tweet for many go away.",
+        "delete_confirm": "You sure want make tweet go away? No take back."
     },
     "players": {
         "title": "Uggur",

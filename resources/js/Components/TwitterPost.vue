@@ -29,11 +29,15 @@
         </div>
 
         <div class="absolute top-1 right-1 flex gap-1 items-center">
-            <button class="text-yellow-500 dark:text-yellow-400 no-underline drop-shadow-sm leading-none" @click="editingPost = true" v-if="canSeeEdit()">
+            <button class="text-red-500 dark:text-red-400 no-underline drop-shadow-sm leading-none" @click="deletePost()" v-if="canSeeDelete()" :title="t('twitter.delete_quick')">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+
+            <button class="text-yellow-500 dark:text-yellow-400 no-underline drop-shadow-sm leading-none" @click="editingPost = true" v-if="canSeeEdit()" :title="t('twitter.edit_post_title')">
                 <i class="fas fa-pen-square"></i>
             </button>
 
-            <input type="checkbox" class="!outline-none drop-shadow-sm" @change="selectionChange($event, post.id)" v-if="selectionChange && canSeeDelete()" />
+            <input type="checkbox" class="!outline-none drop-shadow-sm" @change="selectionChange($event, post.id)" v-if="selectionChange && canSeeDelete()" :title="t('twitter.delete_mark')" />
         </div>
 
         <modal :show="editingPost">
@@ -49,7 +53,7 @@
                         {{ t('twitter.likes') }}
                         <span v-if="hasEdited('likes')">*</span>
                     </label>
-                    <input class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border-2 border-gray-500 rounded" :class="{'border-lime-500': hasEdited('likes')}" id="likes" type="number" step="1" min="0" max="10000000" v-model="edit.likes" />
+                    <input class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border-2 border-gray-500 rounded" :class="{ 'border-lime-500': hasEdited('likes') }" id="likes" type="number" step="1" min="0" max="10000000" v-model="edit.likes" />
                 </div>
 
                 <div class="w-full p-3 flex justify-between px-0">
@@ -57,7 +61,7 @@
                         {{ t('twitter.message') }}
                         <span v-if="hasEdited('message')">*</span>
                     </label>
-                    <textarea class="block w-3/4 py-2 bg-gray-200 dark:bg-gray-600 border-2 border-gray-500 rounded" :class="{'border-lime-500': hasEdited('message')}" id="message" placeholder="meow :)" rows="4" v-model="edit.message"></textarea>
+                    <textarea class="block w-3/4 py-2 bg-gray-200 dark:bg-gray-600 border-2 border-gray-500 rounded" :class="{ 'border-lime-500': hasEdited('message') }" id="message" placeholder="meow :)" rows="4" v-model="edit.message"></textarea>
                 </div>
             </template>
 
@@ -119,6 +123,22 @@ export default {
         },
         hasEdited(field) {
             return this.edit[field] != this.post[field];
+        },
+        async deletePost() {
+            if (!confirm(this.t('twitter.delete_confirm'))) return;
+
+            if (this.isLoading) return;
+
+            this.isLoading = true;
+
+            await this.$inertia.post('/tweets/delete', {
+                ids: [this.post.id],
+            }, {
+                preserveState: true,
+                preserveScroll: true
+            });
+
+            this.isLoading = false;
         },
         async updatePost() {
             const data = {};
