@@ -42,7 +42,7 @@ class PlayerController extends Controller
 
         // Filtering by identifier & type.
         $identifier = $request->input('identifier');
-        $identifier = $identifier ? preg_replace('/[^a-z0-9:]/i', '', $identifier) : null;
+        $identifier = $identifier ? preg_replace('/[^a-z0-9:~]/i', '', $identifier) : null;
 
         $type = $request->input('identifier_type');
         $type = $type && !Str::contains($identifier, ':') ? preg_replace('/[^a-z0-9]/i', '', $type) : null;
