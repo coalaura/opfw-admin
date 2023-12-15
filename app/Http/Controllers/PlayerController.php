@@ -48,13 +48,19 @@ class PlayerController extends Controller
         $type = $type && !Str::contains($identifier, ':') ? preg_replace('/[^a-z0-9]/i', '', $type) : null;
 
         if ($identifier) {
-            $id = '"' . $identifier . '"';
+            if (Str::startsWith($identifier, '~')) {
+                $identifier = substr($identifier, 1);
 
-            if ($type) {
-                $id = '"' . $type . ':' . $identifier . '"';
+                $query->where('identifiers', 'LIKE', '%' . $identifier . '%');
+            } else {
+                $id = '"' . $identifier . '"';
+
+                if ($type) {
+                    $id = '"' . $type . ':' . $identifier . '"';
+                }
+
+                $query->where(DB::raw("JSON_CONTAINS(identifiers, '$id')"), '=', '1');
             }
-
-            $query->where(DB::raw("JSON_CONTAINS(identifiers, '$id')"), '=', '1');
         }
 
         // Filtering by serer-id.
