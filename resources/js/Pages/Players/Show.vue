@@ -1649,7 +1649,7 @@ export default {
             panelLogs: [],
 
             statusLoading: true,
-            status: {},
+            status: false,
 
             echo: false,
             showingEchoInfo: false,
