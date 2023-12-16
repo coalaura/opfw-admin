@@ -920,7 +920,9 @@
             "global_title": "Player is banned on {0} op-fw servers, bless their heart.",
             "delete_warning": "Ya'll sure 'bout deletin' this here strike/warnin'/note?",
             "user_variables": "Y'all Variables",
-            "indefinitely": "fer good"
+            "indefinitely": "fer good",
+            "streamer_exception": "Ban-Exception",
+            "streamer_exception_title": "This here player's got permission to play whilst they're streamin' live on `{0}`."
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

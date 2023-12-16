@@ -858,6 +858,8 @@
             "linked": "Show linked accounts",
             "drug_department_title": "Player has access to all drug related server logs.",
             "drug_department": "Drug-Logs",
+            "streamer_exception": "Ban-Exception",
+            "streamer_exception_title": "This player is allowed to play while actively streaming on `{0}`.",
             "echo_failed": "Failed to load Echo data.",
             "echo_failed_steam": "No available steam accounts to check.",
             "echo_title": "Click for more information.",

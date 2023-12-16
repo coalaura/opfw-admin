@@ -352,6 +352,13 @@ class Player extends Model
         return isset($data['staffHidden']) && $data['staffHidden'];
     }
 
+    public function getStreamerBanException(): ?string
+    {
+        $data = $this->user_data ?? [];
+
+        return isset($data['twitchBanException']) ? $data['twitchBanException'] : null;
+    }
+
     private static function filterPlayerName(string $name): string
     {
         foreach (self::PlayerNameFilter as $filter) {

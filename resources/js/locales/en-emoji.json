@@ -920,7 +920,9 @@
             "global_title": "👮‍♂️🚫🔒{0}🖥️👞⚠️🗂️🔒.🔥",
             "delete_warning": "❓ 🔨/⚠️/📝?",
             "user_variables": "👤🔣",
-            "indefinitely": "🔁"
+            "indefinitely": "🔁",
+            "streamer_exception": "🚫❌",
+            "streamer_exception_title": "🎮👤🏳️⏩🎥💻➡️`{0}`."
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

@@ -930,7 +930,9 @@
             "show_link_identifier": "Pehchaankartaon ke madhyam se jude hue accounts dikhayen",
             "meta_minigame": "Arena/BR",
             "meta_camCords": "Freecam/Orbitcam",
-            "meta_queue": "Queue"
+            "meta_queue": "Queue",
+            "streamer_exception": "Ban-Apavaad",
+            "streamer_exception_title": "Yah khiladi '{0}' par sakriya roop se streaming karte hue khelne ke liye anumati prapt hai."
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",

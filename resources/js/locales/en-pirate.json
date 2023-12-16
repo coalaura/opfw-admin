@@ -920,7 +920,9 @@
             "global_title": "Bilge rat be scurvy on {0} op-fw servers.",
             "delete_warning": "Be ye sure ye want to purge this strike/warning/note, matey?",
             "user_variables": "Crew Mate Variables",
-            "indefinitely": "forev'r"
+            "indefinitely": "forev'r",
+            "streamer_exception": "Ban-Reprieve",
+            "streamer_exception_title": "Thar player be permitted t' partake in play whilst broadcasin' live on `{0}`."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

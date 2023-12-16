@@ -154,28 +154,40 @@
 
         <div class="flex flex-wrap justify-between mb-6">
             <div class="mb-3 flex flex-wrap gap-3">
+                <!-- Debugger -->
+                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale px-4 py-2" :title="t('global.debugger_title')" v-if="player.isDebugger && !player.isRoot">
+                    <i class="fas fa-toolbox mr-1"></i>
+                    <span class="font-semibold">{{ t('global.debugger') }}</span>
+                </badge>
+
                 <!-- Panel drug department -->
                 <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale px-4 py-2" v-if="$page.auth.player.isSuperAdmin && player.panelDrugDepartment">
+                    <i class="fas fa-tablets mr-1"></i>
                     <span class="font-semibold" :title="t('players.show.drug_department_title')">{{ t('players.show.drug_department') }}</span>
                 </badge>
 
                 <!-- Whitelisted -->
                 <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale px-4 py-2" v-if="whitelisted">
+                    <i class="fas fa-clipboard-check mr-1"></i>
                     <span class="font-semibold">{{ t('global.whitelisted') }}</span>
                 </badge>
 
+                <!-- Streamer Ban exception -->
+                <a class="px-4 py-2 font-semibold border-2 rounded bg-yellow-100 dark:bg-yellow-700 border-yellow-200 flex items-center gap-1" :href="'https://twitch.tv/' + player.streamerException" target="_blank" v-if="player.streamerException" :title="t('players.show.streamer_exception_title', player.streamerException)">
+                    <i class="fab fa-twitch mr-1"></i>
+                    {{ t('players.show.streamer_exception') }}
+                </a>
+
                 <!-- Blacklisted -->
                 <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale px-4 py-2" v-if="blacklisted">
+                    <i class="fas fa-hand-paper mr-1"></i>
                     <span class="font-semibold">{{ t('global.blacklisted') }}</span>
-                </badge>
-
-                <!-- Debugger -->
-                <badge class="border-pink-200 bg-pink-100 dark:bg-pink-700 px-4 py-2" :title="t('global.debugger_title')" v-if="player.isDebugger && !player.isRoot">
-                    <span class="font-semibold">{{ t('global.debugger') }}</span>
                 </badge>
 
                 <!-- Soft Ban -->
                 <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale px-4 py-2" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && player.isSoftBanned">
+                    <i class="fas fa-feather-alt mr-1"></i>
+
                     <span class="font-semibold">{{ t('global.soft_banned') }}</span>
 
                     <a href="#" @click="removeSoftBan($event)" class="ml-1 text-white" :title="t('players.show.remove_soft_ban')">

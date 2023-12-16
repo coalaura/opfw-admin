@@ -920,7 +920,9 @@
             "global_title": "Player get bonk on {0} big bad servers.",
             "delete_warning": "Ugga ugga delete dis bonk/bad thing/note?",
             "user_variables": "Ugga Ugga Variables",
-            "indefinitely": "forever and ever"
+            "indefinitely": "forever and ever",
+            "streamer_exception": "OOG-No-Ban",
+            "streamer_exception_title": "This player okay play while show-live on ‘{0}’."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

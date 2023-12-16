@@ -930,7 +930,9 @@
             "show_link_identifier": "Vis koblet kontoer via identifikatorer",
             "meta_minigame": "Arena/Slagfelt",
             "meta_camCords": "Fri kamera/Orbitkamera",
-            "meta_queue": "Kø"
+            "meta_queue": "Kø",
+            "streamer_exception": "Unntak fra utestengelse",
+            "streamer_exception_title": "Denne spilleren har lov til å spille mens vedkommende aktivt strømmer på `{0}`."
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",
