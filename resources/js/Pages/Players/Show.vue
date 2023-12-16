@@ -829,7 +829,11 @@
             <!-- Viewing -->
             <alert class="bg-danger dark:bg-dark-danger px-6 py-4" v-if="player.isBanned">
                 <div class="flex items-center justify-between mb-2">
-                    <h2 class="text-lg font-semibold" v-html="local.ban"></h2>
+                    <h2 class="text-lg font-semibold">
+                        <i class="fas fa-shield-alt mr-1 cursor-help" v-if="player.streamerException" :title="t('players.show.streamer_exception_title', player.streamerException)"></i>
+
+                        <span v-html="local.ban"></span>
+                    </h2>
                     <div class="font-semibold">
                         <i class="mr-1 fas fa-lock" v-if="player.ban.locked" :title="t('players.show.ban_locked')"></i>
                         {{ player.ban.timestamp | formatTime }}
