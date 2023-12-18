@@ -179,22 +179,46 @@ const Markdown = {
             });
 
             // ***text***
-            text = text.replace(/\*{3,}(.+?)\*{3,}/gi, '<strong><em>$1</em></strong>');
+            text = text.replace(/\*{3,}(.+?)\*{3,}/gi, (match, content) => {
+                if (content.match(/^[*_~-]*$/m)) return match;
+
+                return `<strong><em>${content}</em></strong>`;
+            });
 
             // **text**
-            text = text.replace(/\*{2}(.+?)\*{2}/gi, '<strong>$1</strong>');
+            text = text.replace(/\*{2}(.+?)\*{2}/gi, (match, content) => {
+                if (content.match(/^[*_~-]*$/m)) return match;
+
+                return `<strong>${content}</strong>`;
+            });
 
             // *text*
-            text = text.replace(/\*(.+?)\*/gi, '<em>$1</em>');
+            text = text.replace(/\*(.+?)\*/gi, (match, content) => {
+                if (content.match(/^[*_~-]*$/m)) return match;
+
+                return `<em>${content}</em>`;
+            });
 
             // __text__
-            text = text.replace(/_{2}(.+?)_{2}/gi, '<u>$1</u>');
+            text = text.replace(/_{2}(.+?)_{2}/gi, (match, content) => {
+                if (content.match(/^[*_~-]*$/m)) return match;
+
+                return `<u>${content}</u>`;
+            });
 
             // ~~text~~
-            text = text.replace(/~{2}(.+?)~{2}/gi, '<del>$1</del>');
+            text = text.replace(/~{2}(.+?)~{2}/gi, (match, content) => {
+                if (content.match(/^[*_~-]*$/m)) return match;
+
+                return `<del>${content}</del>`;
+            });
 
             // --text-- (custom)
-            text = text.replace(/-{2}(.+?)-{2}/gi, '<span>$1</span>');
+            text = text.replace(/-{2}(.+?)-{2}/gi, (match, content) => {
+                if (content.match(/^[*_~-]*$/m)) return match;
+
+                return `<span class="line-through">${content}</span>`;
+            });
 
             // ![alt](url)
             text = text.replace(/!\[(.+?)\]\((.+?)\)/gi, (match, p1, p2, offset, string) => {
