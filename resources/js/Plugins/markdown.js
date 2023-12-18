@@ -217,7 +217,7 @@ const Markdown = {
             text = text.replace(/-{2}(.+?)-{2}/gi, (match, content) => {
                 if (content.match(/^[*_~-]*$/m)) return match;
 
-                return `<span class="line-through">${content}</span>`;
+                return `<span>${content}</span>`;
             });
 
             // ![alt](url)
