@@ -621,7 +621,7 @@ class Player extends Model
      *
      * @return array
      */
-    public function getLastUsedIdentifiers(): array
+    public function getLastUsedIdentifiers(bool $ignoreLicense2 = false): array
     {
         $identifiers = $this->last_used_identifiers ?? [];
 
@@ -630,8 +630,13 @@ class Player extends Model
         }
 
         return array_values(
-            array_unique(
-                $identifiers
+            array_filter(
+                array_unique(
+                    $identifiers
+                ),
+                function ($identifier) use ($ignoreLicense2) {
+                    return $ignoreLicense2 ? !Str::startsWith($identifier, 'license2:') : true;
+                }
             )
         );
     }

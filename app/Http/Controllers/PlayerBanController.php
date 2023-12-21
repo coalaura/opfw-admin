@@ -385,8 +385,8 @@ class PlayerBanController extends Controller
         $identifiers = $player->getIdentifiers();
         $identifiers2 = $player2->getIdentifiers();
 
-        $lastUsed = $player->getLastUsedIdentifiers();
-        $lastUsed2 = $player2->getLastUsedIdentifiers();
+        $lastUsed = $player->getLastUsedIdentifiers(true);
+        $lastUsed2 = $player2->getLastUsedIdentifiers(true);
 
         if (!Player::isLinked($identifiers, $identifiers2)) {
             return backWith('error', 'Players are not linked.');
