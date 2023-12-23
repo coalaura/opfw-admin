@@ -1064,7 +1064,7 @@
                 "turbo": "Turbo",
                 "neon_enabled": "Lys under bilen aktivert",
                 "neon": "Lysfarge under bilen",
-                "engine": "Motor (0 - 5)",
+                "engine": "Motor (0 - 4)",
                 "transmission": "Girkasse (0 - 3)",
                 "breaks": "Bremser (0 - 3)",
                 "suspension": "Fjæring (0 - 4)",
