@@ -860,8 +860,6 @@
             "revive_confirm": "❓Sure you want to ⬆️ revive this player?",
             "warning_edited": "📝Edited",
             "warning_edited_title": "📝Edited on {0}",
-            "hide_system": "🙈Hide System Notes",
-            "show_system": "👀Show System Notes",
             "warning_type": {
                 "warning": "⚠️Warning",
                 "note": "📌Note",
@@ -922,7 +920,9 @@
             "user_variables": "👤🔣",
             "indefinitely": "🔁",
             "streamer_exception": "🚫❌",
-            "streamer_exception_title": "🎮👤🏳️⏩🎥💻➡️`{0}`."
+            "streamer_exception_title": "🎮👤🏳️⏩🎥💻➡️`{0}`.",
+            "hide_system": "🙈 {0} 🖥️ 📝",
+            "show_system": "🔍 {0} 🖥️ 📝"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

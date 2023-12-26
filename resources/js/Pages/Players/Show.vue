@@ -1142,10 +1142,10 @@
 
                     <button class="block px-5 py-2 font-semibold text-center text-white bg-gray-500 rounded" :class="{ 'bg-blue-500': showSystemWarnings }" @click="showSystemWarnings = !showSystemWarnings" v-if="!warningsCollapsed">
                         <span v-if="showSystemWarnings">
-                            {{ t('players.show.hide_system') }}
+                            {{ t('players.show.hide_system', systemNoteCount) }}
                         </span>
                         <span v-else>
-                            {{ t('players.show.show_system') }}
+                            {{ t('players.show.show_system', systemNoteCount) }}
                         </span>
                     </button>
                 </div>
@@ -1704,6 +1704,9 @@ export default {
 
             return this.$moment.utc(this.player.ban.scheduled * 1000).fromNow();
         },
+        systemNoteCount() {
+            return this.warnings.filter(warn => this.isAutomatedWarning(warn.message)).length;
+        }
     },
     methods: {
         showGlobalBans() {

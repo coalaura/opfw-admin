@@ -860,8 +860,6 @@
             "revive_confirm": "You dang sure you wanna revive this here player?",
             "warning_edited": "Done been edited",
             "warning_edited_title": "Done been edited on {0}",
-            "hide_system": "Hide them fancy System Notes",
-            "show_system": "Show them fancy System Notes",
             "warning_type": {
                 "warning": "Now listen up, this here's a warning",
                 "note": "Listen up, this here's a lil' note",
@@ -922,7 +920,9 @@
             "user_variables": "Y'all Variables",
             "indefinitely": "fer good",
             "streamer_exception": "Ban-Exception",
-            "streamer_exception_title": "This here player's got permission to play whilst they're streamin' live on `{0}`."
+            "streamer_exception_title": "This here player's got permission to play whilst they're streamin' live on `{0}`.",
+            "hide_system": "Hide {0} System Notes",
+            "show_system": "Show {0} System Notes"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

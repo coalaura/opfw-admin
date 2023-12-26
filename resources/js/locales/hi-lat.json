@@ -891,8 +891,6 @@
             "revive_confirm": "Kya aapko yakeen hai ki aap is player ko punarjeevit karna chahte hain?",
             "warning_edited": "Sampadit",
             "warning_edited_title": "{0} ko sampadit kiya gaya",
-            "hide_system": "System Notes chhupaen",
-            "show_system": "System Notes dikhaen",
             "warning_type": {
                 "warning": "Chetaavani",
                 "note": "Note",
@@ -932,7 +930,9 @@
             "meta_camCords": "Freecam/Orbitcam",
             "meta_queue": "Queue",
             "streamer_exception": "Ban-Apavaad",
-            "streamer_exception_title": "Yah khiladi '{0}' par sakriya roop se streaming karte hue khelne ke liye anumati prapt hai."
+            "streamer_exception_title": "Yah khiladi '{0}' par sakriya roop se streaming karte hue khelne ke liye anumati prapt hai.",
+            "hide_system": "Chhupaaye {0} System Notes",
+            "show_system": "Dikhaaye {0} System Notes"
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",

@@ -891,8 +891,6 @@
             "revive_confirm": "Er du sikker på at du ønsker å gjenopplive denne spilleren?",
             "warning_edited": "Redigert",
             "warning_edited_title": "Redigert på {0}",
-            "hide_system": "Skjul Systemnotater",
-            "show_system": "Vis Systemnotater",
             "warning_type": {
                 "warning": "Advarsel",
                 "note": "Merknad",
@@ -932,7 +930,9 @@
             "meta_camCords": "Fri kamera/Orbitkamera",
             "meta_queue": "Kø",
             "streamer_exception": "Unntak fra utestengelse",
-            "streamer_exception_title": "Denne spilleren har lov til å spille mens vedkommende aktivt strømmer på `{0}`."
+            "streamer_exception_title": "Denne spilleren har lov til å spille mens vedkommende aktivt strømmer på `{0}`.",
+            "hide_system": "Skjul {0} systemnotater",
+            "show_system": "Vis {0} systemnotater"
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",
