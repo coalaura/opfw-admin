@@ -85,7 +85,7 @@ const Markdown = {
                 if (!id) return false;
 
                 return {
-                    text: `clipchamp.com/watch/${id}`,
+                    text: `clipchamp.com/${id}`,
                     url: `https://clipchamp.com/watch/${id}/embed`
                 };
             }
