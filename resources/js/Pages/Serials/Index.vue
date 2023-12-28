@@ -47,7 +47,7 @@
             </template>
 
             <template>
-                <table class="w-full whitespace-no-wrap text-left" v-if="result">
+                <table class="w-full text-left" v-if="result">
                     <!-- Item Type -->
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4">
                         <th class="px-6 py-4">{{ t('serials.table.item') }}</th>

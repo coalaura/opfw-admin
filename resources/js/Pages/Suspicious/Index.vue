@@ -73,7 +73,7 @@
             </template>
 
             <template>
-                <table class="w-full whitespace-no-wrap">
+                <table class="w-full">
                     <tr class="font-semibold text-left" v-if="logType === 'characters'">
                         <th class="px-6 py-4">{{ t('suspicious.items.player') }}</th>
                         <th class="px-6 py-4">{{ t('suspicious.characters.character') }}</th>
@@ -168,7 +168,7 @@
                             </inertia-link>
                         </td>
                         <td class="p-3">{{ log.details }}</td>
-                        <td class="p-3 pr-8">{{ log.timestamp | formatTime(true) }}</td>
+                        <td class="p-3 pr-8 whitespace-nowrap">{{ log.timestamp | formatTime(true) }}</td>
                     </tr>
 
                     <!-- Nothing -->

@@ -26,7 +26,7 @@
         <!-- Table -->
         <v-section class="overflow-x-auto" :noHeader="true">
             <template>
-                <table class="w-full whitespace-no-wrap">
+                <table class="w-full">
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="p-3 pl-8">{{ t('screenshot.player') }}</th>
                         <th class="p-3">{{ t('screenshot.screenshot') }}</th>

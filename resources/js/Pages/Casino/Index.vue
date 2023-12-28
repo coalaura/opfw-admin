@@ -102,7 +102,7 @@
             </template>
 
             <template>
-                <table class="w-full whitespace-no-wrap">
+                <table class="w-full">
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="p-3 pl-8">{{ t('casino.player') }}</th>
                         <th class="p-3">{{ t('casino.character_id') }}</th>
@@ -127,7 +127,7 @@
                         <td class="p-3 mobile:block">
                             {{ log.details }}
                         </td>
-                        <td class="p-3 pr-8 mobile:block">{{ log.timestamp | formatTime(true) }}</td>
+                        <td class="p-3 pr-8 mobile:block whitespace-nowrap">{{ log.timestamp | formatTime(true) }}</td>
                     </tr>
                     <tr v-if="logs.length === 0" class="border-t border-gray-300 dark:border-gray-500">
                         <td class="px-8 py-3 text-center" colspan="100%">

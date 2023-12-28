@@ -96,7 +96,7 @@
             </template>
 
             <template>
-                <table class="w-full whitespace-no-wrap">
+                <table class="w-full">
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="p-3 pl-8">{{ t('logs.player') }}</th>
                         <th class="p-3">{{ t('logs.action') }}</th>
@@ -114,7 +114,7 @@
                                 {{ playerName(log.license_identifier) }}
                             </inertia-link>
                         </td>
-                        <td class="p-3 mobile:block" :class="{ 'text-muted dark:text-dark-muted': !log.action }">
+                        <td class="p-3 mobile:block whitespace-nowrap" :class="{ 'text-muted dark:text-dark-muted': !log.action }">
                             {{ log.action || '-' }}
                         </td>
                         <td class="p-3 mobile:block" :class="{ 'text-muted dark:text-dark-muted': !log.details }">
@@ -129,7 +129,7 @@
                         <td class="p-3 mobile:block" :class="{ 'text-muted dark:text-dark-muted': !log.page }">
                             {{ log.page || '-' }}
                         </td>
-                        <td class="p-3 pr-8 mobile:block">{{ log.timestamp * 1000 | formatTime(true) }}</td>
+                        <td class="p-3 pr-8 mobile:block whitespace-nowrap">{{ log.timestamp * 1000 | formatTime(true) }}</td>
                     </tr>
                     <tr v-if="logs.length === 0" class="border-t border-gray-300 dark:border-gray-500">
                         <td class="py-3 px-8 text-center" colspan="100%">

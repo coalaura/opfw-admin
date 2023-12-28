@@ -86,7 +86,7 @@
             </template>
 
             <template>
-                <table class="w-full whitespace-no-wrap">
+                <table class="w-full">
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="p-3 pl-8">{{ t('errors.player') }}</th>
                         <th class="p-3">{{ t('errors.location') }}</th>
@@ -104,8 +104,8 @@
                         <td class="p-3 mobile:block whitespace-nowrap font-mono">{{ getErrorLocation(error) }}</td>
                         <td class="p-3 mobile:block font-mono text-sm cursor-pointer" @click="showError(error)">{{ cleanupTrace(error.error_trace) }}</td>
                         <td class="p-3 mobile:block">{{ error.occurrences }}</td>
-                        <td class="p-3 mobile:block">{{ error.server_version || "N/A" }}</td>
-                        <td class="p-3 pr-8 mobile:block">{{ error.timestamp * 1000 | formatTime(true) }}</td>
+                        <td class="p-3 mobile:block whitespace-nowrap">{{ error.server_version || "N/A" }}</td>
+                        <td class="p-3 pr-8 mobile:block whitespace-nowrap">{{ error.timestamp * 1000 | formatTime(true) }}</td>
                     </tr>
                     <tr v-if="errors.length === 0" class="border-t border-gray-300 dark:border-gray-500">
                         <td class="px-8 py-3 text-center" colspan="100%">

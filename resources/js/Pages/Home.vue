@@ -70,7 +70,7 @@
             <h3 class="mb-2 dark:text-white">
                 {{ t('home.bans') }}
             </h3>
-            <table class="w-full whitespace-no-wrap table-fixed max-w-screen-lg">
+            <table class="w-full table-fixed max-w-screen-lg">
                 <tr class="font-semibold text-left mobile:hidden">
                     <th class="px-6 py-4">{{ t('home.ban.license') }}</th>
                     <th class="px-6 py-4">{{ t('home.ban.reason') }}</th>
@@ -89,8 +89,8 @@
                     <td class="px-6 py-3 border-t mobile:block italic" v-else>
                         {{ t('global.none') }}
                     </td>
-                    <td class="px-6 py-3 border-t mobile:block">{{ banTime(ban) }}</td>
-                    <td class="px-6 py-3 border-t mobile:block">{{ ban.timestamp | formatTime }}</td>
+                    <td class="px-6 py-3 border-t mobile:block whitespace-nowrap">{{ banTime(ban) }}</td>
+                    <td class="px-6 py-3 border-t mobile:block whitespace-nowrap">{{ ban.timestamp | formatTime }}</td>
                 </tr>
                 <tr v-if="bans.length === 0">
                     <td class="px-6 py-6 text-center border-t" colspan="4">

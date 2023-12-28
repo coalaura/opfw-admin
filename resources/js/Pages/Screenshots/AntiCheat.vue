@@ -34,7 +34,7 @@
         <v-section class="overflow-x-auto" :noHeader="true">
             <template>
                 <HashResolver>
-                    <table class="w-full whitespace-no-wrap">
+                    <table class="w-full">
                         <tr class="font-semibold text-left mobile:hidden">
                             <th class="p-3 pl-8 max-w-56">{{ t('screenshot.player') }}</th>
                             <th class="p-3 w-32">{{ t('screenshot.playtime') }}</th>
@@ -53,7 +53,7 @@
                                 <td class="p-3 mobile:block italic text-gray-600 dark:text-gray-400 text-sm" colspan="4">
                                     Banned indefinitely for <span class="font-semibold">{{ screenshot.reason }}</span>
                                 </td>
-                                <td class="p-3 pr-8 mobile:block italic text-gray-600 dark:text-gray-400 w-60">
+                                <td class="p-3 pr-8 mobile:block italic text-gray-600 dark:text-gray-400 w-60 whitespace-nowrap">
                                     {{ screenshot.timestamp * 1000 | formatTime(true) }}
                                 </td>
                             </template>
@@ -82,8 +82,8 @@
                                         {{ t('global.not_banned') }}
                                     </span>
                                 </td>
-                                <td class="p-3 mobile:block w-60 italic text-gray-600 dark:text-gray-400" v-if="screenshot.timestamp">{{ screenshot.timestamp * 1000 | formatTime(true) }}</td>
-                                <td class="p-3 pr-8 mobile:block w-60 italic text-gray-600 dark:text-gray-400" v-else>{{ t('global.unknown') }}</td>
+                                <td class="p-3 mobile:block w-60 italic text-gray-600 dark:text-gray-400 whitespace-nowrap" v-if="screenshot.timestamp">{{ screenshot.timestamp * 1000 | formatTime(true) }}</td>
+                                <td class="p-3 pr-8 mobile:block w-60 italic text-gray-600 dark:text-gray-400 whitespace-nowrap" v-else>{{ t('global.unknown') }}</td>
                             </template>
                         </tr>
                         <tr v-if="screenshots.length === 0" class="border-t border-gray-300 dark:border-gray-500">
@@ -130,7 +130,7 @@
                 <template v-for="(contents, category) in reasons">
                     <h2 class="mt-5">{{ category }}</h2>
 
-                    <table class="w-full whitespace-no-wrap">
+                    <table class="w-full">
                         <tr class="text-left hover:bg-gray-100 dark:hover:bg-gray-600" v-for="(value, key) in contents">
                             <td class="font-semibold py-2 px-1 border-t">{{ key }}</td>
                             <td class="py-2 px-1 italic border-t text-sm">{{ value }}</td>

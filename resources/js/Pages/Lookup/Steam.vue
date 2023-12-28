@@ -28,7 +28,7 @@
             <h3 class="mb-2 dark:text-white">
                 {{ t('steam.result') }}
             </h3>
-            <table class="whitespace-no-wrap table-fixed max-w-screen-lg text-left">
+            <table class="table-fixed max-w-screen-lg text-left">
                 <template v-if="!result || result.error">
                     <tr>
                         <td class="px-6 py-4 text-center border-t" colspan="2">

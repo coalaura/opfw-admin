@@ -101,7 +101,7 @@
             </template>
 
             <template #default>
-                <table class="w-full whitespace-no-wrap">
+                <table class="w-full">
                     <tr class="text-left font-semibold">
                         <td class="py-2 px-1">{{ t('nav.perm') }}</td>
                         <td class="py-2 px-1">{{ t('nav.perm_level') }}</td>

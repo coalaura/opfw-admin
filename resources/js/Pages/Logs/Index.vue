@@ -164,7 +164,7 @@
 			</template>
 
 			<template>
-				<table class="w-full whitespace-no-wrap">
+				<table class="w-full">
 					<tr class="font-semibold text-left mobile:hidden">
 						<th class="p-3 pl-8 max-w-56">{{ t('logs.player') }}</th>
 						<th class="p-3 whitespace-nowrap">{{ t('logs.server_id') }}</th>
@@ -185,7 +185,7 @@
 								{{ playerName(log.licenseIdentifier) }}
 							</inertia-link>
 						</td>
-						<td class="p-3 mobile:block">
+						<td class="p-3 mobile:block whitespace-nowrap">
 							<span class="font-semibold" v-if="statusLoading">
 								{{ t('global.loading') }}
 							</span>
@@ -196,21 +196,21 @@
 								{{ t('global.status.offline') }}
 							</span>
 						</td>
-						<td class="p-3 mobile:block">
+						<td class="p-3 mobile:block whitespace-nowrap">
 							{{ log.action }}
 							<a href="#" @click="detailedAction($event, log)" class="block text-xs leading-1 text-blue-700 dark:text-blue-300 whitespace-nowrap" v-if="log.metadata">
 								{{ t('logs.metadata.show') }}
 							</a>
 						</td>
 						<td class="p-3 mobile:block" v-html="parseLog(log.details, log.action, log.metadata)"></td>
-						<td class="p-3 mobile:block" v-if="showLogTimeDifference" :title="t('logs.diff_label')">
+						<td class="p-3 mobile:block whitespace-nowrap" v-if="showLogTimeDifference" :title="t('logs.diff_label')">
 							<span v-if="index + 1 < logs.length">
 								{{ formatSecondDiff(stamp(log.timestamp) - stamp(logs[index + 1].timestamp)) }}
 								<i class="fas fa-arrow-down"></i>
 							</span>
 							<span v-else>Start</span>
 						</td>
-						<td class="p-3 pr-8 mobile:block" v-else>
+						<td class="p-3 pr-8 mobile:block whitespace-nowrap" v-else>
 							{{ log.timestamp | formatTime(true) }}
 							<i class="block text-xs leading-1 whitespace-nowrap text-yellow-600 dark:text-yellow-400">{{ formatRawTimestamp(log.timestamp) }}</i>
 						</td>

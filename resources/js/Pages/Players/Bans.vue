@@ -70,7 +70,7 @@
 
         <v-section class="overflow-x-auto" :noHeader="true">
             <template>
-                <table class="w-full whitespace-no-wrap">
+                <table class="w-full">
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="px-6 py-4">{{ t('players.form.identifier') }}</th>
                         <th class="px-6 py-4">{{ t('players.form.name') }}</th>

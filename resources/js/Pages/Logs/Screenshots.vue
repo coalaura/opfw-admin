@@ -96,7 +96,7 @@
             </template>
 
             <template>
-                <table class="w-full whitespace-no-wrap">
+                <table class="w-full">
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="p-3 pl-8">&nbsp;</th>
                         <th class="p-3">{{ t('logs.player') }}</th>
@@ -193,13 +193,13 @@
 
                 <table class="w-full text-sm font-mono">
                     <tr v-for="(entry, index) in logMetadata" :key="index" :class="{ 'border-b': index < logMetadata.length - 1, 'bg-gray-200 dark:bg-gray-800': logImageIndex === index && logMetadata.length > 1 }">
-                        <td class="p-1 pl-2">
+                        <td class="p-1 pl-2 whitespace-nowrap">
                             <i>{{ entry.timestamp * 1000 | formatTime(true) }}</i>
                         </td>
                         <td class="p-1">
-                            <a :href="entry.url" target="_blank" class="text-indigo-600 dark:text-indigo-300 hover:text-yellow-500 dark:hover:text-yellow-300">{{ entry.url.split('/').pop() }}</a>
+                            <a :href="entry.url" target="_blank" class="text-indigo-600 dark:text-indigo-300 hover:text-yellow-500 dark:hover:text-yellow-300 truncate">{{ entry.url.split('/').pop() }}</a>
                         </td>
-                        <td class="p-1 pr-2 text-muted dark:text-dark-muted">
+                        <td class="p-1 pr-2 text-muted dark:text-dark-muted whitespace-nowrap">
                             {{ entry.type }}
                         </td>
                     </tr>

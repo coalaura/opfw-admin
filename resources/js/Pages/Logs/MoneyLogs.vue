@@ -129,7 +129,7 @@
 			</template>
 
 			<template>
-				<table class="w-full whitespace-no-wrap">
+				<table class="w-full">
 					<tr class="font-semibold text-left mobile:hidden">
 						<th class="p-3 pl-8 max-w-56">{{ t('logs.player') }}</th>
 						<th class="p-3 max-w-56">{{ t('logs.character') }}</th>
@@ -151,7 +151,7 @@
 								{{ log.characterName }}
 							</inertia-link>
 						</td>
-						<td class="p-3 mobile:block">{{ log.type }}</td>
+						<td class="p-3 mobile:block whitespace-nowrap">{{ log.type }}</td>
 						<td class="p-3 mobile:block font-mono">
 							<div class="flex items-center gap-2 text-gray-700 dark:text-gray-300">
 								<span>{{ numberFormat(log.balanceBefore, 0, true) }}</span>
@@ -166,7 +166,7 @@
 							</div>
 						</td>
 						<td class="p-3 mobile:block">{{ log.details ? log.details : '-' }}</td>
-						<td class="p-3 pr-8 mobile:block">
+						<td class="p-3 pr-8 mobile:block whitespace-nowrap">
 							{{ log.timestamp | formatTime(true) }}
 
 							<i class="block text-xs leading-1 whitespace-nowrap text-yellow-600 dark:text-yellow-400">{{ formatRawTimestamp(log.timestamp) }}</i>

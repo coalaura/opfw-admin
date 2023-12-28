@@ -22,7 +22,7 @@
             </template>
 
             <template>
-                <table class="w-full whitespace-no-wrap">
+                <table class="w-full">
                     <tr class="font-semibold text-left">
                         <th class="p-3 pl-8">{{ t('logs.player') }}</th>
                         <th class="p-3">{{ t('inventories.character.item') }}</th>
@@ -35,7 +35,7 @@
                                 {{ playerName(log.licenseIdentifier) }}
                             </inertia-link>
                         </td>
-                        <td class="p-3">
+                        <td class="p-3 whitespace-nowrap">
                             <a class="dark:text-green-200 text-green-800 hover:text-yellow-500 dark:hover:text-yellow-300" v-if="log.itemMoved.startsWith('1x') && itemId(log.metadata)" :href="'/inventory/item/' + itemId(log.metadata)">
                                 {{ log.itemMoved }}
                             </a>
@@ -43,7 +43,7 @@
                                 {{ log.itemMoved }}
                             </span>
                         </td>
-                        <td class="p-3">{{ log.timestamp | formatTime(true) }}</td>
+                        <td class="p-3 whitespace-nowrap">{{ log.timestamp | formatTime(true) }}</td>
                         <td class="p-3 pr-8">
                             <div class="flex">
                                 <inertia-link v-if="log.inventoryFrom && log.inventoryFrom.type" :class="'w-inventory block px-2 py-2 font-semibold text-center ' + inventoryColor(log.inventoryFrom.type)" v-bind:href="'/inventory/' + log.inventoryFrom.descriptor">

@@ -548,7 +548,7 @@
                     </div>
                 </div>
                 <div v-else>
-                    <table class="w-full whitespace-no-wrap" v-if="antiCheatEvents.length > 0">
+                    <table class="w-full" v-if="antiCheatEvents.length > 0">
                         <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 border-t" v-for="event in antiCheatEvents" :key="event.id">
                             <td class="px-3 py-2">
                                 {{ event.type }}
@@ -1325,9 +1325,9 @@
                         <th class="py-2 px-4">{{ t('logs.timestamp') }}</th>
                     </tr>
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="log in panelLogs" :key="log.id">
-                        <td class="py-2 px-4 border-t mobile:block">{{ log.action }}</td>
+                        <td class="py-2 px-4 border-t mobile:block whitespace-nowrap">{{ log.action }}</td>
                         <td class="py-2 px-4 border-t mobile:block" v-html="formatPanelLog(log.log)"></td>
-                        <td class="py-2 px-4 border-t w-60 mobile:block">{{ log.timestamp | formatTime(true) }}</td>
+                        <td class="py-2 px-4 border-t w-60 mobile:block whitespace-nowrap">{{ log.timestamp | formatTime(true) }}</td>
                     </tr>
                     <tr v-if="panelLogs.length === 0">
                         <td class="py-2 px-4 text-center border-t" colspan="100%">

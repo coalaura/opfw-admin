@@ -96,7 +96,7 @@
             </template>
 
             <template>
-                <table class="w-full whitespace-no-wrap">
+                <table class="w-full">
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="p-3 pl-8">{{ t('global.server_id') }}</th>
                         <th class="p-3">{{ t('players.form.identifier') }}</th>

@@ -65,7 +65,7 @@
 
         <v-section :noFooter="true" :noHeader="true">
             <template>
-                <table class="w-full whitespace-no-wrap">
+                <table class="w-full">
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="p-3 pl-8">{{ t('inventories.search.name') }}</th>
                         <th class="p-3">{{ t('inventories.search.id') }}</th>

@@ -99,7 +99,7 @@
             </template>
 
             <template>
-                <table class="w-full whitespace-no-wrap">
+                <table class="w-full">
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="p-3 pl-8">{{ t('panel_logs.source') }}</th>
                         <th class="p-3">{{ t('panel_logs.target') }}</th>
@@ -118,9 +118,9 @@
                                 {{ playerName(log.target_identifier) }}
                             </inertia-link>
                         </td>
-                        <td class="p-3 mobile:block">{{ log.action }}</td>
+                        <td class="p-3 mobile:block whitespace-nowrap">{{ log.action }}</td>
                         <td class="p-3 mobile:block" >{{ log.log }}</td>
-                        <td class="p-3 pr-8 mobile:block">{{ log.timestamp | formatTime(true) }}</td>
+                        <td class="p-3 pr-8 mobile:block whitespace-nowrap">{{ log.timestamp | formatTime(true) }}</td>
                     </tr>
                     <tr v-if="logs.length === 0" class="border-t border-gray-300 dark:border-gray-500">
                         <td class="py-3 px-8 text-center" colspan="100%">

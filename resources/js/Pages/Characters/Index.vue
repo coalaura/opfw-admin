@@ -107,7 +107,7 @@
             </template>
 
             <template>
-                <table class="w-full whitespace-no-wrap">
+                <table class="w-full">
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="p-3 pl-8">{{ t('characters.result.player') }}</th>
                         <th class="p-3">{{ t('characters.form.character_id') }}</th>
