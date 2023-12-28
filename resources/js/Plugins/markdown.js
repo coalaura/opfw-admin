@@ -78,6 +78,18 @@ const Markdown = {
                 };
             }
 
+            // ClipChamp
+            if (url.startsWith("https://clipchamp.com/watch/")) {
+                const id = find(/clipchamp.com\/watch\/(\w+)/gm, url);
+
+                if (!id) return false;
+
+                return {
+                    text: `clipchamp.com/watch/${id}`,
+                    url: `https://clipchamp.com/watch/${id}/embed`
+                };
+            }
+
             // TicketTool Transcripts
             if (url.startsWith("https://tickettool.xyz/direct?url=")) {
                 const ticket = find(/(transcript-.+?)\.html/gm, url);

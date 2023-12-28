@@ -74,6 +74,7 @@ multiple lines
                     <li>Youtube videos, shortened urls and livestreams</li>
                     <li>TicketTool transcripts</li>
                     <li>Medal.TV clips</li>
+                    <li>ClipChamp videos</li>
                 </ul>
             </div>
         </v-section>
