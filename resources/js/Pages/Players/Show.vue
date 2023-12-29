@@ -1715,7 +1715,7 @@ export default {
         updatePlayerTime() {
             const timezoneOffset = this.player.variables?.timezoneOffset;
 
-            if (!timezoneOffset) {
+            if (typeof timezoneOffset !== "number") {
                 return;
             }
 
