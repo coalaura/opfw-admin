@@ -135,7 +135,7 @@
                         {{ player.countryName }}
                     </span>
 
-                    <span class="block" v-if="player.variables && player.variables.timezone && player.variables.timezoneOffset">
+                    <span class="block" v-if="player.variables && player.variables.timezone && typeof player.variables.timezoneOffset === 'number'">
                         <span class="font-bold">{{ t('players.show.timezone') }}:</span>
                         {{ player.variables.timezone }} - <span class="font-semibold">{{ playerTime }}</span>
                     </span>
