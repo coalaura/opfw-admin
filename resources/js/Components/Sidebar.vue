@@ -111,6 +111,12 @@ export default {
                             label: 'twitter.title',
                             icon: 'twitter',
                             url: '/twitter',
+                        },
+                        {
+                            label: 'map.title',
+                            icon: 'map',
+                            url: '/map',
+                            hidden: !this.perm.check(this.perm.PERM_LIVEMAP),
                         }
                     ]
                 },
@@ -202,12 +208,6 @@ export default {
                     label: 'sidebar.data_stats',
                     icon: 'server',
                     sub: [
-                        {
-                            label: 'map.title',
-                            icon: 'map',
-                            url: '/map',
-                            hidden: !this.perm.check(this.perm.PERM_LIVEMAP),
-                        },
                         {
                             label: 'statistics.title',
                             icon: 'statistics',
