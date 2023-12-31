@@ -834,7 +834,7 @@ export default {
                 this.loadingScreenStatus = this.t('map.timestamp_load_names');
 
                 const licenses = players.map(player => player.license),
-                    playerNames = await this.loadPlayerNames(licenses);
+                    playerNames = (await this.loadPlayerNames(licenses)) || {};
 
                 this.loadingScreenStatus = this.t('map.timestamp_render');
 
@@ -881,7 +881,7 @@ export default {
                         }
                     );
 
-                    const playerName = playerNames && playerNames[player.license] ? playerNames[player.license] : player.license;
+                    const playerName = playerNames[player.license]?.trim() || player.license.substr(0, 8);
 
                     const speed = "s" in player ? Math.floor(player.s * 2.236936) + "mph" : false;
 
