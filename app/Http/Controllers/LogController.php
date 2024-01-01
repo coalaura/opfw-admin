@@ -73,8 +73,8 @@ class LogController extends Controller
         // Filtering by minigames.
         if ($request->input('minigames') === 'none') {
             $query->where(function ($subQuery) {
-                // The only actions where we even use minigames are Player Died and Player Killed.
-                $subQuery->whereNotIn('action', ['Player Died', 'Player Killed']);
+                // The only actions where we even use minigames are Player Died, Player Killed and Killed Player.
+                $subQuery->whereNotIn('action', ['Player Died', 'Player Killed', 'Killed Player']);
 
                 // If the action is Player Died or Player Killed, we have to check.
                 $subQuery->orWhereNotIn(DB::raw("JSON_UNQUOTE(JSON_EXTRACT(metadata, '$.minigames[0]'))"), ['arena', 'battle_royale', 'training']);
