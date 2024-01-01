@@ -473,7 +473,7 @@ export default {
 			} else if (MoneyTransferActions.includes(action)) {
 				return `<i class="text-teal-800 dark:text-teal-200 fas fa-money-bill-wave" title="money transfer"></i>`;
 			} else if (this.drugActions.includes(action)) {
-				return `<i class="text-yellow-800 dark:text-yellow-200 fas fa-tablets" title="money transfer"></i>`;
+				return `<i class="text-yellow-800 dark:text-yellow-200 fas fa-tablets" title="drugs"></i>`;
 			} else if (DisconnectActions.includes(action)) {
 				return `<i class="text-rose-800 dark:text-rose-200 fas fa-door-open" title="exit/disconnect/unload"></i>`;
 			} else if (ConnectActions.includes(action)) {
