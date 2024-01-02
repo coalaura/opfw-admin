@@ -123,21 +123,27 @@ class PlayerCharacterController extends Controller
         $motels      = Motel::query()->where('cid', $character->character_id)->get()->sortBy(['motel', 'room_id']);
         $motelMap    = json_decode(file_get_contents(__DIR__ . '/../../../helpers/motels.json'), true);
 
+        $savingsAccounts = DB::table("savings_accounts")
+            ->where("character_id", $character->character_id)
+            ->orWhere(DB::raw("JSON_CONTAINS(access, " . $character->character_id . ")"), '=', '1')
+            ->get()->toArray();
+
         $horns = Vehicle::getHornMap(false);
 
         $jobs     = OPFWHelper::getJobsJSON(Server::getFirstServer() ?? '');
         $vehicles = OPFWHelper::getVehiclesJSON(Server::getFirstServer() ?? '');
 
         return Inertia::render('Players/Characters/Show', [
-            'player'       => new PlayerResource($player),
-            'character'    => new CharacterResource($character),
-            'motels'       => $motels->toArray(),
-            'motelMap'     => $motelMap,
-            'horns'        => $horns,
-            'vehicles'     => $vehicles ?? [],
-            'jobs'         => $jobs ? $jobs['jobs'] : [],
-            'resetCoords'  => $resetCoords ? array_keys($resetCoords) : [],
-            'vehicleValue' => Vehicle::getTotalVehicleValue($character->character_id),
+            'player'          => new PlayerResource($player),
+            'character'       => new CharacterResource($character),
+            'motels'          => $motels->toArray(),
+            'motelMap'        => $motelMap,
+            'savingsAccounts' => $savingsAccounts,
+            'horns'           => $horns,
+            'vehicles'        => $vehicles ?? [],
+            'jobs'            => $jobs ? $jobs['jobs'] : [],
+            'resetCoords'     => $resetCoords ? array_keys($resetCoords) : [],
+            'vehicleValue'    => Vehicle::getTotalVehicleValue($character->character_id),
         ]);
     }
 

@@ -765,6 +765,42 @@
             </template>
         </v-section>
 
+        <!-- Savings Accounts -->
+        <v-section :noFooter="true">
+            <template #header>
+                <h2>
+                    {{ t('players.savings.accounts') }}
+                </h2>
+            </template>
+
+            <template>
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9">
+                    <card :key="account.id" v-for="account in savingsAccounts" :no_body="true" :no_footer="true" class="relative" :class="account.character_id === character.id ? '!bg-lime-500 !bg-opacity-20' : '!bg-blue-500 !bg-opacity-20'">
+                        <template #header>
+                            <h3>
+                                {{ account.name }} #{{ account.id }}
+                            </h3>
+                            <h4 class="text-green-600 dark:text-green-300 text-lg mb-2 font-semibold" :class="{ '!text-red-600 dark:!text-red-300': account.balance <= 0 }">
+                                {{ numberFormat(account.balance, false, true) }}
+                            </h4>
+
+                            <div class="absolute top-0.5 left-1 text-lime-400 text-sm font-semibold" v-if="account.character_id === character.id">
+                                <i class="fas fa-wallet"></i>
+                                {{ t('players.savings.owner') }}
+                            </div>
+                            <div class="absolute top-1 left-1.5 text-blue-400 text-sm font-semibold" v-else>
+                                <i class="fas fa-thumbtack"></i>
+                                {{ t('players.savings.access') }}
+                            </div>
+                        </template>
+                    </card>
+                </div>
+                <p class="text-muted dark:text-dark-muted" v-if="savingsAccounts.length === 0">
+                    {{ t('players.savings.none') }}
+                </p>
+            </template>
+        </v-section>
+
     </div>
 </template>
 
@@ -814,6 +850,10 @@ export default {
             required: true,
         },
         motels: {
+            type: Array,
+            required: true,
+        },
+        savingsAccounts: {
             type: Array,
             required: true,
         },
