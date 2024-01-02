@@ -64,24 +64,26 @@
                             </select>
                         </div>
                     </div>
+
                     <!-- Description -->
                     <div class="w-full px-3 mt-3">
                         <small class="text-muted dark:text-dark-muted mt-1 leading-4 block" v-html="t('global.search.custom')"></small>
                     </div>
+
+                    <!-- Search button -->
+                    <div class="w-full px-3 mt-3">
+                        <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg" @click="refresh">
+                            <span v-if="!isLoading">
+                                <i class="fas fa-search"></i>
+                                {{ t('players.search_btn') }}
+                            </span>
+                            <span v-else>
+                                <i class="fas fa-cog animate-spin"></i>
+                                {{ t('global.loading') }}
+                            </span>
+                        </button>
+                    </div>
                 </form>
-                <!-- Search button -->
-                <div class="w-full mt-3">
-                    <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg" @click="refresh">
-                        <span v-if="!isLoading">
-                            <i class="fas fa-search"></i>
-                            {{ t('players.search_btn') }}
-                        </span>
-                        <span v-else>
-                            <i class="fas fa-cog animate-spin"></i>
-                            {{ t('global.loading') }}
-                        </span>
-                    </button>
-                </div>
             </template>
         </v-section>
 
