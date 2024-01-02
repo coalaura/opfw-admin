@@ -91,11 +91,19 @@ export default {
 
                 return {
                     ...vehicle,
-                    distance: Math.min(modelDistance, labelDistance)
+                    modelDistance: modelDistance,
+                    labelDistance: labelDistance
                 };
             });
 
-            vehicles.sort((a, b) => a.distance - b.distance);
+            // Prioritize model distance over label distance
+            vehicles.sort((a, b) => {
+                if (a.modelDistance === b.modelDistance) {
+                    return a.labelDistance - b.labelDistance;
+                }
+
+                return a.modelDistance - b.modelDistance;
+            });
 
             this.result = vehicles.shift();
         }
