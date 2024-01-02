@@ -993,7 +993,6 @@
         "characters": {
             "characters": "Characters",
             "hide": "Mite hue ko chhupaye",
-            "show": "Mite hue ko dikhae",
             "created": "Banaya gaya {0}",
             "loaded": "Yah character abhi load kiya gaya hai",
             "none": "Is khiladi ne abhi tak koi character nahi banaya hai.",
@@ -1117,7 +1116,8 @@
                 "mining": "Khanan",
                 "boat": "Naukayen Chalane ka License",
                 "passenger": "PPL - Passenger"
-            }
+            },
+            "show": "{0} hataaye gaye dikhao"
         },
         "edit": {
             "born": "<b>{0}</b> par janma",

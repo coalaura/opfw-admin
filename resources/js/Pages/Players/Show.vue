@@ -1007,12 +1007,12 @@
                         </h2>
                     </div>
 
-                    <button class="block px-5 py-2 font-semibold text-center text-white bg-gray-500 rounded" :class="{ 'bg-blue-500': isShowingDeletedCharacters }" @click="hideDeleted" v-if="!charactersCollapsed">
+                    <button class="block px-5 py-2 font-semibold text-center text-white bg-gray-500 rounded" :class="{ 'bg-blue-500': isShowingDeletedCharacters }" @click="hideDeleted" v-if="!charactersCollapsed && deletedCharacterCount > 0">
                         <span v-if="isShowingDeletedCharacters">
                             {{ t('players.characters.hide') }}
                         </span>
                         <span v-else>
-                            {{ t('players.characters.show') }}
+                            {{ t('players.characters.show', deletedCharacterCount) }}
                         </span>
                     </button>
                 </div>
@@ -1706,7 +1706,10 @@ export default {
         },
         systemNoteCount() {
             return this.warnings.filter(warn => this.isAutomatedWarning(warn.message)).length;
-        }
+        },
+        deletedCharacterCount() {
+            return this.characters.filter(c => c.character_deleted).length;
+        },
     },
     methods: {
         showGlobalBans() {

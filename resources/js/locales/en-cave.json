@@ -983,7 +983,6 @@
         "characters": {
             "characters": "Ugga! Characters",
             "hide": "Hide deleted",
-            "show": "Grok unalive",
             "created": "Made at {0}",
             "loaded": "Grok's caveman be having this character",
             "none": "This caveperson no made any characters yet",
@@ -1107,7 +1106,8 @@
                 "passenger": "Ugga Ugga - Traveler"
             },
             "no_coords": "Last coords not knowed when player be online.",
-            "save_changes": "Ugga bugga changes"
+            "save_changes": "Ugga bugga changes",
+            "show": "Show {0} gone"
         },
         "edit": {
             "born": "Cavebaby on <b>{0}</b>",

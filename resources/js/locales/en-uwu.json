@@ -983,7 +983,6 @@
         "characters": {
             "characters": "Characters UwU",
             "hide": "Hide deleted OwO",
-            "show": "Show deleted OwO",
             "created": "Created at {0} OwO",
             "loaded": "This character is currently loaded UwU",
             "none": "OwO This pwayew has nyot cweated any chawactews yet.",
@@ -1107,7 +1106,8 @@
                 "passenger": "PPL - Pawsenger"
             },
             "no_coords": "Wast cwoods awa unwavaiwabwe whiwe the pwayew is onwine.",
-            "save_changes": "Vewwy important! Save changies"
+            "save_changes": "Vewwy important! Save changies",
+            "show": "Show {0} deweted"
         },
         "edit": {
             "born": "Bowwn on <b>{0}</b>wU",

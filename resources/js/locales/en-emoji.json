@@ -983,7 +983,6 @@
         "characters": {
             "characters": "👤👥",
             "hide": "🙈",
-            "show": "📺 🚮",
             "created": "🎨 at {0}",
             "loaded": "👤 This character is currently loaded",
             "none": "👤 This player has not created any characters yet.",
@@ -1107,7 +1106,8 @@
                 "passenger": "✈️🆔📜"
             },
             "no_coords": "Last 🌐 are unavailable while the player is 📴.",
-            "save_changes": "💾🔄"
+            "save_changes": "💾🔄",
+            "show": "👁️ {0} ❌"
         },
         "edit": {
             "born": "📍 Born on <b>{0}</b>",

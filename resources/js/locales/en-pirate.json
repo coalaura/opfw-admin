@@ -983,7 +983,6 @@
         "characters": {
             "characters": "Scallywags",
             "hide": "Hide sent ta Davey Jones' Locker",
-            "show": "Show obliterated",
             "created": "Created at {0}, arrr!",
             "loaded": "This scallywag be currently loaded",
             "none": "This landlubber hasn't crafted any characters yet, arrr!",
@@ -1107,7 +1106,8 @@
                 "passenger": "PPL - Passenger"
             },
             "no_coords": "Avast! The last known whereabouts of ye scurvy dog be hidin' from me while ye be sailin' the high seas.",
-            "save_changes": "Preserve Changes, Matey"
+            "save_changes": "Preserve Changes, Matey",
+            "show": "Display {0} walked the plank"
         },
         "edit": {
             "born": "Set sail on <b>{0}</b>",

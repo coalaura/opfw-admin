@@ -983,7 +983,6 @@
         "characters": {
             "characters": "Characters, y'all",
             "hide": "Hide them deleted ones",
-            "show": "Y'all take a look at what's been deleted",
             "created": "Done got created at {0} y'all",
             "loaded": "This here character is currently loaded",
             "none": "This player reckon ain't got no characters yet.",
@@ -1107,7 +1106,8 @@
                 "passenger": "PPL - Passenger"
             },
             "no_coords": "Sorry y'all, I cain't give ya the last known whereabouts of a player while they're online.",
-            "save_changes": "Save y'all's changes"
+            "save_changes": "Save y'all's changes",
+            "show": "Show {0} done been deleted"
         },
         "edit": {
             "born": "Born on <b>{0}</b>, bless their lil' heart",

@@ -993,7 +993,6 @@
         "characters": {
             "characters": "Karakterer",
             "hide": "Skjul slettede",
-            "show": "Vis slettede",
             "created": "Opprettet den {0}",
             "loaded": "Denne karakteren er for øyeblikket lastet",
             "none": "Denne spilleren har ikke opprettet noen karakterer ennå.",
@@ -1117,7 +1116,8 @@
                 "mining": "Gruvedrift",
                 "boat": "Båtlisens",
                 "passenger": "PPL - Passasjer"
-            }
+            },
+            "show": "Vis {0} slettede"
         },
         "edit": {
             "born": "Født den <b>{0}</b>",
