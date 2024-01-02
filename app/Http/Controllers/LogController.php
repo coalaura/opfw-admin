@@ -121,7 +121,7 @@ class LogController extends Controller
         }
 
         $query->select(['id', 'identifier', 'action', 'details', 'metadata', 'timestamp']);
-        $query->limit(15)->offset(($page - 1) * 15);
+        $query->limit(30)->offset(($page - 1) * 30);
 
         $logs = $query->get();
 
@@ -201,7 +201,7 @@ class LogController extends Controller
         $query->select(['id', 'type', 'money_logs.license_identifier', 'money_logs.character_id', 'amount', 'balance_after', 'details', 'timestamp', 'player_name', DB::raw('CONCAT(first_name, " ", last_name) AS character_name')]);
 
         $page = Paginator::resolveCurrentPage('page');
-        $query->limit(15)->offset(($page - 1) * 15);
+        $query->limit(30)->offset(($page - 1) * 30);
 
         $logs = $query->get();
 
@@ -329,7 +329,7 @@ class LogController extends Controller
 
         $page = Paginator::resolveCurrentPage('page');
 
-        $query->limit(15)->offset(($page - 1) * 15);
+        $query->limit(20)->offset(($page - 1) * 20);
 
         $logs = $query->get();
 
@@ -422,7 +422,7 @@ class LogController extends Controller
             ];
         }
 
-        $paginated = array_slice($groupedLogs, ($page - 1) * 15, 15);
+        $paginated = array_slice($groupedLogs, ($page - 1) * 20, 20);
 
         return Inertia::render('Logs/Screenshots', [
             'logs'      => $paginated,
@@ -435,7 +435,7 @@ class LogController extends Controller
             'links'     => $this->getPageUrls($page),
             'playerMap' => Player::fetchLicensePlayerNameMap($logs, ['source_license', 'target_license']),
             'page'      => $page,
-            'maxPage'   => ceil(sizeof($groupedLogs) / 15),
+            'maxPage'   => ceil(sizeof($groupedLogs) / 20),
         ]);
     }
 

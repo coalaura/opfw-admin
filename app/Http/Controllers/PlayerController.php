@@ -86,7 +86,7 @@ class PlayerController extends Controller
         $query->selectSub('SELECT COUNT(`id`) FROM `warnings` WHERE `player_id` = `user_id` AND `warning_type` IN (\'' . Warning::TypeWarning . '\', \'' . Warning::TypeStrike . '\')', 'warning_count');
 
         $page = Paginator::resolveCurrentPage('page');
-        $query->limit(15)->offset(($page - 1) * 15);
+        $query->limit(20)->offset(($page - 1) * 20);
 
         $players = $query->get();
 
@@ -114,8 +114,8 @@ class PlayerController extends Controller
                 'enablable'       => $request->input('enablable') ?? '',
             ],
             'links'     => $this->getPageUrls($page),
-            'time'      => $end - $start,
             'page'      => $page,
+            'time'      => $end - $start,
             'enablable' => PlayerRouteController::EnablableCommands,
         ]);
     }

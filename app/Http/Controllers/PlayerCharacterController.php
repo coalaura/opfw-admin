@@ -15,6 +15,7 @@ use App\Server;
 use App\Vehicle;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -84,11 +85,10 @@ class PlayerCharacterController extends Controller
             'department_name', 'position_name', 'phone_number', 'date_of_birth',
         ]);
 
-        $characters = $query->paginate(15, [
-            'id',
-        ])->appends($request->query());
+        $page = Paginator::resolveCurrentPage('page');
+        $query->limit(20)->offset(($page - 1) * 20);
 
-        $characters = CharacterIndexResource::collection($characters);
+        $characters = CharacterIndexResource::collection($query->get());
 
         $end = round(microtime(true) * 1000);
 
@@ -103,6 +103,8 @@ class PlayerCharacterController extends Controller
                 'job'           => $request->input('job'),
                 'license'       => $request->input('license') ?? '',
             ],
+            'links'     => $this->getPageUrls($page),
+            'page'      => $page,
             'time'       => $end - $start,
             'playerMap'  => Player::fetchLicensePlayerNameMap($characters->toArray($request), 'licenseIdentifier'),
             'licenses'   => self::Licenses,

@@ -118,7 +118,7 @@
                         <th class="p-3">{{ t('characters.form.job') }}</th>
                         <th class="p-3 pr-8"></th>
                     </tr>
-                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="character in characters.data" :key="character.id">
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="character in characters" :key="character.id">
                         <td class="p-3 pl-8 mobile:block">
                             <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + character.licenseIdentifier">
                                 {{ playerName(character.licenseIdentifier) }}
@@ -150,8 +150,27 @@
             </template>
 
             <template #footer>
-                <pagination v-bind:links="characters.links" v-bind:meta="characters.meta" />
-            </template>
+				<div class="flex items-center justify-between mt-6 mb-1">
+
+					<!-- Navigation -->
+					<div class="flex flex-wrap">
+						<inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="links.prev" v-if="page >= 2">
+							<i class="mr-1 fas fa-arrow-left"></i>
+							{{ t("pagination.previous") }}
+						</inertia-link>
+						<inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="characters.length === 20" :href="links.next">
+							{{ t("pagination.next") }}
+							<i class="ml-1 fas fa-arrow-right"></i>
+						</inertia-link>
+					</div>
+
+					<!-- Meta -->
+					<div class="font-semibold">
+						{{ t("pagination.page", page) }}
+					</div>
+
+				</div>
+			</template>
         </v-section>
 
     </div>
@@ -194,6 +213,14 @@ export default {
             type: Array,
             required: true,
         },
+		links: {
+			type: Object,
+			required: true,
+		},
+		page: {
+			type: Number,
+			required: true,
+		}
     },
     data() {
         return {
