@@ -1708,7 +1708,7 @@ export default {
             return this.warnings.filter(warn => this.isAutomatedWarning(warn.message)).length;
         },
         deletedCharacterCount() {
-            return this.characters.filter(c => c.character_deleted).length;
+            return this.characters.filter(c => c.characterDeleted).length;
         },
     },
     methods: {
