@@ -77,7 +77,7 @@ class LogController extends Controller
                 $subQuery->whereNotIn('action', ['Player Died', 'Player Killed', 'Killed Player']);
 
                 // If the action is Player Died or Player Killed, we have to check.
-                $subQuery->orWhereNotIn(DB::raw("JSON_UNQUOTE(JSON_EXTRACT(metadata, '$.minigames[0]'))"), ['arena', 'battle_royale', 'training']);
+                $subQuery->orWhere('metadata', 'LIKE', '%"minigames":[]%');
             });
         }
 
