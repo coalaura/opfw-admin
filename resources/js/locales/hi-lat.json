@@ -1133,6 +1133,12 @@
             "phone": "Phone Number",
             "outfits": "Is character ke paas {0} saved outfit(s) hain.",
             "gender": "Ling"
+        },
+        "savings": {
+            "accounts": "Bachat Khate",
+            "none": "Is character ke paas koi bachat khata nahi hai aur na hi us tak pahunch hai.",
+            "owner": "Khata Malik",
+            "access": "Pahunch Hai"
         }
     },
     "casino": {

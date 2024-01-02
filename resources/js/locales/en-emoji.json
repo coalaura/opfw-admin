@@ -1124,7 +1124,13 @@
             "outfits": "This character has {0} 👗 saved outfit(s).",
             "gender": "♂️♀️ Gender"
         },
-        "identifier_type": "🔑🆔📝"
+        "identifier_type": "🔑🆔📝",
+        "savings": {
+            "accounts": "🏦📇",
+            "none": "🚫👤👛💳",
+            "owner": "👤🏦👑",
+            "access": "👍🔓"
+        }
     },
     "casino": {
         "title": "🎰 Casino Logs",

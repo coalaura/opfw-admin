@@ -1124,7 +1124,13 @@
             "outfits": "This pirate has {0} stashed outfit(s).",
             "gender": "Sailor's Pivot"
         },
-        "identifier_type": "Identifier Ship"
+        "identifier_type": "Identifier Ship",
+        "savings": {
+            "accounts": "Treasure Hoardin' Ledgers",
+            "none": "This scallywag be havin' no claim nor entry to any treasure hoardin' ledgers.",
+            "owner": "Cap'n o' the Ledger",
+            "access": "Be Granted Entry"
+        }
     },
     "casino": {
         "title": "Log o' Casino Aberrations",

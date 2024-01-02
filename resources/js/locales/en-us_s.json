@@ -1124,7 +1124,13 @@
             "outfits": "This character got {0} outfit(s) saved, all dressed up",
             "gender": "Gender, boy or girl"
         },
-        "identifier_type": "Type of ID"
+        "identifier_type": "Type of ID",
+        "savings": {
+            "accounts": "Savin's Accounts",
+            "none": "This here character don't own ner has access to any savin's accounts, I'll tell ya what.",
+            "owner": "Account Own'r",
+            "access": "Has Access"
+        }
     },
     "casino": {
         "title": "Casino Logs, some gamblin' tales",

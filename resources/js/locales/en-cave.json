@@ -1124,7 +1124,13 @@
             "outfits": "This Ug has {0} fashions.",
             "gender": "Ug Gender"
         },
-        "identifier_type": "Ugga Ugga Type"
+        "identifier_type": "Ugga Ugga Type",
+        "savings": {
+            "accounts": "Savings Piles",
+            "none": "This human no have or get in savings piles.",
+            "owner": "Pile Keeper",
+            "access": "Get In"
+        }
     },
     "casino": {
         "title": "Logs of the Big Cave",

@@ -1124,7 +1124,13 @@
             "outfits": "This chawactew has {0} saved infit(s).",
             "gender": "Genderw"
         },
-        "identifier_type": "Identifiwer Typwu"
+        "identifier_type": "Identifiwer Typwu",
+        "savings": {
+            "accounts": "Savings Accouwunts",
+            "none": "Dis chawactew does not own ow has access any savings accouwunts.",
+            "owner": "Account Ownyew",
+            "access": "Has Access"
+        }
     },
     "casino": {
         "title": "Casino Cute Wogs",

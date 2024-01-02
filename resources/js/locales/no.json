@@ -1133,6 +1133,12 @@
             "phone": "Telefonnummer",
             "outfits": "Denne karakteren har {0} lagrede antrekk.",
             "gender": "Kjønn"
+        },
+        "savings": {
+            "accounts": "Sparekontoer",
+            "none": "Denne karakteren eier ikke eller har tilgang til noen sparekontoer.",
+            "owner": "Kontoeier",
+            "access": "Har tilgang"
         }
     },
     "casino": {
