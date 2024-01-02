@@ -775,7 +775,7 @@
 
             <template>
                 <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9">
-                    <card :key="account.id" v-for="account in savingsAccounts" :no_body="true" :no_footer="true" class="relative" :class="account.character_id === character.id ? '!bg-lime-500 !bg-opacity-20' : '!bg-blue-500 !bg-opacity-20'">
+                    <card :key="account.id" v-for="account in savingsAccounts" :no_body="true" :no_footer="true" class="relative border" :class="account.character_id === character.id ? '!bg-lime-500 !bg-opacity-20 border-lime-300' : '!bg-blue-500 !bg-opacity-20 border-blue-300'">
                         <template #header>
                             <h3>
                                 {{ account.name }} #{{ account.id }}
@@ -784,11 +784,11 @@
                                 {{ numberFormat(account.balance, false, true) }}
                             </h4>
 
-                            <div class="absolute top-0.5 left-1 text-lime-400 text-sm font-semibold" v-if="account.character_id === character.id">
+                            <div class="absolute top-0.5 left-1 text-lime-600 dark:text-lime-400 text-sm font-semibold" v-if="account.character_id === character.id">
                                 <i class="fas fa-wallet"></i>
                                 {{ t('players.savings.owner') }}
                             </div>
-                            <div class="absolute top-1 left-1.5 text-blue-400 text-sm font-semibold" v-else>
+                            <div class="absolute top-1 left-1.5 text-blue-600 dark:text-blue-400 text-sm font-semibold" v-else>
                                 <i class="fas fa-thumbtack"></i>
                                 {{ t('players.savings.access') }}
                             </div>

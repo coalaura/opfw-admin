@@ -1019,7 +1019,7 @@
         },
         "savings": {
             "accounts": "Savings Accounts",
-            "none": "This character does not have any savings accounts.",
+            "none": "This character does not own or has access any savings accounts.",
             "owner": "Account Owner",
             "access": "Has Access"
         },
