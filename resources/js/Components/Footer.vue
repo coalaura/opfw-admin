@@ -2,7 +2,7 @@
     <footer class="items-center justify-between px-12 py-6 text-center text-white bg-gray-900 lg:flex">
         <div></div>
         <p>
-            Made with <span id="heart" class="text-red-500 fas fa-heart"></span> Laura (coalaura) <i>originally started by Marius (ExpDev07)</i> with <a class="font-semibold" target="_blank" href="https://laravel.com/">Laravel</a> + <a class="font-semibold text-green-400 hover:text-green-500" target="_blank" href="https://vuejs.org/">Vue</a>.
+            2022 - 2024 made with <span id="heart" class="text-red-500 fas fa-heart"></span> by coalaura
         </p>
         <p class="text-gray-100">
             <a target="_blank" href="https://github.com/coalaura/opfw-admin">
