@@ -1305,5 +1305,13 @@
         "no_result": "Discord account ka pata lagane mein asafal.",
         "no_players": "Koi juda hua players nahi mila.",
         "linked_players": "Juda Huye Players"
+    },
+    "vehicles": {
+        "title": "Vahan Ki Jaankari",
+        "description": "Vahanon ki khoj karein.",
+        "search": "Khojein",
+        "result": "Khoj Parinaam",
+        "no_result": "Khoje gaye vahan se mel khate koi vahan nahin mila.",
+        "distance": "Khoj aur parinaam ke beech Levenshtein doori. Kam hona behtar hai, 0 ekdum sahi mel hai."
     }
 }

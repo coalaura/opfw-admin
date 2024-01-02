@@ -242,6 +242,17 @@ export default {
                             hidden: !this.perm.check(this.perm.PERM_SCREENSHOT),
                         },
                         {
+                            label: 'weapons.title',
+                            icon: 'damage',
+                            url: '/weapons',
+                            hidden: !this.perm.check(this.perm.PERM_ADVANCED),
+                        },
+                        {
+                            label: 'vehicles.title',
+                            icon: 'crash',
+                            url: '/vehicles',
+                        },
+                        {
                             label: 'backstories.title',
                             icon: 'box-open',
                             url: '/backstories',
@@ -286,12 +297,6 @@ export default {
                             icon: 'pallet',
                             url: '/search_inventory',
                             private: true,
-                        },
-                        {
-                            label: 'weapons.title',
-                            icon: 'damage',
-                            url: '/weapons',
-                            hidden: !this.perm.check(this.perm.PERM_ADVANCED),
                         }
                     ]
                 },

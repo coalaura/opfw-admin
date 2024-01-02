@@ -1305,5 +1305,13 @@
         "no_result": "Klarte ikke å løse opp Discord-konto.",
         "no_players": "Ingen tilknyttede spillere funnet.",
         "linked_players": "Tilknyttede spillere"
+    },
+    "vehicles": {
+        "title": "Kjøretøyinfo",
+        "description": "Søk etter kjøretøy.",
+        "search": "Søk",
+        "result": "Søkeresultat",
+        "no_result": "Ingen kjøretøy som samsvarer med søket ble funnet.",
+        "distance": "Levenshtein-avstand mellom søk og resultat. Lavere er bedre, 0 er et perfekt treff."
     }
 }

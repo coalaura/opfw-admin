@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Character;
+use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
 use App\Player;
 use App\Property;
 use App\Vehicle;
 use App\WeaponDamageEvent;
+use App\Server;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -437,6 +439,21 @@ class AdvancedSearchController extends Controller
         return [
             'pre' => json_encode($json, JSON_PRETTY_PRINT),
         ];
+    }
+
+    /**
+     * Vehicles search.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function vehicles(Request $request): Response
+    {
+        $vehicles = OPFWHelper::getVehiclesJSON(Server::getFirstServer() ?? '') ?? [];
+
+        return Inertia::render('Advanced/Vehicles', [
+            'vehicles' => array_values($vehicles),
+        ]);
     }
 
     /**

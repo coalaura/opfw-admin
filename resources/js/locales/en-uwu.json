@@ -1305,5 +1305,13 @@
         "no_result": "Faiwed to wesowve discowd account.",
         "no_players": "No winked pwayews found.",
         "linked_players": "Winked Pwayews"
+    },
+    "vehicles": {
+        "title": "Vehicwe Info",
+        "description": "Wookup vehicwes.",
+        "search": "Seawch",
+        "result": "Seawch Wesuwt",
+        "no_result": "No vehicwe matching the seawch was found.",
+        "distance": "Wevenshtein distance between seawch and wesuwt. Wowew is bettew, 0 is a pewfect match."
     }
 }

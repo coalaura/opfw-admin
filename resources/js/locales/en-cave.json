@@ -1305,5 +1305,13 @@
         "no_result": "No findy talky-speak-y thing.",
         "no_players": "No findy tribe-folk linked.",
         "linked_players": "Tribe-folk tied"
+    },
+    "vehicles": {
+        "title": "Wheel-thing Info",
+        "description": "Look-see wheel-things.",
+        "search": "Find",
+        "result": "Find Thing Found",
+        "no_result": "No wheel-thing same same find-no",
+        "distance": "Word-step from find to thing found. Small good, 0 same-same."
     }
 }

@@ -67,8 +67,11 @@ class Controller extends BaseController
         } else {
             $resp = [
                 'status'  => false,
-                'message' => $error,
             ];
+
+            if ($error) {
+                $resp['message'] = $error;
+            }
 
             if ($data) {
                 $resp['data'] = $data;

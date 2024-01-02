@@ -153,6 +153,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Advanced search.
     Route::get('/advanced', [AdvancedSearchController::class, 'index']);
+    Route::get('/vehicles', [AdvancedSearchController::class, 'vehicles']);
     Route::get('/weapons', [AdvancedSearchController::class, 'weapons']);
     Route::get('/weapons/{hash}', [AdvancedSearchController::class, 'searchWeapons']);
 

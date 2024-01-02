@@ -1305,5 +1305,13 @@
         "no_result": "Failed to resolve discawd account.",
         "no_players": "No linked players found.",
         "linked_players": "Linked Players"
+    },
+    "vehicles": {
+        "title": "Vehicle Info",
+        "description": "Look up them vehicles, y'all.",
+        "search": "Search",
+        "result": "Search Result",
+        "no_result": "Ain't no vehicle matchin' yer search been found.",
+        "distance": "Levenshtein distance 'tween yer search an' result. Less is more, 0's a bullseye."
     }
 }

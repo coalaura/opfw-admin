@@ -569,6 +569,14 @@
         "registered": "(Registered)",
         "un_registered": "(Un-Registered)"
     },
+    "vehicles": {
+        "title": "Vehicle Info",
+        "description": "Lookup vehicles.",
+        "search": "Search",
+        "result": "Search Result",
+        "no_result": "No vehicle matching the search was found.",
+        "distance": "Levenshtein distance between search and result. Lower is better, 0 is a perfect match."
+    },
     "weapons": {
         "title": "Weapon Info",
         "description": "Lookup weapons and their stats.",

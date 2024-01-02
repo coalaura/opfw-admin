@@ -1305,5 +1305,13 @@
         "no_result": "Failed to ascertain parley handle.",
         "no_players": "No mates spied with connections.",
         "linked_players": "Connected Hearties"
+    },
+    "vehicles": {
+        "title": "Vessel Particulars",
+        "description": "Scour fer vessels.",
+        "search": "Seek",
+        "result": "Seekin' Outcome",
+        "no_result": "Not a single vessel be matchin' yer quest were found.",
+        "distance": "Levenshtein span 'twixt quest and outcome. Lower be fairer, aught be a dead-on match."
     }
 }

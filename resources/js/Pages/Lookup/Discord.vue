@@ -30,11 +30,13 @@
             </h3>
             <table class="table-fixed max-w-screen-lg text-left">
                 <template v-if="!result || result.error">
-                    <tr>
-                        <td class="px-6 py-4 text-center border-t" colspan="2">
-                            {{ result ? result.error : t('discord.no_result') }}
-                        </td>
-                    </tr>
+                    <div class="flex rounded bg-red-600 bg-opacity-60 text-white shadow-sm min-w-box">
+                        <div class="flex flex-col justify-center p-5">
+                            <h4 class="m-0 text-lg drop-shadow-sm leading-6">
+                                {{ result ? result.error : t('discord.no_result') }}
+                            </h4>
+                        </div>
+                    </div>
                 </template>
 
                 <template v-else>
