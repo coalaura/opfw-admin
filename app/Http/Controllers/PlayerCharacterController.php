@@ -590,7 +590,7 @@ class PlayerCharacterController extends Controller
             return self::json(false, null, 'Plate has to be between 3 and 8 characters long and only contain alphanumeric characters and spaces (A-Z and 0-9, cannot start or end with space).');
         }
 
-        $exists = Vehicle::query()->where('plate', '=', $plate)->where('vehicle_id', '<>', $vehicle->vehicle_id)->count(['vehicle_id']) > 0;
+        $exists = Vehicle::query()->where('plate', '=', $plate)->where('vehicle_id', '<>', $vehicle->vehicle_id)->where('vehicle_deleted', '=', '0')->count(['vehicle_id']) > 0;
         if ($exists) {
             return self::json(false, null, 'Plate "' . $plate . '" is already taken.');
         }
