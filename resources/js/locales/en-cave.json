@@ -41,7 +41,6 @@
         "disabled": "Ooga unga",
         "filter": "Bunga bunga",
         "root": "Root",
-        "copy_ip": "Vuggy-IP",
         "copied_ip": "Ugga!",
         "do_search": "Search",
         "whitelisted": "On Whitelist",
@@ -73,7 +72,8 @@
         "search": {
             "custom": "<b>*</b> Grok-grok-grok returns all rows where the column <u>holds</u> your search. You can use grok-grok like: <b>=</b> (same), <b>!=</b> (opposite), <b>&gt;</b> (more), <b>&lt;</b> (less), or <b>!</b> (doesn't hold) at the <u>start</u>-grok of your search string. You can also grok-grok for <u>many things</u> by comma-grok them-grok."
         },
-        "support_markdown": "Simple mark-many-dots things work. Press-press learn more."
+        "support_markdown": "Simple mark-many-dots things work. Press-press learn more.",
+        "connect": "Link-up"
     },
     "steam": {
         "title": "Steam Uggabugga",

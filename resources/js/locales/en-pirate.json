@@ -40,7 +40,6 @@
         "disabled": "Anchor Down",
         "filter": "Inspect",
         "root": "Davey Jones' Locker",
-        "copy_ip": "Arr! Server-IP",
         "copied_ip": "Ye be copied!",
         "do_search": "Scour",
         "whitelisted": "Be On Whitelist",
@@ -73,7 +72,8 @@
         "search": {
             "custom": "<b>*</b> Booty default returns all rows where the column <u>contains</u> yer treasure. Ye can use operators such as: <b>=</b> (equals), <b>!=</b> (does not equal), <b>&gt;</b> (greater than), <b>&lt;</b> (less than) or <b>!</b> (doesn't contain) at the <u>beginning</u> of yer treasure string. Ye can also search for <u>multiple treasures</u> by separating 'em with a doubloon."
         },
-        "support_markdown": "Most barnacle-covered markdown speak be supported, mate. Click t' learn more."
+        "support_markdown": "Most barnacle-covered markdown speak be supported, mate. Click t' learn more.",
+        "connect": "Join forces"
     },
     "steam": {
         "title": "Steam Buccaneer",

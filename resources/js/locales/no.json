@@ -42,7 +42,6 @@
         "disabled": "Deaktivert",
         "filter": "Filter",
         "root": "Rot",
-        "copy_ip": "Server-IP",
         "copied_ip": "Kopiert!",
         "do_search": "Søk",
         "whitelisted": "På hvitelisten",
@@ -73,7 +72,8 @@
         "restricted_to_super": "Begrenset til kun super-administratorer.",
         "restricted_to_root": "Begrenset til kun rotbrukere.",
         "not_restricted": "Ikke begrenset.",
-        "support_markdown": "De fleste grunnleggende markdown-syntaksene støttes. Klikk for å lære mer."
+        "support_markdown": "De fleste grunnleggende markdown-syntaksene støttes. Klikk for å lære mer.",
+        "connect": "Koble til"
     },
     "steam": {
         "title": "Steam-søk",

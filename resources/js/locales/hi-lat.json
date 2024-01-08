@@ -42,7 +42,6 @@
         "disabled": "Aksham",
         "filter": "Chhanni",
         "root": "Mool",
-        "copy_ip": "Server-IP",
         "copied_ip": "Nakal ki gayi!",
         "do_search": "Khojein",
         "whitelisted": "Whitelist mein hai",
@@ -73,7 +72,8 @@
         "restricted_to_super": "Sirf super-admins ke liye prati-bandhit.",
         "restricted_to_root": "Sirf root users ke liye prati-bandhit.",
         "not_restricted": "Prati-bandhit nahi.",
-        "support_markdown": "Adhiktar moolbhoot markdown syntax ka samarthan kiya jaata hai. Jaankaari ke liye click karein."
+        "support_markdown": "Adhiktar moolbhoot markdown syntax ka samarthan kiya jaata hai. Jaankaari ke liye click karein.",
+        "connect": "Jodna"
     },
     "steam": {
         "title": "Steam Lookup",

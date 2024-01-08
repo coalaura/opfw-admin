@@ -42,7 +42,7 @@
         "disabled": "Disabled",
         "filter": "Filter",
         "root": "Root",
-        "copy_ip": "Server-IP",
+        "connect": "Connect",
         "copied_ip": "Copied!",
         "do_search": "Search",
         "whitelisted": "On Whitelist",

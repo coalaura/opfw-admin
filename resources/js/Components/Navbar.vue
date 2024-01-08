@@ -58,11 +58,10 @@
                     </inertia-link>
 
                     <div v-if="showingContext" class="absolute top-full right-0 bg-gray-700 rounded border-2 border-gray-500 min-w-context mt-1 shadow-md z-10 text-sm text-white">
-                        <button class="px-2 py-1 text-left block w-full hover:bg-gray-600" v-if="$page.serverIp" @click="copyServerIp($page.serverIp)">
+                        <a class="px-2 py-1 text-left block w-full hover:bg-gray-600" v-if="$page.serverIp" :href="$page.serverIp" target="_blank">
                             <i class="fas fa-server mr-1"></i>
-                            <span v-if="copiedIp">{{ t('global.copied_ip') }}</span>
-                            <span v-else>{{ t('global.copy_ip') }}</span>
-                        </button>
+                            {{ t('global.connect') }}
+                        </a>
 
                         <button @click="showStaffChat" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500">
                             <i class="fas fa-comment mr-1"></i>
@@ -252,9 +251,6 @@ export default {
         });
 
         return {
-            copiedIp: false,
-            copyIpTimeout: false,
-
             showingPermissions: false,
             showingContext: false,
 
@@ -361,17 +357,6 @@ export default {
             if (!this.$page.auth.player.isSuperAdmin) return;
 
             this.showingPermissions = true;
-        },
-        copyServerIp(ip) {
-            clearTimeout(this.copyIpTimeout);
-
-            navigator.clipboard.writeText("connect " + ip).then(() => {
-                this.copiedIp = true;
-
-                this.copyIpTimeout = setTimeout(() => {
-                    this.copiedIp = false;
-                }, 2000);
-            });
         },
         showStaffChat() {
             window.open('/chat', 'Staff Chat', 'directories=no,titlebar=no,toolbar=no,menubar=no,location=no,status=no,width=480,height=700');

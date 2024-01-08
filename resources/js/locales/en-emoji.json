@@ -41,7 +41,6 @@
         "disabled": "🔴",
         "filter": "⚠️",
         "root": "🌱",
-        "copy_ip": "🌐",
         "copied_ip": "📋",
         "do_search": "🔍",
         "whitelisted": "✅",
@@ -73,7 +72,8 @@
         "search": {
             "custom": "<b>*</b> By default returns all rows where the column <u>contains</u> your search. You can use operators such as: <b>=</b> (equals), <b>!=</b> (does not equal), <b>&gt;</b> (greater than), <b>&lt;</b> (less than) or <b>!</b> (doesn't contain) at the <u>beginning</u> of your search string. You can also search for <u>multiple values</u> by separating them with a comma."
         },
-        "support_markdown": "🔝🧱 markdown ✍️ is 👍. 🔗 to 🎓 more."
+        "support_markdown": "🔝🧱 markdown ✍️ is 👍. 🔗 to 🎓 more.",
+        "connect": "🔗"
     },
     "steam": {
         "title": "🚂🔎",
