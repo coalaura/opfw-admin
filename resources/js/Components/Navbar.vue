@@ -58,7 +58,7 @@
                     </inertia-link>
 
                     <div v-if="showingContext" class="absolute top-full right-0 bg-gray-700 rounded border-2 border-gray-500 min-w-context mt-1 shadow-md z-10 text-sm text-white">
-                        <a class="px-2 py-1 text-left block w-full hover:bg-gray-600" v-if="$page.serverIp" :href="$page.serverIp" target="_blank">
+                        <a class="px-2 py-1 text-left block w-full hover:bg-gray-600" v-if="$page.serverIp" :href="'https://' + $page.serverIp" target="_blank">
                             <i class="fas fa-server mr-1"></i>
                             {{ t('global.connect') }}
                         </a>
