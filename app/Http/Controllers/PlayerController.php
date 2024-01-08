@@ -48,7 +48,7 @@ class PlayerController extends Controller
         $type = $type && !Str::contains($identifier, ':') ? preg_replace('/[^a-z0-9]/i', '', $type) : null;
 
         if ($identifier) {
-            if (Str::startsWith($identifier, '~')) {
+            if (Str::startsWith($identifier, '~') or !$type) {
                 $identifier = substr($identifier, 1);
 
                 $query->where('identifiers', 'LIKE', '%' . $identifier . '%');
