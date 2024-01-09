@@ -37,6 +37,11 @@ class LoginController extends Controller
             sessionHelper()->forget('error');
         }
 
+        if (license()) {
+            // Huh, tf you doin here?
+            return redirect('/');
+        }
+
         return Inertia::render('Login');
     }
 
