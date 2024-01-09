@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Helpers\LoggingHelper;
 use App\Http\Controllers\Controller;
 use Inertia\Inertia;
-use Inertia\Response;
 
 /**
  * @package App\Http\Controllers\Auth
