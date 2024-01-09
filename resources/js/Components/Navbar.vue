@@ -17,16 +17,16 @@
             <!-- Left side -->
             <div class="flex items-center space-x-4">
                 <!-- Toggle Dark mode -->
-                <button class="px-4 py-1 focus:outline-none font-semibold text-white text-sm rounded border-2 border-gray-400 bg-gray-700 hover:bg-gray-600 float-right" :class="{ 'shadow': banner }" @click="toggleTheme" v-if="isDarkMode()">
+                <button class="px-4 py-1 focus:outline-none font-semibold text-white text-sm rounded border-2 border-gray-400 bg-gray-700 hover:bg-gray-600" :class="{ 'shadow': banner }" @click="toggleTheme" v-if="isDarkMode()">
                     <i class="fas fa-moon"></i>
                     {{ t("nav.dark") }}
                 </button>
-                <button class="px-4 py-1 focus:outline-none font-semibold text-black text-sm rounded border-2 border-gray-700 bg-gray-400 hover:bg-gray-300 float-right" :class="{ 'shadow': banner }" @click="toggleTheme" v-else>
+                <button class="px-4 py-1 focus:outline-none font-semibold text-black text-sm rounded border-2 border-gray-700 bg-gray-400 hover:bg-gray-300" :class="{ 'shadow': banner }" @click="toggleTheme" v-else>
                     <i class="fas fa-sun"></i>
                     {{ t("nav.light") }}
                 </button>
 
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-yellow-700 bg-warning rounded dark:bg-dark-warning float-right" :title="t('global.permission')" @click="showPermissions" :class="{ 'cursor-pointer': $page.auth.player.isSuperAdmin, 'shadow-sm': banner }">
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-yellow-700 bg-warning rounded dark:bg-dark-warning" :title="t('global.permission')" @click="showPermissions" :class="{ 'cursor-pointer': $page.auth.player.isSuperAdmin, 'shadow-sm': banner }">
                     <i class="fas fa-tools"></i>
                     <span v-if="$page.auth.player.isRoot">{{ t('global.root') }}</span>
                     <span v-else-if="$page.auth.player.isSuperAdmin">{{ t('global.super') }}</span>
@@ -34,7 +34,7 @@
                     <span v-else>{{ t('global.staff') }}</span>
                 </span>
 
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded float-right" :class="{ 'shadow': banner, 'bg-gray-500 border-gray-700': serverStatusLoading, 'bg-green-500 border-green-700': !serverStatusLoading && serverStatus, 'bg-red-500 border-red-700': !serverStatusLoading && !serverStatus }" :title="!serverStatusLoading ? (!serverStatus ? t('global.server_offline') : t('global.server_online', serverStatus)) : ''">
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded" :class="{ 'shadow': banner, 'bg-gray-500 border-gray-700': serverStatusLoading, 'bg-green-500 border-green-700': !serverStatusLoading && serverStatus, 'bg-red-500 border-red-700': !serverStatusLoading && !serverStatus }" :title="!serverStatusLoading ? (!serverStatus ? t('global.server_offline') : t('global.server_online', serverStatus)) : ''">
                     <i class="fas fa-sync-alt" v-if="serverStatusLoading"></i>
                     <i class="fas fa-server" v-else></i>
 
@@ -42,9 +42,14 @@
                     <span v-else>{{ $page.auth.server }}</span>
                 </span>
 
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-green-700 bg-success rounded dark:bg-dark-success float-right cursor-pointer" :class="{ 'shadow': banner }" :title="t('nav.world_time_desc', timezones.length)" @click="showingWorldTime = true" v-if="timezones.length > 0">
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-green-700 bg-success rounded dark:bg-dark-success cursor-pointer" :class="{ 'shadow': banner }" :title="t('nav.world_time_desc', timezones.length)" @click="showingWorldTime = true" v-if="timezones.length > 0">
                     <i class="fas fa-globe"></i>
                 </span>
+
+                <button class="px-4 py-1 focus:outline-none font-semibold text-white text-sm rounded border-2 border-twitch-dark bg-twitch" :class="{ 'shadow': banner }" @click="showingStreamers = true" v-if="streamers">
+                    <i class="fab fa-twitch"></i>
+                    {{ t("nav.streamers") }}
+                </button>
             </div>
 
             <!-- Right side -->
@@ -219,6 +224,39 @@
                 </button>
             </template>
         </modal>
+
+        <modal :show.sync="showingStreamers" extraClass="!bg-twitch !bg-opacity-40">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('nav.streamers') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <a class="flex py-4 px-6 mb-5 bg-twitch rounded-lg shadow-sm gap-10 relative text-white" v-for="streamer in streamers" :key="streamer.name" v-if="streamers && streamers.length > 0" :href="'https://twitch.tv/' + streamer.name" target="_blank">
+                    <div class="text-7xl">
+                        <img :src="streamer.avatar" class="w-20" />
+                    </div>
+
+                    <div class="flex items-center overflow-hidden">
+                        <div class="overflow-hidden">
+                            <p class="font-semibold text-lg">{{ streamer.name }}</p>
+                        </div>
+                    </div>
+
+                    <div class="absolute top-0.5 right-1 text-sm font-bold drop-shadow-sm">
+                        <i class="fas fa-circle text-red-600"></i>
+                        LIVE
+                    </div>
+                </a>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-twitch text-white" @click="showingStreamers = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
     </div>
 </template>
 
@@ -274,7 +312,10 @@ export default {
             now: false,
 
             hoveringAvatar: false,
-            banner: false
+            banner: false,
+
+            streamers: false,
+            showingStreamers: false
         }
     },
     computed: {
@@ -453,13 +494,27 @@ export default {
             setTimeout(() => {
                 this.updateGameTime();
             }, 60000);
-        }
+        },
+        async updateStreamers() {
+            const streamers = await this.requestGenerated("/streamers.json", true);
+
+            if (streamers && streamers.length > 0) {
+                this.streamers = streamers;
+            } else {
+                this.streamers = false;
+            }
+
+            setTimeout(() => {
+                this.updateStreamers();
+            }, 60000);
+        },
     },
     async mounted() {
         // Delay loading of extra data since it blocks other resources from loading
         setTimeout(() => {
             this.updateServerStatus();
             this.updateGameTime();
+            this.updateStreamers();
         }, 500);
 
         setInterval(() => {

@@ -69,14 +69,14 @@ const Socket = {
             }
         };
 
-        Vue.prototype.requestGenerated = async function (route) {
+        Vue.prototype.requestGenerated = async function (route, noServer = false) {
             if (!route.startsWith('/')) route = '/' + route;
 
             const isDev = window.location.hostname === 'localhost',
                 host = isDev ? 'http://localhost:9999' : 'https://' + window.location.host,
                 server = this.$page.auth.server;
 
-            const url = host + '/generated/' + server + route;
+            const url = host + '/generated' + (!noServer ? '/' + server : '') + route;
 
             try {
                 const response = await axios.get(url),

@@ -493,7 +493,8 @@
         "debug_database_check": "Query Time ARRR",
         "debug_api_variables": "API Time ARRR",
         "debug_request_ip": "Request Sea Dog",
-        "debug_user_agent": "User-Agent Matey"
+        "debug_user_agent": "User-Agent Matey",
+        "streamers": "Weary be ye? Set yer sights on these scallywags broadcastin'!"
     },
     "pagination": {
         "previous": "Avast!",

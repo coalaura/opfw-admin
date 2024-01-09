@@ -129,6 +129,9 @@ module.exports = {
                 'discord': '#6C82CE',
                 'steam': '#171A21',
 
+                'twitch': '#A970FF',
+                'twitch-dark': '#8533ff',
+
                 // Rose
                 'rose-100': 'rgb(255, 228, 230)',
                 'rose-200': 'rgb(254, 205, 211)',

@@ -493,7 +493,8 @@
         "debug_database_check": "Query Time Partner",
         "debug_api_variables": "API Time Ya Hear",
         "debug_request_ip": "Request IP Y'all",
-        "debug_user_agent": "User-Agent Y'all"
+        "debug_user_agent": "User-Agent Y'all",
+        "streamers": "Bored? Go on an' take a gander at these here streamers!"
     },
     "pagination": {
         "previous": "Aforehand",

@@ -493,7 +493,8 @@
         "debug_database_check": "⏳⬅️",
         "debug_api_variables": "📊⌛️",
         "debug_request_ip": "🌐🆔",
-        "debug_user_agent": "🕵️‍♂️💻📋"
+        "debug_user_agent": "🕵️‍♂️💻📋",
+        "streamers": "😒❓ ✅👀📺👤👤👤!"
     },
     "pagination": {
         "previous": "⬅️",

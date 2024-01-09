@@ -493,7 +493,8 @@
         "debug_database_check": "Query Thump",
         "debug_api_variables": "API Crunch",
         "debug_request_ip": "Request Rock Spot",
-        "debug_user_agent": "Beast-Agent"
+        "debug_user_agent": "Beast-Agent",
+        "streamers": "Bored? See these stream-people!"
     },
     "pagination": {
         "previous": "Before",
