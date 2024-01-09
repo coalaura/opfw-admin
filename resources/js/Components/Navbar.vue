@@ -235,7 +235,7 @@
             <template #default>
                 <a class="flex py-4 px-6 mb-5 bg-twitch rounded-lg shadow-sm gap-10 relative text-white" v-for="streamer in streamers" :key="streamer.name" v-if="streamers && streamers.length > 0" :href="'https://twitch.tv/' + streamer.name" target="_blank">
                     <div class="text-7xl">
-                        <img :src="streamer.avatar" class="w-20" />
+                        <img :src="streamer.avatar" class="w-20 h-20" />
                     </div>
 
                     <div class="flex items-center overflow-hidden">
@@ -245,7 +245,7 @@
                     </div>
 
                     <div class="absolute top-0.5 right-1 text-sm font-bold drop-shadow-sm">
-                        <i class="fas fa-circle text-red-600"></i>
+                        <i class="animate-pulse fas fa-circle text-red-600"></i>
                         LIVE
                     </div>
                 </a>
@@ -506,7 +506,7 @@ export default {
 
             setTimeout(() => {
                 this.updateStreamers();
-            }, 60000);
+            }, 20000);
         },
     },
     async mounted() {
