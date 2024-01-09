@@ -25,10 +25,8 @@ class LoginController extends Controller
 
     /**
      * Renders the login view.
-     *
-     * @return Response
      */
-    public function render(): Response
+    public function render()
     {
         if (sessionHelper()->get('isLogout')) {
             LoggingHelper::log('Rendering login view while coming from logout');
