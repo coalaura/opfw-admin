@@ -245,7 +245,7 @@
                     </div>
 
                     <div class="absolute top-0.5 right-1 text-sm font-bold drop-shadow-sm">
-                        <i class="animate-pulse fas fa-circle text-red-600"></i>
+                        <i class="fas fa-circle text-red-600"></i>
                         LIVE
                     </div>
                 </a>
