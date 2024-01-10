@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Character;
 use App\Helpers\PermissionHelper;
 use App\Http\Resources\CharacterResource;
-use App\Http\Resources\PlayerIndexResource;
 use App\Http\Resources\TwitterPostResource;
 use App\Http\Resources\TwitterUserResource;
 use App\TwitterPost;
@@ -29,7 +28,7 @@ class TwitterController extends Controller
     {
         $start = round(microtime(true) * 1000);
 
-        $query = TwitterPost::query()->orderByDesc('time')->where('is_deleted', '=', '0');
+        $query = TwitterPost::query()->where('is_deleted', '=', '0');
 
         // Filtering by username.
         $this->searchQuery($request, $query, 'username', 'username');
@@ -42,6 +41,8 @@ class TwitterController extends Controller
         if (intval($request->input('top', '0')) === 1) {
             // order by likes where time is within the last 15 days
             $query->where('time', '>=', time() - (60 * 60 * 24 * 15))->orderByDesc('likes');
+        } else {
+            $query->orderByDesc('time');
         }
 
         $page = Paginator::resolveCurrentPage('page');
