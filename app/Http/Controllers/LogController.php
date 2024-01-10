@@ -257,7 +257,7 @@ class LogController extends Controller
                 'channel',
                 'message'
             ),
-            //'playerMap'      => Player::fetchLicensePlayerNameMap($logs, 'licenseIdentifier'),
+            //'playerMap'      => Player::fetchLicensePlayerNameMap($logs, 'license_identifier'),
             'links'          => $this->getPageUrls($page),
             'time'           => $end - $start,
             'page'           => $page,
