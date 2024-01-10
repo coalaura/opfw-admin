@@ -39,6 +39,11 @@ class TwitterController extends Controller
 
         $query->leftJoin('twitter_accounts', 'twitter_accounts.id', '=', 'authorId');
 
+        if ($request->has('top')) {
+            // order by likes where time is within the last 15 days
+            $query->where('time', '>=', time() - (60 * 60 * 24 * 15))->orderByDesc('likes');
+        }
+
         $page = Paginator::resolveCurrentPage('page');
 
         $query->select(['twitter_tweets.id', 'authorId', 'realUser', 'message', 'time', 'likes', 'username', 'is_verified', 'avatar_url']);
