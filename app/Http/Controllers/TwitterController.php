@@ -39,7 +39,7 @@ class TwitterController extends Controller
 
         $query->leftJoin('twitter_accounts', 'twitter_accounts.id', '=', 'authorId');
 
-        if ($request->has('top')) {
+        if ($request->input('top') === '1') {
             // order by likes where time is within the last 15 days
             $query->where('time', '>=', time() - (60 * 60 * 24 * 15))->orderByDesc('likes');
         }
@@ -57,7 +57,8 @@ class TwitterController extends Controller
             'posts'   => $posts,
             'filters' => $request->all(
                 'message',
-                'username'
+                'username',
+                'top'
             ),
             'links'   => $this->getPageUrls($page),
             'time'    => $end - $start,
