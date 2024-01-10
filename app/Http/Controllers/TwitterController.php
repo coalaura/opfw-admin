@@ -50,7 +50,7 @@ class TwitterController extends Controller
         $page = Paginator::resolveCurrentPage('page');
 
         $query->select(['twitter_tweets.id', 'authorId', 'realUser', 'message', 'time', 'likes', 'username', 'is_verified', 'avatar_url']);
-        $query->limit(15)->offset(($page - 1) * 15);
+        $query->limit(30)->offset(($page - 1) * 30);
 
         $posts = TwitterPostResource::collection($query->get());
 

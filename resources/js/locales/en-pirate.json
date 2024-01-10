@@ -718,7 +718,8 @@
         "edit_post_title": "Amend yer tweet's scribbles an' admirations.",
         "delete_quick": "Scuttle this tweet with haste.",
         "delete_mark": "Mark this tweet fer a grand scuttle.",
-        "delete_confirm": "Be ye certain ye wish t' send this tweet to Davy Jones' locker? It can ne'er be reversed."
+        "delete_confirm": "Be ye certain ye wish t' send this tweet to Davy Jones' locker? It can ne'er be reversed.",
+        "top": "Pinnacle Tweets"
     },
     "players": {
         "title": "Scallywags",

@@ -35,18 +35,28 @@
                 <form @submit.prevent>
                     <div class="flex flex-wrap mb-4">
                         <!-- Details -->
-                        <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
+                        <div class="w-3/12 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-3" for="username">
                                 {{ t('twitter.account') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
                             <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="username" :placeholder="t('twitter.placeholder_username')" v-model="filters.username">
                         </div>
                         <!-- Details -->
-                        <div class="w-2/3 px-3 mobile:w-full mobile:mb-3">
+                        <div class="w-7/12 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-3" for="message">
                                 {{ t('twitter.message') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
                             <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" :placeholder="t('twitter.placeholder_message')" v-model="filters.message">
+                        </div>
+                        <!-- Top Tweets -->
+                        <div class="w-2/12 px-3 mobile:w-full mobile:mb-3">
+                            <label class="block mb-3" for="top">
+                                {{ t('twitter.top') }}
+                            </label>
+                            <select class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="top" v-model="filters.top">
+                                <option :value="null">{{ t('global.no') }}</option>
+                                <option :value="1">{{ t('global.yes') }}</option>
+                            </select>
                         </div>
                     </div>
                     <!-- Description -->
@@ -128,7 +138,9 @@ export default {
             required: true,
         },
         filters: {
+            username: String,
             message: String,
+            top: Number,
         },
         links: {
             type: Object,

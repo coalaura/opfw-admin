@@ -718,7 +718,8 @@
         "edit_post_title": "Edit yer tweet content an' favorites, y'all.",
         "delete_quick": "Go 'head an' delete this here tweet lickety-split.",
         "delete_mark": "Pick this tweet out for a heapin' deletion.",
-        "delete_confirm": "Y'all sure ya wanna toss this tweet? Ain't no undo button for this'n."
+        "delete_confirm": "Y'all sure ya wanna toss this tweet? Ain't no undo button for this'n.",
+        "top": "Top Twee-yuhts"
     },
     "players": {
         "title": "Folks",
