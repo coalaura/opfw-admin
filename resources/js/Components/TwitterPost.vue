@@ -159,7 +159,10 @@ export default {
             this.isLoading = true;
             this.editingPost = false;
 
-            await this.$inertia.post('/tweets/edit/' + this.post.id, data);
+            await this.$inertia.post('/tweets/edit/' + this.post.id, data, {
+                preserveState: true,
+                preserveScroll: true
+            });
 
             this.isLoading = false;
         },
