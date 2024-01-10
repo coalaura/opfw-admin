@@ -39,8 +39,10 @@ class TwitterController extends Controller
         $query->leftJoin('twitter_accounts', 'twitter_accounts.id', '=', 'authorId');
 
         if (intval($request->input('top', '0')) === 1) {
-            // order by likes where time is within the last 15 days
-            $query->where('time', '>=', time() - (60 * 60 * 24 * 15))->orderByDesc('likes');
+            // twitter_tweets.TIME > CURRENT_TIMESTAMP() - INTERVAL '15' DAY
+            $query->where('time', '>', date('Y-m-d H:i:s', strtotime('-15 days')));
+
+            $query->orderByDesc('likes');
         } else {
             $query->orderByDesc('time');
         }
