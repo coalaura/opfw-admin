@@ -26,6 +26,7 @@ class PermissionHelper
         self::PERM_PHONE_LOGS     => ['phone_logs', self::LEVEL_SUPERADMIN],
         self::PERM_MONEY_LOGS     => ['money_logs', self::LEVEL_STAFF],
         self::PERM_ANTI_CHEAT     => ['anti_cheat', self::LEVEL_STAFF],
+        self::PERM_DARK_CHAT      => ['dark_chat', self::LEVEL_SENIOR],
     ];
 
     const PERM_SCREENSHOT     = 'P_SCREENSHOT';
@@ -47,6 +48,7 @@ class PermissionHelper
     const PERM_PHONE_LOGS     = 'P_PHONE_LOGS';
     const PERM_MONEY_LOGS     = 'P_MONEY_LOGS';
     const PERM_ANTI_CHEAT     = 'P_ANTI_CHEAT';
+    const PERM_DARK_CHAT      = 'P_DARK_CHAT';
 
     const LEVEL_STAFF      = 1;
     const LEVEL_SENIOR     = 2;

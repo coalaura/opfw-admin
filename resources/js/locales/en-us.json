@@ -507,7 +507,8 @@
             "crafting": "View Crafting Recipes",
             "phone_logs": "View Phone Logs",
             "money_logs": "View Money Logs",
-            "anti_cheat": "View Anti-Cheat Logs & Screenshots"
+            "anti_cheat": "View Anti-Cheat Logs & Screenshots",
+            "dark_chat": "View Dark Chat"
         },
 
         "world_time": "World Time",
@@ -1260,6 +1261,15 @@
         "money_search": "Money-Logs",
         "connect_search": "Connect-Logs",
         "skipped": "Skipped logs where:",
+        "dark_chat": "Dark Chat",
+        "dark_chat_description": "On this page you can view and filter dark chat messages.",
+        "filter_messages": "Filter Messages",
+        "channel": "Channel",
+        "message": "Message",
+        "search_chat": "Search in chat",
+        "messages": "Messages",
+        "no_messages": "No messages found.",
+        "not_available": "Not available",
         "money_title": "Money Logs",
         "money_description": "On this page you can view and filter the money logs.",
         "type": "Type",

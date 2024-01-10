@@ -487,7 +487,8 @@
             "phone_logs": "Phone Logs Dekhein",
             "money_logs": "Money Logs Dekhein",
             "anti_cheat": "Anti-Cheat Logs aur Screenshots Dekhein",
-            "twitter_edit": "Twitter Posts Sampadit Karein"
+            "twitter_edit": "Twitter Posts Sampadit Karein",
+            "dark_chat": "Dekhein Dark Chat"
         },
         "world_time": "Vishwa Samay",
         "world_time_desc": "{0} sabse adhik upayog kiye jaane waale samay kshetron ka samay.",
@@ -1270,7 +1271,16 @@
                 "config": "Jodte samay server ki vinyas load nahi ho pa rahi thi jis wajah se upayogakarta ko aswikar kar diya gaya.",
                 "unknown": "Vistarit varnan uplabdh nahi hai. Aap vikasak se adhik madad ke liye puch sakte hain."
             }
-        }
+        },
+        "dark_chat": "Dark Chat",
+        "dark_chat_description": "Is page par aap dark chat sandeshon ko dekh sakte hain aur filter kar sakte hain.",
+        "filter_messages": "Sandeshon ko Filter Karein",
+        "channel": "Channel",
+        "message": "Sandesh",
+        "search_chat": "Chat mein khojein",
+        "messages": "Sandesh",
+        "no_messages": "Koi sandesh nahi mila.",
+        "not_available": "Upalabdh nahi hai"
     },
     "panel_logs": {
         "title": "Panel Ke Log",

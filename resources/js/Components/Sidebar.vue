@@ -142,6 +142,12 @@ export default {
                             hidden: !this.perm.check(this.perm.PERM_PHONE_LOGS),
                         },
                         {
+                            label: 'logs.dark_chat',
+                            icon: 'mail',
+                            url: '/darkChat',
+                            hidden: !this.perm.check(this.perm.PERM_DARK_CHAT),
+                        },
+                        {
                             label: 'casino.title',
                             icon: 'chess',
                             url: '/casino',

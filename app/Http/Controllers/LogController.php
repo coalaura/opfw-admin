@@ -225,6 +225,45 @@ class LogController extends Controller
         ]);
     }
 
+    public function darkChat(Request $request)
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_DARK_CHAT)) {
+            abort(403);
+        }
+
+        $start = round(microtime(true) * 1000);
+
+        $query = DB::table('gcphone_app_chat')
+            ->select(['id', 'channel', 'message', 'time'])
+            ->orderByDesc('time');
+
+        // Filtering by channel.
+        $this->searchQuery($request, $query, 'channel', 'channel');
+
+        // Filtering by message.
+        $this->searchQuery($request, $query, 'message', 'message');
+
+        $page = Paginator::resolveCurrentPage('page');
+
+        $query->limit(30)->offset(($page - 1) * 30);
+
+        $logs = $query->get()->toArray();
+
+        $end = round(microtime(true) * 1000);
+
+        return Inertia::render('Logs/DarkChat', [
+            'logs'           => $logs,
+            'filters' => $request->all(
+                'channel',
+                'message'
+            ),
+            //'playerMap'      => Player::fetchLicensePlayerNameMap($logs, 'licenseIdentifier'),
+            'links'          => $this->getPageUrls($page),
+            'time'           => $end - $start,
+            'page'           => $page,
+        ]);
+    }
+
     /**
      * Display the phone message logs.
      *

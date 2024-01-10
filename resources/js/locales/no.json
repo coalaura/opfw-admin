@@ -487,7 +487,8 @@
             "phone_logs": "Vis Telefonslogger",
             "money_logs": "Vis Pengelogg",
             "anti_cheat": "Vis Anti-Cheat Logger og Skjermbilder",
-            "twitter_edit": "Rediger Twitter-innlegg"
+            "twitter_edit": "Rediger Twitter-innlegg",
+            "dark_chat": "Vis mørk prat"
         },
         "world_time": "Verdenstid",
         "world_time_desc": "Tiden i de {0} mest brukte tidssonene.",
@@ -1270,7 +1271,16 @@
                 "config": "Under tilkobling kunne ikke konfigurasjonen til serveren lastes, noe som medførte at brukeren ble avvist.",
                 "unknown": "Ingen detaljert beskrivelse tilgjengelig. Du kan be en utvikler om mer hjelp."
             }
-        }
+        },
+        "dark_chat": "Mørk prat",
+        "dark_chat_description": "På denne siden kan du se og filtrere mørke pratmeldinger.",
+        "filter_messages": "Filtrer meldinger",
+        "channel": "Kanal",
+        "message": "Melding",
+        "search_chat": "Søk i prat",
+        "messages": "Meldinger",
+        "no_messages": "Ingen meldinger funnet.",
+        "not_available": "Ikke tilgjengelig"
     },
     "panel_logs": {
         "title": "Panellagre",

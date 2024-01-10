@@ -478,7 +478,8 @@
             "money_logs": "View Money ÖwÖs",
             "anti_cheat": "View Anti-Cheat Wogs & Screenshots",
             "twitter_verify": "Vewify Twittew Usews",
-            "twitter_edit": "Edit Twittew Posts"
+            "twitter_edit": "Edit Twittew Posts",
+            "dark_chat": "View Dawk Chat"
         },
         "world_time": "Wowld Timeowo",
         "world_time_desc": "The time in the {0} most used timezonesowo.",
@@ -1261,7 +1262,16 @@
         "character_id": "Chawactew ID",
         "character": "Chawactew",
         "minigames": "Mwiniwames",
-        "minigame_none": "UwUxclude UwUw UwUw"
+        "minigame_none": "UwUxclude UwUw UwUw",
+        "dark_chat": "Dawk Chat",
+        "dark_chat_description": "On this page uwu can view and fiwter dawk chat messages.",
+        "filter_messages": "Fiwter Messages",
+        "channel": "Channew",
+        "message": "Message",
+        "search_chat": "Seawch in chat",
+        "messages": "Messages",
+        "no_messages": "No messages found, nyaa.",
+        "not_available": "Nuwot avaiwabwe"
     },
     "panel_logs": {
         "title": "Pwanel Wogs",
