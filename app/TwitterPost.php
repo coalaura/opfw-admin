@@ -16,14 +16,11 @@ class TwitterPost extends Model
     use HasFactory;
 
     /**
-     * Column name for when the model was created.
+     * Whether to use timestamps.
+     *
+     * @var bool
      */
-    const CREATED_AT = 'time';
-
-    /**
-     * Column name for when the model was last updated.
-     */
-    const UPDATED_AT = 'time';
+    public $timestamps = false;
 
     /**
      * The table associated with the model.
