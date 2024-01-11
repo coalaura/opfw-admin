@@ -469,6 +469,7 @@
         "debug_collecting": "Collecting info...",
         "streamer": "Bored? Check out this streamer!",
         "streamer_many": "Bored? Check out these {0} streamers!",
+        "streamer_title": "Active Streamers",
 
         "debug_ping": "Ping Ping",
         "debug_system": "System Info",

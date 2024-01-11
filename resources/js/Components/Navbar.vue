@@ -228,7 +228,7 @@
         <modal :show.sync="showingStreamers" extraClass="!bg-twitch !bg-opacity-40">
             <template #header>
                 <h1 class="dark:text-white">
-                    {{ t('nav.streamers') }}
+                    {{ t('nav.streamer_title') }}
                 </h1>
             </template>
 

@@ -496,7 +496,8 @@
         "debug_request_ip": "Wequest IP UwU",
         "debug_user_agent": "Uwer-Agent UwU",
         "streamer": "Bowd? Chek out dis stweamew uwu!",
-        "streamer_many": "Bowd? Chek out theses {0} stweamews uwu!"
+        "streamer_many": "Bowd? Chek out theses {0} stweamews uwu!",
+        "streamer_title": "Active Stweamews"
     },
     "pagination": {
         "previous": "Pwevious",

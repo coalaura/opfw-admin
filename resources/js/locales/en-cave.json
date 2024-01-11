@@ -496,7 +496,8 @@
         "debug_request_ip": "Request Rock Spot",
         "debug_user_agent": "Beast-Agent",
         "streamer": "Uh? Look-see moving picture person!",
-        "streamer_many": "Uh? Look-see many moving picture persons!"
+        "streamer_many": "Uh? Look-see many moving picture persons!",
+        "streamer_title": "Active Streamers not exist in Caveman Speak, closest translation: \"Fire alive picture magic show-ers\""
     },
     "pagination": {
         "previous": "Before",
