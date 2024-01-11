@@ -495,7 +495,8 @@
         "debug_api_variables": "API Time Ya Hear",
         "debug_request_ip": "Request IP Y'all",
         "debug_user_agent": "User-Agent Y'all",
-        "streamers": "Bored? Go on an' take a gander at these here streamers!"
+        "streamer": "Bored? Go on now, take a gander at this here streamer!",
+        "streamer_many": "Bored? Go on now, take a gander at these here {0} streamers!"
     },
     "pagination": {
         "previous": "Aforehand",

@@ -495,7 +495,8 @@
         "debug_api_variables": "📊⌛️",
         "debug_request_ip": "🌐🆔",
         "debug_user_agent": "🕵️‍♂️💻📋",
-        "streamers": "😒❓ ✅👀📺👤👤👤!"
+        "streamer": "😒❓✅👀💻🎥🕹️",
+        "streamer_many": "😒❓✅👀👆🕺💻🎥🕹️!"
     },
     "pagination": {
         "previous": "⬅️",

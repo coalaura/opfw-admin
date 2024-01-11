@@ -495,7 +495,8 @@
         "debug_api_variables": "API Time UwU",
         "debug_request_ip": "Wequest IP UwU",
         "debug_user_agent": "Uwer-Agent UwU",
-        "streamers": "Bowd? Check out these stweamews!"
+        "streamer": "Bowd? Chek out dis stweamew uwu!",
+        "streamer_many": "Bowd? Chek out theses {0} stweamews uwu!"
     },
     "pagination": {
         "previous": "Pwevious",

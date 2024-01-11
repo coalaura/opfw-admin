@@ -495,7 +495,8 @@
         "debug_api_variables": "API Crunch",
         "debug_request_ip": "Request Rock Spot",
         "debug_user_agent": "Beast-Agent",
-        "streamers": "Bored? See these stream-people!"
+        "streamer": "Uh? Look-see moving picture person!",
+        "streamer_many": "Uh? Look-see many moving picture persons!"
     },
     "pagination": {
         "previous": "Before",

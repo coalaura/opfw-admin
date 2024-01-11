@@ -48,7 +48,7 @@
 
                 <button class="px-4 py-1 focus:outline-none font-semibold text-white text-sm rounded border-2 border-twitch-dark bg-twitch" :class="{ 'shadow': banner }" @click="showingStreamers = true" v-if="streamers">
                     <i class="fab fa-twitch"></i>
-                    {{ t("nav.streamers") }}
+                    {{ streamers.length === 1 ? t("nav.streamer") : t("nav.streamer_many", streamers.length) }}
                 </button>
             </div>
 

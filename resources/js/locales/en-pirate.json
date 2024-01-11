@@ -495,7 +495,8 @@
         "debug_api_variables": "API Time ARRR",
         "debug_request_ip": "Request Sea Dog",
         "debug_user_agent": "User-Agent Matey",
-        "streamers": "Weary be ye? Set yer sights on these scallywags broadcastin'!"
+        "streamer": "Marooned on t' island o' dullness? Feast yer eyes on this sea dog who be streamin'!",
+        "streamer_many": "Marooned on t' island o' dullness? Lay yer gaze upon these {0} swashbucklers who be streamin'!"
     },
     "pagination": {
         "previous": "Avast!",

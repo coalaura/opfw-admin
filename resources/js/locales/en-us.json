@@ -467,7 +467,8 @@
         "debug_info": "Debug Info",
         "debug_info_failed": "Failed to fetch debug info.",
         "debug_collecting": "Collecting info...",
-        "streamers": "Bored? Check out these streamers!",
+        "streamer": "Bored? Check out this streamer!",
+        "streamer_many": "Bored? Check out these {0} streamers!",
 
         "debug_ping": "Ping Ping",
         "debug_system": "System Info",
