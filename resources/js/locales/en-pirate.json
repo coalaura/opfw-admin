@@ -1273,7 +1273,8 @@
         "search_chat": "Seek in gabbin'",
         "messages": "Scrawls",
         "no_messages": "Avast! No messages be spotted.",
-        "not_available": "Not to be had"
+        "not_available": "Not to be had",
+        "license": "License Identifier be \"Plunderin' Permit Mark\""
     },
     "panel_logs": {
         "title": "Boardin' Logs",

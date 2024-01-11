@@ -1273,7 +1273,8 @@
         "search_chat": "🔍💬",
         "messages": "✉️📩",
         "no_messages": "❌✉️🔍.",
-        "not_available": "🚫✅"
+        "not_available": "🚫✅",
+        "license": "🆔🔍"
     },
     "panel_logs": {
         "title": "📋🔒Logs",

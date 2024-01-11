@@ -1282,7 +1282,8 @@
         "search_chat": "Søk i prat",
         "messages": "Meldinger",
         "no_messages": "Ingen meldinger funnet.",
-        "not_available": "Ikke tilgjengelig"
+        "not_available": "Ikke tilgjengelig",
+        "license": "Lisensidentifikator"
     },
     "panel_logs": {
         "title": "Panellagre",

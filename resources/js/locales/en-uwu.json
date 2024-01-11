@@ -1273,7 +1273,8 @@
         "search_chat": "Seawch in chat",
         "messages": "Messages",
         "no_messages": "No messages found, nyaa.",
-        "not_available": "Nuwot avaiwabwe"
+        "not_available": "Nuwot avaiwabwe",
+        "license": "Wicense Identifiew"
     },
     "panel_logs": {
         "title": "Pwanel Wogs",

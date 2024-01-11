@@ -1273,7 +1273,8 @@
         "search_chat": "Look for words in talk",
         "messages": "Word Things",
         "no_messages": "No word things found.",
-        "not_available": "No have"
+        "not_available": "No have",
+        "license": "License Thing Name"
     },
     "panel_logs": {
         "title": "Ugga Ugga Ugga",

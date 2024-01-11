@@ -32,15 +32,22 @@
 					<input autocomplete="false" name="hidden" type="text" class="hidden" />
 
 					<div class="flex flex-wrap mb-4">
+						<!-- License Identifier -->
+						<div class="w-3/12 px-3 mobile:w-full mobile:mb-3">
+							<label class="block mb-2" for="license">
+								{{ t('logs.license') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+							</label>
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="license" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.license">
+						</div>
 						<!-- Channel -->
-						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
+						<div class="w-2/12 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2" for="channel">
 								{{ t('logs.channel') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="channel" placeholder="guns" v-model="filters.channel">
 						</div>
 						<!-- Message -->
-						<div class="w-2/3 px-3 mobile:w-full mobile:mb-3">
+						<div class="w-7/12 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2" for="message">
 								{{ t('logs.message') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
@@ -85,6 +92,7 @@
 				<table class="w-full">
 					<tr class="font-semibold text-left mobile:hidden">
 						<th class="p-3 pl-8 max-w-56">{{ t('logs.player') }}</th>
+						<th class="p-3 whitespace-nowrap">{{ t('logs.character') }}</th>
 						<th class="p-3 w-40 whitespace-nowrap">{{ t('logs.channel') }}</th>
 						<th class="p-3">{{ t('logs.message') }}</th>
 						<th class="p-3 pr-8 whitespace-nowrap w-40">
@@ -94,8 +102,13 @@
 					<tr class="border-t border-gray-300 dark:border-gray-500 relative" v-for="log in logs" :key="log.id">
 						<td class="p-3 pl-8 mobile:block max-w-56 whitespace-nowrap">
 							<inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.license_identifier" v-if="log.license_identifier">
-								{{ playerName(log.license_identifier) }}
+								{{ log.player_name }}
 							</inertia-link>
+
+							<span class="italic" v-else>{{ t('logs.not_available') }}</span>
+						</td>
+						<td class="p-3 mobile:block whitespace-nowrap">
+							<span v-if="log.character_id" class="font-semibold">#{{ log.character_id }}</span>
 
 							<span class="italic" v-else>{{ t('logs.not_available') }}</span>
 						</td>
@@ -161,6 +174,7 @@ export default {
 			required: true,
 		},
 		filters: {
+			license: String,
 			channel: String,
 			message: String,
 		},

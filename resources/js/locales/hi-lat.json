@@ -1282,7 +1282,8 @@
         "search_chat": "Chat mein khojein",
         "messages": "Sandesh",
         "no_messages": "Koi sandesh nahi mila.",
-        "not_available": "Upalabdh nahi hai"
+        "not_available": "Upalabdh nahi hai",
+        "license": "Laisens Pehchanakarta"
     },
     "panel_logs": {
         "title": "Panel Ke Log",

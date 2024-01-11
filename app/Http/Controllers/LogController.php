@@ -234,14 +234,19 @@ class LogController extends Controller
         $start = round(microtime(true) * 1000);
 
         $query = DB::table('gcphone_app_chat')
-            ->select(['id', 'channel', 'message', DB::raw('UNIX_TIMESTAMP(`time`) AS timestamp')])
+            ->select(['id', 'gcphone_app_chat.license_identifier', 'character_id', 'player_name', 'channel', 'message', DB::raw('UNIX_TIMESTAMP(`time`) AS timestamp')])
             ->orderByDesc('time');
+
+        // Filtering by license.
+        $this->searchQuery($request, $query, 'license', 'gcphone_app_chat.license_identifier');
 
         // Filtering by channel.
         $this->searchQuery($request, $query, 'channel', 'channel');
 
         // Filtering by message.
         $this->searchQuery($request, $query, 'message', 'message');
+
+        $query->leftJoin('users', 'users.license_identifier', '=', 'gcphone_app_chat.license_identifier');
 
         $page = Paginator::resolveCurrentPage('page');
 
@@ -254,10 +259,10 @@ class LogController extends Controller
         return Inertia::render('Logs/DarkChat', [
             'logs'           => $logs,
             'filters' => $request->all(
+                'license',
                 'channel',
                 'message'
             ),
-            //'playerMap'      => Player::fetchLicensePlayerNameMap($logs, 'license_identifier'),
             'links'          => $this->getPageUrls($page),
             'time'           => $end - $start,
             'page'           => $page,
