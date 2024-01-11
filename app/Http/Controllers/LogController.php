@@ -234,7 +234,7 @@ class LogController extends Controller
         $start = round(microtime(true) * 1000);
 
         $query = DB::table('gcphone_app_chat')
-            ->select(['id', 'channel', 'message', 'time'])
+            ->select(['id', 'channel', 'message', DB::raw('UNIX_TIMESTAMP(`time`) AS timestamp')])
             ->orderByDesc('time');
 
         // Filtering by channel.
