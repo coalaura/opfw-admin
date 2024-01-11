@@ -106,9 +106,9 @@
 							{{ log.message }}
 						</td>
 						<td class="p-3 pr-8 mobile:block w-40 whitespace-nowrap">
-							{{ log.timestamp | formatTime(true) }}
+							{{ log.timestamp * 1000 | formatTime(true) }}
 
-							<i class="block text-xs leading-1 whitespace-nowrap text-yellow-600 dark:text-yellow-400">{{ formatRawTimestamp(log.timestamp) }}</i>
+							<i class="block text-xs leading-1 whitespace-nowrap text-yellow-600 dark:text-yellow-400">{{ formatRawTimestamp(log.timestamp * 1000) }}</i>
 						</td>
 					</tr>
 					<tr v-if="logs.length === 0" class="border-t border-gray-300 dark:border-gray-500">
