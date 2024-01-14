@@ -342,7 +342,7 @@ export default {
                     const args = (metadata.arguments || []).map(arg => {
                         if (typeof arg === 'number') {
                             arg = arg.toFixed(2);
-                        } else if (typeof arg === 'object') {
+                        } else if (arg && typeof arg === 'object') {
                             if ('x' in arg && 'y' in arg && 'z' in arg && 'w' in arg) {
                                 arg = `vector4(${arg.x.toFixed(1)}, ${arg.y.toFixed(1)}, ${arg.z.toFixed(1)}, ${arg.w.toFixed(1)})`;
                             } else if ('x' in arg && 'y' in arg && 'z' in arg) {
