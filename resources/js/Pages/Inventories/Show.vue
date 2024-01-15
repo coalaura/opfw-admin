@@ -368,7 +368,7 @@
                                     :src="'/images/icons/items/' + item.item + '.png'"
                                     :alt="item.item"
                                     :title="t('inventories.show.content_title', slot, item.amount, item.item)"
-                                    class="block h-full w-full"
+                                    class="block h-10/12 w-10/12 m-auto"
                                     v-if="item.item"
                                 />
 
