@@ -326,7 +326,9 @@
         "deaths": "☠️",
         "deaths_details": "📈☠️",
         "airlifts": "✈️🏥",
-        "airlifts_details": "🔢 of ✈️🏥"
+        "airlifts_details": "🔢 of ✈️🏥",
+        "scratch_tickets": "🎟️",
+        "scratch_tickets_details": "💰🏆🎟️"
     },
     "map": {
         "title": "🌍 Live-Map",

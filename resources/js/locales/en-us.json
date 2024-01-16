@@ -341,7 +341,9 @@
         "deaths": "Deaths",
         "deaths_details": "Amount of deaths.",
         "airlifts": "Airlifts",
-        "airlifts_details": "Amount of airlifts to the hospital."
+        "airlifts_details": "Amount of airlifts to the hospital.",
+        "scratch_tickets": "Scratch Tickets",
+        "scratch_tickets_details": "Money won from scratch tickets."
     },
     "map": {
         "title": "Live-Map",

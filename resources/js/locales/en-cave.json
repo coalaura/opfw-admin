@@ -326,7 +326,9 @@
         "deaths": "Ugga ugga",
         "deaths_details": "Amount of times clubba go bye-bye.",
         "airlifts": "Ugga ugga",
-        "airlifts_details": "Ugga ugga of ugga ugga to the ugga."
+        "airlifts_details": "Ugga ugga of ugga ugga to the ugga.",
+        "scratch_tickets": "Scratchy Papers",
+        "scratch_tickets_details": "Shiny rocks get from scratchy papers."
     },
     "map": {
         "title": "Ooga-Map",

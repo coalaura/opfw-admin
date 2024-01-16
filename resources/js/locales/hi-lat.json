@@ -326,7 +326,9 @@
         "deaths": "Mrityu",
         "deaths_details": "Mrityuon ki sankhya.",
         "airlifts": "Hawaai Uthaane",
-        "airlifts_details": "Aspatal ke liye ki gayi hawaai uthaanon ki sankhya."
+        "airlifts_details": "Aspatal ke liye ki gayi hawaai uthaanon ki sankhya.",
+        "scratch_tickets": "Scratch Tikat",
+        "scratch_tickets_details": "Scratch tikat se jeeta gaya paisa."
     },
     "map": {
         "title": "Live-Naksha",

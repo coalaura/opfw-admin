@@ -326,7 +326,9 @@
         "deaths": "Six Feet Under",
         "deaths_details": "Number of times we bit the dust.",
         "airlifts": "Air-hoists",
-        "airlifts_details": "Amount o' air-hoists t' the hospital."
+        "airlifts_details": "Amount o' air-hoists t' the hospital.",
+        "scratch_tickets": "Scratch-Offs",
+        "scratch_tickets_details": "Money won from them scratch-offs."
     },
     "map": {
         "title": "Active Map",

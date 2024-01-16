@@ -326,7 +326,9 @@
         "deaths": "Walkin' the Plank",
         "deaths_details": "Amount o' deaths at sea.",
         "airlifts": "Scallywag Hoists",
-        "airlifts_details": "Amount of scallywag hoists to the infirmary."
+        "airlifts_details": "Amount of scallywag hoists to the infirmary.",
+        "scratch_tickets": "Scratch Papers",
+        "scratch_tickets_details": "Booty won from scratch papers."
     },
     "map": {
         "title": "Sailin' Map",
