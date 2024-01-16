@@ -332,7 +332,11 @@
         "material_vendor": "Material Vendor Bikri",
         "material_vendor_details": "Sabhi material vendors se bechi gayi saamagriyon ki samahit aay.",
         "special_imports": "Vishesh Aayaat Bikri",
-        "special_imports_details": "Sabhi vishesh aayaat bikriyon ki samahit aay."
+        "special_imports_details": "Sabhi vishesh aayaat bikriyon ki samahit aay.",
+        "bills": "Bills Bhugtaan Kiye Gaye",
+        "bills_details": "Saare bhugtaan kiye gaye bills ka yugmit rashi.",
+        "dumpsters": "Dumpster Mein Payi Gayi Vastuen",
+        "dumpsters_details": "Dumpster mein payi gayi vastuon ki sankhya."
     },
     "map": {
         "title": "Live-Naksha",

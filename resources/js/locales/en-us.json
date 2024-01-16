@@ -347,7 +347,11 @@
         "material_vendor": "Material Vendor Sales",
         "material_vendor_details": "Combined revenue from all materials sold at the material vendor.",
         "special_imports": "Special Imports Sales",
-        "special_imports_details": "Combined revenue from all special imports sales."
+        "special_imports_details": "Combined revenue from all special imports sales.",
+        "bills": "Bills Paid",
+        "bills_details": "Combined amount of all paid bills.",
+        "dumpsters": "Items Found in Dumpsters",
+        "dumpsters_details": "Amount of items found in dumpsters."
     },
     "map": {
         "title": "Live-Map",

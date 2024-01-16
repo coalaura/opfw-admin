@@ -126,10 +126,22 @@ class StatisticsHelper
         return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = 'Hospitalization' AND details LIKE '%airlifted%' GROUP BY date ORDER BY timestamp DESC");
     }
 
+    // Items found in Dumpsters (count)
+    public static function collectDumpsterStatistics(): array
+    {
+        return self::collectStatistics("SELECT SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'moved ', -1), 'x', 1)) as count, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Item Moved' AND details LIKE '%dumpster-%' GROUP BY date ORDER BY timestamp DESC");
+    }
+
     // Scratched Tickets
     public static function collectScratchTicketStatistics(): array
     {
         return self::collectStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'and won $', -1), '.', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Scratched Ticket' GROUP BY date ORDER BY timestamp DESC");
+    }
+
+    // Bills paid
+    public static function collectBillsStatistics(): array
+    {
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'paid the $', -1), ' (', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Paid Bill' GROUP BY date ORDER BY timestamp DESC");
     }
 
     private static function collectUserLogsCountStatistics(string ...$action): array

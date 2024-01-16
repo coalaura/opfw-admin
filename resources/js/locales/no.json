@@ -332,7 +332,11 @@
         "material_vendor": "Salg av Materialleverandør",
         "material_vendor_details": "Samlet inntekt fra alle materialer solgt hos materialleverandøren.",
         "special_imports": "Salg av Spesialimport",
-        "special_imports_details": "Samlet inntekt fra alle salg av spesialimport."
+        "special_imports_details": "Samlet inntekt fra alle salg av spesialimport.",
+        "bills": "Regninger betalt",
+        "bills_details": "Samlet beløp av alle betalte regninger.",
+        "dumpsters": "Gjenstander funnet i søppelcontainere",
+        "dumpsters_details": "Antall gjenstander funnet i søppelcontainere."
     },
     "map": {
         "title": "Levende-kart",

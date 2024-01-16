@@ -77,6 +77,12 @@ class StatisticsController extends Controller
                 case 'robbed_peds':
                     $result = StatisticsHelper::collectRobbedPedsStatistics();
                     break;
+                case 'bills':
+                    $result = StatisticsHelper::collectBillsStatistics();
+                    break;
+                case 'scratch_tickets':
+                    $result = StatisticsHelper::collectScratchTicketStatistics();
+                    break;
 
                 // Non currency statistics
                 case 'robberies':
@@ -100,8 +106,8 @@ class StatisticsController extends Controller
                 case 'airlifts':
                     $result = StatisticsHelper::collectAirliftsStatistics();
                     break;
-                case 'scratch_tickets':
-                    $result = StatisticsHelper::collectScratchTicketStatistics();
+                case 'dumpsters':
+                    $result = StatisticsHelper::collectDumpsterStatistics();
                     break;
             }
 

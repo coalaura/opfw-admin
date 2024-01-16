@@ -332,7 +332,11 @@
         "material_vendor": "🧵🏪💰",
         "material_vendor_details": "🔗💰📈🧵🛒",
         "special_imports": "🌍📦🏪💰",
-        "special_imports_details": "🔗💰📈🌍📦🛒"
+        "special_imports_details": "🔗💰📈🌍📦🛒",
+        "bills": "💸✅",
+        "bills_details": "🤝💵🧾✅💸",
+        "dumpsters": "🗑️🔍📦",
+        "dumpsters_details": "🧮🗑️🔍📦"
     },
     "map": {
         "title": "🌍 Live-Map",

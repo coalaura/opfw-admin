@@ -332,7 +332,11 @@
         "material_vendor": "Goods Merchant Trade",
         "material_vendor_details": "Total doubloons fer all materials peddled at the goods merchant.",
         "special_imports": "Exotic Booty Trade",
-        "special_imports_details": "Total doubloons fer all exotic booty traded."
+        "special_imports_details": "Total doubloons fer all exotic booty traded.",
+        "bills": "Bills Be Settled",
+        "bills_details": "Total sum o' all settled bills.",
+        "dumpsters": "Booty Found in Davy Jones's Lockers",
+        "dumpsters_details": "Number o' treasures plundered from Davy Jones's lockers."
     },
     "map": {
         "title": "Sailin' Map",

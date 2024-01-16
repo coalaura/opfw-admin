@@ -332,7 +332,11 @@
         "material_vendor": "Matewiaw Vendow Sawes",
         "material_vendor_details": "Combinyed wevenue fwom aww matewiaws sowd at de matewiaw vendow.",
         "special_imports": "Speciaw Impowts Sawes",
-        "special_imports_details": "Combinyed wevenue fwom aww speciaw impowts sawes."
+        "special_imports_details": "Combinyed wevenue fwom aww speciaw impowts sawes.",
+        "bills": "Biwws Paiwd",
+        "bills_details": "Combinwed amount of aww paiwd biwws.",
+        "dumpsters": "Items Fwound in Dwumpstews",
+        "dumpsters_details": "Amount of items fwound in dwumpstews."
     },
     "map": {
         "title": "Wive-Map UwU",
