@@ -328,7 +328,11 @@
         "airlifts": "Air-hoists",
         "airlifts_details": "Amount o' air-hoists t' the hospital.",
         "scratch_tickets": "Scratch-Offs",
-        "scratch_tickets_details": "Money won from them scratch-offs."
+        "scratch_tickets_details": "Money won from them scratch-offs.",
+        "material_vendor": "Material Vendor Sales",
+        "material_vendor_details": "Combin'd revenue from all materials sold down at the material vendor.",
+        "special_imports": "Special Imports Sales",
+        "special_imports_details": "Combin'd revenue from all special imports sales."
     },
     "map": {
         "title": "Active Map",

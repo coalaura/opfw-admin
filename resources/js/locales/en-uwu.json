@@ -328,7 +328,11 @@
         "airlifts": "Awiwiftsies",
         "airlifts_details": "Amount of awiwiftsies to the hospital UwU.",
         "scratch_tickets": "Scwatch Tickets",
-        "scratch_tickets_details": "Muney won fwom scwatch tickets."
+        "scratch_tickets_details": "Muney won fwom scwatch tickets.",
+        "material_vendor": "Matewiaw Vendow Sawes",
+        "material_vendor_details": "Combinyed wevenue fwom aww matewiaws sowd at de matewiaw vendow.",
+        "special_imports": "Speciaw Impowts Sawes",
+        "special_imports_details": "Combinyed wevenue fwom aww speciaw impowts sawes."
     },
     "map": {
         "title": "Wive-Map UwU",

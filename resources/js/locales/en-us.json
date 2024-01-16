@@ -343,7 +343,11 @@
         "airlifts": "Airlifts",
         "airlifts_details": "Amount of airlifts to the hospital.",
         "scratch_tickets": "Scratch Tickets",
-        "scratch_tickets_details": "Money won from scratch tickets."
+        "scratch_tickets_details": "Money won from scratch tickets.",
+        "material_vendor": "Material Vendor Sales",
+        "material_vendor_details": "Combined revenue from all materials sold at the material vendor.",
+        "special_imports": "Special Imports Sales",
+        "special_imports_details": "Combined revenue from all special imports sales."
     },
     "map": {
         "title": "Live-Map",

@@ -328,7 +328,11 @@
         "airlifts": "Luftbro",
         "airlifts_details": "Antall luftbroer til sykehuset.",
         "scratch_tickets": "Flakslodd",
-        "scratch_tickets_details": "Penger vunnet fra flakslodd."
+        "scratch_tickets_details": "Penger vunnet fra flakslodd.",
+        "material_vendor": "Salg av Materialleverandør",
+        "material_vendor_details": "Samlet inntekt fra alle materialer solgt hos materialleverandøren.",
+        "special_imports": "Salg av Spesialimport",
+        "special_imports_details": "Samlet inntekt fra alle salg av spesialimport."
     },
     "map": {
         "title": "Levende-kart",

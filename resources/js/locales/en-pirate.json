@@ -328,7 +328,11 @@
         "airlifts": "Scallywag Hoists",
         "airlifts_details": "Amount of scallywag hoists to the infirmary.",
         "scratch_tickets": "Scratch Papers",
-        "scratch_tickets_details": "Booty won from scratch papers."
+        "scratch_tickets_details": "Booty won from scratch papers.",
+        "material_vendor": "Goods Merchant Trade",
+        "material_vendor_details": "Total doubloons fer all materials peddled at the goods merchant.",
+        "special_imports": "Exotic Booty Trade",
+        "special_imports_details": "Total doubloons fer all exotic booty traded."
     },
     "map": {
         "title": "Sailin' Map",

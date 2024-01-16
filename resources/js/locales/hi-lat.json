@@ -328,7 +328,11 @@
         "airlifts": "Hawaai Uthaane",
         "airlifts_details": "Aspatal ke liye ki gayi hawaai uthaanon ki sankhya.",
         "scratch_tickets": "Scratch Tikat",
-        "scratch_tickets_details": "Scratch tikat se jeeta gaya paisa."
+        "scratch_tickets_details": "Scratch tikat se jeeta gaya paisa.",
+        "material_vendor": "Material Vendor Bikri",
+        "material_vendor_details": "Sabhi material vendors se bechi gayi saamagriyon ki samahit aay.",
+        "special_imports": "Vishesh Aayaat Bikri",
+        "special_imports_details": "Sabhi vishesh aayaat bikriyon ki samahit aay."
     },
     "map": {
         "title": "Live-Naksha",

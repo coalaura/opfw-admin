@@ -328,7 +328,11 @@
         "airlifts": "Ugga ugga",
         "airlifts_details": "Ugga ugga of ugga ugga to the ugga.",
         "scratch_tickets": "Scratchy Papers",
-        "scratch_tickets_details": "Shiny rocks get from scratchy papers."
+        "scratch_tickets_details": "Shiny rocks get from scratchy papers.",
+        "material_vendor": "Stuff Trader Sell-Make",
+        "material_vendor_details": "Many shiny-rock for all stuff trade-maker give.",
+        "special_imports": "Special Thing Bring Sell-Make",
+        "special_imports_details": "Many shiny-rock for all special thing trader bring and sell."
     },
     "map": {
         "title": "Ooga-Map",
