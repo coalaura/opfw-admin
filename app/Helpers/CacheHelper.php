@@ -73,6 +73,14 @@ class CacheHelper
     }
 
     /**
+     * Clear the entire cache
+     */
+    public static function clear()
+    {
+        Cache::store('file')->clear();
+    }
+
+    /**
      * Forget something in the cache
      *
      * @param string $key

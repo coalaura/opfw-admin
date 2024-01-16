@@ -339,6 +339,9 @@ Artisan::command("clear:cache", function () {
         Artisan::call($cache);
     }
 
+    $this->comment(" - CacheHelper::clear()");
+    CacheHelper::clear();
+
     $this->info(CLUSTER . " Done!");
 })->describe("Clear all laravel caches.");
 
