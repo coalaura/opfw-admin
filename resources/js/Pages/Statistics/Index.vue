@@ -30,6 +30,7 @@
             <StatisticsTable source="gem" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="impounds" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="joins" tag="amount" :currency="false" :search="search" />
+            <StatisticsTable source="material_vendor" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="ooc" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="pawn" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="paycheck" tag="money" :currency="true" :search="search" />
@@ -38,6 +39,7 @@
             <StatisticsTable source="robbed_peds" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="robberies" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="scratch_tickets" tag="money" :currency="true" :search="search" />
+            <StatisticsTable source="special_imports" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="store" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="tuner" tag="money" :currency="true" :search="search" />
         </template>

@@ -44,6 +44,9 @@ class StatisticsController extends Controller
                 case 'edm':
                     $result = StatisticsHelper::collectEDMStatistics();
                     break;
+                case 'special_imports':
+                    $result = StatisticsHelper::collectSpecialImportsStatistics();
+                    break;
                 case 'tuner':
                     $result = StatisticsHelper::collectTunerStatistics();
                     break;
@@ -52,6 +55,9 @@ class StatisticsController extends Controller
                     break;
                 case 'pawn':
                     $result = StatisticsHelper::collectPawnshopStatistics();
+                    break;
+                case 'material_vendor':
+                    $result = StatisticsHelper::collectMaterialVendorStatistics();
                     break;
                 case 'casino':
                     $result = StatisticsHelper::collectCasinoStatistics();
