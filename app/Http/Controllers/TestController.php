@@ -109,7 +109,8 @@ class TestController extends Controller
                 if (!isset($leaderboard[$name])) {
                     $leaderboard[$name] = [
                         'steps' => 0,
-                        'deaths' => 0
+                        'deaths' => 0,
+                        'kills' => 0,
                     ];
                 }
 
@@ -128,6 +129,14 @@ class TestController extends Controller
                         $leaderboard[$name]['deaths'] = $deaths;
                     }
                 }
+
+                if (isset($metadata['kills'])) {
+                    $kills = intval($metadata['kills']);
+
+                    if ($leaderboard[$name]['kills'] < $kills) {
+                        $leaderboard[$name]['kills'] = $kills;
+                    }
+                }
             }
         }
 
@@ -137,7 +146,8 @@ class TestController extends Controller
             $list[] = [
                 'name' => $name,
                 'steps' => $data['steps'],
-                'deaths' => $data['deaths']
+                'deaths' => $data['deaths'],
+                'kills' => $data['kills'],
             ];
         }
 
@@ -165,9 +175,21 @@ class TestController extends Controller
             return $index . ".\t" . number_format($entry['deaths']) . "\t" . $entry['name'];
         }, array_splice($list, 0, 15));
 
+        usort($list, function ($a, $b) {
+            return $b['kills'] - $a['kills'];
+        });
+
+        $killsList = array_map(function ($entry) use (&$index) {
+            $index++;
+
+            return $index . ".\t" . number_format($entry['kills']) . "\t" . $entry['name'];
+        }, array_splice($list, 0, 15));
+
         $text = "Top 15 steps traveled\n\nSpot\tSteps\tFull-Name\n" . implode("\n", $stepsList);
         $text .= "\n\n- - -\n\n";
         $text .= "Top 15 deaths\n\nSpot\tDeaths\tFull-Name\n" . implode("\n", $deathsList);
+        $text .= "\n\n- - -\n\n";
+        $text .= "Top 15 locals murdered\n\nSpot\tKills\tFull-Name\n" . implode("\n", $killsList);
 
         return self::respond($text);
     }
