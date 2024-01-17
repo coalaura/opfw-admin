@@ -325,9 +325,6 @@ Artisan::command("migrate-trunks", function () {
 Artisan::command("clear:cache", function () {
     $this->info(CLUSTER . " Clearing caches...");
 
-    $this->comment(" - CacheHelper::clear()");
-    CacheHelper::clear();
-
     $caches = [
         "cache:clear",
         "view:clear",
