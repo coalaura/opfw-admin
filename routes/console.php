@@ -328,10 +328,6 @@ Artisan::command("clear:cache", function () {
     $this->comment(" - CacheHelper::clear()");
     CacheHelper::clear();
 
-    $path = storage_path("framework/cache/data");
-    $this->comment(" - rm -rf $path");
-    exec("rm -rf $path");
-
     $caches = [
         "cache:clear",
         "view:clear",
