@@ -325,6 +325,13 @@ Artisan::command("migrate-trunks", function () {
 Artisan::command("clear:cache", function () {
     $this->info(CLUSTER . " Clearing caches...");
 
+    $this->comment(" - CacheHelper::clear()");
+    CacheHelper::clear();
+
+    $path = storage_path("framework/cache/data");
+    $this->comment(" - rm -rf $path");
+    exec("rm -rf $path");
+
     $caches = [
         "cache:clear",
         "view:clear",
@@ -338,9 +345,6 @@ Artisan::command("clear:cache", function () {
 
         Artisan::call($cache);
     }
-
-    $this->comment(" - CacheHelper::clear()");
-    CacheHelper::clear();
 
     $this->info(CLUSTER . " Done!");
 })->describe("Clear all laravel caches.");
