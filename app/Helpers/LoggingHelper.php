@@ -73,7 +73,7 @@ class LoggingHelper
         self::$lastSessionKey = $sessionKey;
         self::registerShutdown();
 
-        $trace = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 4);
+        $trace     = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 4);
         $classInfo = '[internal:internal]';
         if (sizeof($trace) > 1) {
             $classInfo = basename($trace[0]['file']) . ':' . $trace[0]['line'];
@@ -117,11 +117,11 @@ class LoggingHelper
     private static function header()
     {
         $timestamp = date(\DateTimeInterface::RFC3339);
-        $method = str_pad($_SERVER['REQUEST_METHOD'] ?? '???', 7, ' ');
-        $ip = $_SERVER['REMOTE_ADDR'] ?? '???';
-        $path = explode('?', $_SERVER['REQUEST_URI'] ?? '???');
-        $get = isset($path[1]) ? $path[1] : null;
-        $path = $path[0];
+        $method    = str_pad($_SERVER['REQUEST_METHOD'] ?? '???', 7, ' ');
+        $ip        = $_SERVER['REMOTE_ADDR'] ?? '???';
+        $path      = explode('?', $_SERVER['REQUEST_URI'] ?? '???');
+        $get       = isset($path[1]) ? $path[1] : null;
+        $path      = $path[0];
 
         $msg = '[' . $timestamp . '] ' .
             '[' . $ip . '] ' .
@@ -186,6 +186,27 @@ class LoggingHelper
             });
 
             self::$shutdownRegistered = true;
+        }
+    }
+
+    /**
+     * Cleans the log files by removing old ones
+     */
+    public static function cleanup()
+    {
+        $dir = storage_path('logs');
+
+        $files = array_diff(scandir($dir), ['.', '..', '.gitignore']);
+
+        foreach ($files as $file) {
+            if (strpos($file, '.log') === false) continue;
+
+            $path = $dir . '/' . $file;
+
+            // Keep logs for 7 days
+            if (filemtime($path) < time() - 60 * 60 * 24 * 7) {
+                unlink($path);
+            }
         }
     }
 }

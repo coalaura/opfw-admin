@@ -2,6 +2,7 @@
 
 use App\Ban;
 use App\Helpers\CacheHelper;
+use App\Helpers\LoggingHelper;
 use App\Helpers\SessionHelper;
 use App\Session;
 use App\Warning;
@@ -135,6 +136,12 @@ Artisan::command("cron", function () {
     $start = microtime(true);
     echo "Cleaning up sessions...";
     SessionHelper::cleanup();
+
+    echo stopTime($start);
+
+    $start = microtime(true);
+    echo "Cleaning up log files...";
+    LoggingHelper::cleanup();
 
     echo stopTime($start);
 
