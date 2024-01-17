@@ -346,6 +346,16 @@ Artisan::command("clear:cache", function () {
         Artisan::call($cache);
     }
 
+    $this->info(CLUSTER . " Repairing permissions...");
+
+    $path = storage_path("framework/cache");
+
+    $this->comment(" - chmod -R 775 $path");
+    exec("chmod -R 775 $path");
+
+    $this->comment(" - chown -R www-data:www-data $path");
+    exec("chown -R www-data:www-data $path");
+
     $this->info(CLUSTER . " Done!");
 })->describe("Clear all laravel caches.");
 
