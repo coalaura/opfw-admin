@@ -175,6 +175,8 @@ class TestController extends Controller
             return $index . ".\t" . number_format($entry['deaths']) . "\t" . $entry['name'];
         }, array_splice($list, 0, 15));
 
+        $index = 0;
+
         usort($list, function ($a, $b) {
             return $b['kills'] - $a['kills'];
         });
