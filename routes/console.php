@@ -322,7 +322,7 @@ Artisan::command("migrate-trunks", function () {
     return;
 })->describe("Update all trunks to have the correct vehicle class.");
 
-Artisan::command("clear:cache", function () {
+Artisan::command("repair", function () {
     $this->info(CLUSTER . " Clearing caches...");
 
     $caches = [
@@ -350,7 +350,7 @@ Artisan::command("clear:cache", function () {
     exec("chown -R www-data:www-data $path");
 
     $this->info(CLUSTER . " Done!");
-})->describe("Clear all laravel caches.");
+})->describe("Attempt to repair general laravel issues.");
 
 Artisan::command("clear:sessions", function () {
     $this->info(CLUSTER . " Dropping all sessions...");
@@ -358,4 +358,4 @@ Artisan::command("clear:sessions", function () {
     $count = Session::query()->delete();
 
     $this->info(CLUSTER . " Dropped $count sessions.");
-})->describe("Clear all laravel caches.");
+})->describe("Drop all laravel sessions.");
