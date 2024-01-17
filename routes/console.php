@@ -147,7 +147,7 @@ Artisan::command("cron", function () {
 
     $start = microtime(true);
     echo "Removing scheduled bans...";
-	$time = time();
+    $time = time();
 
     $bans = Ban::query()
         ->where('scheduled_unban', '<=', $time)
@@ -177,6 +177,52 @@ Artisan::command("cron", function () {
     }
 
     echo stopTime($start);
+
+    // Auto-delete non-locked bans after 2+ years
+    if (env('AUTO_EXPIRE_BANS')) {
+        $start = microtime(true);
+        echo "Auto-removing old bans...";
+
+        $bans = Ban::query()
+            ->where('locked', '=', 0)
+            ->whereNull('expire')
+            ->where('timestamp', '<', time() - (60 * 60 * 24 * 365 * 2))
+            ->select(["ban_hash", "identifier", "reason"])
+            ->get()->toArray();
+
+        $logs        = [];
+        $toBeDeleted = [];
+
+        foreach ($bans as $ban) {
+            $hash = $ban['ban_hash'];
+            $identifier = $ban['identifier'];
+
+            if (Str::startsWith($identifier, "steam:") || Str::startsWith($identifier, "license:")) {
+                $reason = preg_replace('/\s+/', ' ', $ban['reason']);
+
+                $logs[] = sprintf('[%s] %s: %s - "%s"', date('Y-m-d H:i:s'), $hash, $identifier, $reason);
+            }
+
+            if (!in_array($hash, $toBeDeleted)) {
+                $toBeDeleted[] = $hash;
+            }
+        }
+
+        if (!empty($toBeDeleted)) {
+            Ban::query()->whereIn("ban_hash", $toBeDeleted)->delete();
+
+            if (!empty($logs)) {
+                $path = storage_path('bans/' . CLUSTER . '.log');
+                $dir = dirname($path);
+
+                if (!is_dir($dir)) mkdir($dir, 0775, true);
+
+                file_put_contents($path, implode("\n", $logs) . "\n", FILE_APPEND);
+            }
+        }
+
+        echo stopTime($start);
+    }
 })->describe("Runs all cronjobs for a certain cluster.");
 
 Artisan::command("migrate-trunks", function () {
