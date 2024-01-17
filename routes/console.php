@@ -348,7 +348,7 @@ Artisan::command("clear:cache", function () {
 
     $this->info(CLUSTER . " Repairing permissions...");
 
-    $path = storage_path("framework/cache");
+    $path = storage_path("framework/cache/*");
 
     $this->comment(" - chmod -R 775 $path");
     exec("chmod -R 775 $path");
