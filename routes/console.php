@@ -394,13 +394,23 @@ Artisan::command("repair", function () {
 
     $this->info(CLUSTER . " Repairing permissions...");
 
-    $path = storage_path("framework/cache/*");
+    $root = realpath(__DIR__ . "/../");
+    $storage = $root . "/storage";
+    $cache = $root . "/bootstrap/cache";
 
-    $this->comment(" - chmod -R 775 $path");
-    exec("chmod -R 775 $path");
+    $permissions = [
+        "chown -R www-data:www-data $root",
+        "find $root -type f -exec chmod 664 {} \;",
+        "find $root -type d -exec chmod 775 {} \;",
+        "chgrp -R www-data $storage $cache",
+        "chmod -R ug+rwx $storage $cache"
+    ];
 
-    $this->comment(" - chown -R www-data:www-data $path");
-    exec("chown -R www-data:www-data $path");
+    foreach ($permissions as $permission) {
+        $this->comment(" - $permission");
+
+        exec($permission);
+    }
 
     $this->info(CLUSTER . " Done!");
 })->describe("Attempt to repair general laravel issues.");
