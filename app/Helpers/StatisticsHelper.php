@@ -135,13 +135,13 @@ class StatisticsHelper
     // Scratched Tickets
     public static function collectScratchTicketStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'and won $', -1), '.', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Scratched Ticket' AND details NOT LIKE '%\$amount%' GROUP BY date ORDER BY timestamp DESC");
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'and won $', -1), '.', 1), ',', '')) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Scratched Ticket' AND details NOT LIKE '%\$amount%' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Bills paid
     public static function collectBillsStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'paid the $', -1), ' (', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Paid Bill' GROUP BY date ORDER BY timestamp DESC");
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'paid the $', -1), ' (', 1), ',', '')) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Paid Bill' GROUP BY date ORDER BY timestamp DESC");
     }
 
     private static function collectUserLogsCountStatistics(string ...$action): array
