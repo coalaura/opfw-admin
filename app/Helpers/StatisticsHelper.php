@@ -6,46 +6,65 @@ use Illuminate\Support\Facades\DB;
 
 class StatisticsHelper
 {
+    private static function number(string $query): string
+    {
+        return "REPLACE(REPLACE($query, ',', ''), '.', '')";
+    }
+
     // PDM Purchase & PDM Finance
     public static function collectPDMStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'paid $', -1), '.', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action IN ('Vehicle Purchased', 'Vehicle Financed') GROUP BY date ORDER BY timestamp DESC");
+        $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'paid $', -1), '.', 1)");
+
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action IN ('Vehicle Purchased', 'Vehicle Financed') GROUP BY date ORDER BY timestamp DESC");
     }
 
     // EDM Purchase
     public static function collectEDMStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), '.', 1), ',', '')) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'EDM Purchase' GROUP BY date ORDER BY timestamp DESC");
+        $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), '.', 1)");
+
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'EDM Purchase' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Special Imports Purchase
     public static function collectSpecialImportsStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), ' (', 1), ',', '')) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Special Imports' GROUP BY date ORDER BY timestamp DESC");
+        $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), ' (', 1)");
+
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Special Imports' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Tunershop Purchase
     public static function collectTunerStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), '.', 1), ',', '')) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Tunershop Purchase' GROUP BY date ORDER BY timestamp DESC");
+        $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), '.', 1)");
+
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Tunershop Purchase' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Gemstone sales
     public static function collectGemSaleStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), '.', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Sold Gems' GROUP BY date ORDER BY timestamp DESC");
+        $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), '.', 1)");
+
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Sold Gems' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Pawnshop sales
     public static function collectPawnshopStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'received $', -1), '.', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Used Pawn Shop' GROUP BY date ORDER BY timestamp DESC");
+        $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'received $', -1), '.', 1)");
+
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Used Pawn Shop' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Material Vendor sales
     public static function collectMaterialVendorStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), '.', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Sold Materials' GROUP BY date ORDER BY timestamp DESC");
+        $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), '.', 1)");
+
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Sold Materials' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Casino revenue
@@ -57,16 +76,20 @@ class StatisticsHelper
     // Drug sales
     public static function collectDrugSaleStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), '.', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action IN ('Sold Cocaine', 'Sold Weed', 'Sold Acid', 'Sold Lean', 'Sold Meth', 'Sold Moonshine', 'Sold Shrooms') GROUP BY date ORDER BY timestamp DESC");
+        $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), '.', 1)");
+
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action IN ('Sold Cocaine', 'Sold Weed', 'Sold Acid', 'Sold Lean', 'Sold Meth', 'Sold Moonshine', 'Sold Shrooms') GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Store sales
     public static function collectStoreSaleStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), 'with', 1) + SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'additional $', -1), 'due', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Item(s) Purchased' GROUP BY date ORDER BY timestamp DESC");
+        $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), 'with', 1)");
+
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Item(s) Purchased' GROUP BY date ORDER BY timestamp DESC");
     }
 
-    // Store paychecks
+    // Hourly paychecks
     public static function collectPaycheckStatistics(): array
     {
         return self::collectStatistics("SELECT COUNT(id) as count, SUM(amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM money_logs WHERE details = 'hourly-salary' GROUP BY date ORDER BY timestamp DESC");
@@ -96,16 +119,20 @@ class StatisticsHelper
         return self::collectUserLogsCountStatistics("Report");
     }
 
-    // Impounds (count)
+    // Impounds
     public static function collectImpoundsStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'got $', -1), '.', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Impound' GROUP BY date ORDER BY timestamp DESC");
+        $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'got $', -1), '.', 1)");
+
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Impound' GROUP BY date ORDER BY timestamp DESC");
     }
 
-    // Robbed Peds (count)
+    // Robbed Peds
     public static function collectRobbedPedsStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'received $', -1), '.', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Robbed Ped' GROUP BY date ORDER BY timestamp DESC");
+        $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'received $', -1), '.', 1)");
+
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Robbed Ped' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Daily Tasks (count)
@@ -129,19 +156,25 @@ class StatisticsHelper
     // Items found in Dumpsters (count)
     public static function collectDumpsterStatistics(): array
     {
-        return self::collectStatistics("SELECT 0 as count, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'moved ', -1), 'x', 1)) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Item Moved' AND details LIKE '%dumpster-%' GROUP BY date ORDER BY timestamp DESC");
+        $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'moved ', -1), 'x', 1)");
+
+        return self::collectStatistics("SELECT 0 as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Item Moved' AND details LIKE '%dumpster-%' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Scratched Tickets
     public static function collectScratchTicketStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'and won $', -1), '.', 1), ',', '')) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Scratched Ticket' AND details NOT LIKE '%\$amount%' GROUP BY date ORDER BY timestamp DESC");
+        $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'and won $', -1), '.', 1)");
+
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Scratched Ticket' AND details NOT LIKE '%\$amount%' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Bills paid
     public static function collectBillsStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(REPLACE(SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'paid the $', -1), ' (', 1), ',', '')) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Paid Bill' GROUP BY date ORDER BY timestamp DESC");
+        $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'paid the $', -1), ' (', 1)");
+
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Paid Bill' GROUP BY date ORDER BY timestamp DESC");
     }
 
     private static function collectUserLogsCountStatistics(string ...$action): array
