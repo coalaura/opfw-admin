@@ -400,8 +400,8 @@ Artisan::command("repair", function () {
 
     $permissions = [
         "chown -R www-data:www-data $root",
-        "find $root -type f -exec chmod 664 {} \;",
-        "find $root -type d -exec chmod 775 {} \;",
+        "find $root -type f ! -path \"$root/.git/*\" ! -path \"$root/vendor/*\" ! -path \"$root/node_modules/*\" -exec chmod 664 {} \;",
+        "find $root -type d ! -path \"$root/.git\" ! -path \"$root/.git/*\" ! -path \"$root/vendor\" ! -path \"$root/vendor/*\" ! -path \"$root/node_modules\" ! -path \"$root/node_modules/*\" -exec chmod 775 {} \;",
         "chgrp -R www-data $storage $cache",
         "chmod -R ug+rwx $storage $cache"
     ];
