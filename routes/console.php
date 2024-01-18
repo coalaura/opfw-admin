@@ -400,10 +400,13 @@ Artisan::command("repair", function () {
 
     $permissions = [
         "chown -R www-data:www-data $root",
-        "find $root -type f ! -path \"$root/.git/*\" ! -path \"$root/vendor/*\" ! -path \"$root/node_modules/*\" -exec chmod 664 {} \;",
-        "find $root -type d ! -path \"$root/.git\" ! -path \"$root/.git/*\" ! -path \"$root/vendor\" ! -path \"$root/vendor/*\" ! -path \"$root/node_modules\" ! -path \"$root/node_modules/*\" -exec chmod 775 {} \;",
+        "find $root -type d \( -name .git -o -name vendor -o -name node_modules \) -prune -o -type f -print0 | xargs -0 chmod 664",
+        "find $root -type d \( -name .git -o -name vendor -o -name node_modules \) -prune -o -type d -print0 | xargs -0 chmod 775",
         "chgrp -R www-data $storage $cache",
-        "chmod -R ug+rwx $storage $cache"
+        "chmod -R ug+rwx $storage $cache",
+
+        // Fix .git ownership
+        "chown -R \$USER:\$USER $root/.git"
     ];
 
     foreach ($permissions as $permission) {
