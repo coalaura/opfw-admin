@@ -947,7 +947,16 @@
             "streamer_exception": "Ban-Apavaad",
             "streamer_exception_title": "Yah khiladi '{0}' par sakriya roop se streaming karte hue khelne ke liye anumati prapt hai.",
             "hide_system": "Chhupaaye {0} System Notes",
-            "show_system": "Dikhaaye {0} System Notes"
+            "show_system": "Dikhaaye {0} System Notes",
+            "staff_stats": "Karmchari Gatividhi Aankade",
+            "source_bans": "Pratibandh",
+            "source_bans_details": "Pichle 30 dino mein is karmchari dwara jaari kiye gaye pratibandhon ki sankhya.",
+            "source_notes": "Notes, Chetavani aur Strikes",
+            "source_notes_details": "Pichle 30 dino mein is karmchari dwara jaari kiye gaye notes, chetavani aur strikes ki sankhya.",
+            "source_staff": "Staff Chat",
+            "source_staff_details": "Pichle 30 dino mein is karmchari dwara bheje gaye staff chat sandeshon ki sankhya.",
+            "source_staff_pm": "Staff-PM",
+            "source_staff_pm_details": "Pichle 30 dino mein is karmchari dwara bheje gaye staff PMs ki sankhya."
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",

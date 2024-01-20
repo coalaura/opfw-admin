@@ -937,7 +937,16 @@
             "streamer_exception": "Ban-Reprieve",
             "streamer_exception_title": "Thar player be permitted t' partake in play whilst broadcasin' live on `{0}`.",
             "hide_system": "Stow {0} System Notes",
-            "show_system": "Reveal {0} System Notes"
+            "show_system": "Reveal {0} System Notes",
+            "staff_stats": "Deckhand Deeds Tally",
+            "source_bans": "Maroonin's",
+            "source_bans_details": "Number o' scallywags cast off to Davy Jones' Locker by this here crew member in the last 30 moons.",
+            "source_notes": "Scrawls, Cautions & Floggin's",
+            "source_notes_details": "Number o' scrawls, cautions an' floggin's handed down by this buccaneer in the last 30 moons.",
+            "source_staff": "Crew Parley",
+            "source_staff_details": "Number of gab fests in the crew's quarters by this salty dog in the last 30 moons.",
+            "source_staff_pm": "Crew Missives",
+            "source_staff_pm_details": "Number o' missives dispatched by this swabbie in the last 30 moons."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

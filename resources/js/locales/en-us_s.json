@@ -937,7 +937,16 @@
             "streamer_exception": "Ban-Exception",
             "streamer_exception_title": "This here player's got permission to play whilst they're streamin' live on `{0}`.",
             "hide_system": "Hide {0} System Notes",
-            "show_system": "Show {0} System Notes"
+            "show_system": "Show {0} System Notes",
+            "staff_stats": "Staff Activity Numbers",
+            "source_bans": "Prohibitions",
+            "source_bans_details": "Number of bans this staff member done handed out in the past month.",
+            "source_notes": "Remarks, Heads-ups & Reprimands",
+            "source_notes_details": "Number of remarks, heads-ups, and reprimands this staff member done given in the past month.",
+            "source_staff": "Staff Chatter",
+            "source_staff_details": "Number of times this staff member chatted in staff chat in the past month.",
+            "source_staff_pm": "Staff Private Messages",
+            "source_staff_pm_details": "Number of private messages this staff member sent in the past month."
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

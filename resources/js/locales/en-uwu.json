@@ -937,7 +937,16 @@
             "streamer_exception": "Bawn-Excepshun",
             "streamer_exception_title": "Dis pwayew is awwowed to pway whiwe actwively stweaming on `{0}`.",
             "hide_system": "Hidye {0} System Nyotes",
-            "show_system": "Showy {0} System Nyotes"
+            "show_system": "Showy {0} System Nyotes",
+            "staff_stats": "Stawff Activitee Statistwics",
+            "source_bans": "Bwans",
+            "source_bans_details": "Amownt of bwans issued by dis stawff membew in da wast 30 dayz.",
+            "source_notes": "Notes, Wawnings & Stwikes",
+            "source_notes_details": "Amownt of notes, wawnings and stwikes issued by dis stawff membew in da wast 30 dayz.",
+            "source_staff": "Stawff Chat",
+            "source_staff_details": "Amownt of stawff chat messwages sent by dis stawff membew in da wast 30 dayz.",
+            "source_staff_pm": "Stawff-PM",
+            "source_staff_pm_details": "Amownt of stawff PeeMs sent by dis stawff membew in da wast 30 dayz."
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

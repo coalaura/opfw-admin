@@ -177,18 +177,20 @@ class StatisticsHelper
         return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Paid Bill' GROUP BY date ORDER BY timestamp DESC");
     }
 
-    private static function collectUserLogsCountStatistics(string ...$action): array
+    public static function collectUserLogsCountStatistics(string ...$action): array
     {
+        $monthAgo = strtotime("-1 month");
+
         if (sizeof($action) === 1) {
             return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = '{$action[0]}' GROUP BY date ORDER BY timestamp DESC");
         }
 
         $action = implode("', '", $action);
 
-        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action IN ('{$action}') GROUP BY date ORDER BY timestamp DESC");
+        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action IN ('{$action}') AND timestamp >= $monthAgo GROUP BY date ORDER BY timestamp DESC");
     }
 
-    private static function collectStatistics(string $query): array
+    public static function collectStatistics(string $query): array
     {
         $start = microtime(true);
 

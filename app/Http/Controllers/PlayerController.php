@@ -6,6 +6,7 @@ use App\Ban;
 use App\BlacklistedIdentifier;
 use App\Character;
 use App\Helpers\GeneralHelper;
+use App\Helpers\StatisticsHelper;
 use App\Http\Controllers\PlayerRouteController;
 use App\Http\Resources\CharacterResource;
 use App\Http\Resources\PanelLogResource;
@@ -248,4 +249,41 @@ class PlayerController extends Controller
         return $this->json(true, $data);
     }
 
+    /**
+     * Staff Activity Statistics loaded via ajax.
+     *
+     * @param Player $player
+     * @param string $source
+     * @param Request $request
+     * @return Response|void
+     */
+    public function statistics(Player $player, string $source, Request $request)
+    {
+        if (!$player->isStaff() || !$this->isSeniorStaff($request)) {
+            abort(401);
+        }
+
+        $userId  = $player->user_id;
+        $license = $player->license_identifier;
+        $month   = strtotime("-1 month");
+
+        $result = false;
+
+        switch ($source) {
+            case "bans":
+                $result = StatisticsHelper::collectStatistics("SELECT 0 as count, COUNT(ban_hash) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM (SELECT ban_hash, timestamp FROM user_bans WHERE creator_identifier = '$license' AND timestamp >= $month GROUP BY ban_hash) bans GROUP BY date ORDER BY timestamp DESC");
+                break;
+            case "notes":
+                $result = StatisticsHelper::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(created_at, '%c/%d/%Y') as date FROM warnings WHERE issuer_id = $userId AND UNIX_TIMESTAMP(created_at) >= $month GROUP BY date ORDER BY created_at DESC");
+                break;
+            case "staff":
+                $result = StatisticsHelper::collectUserLogsCountStatistics("Staff Message");
+                break;
+            case "staff_pm":
+                $result = StatisticsHelper::collectUserLogsCountStatistics("Staff PM", "Important Staff PM");
+                break;
+        }
+
+        return $this->json(true, $result);
+    }
 }

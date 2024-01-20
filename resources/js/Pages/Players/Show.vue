@@ -275,6 +275,16 @@
 
             <!-- Small icon buttons top right -->
             <div class="absolute top-2 right-2 flex gap-2 items-center">
+                <!-- Staff statistics -->
+                <template v-if="$page.auth.player.isSeniorStaff && player.isStaff">
+                    <button class="p-1 text-sm font-bold leading-4 text-center rounded border-teal-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :title="t('players.show.staff_stats')" @click="isShowingStaffStatistics = true">
+                        <i class="fas fa-heartbeat mr-1"></i>
+                        Stats
+                    </button>
+
+                    <div class="w-px bg-white bg-opacity-30 h-full separator">&nbsp;</div>
+                </template>
+
                 <!-- Damage Logs -->
                 <a class="p-1 text-sm font-bold leading-4 text-center rounded border-pink-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/who_was_damaged/' + player.licenseIdentifier" :title="t('players.show.damage_logs_by')" v-if="this.perm.check(this.perm.PERM_DAMAGE_LOGS)" target="_blank">
                     <i class="fas fa-hammer mr-1"></i>
@@ -367,6 +377,28 @@
         </div>
 
         <metadataViewer :title="t('players.show.user_variables')" :metadata="player.variables" :show.sync="showingUserVariables"></metadataViewer>
+
+        <!-- Staff Statistics -->
+        <modal :show.sync="isShowingStaffStatistics" extraClass="max-w-large">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.show.staff_stats') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <StatisticsTable source="bans" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
+                <StatisticsTable source="notes" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
+                <StatisticsTable source="staff" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
+                <StatisticsTable source="staff_pm" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingStaffStatistics = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
 
         <!-- Global bans -->
         <modal :show.sync="showingGlobalBans">
@@ -1474,6 +1506,7 @@ import Avatar from './../../Components/Avatar';
 import ScreenshotAttacher from './../../Components/ScreenshotAttacher';
 import Modal from './../../Components/Modal';
 import MetadataViewer from './../../Components/MetadataViewer';
+import StatisticsTable from './../../Components/StatisticsTable';
 
 import models from "../../data/ped_models.json";
 
@@ -1487,7 +1520,8 @@ export default {
         Avatar,
         ScreenshotAttacher,
         Modal,
-        MetadataViewer
+        MetadataViewer,
+        StatisticsTable
     },
     props: {
         player: {
@@ -1669,7 +1703,10 @@ export default {
             isLoading: false,
             showingMoreInfo: false,
 
-            showingUserVariables: false
+            showingUserVariables: false,
+
+            isShowingStaffStatistics: false,
+            staffStatistics: {}
         }
     },
     computed: {
@@ -1712,6 +1749,9 @@ export default {
         },
     },
     methods: {
+        resolveStaffStatistics(pSource) {
+            return axios.get('/players/' + this.player.licenseIdentifier + '/statistics/' + pSource);
+        },
         showGlobalBans() {
             this.showingGlobalBans = true;
         },

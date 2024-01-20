@@ -937,7 +937,16 @@
             "streamer_exception": "🚫❌",
             "streamer_exception_title": "🎮👤🏳️⏩🎥💻➡️`{0}`.",
             "hide_system": "🙈 {0} 🖥️ 📝",
-            "show_system": "🔍 {0} 🖥️ 📝"
+            "show_system": "🔍 {0} 🖥️ 📝",
+            "staff_stats": "👥📊",
+            "source_bans": "🚫",
+            "source_bans_details": "👥🚫📆📈🔙🔟➖3️⃣0️⃣📅",
+            "source_notes": "📝, ⚠️ & 🏴‍☠️",
+            "source_notes_details": "👥📝🚨🏴‍☠️📆📈🔙🔟➖3️⃣0️⃣📅",
+            "source_staff": "👥💬",
+            "source_staff_details": "👥💬🗨️✉️📆📈🔙🔟➖3️⃣0️⃣📅",
+            "source_staff_pm": "👥-📧✉️",
+            "source_staff_pm_details": "👥📧✉️📈🔙🔟➖3️⃣0️⃣📅"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

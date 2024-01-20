@@ -8,7 +8,7 @@
                 </div>
 
                 <span>
-                    {{ t('statistics.' + source) }}
+                    {{ t((this.locale ? this.locale : 'statistics.') + source) }}
                     <sup v-if="totalAmount > 0 || totalCount > 0">
                         {{ numberFormat(totalAmount, false, currency) }}
                         <span v-if="currency">- x{{ numberFormat(totalCount, false, false) }}</span>
@@ -17,7 +17,7 @@
             </h2>
         </div>
 
-        <p class="text-sm italic mb-3">{{ t('statistics.' + source + '_details') }}</p>
+        <p class="text-sm italic mb-3">{{ t((this.locale ? this.locale : 'statistics.') + source + '_details') }}</p>
 
         <span class="absolute bottom-1 right-2 text-xs" v-if="time">{{ numberFormat(time, false, false) }}ms</span>
 
@@ -91,6 +91,12 @@ export default {
         currency: {
             type: Boolean,
         },
+        resolve: {
+            type: Function,
+        },
+        locale: {
+            type: String,
+        },
 
         search: {
             type: String,
@@ -108,6 +114,8 @@ export default {
             return this.data.reduce((a, b) => a + b.count, 0);
         },
         shown() {
+            if (!this.search) return true;
+
             const title = this.t('statistics.' + this.source).toLowerCase(),
                 search = this.search.toLowerCase().trim();
 
@@ -144,7 +152,7 @@ export default {
             this.requested = true;
 
             try {
-                const response = await axios.get('/statistics/' + this.source),
+                const response = await (this.resolve ? this.resolve(this.source) : axios.get('/statistics/' + this.source)),
                     data = response.data;
 
                 if (data.status) {

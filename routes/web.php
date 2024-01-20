@@ -89,6 +89,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::resource('players.bans', PlayerBanController::class);
     Route::resource('players.warnings', PlayerWarningController::class);
 
+    Route::get('/players/{player}/statistics/{source}', [PlayerController::class, 'statistics']);
     Route::get('/players/{player}/data', [PlayerController::class, 'extraData']);
     Route::get('/players/{player}/linked', [PlayerRouteController::class, 'linkedAccounts']);
     Route::get('/players/{player}/linked_hwid', [PlayerRouteController::class, 'linkedHWID']);

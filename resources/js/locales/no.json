@@ -947,7 +947,16 @@
             "streamer_exception": "Unntak fra utestengelse",
             "streamer_exception_title": "Denne spilleren har lov til å spille mens vedkommende aktivt strømmer på `{0}`.",
             "hide_system": "Skjul {0} systemnotater",
-            "show_system": "Vis {0} systemnotater"
+            "show_system": "Vis {0} systemnotater",
+            "staff_stats": "Statistikk over Ansatte Aktiviteter",
+            "source_bans": "Utestengelser",
+            "source_bans_details": "Antall utestengelser utført av denne ansatte de siste 30 dagene.",
+            "source_notes": "Notater, Advarsler & Anmerkninger",
+            "source_notes_details": "Antall notater, advarsler og anmerkninger utført av denne ansatte de siste 30 dagene.",
+            "source_staff": "Ansattprat",
+            "source_staff_details": "Antall ansattprat-meldinger sendt av denne ansatte de siste 30 dagene.",
+            "source_staff_pm": "Ansatt-PM",
+            "source_staff_pm_details": "Antall ansatt PM-er sendt av denne ansatte de siste 30 dagene."
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",
