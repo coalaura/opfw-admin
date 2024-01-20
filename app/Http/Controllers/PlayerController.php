@@ -277,10 +277,10 @@ class PlayerController extends Controller
                 $result = StatisticsHelper::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(created_at, '%c/%d/%Y') as date FROM warnings WHERE issuer_id = $userId AND UNIX_TIMESTAMP(created_at) >= $month GROUP BY date ORDER BY created_at DESC");
                 break;
             case "staff":
-                $result = StatisticsHelper::collectUserLogsCountStatistics("Staff Message");
+                $result = StatisticsHelper::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = 'Staff Message' AND timestamp >= $month AND identifier = '$license' GROUP BY date ORDER BY timestamp DESC");
                 break;
             case "staff_pm":
-                $result = StatisticsHelper::collectUserLogsCountStatistics("Staff PM", "Important Staff PM");
+                $result = StatisticsHelper::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action IN ('Staff PM', 'Important Staff PM') AND timestamp >= $month AND identifier = '$license' GROUP BY date ORDER BY timestamp DESC");
                 break;
         }
 
