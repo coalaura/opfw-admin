@@ -271,7 +271,7 @@ class PlayerController extends Controller
 
         switch ($source) {
             case "bans":
-                $result = StatisticsHelper::collectStatistics("SELECT 0 as count, COUNT(ban_hash) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM (SELECT ban_hash, timestamp FROM user_bans WHERE creator_identifier = '$license' AND timestamp >= $month GROUP BY ban_hash) bans GROUP BY date ORDER BY timestamp DESC");
+                $result = StatisticsHelper::collectStatistics("SELECT 0 as count, COUNT(ban_hash) as amount, DATE_FORMAT(FROM_UNIXTIME(timestamp), '%c/%d/%Y') as date FROM (SELECT ban_hash, timestamp FROM user_bans WHERE creator_identifier = '$license' AND timestamp >= $month GROUP BY ban_hash) bans GROUP BY date ORDER BY timestamp DESC");
                 break;
             case "notes":
                 $result = StatisticsHelper::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(created_at, '%c/%d/%Y') as date FROM warnings WHERE issuer_id = $userId AND UNIX_TIMESTAMP(created_at) >= $month GROUP BY date ORDER BY created_at DESC");
