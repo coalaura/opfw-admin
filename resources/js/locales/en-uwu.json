@@ -946,7 +946,11 @@
             "source_staff": "Stawff Chat",
             "source_staff_details": "Amownt of stawff chat messwages sent by dis stawff membew in da wast 30 dayz.",
             "source_staff_pm": "Stawff-PM",
-            "source_staff_pm_details": "Amownt of stawff PeeMs sent by dis stawff membew in da wast 30 dayz."
+            "source_staff_pm_details": "Amownt of stawff PeeMs sent by dis stawff membew in da wast 30 dayz.",
+            "source_noclip": "Nyocwip",
+            "source_noclip_details": "Amownt of times this staff membew used nyocwip in the wast 30 days.",
+            "source_spectate": "Spwectate",
+            "source_spectate_details": "Amownt of times this staff membew has spwectated someone in the wast 30 days."
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

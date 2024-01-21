@@ -956,7 +956,11 @@
             "source_staff": "Ansattprat",
             "source_staff_details": "Antall ansattprat-meldinger sendt av denne ansatte de siste 30 dagene.",
             "source_staff_pm": "Ansatt-PM",
-            "source_staff_pm_details": "Antall ansatt PM-er sendt av denne ansatte de siste 30 dagene."
+            "source_staff_pm_details": "Antall ansatt PM-er sendt av denne ansatte de siste 30 dagene.",
+            "source_noclip": "Noclip",
+            "source_noclip_details": "Antall ganger denne ansatte har brukt noclip de siste 30 dagene.",
+            "source_spectate": "Tilskuermodus",
+            "source_spectate_details": "Antall ganger denne ansatte har vært i tilskuermodus og sett på noen de siste 30 dagene."
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",

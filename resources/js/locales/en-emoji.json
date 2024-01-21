@@ -946,7 +946,11 @@
             "source_staff": "👥💬",
             "source_staff_details": "👥💬🗨️✉️📆📈🔙🔟➖3️⃣0️⃣📅",
             "source_staff_pm": "👥-📧✉️",
-            "source_staff_pm_details": "👥📧✉️📈🔙🔟➖3️⃣0️⃣📅"
+            "source_staff_pm_details": "👥📧✉️📈🔙🔟➖3️⃣0️⃣📅",
+            "source_noclip": "🔓",
+            "source_noclip_details": "👤🔓⌛️🔢🗓️.",
+            "source_spectate": "👀",
+            "source_spectate_details": "👤👀👥⌛️🔢🗓️."
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

@@ -956,7 +956,11 @@
             "source_staff": "Staff Chat",
             "source_staff_details": "Pichle 30 dino mein is karmchari dwara bheje gaye staff chat sandeshon ki sankhya.",
             "source_staff_pm": "Staff-PM",
-            "source_staff_pm_details": "Pichle 30 dino mein is karmchari dwara bheje gaye staff PMs ki sankhya."
+            "source_staff_pm_details": "Pichle 30 dino mein is karmchari dwara bheje gaye staff PMs ki sankhya.",
+            "source_noclip": "Noclip",
+            "source_noclip_details": "Pichhle 30 dino mein is staff member ne kitni baar noclip ka upayog kiya hai.",
+            "source_spectate": "Spectate",
+            "source_spectate_details": "Pichhle 30 dino mein is staff member ne kitni baar kisi ko spectate kiya hai."
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",

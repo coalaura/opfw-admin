@@ -391,6 +391,8 @@
                 <StatisticsTable source="notes" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
                 <StatisticsTable source="staff" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
                 <StatisticsTable source="staff_pm" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
+                <StatisticsTable source="noclip" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
+                <StatisticsTable source="spectate" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
             </template>
 
             <template #actions>

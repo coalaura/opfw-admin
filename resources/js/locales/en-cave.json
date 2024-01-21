@@ -946,7 +946,11 @@
             "source_staff": "Tribe Helper Talk",
             "source_staff_details": "How many talk-signs big helper send in tribe helper talk in moon-times of 30 days.",
             "source_staff_pm": "Tribe-Helper Secret-Send",
-            "source_staff_pm_details": "How many secret-sends big helper make to others in moon-times of 30 days."
+            "source_staff_pm_details": "How many secret-sends big helper make to others in moon-times of 30 days.",
+            "source_noclip": "No fall through ground",
+            "source_noclip_details": "How many suns since last moon staff use no fall through ground.",
+            "source_spectate": "Watch quietly",
+            "source_spectate_details": "How many suns since last moon staff watch others quiet."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

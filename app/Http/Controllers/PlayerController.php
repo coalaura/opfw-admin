@@ -282,6 +282,13 @@ class PlayerController extends Controller
             case "staff_pm":
                 $result = StatisticsHelper::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action IN ('Staff PM', 'Important Staff PM') AND timestamp >= $month AND identifier = '$license' GROUP BY date ORDER BY timestamp DESC");
                 break;
+            case "noclip":
+                $result = StatisticsHelper::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = 'Noclip Toggled' AND timestamp >= $month AND identifier = '$license' GROUP BY date ORDER BY timestamp DESC");
+                break;
+            case "spectate":
+                // only need 1 of the 2 (not 'Stopped Spectating')
+                $result = StatisticsHelper::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = 'Started Spectating' AND timestamp >= $month AND identifier = '$license' GROUP BY date ORDER BY timestamp DESC");
+                break;
         }
 
         return $this->json(true, $result);

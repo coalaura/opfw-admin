@@ -946,7 +946,11 @@
             "source_staff": "Staff Chatter",
             "source_staff_details": "Number of times this staff member chatted in staff chat in the past month.",
             "source_staff_pm": "Staff Private Messages",
-            "source_staff_pm_details": "Number of private messages this staff member sent in the past month."
+            "source_staff_pm_details": "Number of private messages this staff member sent in the past month.",
+            "source_noclip": "Noclip",
+            "source_noclip_details": "How many times this here staff member done used noclip in the past 30 days.",
+            "source_spectate": "Spectate",
+            "source_spectate_details": "How many times this staff member done spectated somebody in the last 30 days."
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",
