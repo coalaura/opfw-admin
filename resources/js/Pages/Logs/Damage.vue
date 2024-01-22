@@ -140,7 +140,7 @@
 							<span class="italic" v-else-if="log.hitEntityType === 2">
 								{{ t('logs.vehicle') }} #{{ log.hitGlobalId }}
 
-								<span v-if="log.tireIndex" :title="t('logs.hit_tire', log.tireIndex)">
+								<span v-if="log.tireIndex" :title="t('logs.hit_tire', log.tireIndex)" class="ml-2 cursor-help">
 									<i class="fas fa-truck-monster"></i>
 									{{ log.tireIndex }}
 								</span>
@@ -311,7 +311,7 @@ export default {
 			if (!this.setting('parseLogs')) return '';
 
 			if (log.silenced) {
-				return `<i class="text-gray-400 dark:text-gray-600 fas fa-volume-mute" title="${this.t("logs.silenced")}"></i>`;
+				return `<i class="text-teal-700 dark:text-teal-300 fas fa-volume-mute" title="${this.t("logs.silenced")}"></i>`;
 			}
 
 			if (log.hitComponent === "head") {
