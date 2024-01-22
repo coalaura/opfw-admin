@@ -1352,6 +1352,7 @@
         "peds": "Peds",
         "vehicles": "Vehicles",
         "objects": "Objects",
+        "players": "Players",
         "npc": "NPC",
         "vehicle": "Vehicle",
         "object": "Object",

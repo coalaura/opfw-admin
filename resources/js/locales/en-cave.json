@@ -1318,7 +1318,8 @@
         "headshot": "Head bonk",
         "high_damage": "Big Hurt (Boom-booms, and more)",
         "silenced": "Quiet",
-        "hit_tire": "Smack wheel with count {0}."
+        "hit_tire": "Smack wheel with count {0}.",
+        "players": "Play-mates"
     },
     "panel_logs": {
         "title": "Ugga Ugga Ugga",

@@ -1318,7 +1318,8 @@
         "headshot": "Noggin shot",
         "high_damage": "Big Ol' Hurt (like boom-booms, and such)",
         "silenced": "Quiet-like",
-        "hit_tire": "Hit the tire with number {0}."
+        "hit_tire": "Hit the tire with number {0}.",
+        "players": "Playas"
     },
     "panel_logs": {
         "title": "Panel Lahgs",

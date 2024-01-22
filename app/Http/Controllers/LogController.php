@@ -528,6 +528,9 @@ class LogController extends Controller
                 case "object":
                     $query->where('hit_entity_types', '=', '[3]');
                     break;
+                case "player":
+                    $query->where('hit_players', '!=', '[]');
+                    break;
             }
         }
 

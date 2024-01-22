@@ -1327,7 +1327,8 @@
         "headshot": "Hodeskudd",
         "high_damage": "Høy Skade (Eksplosjoner osv.)",
         "silenced": "Lydløs",
-        "hit_tire": "Truffet dekk med indeks {0}."
+        "hit_tire": "Truffet dekk med indeks {0}.",
+        "players": "Spillere"
     },
     "panel_logs": {
         "title": "Panellagre",

@@ -63,6 +63,7 @@
 							</label>
 							<select class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="entity" v-model="filters.entity">
 								<option :value="null">{{ t('global.all') }}</option>
+								<option value="player">{{ t('logs.players') }}</option>
 								<option value="ped">{{ t('logs.peds') }}</option>
 								<option value="vehicle">{{ t('logs.vehicles') }}</option>
 								<option value="object">{{ t('logs.objects') }}</option>

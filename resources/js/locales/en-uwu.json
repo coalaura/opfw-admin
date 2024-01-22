@@ -1318,7 +1318,8 @@
         "headshot": "Headshot",
         "high_damage": "High Damawge (Expwosions, etc.)",
         "silenced": "Siwenced",
-        "hit_tire": "Hit tiw with index {0}."
+        "hit_tire": "Hit tiw with index {0}.",
+        "players": "Pwayews"
     },
     "panel_logs": {
         "title": "Pwanel Wogs",
