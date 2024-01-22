@@ -272,7 +272,7 @@ export default {
 		},
 		formatMilliSecondDiff(ms) {
 			if (ms <= 5000) {
-				const seconds = Math.round(ms / 1000);
+				const seconds = Math.floor(ms / 1000);
 				ms -= seconds * 1000;
 
 				return (seconds ? seconds + 's ' : '') + (!seconds || ms ? ms + 'ms' : '');
