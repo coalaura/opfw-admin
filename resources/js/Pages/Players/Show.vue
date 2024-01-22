@@ -286,12 +286,12 @@
                 </template>
 
                 <!-- Damage Logs -->
-                <a class="p-1 text-sm font-bold leading-4 text-center rounded border-pink-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/who_was_damaged/' + player.licenseIdentifier" :title="t('players.show.damage_logs_by')" v-if="this.perm.check(this.perm.PERM_DAMAGE_LOGS)" target="_blank">
+                <a class="p-1 text-sm font-bold leading-4 text-center rounded border-pink-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/damage?attacker=' + player.licenseIdentifier" :title="t('players.show.damage_logs_by')" v-if="this.perm.check(this.perm.PERM_DAMAGE_LOGS)" target="_blank">
                     <i class="fas fa-hammer mr-1"></i>
                     Out
                 </a>
                 <!-- Damage Logs 2 -->
-                <a class="p-1 text-sm font-bold leading-4 text-center rounded border-pink-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/who_damaged/' + player.licenseIdentifier" :title="t('players.show.damage_logs')" v-if="this.perm.check(this.perm.PERM_DAMAGE_LOGS)" target="_blank">
+                <a class="p-1 text-sm font-bold leading-4 text-center rounded border-pink-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/damage?victim=' + player.licenseIdentifier" :title="t('players.show.damage_logs')" v-if="this.perm.check(this.perm.PERM_DAMAGE_LOGS)" target="_blank">
                     <i class="fas fa-procedures mr-1"></i>
                     In
                 </a>

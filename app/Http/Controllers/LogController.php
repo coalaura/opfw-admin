@@ -6,10 +6,12 @@ use App\Helpers\CacheHelper;
 use App\Helpers\GeneralHelper;
 use App\Helpers\PermissionHelper;
 use App\Http\Resources\LogResource;
+use App\Http\Resources\WeaponDamageEventResource;
 use App\Http\Resources\MoneyLogResource;
 use App\Log;
 use App\MoneyLog;
 use App\Player;
+use App\WeaponDamageEvent;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
@@ -210,8 +212,8 @@ class LogController extends Controller
         $end = round(microtime(true) * 1000);
 
         return Inertia::render('Logs/MoneyLogs', [
-            'logs'      => $logs,
-            'filters'   => [
+            'logs'    => $logs,
+            'filters' => [
                 'identifier'   => $request->input('identifier'),
                 'character_id' => $request->input('character_id'),
                 'details'      => $request->input('details'),
@@ -219,9 +221,9 @@ class LogController extends Controller
                 'after'        => $request->input('after'),
                 'before'       => $request->input('before'),
             ],
-            'links'     => $this->getPageUrls($page),
-            'time'      => $end - $start,
-            'page'      => $page,
+            'links'   => $this->getPageUrls($page),
+            'time'    => $end - $start,
+            'page'    => $page,
         ]);
     }
 
@@ -257,15 +259,15 @@ class LogController extends Controller
         $end = round(microtime(true) * 1000);
 
         return Inertia::render('Logs/DarkChat', [
-            'logs'           => $logs,
+            'logs'    => $logs,
             'filters' => $request->all(
                 'license',
                 'channel',
                 'message'
             ),
-            'links'          => $this->getPageUrls($page),
-            'time'           => $end - $start,
-            'page'           => $page,
+            'links'   => $this->getPageUrls($page),
+            'time'    => $end - $start,
+            'page'    => $page,
         ]);
     }
 
@@ -480,6 +482,77 @@ class LogController extends Controller
             'playerMap' => Player::fetchLicensePlayerNameMap($logs, ['source_license', 'target_license']),
             'page'      => $page,
             'maxPage'   => ceil(sizeof($groupedLogs) / 20),
+        ]);
+    }
+
+    public function damageLogs(Request $request)
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_DAMAGE_LOGS)) {
+            abort(401);
+        }
+
+        $start = round(microtime(true) * 1000);
+
+        $query = WeaponDamageEvent::query()
+            ->orderByDesc('timestamp_ms')
+            ->where('is_parent_self', '=', '1');
+
+        // Filtering by attacker identifier.
+        $this->searchQuery($request, $query, 'attacker', 'license_identifier');
+
+        // Filtering by victim identifier.
+        $this->searchQuery($request, $query, 'victim', DB::raw("JSON_UNQUOTE(JSON_EXTRACT(hit_players, '$[0]'))"));
+
+        // Filtering by weapon.
+        if ($weapon = $request->input('weapon')) {
+            $hash = WeaponDamageEvent::getWeaponHash($weapon);
+
+            if ($hash) {
+                if ($hash < 0) {
+                    $hash += 4294967296;
+                }
+
+                $query->where('weapon_type', $hash);
+            }
+        }
+
+        // Filtering by entity type.
+        if ($entityType = $request->input('entity')) {
+            switch ($entityType) {
+                case "ped":
+                    $query->where('hit_entity_types', '=', '[1]');
+                    break;
+                case "vehicle":
+                    $query->where('hit_entity_types', '=', '[2]');
+                    break;
+                case "object":
+                    $query->where('hit_entity_types', '=', '[3]');
+                    break;
+            }
+        }
+
+        $page = Paginator::resolveCurrentPage('page');
+        $query->limit(30)->offset(($page - 1) * 30);
+
+        $query->select(['id', 'license_identifier', 'timestamp_ms', 'hit_players', 'hit_healths', 'distance', 'hit_global_ids', 'hit_entity_types', 'hit_component', 'silenced', 'tyre_index', 'weapon_damage', 'weapon_type', 'bonus_damage']);
+
+        $logs = WeaponDamageEventResource::collection($query->get());
+
+        $end = round(microtime(true) * 1000);
+
+        return Inertia::render('Logs/Damage', [
+            'logs'      => $logs,
+            'filters'   => $request->all(
+                'attacker',
+                'victim',
+                'weapon',
+                'entity'
+            ),
+            'links'     => $this->getPageUrls($page),
+            'time'      => $end - $start,
+            'playerMap' => Player::fetchLicensePlayerNameMap($logs->toArray($request), ['licenseIdentifier', 'hitLicense']),
+            'page'      => $page,
+            'weapons'   => array_values(WeaponDamageEvent::getWeaponList()),
         ]);
     }
 

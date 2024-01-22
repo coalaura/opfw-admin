@@ -2,7 +2,11 @@
 
 function first($array)
 {
-    if (!is_array($array) || empty($array)) {
+    if (is_string($array)) {
+        $array = json_decode($array, true);
+    }
+
+    if (!$array || !is_array($array) || empty($array)) {
         return null;
     }
 

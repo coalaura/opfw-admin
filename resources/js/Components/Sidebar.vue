@@ -130,6 +130,12 @@ export default {
                             url: '/logs',
                         },
                         {
+                            label: 'logs.damage',
+                            icon: 'medkit',
+                            url: '/damage',
+                            hidden: !this.perm.check(this.perm.PERM_DAMAGE_LOGS),
+                        },
+                        {
                             label: 'logs.money_title',
                             icon: 'money',
                             url: '/moneyLogs',
@@ -371,6 +377,8 @@ export default {
                     return 'h-side-close hover:h-side-open-four';
                 case 5:
                     return 'h-side-close hover:h-side-open-five';
+                case 6:
+                    return 'h-side-close hover:h-side-open-six';
                 default:
                     return '';
             }

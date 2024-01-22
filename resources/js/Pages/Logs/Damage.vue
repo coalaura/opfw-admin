@@ -1,0 +1,328 @@
+<template>
+	<div>
+
+		<portal to="title">
+			<h1 class="dark:text-white">
+				<i class="mr-3 fas fa-unlock-alt" :title="perm.restriction(perm.PERM_DAMAGE_LOGS)"></i>
+
+				{{ t('logs.damage') }}
+			</h1>
+			<p>
+				{{ t('logs.damage_description') }}
+			</p>
+		</portal>
+
+		<portal to="actions">
+			<button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
+				<i class="mr-1 fa fa-refresh"></i>
+				{{ t('logs.refresh') }}
+			</button>
+		</portal>
+
+		<!-- Querying -->
+		<v-section :noFooter="true">
+			<template #header>
+				<h2>
+					{{ t('logs.filter') }}
+				</h2>
+			</template>
+
+			<template>
+				<form @submit.prevent autocomplete="off">
+					<input autocomplete="false" name="hidden" type="text" class="hidden" />
+
+					<div class="flex flex-wrap mb-4">
+						<!-- Attacker -->
+						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
+							<label class="block mb-2" for="attacker">
+								{{ t('logs.attacker') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+							</label>
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="attacker" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.attacker">
+						</div>
+
+						<!-- Victim -->
+						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
+							<label class="block mb-2" for="victim">
+								{{ t('logs.victim') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+							</label>
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="victim" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.victim">
+						</div>
+
+						<!-- Weapon -->
+						<div class="w-1/6 px-3 mobile:w-full mobile:mb-3">
+							<label class="block mb-2" for="weapon">
+								{{ t('logs.weapon') }}
+							</label>
+							<input class="block w-full px-4 py-3 bg-lime-500 !bg-opacity-10 border focus:border-lime-500 border-lime-500 rounded outline-none" :class="{'!bg-red-500 !border-red-500': !isWeaponValid()}" id="weapon" placeholder="weapon_pistol" v-model="filters.weapon">
+						</div>
+
+						<!-- Entity Type -->
+						<div class="w-1/6 px-3 mobile:w-full mobile:mb-3">
+							<label class="block mb-2" for="entity">
+								{{ t('logs.entity') }}
+							</label>
+							<select class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="entity" v-model="filters.entity">
+								<option :value="null">{{ t('global.all') }}</option>
+								<option value="ped">{{ t('logs.peds') }}</option>
+								<option value="vehicle">{{ t('logs.vehicles') }}</option>
+								<option value="object">{{ t('logs.objects') }}</option>
+							</select>
+						</div>
+					</div>
+
+					<!-- Description -->
+					<div class="w-full px-3 mt-3">
+						<small class="text-muted dark:text-dark-muted mt-1 leading-4 block" v-html="t('global.search.custom')"></small>
+					</div>
+
+					<!-- Search button -->
+					<div class="w-full px-3 mt-3">
+						<button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg" @click="refresh">
+							<span v-if="!isLoading">
+								<i class="fas fa-search"></i>
+								{{ t('logs.search') }}
+							</span>
+							<span v-else>
+								<i class="fas fa-cog animate-spin"></i>
+								{{ t('global.loading') }}
+							</span>
+						</button>
+					</div>
+				</form>
+			</template>
+		</v-section>
+
+		<!-- Table -->
+		<v-section class="overflow-x-auto">
+			<template #header>
+				<h2>
+					{{ t('logs.logs') }}
+				</h2>
+				<p class="text-muted dark:text-dark-muted text-xs">
+					{{ t('global.results', time) }}
+				</p>
+			</template>
+
+			<template>
+				<table class="w-full">
+					<tr class="font-semibold text-left mobile:hidden">
+						<th class="p-3 pl-8 max-w-56">{{ t('logs.attacker') }}</th>
+						<th class="p-3 max-w-56">{{ t('logs.victim') }}</th>
+						<th class="p-3">{{ t('logs.health_before') }}</th>
+						<th class="p-3">{{ t('logs.damage_dealt') }}</th>
+						<th class="p-3">{{ t('logs.distance') }}</th>
+						<th class="p-3">{{ t('logs.component') }}</th>
+						<th class="p-3">{{ t('logs.weapon') }}</th>
+						<th class="p-3 pr-8">
+							{{ t('logs.timestamp') }}
+							<a href="#" :title="t('logs.toggle_diff')" @click="$event.preventDefault(); showLogTimeDifference = !showLogTimeDifference">
+								<i class="fas fa-stopwatch"></i>
+							</a>
+						</th>
+					</tr>
+					<tr class="border-t border-gray-300 dark:border-gray-500 relative" v-for="(log, index) in logs" :key="log.id">
+						<td class="p-3 pl-8 mobile:block max-w-56">
+							<div class="absolute top-1 left-1 text-sm leading-3 font-semibold italic" v-html="getDamageTag(log)"></div>
+
+							<inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.licenseIdentifier">
+								{{ playerName(log.licenseIdentifier) }}
+							</inertia-link>
+						</td>
+						<td class="p-3 mobile:block max-w-56">
+							<inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.hitLicense" v-if="log.hitLicense">
+								{{ playerName(log.hitLicense) }}
+							</inertia-link>
+
+							<span class="italic" v-else-if="log.hitEntityType === 1">
+								{{ t('logs.npc') }} #{{ log.hitGlobalId }}
+							</span>
+							<span class="italic" v-else-if="log.hitEntityType === 2">
+								{{ t('logs.vehicle') }} #{{ log.hitGlobalId }}
+
+								<span v-if="log.tireIndex" :title="t('logs.hit_tire', log.tireIndex)">
+									<i class="fas fa-truck-monster"></i>
+									{{ log.tireIndex }}
+								</span>
+							</span>
+							<span class="italic" v-else-if="log.hitEntityType === 3">
+								{{ t('logs.object') }} #{{ log.hitGlobalId }}
+							</span>
+						</td>
+						<td class="p-3 mobile:block">
+							{{ log.hitHealth ? log.hitHealth + "hp" : "N/A" }}
+						</td>
+						<td class="p-3 mobile:block">
+							{{ log.damage }}hp
+
+							<i v-if="log.bonusDamage" :title="t('log.bonus_damage')">+{{ log.bonusDamage }}hp</i>
+						</td>
+						<td class="p-3 mobile:block">
+							{{ log.distance.toFixed(2) }}m
+						</td>
+						<td class="p-3 mobile:block">
+							{{ log.hitComponent }}
+						</td>
+						<td class="p-3 mobile:block">
+							{{ log.weapon }}
+						</td>
+						<td class="p-3 mobile:block whitespace-nowrap" v-if="showLogTimeDifference" :title="t('logs.diff_label')">
+							<span v-if="index + 1 < logs.length">
+								{{ formatMilliSecondDiff(stamp(log.timestamp) - stamp(logs[index + 1].timestamp)) }}
+								<i class="fas fa-arrow-down"></i>
+							</span>
+							<span v-else>Start</span>
+						</td>
+						<td class="p-3 pr-8 mobile:block whitespace-nowrap" v-else>
+							{{ log.timestamp | formatTime(true) }}
+							<i class="block text-xs leading-1 whitespace-nowrap text-yellow-600 dark:text-yellow-400">{{ Math.floor(log.timestamp / 1000) }}</i>
+						</td>
+					</tr>
+					<tr v-if="logs.length === 0" class="border-t border-gray-300 dark:border-gray-500">
+						<td class="py-3 px-8 text-center" colspan="100%">
+							{{ t('logs.no_logs') }}
+						</td>
+					</tr>
+				</table>
+			</template>
+
+			<template #footer>
+				<div class="flex items-center justify-between mt-6 mb-1">
+
+					<!-- Navigation -->
+					<div class="flex flex-wrap">
+						<inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="links.prev" v-if="page >= 2">
+							<i class="mr-1 fas fa-arrow-left"></i>
+							{{ t("pagination.previous") }}
+						</inertia-link>
+						<inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="logs.length === 30" :href="links.next">
+							{{ t("pagination.next") }}
+							<i class="ml-1 fas fa-arrow-right"></i>
+						</inertia-link>
+					</div>
+
+					<!-- Meta -->
+					<div class="font-semibold">
+						{{ t("pagination.page", page) }}
+					</div>
+
+				</div>
+			</template>
+		</v-section>
+
+	</div>
+</template>
+
+<script>
+import Layout from './../../Layouts/App';
+import VSection from './../../Components/Section';
+import Pagination from './../../Components/Pagination';
+
+export default {
+	layout: Layout,
+	components: {
+		Pagination,
+		VSection,
+	},
+	props: {
+		logs: {
+			type: Array,
+			required: true,
+		},
+		filters: {
+			attacker: String,
+			victim: String,
+			weapon: String,
+			entity: String,
+		},
+		playerMap: {
+			type: Object,
+			required: true,
+		},
+		links: {
+			type: Object,
+			required: true,
+		},
+		page: {
+			type: Number,
+			required: true,
+		},
+		time: {
+			type: Number,
+			required: true,
+		},
+		weapons: {
+			type: Array
+		}
+	},
+	data() {
+		return {
+			isLoading: false,
+
+			showLogTimeDifference: false
+		};
+	},
+	methods: {
+		isWeaponValid() {
+			const weapon = this.filters.weapon?.trim()?.toLowerCase();
+
+			if (!weapon) return true;
+
+			return this.weapons.includes(weapon);
+		},
+		formatMilliSecondDiff(ms) {
+			if (ms <= 5000) {
+				const seconds = Math.round(ms / 1000);
+				ms -= seconds * 1000;
+
+				return (seconds ? seconds + 's ' : '') + (!seconds || ms ? ms + 'ms' : '');
+			}
+
+			return this.$moment.duration(Math.round(ms / 1000), 'seconds').format('d[d] h[h] m[m] s[s]');
+		},
+		stamp(time) {
+			return this.$moment.utc(time).unix();
+		},
+		async refresh() {
+			if (this.isLoading) {
+				return;
+			}
+
+			this.isLoading = true;
+
+			try {
+				await this.$inertia.replace('/damage', {
+					data: this.filters,
+					preserveState: true,
+					preserveScroll: true,
+					only: ['logs', 'playerMap', 'time', 'links', 'page'],
+				});
+			} catch (e) {
+			}
+
+			console.log(this.weapons);
+
+			this.isLoading = false;
+		},
+		playerName(licenseIdentifier) {
+			return licenseIdentifier in this.playerMap ? this.playerMap[licenseIdentifier] : licenseIdentifier;
+		},
+		getDamageTag(log) {
+			if (!this.setting('parseLogs')) return '';
+
+			if (log.silenced) {
+				return `<i class="text-gray-400 dark:text-gray-600 fas fa-volume-mute" title="${this.t("logs.silenced")}"></i>`;
+			}
+
+			if (log.hitComponent === "head") {
+				return `<i class="text-red-700 dark:text-red-300 fas fa-crosshairs" title="${this.t("logs.headshot")}"></i>`;
+			}
+
+			if (log.damage >= 200) {
+				return `<i class="text-red-700 dark:text-red-300 fas fa-temperature-high" title="${this.t("logs.high_damage")}"></i>`;
+			}
+
+			return '';
+		}
+	}
+};
+</script>

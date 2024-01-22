@@ -1342,7 +1342,28 @@
 
                 "unknown": "No detailed description available. You can ask a developer for more help."
             }
-        }
+        },
+        "damage": "Damage Logs",
+        "damage_description": "On this page you can view and filter the damage logs.",
+        "attacker": "Attacker",
+        "victim": "Victim",
+        "weapon": "Weapon",
+        "entity": "Entity",
+        "peds": "Peds",
+        "vehicles": "Vehicles",
+        "objects": "Objects",
+        "npc": "NPC",
+        "vehicle": "Vehicle",
+        "object": "Object",
+        "health_before": "Health (Before)",
+        "damage_dealt": "Damage Dealt",
+        "bonus_damage": "Bonus damage (headshots, etc.)",
+        "distance": "Distance",
+        "component": "Hit Component",
+        "headshot": "Headshot",
+        "high_damage": "High Damage (Explosions, etc.)",
+        "silenced": "Silenced",
+        "hit_tire": "Hit tire with index {0}."
     },
     "panel_logs": {
         "title": "Panel Logs",

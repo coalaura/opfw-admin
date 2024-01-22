@@ -135,6 +135,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/linked_print/{license}', [PlayerBanController::class, 'linkedPrint']);
 
     // Epic damage logs
+    Route::get('/damage', [LogController::class, 'damageLogs']);
     Route::get('/who_damaged/{license}', [PlayerRouteController::class, 'whoDamaged']);
     Route::get('/who_was_damaged/{license}', [PlayerRouteController::class, 'whoWasDamagedBy']);
 
@@ -192,7 +193,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/darkChat', [LogController::class, 'darkChat']);
     Route::get('/searches', [LogController::class, 'searches']);
     Route::get('/screenshot_logs', [LogController::class, 'screenshotLogs']);
-
+    Route::get('/damage', [LogController::class, 'damageLogs']);
     Route::get('/phoneLogs', [LogController::class, 'phoneLogs']);
     Route::get('/phoneLogs/get', [LogController::class, 'phoneLogsData']);
 
