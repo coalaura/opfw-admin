@@ -840,7 +840,6 @@
             "no_anti_cheat_events": "No Anti-Cheat events found.",
             "anti_cheat_has_screenshot": "Anti-Cheat event hath a screenshot attached.",
             "unban_system_title": "Removing System Ban",
-            "unban_system_message": "Ugga ugga. Player bad. System say ban. You remove ban?",
             "linked_title": "Ugga ugga. Accounts linked.",
             "no_link": "Ugga. No accounts linked. Identifier alone.",
             "no_warnings": "Player good. No warnings or notes.",
@@ -950,7 +949,8 @@
             "source_noclip": "No fall through ground",
             "source_noclip_details": "How many suns since last moon staff use no fall through ground.",
             "source_spectate": "Watch quietly",
-            "source_spectate_details": "How many suns since last moon staff watch others quiet."
+            "source_spectate_details": "How many suns since last moon staff watch others quiet.",
+            "unban_system_confirm": "Player system-no-allow, get big-no. You want make-no ban? Say \"confirm\" for agree."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

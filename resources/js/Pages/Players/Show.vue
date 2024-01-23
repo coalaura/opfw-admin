@@ -818,15 +818,17 @@
             <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
                 <h3 class="mb-2">{{ t('players.show.unban_system_title') }}</h3>
                 <div>
-                    <p>
-                        {{ t('players.show.unban_system_message') }}
+                    <p class="select-none">
+                        {{ t('players.show.unban_system_confirm') }}
                     </p>
+
+                    <input class="w-full px-4 py-2 !border-red-400 !bg-red-500 !bg-opacity-10 border rounded my-3" v-model="confirmingUnbanInput" placeholder="confirm" :class="{'!border-lime-400 !bg-lime-500 !bg-opacity-10': confirmingUnbanInput === 'confirm'}" />
                 </div>
                 <div class="flex justify-end mt-2">
-                    <button type="button" class="px-5 py-2 font-semibold text-white rounded bg-dark-secondary mr-3 dark:text-black dark:bg-secondary" @click="isConfirmingUnban = false">
+                    <button type="button" class="px-5 py-2 font-semibold text-white rounded bg-dark-secondary dark:text-black dark:bg-secondary" @click="isConfirmingUnban = false">
                         {{ t('global.close') }}
                     </button>
-                    <button class="px-5 py-2 rounded bg-danger dark:bg-dark-danger" type="button" @click="unbanPlayer()">
+                    <button class="px-5 py-2 rounded bg-danger dark:bg-dark-danger ml-3" type="button" @click="unbanPlayer()" v-if="confirmingUnbanInput === 'confirm'">
                         <i class="mr-1 fas fa-lock-open"></i>
                         {{ t('players.show.unban') }}
                     </button>
@@ -1655,6 +1657,7 @@ export default {
             selectedRole: selectedRole,
 
             isConfirmingUnban: false,
+            confirmingUnbanInput: "",
 
             isScreenCapture: false,
             screenCaptureStatus: false,
@@ -1801,8 +1804,9 @@ export default {
         async unbanPlayer() {
             if (this.isLoading) return;
 
-            if (!this.player.ban.issuer && !this.isConfirmingUnban) {
+            if (!this.player.ban.issuer && !this.isConfirmingUnban && (this.confirmedAccuracy || this.prettyHighAccuracy)) {
                 this.isConfirmingUnban = true;
+                this.confirmingUnbanInput = "";
 
                 return;
             }

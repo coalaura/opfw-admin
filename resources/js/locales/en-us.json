@@ -903,7 +903,7 @@
             "no_anti_cheat_events": "No Anti-Cheat events found.",
             "anti_cheat_has_screenshot": "Anti-Cheat event has a screenshot attached.",
 			"unban_system_title": "Removing System Ban",
-			"unban_system_message": "This player was automatically banned by the system. Are you sure you want to remove this ban?",
+			"unban_system_confirm": "This player was automatically banned by the system. Are you sure you want to remove this ban? Type \"confirm\" to confirm.",
             "linked_title": "Linked accounts",
             "no_link": "No linked accounts for this identifier",
             "no_warnings": "This player has not received any warnings or notes.",

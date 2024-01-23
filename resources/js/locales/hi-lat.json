@@ -870,7 +870,6 @@
             "no_anti_cheat_events": "Koi Anti-Cheat ghatnayein nahi mili.",
             "anti_cheat_has_screenshot": "Anti-Cheat ghatna ke saath screenshot attached hai.",
             "unban_system_title": "System Ban Hataana",
-            "unban_system_message": "Is player ko swatah system dwara ban kiya gaya tha. Kya aap sach me yah ban hataana chahte hain?",
             "linked_title": "Judi hui accounts",
             "no_link": "Is pehchanakarta ke liye koi judi hui accounts nahi hain",
             "no_warnings": "Is player ko kisi bhi chetaavani ya notes nahi mile hain.",
@@ -960,7 +959,8 @@
             "source_noclip": "Noclip",
             "source_noclip_details": "Pichhle 30 dino mein is staff member ne kitni baar noclip ka upayog kiya hai.",
             "source_spectate": "Spectate",
-            "source_spectate_details": "Pichhle 30 dino mein is staff member ne kitni baar kisi ko spectate kiya hai."
+            "source_spectate_details": "Pichhle 30 dino mein is staff member ne kitni baar kisi ko spectate kiya hai.",
+            "unban_system_confirm": "Yeh khiladi swachaalit roop se system dwaara ban kar diya gaya tha. Kya aap vaakai mein is ban ko hataana chahte hain? Pushthi karne ke liye \"confirm\" type karein."
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",

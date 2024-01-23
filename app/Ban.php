@@ -287,24 +287,26 @@ class Ban extends Model
         return $this->belongsTo(Player::class, 'creator_name', 'player_name');
     }
 
-    public static function resolveAutomatedReason(string $originalReason): array
+    public static function resolveAutomatedReason(?string $originalReason): array
     {
-        $reasons = self::getAutomatedReasons();
+        if ($originalReason) {
+            $reasons = self::getAutomatedReasons();
 
-        $parts = explode('-', $originalReason);
+            $parts = explode('-', $originalReason);
 
-        $category = array_shift($parts);
-        $key      = array_shift($parts);
+            $category = array_shift($parts);
+            $key      = array_shift($parts);
 
-        if ($reasons && $category && $key && isset($reasons[$category]) && isset($reasons[$category][$key])) {
-            $reason = $reasons[$category][$key];
+            if ($reasons && $category && $key && isset($reasons[$category]) && isset($reasons[$category][$key])) {
+                $reason = $reasons[$category][$key];
 
-            $info = isset(self::SYSTEM_INFO[$category]) && isset(self::SYSTEM_INFO[$category][$key]) ? self::SYSTEM_INFO[$category][$key] : false;
+                $info = isset(self::SYSTEM_INFO[$category]) && isset(self::SYSTEM_INFO[$category][$key]) ? self::SYSTEM_INFO[$category][$key] : false;
 
-            return [
-                "reason" => str_replace('${DATA}', implode('-', $parts), $reason) . " (" . $originalReason . ")",
-                "info"   => $info,
-            ];
+                return [
+                    "reason" => str_replace('${DATA}', implode('-', $parts), $reason) . " (" . $originalReason . ")",
+                    "info"   => $info,
+                ];
+            }
         }
 
         return [

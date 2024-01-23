@@ -840,7 +840,6 @@
             "no_anti_cheat_events": "Ain't found no Anti-Cheat events.",
             "anti_cheat_has_screenshot": "Anti-Cheat event got a screenshot attached.",
             "unban_system_title": "Removing System Ban",
-            "unban_system_message": "This ol' boy done been kicked out by the system. Y'all reckon you wanna lift this ban?",
             "linked_title": "Linked kinfolk",
             "no_link": "Ain't no kinfolk linked to this identification",
             "no_warnings": "This here player ain't never been warned nor noted.",
@@ -950,7 +949,8 @@
             "source_noclip": "Noclip",
             "source_noclip_details": "How many times this here staff member done used noclip in the past 30 days.",
             "source_spectate": "Spectate",
-            "source_spectate_details": "How many times this staff member done spectated somebody in the last 30 days."
+            "source_spectate_details": "How many times this staff member done spectated somebody in the last 30 days.",
+            "unban_system_confirm": "This player done got banned by the system on its own. Y'all sure ya wanna lift this here ban? Type \"confirm\" to confirm, alright?"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

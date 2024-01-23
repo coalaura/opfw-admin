@@ -840,7 +840,6 @@
             "no_anti_cheat_events": "No Anti-Cheat events found.",
             "anti_cheat_has_screenshot": "Anti-Cheat event has a scweenshot attached.",
             "unban_system_title": "Wemoving System Ban",
-            "unban_system_message": "Dis player was automaticawwy banned by da system. Awe yuw suwe yuw want tuwu wemove dis ban? UwU",
             "linked_title": "Winked accounts OwO",
             "no_link": "No winked accounts fow dis identifiew ^w^",
             "no_warnings": "Dis pwayew has not weceived any warnings ow notes UwU",
@@ -950,7 +949,8 @@
             "source_noclip": "Nyocwip",
             "source_noclip_details": "Amownt of times this staff membew used nyocwip in the wast 30 days.",
             "source_spectate": "Spwectate",
-            "source_spectate_details": "Amownt of times this staff membew has spwectated someone in the wast 30 days."
+            "source_spectate_details": "Amownt of times this staff membew has spwectated someone in the wast 30 days.",
+            "unban_system_confirm": "Dis pwayew was automaticawwy bawwed by de system. Awe you suwe you wanna wemove dis ban? Type \"confirm\" to confiwm."
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

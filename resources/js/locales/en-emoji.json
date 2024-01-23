@@ -840,7 +840,6 @@
             "no_anti_cheat_events": "❌ 🚫 🕵️‍♂️",
             "anti_cheat_has_screenshot": "🚫🕵️‍♂️ 📷",
             "unban_system_title": "🔓 🚫",
-            "unban_system_message": "⚠️🔨 🤖🔒❌👤🤖 ⚠️🔨🕵️‍♂️📝❌👤🤖? 🔓👍",
             "linked_title": "🔗🙋‍♂️🙋 Accounts",
             "no_link": "🙅‍♂️🔗🙋‍♂️⛔🙅‍♂️🔗🙋‍♂️🆔",
             "no_warnings": "🚫📢🚫🔔🙅‍♂️📢🚫📝🙅‍♂️🔔",
@@ -950,7 +949,8 @@
             "source_noclip": "🔓",
             "source_noclip_details": "👤🔓⌛️🔢🗓️.",
             "source_spectate": "👀",
-            "source_spectate_details": "👤👀👥⌛️🔢🗓️."
+            "source_spectate_details": "👤👀👥⌛️🔢🗓️.",
+            "unban_system_confirm": "🎮🚫🤖❗ 🤔💭❌✂️🚫❓ ✍️\"confirm\"✅❗"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

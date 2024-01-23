@@ -870,7 +870,6 @@
             "no_anti_cheat_events": "Ingen Anti-Cheat hendelser funnet.",
             "anti_cheat_has_screenshot": "Anti-Cheat hendelse har et vedlegg av skjermbilde.",
             "unban_system_title": "Fjerner systemban",
-            "unban_system_message": "Denne spilleren ble automatisk bannet av systemet. Er du sikker på at du vil fjerne denne bannen?",
             "linked_title": "Lenkede kontoer",
             "no_link": "Ingen lenkede kontoer for denne identifikatoren",
             "no_warnings": "Denne spilleren har ikke mottatt noen advarsler eller notater.",
@@ -960,7 +959,8 @@
             "source_noclip": "Noclip",
             "source_noclip_details": "Antall ganger denne ansatte har brukt noclip de siste 30 dagene.",
             "source_spectate": "Tilskuermodus",
-            "source_spectate_details": "Antall ganger denne ansatte har vært i tilskuermodus og sett på noen de siste 30 dagene."
+            "source_spectate_details": "Antall ganger denne ansatte har vært i tilskuermodus og sett på noen de siste 30 dagene.",
+            "unban_system_confirm": "Denne spilleren ble automatisk utestengt av systemet. Er du sikker på at du ønsker å oppheve denne utestengelsen? Skriv \"confirm\" for å bekrefte."
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",
