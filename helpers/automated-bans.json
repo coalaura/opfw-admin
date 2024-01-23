@@ -59,7 +59,8 @@
 		"ILLEGAL_VEHICLE_MODIFIER": "Unlike Dom Toretto from Fast and Furious, we are not family.",
 		"PLAYER_BLIPS": "Airspace is full, UAV unavailable.",
 		"CLEAR_TASKS": "This is not a Jedi mind trick training center. Your efforts to influence the free will of others has been noted... and rejected.",
-		"UNDERGROUND": "You seem to have fallen into a rabbit hole."
+		"UNDERGROUND": "You seem to have fallen into a rabbit hole.",
+		"ILLEGAL_LOCAL_VEHICLE": "Seems like you've found the invisible steed of Lord Mirage! Alas, this mystical ride is reserved for the annual phantom parade."
 	},
 	"MEDIOCRE": {
 		"DISALLOWED_CHARACTER_NAME": "Attempted to create a character with a possibly bad name: \"${DATA}\"",
