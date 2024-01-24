@@ -189,7 +189,7 @@ export default {
             body = body.trim();
 
             if (body.match(/^https?:\/\/[^\s]+?\.(png|jpe?g|gif|bmp|webp)(\?[^\s]*)?$/i)) {
-                return '<a href="' + body + '" target="_blank" class="block max-w-screen-sm w-full h-twitter-img overflow-hidden rounded-lg border border-gray-400"><img src="' + body + '" class="block w-full h-full object-cover translate hover:scale-105" /></a>';
+                return '<a href="' + body + '" target="_blank" class="block max-w-full w-twitter-img h-twitter-img overflow-hidden rounded-lg border border-gray-500"><img src="' + body + '" class="block w-full h-full object-cover translate hover:scale-105" /></a>';
             }
 
             return body;

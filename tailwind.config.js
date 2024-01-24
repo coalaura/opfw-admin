@@ -71,7 +71,8 @@ module.exports = {
                 'xs-steam':           '150px',
                 'iframe':             '640px',
                 'avatar':             '50px',
-                'screenshot':         '540px'
+                'screenshot':         '540px',
+                'twitter-img':        '640px',
             },
             height: {
                 'side-close':      '37px',
