@@ -81,9 +81,9 @@
         </v-section>
 
         <template>
-            <h2 class="mb-4 max-w-screen-md m-auto text-2xl">{{ t('twitter.title') }}</h2>
+            <h2 class="mb-4 max-w-2xl m-auto text-2xl">{{ t('twitter.title') }}</h2>
 
-            <div class="w-full flex flex-wrap max-w-screen-md m-auto">
+            <div class="w-full flex flex-wrap max-w-2xl m-auto">
                 <TwitterPost v-for="post in posts" :key="post.id" :post="post" :user="post" :selectionChange="selectPost" />
 
                 <div class="mt-3" v-if="selectedPosts.length > 0">

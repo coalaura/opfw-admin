@@ -30,7 +30,7 @@
         </template>
 
         <template>
-            <div class="w-full flex flex-wrap max-w-screen-md m-auto">
+            <div class="w-full flex flex-wrap max-w-2xl m-auto">
                 <div v-if="tweets.length === 0" class="p-2 italic">{{ t('twitter.no_tweets') }}</div>
 
                 <TwitterPost v-for="post in tweets" :key="post.id" :post="post" :user="user" :dont-link="true" :selectionChange="selectPost" v-else />
