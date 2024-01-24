@@ -84,6 +84,7 @@ module.exports = {
                 'max':             'calc(100vh - (210px + 120px))',
                 'inventory_slot':  '100px',
                 'box':             '15px',
+                'twitter-img':     '280px',
             },
             minWidth: {
                 'box':     '350px',

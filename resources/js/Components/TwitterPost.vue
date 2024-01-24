@@ -189,7 +189,7 @@ export default {
             body = body.trim();
 
             if (body.match(/^https?:\/\/[^\s]+?\.(png|jpe?g|gif|bmp|webp)(\?[^\s]*)?$/i)) {
-                return '<div class="max-w-screen-sm"><img src="' + body + '" class="block max-w-full max-h-img" /></div>';
+                return '<a href="' + body + '" target="_blank" class="block max-w-screen-sm w-full h-twitter-img overflow-hidden rounded-lg"><img src="' + body + '" class="block w-full h-full object-cover" /></a>';
             }
 
             return body;
