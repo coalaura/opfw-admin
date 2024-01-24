@@ -114,7 +114,7 @@
                                 {{ playerName(log.license_identifier) }}
                             </inertia-link>
                         </td>
-                        <td class="p-3 mobile:block whitespace-nowrap" :class="{ 'text-muted dark:text-dark-muted': !log.action }">
+                        <td class="p-3 mobile:block" :class="{ 'text-muted dark:text-dark-muted': !log.action }">
                             {{ log.action || '-' }}
                         </td>
                         <td class="p-3 mobile:block" :class="{ 'text-muted dark:text-dark-muted': !log.details }">
