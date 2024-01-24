@@ -72,7 +72,7 @@ module.exports = {
                 'iframe':             '640px',
                 'avatar':             '50px',
                 'screenshot':         '540px',
-                'twitter-img':        '640px',
+                'twitter-img':        '500px',
             },
             height: {
                 'side-close':      '37px',
@@ -85,7 +85,7 @@ module.exports = {
                 'max':             'calc(100vh - (210px + 120px))',
                 'inventory_slot':  '100px',
                 'box':             '15px',
-                'twitter-img':     '280px',
+                'twitter-img':     '250px',
             },
             minWidth: {
                 'box':     '350px',
