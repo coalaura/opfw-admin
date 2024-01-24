@@ -84,7 +84,7 @@ class TwitterController extends Controller
             ->where('is_deleted', '=', '0')
             ->select(['id', 'authorId', 'realUser', 'message', 'time', 'likes'])
             ->orderByDesc('time')
-            ->limit(15)->offset(($page - 1) * 15)
+            ->limit(30)->offset(($page - 1) * 30)
             ->get();
 
         $creatorCid = $user->creator_cid;
