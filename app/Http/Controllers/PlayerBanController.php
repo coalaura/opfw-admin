@@ -521,15 +521,21 @@ class PlayerBanController extends Controller
             return $this->text(404, "No ips found.");
         }
 
-		$ips = array_filter($ips, function($ip) {
+        $badIps = [];
+
+		$ips = array_filter($ips, function($ip) use (&$badIps) {
 			$info = GeneralHelper::ipInfo($ip);
 
 			if ($info) {
 				if (in_array($info['isp'], ['OVH SAS'])) {
+                    $badIps[] = $info;
+
 					return false;
 				}
 
 				if ($info['proxy']) {
+                    $badIps[] = $info;
+
 					return false;
 				}
 			}
@@ -538,7 +544,11 @@ class PlayerBanController extends Controller
 		});
 
         if (empty($ips)) {
-            return $this->text(404, "Only VPN/Proxy IPs found (suspicious).");
+            $fmt = implode("\n", array_map(function($ip) {
+                return " - $ip[ip] ($ip[isp]" . ($ip["proxy"] ? ", proxy" : "") . ")";
+            }, $badIps));
+
+            return $this->text(404, "Only VPN/Proxy IPs found:\n$fmt");
         }
 
 		$where = implode(' OR ', array_map(function($ip) {
