@@ -556,7 +556,7 @@ class PlayerBanController extends Controller
                     ];
                 }
 
-                $grouped[$key]["ips"][] = $ip;
+                $grouped[$key]["ips"][] = $ip["ip"];
             }
 
             $fmt = implode("\n\n", array_map(function($isp) {
