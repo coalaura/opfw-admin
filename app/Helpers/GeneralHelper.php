@@ -168,7 +168,7 @@ class GeneralHelper
         $info = DB::table('panel_ip_infos')->where('ip', '=', $ip)->get()->first();
 
         if (!$info) {
-            $info = json_decode(GeneralHelper::get("http://ip-api.com/json/" . $ip . "?fields=status,message,country,isp,proxy,hosting"), true) ?? [];
+            $info = json_decode(GeneralHelper::get("http://ip-api.com/json/" . $ip . "?fields=status,message,country,city,isp,proxy,hosting"), true) ?? [];
             if (!$info || $info['status'] !== 'success') {
                 return null;
             }
@@ -178,6 +178,7 @@ class GeneralHelper
             $info = [
                 'ip'           => $ip,
                 'country'      => $info['country'] ?? 'N/A',
+                'city'         => $info['city'] ?? 'N/A',
                 'isp'          => $info['isp'] ?? 'N/A',
                 'proxy'        => $info['proxy'] ? 1 : 0,
                 'hosting'      => $info['hosting'] ? 1 : 0,
