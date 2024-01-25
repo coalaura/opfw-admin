@@ -537,6 +537,10 @@ class PlayerBanController extends Controller
 			return true;
 		});
 
+        if (empty($ips)) {
+            return $this->text(404, "Only VPN/Proxy IPs found (suspicious).");
+        }
+
 		$where = implode(' OR ', array_map(function($ip) {
 			return 'JSON_CONTAINS(ips, \'"' . $ip . '"\', \'$\')';
 		}, $ips));
