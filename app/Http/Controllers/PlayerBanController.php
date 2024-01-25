@@ -545,7 +545,7 @@ class PlayerBanController extends Controller
 
         if (empty($ips)) {
             $fmt = implode("\n", array_map(function($ip) {
-                return " - $ip[ip] ($ip[isp]" . ($ip["proxy"] ? ", proxy" : "") . ")";
+                return " - $ip[ip] ($ip[country]/$ip[city]" . ($ip["proxy"] ? " - Proxy IP" : "") . ")";
             }, $badIps));
 
             return $this->text(404, "Only VPN/Proxy IPs found:\n$fmt");
