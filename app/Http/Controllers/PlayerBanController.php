@@ -562,7 +562,7 @@ class PlayerBanController extends Controller
             }
 
             $fmt = implode("\n\n", array_map(function($isp) {
-                return "$isp[isp]\n - $isp[country]/$isp[city]" . ($isp["proxy"] ? "Proxy IP" : "") . "\n - " . implode("\n - ", $isp["ips"]);
+                return "$isp[isp]\n - $isp[country]/$isp[city]" . ($isp["proxy"] ? "\n - Proxy IP" : "") . "\n - " . implode("\n - ", $isp["ips"]);
             }, array_values($grouped)));
 
             return $this->text(404, "Only VPN/Proxy IPs found. This means the user has always used a VPN/Proxy when connecting to the server. " . sizeof($badIps) . " IPs found:\n\n$fmt");
