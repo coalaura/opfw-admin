@@ -1079,7 +1079,7 @@ export default {
             return this.t('players.vehicles.oil_change_needed');
         },
         getAvailableLicenses() {
-            return ["heli", "fw", "cfi", "hw", "hwh", "perf", "management", "military", "utility", "commercial", "special", "hunting", "fishing", "weapon", "mining", "boat"]
+            return ["heli", "fw", "cfi", "hw", "hwh", "perf", "passenger", "management", "military", "utility", "commercial", "special", "hunting", "fishing", "weapon", "mining", "boat"]
                 .sort((a, b) => {
                     const aName = this.t('players.characters.license.' + a),
                         bName = this.t('players.characters.license.' + b);
