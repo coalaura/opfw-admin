@@ -544,11 +544,11 @@ class PlayerBanController extends Controller
 		});
 
         if (empty($ips)) {
-            $fmt = implode("\n", array_map(function($ip) {
-                return " - $ip[ip] ($ip[country]/$ip[city]" . ($ip["proxy"] ? " - Proxy IP" : "") . ")";
+            $fmt = implode("\n\n", array_map(function($ip) {
+                return "$ip[ip]\n - $ip[country]/$ip[city]" . ($ip["proxy"] ? "\n - Proxy IP" : "") . "\n - \"$ip[isp]\"";
             }, $badIps));
 
-            return $this->text(404, "Only VPN/Proxy IPs found:\n$fmt");
+            return $this->text(404, "Only VPN/Proxy IPs found:\n\n$fmt");
         }
 
 		$where = implode(' OR ', array_map(function($ip) {
