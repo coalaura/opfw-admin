@@ -544,11 +544,26 @@ class PlayerBanController extends Controller
 		});
 
         if (empty($ips)) {
-            $fmt = implode("\n\n", array_map(function($ip) {
-                return "$ip[ip]\n - $ip[country]/$ip[city]" . ($ip["proxy"] ? "\n - Proxy IP" : "") . "\n - \"$ip[isp]\"";
-            }, $badIps));
+            $grouped = [];
 
-            return $this->text(404, "Only VPN/Proxy IPs found:\n\n$fmt");
+            foreach ($badIps as $ip) {
+                $key = $ip["isp"] . " - " . $ip["country"] . "/" . $ip["city"];
+
+                if (!isset($grouped[$key])) {
+                    $grouped[$key] = $ip;
+                    $grouped[$key]["ips"] = [
+                        $ip["ip"]
+                    ];
+                }
+
+                $grouped[$key]["ips"][] = $ip;
+            }
+
+            $fmt = implode("\n\n", array_map(function($isp) {
+                return "$isp[isp]\n - $isp[country]/$isp[city]\n - " . implode("\n - ", $isp["ips"]);
+            }, array_values($grouped)));
+
+            return $this->text(404, "Only VPN/Proxy IPs found. This means the user has always used a VPN/Proxy when connecting to the server. " . sizeof($badIps) . " IPs found:\n\n$fmt");
         }
 
 		$where = implode(' OR ', array_map(function($ip) {
