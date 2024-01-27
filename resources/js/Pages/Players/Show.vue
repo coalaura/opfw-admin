@@ -1196,7 +1196,9 @@
                                     <div class="flex justify-between gap-4">
                                         <div class="flex items-center py-4 pr-4 border-r border-gray-200 dark:border-gray-400 w-32 flex-shrink-0">
                                             <h4 class="truncate" v-if="warning.issuer.playerName === null">{{ t('global.system') }}</h4>
-                                            <h4 class="truncate" :title="warning.issuer.playerName">{{ warning.issuer.playerName }}</h4>
+                                            <h4 class="truncate" :title="warning.issuer.playerName">
+                                                <a :href="'/players/' + warning.issuer.licenseIdentifier" >{{ warning.issuer.playerName }}</a>
+                                            </h4>
                                         </div>
 
                                         <div class="flex items-center py-4">
@@ -1225,7 +1227,8 @@
                                     <h4>
                                         <span v-html="getWarningTypeIcon(warning.warningType)"></span>
                                         -
-                                        {{ warning.issuer.licenseIdentifier ? warning.issuer.playerName : t('global.system') }}
+                                        <span v-if="!warning.issuer.licenseIdentifier">{{ t('global.system') }}</span>
+                                        <a :href="'/players/' + warning.issuer.licenseIdentifier" v-else>{{ warning.issuer.playerName }}</a>
                                     </h4>
                                 </div>
                                 <div class="flex items-center">
