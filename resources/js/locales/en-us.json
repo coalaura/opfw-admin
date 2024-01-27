@@ -222,6 +222,7 @@
         "capturing": "Capturing ({0}s remaining)...",
         "processing": "Processing video...",
         "processing_description": "This step may take a while depending on the players connection speed and processing power.",
+        "flags": "Character Flags",
         "created_at": "Created at",
         "playtime": "Playtime",
         "ban_status": "Ban Status",

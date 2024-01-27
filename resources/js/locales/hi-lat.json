@@ -225,7 +225,8 @@
         "description": "Hal hi mein judi hue screenshots.",
         "player": "Khiladi",
         "label": "Screenshots",
-        "documentation": "Is screenshot/capture ko kyun banaya gaya iske bare mein adhik jaankari dikhaye."
+        "documentation": "Is screenshot/capture ko kyun banaya gaya iske bare mein adhik jaankari dikhaye.",
+        "flags": "Charitr Dhvaj"
     },
     "changelog": {
         "title": "Haal ki Updates",

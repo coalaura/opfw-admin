@@ -225,7 +225,8 @@
         "description": "Nylig knyttede skjermbilder.",
         "player": "Spiller",
         "label": "Skjermbilder",
-        "documentation": "Vis mer informasjon om hvorfor dette skjermbildet/innspillet ble opprettet."
+        "documentation": "Vis mer informasjon om hvorfor dette skjermbildet/innspillet ble opprettet.",
+        "flags": "Karakterflagg"
     },
     "changelog": {
         "title": "Nyeste oppdateringer",

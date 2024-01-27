@@ -225,7 +225,8 @@
         "documentation": "Show more info 'bout why this snap/capture was made.",
         "metadata": "Metadater",
         "logs": "Git yer eyes on them there logs, y'all",
-        "playtime": "Playtime, y'all"
+        "playtime": "Playtime, y'all",
+        "flags": "Charactuh Flags"
     },
     "changelog": {
         "title": "Latest Happ'nins",

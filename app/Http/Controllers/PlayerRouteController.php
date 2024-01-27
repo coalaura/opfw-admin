@@ -440,6 +440,7 @@ class PlayerRouteController extends Controller
                 'url'     => $data->data['screenshotURL'],
                 'logs'    => $data->data['logs'] ?? false,
                 'license' => $license,
+                'flags'   => $status->characterMetadata,
             ]);
         } else {
             return self::json(false, null, 'Failed to create screenshot');

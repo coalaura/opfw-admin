@@ -1404,6 +1404,12 @@
                     {{ t('map.screenshot_description') }}
                 </p>
 
+                <div v-if="screenshotFlags" class="mb-5">
+                    <h4 class="text-base mb-1 mt-2 pt-2 border-t border-gray-500">{{ t('screenshot.flags') }}</h4>
+
+                    <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm" v-html="screenshotFlags.join(', ')"></pre>
+                </div>
+
                 <div v-if="screenCaptureLogs" class="mb-5">
                     <h4 class="text-base mb-1 mt-2 pt-2 border-t border-gray-500">{{ t('screenshot.logs') }}</h4>
 
@@ -1679,6 +1685,7 @@ export default {
             isScreenshotLoading: false,
             screenshotImage: null,
             screenshotLicense: null,
+            screenshotFlags: null,
             screenshotError: null,
             isAttachingScreenshot: false,
 
@@ -2243,6 +2250,7 @@ export default {
 
             this.screenCaptureLogs = null;
             this.screenshotLicense = null;
+            this.screenshotFlags = null;
 
             try {
                 const result = await axios.post('/api/screenshot/' + this.$page.serverName + '/' + this.status.source + (shortLifespan ? '?short=1' : ''));
@@ -2255,6 +2263,7 @@ export default {
                         this.screenshotImage = result.data.data.url;
                         this.screenshotLicense = result.data.data.license;
 
+                        this.screenshotFlags = result.data.data.flags;
                         this.screenCaptureLogs = this.formatScreenCaptureLogs(result.data.data.logs);
 
                         cb && cb(true);
