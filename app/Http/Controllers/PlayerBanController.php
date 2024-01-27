@@ -283,7 +283,7 @@ class PlayerBanController extends Controller
             abort(401);
         }
 
-        $ban->update([
+        Ban::query()->where('ban_hash', '=', $ban->ban_hash)->update([
             'locked' => 1
         ]);
 
@@ -296,7 +296,7 @@ class PlayerBanController extends Controller
             abort(401);
         }
 
-        $ban->update([
+        Ban::query()->where('ban_hash', '=', $ban->ban_hash)->update([
             'locked' => 0
         ]);
 
