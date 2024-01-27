@@ -252,8 +252,6 @@
         },
         "no_bans": "Ain't no recents bans by ya",
         "staff": "Actin' Staff members",
-        "locations": "/tp_coords spots",
-        "location_description": "Secret spots 'round the city to avoid no-clippin' long distances.",
         "staff_locations": "Staff hideouts",
         "staff_description": "Hideouts fer staff to relax at without bein' seen by other players.",
         "no_player_count": "Player count ain't available right now, bless your heart.",

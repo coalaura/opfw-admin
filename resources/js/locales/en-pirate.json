@@ -252,8 +252,6 @@
         },
         "no_bans": "No recent scallywags ye be banishin'",
         "staff": "Active Crew members",
-        "locations": "/tp_coords treasure maps",
-        "location_description": "Secret hidey-holes 'round the city to steer clear of swashbucklers no-clipping long distances.",
         "staff_locations": "Matey hideaways",
         "staff_description": "Hidin' spots for the crew to relax at without bein' spied on by other landlubbers.",
         "no_player_count": "Arr, the tally o' players be unavailable at this time.",

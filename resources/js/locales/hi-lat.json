@@ -252,8 +252,6 @@
         },
         "no_bans": "Aapke dwara koi haal ki pratibandh nahi kiya gaya",
         "staff": "Sakriy Staff sadasya",
-        "locations": "/tp_coords sthaan",
-        "location_description": "Shehar ke aaspas ki chhipi hui jagahen taaki lambi dooriyaan no-clip na karni pade.",
         "staff_locations": "Staff ke sthaan",
         "staff_description": "Khiladiyon se anjaan rehkar staff ke aaram karne ke sthaan.",
         "no_player_count": "Khiladiyon ki sankhya is samay uplabdh nahi hai.",

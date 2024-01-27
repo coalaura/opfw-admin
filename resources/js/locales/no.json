@@ -252,8 +252,6 @@
         },
         "no_bans": "Ingen nylige utestengelser av deg",
         "staff": "Aktive ansatte medlemmer",
-        "locations": "/tp_koordinater steder",
-        "location_description": "Skjulte steder rundt i byen for å unngå no-clip lange avstander.",
         "staff_locations": "Ansattes steder",
         "staff_description": "Steder for ansatte å slappe av på uten å bli sett av andre spillere.",
         "no_player_count": "Spillerantallet er ikke tilgjengelig for øyeblikket.",

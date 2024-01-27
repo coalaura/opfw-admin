@@ -252,8 +252,6 @@
         },
         "no_bans": "No recent bans by you, you good caveman",
         "staff": "Active caveman in charge",
-        "locations": "/tp_coords places",
-        "location_description": "Secret spots 'round city. No walkin' long distances like no-clippers.",
         "staff_locations": "Staff spots",
         "staff_description": "Places for staff to relax without bein' seen by other players.",
         "no_player_count": "Player count not available right now.",
