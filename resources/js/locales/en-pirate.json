@@ -798,7 +798,8 @@
             "hash": "Ban Hash",
             "search_btn": "Search Bans",
             "title": "Davy Jones’s Locker",
-            "description": "List of all scallywags in Davy Jones’s Locker."
+            "description": "List of all scallywags in Davy Jones’s Locker.",
+            "locked": "Secured"
         },
         "show": {
             "played": "<b>{0}</b> sailed",

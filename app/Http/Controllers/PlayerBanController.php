@@ -113,28 +113,19 @@ class PlayerBanController extends Controller
         ]);
 
 		// Filtering by ban hash.
-		if ($banHash = $request->input('banHash')) {
-            if (Str::startsWith($banHash, '=')) {
-                $banHash = Str::substr($banHash, 1);
-                $query->where('ban_hash', $banHash);
-            } else {
-                $query->where('ban_hash', 'like', "%{$banHash}%");
-            }
-        }
+        $this->searchQuery($request, $query, 'banHash', 'ban_hash');
 
 		// Filtering by reason.
-		if ($reason = $request->input('reason')) {
-            if (Str::startsWith($reason, '=')) {
-                $banHash = Str::substr($reason, 1);
-                $query->where('reason', $reason);
-            } else {
-                $query->where('reason', 'like', "%{$reason}%");
-            }
-        }
+        $this->searchQuery($request, $query, 'reason', 'reason');
 
 		// Filtering by creator.
 		if ($creator = $request->input('creator')) {
             $query->where('creator_identifier', $creator);
+        }
+
+        // Filtering by locked.
+        if ($locked = $request->input('locked')) {
+            $query->where('locked', '=', $locked === 'yes' ? 1 : 0);
         }
 
         $query->leftJoin('user_bans', 'identifier', '=', 'license_identifier');
@@ -175,7 +166,8 @@ class PlayerBanController extends Controller
 			'filters' => [
                 'banHash' => $request->input('banHash'),
                 'reason' => $request->input('reason'),
-                'creator' => $request->input('creator') ?: "",
+                'creator' => $request->input('creator'),
+                'locked' => $request->input('locked')
             ],
         ]);
     }

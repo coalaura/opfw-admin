@@ -21,35 +21,46 @@
             <template>
                 <form @submit.prevent>
                     <div class="flex flex-wrap mb-4">
-                        <div class="px-3 mobile:w-full mobile:mb-3" :class="$page.auth.player.isSeniorStaff ? 'w-1/3' : 'w-1/2'">
+                        <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-4 font-semibold" for="banHash">
-                                {{ t('players.ban.hash') }} <sup class="text-muted dark:text-dark-muted">**</sup>
+                                {{ t('players.ban.hash') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
                             <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="banHash" name="banHash" placeholder="b60f832e-0c78-42ed-acae-9c89b5f14265" v-model="filters.banHash">
                         </div>
 
-                        <div class="px-3 mobile:w-full mobile:mb-3" :class="$page.auth.player.isSeniorStaff ? 'w-1/3' : 'w-1/2'">
+                        <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-4 font-semibold" for="reason">
-                                {{ t('players.ban.reason') }} <sup class="text-muted dark:text-dark-muted">**</sup>
+                                {{ t('players.ban.reason') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
                             <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="reason" name="reason" placeholder="L Bozo" v-model="filters.reason">
                         </div>
 
-                        <div class="w-1/3 px-3 mobile:w-full mobile:mb-3" v-if="$page.auth.player.isSeniorStaff">
-                            <label class="block mb-4 font-semibold" for="reason">
-                                {{ t('players.ban.creator') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+                        <div class="w-1/4 px-3 mobile:w-full mobile:mb-3" v-if="$page.auth.player.isSeniorStaff">
+                            <label class="block mb-4 font-semibold" for="creator">
+                                {{ t('players.ban.creator') }}
                             </label>
-                            <select class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="reason" name="reason" v-model="filters.creator">
-                                <option value="">{{ t('global.all') }}</option>
+                            <select class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="creator" name="creator" v-model="filters.creator">
+                                <option :value="null">{{ t('global.all') }}</option>
                                 <option v-for="member in staff" :key="member.license_identifier" :value="member.license_identifier">
                                     {{ member.player_name }}
                                 </option>
                             </select>
                         </div>
+
+                        <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
+                            <label class="block mb-4 font-semibold" for="locked">
+                                {{ t('players.ban.locked') }}
+                            </label>
+                            <select class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="locked" name="locked" v-model="filters.locked">
+                                <option :value="null">{{ t('global.all') }}</option>
+                                <option value="yes">{{ t('global.yes') }}</option>
+                                <option value="no">{{ t('global.no') }}</option>
+                            </select>
+                        </div>
                     </div>
                     <!-- Description -->
                     <div class="w-full px-3 mt-3">
-                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block">** {{ t('global.search.like') }} {{ t('global.search.like_prepend') }}</small>
+                        <small class="text-muted dark:text-dark-muted mt-1 leading-4 block" v-html="t('global.search.custom')"></small>
                     </div>
                 </form>
                 <!-- Search button -->

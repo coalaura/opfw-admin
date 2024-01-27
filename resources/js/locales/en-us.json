@@ -819,6 +819,7 @@
             "expiration": "Expiration",
             "reason": "Reason",
             "creator": "Creator",
+            "locked": "Locked",
             "do_ban": "Ban player",
             "update_ban": "Update Ban",
             "banned_for": "Banned for about {0}",

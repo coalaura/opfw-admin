@@ -808,7 +808,8 @@
             "hash": "Ban Hash",
             "search_btn": "Bans khojo",
             "title": "Pratibandhit",
-            "description": "Sabhi pratibandhit khiladiyon ki soochi."
+            "description": "Sabhi pratibandhit khiladiyon ki soochi.",
+            "locked": "Taala laga hua hai"
         },
         "show": {
             "played": "<b>{0}</b> ne khela",

@@ -798,7 +798,8 @@
             "hash": "Ugga Hash",
             "search_btn": "Ugga Bans",
             "title": "Ug Bans",
-            "description": "Ooga ooga list of ooga banned players."
+            "description": "Ooga ooga list of ooga banned players.",
+            "locked": "Locked not there in Caveman Speak, but me try \"No open!\""
         },
         "show": {
             "played": "<b>{0}</b> ooga",

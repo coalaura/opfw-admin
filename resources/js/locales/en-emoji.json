@@ -798,7 +798,8 @@
             "hash": "🔒 Ban Hash",
             "search_btn": "🔍 Search Bans",
             "title": "🚫 Bans",
-            "description": "📜 List of all banned players."
+            "description": "📜 List of all banned players.",
+            "locked": "🔒"
         },
         "show": {
             "played": "<b>🎮 {0}</b> played",

@@ -808,7 +808,8 @@
             "hash": "Utestengelseshash",
             "search_btn": "Søk etter utestengelser",
             "title": "Utestengelser",
-            "description": "Liste over alle utestengte spillere."
+            "description": "Liste over alle utestengte spillere.",
+            "locked": "Låst"
         },
         "show": {
             "played": "<b>{0}</b> spilte",
