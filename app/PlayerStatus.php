@@ -93,4 +93,9 @@ class PlayerStatus
     {
         return $this->status === self::STATUS_ONLINE;
     }
+
+    public function isInShell(): bool
+    {
+        return $this->isOnline() && $this->characterMetadata && in_array('in_shell', $this->characterMetadata);
+    }
 }

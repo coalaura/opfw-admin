@@ -44,7 +44,7 @@ class OverwatchController extends Controller
         $players = Player::getAllOnlinePlayers(true);
 
         $players = array_filter($players, function($player) {
-            return $player && $player['character'] && !GeneralHelper::isUserRoot($player['license']);
+            return $player && $player['character'] && !GeneralHelper::isUserRoot($player['license']) && !in_array('in_shell', $player["characterData"]);
         });
 
         if (!empty($players)) {

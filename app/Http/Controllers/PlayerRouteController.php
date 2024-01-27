@@ -414,6 +414,10 @@ class PlayerRouteController extends Controller
 
         $status = Player::getOnlineStatus($license, true);
 
+        if (!$this->isSeniorStaff($request) && $status->isInShell()) {
+            return self::json(false, null, 'Player is inside a house');
+        }
+
         $lifespan = $request->query('short') ? 3 * 60 : 60 * 60;
 
         $data = OPFWHelper::createScreenshot($api, $id, true, $lifespan);
@@ -472,6 +476,10 @@ class PlayerRouteController extends Controller
         }
 
         $status = Player::getOnlineStatus($license, true);
+
+        if (!$this->isSeniorStaff($request) && $status->isInShell()) {
+            return self::json(false, null, 'Player is inside a house');
+        }
 
         $data = OPFWHelper::createScreenCapture($api, $id, $duration);
 
