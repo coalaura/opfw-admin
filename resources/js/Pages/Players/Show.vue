@@ -1404,7 +1404,7 @@
                     {{ t('map.screenshot_description') }}
                 </p>
 
-                <div v-if="screenshotFlags" class="mb-5">
+                <div v-if="screenshotFlags" class="mb-3">
                     <h4 class="text-base mb-1 mt-2 pt-2 border-t border-gray-500">{{ t('screenshot.flags') }}</h4>
 
                     <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm" v-html="screenshotFlags.join(', ')"></pre>
