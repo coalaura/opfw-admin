@@ -389,6 +389,7 @@
             <template #default>
                 <StatisticsTable source="bans" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
                 <StatisticsTable source="notes" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
+                <StatisticsTable source="helpful" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
                 <StatisticsTable source="staff" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
                 <StatisticsTable source="staff_pm" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
                 <StatisticsTable source="noclip" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />

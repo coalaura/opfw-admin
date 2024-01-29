@@ -952,7 +952,9 @@
             "source_noclip_details": "Amownt of times this staff membew used nyocwip in the wast 30 days.",
             "source_spectate": "Spwectate",
             "source_spectate_details": "Amownt of times this staff membew has spwectated someone in the wast 30 days.",
-            "unban_system_confirm": "Dis pwayew was automaticawwy bawwed by de system. Awe you suwe you wanna wemove dis ban? Type \"confirm\" to confiwm."
+            "unban_system_confirm": "Dis pwayew was automaticawwy bawwed by de system. Awe you suwe you wanna wemove dis ban? Type \"confirm\" to confiwm.",
+            "source_helpful": "\\\"Hewpfuw\\\" Staff actions",
+            "source_helpful_details": "Amownt of \\\"hewpfuw\\\" actions pewfowmed by this staff membew in the wast 30 days. This means using commands dat awe genewawwy used to hewp OTHER pwayews: /tp_player, /tp_here, /tp_to, /spectate, /staffpm, /wipe, /freeze, /unfweeze, /job, /reset_job, /wevive and /wevive_wange (odoews only)."
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

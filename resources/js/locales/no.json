@@ -962,7 +962,9 @@
             "source_noclip_details": "Antall ganger denne ansatte har brukt noclip de siste 30 dagene.",
             "source_spectate": "Tilskuermodus",
             "source_spectate_details": "Antall ganger denne ansatte har vært i tilskuermodus og sett på noen de siste 30 dagene.",
-            "unban_system_confirm": "Denne spilleren ble automatisk utestengt av systemet. Er du sikker på at du ønsker å oppheve denne utestengelsen? Skriv \"confirm\" for å bekrefte."
+            "unban_system_confirm": "Denne spilleren ble automatisk utestengt av systemet. Er du sikker på at du ønsker å oppheve denne utestengelsen? Skriv \"confirm\" for å bekrefte.",
+            "source_helpful": "\"Hjelpsomme\" ansattehandlinger",
+            "source_helpful_details": "Antall \"hjelpsomme\" handlinger utført av denne ansatte i de siste 30 dagene. Dette innebærer bruk av kommandoer som generelt brukes for å hjelpe ANDRE spillere: /tp_spiller, /tp_hit, /tp_til, /observere, /stabspm, /tømme, /fryse, /tine, /jobb, /nullstill_jobb, /gjenopplive og /gjenopplive_område (kun andre)."
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",

@@ -927,6 +927,8 @@
             "source_staff_details": "Amount of staff chat messages sent by this staff member in the last 30 days.",
             "source_staff_pm": "Staff-PM",
             "source_staff_pm_details": "Amount of staff PM's sent by this staff member in the last 30 days.",
+            "source_helpful": "\"Helpful\" Staff actions",
+            "source_helpful_details": "Amount of \"helpful\" actions performed by this staff member in the last 30 days. This means using commands that are generally used to help OTHER players: /tp_player, /tp_here, /tp_to, /spectate, /staffpm, /wipe, /freeze, /unfreeze, /job, /reset_job, /revive and /revive_range (others only).",
             "source_noclip": "Noclip",
             "source_noclip_details": "Amount of times this staff member used noclip in the last 30 days.",
             "source_spectate": "Spectate",

@@ -952,7 +952,9 @@
             "source_noclip_details": "Number o' times this matey turned inta a specter passin' through matter in th' last 30 days.",
             "source_spectate": "Spy wit' yer eye",
             "source_spectate_details": "Number o' times this sea dog's been peepin' at someone from afar in th' last 30 days.",
-            "unban_system_confirm": "Ye scallywag be automatically marooned by the riggin's own doin'. Be ye certain ye be wishin' to rescind this here black spot? Scribble \"confirm\" to affirm, arrr."
+            "unban_system_confirm": "Ye scallywag be automatically marooned by the riggin's own doin'. Be ye certain ye be wishin' to rescind this here black spot? Scribble \"confirm\" to affirm, arrr.",
+            "source_helpful": "\"Helpful\" Crew deeds",
+            "source_helpful_details": "Quantity o' \"helpful\" deeds performed by this matey in the past 30 days. This be meanin' usin' commands that be generally used to aid OTHER buccaneers: /tp_player, /tp_here, /tp_to, /spectate, /staffpm, /wipe, /freeze, /unfreeze, /job, /reset_job, /revive and /revive_range (others only)."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

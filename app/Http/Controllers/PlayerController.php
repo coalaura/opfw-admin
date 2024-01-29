@@ -282,6 +282,9 @@ class PlayerController extends Controller
             case "staff_pm":
                 $result = StatisticsHelper::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action IN ('Staff PM', 'Important Staff PM') AND timestamp >= $month AND identifier = '$license' GROUP BY date ORDER BY timestamp DESC");
                 break;
+            case "helpful":
+                $result = StatisticsHelper::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action IN ('TP Player', 'TP Here', 'TP To', 'Started Spectating', 'Staff PM', 'Important Staff PM', 'Wiped Entities', 'Froze Player', 'Unfroze Player', 'Set Job', 'Reset Job', 'Revived Player', 'Revived Player And Removed Injuries', 'Revived Range') AND timestamp >= $month AND identifier = '$license' GROUP BY date ORDER BY timestamp DESC");
+                break;
             case "noclip":
                 $result = StatisticsHelper::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = 'Noclip Toggled' AND timestamp >= $month AND identifier = '$license' GROUP BY date ORDER BY timestamp DESC");
                 break;

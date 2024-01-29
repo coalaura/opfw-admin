@@ -952,7 +952,9 @@
             "source_noclip_details": "How many times this here staff member done used noclip in the past 30 days.",
             "source_spectate": "Spectate",
             "source_spectate_details": "How many times this staff member done spectated somebody in the last 30 days.",
-            "unban_system_confirm": "This player done got banned by the system on its own. Y'all sure ya wanna lift this here ban? Type \"confirm\" to confirm, alright?"
+            "unban_system_confirm": "This player done got banned by the system on its own. Y'all sure ya wanna lift this here ban? Type \"confirm\" to confirm, alright?",
+            "source_helpful": "\"Helpful\" Staff actions",
+            "source_helpful_details": "Amount o' \"helpful\" actions this here staff member done did in tha last 30 days. This means usin' them commands that's generally used fer helpin' OTHER folks: /tp_player, /tp_here, /tp_to, /spectate, /staffpm, /wipe, /freeze, /unfreeze, /job, /reset_job, /revive and /revive_range (others only)."
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",
