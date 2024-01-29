@@ -964,7 +964,7 @@
             "source_spectate_details": "Antall ganger denne ansatte har vært i tilskuermodus og sett på noen de siste 30 dagene.",
             "unban_system_confirm": "Denne spilleren ble automatisk utestengt av systemet. Er du sikker på at du ønsker å oppheve denne utestengelsen? Skriv \"confirm\" for å bekrefte.",
             "source_helpful": "\"Hjelpsomme\" ansattehandlinger",
-            "source_helpful_details": "Antall \"hjelpsomme\" handlinger utført av denne ansatte i de siste 30 dagene. Dette innebærer bruk av kommandoer som generelt brukes for å hjelpe ANDRE spillere: /tp_spiller, /tp_hit, /tp_til, /observere, /stabspm, /tømme, /fryse, /tine, /jobb, /nullstill_jobb, /gjenopplive og /gjenopplive_område (kun andre)."
+            "source_helpful_details": "Antall \"hjelpsomme\" handlinger utført av dette stabmedlemmet de siste 30 dagene. Dette refererer til bruk av kommandoer som generelt brukes mer for å hjelpe ANDRE spillere: /tp_spiller, /tp_hit, /tp_til, /observere, /stabpm, /tømme, /fryse, /tine, /jobb, /tilbakestill_jobb, /gjenopplive og /gjenopplive_område (kun andre), med kommandoer som oftere brukes for å trolle andre stabmedlemmer som /slå og /skade ekskludert."
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",

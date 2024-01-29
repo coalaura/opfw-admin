@@ -964,7 +964,7 @@
             "source_spectate_details": "Pichhle 30 dino mein is staff member ne kitni baar kisi ko spectate kiya hai.",
             "unban_system_confirm": "Yeh khiladi swachaalit roop se system dwaara ban kar diya gaya tha. Kya aap vaakai mein is ban ko hataana chahte hain? Pushthi karne ke liye \"confirm\" type karein.",
             "source_helpful": "\"Sahayak\" Staff karyavaahiyaan",
-            "source_helpful_details": "Pichhle 30 dinon mei is staff sadasya dwara ki gayi \"sahayak\" karyavaahiyo ki sankhya. Iska matlab hai aise command ka istemal karna jo aam taur par ANYA khiladiyon ki madad ke liye kiye jaate hain: /tp_player, /tp_here, /tp_to, /spectate, /staffpm, /wipe, /freeze, /unfreeze, /job, /reset_job, /revive aur /revive_range (sirf doosron ke liye)."
+            "source_helpful_details": "Is staff sadasya dwara pichhle 30 dino me ki gayi \"sahayak\" kriyaon ki matra. Iska matlab hai aise command ka upyog jo aam taur par dusre khiladiyon ki madad ke liye jyada istemal kiye jaate hain: /tp_player, /tp_here, /tp_to, /spectate, /staffpm, /wipe, /freeze, /unfreeze, /job, /reset_job, /revive aur /revive_range (keval dusron ke liye) ko shamil karte hue aur dusre staff ko pareshan karne wale commands jaise /slap aur /damage ko chhod kar."
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",
