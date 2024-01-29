@@ -350,7 +350,9 @@
         "bills": "Bills Paid",
         "bills_details": "Combined amount of all paid bills.",
         "dumpsters": "Items Found in Dumpsters",
-        "dumpsters_details": "Amount of items found in dumpsters."
+        "dumpsters_details": "Amount of items found in dumpsters.",
+        "mining_explosions": "Mining Explosions",
+        "mining_explosions_details": "Amount of gems that exploded while being mined."
     },
     "map": {
         "title": "Live-Map",

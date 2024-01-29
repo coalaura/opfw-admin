@@ -335,7 +335,9 @@
         "bills": "Bills Give-Rocks",
         "bills_details": "All give-rocks pile for paid bills.",
         "dumpsters": "Things Found in Trash-Piles",
-        "dumpsters_details": "Pile of things found in trash-holes."
+        "dumpsters_details": "Pile of things found in trash-holes.",
+        "mining_explosions": "Boom Rocks Get",
+        "mining_explosions_details": "Many shinies go boom when dig-dig."
     },
     "map": {
         "title": "Ooga-Map",

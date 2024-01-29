@@ -335,7 +335,9 @@
         "bills": "Bills Bhugtaan Kiye Gaye",
         "bills_details": "Saare bhugtaan kiye gaye bills ka yugmit rashi.",
         "dumpsters": "Dumpster Mein Payi Gayi Vastuen",
-        "dumpsters_details": "Dumpster mein payi gayi vastuon ki sankhya."
+        "dumpsters_details": "Dumpster mein payi gayi vastuon ki sankhya.",
+        "mining_explosions": "Khanan Vishphot",
+        "mining_explosions_details": "Ratnon ki sankhya jo khanan ke dauran visphotit hui."
     },
     "map": {
         "title": "Live-Naksha",

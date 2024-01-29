@@ -153,6 +153,12 @@ class StatisticsHelper
         return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = 'Hospitalization' AND details LIKE '%airlifted%' GROUP BY date ORDER BY timestamp DESC");
     }
 
+    // Mining Explosions (count)
+    public static function collectMiningExplosionStatistics(): array
+    {
+        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = 'Mining Explosion' GROUP BY date ORDER BY timestamp DESC");
+    }
+
     // Items found in Dumpsters (count)
     public static function collectDumpsterStatistics(): array
     {

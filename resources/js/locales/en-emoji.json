@@ -335,7 +335,9 @@
         "bills": "💸✅",
         "bills_details": "🤝💵🧾✅💸",
         "dumpsters": "🗑️🔍📦",
-        "dumpsters_details": "🧮🗑️🔍📦"
+        "dumpsters_details": "🧮🗑️🔍📦",
+        "mining_explosions": "💎💥",
+        "mining_explosions_details": "💎💣💥🔨."
     },
     "map": {
         "title": "🌍 Live-Map",

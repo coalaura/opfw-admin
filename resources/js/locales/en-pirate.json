@@ -335,7 +335,9 @@
         "bills": "Bills Be Settled",
         "bills_details": "Total sum o' all settled bills.",
         "dumpsters": "Booty Found in Davy Jones's Lockers",
-        "dumpsters_details": "Number o' treasures plundered from Davy Jones's lockers."
+        "dumpsters_details": "Number o' treasures plundered from Davy Jones's lockers.",
+        "mining_explosions": "Blastin's in th' Mines",
+        "mining_explosions_details": "Number o' jewels what went boom durin' they be dug out."
     },
     "map": {
         "title": "Sailin' Map",

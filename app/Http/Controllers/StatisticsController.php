@@ -106,6 +106,9 @@ class StatisticsController extends Controller
                 case 'airlifts':
                     $result = StatisticsHelper::collectAirliftsStatistics();
                     break;
+                case 'mining_explosions':
+                    $result = StatisticsHelper::collectMiningExplosionStatistics();
+                    break;
                 case 'dumpsters':
                     $result = StatisticsHelper::collectDumpsterStatistics();
                     break;

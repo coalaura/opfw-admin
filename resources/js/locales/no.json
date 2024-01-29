@@ -335,7 +335,9 @@
         "bills": "Regninger betalt",
         "bills_details": "Samlet beløp av alle betalte regninger.",
         "dumpsters": "Gjenstander funnet i søppelcontainere",
-        "dumpsters_details": "Antall gjenstander funnet i søppelcontainere."
+        "dumpsters_details": "Antall gjenstander funnet i søppelcontainere.",
+        "mining_explosions": "Gruveeksplosjoner",
+        "mining_explosions_details": "Antall edelstener som eksploderte under utvinning."
     },
     "map": {
         "title": "Levende-kart",

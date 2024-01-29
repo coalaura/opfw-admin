@@ -33,6 +33,7 @@
             <StatisticsTable source="impounds" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="joins" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="material_vendor" tag="money" :currency="true" :search="search" />
+            <StatisticsTable source="mining_explosions" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="ooc" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="pawn" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="paycheck" tag="money" :currency="true" :search="search" />

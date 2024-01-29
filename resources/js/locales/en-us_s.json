@@ -335,7 +335,9 @@
         "bills": "Bills Paid",
         "bills_details": "Combined amount gone paid fer all them bills.",
         "dumpsters": "Items Found in Dumpsters",
-        "dumpsters_details": "Amount of stuff folks found in them dumpsters."
+        "dumpsters_details": "Amount of stuff folks found in them dumpsters.",
+        "mining_explosions": "Minin' 'Splosions",
+        "mining_explosions_details": "Amoun' o' gems that done went ka-boom whilst bein' dug up."
     },
     "map": {
         "title": "Active Map",
