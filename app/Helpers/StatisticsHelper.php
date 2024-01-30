@@ -194,7 +194,7 @@ class StatisticsHelper
     {
         $start = microtime(true);
 
-        $data = DB::select("SELECT details, SUM(amount) as amount, COUNT(id) as count FROM money_logs WHERE timestamp > DATE_SUB(NOW(), INTERVAL 7 DAY) GROUP BY details ORDER BY amount DESC");
+        $data = DB::select("SELECT details, SUM(amount) as amount, COUNT(id) as count FROM money_logs WHERE timestamp > DATE_SUB(NOW(), INTERVAL 7 DAY) AND details IS NOT NULL GROUP BY details ORDER BY amount DESC");
 
         return [
             'data' => $data,
