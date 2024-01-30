@@ -339,7 +339,10 @@
         "mining_explosions": "Minin' 'Splosions",
         "mining_explosions_details": "Amoun' o' gems that done went ka-boom whilst bein' dug up.",
         "daily_refresh": "Paid Daily Activities Refresh",
-        "daily_refresh_details": "Combined 'mount of all paid daily activities refreshes."
+        "daily_refresh_details": "Combined 'mount of all paid daily activities refreshes.",
+        "type": "Type",
+        "economy": "Economy Movements",
+        "economy_details": "Money movements grouped up by type in the las' 7 days."
     },
     "map": {
         "title": "Active Map",

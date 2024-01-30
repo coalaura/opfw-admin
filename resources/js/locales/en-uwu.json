@@ -339,7 +339,10 @@
         "mining_explosions": "Mining Expwosions",
         "mining_explosions_details": "Amount of gems dat expwoded whiwe being mined.",
         "daily_refresh": "Pwaid Daiwy Activitwies Weffwesh",
-        "daily_refresh_details": "Combwined amount of aww pwaid daiwy activitwies weffweshes."
+        "daily_refresh_details": "Combwined amount of aww pwaid daiwy activitwies weffweshes.",
+        "type": "Type",
+        "economy": "Econyomwy Movwements",
+        "economy_details": "Money mwovements gwouped by type in the wast 7 days."
     },
     "map": {
         "title": "Wive-Map UwU",

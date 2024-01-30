@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mt-5" v-if="shown">
+    <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mt-4" v-if="shown">
         <div class="flex">
             <h2 class="text-lg flex gap-2" @click="collapsed && toggleCollapsed()" :class="{'cursor-pointer': collapsed}">
                 <div class="flex items-center" v-if="tag">

@@ -339,7 +339,10 @@
         "mining_explosions": "💎💥",
         "mining_explosions_details": "💎💣💥🔨.",
         "daily_refresh": "💰📅🔄",
-        "daily_refresh_details": "🔗💰🔢📅🔄."
+        "daily_refresh_details": "🔗💰🔢📅🔄.",
+        "type": "⌨️",
+        "economy": "📉🌐",
+        "economy_details": "💵🔄🏷️📋📅🔙7️⃣📆."
     },
     "map": {
         "title": "🌍 Live-Map",

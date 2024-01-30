@@ -292,6 +292,7 @@
         "title": "Statistics",
         "description": "Some general statistics",
 
+        "type": "Type",
         "date": "Date",
         "count": "Count",
         "amount": "Amount",
@@ -354,7 +355,10 @@
         "mining_explosions": "Mining Explosions",
         "mining_explosions_details": "Amount of gems that exploded while being mined.",
         "daily_refresh": "Paid Daily Activities Refresh",
-        "daily_refresh_details": "Combined amount of all paid daily activities refreshes."
+        "daily_refresh_details": "Combined amount of all paid daily activities refreshes.",
+
+        "economy": "Economy Movements",
+        "economy_details": "Money movements grouped by type in the last 7 days."
     },
     "map": {
         "title": "Live-Map",

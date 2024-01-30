@@ -339,7 +339,10 @@
         "mining_explosions": "Boom Rocks Get",
         "mining_explosions_details": "Many shinies go boom when dig-dig.",
         "daily_refresh": "Get Rocks Every Sun Up Again",
-        "daily_refresh_details": "All Rocks From Every Sun Up Again Together"
+        "daily_refresh_details": "All Rocks From Every Sun Up Again Together",
+        "type": "Make Marks",
+        "economy": "Trade Things Move",
+        "economy_details": "Shiny Pebble move by make marks in past many suns."
     },
     "map": {
         "title": "Ooga-Map",

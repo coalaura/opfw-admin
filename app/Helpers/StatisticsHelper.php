@@ -189,6 +189,19 @@ class StatisticsHelper
         return self::collectStatistics("SELECT COUNT(id) as count, SUM(-amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from money_logs WHERE details = 'daily-activities-refresh-task' GROUP BY date ORDER BY timestamp DESC");
     }
 
+    // Generic Economy Statistics
+    public static function collectGenericEconomyStatistics(): array
+    {
+        $start = microtime(true);
+
+        $data = DB::select("SELECT details, SUM(amount) as amount, COUNT(id) as count FROM money_logs WHERE timestamp > DATE_SUB(NOW(), INTERVAL 7 DAY) GROUP BY details ORDER BY amount DESC");
+
+        return [
+            'data' => $data,
+            'time' => round((microtime(true) - $start) * 1000),
+        ];
+    }
+
     public static function collectUserLogsCountStatistics(string ...$action): array
     {
         if (sizeof($action) === 1) {

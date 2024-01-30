@@ -115,6 +115,11 @@ class StatisticsController extends Controller
                 case 'dumpsters':
                     $result = StatisticsHelper::collectDumpsterStatistics();
                     break;
+
+                // Other statistics
+                case 'economy':
+                    $result = StatisticsHelper::collectGenericEconomyStatistics();
+                    break;
             }
 
             CacheHelper::write($key, $result, CacheHelper::HOUR);
