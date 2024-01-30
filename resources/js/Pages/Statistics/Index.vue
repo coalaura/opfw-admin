@@ -65,7 +65,7 @@
                                 </td>
                             </tr>
 
-                            <tr v-for="(entry, index) in economy.data" :key="index" class="border-t border-gray-500" :class="{ 'hidden': economySearch && !entry.details.includes(economySearch.toLowerCase()) }">
+                            <tr v-for="(entry, index) in economy.data" :key="index" class="border-t border-gray-500" :class="{ 'hidden': !entry.details || (economySearch && !entry.details.includes(economySearch.toLowerCase())) }">
                                 <td class="italic text-gray-700 dark:text-gray-300 px-2 py-0.5">{{ entry.details }}</td>
                                 <td class="px-2 py-0.5">{{ numberFormat(entry.count, false, false) }}x</td>
                                 <td class="px-2 py-0.5">
