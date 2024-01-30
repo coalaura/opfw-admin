@@ -37,7 +37,7 @@
                 </button>
 
                 <div class="inline-block flex-shrink-0">
-                    <input class="block w-full px-2 py-0.5 border-0 border-b border-gray-500 bg-gray-300 dark:bg-gray-700 mb-2" v-model="economySearch" type="text" placeholder="hourly-sal..." />
+                    <input class="block w-full px-2 py-0.5 border-0 border-b border-gray-500 bg-gray-300 dark:bg-gray-700 mb-2" v-model="economySearch" type="text" placeholder="hourly-sal..." v-if="economy" />
 
                     <div class="overflow-y-auto max-h-statistics pr-2 -mr-2">
                         <table class="whitespace-nowrap w-full">
