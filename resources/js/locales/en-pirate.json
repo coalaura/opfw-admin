@@ -337,7 +337,9 @@
         "dumpsters": "Booty Found in Davy Jones's Lockers",
         "dumpsters_details": "Number o' treasures plundered from Davy Jones's lockers.",
         "mining_explosions": "Blastin's in th' Mines",
-        "mining_explosions_details": "Number o' jewels what went boom durin' they be dug out."
+        "mining_explosions_details": "Number o' jewels what went boom durin' they be dug out.",
+        "daily_refresh": "Paid Daily Capers Refresh",
+        "daily_refresh_details": "Sum o' all the paid daily capers refreshes."
     },
     "map": {
         "title": "Sailin' Map",

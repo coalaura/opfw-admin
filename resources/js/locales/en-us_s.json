@@ -337,7 +337,9 @@
         "dumpsters": "Items Found in Dumpsters",
         "dumpsters_details": "Amount of stuff folks found in them dumpsters.",
         "mining_explosions": "Minin' 'Splosions",
-        "mining_explosions_details": "Amoun' o' gems that done went ka-boom whilst bein' dug up."
+        "mining_explosions_details": "Amoun' o' gems that done went ka-boom whilst bein' dug up.",
+        "daily_refresh": "Paid Daily Activities Refresh",
+        "daily_refresh_details": "Combined 'mount of all paid daily activities refreshes."
     },
     "map": {
         "title": "Active Map",

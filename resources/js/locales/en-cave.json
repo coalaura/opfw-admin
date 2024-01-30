@@ -337,7 +337,9 @@
         "dumpsters": "Things Found in Trash-Piles",
         "dumpsters_details": "Pile of things found in trash-holes.",
         "mining_explosions": "Boom Rocks Get",
-        "mining_explosions_details": "Many shinies go boom when dig-dig."
+        "mining_explosions_details": "Many shinies go boom when dig-dig.",
+        "daily_refresh": "Get Rocks Every Sun Up Again",
+        "daily_refresh_details": "All Rocks From Every Sun Up Again Together"
     },
     "map": {
         "title": "Ooga-Map",

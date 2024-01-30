@@ -352,7 +352,9 @@
         "dumpsters": "Items Found in Dumpsters",
         "dumpsters_details": "Amount of items found in dumpsters.",
         "mining_explosions": "Mining Explosions",
-        "mining_explosions_details": "Amount of gems that exploded while being mined."
+        "mining_explosions_details": "Amount of gems that exploded while being mined.",
+        "daily_refresh": "Paid Daily Activities Refresh",
+        "daily_refresh_details": "Combined amount of all paid daily activities refreshes."
     },
     "map": {
         "title": "Live-Map",

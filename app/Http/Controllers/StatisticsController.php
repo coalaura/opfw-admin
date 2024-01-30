@@ -83,6 +83,9 @@ class StatisticsController extends Controller
                 case 'scratch_tickets':
                     $result = StatisticsHelper::collectScratchTicketStatistics();
                     break;
+                case 'daily_refresh':
+                    $result = StatisticsHelper::collectDailyRefreshStatistics();
+                    break;
 
                 // Non currency statistics
                 case 'robberies':

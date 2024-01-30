@@ -337,7 +337,9 @@
         "dumpsters": "Dumpster Mein Payi Gayi Vastuen",
         "dumpsters_details": "Dumpster mein payi gayi vastuon ki sankhya.",
         "mining_explosions": "Khanan Vishphot",
-        "mining_explosions_details": "Ratnon ki sankhya jo khanan ke dauran visphotit hui."
+        "mining_explosions_details": "Ratnon ki sankhya jo khanan ke dauran visphotit hui.",
+        "daily_refresh": "Bhuktan Kiye Gaye Dainik Kriyakalapon Ka Navikaran",
+        "daily_refresh_details": "Sabhi bhuktan kiye gaye dainik kriyakalapon ke navikaranon ka samyukt yog."
     },
     "map": {
         "title": "Live-Naksha",

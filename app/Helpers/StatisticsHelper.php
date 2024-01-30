@@ -183,6 +183,12 @@ class StatisticsHelper
         return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Paid Bill' GROUP BY date ORDER BY timestamp DESC");
     }
 
+    // Daily Activities paid refresh
+    public static function collectDailyRefreshStatistics(): array
+    {
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM(-amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from money_logs WHERE details = 'daily-activities-refresh-task' GROUP BY date ORDER BY timestamp DESC");
+    }
+
     public static function collectUserLogsCountStatistics(string ...$action): array
     {
         if (sizeof($action) === 1) {
