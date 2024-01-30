@@ -36,41 +36,45 @@
                     <i class="fas fa-plus"></i>
                 </button>
 
-                <div class="overflow-y-auto max-h-statistics inline-block pr-2 flex-shrink-0" ref="table">
-                    <table class="whitespace-nowrap">
-                        <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
-                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.type') }}</th>
-                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.count') }}</th>
-                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.amount') }}</th>
-                        </tr>
+                <div class="inline-block flex-shrink-0">
+                    <input class="block w-full px-2 py-0.5 border-0 border-b border-gray-500 bg-gray-300 dark:bg-gray-700 mb-2" v-model="economySearch" type="text" placeholder="hourly-sal..." />
 
-                        <tr class="border-t border-gray-500" v-if="!isLoading && !economy">
-                            <td class="px-2 py-0.5">...</td>
-                            <td class="px-2 py-0.5">...</td>
-                            <td class="px-2 py-0.5">...</td>
-                        </tr>
+                    <div class="overflow-y-auto max-h-statistics pr-2 -mr-2">
+                        <table class="whitespace-nowrap w-full">
+                            <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.type') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.count') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.amount') }}</th>
+                            </tr>
 
-                        <tr class="border-t border-gray-500" v-else-if="isLoading">
-                            <td class="px-2 py-0.5 text-center" colspan="3">
-                                <i class="fas fa-spinner animate-spin"></i>
-                            </td>
-                        </tr>
+                            <tr class="border-t border-gray-500" v-if="!isLoading && !economy">
+                                <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
+                            </tr>
 
-                        <tr class="border-t border-gray-500" v-else-if="!economy || !economy.data">
-                            <td class="px-2 py-0.5 text-center text-red-500 font-semibold" colspan="3">
-                                {{ t("statistics.failed_load") }}
-                            </td>
-                        </tr>
+                            <tr class="border-t border-gray-500" v-else-if="isLoading">
+                                <td class="px-2 py-0.5 text-center" colspan="3">
+                                    <i class="fas fa-spinner animate-spin"></i>
+                                </td>
+                            </tr>
 
-                        <tr v-for="entry in economy.data" :key="index" class="border-t border-gray-500" v-else>
-                            <td class="italic text-gray-700 dark:text-gray-300 px-2 py-0.5">{{ entry.details }}</td>
-                            <td class="px-2 py-0.5">{{ numberFormat(entry.count, false, false) }}x</td>
-                            <td class="px-2 py-0.5">
-                                <span v-if="entry.amount > 0" class="text-green-700 dark:text-green-300">+{{ numberFormat(entry.amount, false, true) }}</span>
-                                <span v-else class="text-red-700 dark:text-red-300">{{ numberFormat(entry.amount, false, true) }}</span>
-                            </td>
-                        </tr>
-                    </table>
+                            <tr class="border-t border-gray-500" v-else-if="!economy || !economy.data">
+                                <td class="px-2 py-0.5 text-center text-red-500 font-semibold" colspan="3">
+                                    {{ t("statistics.failed_load") }}
+                                </td>
+                            </tr>
+
+                            <tr v-for="(entry, index) in economy.data" :key="index" class="border-t border-gray-500" :class="{ 'hidden': economySearch && !entry.details.includes(economySearch.toLowerCase()) }">
+                                <td class="italic text-gray-700 dark:text-gray-300 px-2 py-0.5">{{ entry.details }}</td>
+                                <td class="px-2 py-0.5">{{ numberFormat(entry.count, false, false) }}x</td>
+                                <td class="px-2 py-0.5">
+                                    <span v-if="entry.amount > 0" class="text-green-700 dark:text-green-300">+{{ numberFormat(entry.amount, false, true) }}</span>
+                                    <span v-else class="text-red-700 dark:text-red-300">{{ numberFormat(entry.amount, false, true) }}</span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -120,7 +124,8 @@ export default {
             isLoading: false,
             search: "",
 
-            economy: false
+            economy: false,
+            economySearch: ""
         }
     },
     methods: {
