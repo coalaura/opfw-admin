@@ -51,11 +51,11 @@ class QueryRunner extends Command
 
         $this->info("Iterating through all clusters...");
 
-        $dir = __DIR__ . "/../envs";
+        $dir = base_path("envs");
 
         $clusters = array_diff(scandir($dir), [".", ".."]);
 
-        chdir(__DIR__ . "/..");
+        chdir(base_path());
 
         foreach ($clusters as $cluster) {
             $cluster = trim($cluster);
@@ -82,7 +82,7 @@ class QueryRunner extends Command
 
     private function runQuery(string $cluster, string $query)
     {
-        $dir = realpath(__DIR__ . "/../envs/" . $cluster);
+        $dir = base_path("envs/" . $cluster);
         $env = $dir . "/.env";
 
         if (empty($env) || !file_exists($env)) {
