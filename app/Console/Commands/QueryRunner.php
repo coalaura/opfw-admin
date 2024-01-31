@@ -53,7 +53,7 @@ class QueryRunner extends Command
 
         $dir = base_path("envs");
 
-        $clusters = array_diff(scandir($dir), [".", ".."]);
+        $clusters = array_diff(scandir($dir), [".", "..", "auth"]);
 
         chdir(base_path());
 
