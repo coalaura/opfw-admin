@@ -82,10 +82,12 @@ class Create{$name}Table extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		\$indexes = \$this->collectIndexedColumns();
-		\$columns = Schema::getColumnListing("$table");
+		\$tableExists = Schema::hasTable("$table");
 
-		\$func = Schema::hasTable("$table") ? "table" : "create";
+		\$indexes = \$tableExists ? \$this->getIndexedColumns() : [];
+		\$columns = \$tableExists ? \$this->getColumns() : [];
+
+		\$func = \$tableExists ? "table" : "create";
 
 		Schema::\$func("$table", function (Blueprint \$table) use (\$columns, \$indexes) {
 {{up}}
@@ -103,24 +105,31 @@ class Create{$name}Table extends Migration
 	}
 
 	/**
-	 * Collect all columns that are indexed in the $table table.
+	 * Get all columns.
 	 *
 	 * @return array
 	 */
-	private function collectIndexedColumns(): array
+	private function getColumns(): array
 	{
-		if (!Schema::hasTable("$table")) {
-			return [];
-		}
+		\$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `$table`");
 
-		\$sm  = Schema::getConnection()->getDoctrineSchemaManager();
-		\$tbl = \$sm->introspectTable("$table");
+		return array_map(function (\$column) {
+			return \$column->Field;
+		}, \$columns);
+	}
 
-		\$indexes = array_reduce(\$tbl->getIndexes(), function (\$carry, \$index) {
-			return array_merge(\$carry, \$index->getColumns());
-		}, []);
+	/**
+	 * Get all indexed columns.
+	 *
+	 * @return array
+	 */
+	private function getIndexedColumns(): array
+	{
+		\$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `$table` WHERE Key_name != 'PRIMARY'");
 
-		return array_values(array_unique(\$indexes));
+		return array_map(function (\$index) {
+			return \$index->Column_name;
+		}, \$indexes);
 	}
 }
 EOT;
