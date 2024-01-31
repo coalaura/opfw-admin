@@ -129,7 +129,13 @@ class QueryRunner extends Command
         } else if (Str::startsWith($query, "DELETE")) {
             $affected = DB::connection($dbName)->delete($query);
         } else {
-            return [false, "Unknown query type"];
+            $affected = DB::connection($dbName)->statement($query);
+
+            if (!$affected) {
+                return [false, "Failed to execute query"];
+            }
+
+            return [true, "Executed query"];
         }
 
         return [true, "Affected " . $affected . " rows"];
