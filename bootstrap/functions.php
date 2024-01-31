@@ -4,10 +4,22 @@ function first($array)
 {
     if (is_string($array)) {
         $array = json_decode($array, true);
+    } else if ($array instanceof stdClass) {
+        $array = (array) $array;
     }
 
     if (!$array || !is_array($array) || empty($array)) {
         return null;
+    }
+
+    if (!array_is_list($array)) {
+        $keys = array_keys($array);
+
+        if (empty($keys)) {
+            return null;
+        }
+
+        return $array[$keys[0]];
     }
 
     return $array[0];
@@ -15,7 +27,7 @@ function first($array)
 
 function mb_str_pad($input, $pad_length, $pad_string = ' ', $pad_type = STR_PAD_RIGHT, $encoding = 'UTF-8')
 {
-    $input_length = mb_strlen($input, $encoding);
+    $input_length      = mb_strlen($input, $encoding);
     $pad_string_length = mb_strlen($pad_string, $encoding);
 
     if ($pad_length <= 0 || ($pad_length - $input_length) <= 0) {
@@ -26,17 +38,17 @@ function mb_str_pad($input, $pad_length, $pad_string = ' ', $pad_type = STR_PAD_
 
     switch ($pad_type) {
         case STR_PAD_RIGHT:
-            $left_pad = 0;
+            $left_pad  = 0;
             $right_pad = $num_pad_chars;
             break;
 
         case STR_PAD_LEFT:
-            $left_pad = $num_pad_chars;
+            $left_pad  = $num_pad_chars;
             $right_pad = 0;
             break;
 
         case STR_PAD_BOTH:
-            $left_pad = floor($num_pad_chars / 2);
+            $left_pad  = floor($num_pad_chars / 2);
             $right_pad = $num_pad_chars - $left_pad;
             break;
     }
@@ -85,7 +97,7 @@ function redirectWith(string $path, string $type, string $message)
     return redirect($path);
 }
 
-function put_contents(string $filename, mixed $content, int $flags = 0): int|false
+function put_contents(string $filename, mixed $content, int $flags = 0): int | false
 {
     $success = file_put_contents($filename, $content, $flags);
 
@@ -104,7 +116,7 @@ function op_week_identifier(): int
 {
     $weekZero = 1609113600;
 
-	$difference = time() - $weekZero;
+    $difference = time() - $weekZero;
 
-	return floor($difference / 604800);
+    return floor($difference / 604800);
 }
