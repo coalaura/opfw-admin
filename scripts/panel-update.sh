@@ -9,7 +9,7 @@ export COMPOSER_ALLOW_SUPERUSER=1
 
 composer install
 
-for directory in ./envs/*/; do
+for directory in ./envs/c*/; do
     [ -L "${d%/}" ] && continue
 
     cluster="$(basename -- $directory)"
