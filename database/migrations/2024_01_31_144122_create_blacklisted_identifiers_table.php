@@ -29,7 +29,7 @@ class CreateBlacklistedIdentifiersTable extends Migration
 			!in_array("identifier", $columns) && $table->string("identifier", 255)->nullable();
 			!in_array("creator_identifier", $columns) && $table->longText("creator_identifier")->nullable();
 			!in_array("reason", $columns) && $table->longText("reason")->nullable();
-			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->default("current_timestamp()");
+			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->useCurrent();
 			!in_array("note", $columns) && $table->longText("note")->nullable();
 
 			!in_array("identifier", $indexes) && $table->index("identifier");

@@ -254,7 +254,9 @@ EOT;
 			$content .= '->nullable()';
 		}
 
-		if ($default !== null) {
+		if ($default === 'current_timestamp()') {
+			$content .= '->useCurrent()';
+		} else if ($default !== null) {
 			$content .= sprintf('->default("%s")', $default);
 		}
 

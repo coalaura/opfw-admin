@@ -32,7 +32,7 @@ class CreateStocksCompaniesTable extends Migration
 			!in_array("company_description", $columns) && $table->longText("company_description")->nullable();
 			!in_array("company_logo", $columns) && $table->longText("company_logo")->nullable();
 			!in_array("company_balance", $columns) && $table->double("company_balance")->nullable()->default("0");
-			!in_array("company_reg_timestamp", $columns) && $table->timestamp("company_reg_timestamp")->default("current_timestamp()");
+			!in_array("company_reg_timestamp", $columns) && $table->timestamp("company_reg_timestamp")->useCurrent();
 			!in_array("total_shares", $columns) && $table->integer("total_shares")->nullable()->default("0");
 			!in_array("total_shares_purchased", $columns) && $table->integer("total_shares_purchased")->nullable()->default("0");
 			!in_array("max_shares", $columns) && $table->integer("max_shares")->nullable()->default("1000000");

@@ -32,7 +32,7 @@ class CreateMoneyLogsTable extends Migration
 			!in_array("amount", $columns) && $table->integer("amount");
 			!in_array("balance_after", $columns) && $table->integer("balance_after");
 			!in_array("details", $columns) && $table->longText("details")->nullable();
-			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->default("current_timestamp()");
+			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->useCurrent();
 
 			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
 			!in_array("character_id", $indexes) && $table->index("character_id");

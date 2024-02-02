@@ -30,7 +30,7 @@ class CreateUserLogsTable extends Migration
 			!in_array("action", $columns) && $table->string("action", 50)->nullable();
 			!in_array("details", $columns) && $table->longText("details")->nullable();
 			!in_array("metadata", $columns) && $table->longText("metadata")->nullable();
-			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->default("current_timestamp()");
+			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->useCurrent();
 
 			!in_array("identifier", $indexes) && $table->index("identifier");
 			!in_array("action", $indexes) && $table->index("action");

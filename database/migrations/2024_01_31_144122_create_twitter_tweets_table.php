@@ -29,7 +29,7 @@ class CreateTwitterTweetsTable extends Migration
 			!in_array("authorId", $columns) && $table->integer("authorId")->nullable();
 			!in_array("realUser", $columns) && $table->string("realUser", 50)->nullable();
 			!in_array("message", $columns) && $table->text("message")->nullable();
-			!in_array("time", $columns) && $table->timestamp("time")->default("current_timestamp()");
+			!in_array("time", $columns) && $table->timestamp("time")->useCurrent();
 			!in_array("likes", $columns) && $table->integer("likes")->nullable()->default("0");
 			!in_array("is_deleted", $columns) && $table->tinyInteger("is_deleted")->nullable()->default("0");
 

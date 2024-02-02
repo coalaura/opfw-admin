@@ -29,8 +29,8 @@ class CreateWarningsTable extends Migration
 			!in_array("player_id", $columns) && $table->integer("player_id");
 			!in_array("issuer_id", $columns) && $table->integer("issuer_id");
 			!in_array("message", $columns) && $table->longText("message")->nullable();
-			!in_array("created_at", $columns) && $table->timestamp("created_at")->default("current_timestamp()");
-			!in_array("updated_at", $columns) && $table->timestamp("updated_at")->default("current_timestamp()");
+			!in_array("created_at", $columns) && $table->timestamp("created_at")->useCurrent();
+			!in_array("updated_at", $columns) && $table->timestamp("updated_at")->useCurrent();
 			!in_array("warning_type", $columns) && $table->enum("warning_type", ["note", "warning", "strike", "system", "hidden"])->default("note");
 			!in_array("can_be_deleted", $columns) && $table->tinyInteger("can_be_deleted")->default("1");
 

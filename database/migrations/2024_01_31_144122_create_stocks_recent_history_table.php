@@ -32,7 +32,7 @@ class CreateStocksRecentHistoryTable extends Migration
 			!in_array("text", $columns) && $table->longText("text")->nullable();
 			!in_array("paid_amount", $columns) && $table->integer("paid_amount")->nullable();
 			!in_array("share_change", $columns) && $table->double("share_change")->nullable();
-			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->default("current_timestamp()");
+			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->useCurrent();
 
 			!in_array("company_id", $indexes) && $table->index("company_id");
 			!in_array("id", $indexes) && $table->index("id");

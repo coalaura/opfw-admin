@@ -29,7 +29,7 @@ class CreateFinancesTable extends Migration
 			!in_array("cid", $columns) && $table->integer("cid")->nullable();
 			!in_array("amount", $columns) && $table->integer("amount")->nullable();
 			!in_array("completed", $columns) && $table->integer("completed")->nullable()->default("0");
-			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->default("current_timestamp()");
+			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->useCurrent();
 			!in_array("description", $columns) && $table->longText("description")->nullable();
 
 			!in_array("cid", $indexes) && $table->index("cid");

@@ -29,7 +29,7 @@ class CreateGcphoneMessagesTable extends Migration
 			!in_array("transmitter", $columns) && $table->string("transmitter", 255)->nullable();
 			!in_array("receiver", $columns) && $table->string("receiver", 255)->nullable();
 			!in_array("message", $columns) && $table->longText("message")->nullable()->default("'0'");
-			!in_array("time", $columns) && $table->timestamp("time")->default("current_timestamp()");
+			!in_array("time", $columns) && $table->timestamp("time")->useCurrent();
 			!in_array("isRead", $columns) && $table->integer("isRead")->nullable()->default("0");
 			!in_array("owner", $columns) && $table->integer("owner")->nullable()->default("0");
 

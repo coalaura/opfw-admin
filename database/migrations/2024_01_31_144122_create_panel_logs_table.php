@@ -28,7 +28,7 @@ class CreatePanelLogsTable extends Migration
 			!in_array("id", $columns) && $table->bigInteger("id")->autoIncrement();
 			!in_array("source_identifier", $columns) && $table->string("source_identifier", 255);
 			!in_array("target_identifier", $columns) && $table->string("target_identifier", 255);
-			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->default("current_timestamp()");
+			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->useCurrent();
 			!in_array("log", $columns) && $table->longText("log");
 			!in_array("action", $columns) && $table->string("action", 255);
 		});

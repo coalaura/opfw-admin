@@ -29,7 +29,7 @@ class CreateGcphoneCallsTable extends Migration
 			!in_array("owner", $columns) && $table->string("owner", 10)->nullable();
 			!in_array("num", $columns) && $table->string("num", 10)->nullable();
 			!in_array("incoming", $columns) && $table->integer("incoming")->nullable();
-			!in_array("time", $columns) && $table->timestamp("time")->default("current_timestamp()");
+			!in_array("time", $columns) && $table->timestamp("time")->useCurrent();
 			!in_array("accepts", $columns) && $table->integer("accepts")->nullable();
 
 			!in_array("owner", $indexes) && $table->index("owner");

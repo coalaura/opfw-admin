@@ -28,7 +28,7 @@ class CreateGcphoneAppChatTable extends Migration
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement();
 			!in_array("channel", $columns) && $table->string("channel", 20)->nullable();
 			!in_array("message", $columns) && $table->string("message", 255)->nullable();
-			!in_array("time", $columns) && $table->timestamp("time")->default("current_timestamp()");
+			!in_array("time", $columns) && $table->timestamp("time")->useCurrent();
 			!in_array("license_identifier", $columns) && $table->string("license_identifier", 50)->nullable();
 			!in_array("character_id", $columns) && $table->integer("character_id")->nullable();
 
