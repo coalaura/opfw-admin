@@ -1282,7 +1282,7 @@
                             <i class="fab fa-markdown"></i>
                         </inertia-link>
 
-                        <textarea class="w-full p-5 mb-5 bg-gray-200 rounded shadow dark:bg-gray-600" id="message" name="message" rows="4" :placeholder="t('players.warning.placeholder', player.playerName)" v-model="form.warning.message" required></textarea>
+                        <textarea class="w-full p-5 mb-5 bg-gray-200 rounded shadow dark:bg-gray-600" id="message" name="message" rows="4" :placeholder="t('players.warning.placeholder', player.playerName)" v-model="form.warning.message" @input="warningMessageChanged()" required></textarea>
                     </div>
 
                     <button class="px-5 py-2 font-semibold text-white bg-red-500 dark:bg-red-500 rounded" @click="form.warning.warning_type = 'strike'" type="submit">
@@ -1765,6 +1765,11 @@ export default {
         },
     },
     methods: {
+        warningMessageChanged() {
+            const message = this.form.warning.message;
+
+            sessionStorage.setItem(`warning_${this.player.licenseIdentifier}`, message);
+        },
         resolveStaffStatistics(pSource) {
             return axios.get('/players/' + this.player.licenseIdentifier + '/statistics/' + pSource);
         },
@@ -2568,6 +2573,9 @@ export default {
 
             // Reset.
             this.form.warning.message = null;
+
+            // Remove saved message.
+            sessionStorage.removeItem(`warning_${this.player.licenseIdentifier}`);
         },
         async editWarning(id, warningType) {
             // Send request.
@@ -2677,6 +2685,11 @@ export default {
         if (this.kickReason) {
             this.isKicking = true;
             this.form.kick.reason = this.kickReason;
+        }
+
+        const savedMessage = sessionStorage.getItem(`warning_${this.player.licenseIdentifier}`);
+        if (savedMessage) {
+            this.form.warning.message = savedMessage;
         }
 
         // Delay loading of extra data since it blocks other resources from loading
