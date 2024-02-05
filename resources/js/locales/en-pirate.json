@@ -959,7 +959,8 @@
             "source_spectate_details": "Number o' times this sea dog's been peepin' at someone from afar in th' last 30 days.",
             "unban_system_confirm": "Ye scallywag be automatically marooned by the riggin's own doin'. Be ye certain ye be wishin' to rescind this here black spot? Scribble \"confirm\" to affirm, arrr.",
             "source_helpful": "\"Helpful\" Crew deeds",
-            "source_helpful_details": "Quantity o' \"aidin'\" deeds done by this here crew member in the past 30 sunsets. 'Tis signalin' the usin' o' orders that be mostly used to lend a hand to OTHER sea dogs: /tp_player, /tp_here, /tp_to, /spectate, /staffpm, /wipe, /freeze, /unfreeze, /job, /reset_job, /revive and /revive_range (others only), whilst shunnin' orders more oft used to play the bilge-sucking scoundrel on other mates like /slap and /damage, which be excluded."
+            "source_helpful_details": "Quantity o' \"aidin'\" deeds done by this here crew member in the past 30 sunsets. 'Tis signalin' the usin' o' orders that be mostly used to lend a hand to OTHER sea dogs: /tp_player, /tp_here, /tp_to, /spectate, /staffpm, /wipe, /freeze, /unfreeze, /job, /reset_job, /revive and /revive_range (others only), whilst shunnin' orders more oft used to play the bilge-sucking scoundrel on other mates like /slap and /damage, which be excluded.",
+            "stretch_res": "Player be sailin' a {0} aspect ratio on a {1} resolution. (Stretched-Resolution)"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

@@ -64,6 +64,8 @@
                         </span>
                     </badge>
 
+                    <badge class="border-gray-200 overflow-hidden bg-center bg-cover w-32 cursor-help" style="background-image: url('/images/wide_putin.webp')" v-if="player.stretchedRes" :title="t('players.show.stretch_res', estimateRatio(player.stretchedRes.aspectRatio), estimateRatio(player.stretchedRes.pixelRatio))"></badge>
+
                     <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary" :title="formatSecondDiff(player.playTime)" v-html="local.played"></badge>
 
                     <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary italic" v-if="player.averagePing" :title="t('players.show.average_ping')">
@@ -1784,6 +1786,21 @@ export default {
             }
 
             this.playerTime = this.$moment().utcOffset(timezoneOffset * -1).format('h:mm:ss A');
+        },
+        estimateRatio(pRatio) {
+            if (!pRatio) return '???';
+
+            for (let w = 1; w <= 50; w++) {
+                for (let h = 1; h <= 50; h++) {
+                    const ratio = w / h;
+
+                    if (Math.abs(ratio - pRatio) < 0.05) {
+                        return `${w}:${h} (${pRatio.toFixed(2)})`;
+                    }
+                }
+            }
+
+            return `??? (${pRatio.toFixed(2)})`;
         },
         formatSecondDiff(sec) {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');

@@ -959,7 +959,8 @@
             "source_spectate_details": "How many suns since last moon staff watch others quiet.",
             "unban_system_confirm": "Player system-no-allow, get big-no. You want make-no ban? Say \"confirm\" for agree.",
             "source_helpful": "\"Helpful\" Tribe do things",
-            "source_helpful_details": "Many \"helpful\" do by tribe member in last 30 suns. Do use things that help OTHER tribe: /tp_player, /tp_here, /tp_to, /spectate, /staffpm, /wipe, /freeze, /unfreeze, /job, /reset_job, /revive and /revive_range (others only), no include tricks on tribe like /slap and /damage."
+            "source_helpful_details": "Many \"helpful\" do by tribe member in last 30 suns. Do use things that help OTHER tribe: /tp_player, /tp_here, /tp_to, /spectate, /staffpm, /wipe, /freeze, /unfreeze, /job, /reset_job, /revive and /revive_range (others only), no include tricks on tribe like /slap and /damage.",
+            "stretch_res": "Player play {0} shape lots side on {1} many dots. (Big-Stretchy-Resolution)"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

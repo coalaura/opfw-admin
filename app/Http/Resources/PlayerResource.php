@@ -63,6 +63,7 @@ class PlayerResource extends JsonResource
             'staffHidden'         => $this->isStaffHidden(),
             'steam'               => $this->getSteamIdentifiers(),
             'streamerException'   => $this->getStreamerBanException(),
+            'stretchedRes'        => $this->getStretchedResData(),
         ];
     }
 

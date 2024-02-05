@@ -359,6 +359,13 @@ class Player extends Model
         return isset($data['twitchBanException']) ? $data['twitchBanException'] : null;
     }
 
+    public function getStretchedResData(): ?array
+    {
+        $data = $this->user_data ?? [];
+
+        return isset($data['stretchedRes']) ? $data['stretchedRes'] : null;
+    }
+
     private static function filterPlayerName(string $name): string
     {
         foreach (self::PlayerNameFilter as $filter) {

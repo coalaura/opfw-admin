@@ -959,7 +959,8 @@
             "source_spectate_details": "👤👀👥⌛️🔢🗓️.",
             "unban_system_confirm": "🎮🚫🤖❗ 🤔💭❌✂️🚫❓ ✍️\"confirm\"✅❗",
             "source_helpful": "\"🆘\" 👨‍💼🏢",
-            "source_helpful_details": "🔢 \"✋\" 🛠️ 🧑‍💼 🔛 🔙 30 🗓️. 👉 🚸 🤝 🗣️ 🎮‍ 🤝 👥 🎮‍: /tp_player, /tp_here, /tp_to, 👀, /staffpm, /wipe, ❄️, /unfreeze, /job, /reset_job, 💓 🔙 /revive_range (🤝 ⬆️) 🚫 🤝 🛠️ 🤝 🎭 🧑‍💼 🗣️ /slap /damage 🚫."
+            "source_helpful_details": "🔢 \"✋\" 🛠️ 🧑‍💼 🔛 🔙 30 🗓️. 👉 🚸 🤝 🗣️ 🎮‍ 🤝 👥 🎮‍: /tp_player, /tp_here, /tp_to, 👀, /staffpm, /wipe, ❄️, /unfreeze, /job, /reset_job, 💓 🔙 /revive_range (🤝 ⬆️) 🚫 🤝 🛠️ 🤝 🎭 🧑‍💼 🗣️ /slap /damage 🚫.",
+            "stretch_res": "🎮 👤 🔛 🎮 📐 📏 ➡️ ️📺 📈. (📏-📏)"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

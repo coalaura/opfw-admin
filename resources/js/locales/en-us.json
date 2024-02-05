@@ -991,6 +991,7 @@
             "recent_playtime_after": "~in the last 4 weeks",
             "average_ping": "Average ping to the server in milliseconds.",
             "average_fps": "Average fps (tracked once a second).",
+            "stretch_res": "Player is playing a {0} aspect ratio on a {1} resolution. (Stretched-Resolution)",
 
             "country_name": "Country",
             "country_detail": "May not be entirely accurate",
