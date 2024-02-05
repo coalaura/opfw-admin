@@ -8,6 +8,8 @@
                         <i class="fas fa-copy relative top-2px"></i>
                     </div>
 
+                    <CountryFlag :country="flagFromTZ(player.variables.timezone)" :title="player.variables.timezone" class="rounded-sm" v-if="player.variables && player.variables.timezone" />
+
                     <h1 class="dark:text-white">
                         {{ player.safePlayerName }}
                     </h1>
@@ -1513,6 +1515,8 @@
 </template>
 
 <script>
+import CountryFlag from 'vue-country-flag';
+
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
 import Badge from './../../Components/Badge';
@@ -1537,7 +1541,8 @@ export default {
         ScreenshotAttacher,
         Modal,
         MetadataViewer,
-        StatisticsTable
+        StatisticsTable,
+        CountryFlag
     },
     props: {
         player: {

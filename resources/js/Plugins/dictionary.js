@@ -1,4 +1,4 @@
-import { get } from "axios";
+import axios from "axios";
 
 const Dictionary = {
     async install(Vue, options) {
@@ -20,7 +20,7 @@ const Dictionary = {
         }
 
         async function loadDictionaryFile(file, onProgress, offset, maxPercentage, noMap) {
-            const data = await get(file, {
+            const data = await axios.get(file, {
                 onDownloadProgress: progressEvent => {
                     const current = (progressEvent.loaded / progressEvent.total) * 100,
                         percentage = Math.floor((current + offset) / maxPercentage);
