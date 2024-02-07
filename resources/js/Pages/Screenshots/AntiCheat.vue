@@ -43,10 +43,10 @@
                             <th class="p-3 w-32">{{ t('screenshot.ban_status') }}</th>
                             <th class="p-3 pr-8 w-60">{{ t('screenshot.created_at') }}</th>
                         </tr>
-                        <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" :class="{ 'new-entry': screenshot.new }" v-for="screenshot in list" :key="screenshot.url">
+                        <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" :class="{ 'new-entry': screenshot.new, '!bg-red-500 !bg-opacity-10': screenshot.isBan }" v-for="screenshot in list" :key="screenshot.url">
                             <template v-if="screenshot.isBan">
                                 <td class="p-3 pl-8 text-center mobile:block max-w-56">
-                                    <inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-red-600 rounded dark:bg-red-400" :href="'/players/' + screenshot.license_identifier">
+                                    <inertia-link class="block px-2 py-0.5 truncate font-semibold text-center text-sm text-white bg-red-600 rounded dark:bg-red-400" :href="'/players/' + screenshot.license_identifier">
                                         {{ screenshot.player_name }}
                                     </inertia-link>
                                 </td>
