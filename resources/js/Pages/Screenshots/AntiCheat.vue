@@ -50,7 +50,7 @@
                                         {{ screenshot.player_name }}
                                     </inertia-link>
                                 </td>
-                                <td class="p-3 mobile:block italic text-gray-600 dark:text-gray-400 text-sm" colspan="4">
+                                <td class="p-3 mobile:block italic text-gray-600 dark:text-gray-400 text-xs" colspan="4">
                                     Banned indefinitely for <span class="font-semibold">{{ screenshot.reason }}</span>
                                 </td>
                                 <td class="p-3 pr-8 mobile:block italic text-gray-600 dark:text-gray-400 w-60 whitespace-nowrap">
