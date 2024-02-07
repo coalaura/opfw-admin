@@ -43,17 +43,17 @@
                             <th class="p-3 w-32">{{ t('screenshot.ban_status') }}</th>
                             <th class="p-3 pr-8 w-60">{{ t('screenshot.created_at') }}</th>
                         </tr>
-                        <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" :class="{ 'new-entry': screenshot.new, '!bg-red-500 !bg-opacity-10': screenshot.isBan }" v-for="screenshot in list" :key="screenshot.url">
+                        <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" :class="{ 'new-entry': screenshot.new, '!bg-red-500 !bg-opacity-10 opacity-50 hover:opacity-100': screenshot.isBan }" v-for="screenshot in list" :key="screenshot.url">
                             <template v-if="screenshot.isBan">
-                                <td class="p-3 pl-8 text-center mobile:block max-w-56">
-                                    <inertia-link class="block px-2 py-0.5 truncate font-semibold text-center text-sm text-white bg-red-600 rounded dark:bg-red-400" :href="'/players/' + screenshot.license_identifier">
+                                <td class="p-3 py-2 pl-8 text-center mobile:block max-w-56">
+                                    <inertia-link class="block px-2 py-1 truncate font-semibold text-center text-sm text-white bg-red-600 rounded dark:bg-red-400" :href="'/players/' + screenshot.license_identifier">
                                         {{ screenshot.player_name }}
                                     </inertia-link>
                                 </td>
-                                <td class="p-3 mobile:block italic text-gray-600 dark:text-gray-400 text-xs" colspan="4">
+                                <td class="p-3 py-2 mobile:block italic text-gray-600 dark:text-gray-400 text-xs" colspan="4">
                                     Banned indefinitely for <span class="font-semibold">{{ screenshot.reason }}</span>
                                 </td>
-                                <td class="p-3 pr-8 mobile:block italic text-gray-600 dark:text-gray-400 w-60 text-sm whitespace-nowrap">
+                                <td class="p-3 py-2 pr-8 mobile:block italic text-gray-600 dark:text-gray-400 w-60 text-sm whitespace-nowrap">
                                     {{ screenshot.timestamp * 1000 | formatTime(true) }}
                                 </td>
                             </template>
