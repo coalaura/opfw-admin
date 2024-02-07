@@ -43,7 +43,7 @@ class Controller extends BaseController
             $url .= '?';
         }
         $next = $url . 'page=' . ($page + 1);
-        $prev = $url . 'page=' . ($page - 1);
+        $prev = $url . ($page > 2 ? 'page=' . ($page - 1) : '');
 
         return [
             'next' => $next,
