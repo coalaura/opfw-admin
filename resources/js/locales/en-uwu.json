@@ -1388,8 +1388,6 @@
         "title": "Staff Points",
         "description": "Staff points awe used to twack staff activity and pewfowmance.",
         "player": "Pwayew",
-        "week_0": "Dis Week",
-        "week_1": "Wast Week",
-        "week_ago": "0 Weeksies Ago"
+        "week_0": "Dis Week"
     }
 }

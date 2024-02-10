@@ -1388,8 +1388,6 @@
         "title": "Karmchari Ank",
         "description": "Karmchari ank ka istemal karmchari ki gatividhi aur pradarshan ko track karne ke liye kiya jata hai.",
         "player": "Khiladi",
-        "week_0": "Is Saptah",
-        "week_1": "Pichhle Saptah",
-        "week_ago": "{0} Hafte Pehle"
+        "week_0": "Is Saptah"
     }
 }

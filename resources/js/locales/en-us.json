@@ -293,9 +293,7 @@
         "description": "Staff points are used to track staff activity and performance.",
 
         "player": "Player",
-        "week_0": "This Week",
-        "week_1": "Last Week",
-        "week_ago": "{0} Weeks Ago"
+        "week_0": "This Week"
     },
     "statistics": {
         "title": "Statistics",

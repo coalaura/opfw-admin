@@ -1388,8 +1388,6 @@
         "title": "Swabbie Points",
         "description": "Swabbie points be fer trackin' crew activity an' performance.",
         "player": "Pirate",
-        "week_0": "This Tide",
-        "week_1": "Previous Tide",
-        "week_ago": "{0} weeks ago, me hearty"
+        "week_0": "This Tide"
     }
 }

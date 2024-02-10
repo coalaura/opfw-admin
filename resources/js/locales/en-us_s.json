@@ -1388,8 +1388,6 @@
         "title": "Staff Points",
         "description": "Staff points are used to track staff activity an' performance.",
         "player": "Player",
-        "week_0": "This Week",
-        "week_1": "Last Week",
-        "week_ago": "'Bout {0} weeks back"
+        "week_0": "This Week"
     }
 }
