@@ -38,15 +38,15 @@
                         <th class="font-bold px-4 py-1.5 text-left">{{ getWeekName(7) }}</th>
                     </tr>
 
-                    <tr v-if="isLoading">
-                        <td class="px-4 py-1.5 text-center" colspan="9">
-                            <i class="fas fa-spinner animate-spin"></i>
-                        </td>
-                    </tr>
-
                     <tr v-for="(player, license) in points" :key="license" class="odd:bg-gray-200 dark:odd:bg-gray-500" :class="{'border-2 border-gray-400': license === $page.auth.player.licenseIdentifier}">
                         <td class="italic px-4 py-1.5">{{ player.name }}</td>
-                        <td class="px-4 py-1.5 font-medium" :class="getColorForPoints(amount)" v-for="(amount, week) in player.points" :key="week">{{ numberFormat(amount, 1, false) }}</td>
+
+                        <td class="px-4 py-1.5 text-center" colspan="8" v-if="isLoading">
+                            <i class="fas fa-spinner animate-spin"></i>
+                        </td>
+                        <td class="px-4 py-1.5 font-medium" :class="getColorForPoints(amount)" v-for="(amount, week) in player.points" :key="week" v-else>
+                            {{ numberFormat(amount, 1, false) }}
+                        </td>
                     </tr>
                 </table>
             </div>
