@@ -1383,5 +1383,16 @@
         "result": "Seekin' Outcome",
         "no_result": "Not a single vessel be matchin' yer quest were found.",
         "distance": "Levenshtein span 'twixt quest and outcome. Lower be fairer, aught be a dead-on match."
+    },
+    "points": {
+        "title": "Swabbie Points",
+        "description": "Swabbie points be fer trackin' crew activity an' performance.",
+        "player": "Pirate",
+        "week_0": "This Tide",
+        "week_1": "Previous Tide",
+        "week_2": "2 Fortnights Past",
+        "week_3": "3 Fortnights Past",
+        "week_4": "4 Fortnights Past",
+        "week_5": "5 Fortnights Past"
     }
 }

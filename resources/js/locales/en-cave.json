@@ -1383,5 +1383,16 @@
         "result": "Find Thing Found",
         "no_result": "No wheel-thing same same find-no",
         "distance": "Word-step from find to thing found. Small good, 0 same-same."
+    },
+    "points": {
+        "title": "Staff Poke",
+        "description": "Staff poke count for follow staff do and how good do.",
+        "player": "Play-person",
+        "week_0": "This Sun Time",
+        "week_1": "Past Sun Time",
+        "week_2": "Two Sun Times Ago",
+        "week_3": "Three Sun Times Ago",
+        "week_4": "Four Sun Times Ago",
+        "week_5": "Five Sun Times Ago"
     }
 }

@@ -1383,5 +1383,16 @@
         "result": "Søkeresultat",
         "no_result": "Ingen kjøretøy som samsvarer med søket ble funnet.",
         "distance": "Levenshtein-avstand mellom søk og resultat. Lavere er bedre, 0 er et perfekt treff."
+    },
+    "points": {
+        "title": "Ansattpoeng",
+        "description": "Ansattpoeng brukes for å spore ansattes aktivitet og ytelse.",
+        "player": "Spiller",
+        "week_0": "Denne uken",
+        "week_1": "Forrige uke",
+        "week_2": "2 uker siden",
+        "week_3": "3 uker siden",
+        "week_4": "4 uker siden",
+        "week_5": "5 uker siden"
     }
 }

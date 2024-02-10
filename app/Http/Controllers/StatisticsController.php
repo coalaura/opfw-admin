@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\CacheHelper;
 use App\Helpers\StatisticsHelper;
+use App\Player;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -126,6 +127,40 @@ class StatisticsController extends Controller
         }
 
         return $this->json(true, $result);
+    }
+
+    /**
+     * Resolves all staffs staff points.
+     */
+    public function points(Request $request)
+    {
+        $staff = Player::query()
+            ->where('is_staff', '=', '1')
+            ->orWhere('is_senior_staff', '=', '1')
+            ->orWhere('is_super_admin', '=', '1')
+            ->get();
+
+        $points = [];
+
+        foreach ($staff as $player) {
+            $license = $player->license_identifier;
+            $staffPoints = $player->staff_points ?? [];
+
+            $points[$license] = [
+                'name' => $player->getSafePlayerName(),
+                'points' => []
+            ];
+
+            for ($week = -5; $week <= 0; $week++) {
+                $date = date('Y-W', strtotime("{$week} weeks"));
+
+                $points[$license]['points'][abs($week)] = $staffPoints[$date] ?? 0;
+            }
+        }
+
+        return Inertia::render('Statistics/StaffPoints', [
+            'points' => $points,
+        ]);
     }
 
 }

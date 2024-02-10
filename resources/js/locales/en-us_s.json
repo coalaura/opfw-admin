@@ -1383,5 +1383,16 @@
         "result": "Search Result",
         "no_result": "Ain't no vehicle matchin' yer search been found.",
         "distance": "Levenshtein distance 'tween yer search an' result. Less is more, 0's a bullseye."
+    },
+    "points": {
+        "title": "Staff Points",
+        "description": "Staff points are used to track staff activity an' performance.",
+        "player": "Player",
+        "week_0": "This Week",
+        "week_1": "Last Week",
+        "week_2": "2 Weeks Ago",
+        "week_3": "3 Weeks Ago",
+        "week_4": "4 Weeks Ago",
+        "week_5": "5 Weeks Ago"
     }
 }

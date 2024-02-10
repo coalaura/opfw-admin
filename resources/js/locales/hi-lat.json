@@ -1383,5 +1383,16 @@
         "result": "Khoj Parinaam",
         "no_result": "Khoje gaye vahan se mel khate koi vahan nahin mila.",
         "distance": "Khoj aur parinaam ke beech Levenshtein doori. Kam hona behtar hai, 0 ekdum sahi mel hai."
+    },
+    "points": {
+        "title": "Karmchari Ank",
+        "description": "Karmchari ank ka istemal karmchari ki gatividhi aur pradarshan ko track karne ke liye kiya jata hai.",
+        "player": "Khiladi",
+        "week_0": "Is Saptah",
+        "week_1": "Pichhle Saptah",
+        "week_2": "2 Hafte Pehle",
+        "week_3": "3 Hafte Pehle",
+        "week_4": "4 Hafte Pehle",
+        "week_5": "5 Hafte Pehle"
     }
 }

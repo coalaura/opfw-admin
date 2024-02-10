@@ -1383,5 +1383,16 @@
         "result": "Seawch Wesuwt",
         "no_result": "No vehicwe matching the seawch was found.",
         "distance": "Wevenshtein distance between seawch and wesuwt. Wowew is bettew, 0 is a pewfect match."
+    },
+    "points": {
+        "title": "Staff Points",
+        "description": "Staff points awe used to twack staff activity and pewfowmance.",
+        "player": "Pwayew",
+        "week_0": "Dis Week",
+        "week_1": "Wast Week",
+        "week_2": "2 Weeks Ago",
+        "week_3": "3 Weeks Ago",
+        "week_4": "4 Weeks Ago",
+        "week_5": "5 Weeks Ago"
     }
 }

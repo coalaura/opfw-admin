@@ -78,6 +78,7 @@ class Player extends Model
         'average_ping',
         'average_fps',
         'panel_settings',
+        'staff_points',
     ];
 
     /**
@@ -94,6 +95,7 @@ class Player extends Model
         'player_aliases'        => 'array',
         'enabled_commands'      => 'array',
         'user_data'             => 'array',
+        'staff_points'             => 'array',
         'last_connection'       => 'datetime',
         'is_trusted'            => 'boolean',
         'is_staff'              => 'boolean',

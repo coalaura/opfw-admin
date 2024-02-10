@@ -226,6 +226,11 @@ export default {
                             url: '/statistics',
                         },
                         {
+                            label: 'points.title',
+                            icon: 'street-view',
+                            url: '/points',
+                        },
+                        {
                             label: 'screenshot.label',
                             icon: 'images',
                             url: '/screenshots',

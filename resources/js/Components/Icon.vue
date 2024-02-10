@@ -86,6 +86,7 @@
     <i class="fas fa-car-crash" v-else-if="name === 'crash'"></i>
     <i class="fas fa-mail-bulk" v-else-if="name === 'mail'"></i>
     <i class="fas fa-medkit" v-else-if="name === 'medkit'"></i>
+    <i class="fas fa-street-view" v-else-if="name === 'street-view'"></i>
 </template>
 
 <script>

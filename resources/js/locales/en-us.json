@@ -288,6 +288,18 @@
         "importing": "Importing...",
         "confirm_remove": "Are you sure you want to remove this identifier?"
     },
+    "points": {
+        "title": "Staff Points",
+        "description": "Staff points are used to track staff activity and performance.",
+
+        "player": "Player",
+        "week_0": "This Week",
+        "week_1": "Last Week",
+        "week_2": "2 Weeks Ago",
+        "week_3": "3 Weeks Ago",
+        "week_4": "4 Weeks Ago",
+        "week_5": "5 Weeks Ago"
+    },
     "statistics": {
         "title": "Statistics",
         "description": "Some general statistics",
