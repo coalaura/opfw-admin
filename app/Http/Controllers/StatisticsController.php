@@ -152,8 +152,10 @@ class StatisticsController extends Controller
                 'points' => []
             ];
 
-            for ($week = -7; $week <= 0; $week++) {
-                $date = date('Y-W', strtotime("{$week} weeks"));
+            for ($week = 7; $week >= 0; $week--) {
+                $time = $week === 0 ? time() : strtotime("{$week} weeks ago");
+
+                $date = date('Y', $time) . '-' . intval(date('W', $time));
 
                 $points[$license]['points'][abs($week)] = $staffPoints[$date] ?? 0;
             }
