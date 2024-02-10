@@ -1390,9 +1390,6 @@
         "player": "Play-person",
         "week_0": "This Sun Time",
         "week_1": "Past Sun Time",
-        "week_2": "Two Sun Times Ago",
-        "week_3": "Three Sun Times Ago",
-        "week_4": "Four Sun Times Ago",
-        "week_5": "Five Sun Times Ago"
+        "week_ago": "{0} Moons Before"
     }
 }

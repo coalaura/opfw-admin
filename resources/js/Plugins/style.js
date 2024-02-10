@@ -1,7 +1,7 @@
 import ColorThief from 'colorthief';
 
 // Rebuild style on version change
-const Iteration = 14;
+const Iteration = 15;
 
 const colors = {
 	'white': { l: 99 },
@@ -69,6 +69,7 @@ const Style = {
 
 				return [
 					`.bg-${name}{${background}}.dark .dark\\:bg-${name}{${background}}.hover\\:bg-${name}:hover{${background}!important}.dark .dark\\:hover\\:bg-${name}:hover{${background}!important}`,
+					`.dark .dark\\:odd\\:bg-${name}:nth-child(odd){${background}} .odd\\:bg-${name}:nth-child(odd){${background}}`,
 					`.border-${name}{${border}}.dark .dark\\:border-${name}{${border}}.hover\\:border-${name}:hover{${border}!important}.dark .dark\\:hover\\:border-${name}:hover{${border}!important}`,
 
 					// Absolute positioned elements should never have alpha.

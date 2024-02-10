@@ -1390,9 +1390,6 @@
         "player": "Khiladi",
         "week_0": "Is Saptah",
         "week_1": "Pichhle Saptah",
-        "week_2": "2 Hafte Pehle",
-        "week_3": "3 Hafte Pehle",
-        "week_4": "4 Hafte Pehle",
-        "week_5": "5 Hafte Pehle"
+        "week_ago": "{0} Hafte Pehle"
     }
 }

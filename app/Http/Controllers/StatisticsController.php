@@ -138,6 +138,7 @@ class StatisticsController extends Controller
             ->where('is_staff', '=', '1')
             ->orWhere('is_senior_staff', '=', '1')
             ->orWhere('is_super_admin', '=', '1')
+            ->orderBy('player_name')
             ->get();
 
         $points = [];
@@ -151,7 +152,7 @@ class StatisticsController extends Controller
                 'points' => []
             ];
 
-            for ($week = -5; $week <= 0; $week++) {
+            for ($week = -7; $week <= 0; $week++) {
                 $date = date('Y-W', strtotime("{$week} weeks"));
 
                 $points[$license]['points'][abs($week)] = $staffPoints[$date] ?? 0;

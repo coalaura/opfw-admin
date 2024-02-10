@@ -1390,9 +1390,6 @@
         "player": "Spiller",
         "week_0": "Denne uken",
         "week_1": "Forrige uke",
-        "week_2": "2 uker siden",
-        "week_3": "3 uker siden",
-        "week_4": "4 uker siden",
-        "week_5": "5 uker siden"
+        "week_ago": "for {0} uker siden"
     }
 }

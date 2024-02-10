@@ -1390,9 +1390,6 @@
         "player": "Pirate",
         "week_0": "This Tide",
         "week_1": "Previous Tide",
-        "week_2": "2 Fortnights Past",
-        "week_3": "3 Fortnights Past",
-        "week_4": "4 Fortnights Past",
-        "week_5": "5 Fortnights Past"
+        "week_ago": "{0} weeks ago, me hearty"
     }
 }

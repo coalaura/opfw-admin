@@ -1390,9 +1390,6 @@
         "player": "Pwayew",
         "week_0": "Dis Week",
         "week_1": "Wast Week",
-        "week_2": "2 Weeks Ago",
-        "week_3": "3 Weeks Ago",
-        "week_4": "4 Weeks Ago",
-        "week_5": "5 Weeks Ago"
+        "week_ago": "0 Weeksies Ago"
     }
 }

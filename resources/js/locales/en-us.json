@@ -295,10 +295,7 @@
         "player": "Player",
         "week_0": "This Week",
         "week_1": "Last Week",
-        "week_2": "2 Weeks Ago",
-        "week_3": "3 Weeks Ago",
-        "week_4": "4 Weeks Ago",
-        "week_5": "5 Weeks Ago"
+        "week_ago": "{0} Weeks Ago"
     },
     "statistics": {
         "title": "Statistics",
