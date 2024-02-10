@@ -46,7 +46,7 @@
 
                     <tr v-for="(player, license) in points" :key="license" class="odd:bg-gray-200 dark:odd:bg-gray-500" :class="{'border-2 border-gray-400': license === $page.auth.player.licenseIdentifier}">
                         <td class="italic px-4 py-1.5">{{ player.name }}</td>
-                        <td class="px-4 py-1.5" :class="getColorForPoints(amount)" v-for="(amount, week) in player.points" :key="week">{{ amount.toFixed(2) }}</td>
+                        <td class="px-4 py-1.5" :class="getColorForPoints(amount)" v-for="(amount, week) in player.points" :key="week">{{ numberFormat(amount, 1, false) }}</td>
                     </tr>
                 </table>
             </div>
