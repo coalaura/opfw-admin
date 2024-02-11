@@ -45,27 +45,20 @@ class Character extends Model
         'date_of_birth',
         'blood_type',
         'backstory',
-
         'is_dead',
-
         'cash',
         'bank',
         'stocks_balance',
-
         'job_name',
         'department_name',
         'position_name',
-
         'character_created',
         'character_creation_timestamp',
         'character_deleted',
         'character_deletion_timestamp',
-
 		'character_creation_time',
         'last_loaded',
-
         'ped_model_hash',
-
         'tattoos_data',
         'coords',
         'character_data'
@@ -114,9 +107,10 @@ class Character extends Model
         return $this->cash + $this->bank;
     }
 
-    public static function getOutfits(int $cid): int
+    public static function getOutfits(int $characterId): int
     {
-        return DB::table('outfits')->where('cid', '=', $cid)->count();
+        // TODO: `cid` will be renamed to `character_id` next update
+        return DB::table('outfits')->where('cid', '=', $characterId)->count();
     }
 
     /**
@@ -128,6 +122,7 @@ class Character extends Model
         if (!isset(self::$cache[$characterId])) {
             self::$cache[$characterId] = self::query()->where('character_id', '=', $characterId)->first()->toArray() ?? [];
         }
+
         return self::$cache[$characterId];
     }
 

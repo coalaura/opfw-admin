@@ -26,13 +26,12 @@ class CreateOutfitsTable extends Migration
 
 		Schema::$func("outfits", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement();
-			!in_array("cid", $columns) && $table->integer("cid")->nullable();
+			!in_array("character_id", $columns) && $table->integer("character_id")->nullable();
 			!in_array("name", $columns) && $table->longText("name")->nullable();
-			!in_array("data", $columns) && $table->longText("data")->nullable();
 			!in_array("ped_data", $columns) && $table->longText("ped_data")->nullable();
 			!in_array("updated_at", $columns) && $table->integer("updated_at")->nullable();
 
-			!in_array("cid", $indexes) && $table->index("cid");
+			!in_array("character_id", $indexes) && $table->index("character_id");
 			!in_array("name", $indexes) && $table->index("name");
 		});
 	}
