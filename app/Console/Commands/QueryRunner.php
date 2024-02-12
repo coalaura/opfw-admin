@@ -51,7 +51,7 @@ class QueryRunner extends Command
             return;
         }
 
-        $this->info("Iterating through all clusters...");
+        $this->info("Iterating through all clusters..." . ($skipFailed ? " (skipping failed clusters)" : ""));
 
         $dir = base_path("envs");
 
@@ -70,14 +70,20 @@ class QueryRunner extends Command
 
             $this->info("Running query on cluster `" . $cluster . "`...");
 
-            $result = $this->runQuery($cluster, $query);
+            try {
+                $result = $this->runQuery($cluster, $query);
+            } catch (\Exception $e) {
+                $this->error(" - " . $e->getMessage());
+
+                if ($skipFailed) {
+                    continue;
+                } else {
+                    return 1;
+                }
+            }
 
             if (!$result[0]) {
-                if ($skipFailed) {
-                    $this->warn(" - " . $result[1]);
-                } else {
-                    $this->error(" - " . $result[1]);
-                }
+                $this->error(" - " . $result[1]);
             } else {
                 $this->comment(" - " . $result[1]);
             }
