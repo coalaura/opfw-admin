@@ -109,8 +109,7 @@ class Character extends Model
 
     public static function getOutfits(int $characterId): int
     {
-        // TODO: `cid` will be renamed to `character_id` next update
-        return DB::table('outfits')->where('cid', '=', $characterId)->count();
+        return DB::table('outfits')->where('character_id', '=', $characterId)->count();
     }
 
     /**

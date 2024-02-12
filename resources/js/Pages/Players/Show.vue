@@ -1909,7 +1909,6 @@ export default {
 
             this.loadHWIDLink();
         },
-        // TODO: finish this
         async unlinkIdentifiers(pLicenseIdentifier) {
             if (this.isLoading) return;
 
