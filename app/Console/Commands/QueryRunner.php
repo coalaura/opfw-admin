@@ -15,7 +15,7 @@ class QueryRunner extends Command
      *
      * @var string
      */
-    protected $signature = 'run:query';
+    protected $signature = 'run:query {--skip}';
 
     /**
      * The console command description.
@@ -41,6 +41,8 @@ class QueryRunner extends Command
      */
     public function handle()
     {
+        $skipFailed = $this->option("skip");
+
         $query = trim($this->ask("SQL Query"));
 
         if (empty($query)) {
@@ -71,7 +73,11 @@ class QueryRunner extends Command
             $result = $this->runQuery($cluster, $query);
 
             if (!$result[0]) {
-                $this->error(" - " . $result[1]);
+                if ($skipFailed) {
+                    $this->warn(" - " . $result[1]);
+                } else {
+                    $this->error(" - " . $result[1]);
+                }
             } else {
                 $this->comment(" - " . $result[1]);
             }
