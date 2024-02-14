@@ -71,6 +71,18 @@ export default {
     methods: {
         isMobile() {
             return $(window).width() <= 640;
+        },
+
+        padVerticalOverflows() {
+            $(".overflow-y-auto").each(function() {
+                const isOverflowing = this.scrollHeight > this.clientHeight;
+
+                if (isOverflowing) {
+                    $(this).addClass("overflowing");
+                } else {
+                    $(this).removeClass("overflowing");
+                }
+            });
         }
     },
     updated() {
@@ -92,6 +104,13 @@ export default {
         const lang = this.setting("locale") || "en-US";
 
         this.loadLocale(lang);
+    },
+    mounted() {
+        this.padVerticalOverflows();
+
+        $(window).on("resize", () => {
+            this.padVerticalOverflows();
+        });
     }
 };
 </script>
