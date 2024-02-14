@@ -1060,7 +1060,7 @@
             </template>
 
             <template>
-                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 wide:grid-cols-4 gap-9">
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 wide:grid-cols-4 gap-9 max-h-section overflow-y-auto">
                     <card v-for="(character) in characters" :key="character.id" v-bind:deleted="character.characterDeleted" class="relative mb-0" :class="{ 'shadow-lg': status && status.character === character.id }">
                         <template #header>
                             <div class="flex justify-between">
