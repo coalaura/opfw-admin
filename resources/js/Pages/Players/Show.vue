@@ -1095,9 +1095,11 @@
                         </template>
 
                         <template>
-                            <p class="break-words">
-                                {{ character.backstory }}
-                            </p>
+                            <div class="max-h-72 overflow-y-auto text-sm leading-5 italic">
+                                <p class="break-words">
+                                    {{ character.backstory }}
+                                </p>
+                            </div>
                         </template>
 
                         <template #footer>
