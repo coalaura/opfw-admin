@@ -1105,12 +1105,12 @@
                         <template #footer>
                             <div class="flex justify-between flex-wrap">
                                 <div class="flex justify-between gap-2 w-full">
-                                    <inertia-link class="block w-full px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/players/' + (player.overrideLicense ? player.overrideLicense : player.licenseIdentifier) + '/characters/' + character.id">
+                                    <inertia-link class="block w-1/2 px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/players/' + (player.overrideLicense ? player.overrideLicense : player.licenseIdentifier) + '/characters/' + character.id">
                                         <i class="fas fa-eye mr-1"></i>
                                         {{ t('global.view') }}
                                     </inertia-link>
 
-                                    <inertia-link class="block w-full px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :class="{ '2xl:w-split': status && status.character === character.id }" :href="'/inventories/character/' + character.id">
+                                    <inertia-link class="block w-1/2 px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventories/character/' + character.id">
                                         <i class="fas fa-briefcase mr-1"></i>
                                         {{ t('inventories.view') }}
                                     </inertia-link>
