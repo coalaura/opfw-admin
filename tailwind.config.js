@@ -24,6 +24,8 @@ module.exports = {
             'xl': '1100px',
             '2xl': '1536px',
             '3xl': '1650px',
+
+            'wide': '2100px'
         },
         extend: {
             spacing: {
