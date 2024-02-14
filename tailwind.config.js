@@ -105,7 +105,8 @@ module.exports = {
                 'img':        '500px',
                 'modal-max':  'calc(100% - 10rem)',
                 'lg':         '40rem',
-                'statistics': '15.5rem'
+                'statistics': '15.5rem',
+                'section':    '46rem',
             },
             listStyleType: {
                 'dash': "'–'"

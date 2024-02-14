@@ -590,7 +590,7 @@
             </template>
 
             <template>
-                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9">
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9 max-h-section overflow-y-auto">
                     <card :key="vehicle.id" v-for="vehicle in character.vehicles" class="relative">
                         <template #header>
                             <img :src="vehicle.image" class="w-full h-40 object-contain rounded mb-5" v-if="vehicle.image" />
@@ -666,7 +666,7 @@
             </template>
 
             <template>
-                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9">
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9 max-h-section overflow-y-auto">
                     <card :key="property.property_id" v-for="(property) in character.properties" :no_body="true" class="relative">
                         <template #header>
                             <div class="absolute top-1 right-1 select-all font-bold text-sm">{{ property.property_id }}</div>
@@ -701,7 +701,7 @@
                 <h3 class="mb-4 mt-5 pt-5 border-t-2 border-dashed border-gray-500">
                     {{ t('players.properties.properties_shared') }}
                 </h3>
-                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9" v-if="character.accessProperties.length > 0">
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9 max-h-section overflow-y-auto" v-if="character.accessProperties.length > 0">
                     <card :key="property.property_id" v-for="(property) in character.accessProperties" :no_body="true" class="relative">
                         <template #header>
                             <div class="absolute top-1 right-1 select-all font-bold text-sm">{{ property.property_id }}</div>
@@ -738,7 +738,7 @@
             </template>
 
             <template>
-                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9">
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9 max-h-section overflow-y-auto">
                     <card :key="motel.id" v-for="(motel) in motels" :no_body="true" class="relative">
                         <template #header>
                             <h3 class="mb-2">
@@ -775,7 +775,7 @@
             </template>
 
             <template>
-                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9">
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9 max-h-section overflow-y-auto">
                     <card :key="account.id" v-for="account in savingsAccounts" :no_body="true" :no_footer="true" class="relative border" :class="account.character_id === character.id ? '!bg-lime-500 !bg-opacity-20 border-lime-300' : '!bg-blue-500 !bg-opacity-20 border-blue-300'">
                         <template #header>
                             <h3>
