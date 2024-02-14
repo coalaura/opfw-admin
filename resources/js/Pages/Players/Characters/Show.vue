@@ -591,15 +591,16 @@
 
             <template>
                 <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9">
-                    <card :key="vehicle.id" v-for="(vehicle) in character.vehicles" class="relative">
+                    <card :key="vehicle.id" v-for="vehicle in character.vehicles" class="relative">
                         <template #header>
-                            <h3 class="mb-2">
+                            <img :src="vehicle.image" class="w-full h-40 object-contain rounded mb-5" v-if="vehicle.image" />
+
+                            <h3 class="text-lg text-center font-semibold" :class="{'-mb-3': vehicle.image}">
                                 {{ vehicle.display_name ? vehicle.display_name : vehicle.model_name }}
-                                <span class="block text-xs font-mono font-normal leading-1 select-all">{{ vehicle.model_name }}</span>
                             </h3>
-                            <h4 class="text-blue-700 dark:text-blue-300 font-semibold">
-                                {{ vehicle.id }} <span class="text-gray-500">/</span> {{ vehicle.plate }}
-                            </h4>
+
+                            <div class="absolute bottom-1 left-1.5 text-sm font-semibold">#{{ vehicle.id }}</div>
+                            <div class="absolute bottom-1 right-1.5 text-sm font-semibold">{{ vehicle.plate }}</div>
                         </template>
 
                         <template>

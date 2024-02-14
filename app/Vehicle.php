@@ -52,6 +52,7 @@ class Vehicle extends Model
         'last_garage_identifier',
         'oil_mileage_after',
         'mileage',
+        'image_url',
     ];
 
     const PublicGarages = [
