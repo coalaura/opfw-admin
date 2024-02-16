@@ -1386,8 +1386,8 @@
     },
     "points": {
         "title": "Karmchari Ank",
-        "description": "Karmchari ank ka istemal karmchari ki gatividhi aur pradarshan ko track karne ke liye kiya jata hai.",
         "player": "Khiladi",
-        "week_0": "Is Saptah"
+        "week_0": "Is Saptah",
+        "description": "Staff points gend mein store kiye jaate hain!"
     }
 }

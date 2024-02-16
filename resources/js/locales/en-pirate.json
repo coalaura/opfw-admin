@@ -1386,8 +1386,8 @@
     },
     "points": {
         "title": "Swabbie Points",
-        "description": "Swabbie points be fer trackin' crew activity an' performance.",
         "player": "Pirate",
-        "week_0": "This Tide"
+        "week_0": "This Tide",
+        "description": "Me hearties, th' staff points be stashed in th' balls!"
     }
 }

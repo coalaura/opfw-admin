@@ -1386,8 +1386,8 @@
     },
     "points": {
         "title": "Staff Poke",
-        "description": "Staff poke count for follow staff do and how good do.",
         "player": "Play-person",
-        "week_0": "This Sun Time"
+        "week_0": "This Sun Time",
+        "description": "Stick points keep in round rocks!"
     }
 }

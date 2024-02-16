@@ -1386,8 +1386,8 @@
     },
     "points": {
         "title": "Ansattpoeng",
-        "description": "Ansattpoeng brukes for å spore ansattes aktivitet og ytelse.",
         "player": "Spiller",
-        "week_0": "Denne uken"
+        "week_0": "Denne uken",
+        "description": "De ansatte poengene lagres i ballene!"
     }
 }

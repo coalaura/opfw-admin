@@ -1386,8 +1386,8 @@
     },
     "points": {
         "title": "Staff Points",
-        "description": "Staff points awe used to twack staff activity and pewfowmance.",
         "player": "Pwayew",
-        "week_0": "Dis Week"
+        "week_0": "Dis Week",
+        "description": "Staff points awe stowed in the bawws!"
     }
 }

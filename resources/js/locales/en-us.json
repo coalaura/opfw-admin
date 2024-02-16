@@ -290,7 +290,7 @@
     },
     "points": {
         "title": "Staff Points",
-        "description": "Staff points are used to track staff activity and performance.",
+        "description": "Staff points are stored in the balls!",
 
         "player": "Player",
         "week_0": "This Week"
