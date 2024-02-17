@@ -186,6 +186,11 @@ server {
         fastcgi_pass unix:/run/php/php8.2-fpm.sock;
         fastcgi_index index.php;
         include fastcgi.conf;
+
+        # We sometimes stream chunks in PUT requests
+        if ($request_method = PUT) {
+            fastcgi_buffering off;
+        }
     }
 
     # This is depending on how you are setting up ssl certificates.
