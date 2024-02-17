@@ -266,6 +266,8 @@ class Player extends Model
                     throw new Exception('Failed to download image.');
                 }
 
+                $data = GeneralHelper::renderThumbnail($data, 1280, 720);
+
                 $dir = public_path('/_uploads/');
                 if (!file_exists($dir)) {
                     mkdir($dir, 0777, true);

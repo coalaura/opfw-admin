@@ -6,6 +6,7 @@ use App\Player;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Imagick;
 
 class GeneralHelper
 {
@@ -411,6 +412,21 @@ class GeneralHelper
         LoggingHelper::log("Completed request '" . $url . "' in " . $taken . "ms");
 
         return $body;
+    }
+
+    public static function renderThumbnail(string $imageData, int $maxWidth = 1024, int $maxHeight = 1024)
+    {
+        try {
+            $imagick = new Imagick();
+            $imagick->readImageBlob($imageData);
+
+            // Set bestfit to TRUE to maintain aspect ratio
+            $imagick->resizeImage($maxWidth, $maxHeight, Imagick::FILTER_LANCZOS, 1, true);
+
+            return $imagick->getImageBlob();
+        } catch (\Throwable $t) {
+            throw new \Exception("Failed to render thumbnail: " . $t->getMessage());
+        }
     }
 
     public static function getCluster(): ?string
