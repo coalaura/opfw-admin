@@ -4,8 +4,8 @@ namespace App\Helpers;
 
 use App\Player;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 use Imagick;
 
 class GeneralHelper
@@ -392,11 +392,11 @@ class GeneralHelper
                 'connect_timeout' => $connectTimeout,
 
                 // Try to somewhat fake being a browser
-                'headers' => [
-                    'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                'headers'         => [
+                    'Accept'          => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
                     'Accept-Language' => 'en-US,en;q=0.7,de;q=0.3',
-                    'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0',
-                ]
+                    'User-Agent'      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0',
+                ],
             ]);
 
             $body = $res->getBody()->getContents();
@@ -414,6 +414,17 @@ class GeneralHelper
         return $body;
     }
 
+    /**
+     * Renders a thumbnail from image data and saves it to a file.
+     *
+     * @param string $outPath The path to save the thumbnail to.
+     * @param string $imageData The image data to render the thumbnail from.
+     * @param int $maxWidth The maximum width of the thumbnail.
+     * @param int $maxHeight The maximum height of the thumbnail.
+     * @param bool $toWebp Whether to convert the thumbnail to WebP.
+     *
+     * @throws \Exception
+     */
     public static function renderThumbnail(string $outPath, string $imageData, int $maxWidth = 1024, int $maxHeight = 1024, bool $toWebp = true)
     {
         try {
@@ -450,15 +461,15 @@ class GeneralHelper
     }
 
     public static function formatTimestamp($timestamp)
-	{
-		if ($timestamp instanceof Carbon) {
-			$timestamp = $timestamp->getTimestamp();
-		}
+    {
+        if ($timestamp instanceof Carbon) {
+            $timestamp = $timestamp->getTimestamp();
+        }
 
-		$seconds = time() - $timestamp;
+        $seconds = time() - $timestamp;
 
-		return self::formatSeconds($seconds) . " ago";
-	}
+        return self::formatSeconds($seconds) . " ago";
+    }
 
     public static function formatMilliseconds($ms)
     {
@@ -475,33 +486,35 @@ class GeneralHelper
         return $fmt;
     }
 
-	public static function formatSeconds($seconds)
-	{
-		$string = [
-			'year' => 60*60*24*365,
-			'month' => 60*60*24*30,
-			'week' => 60*60*24*7,
-			'day' => 60*60*24,
-			'hour' => 60*60,
-			'minute' => 60
-		];
+    public static function formatSeconds($seconds)
+    {
+        $string = [
+            'year'   => 60 * 60 * 24 * 365,
+            'month'  => 60 * 60 * 24 * 30,
+            'week'   => 60 * 60 * 24 * 7,
+            'day'    => 60 * 60 * 24,
+            'hour'   => 60 * 60,
+            'minute' => 60,
+        ];
 
-		foreach ($string as $label => $divisor) {
-			$value = floor($seconds / $divisor);
+        foreach ($string as $label => $divisor) {
+            $value = floor($seconds / $divisor);
 
-			if ($value > 0) {
-				$label = $value > 1 ? $label . 's' : $label;
+            if ($value > 0) {
+                $label = $value > 1 ? $label . 's' : $label;
 
-				return $value . ' ' . $label;
-			}
-		}
+                return $value . ' ' . $label;
+            }
+        }
 
-		return $seconds . ' second' . ($seconds > 1 ? 's' : '');
-	}
+        return $seconds . ' second' . ($seconds > 1 ? 's' : '');
+    }
 
     public static function formatSecondsMinimal($seconds)
     {
-        if ($seconds === 0) return '0s';
+        if ($seconds === 0) {
+            return '0s';
+        }
 
         $interval = new \DateInterval('PT' . $seconds . 'S');
 
