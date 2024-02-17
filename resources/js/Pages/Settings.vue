@@ -204,6 +204,8 @@ export default {
 
             setting.disabled = false;
 
+            this.status = false;
+
             // For some reason it doesn't auto-refresh
             this.$forceUpdate();
         }
