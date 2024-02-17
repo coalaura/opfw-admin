@@ -255,6 +255,11 @@ class Player extends Model
                     return;
                 }
 
+                // Imgur is blocking pretty hard for some reason... :(
+                if (Str::startsWith($url, 'https://i.imgur.com/')) {
+                    throw new Exception('Imgur is blocking the download of this image.');
+                }
+
                 $data = GeneralHelper::get($url);
 
                 if (!$data) {
