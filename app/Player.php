@@ -249,7 +249,8 @@ class Player extends Model
                 $ext  = explode('.', $path);
                 $ext  = strtolower(end($ext));
 
-                $value = '/_uploads/' . md5(strtolower($path)) . '.' . $ext;
+                // We convert the image to a webp after resizing it
+                $value = '/_uploads/' . md5(strtolower($path)) . '.webp';
 
                 if ($previous === $value) {
                     return;
@@ -266,14 +267,12 @@ class Player extends Model
                     throw new Exception('Failed to download image.');
                 }
 
-                $data = GeneralHelper::renderThumbnail($data, 1280, 720);
-
                 $dir = public_path('/_uploads/');
                 if (!file_exists($dir)) {
                     mkdir($dir, 0777, true);
                 }
 
-                file_put_contents(public_path($value), $data);
+                GeneralHelper::renderThumbnail(public_path($value), $data, 1280, 720, true);
             }
 
             if ($previous && !$wasPreset && preg_match('/^\/_uploads\/[a-f0-9]+\.(png|jpe?g|webp)$/mi', $previous)) {

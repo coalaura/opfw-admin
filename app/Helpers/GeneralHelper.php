@@ -414,7 +414,7 @@ class GeneralHelper
         return $body;
     }
 
-    public static function renderThumbnail(string $imageData, int $maxWidth = 1024, int $maxHeight = 1024)
+    public static function renderThumbnail(string $outPath, string $imageData, int $maxWidth = 1024, int $maxHeight = 1024, bool $toWebp = true)
     {
         try {
             $imagick = new Imagick();
@@ -423,7 +423,11 @@ class GeneralHelper
             // Set bestfit to TRUE to maintain aspect ratio
             $imagick->resizeImage($maxWidth, $maxHeight, Imagick::FILTER_LANCZOS, 1, true);
 
-            return $imagick->getImageBlob();
+            if ($toWebp) {
+                $imagick->setImageFormat('webp');
+            }
+
+            $imagick->writeImage($outPath);
         } catch (\Throwable $t) {
             throw new \Exception("Failed to render thumbnail: " . $t->getMessage());
         }
