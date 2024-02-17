@@ -255,11 +255,20 @@ class Player extends Model
                     return;
                 }
 
+                $client = new \GuzzleHttp\Client();
+
                 try {
-                    $data = file_get_contents($url);
+                    // Download the image with normal user-agent
+                    $response = $client->request('GET', $url, [
+                        'headers' => [
+                            'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0',
+                        ],
+                    ]);
+
+                    $data = $response->getBody()->getContents();
 
                     if (!$data) {
-                        throw new Exception('Failed to download image.');
+                        throw new Exception('Failed to download image. (HTTP ' . $response->getStatusCode() . ')');
                     }
                 } catch (Exception $ex) {
                     throw new Exception('Failed to download image: ' . $ex->getMessage());
