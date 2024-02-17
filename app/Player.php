@@ -256,7 +256,7 @@ class Player extends Model
                     return;
                 }
 
-                $data = GeneralHelper::get($url);
+                $data = GeneralHelper::get($url, 'image/*');
 
                 if (!$data) {
                     // Imgur is blocking pretty hard for some reason... :(

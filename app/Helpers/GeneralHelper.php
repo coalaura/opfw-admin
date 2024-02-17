@@ -376,7 +376,7 @@ class GeneralHelper
      * @param string $url
      * @return string
      */
-    public static function get(string $url, int $timeout = 3, int $connectTimeout = 1): string
+    public static function get(string $url, string $expectingMimeType = '*/*'): string
     {
         $start = round(microtime(true) * 1000);
 
@@ -388,12 +388,12 @@ class GeneralHelper
             );
 
             $res = $client->request('GET', $url, [
-                'timeout'         => $timeout,
-                'connect_timeout' => $connectTimeout,
+                'timeout'         => 3,
+                'connect_timeout' => 1,
 
                 // Try to somewhat fake being a browser
                 'headers'         => [
-                    'Accept'          => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                    'Accept'          => $expectingMimeType,
                     'Accept-Language' => 'en-US,en;q=0.7,de;q=0.3',
                     'User-Agent'      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0',
                 ],
