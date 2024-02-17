@@ -22,7 +22,8 @@
         "inertiajs/inertia-laravel": "^0.2.5",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^3.0"
+        "laravel/ui": "^3.0",
+        "xpaw/steamid": "^2.0"
     },
     "require-dev": {
         "bennett-treptow/laravel-migration-generator": "^3.2",
