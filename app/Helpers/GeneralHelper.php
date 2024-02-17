@@ -38,11 +38,6 @@ class GeneralHelper
     ];
 
     /**
-     * @var array
-     */
-    private static array $GETCache = [];
-
-    /**
      * @var null|array
      */
     private static ?array $rootCache = null;
@@ -382,11 +377,6 @@ class GeneralHelper
      */
     public static function get(string $url, int $timeout = 3, int $connectTimeout = 1): string
     {
-        if (isset(self::$GETCache[$url])) {
-            LoggingHelper::log("Returning cached request '" . $url . "'");
-            return self::$GETCache[$url];
-        }
-
         $start = round(microtime(true) * 1000);
 
         try {
@@ -399,6 +389,13 @@ class GeneralHelper
             $res = $client->request('GET', $url, [
                 'timeout'         => $timeout,
                 'connect_timeout' => $connectTimeout,
+
+                // Try to somewhat fake being a browser
+                'headers' => [
+                    'Accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+                    'Accept-Language' => 'en-US,en;q=0.7,de;q=0.3',
+                    'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0',
+                ]
             ]);
 
             $body = $res->getBody()->getContents();
@@ -407,14 +404,11 @@ class GeneralHelper
             LoggingHelper::log("Request error '" . $url . "' in " . $taken . "ms");
             LoggingHelper::log(get_class($t) . ': ' . $t->getMessage());
 
-            self::$GETCache[$url] = '';
             return '';
         }
 
         $taken = round(microtime(true) * 1000) - $start;
         LoggingHelper::log("Completed request '" . $url . "' in " . $taken . "ms");
-
-        self::$GETCache[$url] = $body;
 
         return $body;
     }
