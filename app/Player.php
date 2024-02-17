@@ -209,7 +209,7 @@ class Player extends Model
         "~bold~",
     ];
 
-    public function setPanelSetting(string $key, $value)
+    public function setPanelSetting(string $key, $value, ?callable $progress = null)
     {
         $info = self::PlayerSettings[$key] ?? null;
 
@@ -256,6 +256,8 @@ class Player extends Model
                     return;
                 }
 
+                $progress && $progress("download");
+
                 $data = GeneralHelper::get($url, 'image/*');
 
                 if (!$data) {
@@ -271,6 +273,8 @@ class Player extends Model
                 if (!file_exists($dir)) {
                     mkdir($dir, 0777, true);
                 }
+
+                $progress && $progress("resize");
 
                 GeneralHelper::renderThumbnail(public_path($value), $data, 1280, 720, true);
             }
@@ -289,6 +293,8 @@ class Player extends Model
         if (isset($info['options']) && !isset($info['options'][$value])) {
             throw new Exception('Input is not a valid option.');
         }
+
+        $progress && $progress("save");
 
         $settings[$key] = $value;
 

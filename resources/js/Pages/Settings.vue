@@ -70,8 +70,7 @@
                         <img :src="'/images/settings/' + key + '.png'" class="h-20" />
                     </td>
                     <td class="p-3 pr-8">
-                        <i class="fas fa-spinner fa-spin" v-if="setting.disabled"></i>
-                        <i class="fas fa-check" v-else></i>
+                        <i :class="getStatusIcon(setting)"></i>
                     </td>
                 </tr>
             </table>
@@ -117,10 +116,28 @@ export default {
         });
 
         return {
+            status: false,
+
             list: sessions
         }
     },
     methods: {
+        getStatusIcon(setting) {
+            if (!setting.disabled) return 'fas fa-check';
+
+            const prefix = 'animate-bounce';
+
+            switch(this.status) {
+                case 'download':
+                    return prefix + ' fas fa-download';
+                case 'resize':
+                    return prefix + ' fas fa-crop-alt';
+                case 'save':
+                    return prefix + ' fas fa-save';
+            }
+
+            return prefix + ' fas fa-truck-loading';
+        },
         formatTimestamp(timestamp) {
             return this.$options.filters.formatTime(timestamp * 1000);
         },
@@ -159,26 +176,30 @@ export default {
             if (overrideValue) setting.value = overrideValue;
 
             try {
-                const response = await axios.put('/settings/' + key, {
+                const data = await this.chunked.put('/settings/' + key, {
                     value: setting.value
+                }, chunk => {
+                    if (!chunk.status) return;
+
+                    this.status = chunk.status;
                 });
 
-                if (!response.data.status) {
-                    alert(response.data.message || 'An error occurred while saving the setting');
-                }
+                if (!data || !data.status) {
+                    alert(data?.message || 'An error occurred while saving the setting.');
+                } else {
+                    if ('data' in data) {
+                        setting.value = data.data;
+                        this.$page.auth.settings[key].value = data.data;
 
-                if ('data' in response.data) {
-                    setting.value = response.data.data;
-                    this.$page.auth.settings[key].value = response.data.data;
+                        this.$bus.$emit('settingsUpdated');
+                    }
 
-                    this.$bus.$emit('settingsUpdated');
-                }
-
-                if (key === 'locale') {
-                    this.refreshLocales(setting.value);
+                    if (key === 'locale') {
+                        this.refreshLocales(setting.value);
+                    }
                 }
             } catch (e) {
-                alert(e.message || 'An error occurred while saving the setting (Status: ' + e.response.status + ')');
+                alert(e.message || 'An error occurred while saving the setting.');
             }
 
             setting.disabled = false;
