@@ -142,8 +142,8 @@ const Markdown = {
                     isVideo = extension && ['mp4', 'mov', 'avi', 'mkv', 'webm'].includes(extension);
 
                 return {
-                    text: url,
-                    url: `https://cdn.discordapp.com/${filename}`,
+                    text: `https://cdn.discordapp.com/${filename}`,
+                    url: url,
                     image: !isVideo,
                     video: isVideo
                 };
