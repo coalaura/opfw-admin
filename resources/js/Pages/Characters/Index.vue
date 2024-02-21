@@ -239,7 +239,7 @@ export default {
                     data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
-                    only: ['characters', 'playerMap', 'time'],
+                    only: ['characters', 'playerMap', 'time', 'page', 'links'],
                 });
             } catch (e) { }
 
