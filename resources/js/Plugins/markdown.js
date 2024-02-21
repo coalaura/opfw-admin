@@ -130,6 +130,25 @@ const Markdown = {
                 };
             }
 
+            // Discord attachments
+            if (url.match(/^https:\/\/cdn\.discordapp\.com\/attachments\/\d+\/\d+\/(.+?)(\?(.+?)?)?$/gm)) {
+                url = url.split('?').shift();
+
+                const filename = find(/\d+\/\d+\/(.+?)$/gm, url);
+
+                if (!filename) return false;
+
+                const extension = find(/\.(\w+)$/gm, filename),
+                    isVideo = extension && ['mp4', 'mov', 'avi', 'mkv', 'webm'].includes(extension);
+
+                return {
+                    text: url,
+                    url: `https://cdn.discordapp.com/${filename}`,
+                    image: !isVideo,
+                    video: isVideo
+                };
+            }
+
             // Generic Image URLs
             if (url.match(/^https:\/\/[^\s?#]+?\.(jpg|jpeg|png|gif|webp)/gm)) {
                 const host = find(/^https:\/\/([^\s/]+)/gm, url),
