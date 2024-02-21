@@ -979,7 +979,8 @@
             "do_warn": "Stick as wrang",
             "do_note": "Stick as note",
             "do_hidden_note": "Stick as hush-hush note",
-            "remember": "<b>Y'all remember now!</b> Make sure to choose <u>Strike</u> or <u>Warning</u> when handin' them out. We only use notes for, well, notes."
+            "remember": "<b>Y'all remember now!</b> Make sure to choose <u>Strike</u> or <u>Warning</u> when handin' them out. We only use notes for, well, notes.",
+            "discord_attachment": "<b>Warnin'!</b> Discord attachment links expire! It's recommended to upload that there image/video to a spot that'll hold on to it a bit longer and link to that instead, y'all."
         },
         "job": {
             "job": "Work",

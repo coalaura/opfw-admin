@@ -989,7 +989,8 @@
             "do_strike": "Strike ke roop mein joden",
             "do_warn": "Warning ke roop mein joden",
             "do_note": "Tippani ke roop mein joden",
-            "do_hidden_note": "Chhupa hua tippani ke roop mein joden"
+            "do_hidden_note": "Chhupa hua tippani ke roop mein joden",
+            "discord_attachment": "<b>Chetavani!</b> Discord attachment ke links samapt ho jaate hain! Anushansa ki jaati hai ki image/video ko kisi sthaai jagah par upload karke uska link de."
         },
         "job": {
             "job": "Kaam",

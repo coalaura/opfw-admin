@@ -989,7 +989,8 @@
             "do_strike": "Legg til som strike",
             "do_warn": "Legg til som advarsel",
             "do_note": "Legg til som notat",
-            "do_hidden_note": "Legg til som skjult notat"
+            "do_hidden_note": "Legg til som skjult notat",
+            "discord_attachment": "<b>Advarsel!</b> Lenker for vedlegg i Discord utløper! Det anbefales å laste opp bildet/videoen til en mer permanent plassering og lenke til den i stedet."
         },
         "job": {
             "job": "Jobb",

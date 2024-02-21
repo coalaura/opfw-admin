@@ -979,7 +979,8 @@
             "do_warn": "Give a warnin'",
             "do_note": "Make a note",
             "do_hidden_note": "Sneaky note",
-            "remember": "<b>Grug remember!</b> Make sure to select <u>Club</u> or <u>Eat</u> when handing them out. Grug should only write grug-thoughts in notes."
+            "remember": "<b>Grug remember!</b> Make sure to select <u>Club</u> or <u>Eat</u> when handing them out. Grug should only write grug-thoughts in notes.",
+            "discord_attachment": "<b>Ooga!</b> Discord thing-links go bye-bye soon! Better put picture/moving-thing in long-stay place, then use new link."
         },
         "job": {
             "job": "What people do",

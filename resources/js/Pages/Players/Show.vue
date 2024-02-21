@@ -1281,9 +1281,11 @@
                     {{ t('players.warning.give') }}
                 </h3>
                 <form @submit.prevent="submitWarning">
-                    <label for="message" class="mb-3 italic text-gray-800 dark:text-gray-200 block text-sm" v-html="t('players.warning.remember')"></label>
+                    <label for="message" class="italic text-gray-800 dark:text-gray-200 block text-sm" v-html="t('players.warning.remember')"></label>
 
-                    <div class="relative">
+                    <div class="px-2 py-1 rounded italic bg-red-500 border border-red-700 text-white mt-2 text-sm inline-block shadow-sm" v-if="warningMessageNotice" v-html="warningMessageNotice"></div>
+
+                    <div class="relative mt-3">
                         <inertia-link class="text-black dark:text-white no-underline absolute top-0.5 right-1.5" :title="t('global.support_markdown')" href="/docs/markdown">
                             <i class="fab fa-markdown"></i>
                         </inertia-link>
@@ -1772,6 +1774,16 @@ export default {
         deletedCharacterCount() {
             return this.characters.filter(c => c.characterDeleted).length;
         },
+        warningMessageNotice() {
+            const text = this.form.warning.message || '';
+
+            // Discord attachments expire
+            if (text.includes('https://cdn.discordapp.com/attachments/')) {
+                return this.t('players.warning.discord_attachment');
+            }
+
+            return false;
+        }
     },
     methods: {
         warningMessageChanged() {

@@ -979,7 +979,8 @@
             "do_warn": "Add as oopsie",
             "do_note": "Add as notice",
             "do_hidden_note": "Add as hidden notice",
-            "remember": "<b>Wemembew!</b> Make suwe to sewect <u>Stwike</u> ow <u>Wawning</u> when handing them out. Nyotes shouwd onwy be used fow... weww... nyotes"
+            "remember": "<b>Wemembew!</b> Make suwe to sewect <u>Stwike</u> ow <u>Wawning</u> when handing them out. Nyotes shouwd onwy be used fow... weww... nyotes",
+            "discord_attachment": "<b>Wawning!</b> Discord attachment winks expiwe! It is wecommended to upwoad da image/video to a mowe pewmanent wocation and wink dat instead uwu."
         },
         "job": {
             "job": "Jwob",
