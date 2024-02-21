@@ -102,7 +102,7 @@
                             </inertia-link>
                         </td>
                         <td class="p-3 mobile:block whitespace-nowrap font-mono">{{ getErrorLocation(error) }}</td>
-                        <td class="p-3 mobile:block font-mono text-sm cursor-pointer" @click="showError(error)">{{ cleanupTrace(error.error_trace) }}</td>
+                        <td class="p-3 mobile:block font-mono text-sm cursor-pointer whitespace-pre-line" @click="showError(error)" v-html="cleanupTrace(error.error_trace)"></td>
                         <td class="p-3 mobile:block">{{ error.occurrences }}</td>
                         <td class="p-3 mobile:block whitespace-nowrap">{{ error.server_version || "N/A" }}</td>
                         <td class="p-3 pr-8 mobile:block whitespace-nowrap">{{ error.timestamp * 1000 | formatTime(true) }}</td>
@@ -253,7 +253,7 @@ export default {
         cleanupTrace(trace) {
             const cleaned = trace.replace(/^.+:\d+: /gm, '').trim();
 
-            return cleaned ? cleaned : trace;
+            return this.formatChatColors(cleaned ? cleaned : trace);
         },
         lineNumbers(fullTrace) {
             const padSize = (fullTrace.length % 10) + 1;
@@ -354,26 +354,37 @@ export default {
         },
         formatChatColors(text) {
             const colors = {
-                "^1": "#F34342",
-                "^2": "#96C702",
+                "^1": "#FD4343",
+                "^2": "#99CC00",
                 "^3": "#F8B633",
                 "^4": "#0393C3",
                 "^5": "#33AFDD",
                 "^6": "#A363C3",
-                "^7": "#FAFAFA",
+                // ^7 is white (reset)
                 "^8": "#B90606",
                 "^9": "#B90661"
             };
 
             let matches = 0;
+
+            function reset() {
+                if (matches === 0) return '';
+
+                const open = matches;
+
+                matches = 0;
+
+                return '</span>'.repeat(open);
+            }
+
             text = text.replace(/\^[1-9]/gm, (match) => {
+                if (match === "^7") return reset();
+
                 matches++;
                 return '<span style="color:' + colors[match] + '">';
             });
 
-            for (let x = 0; x < matches; x++) {
-                text += '</span>';
-            }
+            text += reset();
 
             return text;
         }

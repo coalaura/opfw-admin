@@ -41,9 +41,11 @@ class ClientError extends Model
         'license_identifier',
         'error_location',
         'error_trace',
+        'full_trace',
         'error_feedback',
         'player_ping',
         'server_id',
+        'server_version',
         'timestamp',
     ];
 

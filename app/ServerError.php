@@ -41,6 +41,7 @@ class ServerError extends Model
         'error_location',
         'error_trace',
         'server_id',
+        'server_version',
         'timestamp',
     ];
 

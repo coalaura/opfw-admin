@@ -11,6 +11,17 @@
         </portal>
 
         <portal to="actions">
+            <button class="px-4 py-2 text-sm font-semibold text-white bg-warning rounded dark:bg-dark-warning mr-1" type="button" @click="createCycle" v-if="$page.auth.player.isRoot">
+                <span v-if="isCreatingCycle">
+                    <i class="mr-1 fas fa-recycle animate-spin"></i>
+                    {{ t('global.loading') }}
+                </span>
+                <span v-else>
+                    <i class="mr-1 fas fa-recycle"></i>
+                    {{ t('errors.create_cycle') }}
+                </span>
+            </button>
+
             <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
                 <span v-if="!isLoading">
                     <i class="fa fa-refresh mr-1"></i>
@@ -39,17 +50,18 @@
                             <label class="block mb-3 mt-3" for="trace">
                                 {{ t('errors.trace') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="trace" placeholder="attempted to index a nil value" v-model="filters.trace">
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
+                                   id="trace" placeholder="attempted to index a nil value" v-model="filters.trace">
                         </div>
 
-                        <!-- Version -->
+                        <!-- Cycle -->
                         <div class="w-1/2 px-3">
                             <label class="block mb-3 mt-3">
-                                {{ t('errors.server_version') }}
+                                {{ t('errors.cycle') }}
                             </label>
-                            <select v-model="filters.server_version" class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600">
-                                <option value="">{{ t('errors.no_version_filter') }}</option>
-                                <option :value="version.server_version" v-for="version in versions">{{ version.server_version }} - {{ version.timestamp * 1000 | formatTime(true) }}</option>
+                            <select v-model="filters.cycle" class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600">
+                                <option value="0">{{ t('errors.newest_cycle') }}</option>
+                                <option :value="cycle.cycle_number" v-for="cycle in cycles">#{{ cycle.cycle_number }} - {{ cycle.first_occurence * 1000 | formatTime(true) }}</option>
                             </select>
                         </div>
                     </div>
@@ -59,7 +71,9 @@
                     </div>
                     <!-- Search button -->
                     <div class="w-full px-3 mt-3">
-                        <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg" @click="refresh">
+                        <button
+                            class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg"
+                            @click="refresh">
                             <span v-if="!isLoading">
                                 <i class="fas fa-search"></i>
                                 {{ t('errors.search') }}
@@ -90,13 +104,12 @@
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="p-3 pl-8">{{ t('errors.location') }}</th>
                         <th class="p-3">{{ t('errors.trace') }}</th>
-                        <th class="p-3 whitespace-nowrap">{{ t('errors.server_version') }}</th>
                         <th class="p-3 pr-8">{{ t('errors.timestamp') }}</th>
                     </tr>
-                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" :class="{ 'bg-pink-500 bg-opacity-20': error.error_feedback }" v-for="error in errors" :key="error.error_id">
-                        <td class="p-3 pl-8 mobile:block whitespace-nowrap font-mono" :title="error.error_location">{{ trim(error.error_location, 30) }}</td>
-                        <td class="p-3 mobile:block font-mono text-sm cursor-pointer whitespace-pre-line" @click="showError(error)" v-html="cleanupTrace(error.error_trace)"></td>
-                        <td class="p-3 mobile:block whitespace-nowrap">{{ error.server_version || "N/A" }}</td>
+                    <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="error in errors"
+                        :key="error.error_id">
+                        <td class="p-3 pl-8 mobile:block whitespace-nowrap font-mono" :title="error.error_location">{{ trim(error.error_location, 20) }}</td>
+                        <td class="p-3 mobile:block font-mono text-sm cursor-pointer" @click="showError(error)" v-html="formatChatColors(trim(error.error_trace, 200))"></td>
                         <td class="p-3 pr-8 mobile:block whitespace-nowrap">{{ error.timestamp * 1000 | formatTime(true) }}</td>
                     </tr>
                     <tr v-if="errors.length === 0" class="border-t border-gray-300 dark:border-gray-500">
@@ -112,11 +125,19 @@
 
                     <!-- Navigation -->
                     <div class="flex flex-wrap">
-                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="links.prev" v-if="page >= 2">
+                        <inertia-link
+                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
+                            :href="links.prev"
+                            v-if="page >= 2"
+                        >
                             <i class="mr-1 fas fa-arrow-left"></i>
                             {{ t("pagination.previous") }}
                         </inertia-link>
-                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="errors.length === 15" :href="links.next">
+                        <inertia-link
+                            class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400"
+                            v-if="errors.length === 15"
+                            :href="links.next"
+                        >
                             {{ t("pagination.next") }}
                             <i class="ml-1 fas fa-arrow-right"></i>
                         </inertia-link>
@@ -139,8 +160,9 @@
             </template>
 
             <template #default>
-                <pre class="block mb-4 pb-4 border-gray-500 border-dashed border-b-2 text-sm whitespace-pre-line break-words" v-html="formatChatColors(errorDetail.error_location)"></pre>
-                <pre class="block mb-4 pb-4 text-sm whitespace-pre-line break-words" v-html="formatChatColors(errorDetail.error_trace)"></pre>
+                <pre class="text-lg block mb-4 pb-4 border-gray-500 border-dashed border-b-2 font-bold whitespace-pre-line" v-if="errorDetail.error_location.length < 40">{{ errorDetail.error_location }}</pre>
+                <pre class="block mb-4 pb-4 border-gray-500 border-dashed border-b-2 text-sm whitespace-pre-line break-words" v-else>{{ errorDetail.error_location }}</pre>
+                <pre class="block mb-2 text-sm whitespace-pre-line break-words" v-html="formatChatColors(errorDetail.error_trace)"></pre>
             </template>
 
             <template #actions>
@@ -171,13 +193,13 @@ export default {
             type: Array,
             required: true,
         },
-        versions: {
+        cycles: {
             type: Array,
             required: true,
         },
         filters: {
             trace: String,
-            server_version: String,
+            cycle: Number,
         },
         links: {
             type: Object,
@@ -213,78 +235,27 @@ export default {
                     data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
-                    only: ['errors', 'versions', 'time', 'links', 'page'],
+                    only: ['errors', 'cycles', 'time', 'links', 'page'],
                 });
             } catch (e) {
             }
 
             this.isLoading = false;
         },
-        cleanupTrace(trace) {
-            const cleaned = trace.replace(/^.+:\d+: /gm, '').trim();
+        async createCycle() {
+            if (this.isCreatingCycle || !confirm(this.t('errors.confirm_cycle'))) {
+                return;
+            }
+            this.isCreatingCycle = true;
 
-            return this.formatChatColors(cleaned ? cleaned : trace);
-        },
-        lineNumbers(fullTrace) {
-            const padSize = (fullTrace.length % 10) + 1;
+            try {
+                await axios.post('/errors/server/cycle');
 
-            const cleanMatch = part => {
-                return part ? part.replace(/^[/:@]/gm, match => {
-                    return `<span style="opacity:0.6;font-style:normal">${match}</span>`;
-                }) : '';
-            };
+                window.location.href = '?cycle=0';
+            } catch (e) {
+            }
 
-            const formatLine = entry => {
-                if (entry.startsWith("event@")) {
-                    const eventName = entry.replace(/^event@/gm, '');
-
-                    return `<span style="color:#B4BEFE">event<span style="opacity:0.6;font-style:normal">@</span></span><span style="color:#A6E3A1">${eventName}</span>`;
-                } else if (entry.startsWith("callback@")) {
-                    const callbackData = entry.replace(/^callback@/gm, '').split("("),
-                        callbackName = callbackData.shift(),
-                        callbackArgs = callbackData.join("(").replace(/\)$/, '');
-
-                    const argRegex = /\b(?:function|vec3)\([^)]*\)|"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|\S+/g,
-                        args = [];
-
-                    let match;
-
-                    while (match = argRegex.exec(callbackArgs)) {
-                        const arg = match[0].replace(/,$/, '');
-
-                        if (arg) {
-                            args.push(arg);
-                        }
-                    }
-
-                    const argString = args.map(arg => `<span style="color:#BEE4ED;font-weight:600">${arg}</span>`).join(`<span style="color:#F38BA8;opacity:0.6;font-style:normal">,</span> `);
-
-                    return [
-                        `<span style="color:#B4BEFE">callback<span style="opacity:0.6;font-style:normal">@</span></span>`,
-                        `<span style="color:#F38BA8">${callbackName}<span style="opacity:0.6;font-style:normal">(</span></span>`,
-                        `${argString}`,
-                        `<span style="color:#F38BA8;opacity:0.6;font-style:normal">)</span>`,
-                    ].join("");
-                }
-
-                const match = entry.matchAll(/^(.+?)(\/.+?)?(:\d+)?(@.+)?$/gm).next().value;
-                if (!match) {
-                    return entry;
-                }
-
-                const [_, resource, file, line, method] = match;
-
-                return [
-                    `<span style="color:#B4BEFE">${resource}</span>`,
-                    `<span style="color:#A6E3A1">${cleanMatch(file)}</span>`,
-                    `<span style="color:#FAB387">${cleanMatch(line)}</span>`,
-                    `<span style="color:#F38BA8">${cleanMatch(method)}</span>`,
-                ].join("");
-            };
-
-            return fullTrace.map((line, index) => {
-                return `<span><span class="line-number">${(index + 1).toString().padStart(padSize, '0')}</span>${formatLine(line)}</span>`;
-            }).join("\n");
+            this.isCreatingCycle = false;
         },
         showError(error) {
             this.showErrorDetail = true;
@@ -298,37 +269,26 @@ export default {
         },
         formatChatColors(text) {
             const colors = {
-                "^1": "#FD4343",
-                "^2": "#99CC00",
+                "^1": "#F34342",
+                "^2": "#96C702",
                 "^3": "#F8B633",
                 "^4": "#0393C3",
                 "^5": "#33AFDD",
                 "^6": "#A363C3",
-                // ^7 is white (reset)
+                "^7": "#FAFAFA",
                 "^8": "#B90606",
                 "^9": "#B90661"
             };
 
             let matches = 0;
-
-            function reset() {
-                if (matches === 0) return '';
-
-                const open = matches;
-
-                matches = 0;
-
-                return '</span>'.repeat(open);
-            }
-
             text = text.replace(/\^[1-9]/gm, (match) => {
-                if (match === "^7") return reset();
-
                 matches++;
                 return '<span style="color:' + colors[match] + '">';
             });
 
-            text += reset();
+            for (let x = 0; x < matches; x++) {
+                text += '</span>';
+            }
 
             return text;
         }

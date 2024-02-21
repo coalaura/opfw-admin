@@ -239,10 +239,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Errors.
     Route::get('/errors/client', [ErrorController::class, 'client']);
-    Route::post('/errors/client/cycle', [ErrorController::class, 'clientCycle']);
-
     Route::get('/errors/server', [ErrorController::class, 'server']);
-    Route::post('/errors/server/cycle', [ErrorController::class, 'serverCycle']);
 
     // Settings.
     Route::get('/settings', [SettingsController::class, 'index']);
