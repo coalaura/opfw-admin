@@ -34,11 +34,11 @@
                     <span v-else>{{ t('global.staff') }}</span>
                 </span>
 
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded" :class="{ 'shadow': banner, 'bg-gray-500 border-gray-700': serverStatusLoading, 'bg-green-500 border-green-700': !serverStatusLoading && serverStatus, 'bg-red-500 border-red-700': !serverStatusLoading && !serverStatus }" :title="!serverStatusLoading ? (!serverStatus ? t('global.server_offline') : t('global.server_online', serverStatus)) : ''">
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded" :class="{ 'shadow': banner, 'bg-gray-500 border-gray-700': serverStatusLoading, 'bg-green-500 border-green-700': !serverStatusLoading && serverUptime, 'bg-red-500 border-red-700': !serverStatusLoading && !serverUptime }" :title="!serverStatusLoading ? (!serverUptime ? t('global.server_offline') : t('global.server_online', serverUptimeDetail)) : ''">
                     <i class="fas fa-sync-alt" v-if="serverStatusLoading"></i>
                     <i class="fas fa-server" v-else></i>
 
-                    <span v-if="serverStatus">{{ serverStatus }}</span>
+                    <span v-if="serverUptime">{{ serverUptime }}</span>
                     <span v-else>{{ $page.auth.server }}</span>
                 </span>
 
@@ -295,7 +295,8 @@ export default {
             failedAvatarLoad: false,
 
             serverStatusLoading: false,
-            serverStatus: false,
+            serverUptime: false,
+            serverUptimeDetail: false,
             serverName: false,
             serverLogo: false,
 
@@ -415,12 +416,12 @@ export default {
 
             this.hideContext();
         },
-        formatUptime(pMilliseconds) {
+        formatUptime(pMilliseconds, pIncludeMinutes) {
             if (pMilliseconds < 3600000) {
                 return moment.duration(pMilliseconds).format('m [minutes]');
             }
 
-            return moment.duration(pMilliseconds).format('d [days], h [hours]');
+            return moment.duration(pMilliseconds).format('d [days], h [hours]' + (pIncludeMinutes ? ', m [minutes]' : ''));
         },
         async showDebugInfo() {
             if (this.loadingDebug) return;
@@ -460,9 +461,11 @@ export default {
             const info = await this.requestGenerated("/info.json");
 
             if (info && info.uptime) {
-                this.serverStatus = this.formatUptime(info.uptime);
+                this.serverUptime = this.formatUptime(info.uptime, false);
+                this.serverUptimeDetail = this.formatUptime(info.uptime, true);
             } else {
-                this.serverStatus = false;
+                this.serverUptime = false;
+                this.serverUptimeDetail = false;
             }
 
             if (info && info.name) {
