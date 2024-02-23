@@ -368,6 +368,38 @@ class OPFWHelper
     }
 
     /**
+     * Gets the chatEmotes.json
+     *
+     * @param string $serverIp
+     * @return array|null
+     */
+    public static function getChatEmotesJSON(string $serverIp): ?array
+    {
+        $serverIp = Server::fixApiUrl($serverIp);
+        $cache = 'emotes_' . md5($serverIp);
+
+        if (CacheHelper::exists($cache)) {
+            return CacheHelper::read($cache, []);
+        } else {
+            $data = self::executeRoute($serverIp, $serverIp . 'chatEmotes.json', [], 'GET', 3);
+
+            if ($data->data) {
+                $emotes = array_map(function($emote) {
+                    $emote['url'] = "https://cdn.discordapp.com/emojis/$emote[id]." . ($emote['animated'] ? 'gif' : 'png') . '?size=96&quality=lossless';
+
+                    return $emote;
+                }, $data->data);
+
+                CacheHelper::write($cache, $emotes, 12 * CacheHelper::HOUR);
+            } else if (!$data->status) {
+                CacheHelper::write($cache, [], 10);
+            }
+
+            return $data->data;
+        }
+    }
+
+    /**
      * Gets the vehicles.json
      *
      * @param string $serverIp

@@ -3,7 +3,7 @@
         <div class="messages" ref="messages">
             <div class="message" v-for="message in messages" :class="message.color">
                 <a class="title" :href="'/players/' + message.license" target="_blank">{{ message.title }}:</a>
-                <span class="text">{{ message.text }}</span>
+                <span class="text" v-html="message.text"></span>
             </div>
 
             <div class="message red" v-if="!socket">
@@ -77,6 +77,12 @@ body {
     .title {
         font-weight: 500;
     }
+
+    .emote {
+        display: inline;
+        height: 3.2vh;
+        vertical-align: middle;
+    }
 }
 
 .purple {
@@ -134,6 +140,11 @@ import DataCompressor from "./Map/DataCompressor";
 import { io } from "socket.io-client";
 
 export default {
+    props: {
+        emotes: {
+            type: Array
+        }
+    },
     data() {
         return {
             chatInput: "",
@@ -158,9 +169,20 @@ export default {
 
             this.isSendingChat = true;
 
+            // Replace emotes
+            const text = this.chatInput.replace(/:(\w+):/g, (match, name) => {
+                name = name.toLowerCase();
+
+                const emote = this.emotes.find(emote => emote.name.toLowerCase() === name);
+
+                if (!emote) return match;
+
+                return `<${emote.id}>`;
+            });
+
             try {
                 await axios.post('/chat', {
-                    message: this.chatInput
+                    message: text
                 });
             } catch (e) { }
 
@@ -174,6 +196,32 @@ export default {
                 this.sendChat();
             }
         },
+        formatMessage(message) {
+            // Slightly scuffed html encoding by the server
+            const text = message.trim()
+                .replace(/&lt(?!;)/g, "<")
+                .replace(/&gt(?!;)/g, ">")
+                .replace(/&quot(?!;)/g, '"');
+
+            // Escape HTML
+            message = message
+				.replace(/&/g, "&amp;")
+				.replace(/</g, "&lt;")
+				.replace(/>/g, "&gt;")
+				.replace(/"/g, "&quot;")
+				.replace(/'/g, "&#039;");
+
+            // Emotes
+            message = message.replace(/&lt;(\d{1,})&gt;/gm, (match, id) => {
+                const emote = this.emotes.find(emote => emote.id == id);
+
+                if (!emote) return match;
+
+                return `<img src="${emote.url}" class="emote" title=":${emote.name}:" />`;
+            });
+
+            return message;
+		},
         init() {
             if (this.socket) return;
 
@@ -213,15 +261,10 @@ export default {
                         const type = message.type,
                             user = message.user;
 
-                        const text = message.message.trim()
-                            .replace(/&lt;/g, "<")
-                            .replace(/&gt;/g, ">")
-                            .replace(/&quot;/g, '"');
-
                         return {
                             license: user.licenseIdentifier,
                             title: (type === "staff" ? "STAFF " : `REPORT-${message.reportId} `) + user.playerName + (type === "staff" ? "" : " (" + user.source + ")"),
-                            text: text,
+                            text: this.formatMessage(message.message),
                             color: type === "staff" ? "purple" : "green",
                             createdAt: message.createdAt
                         };
@@ -267,12 +310,19 @@ export default {
             audio.play();
         }
     },
+    beforeCreate() {
+        const lang = this.setting("locale") || "en-US";
+
+        this.loadLocale(lang);
+    },
     mounted() {
         this.init();
 
         window.addEventListener("resize", () => {
             this.scroll();
         });
+
+        console.log(this.emotes);
     }
 }
 </script>
