@@ -1,10 +1,10 @@
 <template>
     <div class="w-full h-full relative" id="chat">
         <div class="messages" ref="messages">
-            <div class="message" v-for="message in messages" :class="message.color" @hover="updateMessageTime(message)">
+            <div class="message" v-for="message in messages" :class="message.color">
                 <a class="title" :href="'/players/' + message.license" target="_blank">{{ message.title }}:</a>
                 <span class="text" v-html="message.text"></span>
-                <span class="time" v-if="message.time">{{ message.time }}</span>
+                <span class="time">{{ message.time }}</span>
             </div>
 
             <div class="message red" v-if="!socket">
@@ -240,9 +240,6 @@ export default {
 
             return message;
 		},
-        updateMessageTime(message) {
-            message.time = this.$moment.utc(message.createdAt * 1000).local().fromNow();
-        },
         init() {
             if (this.socket) return;
 
@@ -288,7 +285,7 @@ export default {
                             text: this.formatMessage(message.message),
                             color: type === "staff" ? "purple" : "green",
                             createdAt: message.createdAt,
-                            time: false
+                            time: this.$moment.utc(message.createdAt * 1000).local().fromNow()
                         };
                     });
 
@@ -343,8 +340,6 @@ export default {
         window.addEventListener("resize", () => {
             this.scroll();
         });
-
-        console.log(this.emotes);
     }
 }
 </script>
