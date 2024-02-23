@@ -87,12 +87,19 @@ body {
     }
 
     .time {
+        display: none;
         bottom: .4vh;
-        font-size: 1vh;
+        font-size: 1.2vh;
         font-style: italic;
         position: absolute;
         right: .8vh;
-        line-height: 1vh;
+        line-height: 1.2vh;
+    }
+
+    &:hover {
+        .time {
+            display: block;
+        }
     }
 }
 
