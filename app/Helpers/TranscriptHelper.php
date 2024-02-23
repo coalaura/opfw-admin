@@ -10,6 +10,10 @@ class TranscriptHelper
     {
         if (empty($warning->message)) return;
 
+        /**
+         * Old ticket-tool links
+         * https://tickettool.xyz/direct?url=https://cdn.discordapp.com/...
+         */
         $re = '/https:\/\/tickettool\.xyz\/direct\?url=(https:\/\/cdn\.discordapp\.com\/.+?\/(\d+)\/transcript-\w+-(\d+)\.html(\?[\w=%&]+)?)/m';
 
         $message = preg_replace_callback($re, function ($matches) {
@@ -26,6 +30,26 @@ class TranscriptHelper
             return url($path);
         }, $warning->message);
 
+        /**
+         * New ticket-tool links
+         * https://tickettool.xyz/transcript/v1/...
+         */
+        $re = '/https:\/\/tickettool\.xyz\/transcript\/v1\/\d+\/(\d+)\/transcript-\w+-(\d+)\.html[\/\w]+/m';
+
+        $message = preg_replace_callback($re, function ($matches) {
+            $url = $matches[0];
+            $msgId = $matches[1];
+            $id = $matches[2];
+
+            $path = TranscriptHelper::ensureTranscript($msgId, $id, $url);
+            if (!$path) {
+                return $url;
+            }
+
+            return url($path);
+        }, $warning->message);
+
+        // Save the message if it was changed
         if ($message !== $warning->message) {
             $warning->message = $message;
 
