@@ -87,11 +87,12 @@ body {
     }
 
     .time {
-        font-size: 1.2vh;
+        bottom: .4vh;
+        font-size: 1vh;
         font-style: italic;
         position: absolute;
-        bottom: 0.15vh;
-        right: 0.2vh;
+        right: .8vh;
+        line-height: 1vh;
     }
 }
 
@@ -277,7 +278,7 @@ export default {
                             text: this.formatMessage(message.message),
                             color: type === "staff" ? "purple" : "green",
                             createdAt: message.createdAt,
-                            time: this.$moment.utc(message.createdAt).local().fromNow()
+                            time: this.$moment.utc(message.createdAt * 1000).local().fromNow()
                         };
                     });
 
