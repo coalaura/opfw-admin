@@ -4,6 +4,7 @@
             <div class="message" v-for="message in messages" :class="message.color">
                 <a class="title" :href="'/players/' + message.license" target="_blank">{{ message.title }}:</a>
                 <span class="text" v-html="message.text"></span>
+                <span class="time">{{ message.time }}</span>
             </div>
 
             <div class="message red" v-if="!socket">
@@ -73,6 +74,7 @@ body {
     overflow: hidden;
     max-width: 100%;
     word-wrap: break-word;
+    position: relative;
 
     .title {
         font-weight: 500;
@@ -82,6 +84,14 @@ body {
         display: inline;
         height: 3.2vh;
         vertical-align: middle;
+    }
+
+    .time {
+        font-size: 1.2vh;
+        font-style: italic;
+        position: absolute;
+        bottom: 0.15vh;
+        right: 0.2vh;
     }
 }
 
@@ -266,7 +276,8 @@ export default {
                             title: (type === "staff" ? "STAFF " : `REPORT-${message.reportId} `) + user.playerName + (type === "staff" ? "" : " (" + user.source + ")"),
                             text: this.formatMessage(message.message),
                             color: type === "staff" ? "purple" : "green",
-                            createdAt: message.createdAt
+                            createdAt: message.createdAt,
+                            time: this.$moment.utc(message.createdAt).local().fromNow()
                         };
                     });
 
