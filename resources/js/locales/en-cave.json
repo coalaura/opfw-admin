@@ -1330,7 +1330,8 @@
         "high_damage": "Big Hurt (Boom-booms, and more)",
         "silenced": "Quiet",
         "hit_tire": "Smack wheel with count {0}.",
-        "players": "Play-mates"
+        "players": "Play-mates",
+        "victim_hint": "<b>Hint:</b> Maybe be thing for say who own, or thing for find tribe on magic net."
     },
     "panel_logs": {
         "title": "Ugga Ugga Ugga",

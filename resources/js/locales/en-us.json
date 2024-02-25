@@ -1366,6 +1366,7 @@
         "damage_description": "On this page you can view and filter the damage logs.",
         "attacker": "Attacker",
         "victim": "Victim",
+        "victim_hint": "<b>Hint:</b> Can be a license identifier or a network id.",
         "weapon": "Weapon",
         "entity": "Entity",
         "peds": "Peds",

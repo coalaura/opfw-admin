@@ -1330,7 +1330,8 @@
         "high_damage": "Mighty Hurt (Kabooms, an' such)",
         "silenced": "Muffled",
         "hit_tire": "Struck hoop with index {0}.",
-        "players": "Mateys"
+        "players": "Mateys",
+        "victim_hint": "<b>Arrr:</b> Might be a letter o' marque or a signal fer joinin' networks, matey."
     },
     "panel_logs": {
         "title": "Boardin' Logs",

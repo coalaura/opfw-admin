@@ -1330,7 +1330,8 @@
         "high_damage": "High Damawge (Expwosions, etc.)",
         "silenced": "Siwenced",
         "hit_tire": "Hit tiw with index {0}.",
-        "players": "Pwayews"
+        "players": "Pwayews",
+        "victim_hint": "<b>Hint:</b> Can be a wicense identifiw or a netwowk id."
     },
     "panel_logs": {
         "title": "Pwanel Wogs",

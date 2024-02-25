@@ -1339,7 +1339,8 @@
         "high_damage": "Adhik Nuksaan (Visphot, aadi)",
         "silenced": "Shaant",
         "hit_tire": "Index {0} ke saath tire ko hit kiya.",
-        "players": "Khilaadi"
+        "players": "Khilaadi",
+        "victim_hint": "Hint: Yeh ek license identifier ya network id ho sakta hai."
     },
     "panel_logs": {
         "title": "Panel Ke Log",

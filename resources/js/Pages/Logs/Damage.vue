@@ -46,6 +46,10 @@
 								{{ t('logs.victim') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="victim" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.victim">
+
+							<div class="w-full mt-1 italic">
+								<small class="text-muted dark:text-dark-muted leading-4 block" v-html="t('logs.victim_hint')"></small>
+							</div>
 						</div>
 
 						<!-- Weapon -->
@@ -155,7 +159,7 @@
 						<td class="p-3 mobile:block">
 							{{ log.damage }}hp
 
-							<i v-if="log.bonusDamage" :title="t('log.bonus_damage')">+{{ log.bonusDamage }}hp</i>
+							<i v-if="log.bonusDamage" :title="t('logs.bonus_damage')">+{{ log.bonusDamage }}hp</i>
 						</td>
 						<td class="p-3 mobile:block">
 							{{ log.distance.toFixed(2) }}m

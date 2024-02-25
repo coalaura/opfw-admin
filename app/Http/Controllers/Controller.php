@@ -258,7 +258,7 @@ class Controller extends BaseController
     /**
      * Search values in a column. Available operators are =, !=, >, <, !, default is LIKE
      */
-    protected function searchQuery(Request $request, &$query, string $input, $column)
+    protected function searchQuery(Request $request, &$query, string $input, mixed $column)
     {
         $search = $request->input($input);
 
@@ -281,6 +281,8 @@ class Controller extends BaseController
                 if (!$value) {
                     continue;
                 }
+
+                $col = is_callable($column) ? $column($value) : $column;
 
                 switch ($operator) {
                     case "!=":
@@ -311,9 +313,9 @@ class Controller extends BaseController
                 }
 
                 if ($index === 0) {
-                    $subQuery->where($column, $operator, $value);
+                    $subQuery->where($col, $operator, $value);
                 } else {
-                    $subQuery->orWhere($column, $operator, $value);
+                    $subQuery->orWhere($col, $operator, $value);
                 }
             }
         });

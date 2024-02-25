@@ -1330,7 +1330,8 @@
         "high_damage": "Big Ol' Hurt (like boom-booms, and such)",
         "silenced": "Quiet-like",
         "hit_tire": "Hit the tire with number {0}.",
-        "players": "Playas"
+        "players": "Playas",
+        "victim_hint": "<b>Hint:</b> Might be a license number or some kind o' network ID, y'all."
     },
     "panel_logs": {
         "title": "Panel Lahgs",

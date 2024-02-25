@@ -1339,7 +1339,8 @@
         "high_damage": "Høy Skade (Eksplosjoner osv.)",
         "silenced": "Lydløs",
         "hit_tire": "Truffet dekk med indeks {0}.",
-        "players": "Spillere"
+        "players": "Spillere",
+        "victim_hint": "<b>Hint:</b> Kan være en lisensidentifikator eller et nettverks-ID."
     },
     "panel_logs": {
         "title": "Panellagre",

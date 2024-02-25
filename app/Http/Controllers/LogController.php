@@ -501,7 +501,14 @@ class LogController extends Controller
         $this->searchQuery($request, $query, 'attacker', 'license_identifier');
 
         // Filtering by victim identifier.
-        $this->searchQuery($request, $query, 'victim', DB::raw("JSON_UNQUOTE(JSON_EXTRACT(hit_players, '$[0]'))"));
+        $this->searchQuery($request, $query, 'victim', function($value) {
+            // Is it a network id?
+            if (preg_match('/^\d+$/m', $value)) {
+                return DB::raw("JSON_UNQUOTE(JSON_EXTRACT(hit_global_ids, '$[0]'))");
+            }
+
+            return DB::raw("JSON_UNQUOTE(JSON_EXTRACT(hit_players, '$[0]'))");
+        });
 
         // Filtering by weapon.
         if ($weapon = $request->input('weapon')) {
