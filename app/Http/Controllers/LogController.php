@@ -177,7 +177,7 @@ class LogController extends Controller
         $this->searchQuery($request, $query, 'identifier', 'money_logs.license_identifier');
 
         // Filtering by character id.
-        $this->searchQuery($request, $query, 'character_id', 'character_id');
+        $this->searchQuery($request, $query, 'character_id', 'money_logs.character_id');
 
         // Filtering by details.
         $this->searchQuery($request, $query, 'details', 'details');
