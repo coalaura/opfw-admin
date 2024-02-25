@@ -282,7 +282,7 @@ class Controller extends BaseController
                     continue;
                 }
 
-                $col = is_callable($column) ? $column($value) : $column;
+                $col = is_callable($column) && !is_string($column) ? $column($value) : $column;
 
                 switch ($operator) {
                     case "!=":
