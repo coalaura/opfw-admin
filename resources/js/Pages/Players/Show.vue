@@ -508,6 +508,8 @@
 
             <template #default>
                 <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" type="date" :min="minDate" v-model="scheduledUnbanDate">
+
+                <p class="italic text-gray-600 dark:text-gray-400 mt-3">{{ t('players.show.schedule_info') }}</p>
             </template>
 
             <template #actions>
