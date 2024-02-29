@@ -48,7 +48,7 @@
                                 {{ t('errors.server_version') }}
                             </label>
                             <select v-model="filters.server_version" class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600">
-                                <option value="">{{ t('errors.no_version_filter') }}</option>
+                                <option :value="null">{{ t('errors.no_version_filter') }}</option>
                                 <option :value="version.server_version" v-for="version in versions">{{ version.server_version }} - {{ version.timestamp * 1000 | formatTime(true) }}</option>
                             </select>
                         </div>
