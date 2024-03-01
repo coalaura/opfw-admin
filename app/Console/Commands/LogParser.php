@@ -94,13 +94,14 @@ class LogParser extends Command
             if ($matched) {
                 $entry = trim($line);
 
-                // Hide IP addresses
-                $entry = preg_replace("/\[([\d.]+?)]/", "[...]", $entry);
+                // Re-format date (white)
+                $entry = str_replace($matches[1], "\e[97m" . date("Y-m-d H:i:s e", strtotime($matches[1])) . "\e[0m", $entry);
 
-                // Re-format date
-                $entry = preg_replace_callback("/^\[([\w:+-]+?)]/m", function ($matches) {
-                    return "[" . date("Y-m-d H:i:s e", strtotime($matches[1])) . "]";
-                }, $entry);
+                // Hide IP addresses (dark gray)
+                $entry = str_replace($matches[2], "\e[90m...\e[39m", $entry);
+
+                // Mute method (dark gray)
+                $entry = str_replace($matches[3], "\e[90m" . $matches[3] . "\e[0m", $entry);
 
                 continue;
             }
@@ -110,7 +111,8 @@ class LogParser extends Command
 
             if ($matched) {
                 if ($entry) {
-                    $user = $matches[1];
+                    // Highlight username (white)
+                    $user = "\e[97m\e[1m" . $matches[1] . "\e[0m";
 
                     $results[] = $entry . " -> " . $user;
                 }
