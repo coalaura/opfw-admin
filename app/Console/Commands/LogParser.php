@@ -2,10 +2,7 @@
 
 namespace App\Console\Commands;
 
-use Dotenv\Dotenv;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class LogParser extends Command
@@ -58,7 +55,11 @@ class LogParser extends Command
             return 1;
         }
 
-        $files = $cluster ? "${cluster}_*.log" : "*.log";
+        if (!Str::endsWith($regex, "$")) {
+            $regex .= "$";
+        }
+
+        $files = $cluster ? $cluster . "_*.log" : "*.log";
 
         chdir(storage_path("logs"));
 
@@ -92,6 +93,8 @@ class LogParser extends Command
 
             if ($matched) {
                 $entry = trim($line);
+
+                $entry = preg_replace("/\[([\d.]+?)]/", "[...]", $entry);
 
                 continue;
             }
