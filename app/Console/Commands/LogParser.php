@@ -58,7 +58,9 @@ class LogParser extends Command
             return 1;
         }
 
-        $files = storage_path("logs") . "/" . ($cluster ? "${cluster}_*.log" : "*.log");
+        $files = $cluster ? "${cluster}_*.log" : "*.log";
+
+        chdir(storage_path("logs"));
 
         $grep = "grep -ish -A 1 \"$regex\" $files";
 
