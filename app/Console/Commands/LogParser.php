@@ -88,7 +88,7 @@ class LogParser extends Command
 
         foreach ($lines as $line) {
             // [2024-02-29T23:56:33+00:00] [45.140.184.93] [GET    ] /players
-            $matched = preg_match("^\[([\w:+-]+?)] \[([\d.]+?)] \[(\w+?)\s*] (.+?)$", $line, $matches);
+            $matched = preg_match("/^\[([\w:+-]+?)] \[([\d.]+?)] \[(\w+?)\s*] (.+?)$/m", $line, $matches);
 
             if ($matched) {
                 $entry = trim($line);
@@ -97,7 +97,7 @@ class LogParser extends Command
             }
 
             // [LogMiddleware.php:33] l4dv94fjx9fiq27pajoixdln3wdleo -> ACCEPTED Laura
-            $matched = preg_match("-> ACCEPTED (.+?)$", $line, $matches);
+            $matched = preg_match("/-> ACCEPTED (.+?)$/m", $line, $matches);
 
             if ($matched) {
                 if ($entry) {
