@@ -33,12 +33,8 @@ if (file_exists($envDir) && CLUSTER !== null) {
     $app->useEnvironmentPath($envDir);
 
     $app->loadEnvironmentFrom('.env');
-} else {
-    if (php_sapi_name() === 'cli') {
-        echo 'Invalid cluster "' . CLUSTER . '", continuing...' . PHP_EOL;
-    } else {
-        die('Invalid cluster "' . CLUSTER . '"');
-    }
+} else if (php_sapi_name() !== 'cli') {
+    die('Invalid cluster "' . CLUSTER . '"');
 }
 
 /*
