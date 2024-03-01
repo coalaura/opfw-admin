@@ -64,7 +64,7 @@ class LogParser extends Command
 
         $grep = "grep -ish -A 1 \"$regex\" $files";
 
-        $this->comment($grep);
+        $this->comment("- $grep");
 
         $entries = $this->processGrep(shell_exec($grep) ?? "");
 
@@ -75,7 +75,7 @@ class LogParser extends Command
         }
 
         foreach ($entries as $entry) {
-            $this->info($entry);
+            $this->line(" $entry");
         }
     }
 
