@@ -94,7 +94,13 @@ class LogParser extends Command
             if ($matched) {
                 $entry = trim($line);
 
+                // Hide IP addresses
                 $entry = preg_replace("/\[([\d.]+?)]/", "[...]", $entry);
+
+                // Re-format date
+                $entry = preg_replace_callback("/^\[([\w:+-]+?)]/m", function ($matches) {
+                    return "[" . date("Y-m-d H:i:s e", strtotime($matches[1])) . "]";
+                }, $entry);
 
                 continue;
             }
