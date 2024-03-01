@@ -44,7 +44,7 @@ class LogParser extends Command
         $cluster = $this->option("cluster");
         $regex   = $this->argument("regex");
 
-        $regex = preg_replace("/[^\w_\-\/$]|\$(?!$)/m", "", $regex);
+        $regex = preg_replace("/[^\w_\-\/:$]|\$(?!$)/m", "", $regex);
 
         if (empty($regex)) {
             $this->error("Invalid regex");
