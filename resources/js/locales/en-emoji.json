@@ -513,7 +513,8 @@
         "debug_user_agent": "🕵️‍♂️💻📋",
         "streamer": "😒❓✅👀💻🎥🕹️",
         "streamer_many": "😒❓✅👀👆🕺💻🎥🕹️!",
-        "streamer_title": "🟢🎥🕹️👥"
+        "streamer_title": "🟢🎥🕹️👥",
+        "minesweeper": "💣🧹✨"
     },
     "pagination": {
         "previous": "⬅️",

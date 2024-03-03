@@ -73,6 +73,11 @@
                             {{ t('staff_chat.title') }}
                         </button>
 
+                        <button @click="openMinesweeper" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500">
+                            <i class="fas fa-bomb mr-1"></i>
+                            {{ t('nav.minesweeper') }}
+                        </button>
+
                         <button @click="showDebugInfo" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" v-if="$page.auth.player.isRoot">
                             <i class="fas fa-wrench mr-1"></i>
                             {{ t('nav.debug_info') }}
@@ -413,6 +418,11 @@ export default {
         },
         showStaffChat() {
             window.open('/chat', 'Staff Chat', 'directories=no,titlebar=no,toolbar=no,menubar=no,location=no,status=no,width=480,height=700');
+
+            this.hideContext();
+        },
+        openMinesweeper() {
+            window.open('https://mine.coalaura.org', 'Minesweeper', 'directories=no,titlebar=no,toolbar=no,menubar=no,location=no,status=no,width=700,height=500');
 
             this.hideContext();
         },

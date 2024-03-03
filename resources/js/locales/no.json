@@ -513,7 +513,8 @@
         "game_time": "Spilletiden går 12 ganger raskere enn virkelig tid.",
         "streamer": "Kjeder du deg? Ta en titt på denne streameren!",
         "streamer_many": "Kjeder du deg? Ta en titt på disse {0} streamerne!",
-        "streamer_title": "Aktive Streamere"
+        "streamer_title": "Aktive Streamere",
+        "minesweeper": "Minerydder"
     },
     "pagination": {
         "previous": "Forrige",

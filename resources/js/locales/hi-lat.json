@@ -513,7 +513,8 @@
         "game_time": "In-Game Samay vastavik samay se bara guna tezi se chalta hai.",
         "streamer": "Ubaasi lage? Is streamer ko dekho!",
         "streamer_many": "Ubaasi lage? In {0} streamers ko dekho!",
-        "streamer_title": "Sakriya Streamers"
+        "streamer_title": "Sakriya Streamers",
+        "minesweeper": "Baroodi Surangon Ka Khel"
     },
     "pagination": {
         "previous": "Pichhla",

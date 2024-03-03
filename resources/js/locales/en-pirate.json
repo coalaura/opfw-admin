@@ -513,7 +513,8 @@
         "debug_user_agent": "User-Agent Matey",
         "streamer": "Marooned on t' island o' dullness? Feast yer eyes on this sea dog who be streamin'!",
         "streamer_many": "Marooned on t' island o' dullness? Lay yer gaze upon these {0} swashbucklers who be streamin'!",
-        "streamer_title": "Live Buccaneers"
+        "streamer_title": "Live Buccaneers",
+        "minesweeper": "Minehunter"
     },
     "pagination": {
         "previous": "Avast!",

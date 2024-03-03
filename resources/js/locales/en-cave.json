@@ -513,7 +513,8 @@
         "debug_user_agent": "Beast-Agent",
         "streamer": "Uh? Look-see moving picture person!",
         "streamer_many": "Uh? Look-see many moving picture persons!",
-        "streamer_title": "Active Streamers not exist in Caveman Speak, closest translation: \"Fire alive picture magic show-ers\""
+        "streamer_title": "Active Streamers not exist in Caveman Speak, closest translation: \"Fire alive picture magic show-ers\"",
+        "minesweeper": "Rock-Boom Find Game"
     },
     "pagination": {
         "previous": "Before",

@@ -488,6 +488,7 @@
         "report": "Report a bug!",
         "update": "Update available",
         "refresh_login": "Refresh Login",
+        "minesweeper": "Minesweeper",
         "debug_info": "Debug Info",
         "debug_info_failed": "Failed to fetch debug info.",
         "debug_collecting": "Collecting info...",
