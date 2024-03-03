@@ -422,7 +422,7 @@ export default {
             this.hideContext();
         },
         openMinesweeper() {
-            window.open('https://mine.coalaura.org', 'Minesweeper', 'directories=no,titlebar=no,toolbar=no,menubar=no,location=no,status=no,width=700,height=500');
+            window.open('https://mine.coalaura.org', 'Minesweeper', 'directories=no,titlebar=no,toolbar=no,menubar=no,location=no,status=no,width=835,height=500');
 
             this.hideContext();
         },
