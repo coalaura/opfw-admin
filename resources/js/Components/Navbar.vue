@@ -417,12 +417,18 @@ export default {
             this.showingPermissions = true;
         },
         showStaffChat() {
-            window.open('/chat', 'Staff Chat', 'directories=no,titlebar=no,toolbar=no,menubar=no,location=no,status=no,width=480,height=700');
+            const left = Math.round((window.innerWidth - 480) / 2),
+                top = Math.round((window.innerHeight - 700) / 2);
+
+            window.open('/chat', 'Staff Chat', `directories=no,titlebar=no,toolbar=no,menubar=no,location=no,status=no,width=480,height=700,left=${left},top=${top}`);
 
             this.hideContext();
         },
         openMinesweeper() {
-            window.open('https://mine.coalaura.org', 'Minesweeper', 'directories=no,titlebar=no,toolbar=no,menubar=no,location=no,status=no,width=835,height=500');
+            const left = Math.round((window.innerWidth - 835) / 2),
+                top = Math.round((window.innerHeight - 500) / 2);
+
+            window.open('https://mine.coalaura.org', 'Minesweeper', `directories=no,titlebar=no,toolbar=no,menubar=no,location=no,status=no,width=835,height=500,left=${left},top=${top}`);
 
             this.hideContext();
         },
