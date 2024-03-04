@@ -7,8 +7,8 @@
         </template>
 
         <template #default>
-            <video v-if="imageURL && (['mp4', 'webm'].includes(imageURL.split('.').pop()))" :src="imageURL" controls class="w-full mb-3"></video>
-            <img :src="imageURL" v-else-if="imageURL" class="w-full mb-3" />
+            <video v-if="mainImageURL && (['mp4', 'webm'].includes(mainImageURL.split('.').pop()))" :src="mainImageURL" controls class="w-full mb-3"></video>
+            <img :src="mainImageURL" v-else-if="mainImageURL" class="w-full mb-3" />
 
             <slot></slot>
 
@@ -28,6 +28,14 @@
                     </div>
                 </template>
             </hashResolver>
+
+            <div class="flex justify-evenly gap-3 mt-4 pt-4 border-t-2 border-dashed border-gray-500" v-if="images.length">
+                <div class="border rounded border-gray-500 p-2 bg-gray-200 dark:bg-gray-600" v-for="image in images">
+                    <h3 class="text-center text-base mb-3 font-mono font-semibold">{{ image.key }}</h3>
+
+                    <img :src="image.value" class="w-40 rounded bg-gray-400 dark:bg-gray-800 p-3" />
+                </div>
+            </div>
         </template>
 
         <template #actions>
@@ -70,23 +78,7 @@ const CustomPreProcessors = {
     "modifications": data => data.split("\n"),
 
     "changes": data => {
-        const changes = {};
-
-        data.split("\n").forEach(line => {
-            const regex = /^(.+?) (.+?) -> (.+?)$/gm,
-                match = regex.exec(line);
-
-            if (match) {
-                const [_, key, oldValue, newValue] = match;
-
-                changes[key] = {
-                    before: JSON.parse(oldValue),
-                    after: JSON.parse(newValue)
-                };
-            }
-        });
-
-        return changes;
+        return data.map(change => change.replace(/(?<=^\w+: \d+ -> )\w+: (?=\d+$)/m, ""));
     }
 };
 
@@ -114,7 +106,9 @@ export default {
     data() {
         return {
             metadataJSON: [],
-            imageURL: null
+            mainImageURL: null,
+
+            images: []
         };
     },
     mounted() {
@@ -122,6 +116,9 @@ export default {
     },
     methods: {
         updateMetadata() {
+            // Reset images
+            this.images = [];
+
             const metadataJSON = [];
 
             if (this.metadata) {
@@ -129,6 +126,18 @@ export default {
 
                 for (const key in metadata) {
                     let value = metadata[key];
+
+                    // Is it an image?
+                    if (typeof value === "string" && value.match(/^https?:\/\/.*\.(png|jpe?g|gif|webp)$/im)) {
+                        this.images.push({
+                            key,
+                            value
+                        });
+
+                        delete metadata[key];
+
+                        continue;
+                    }
 
                     if (key in CustomPreProcessors) {
                         value = CustomPreProcessors[key](value);
@@ -155,7 +164,7 @@ export default {
             }
 
             this.metadataJSON = metadataJSON;
-            this.imageURL = this.image || this.metadata?.screenshotURL;
+            this.mainImageURL = this.image || this.metadata?.screenshotURL;
         },
         cleanupObject(value) {
             if (typeof value === "object") {

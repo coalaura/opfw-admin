@@ -391,13 +391,9 @@ export default {
 
                     return `${metadata.health}/${metadata.maxHealth}hp - ${metadata.armor}/${metadata.maxArmor}ap`;
                 case 'ped_change':
-                    if (!Array.isArray(metadata.new) || !Array.isArray(metadata.old)) return false;
+                    if (!Array.isArray(metadata.changes)) return false;
 
-                    const changed = metadata.new.filter((prop, index) => {
-                        if (prop === metadata.old[index]) return false;
-
-                        return true;
-                    }).length;
+                    const changed = metadata.changes.length;
 
                     const copied = metadata.copiedPlayers && metadata.copiedPlayers.length > 0 ? '- Copied ' + metadata.copiedPlayers.map(p => {
                         const regex = / \[\d+\] \((.+?)\)$/gm,
