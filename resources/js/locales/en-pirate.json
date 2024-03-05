@@ -342,7 +342,9 @@
         "daily_refresh_details": "Sum o' all the paid daily capers refreshes.",
         "type": "Type o' Plunderin'",
         "economy": "Trade Winds o' Fortune",
-        "economy_details": "Coin shiftin' by sort 'n the past seven suns."
+        "economy_details": "Coin shiftin' by sort 'n the past seven suns.",
+        "bus_revenue": "Booty Collected by the Bus Cap'n",
+        "bus_revenue_details": "Total plunder from all doubloons amassed through steerin' the bus."
     },
     "map": {
         "title": "Sailin' Map",

@@ -342,7 +342,9 @@
         "daily_refresh_details": "Combwined amount of aww pwaid daiwy activitwies weffweshes.",
         "type": "Type",
         "economy": "Econyomwy Movwements",
-        "economy_details": "Money mwovements gwouped by type in the wast 7 days."
+        "economy_details": "Money mwovements gwouped by type in the wast 7 days.",
+        "bus_revenue": "Bus Dwivew Wevenue",
+        "bus_revenue_details": "Combwined wevenue fwom aww money eawned thwough the bus dwivew job."
     },
     "map": {
         "title": "Wive-Map UwU",

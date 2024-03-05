@@ -87,6 +87,9 @@ class StatisticsController extends Controller
                 case 'daily_refresh':
                     $result = StatisticsHelper::collectDailyRefreshStatistics();
                     break;
+                case 'bus_revenue':
+                    $result = StatisticsHelper::collectBusDriverStatistics();
+                    break;
 
                 // Non currency statistics
                 case 'robberies':

@@ -342,7 +342,9 @@
         "daily_refresh_details": "Sabhi bhuktan kiye gaye dainik kriyakalapon ke navikaranon ka samyukt yog.",
         "type": "Prakaar",
         "economy": "Arthavyavastha Gatividhiyan",
-        "economy_details": "Pichhle 7 dino mein prakaar ke anusaar samuhik dhan gatividhiyan."
+        "economy_details": "Pichhle 7 dino mein prakaar ke anusaar samuhik dhan gatividhiyan.",
+        "bus_revenue": "Bas Chalak Ke Aamdani",
+        "bus_revenue_details": "Sabhi bas chalak ke kaam se arjit sabhi aamdani ka yog."
     },
     "map": {
         "title": "Live-Naksha",

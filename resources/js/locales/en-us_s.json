@@ -342,7 +342,9 @@
         "daily_refresh_details": "Combined 'mount of all paid daily activities refreshes.",
         "type": "Type",
         "economy": "Economy Movements",
-        "economy_details": "Money movements grouped up by type in the las' 7 days."
+        "economy_details": "Money movements grouped up by type in the las' 7 days.",
+        "bus_revenue": "Bus Driver Income",
+        "bus_revenue_details": "Total income from all the cash made drivin' them buses."
     },
     "map": {
         "title": "Active Map",

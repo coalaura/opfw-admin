@@ -342,7 +342,9 @@
         "daily_refresh_details": "All Rocks From Every Sun Up Again Together",
         "type": "Make Marks",
         "economy": "Trade Things Move",
-        "economy_details": "Shiny Pebble move by make marks in past many suns."
+        "economy_details": "Shiny Pebble move by make marks in past many suns.",
+        "bus_revenue": "Wheel-Box Go Man Bring-Shiny",
+        "bus_revenue_details": "All shine-stones from wheel-box go work."
     },
     "map": {
         "title": "Ooga-Map",

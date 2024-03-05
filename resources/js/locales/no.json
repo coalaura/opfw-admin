@@ -342,7 +342,9 @@
         "daily_refresh_details": "Samlet mengde for alle nullstillinger av betalte daglige aktiviteter.",
         "type": "Type",
         "economy": "Økonomiske bevegelser",
-        "economy_details": "Pengebevegelser gruppert etter type de siste 7 dagene."
+        "economy_details": "Pengebevegelser gruppert etter type de siste 7 dagene.",
+        "bus_revenue": "Bussjåførinntekter",
+        "bus_revenue_details": "Samlet inntekt fra alle penger tjent gjennom bussjåførjobben."
     },
     "map": {
         "title": "Levende-kart",
