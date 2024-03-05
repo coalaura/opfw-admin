@@ -284,12 +284,12 @@ export default {
                         {
                             label: 'errors.client.title',
                             icon: 'spider',
-                            url: '/errors/client',
+                            url: '/errors/client?server_version=newest',
                         },
                         {
                             label: 'errors.server.title',
                             icon: 'virus',
-                            url: '/errors/server'
+                            url: '/errors/server?server_version=newest'
                         }
                     ]
                 },

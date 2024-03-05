@@ -37,7 +37,9 @@ class ErrorController extends Controller
         // Filtering by error_trace.
         $this->searchQuery($request, $query, 'trace', 'error_trace');
 
-        if ($serverVersion = $request->input('server_version') && $newestVersion) {
+        $serverVersion = $request->input('server_version');
+
+        if ($serverVersion && $newestVersion) {
             if ($serverVersion === 'newest') {
                 $serverVersion = $newestVersion['server_version'];
             }
@@ -95,7 +97,9 @@ class ErrorController extends Controller
         // Filtering by error_trace.
         $this->searchQuery($request, $query, 'trace', 'error_trace');
 
-        if ($serverVersion = $request->input('server_version') && $newestVersion) {
+        $serverVersion = $request->input('server_version');
+
+        if ($serverVersion && $newestVersion) {
             if ($serverVersion === 'newest') {
                 $serverVersion = $newestVersion['server_version'];
             }
