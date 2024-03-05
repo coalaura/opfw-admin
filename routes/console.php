@@ -68,6 +68,6 @@ if ('production' === App::environment()) {
     foreach ($disabledProdCommands as $command) {
         Artisan::command($command, function () {
             $this->comment('This command is disabled in production.');
-        })->describe('Override default command in production.');
+        })->describe('Disabled in production.');
     }
 }

@@ -10,6 +10,7 @@
 
 # env
 .env
+!/.env
 
 # IDE specific
 /.idea
