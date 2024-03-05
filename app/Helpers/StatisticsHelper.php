@@ -192,7 +192,7 @@ class StatisticsHelper
     // Bus Driver revenue
     public static function collectBusDriverStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(-amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from money_logs WHERE details = 'bus_driver_mission' GROUP BY date ORDER BY timestamp DESC");
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM(amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from money_logs WHERE details = 'bus_driver_mission' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Generic Economy Statistics
