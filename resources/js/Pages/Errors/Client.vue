@@ -219,16 +219,19 @@ export default {
             isLoading: false,
             isCreatingCycle: false,
             showErrorDetail: false,
-            errorDetail: null,
-
-            parsedErrors: this.errors.map(error => {
+            errorDetail: null
+        };
+    },
+    computed: {
+        parsedErrors() {
+            return this.errors.map(error => {
                 try {
                     error.full_trace = JSON.parse(error.full_trace);
                 } catch (e) { }
 
                 return error;
             })
-        };
+        }
     },
     methods: {
         refresh: async function () {
