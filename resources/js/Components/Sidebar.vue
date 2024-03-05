@@ -284,7 +284,7 @@ export default {
                         {
                             label: 'errors.client.title',
                             icon: 'spider',
-                            url: '/errors/client?server_version=newest',
+                            url: '/errors/client',
                         },
                         {
                             label: 'errors.server.title',
