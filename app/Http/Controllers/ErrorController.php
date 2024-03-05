@@ -64,7 +64,7 @@ class ErrorController extends Controller
             'versions'  => $versions,
             'filters'   => [
                 'trace'          => $request->input('trace'),
-                'server_version' => $serverVersion,
+                'server_version' => $serverVersion ?? null,
             ],
             'links'     => $this->getPageUrls($page),
             'playerMap' => Player::fetchLicensePlayerNameMap($errors, 'license_identifier'),
@@ -124,7 +124,7 @@ class ErrorController extends Controller
             'versions' => $versions,
             'filters'  => [
                 'trace'          => $request->input('trace'),
-                'server_version' => $serverVersion,
+                'server_version' => $serverVersion ?? null,
             ],
             'links'    => $this->getPageUrls($page),
             'time'     => $end - $start,
