@@ -119,10 +119,14 @@ export default {
             // Reset images
             this.images = [];
 
+            const screenshotURL = this.metadata?.screenshotURL;
+
             const metadataJSON = [];
 
             if (this.metadata) {
                 const metadata = this.cleanupObject(this.metadata);
+
+                delete metadata.screenshotURL;
 
                 for (const key in metadata) {
                     let value = metadata[key];
@@ -164,7 +168,7 @@ export default {
             }
 
             this.metadataJSON = metadataJSON;
-            this.mainImageURL = this.image || this.metadata?.screenshotURL;
+            this.mainImageURL = this.image || screenshotURL;
         },
         cleanupObject(value) {
             if (typeof value === "object") {
