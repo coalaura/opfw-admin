@@ -139,7 +139,7 @@ export default {
         this.updateMetadata();
     },
     methods: {
-        copyText(text) {
+        copyMetadata(text) {
             this.copyToClipboard(text);
         },
         updateMetadata() {
