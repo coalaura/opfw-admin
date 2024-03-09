@@ -14,14 +14,14 @@
 
             <hashResolver>
                 <template #default>
-                    <div class="mt-4" v-for="meta in metadataJSON">
-                        <p class="font-semibold mb-1 font-mono cursor-pointer" @click="meta.open = !meta.open">
+                    <div class="mt-4 relative" v-for="meta in metadataJSON">
+                        <i class="fas fa-copy absolute right-1 top-0.5 cursor-pointer text-sm" @click="copyMetadata(meta.raw)"></i>
+
+                        <p class="font-semibold mb-1 font-mono cursor-pointer relative" @click="meta.open = !meta.open">
                             <i class="fas fa-caret-right" v-if="!meta.open"></i>
                             <i class="fas fa-caret-down" v-else></i>
 
                             {{ meta.key }}
-
-                            <i class="fas fa-copy absolute right-1 top-0.5 cursor-pointer" @click="copyMetadata(meta.raw)"></i>
                         </p>
 
                         <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm hljs cursor-pointer" @click="meta.open = true" v-if="!meta.open"><span class="hljs-number">...</span></pre>
