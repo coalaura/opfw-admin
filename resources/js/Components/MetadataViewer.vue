@@ -78,6 +78,28 @@ const CustomPreProcessors = {
     "modifications": data => data.split("\n"),
 
     "changes": data => {
+        // LS Customs logs
+        if (typeof data === "string") {
+            const changes = {};
+
+            data.split("\n").forEach(line => {
+                const regex = /^(.+?) (.+?) -> (.+?)$/gm,
+                    match = regex.exec(line);
+
+                if (match) {
+                    const [_, key, oldValue, newValue] = match;
+
+                    changes[key] = {
+                        before: JSON.parse(oldValue),
+                        after: JSON.parse(newValue)
+                    };
+                }
+            });
+
+            return changes;
+        }
+
+        // Anti-Cheat ped_change
         return data.map(change => change.replace(/(?<=^\w+: \d+ -> )\w+: (?=\d+$)/m, ""));
     }
 };
