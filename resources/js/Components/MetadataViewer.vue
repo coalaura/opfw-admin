@@ -20,6 +20,8 @@
                             <i class="fas fa-caret-down" v-else></i>
 
                             {{ meta.key }}
+
+                            <i class="fas fa-copy absolute right-1 top-0.5 cursor-pointer" @click="copyMetadata(meta.raw)"></i>
                         </p>
 
                         <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm hljs cursor-pointer" @click="meta.open = true" v-if="!meta.open"><span class="hljs-number">...</span></pre>
@@ -137,6 +139,9 @@ export default {
         this.updateMetadata();
     },
     methods: {
+        copyText(text) {
+            this.copyToClipboard(text);
+        },
         updateMetadata() {
             // Reset images
             this.images = [];
@@ -175,6 +180,7 @@ export default {
                         metadataJSON.push({
                             key: `metadata.${label}`,
                             value: this.highlightJSON(value),
+                            raw: JSON.stringify(value),
                             open: false
                         });
 
@@ -185,6 +191,7 @@ export default {
                 metadataJSON.unshift({
                     key: 'metadata',
                     value: this.highlightJSON(metadata),
+                    raw: JSON.stringify(metadata),
                     open: true
                 });
             }
