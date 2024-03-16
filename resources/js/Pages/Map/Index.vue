@@ -828,7 +828,7 @@ export default {
             const generic = "text-gray-800 hover:text-blue-600 transition-colors";
 
             return [
-                !!(pFlags & 64) ? `<i class="fas fa-smile ${generic}" title="spawned"></i>` : false,
+                // !!(pFlags & 64) spawned
                 !!(pFlags & 32) ? `<i class="fas fa-ice-cream ${generic}" title="frozen"></i>` : false,
                 !!(pFlags & 16) ? `<i class="fas fa-fist-raised ${generic}" title="invincible"></i>` : false,
                 !!(pFlags & 8) ? `<i class="fas fa-eye-slash ${generic}" title="invisible"></i>` : false,
@@ -923,10 +923,15 @@ export default {
                         speed ? `<div>Speed: ${speed}</div>` : false,
                     ].filter(Boolean).join("");
 
+                    const flags = [
+                        characterFlags ? `<div class="flex gap-2">${characterFlags}</div>` : false,
+                        userFlags ? `<div class="flex gap-2">${userFlags}</div>` : false
+                    ].filter(Boolean).join("");
+
                     const popup = (characterName ? `<a href="/players/${player.license}/characters/${player.cid}" target="_blank" class="block"><i class="fas fa-street-view" title="Character"></i> ${characterName}</a>` : "")
                         + `<a href="/players/${player.license}" target="_blank" class="block"><i class="fas fa-user-circle" title="Player"></i> ${playerName}</a>`
                         + `<div class="mt-1 pt-1 border-t border-gray-300 flex flex-col gap-1">${infos}</div>`
-                        + `<div class="flex gap-2 mt-1 pt-1 border-t border-gray-300">${characterFlags}</div><div class="flex gap-2 mt-1">${userFlags}</div>`
+                        + (flags ? `<div class="flex flex-col gap-1 mt-1 pt-1 border-t border-gray-300">${flags}</div>` : "");
 
                     marker.bindPopup(popup, {
                         autoPan: false
