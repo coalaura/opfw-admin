@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Ban;
+use App\Character;
 use App\Helpers\GeneralHelper;
 use App\Helpers\PermissionHelper;
 use App\Player;
-use App\Ban;
 use App\Server;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -27,28 +28,28 @@ class MapController extends Controller
             abort(401);
         }
 
-		$servers = [];
+        $servers = [];
 
         $rawServerIps = explode(',', env('OP_FW_SERVERS', ''));
 
         $serverIps = [];
         foreach ($rawServerIps as $index => $rawServerIp) {
-			$name = Server::getServerName($rawServerIp);
+            $name = Server::getServerName($rawServerIp);
 
-			if (!$server) {
-				$server = $name;
-			}
+            if (!$server) {
+                $server = $name;
+            }
 
             $serverIps[] = [
                 'name' => $name,
             ];
 
-			$servers[$name] = $rawServerIp;
+            $servers[$name] = $rawServerIp;
         }
 
-		if (!isset($servers[$server])) {
-			abort(404);
-		}
+        if (!isset($servers[$server])) {
+            abort(404);
+        }
 
         $staff = Player::query()->where(function ($q) {
             $q->orWhere('is_staff', '=', 1)
@@ -64,7 +65,7 @@ class MapController extends Controller
             if (sizeof($xy) == 2 && is_numeric($xy[0]) && is_numeric($xy[1])) {
                 $marker = [
                     floatval($xy[0]),
-                    floatval($xy[1])
+                    floatval($xy[1]),
                 ];
             } else {
                 $marker = null;
@@ -72,58 +73,69 @@ class MapController extends Controller
         }
 
         return Inertia::render('Map/Index', [
-            'servers'  => $serverIps,
-			'activeServer' => $server,
-            'staff'    => $staff ? array_map(function ($player) {
+            'servers'      => $serverIps,
+            'activeServer' => $server,
+            'staff'        => $staff ? array_map(function ($player) {
                 return $player['license_identifier'];
             }, $staff) : [],
-            'staffMap' => $staff,
-            'blips'    => GeneralHelper::parseMapFile(__DIR__ . '/../../../helpers/markers.map') ?? [],
-            'token'    => sessionKey(),
-            'cluster'  => CLUSTER,
-            'myself'   => license(),
-            'marker'   => $marker
+            'staffMap'     => $staff,
+            'blips'        => GeneralHelper::parseMapFile(__DIR__ . '/../../../helpers/markers.map') ?? [],
+            'token'        => sessionKey(),
+            'cluster'      => CLUSTER,
+            'myself'       => license(),
+            'marker'       => $marker,
         ]);
     }
 
-	public function playerNames(Request $request): \Illuminate\Http\Response
-	{
-		$licenses = $request->input('licenses') ?? [];
+    public function playerNames(Request $request): \Illuminate\Http\Response
+    {
+        $licenses = $request->input('licenses') ?? [];
 
-		if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LIVEMAP)) {
-			return self::json(false, null, 'You can not use the livemap functionality');
-		}
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LIVEMAP)) {
+            return self::json(false, null, 'You can not use the livemap functionality');
+        }
 
-		if (!is_array($licenses) || empty($licenses)) {
-			return self::json(false, null, 'Invalid licenses');
-		}
+        if (!is_array($licenses) || empty($licenses)) {
+            return self::json(false, null, 'Invalid licenses');
+        }
 
-		$data = Player::query()->select(['player_name', 'license_identifier'])->whereIn('license_identifier', $licenses)->get()->toArray();
+        $licenses = array_unique($licenses);
 
-		$map = [];
+        $data = Player::query()->select(['player_name', 'license_identifier'])->whereIn('license_identifier', $licenses)->get()->toArray();
+        $characters = Character::query()->select(['character_id', 'first_name', 'last_name'])->whereIn('license_identifier', $licenses)->get()->toArray();
 
-		foreach($data as $player) {
-			$map[$player['license_identifier']] = $player['player_name'];
-		}
+        $map = [];
+        $characterMap = [];
 
-		return self::json(true, $map);
-	}
+        foreach ($data as $player) {
+            $map[$player['license_identifier']] = $player['player_name'];
+        }
 
-	public function noclipBans(Request $request): \Illuminate\Http\Response
-	{
-		if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LIVEMAP)) {
-			return self::json(false, null, 'You can not use the livemap functionality');
-		}
+        foreach ($characters as $character) {
+            $characterMap[$character['character_id']] = $character['first_name'] . ' ' . $character['last_name'];
+        }
 
-		$data = Ban::query()
-			->select(["identifier", "timestamp"])
-			->where("identifier", "LIKE", "license:%")
-			->whereIn("reason", ["MODDING-ILLEGAL_FREEZE"])
-			->where("timestamp", ">", strtotime("-10 days"))
-			->orderByDesc("timestamp")
-			->get()->toArray();
+        return self::json(true, [
+            'players'    => $map,
+            'characters' => $characterMap,
+        ]);
+    }
 
-		return self::json(true, $data);
-	}
+    public function noclipBans(Request $request): \Illuminate\Http\Response
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LIVEMAP)) {
+            return self::json(false, null, 'You can not use the livemap functionality');
+        }
+
+        $data = Ban::query()
+            ->select(["identifier", "timestamp"])
+            ->where("identifier", "LIKE", "license:%")
+            ->whereIn("reason", ["MODDING-ILLEGAL_FREEZE"])
+            ->where("timestamp", ">", strtotime("-10 days"))
+            ->orderByDesc("timestamp")
+            ->get()->toArray();
+
+        return self::json(true, $data);
+    }
 
 }

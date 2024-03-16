@@ -834,7 +834,7 @@ export default {
                 this.loadingScreenStatus = this.t('map.timestamp_load_names');
 
                 const licenses = players.map(player => player.license),
-                    playerNames = (await this.loadPlayerNames(licenses)) || {};
+                    playerInfos = (await this.loadPlayerNames(licenses)) || {};
 
                 this.loadingScreenStatus = this.t('map.timestamp_render');
 
@@ -881,11 +881,15 @@ export default {
                         }
                     );
 
-                    const playerName = playerNames[player.license]?.trim() || player.license.substr(0, 8);
+                    const playerName = playerInfos.players[player.license]?.trim() || player.license.substring(8),
+                        characterName = playerInfos.characters[player.cid]?.trim() || false,
+                        speed = "s" in player ? Math.floor(player.s * 2.236936) + "mph" : false;
 
-                    const speed = "s" in player ? Math.floor(player.s * 2.236936) + "mph" : false;
+                    const popup = (characterName ? `<a href="/players/${player.license}/characters/${player.cid}" target="_blank"><i class="fas fa-street-view" title="Character"></i> ${characterName}</a><br>` : "")
+                        + `<a href="/players/${player.license}" target="_blank"><i class="fas fa-user-circle" title="Player"></i> ${playerName}</a>`
+                        + (speed ? `<br>Speed: ${speed}` : "");
 
-                    marker.bindPopup('<a href="/players/' + player.license + '" target="_blank"><i class="fas fa-user-circle"></i> ' + playerName + '</a>' + (speed ? '<br><li>' + speed + '</li>' : ''), {
+                    marker.bindPopup(popup, {
                         autoPan: false
                     });
 
@@ -910,6 +914,7 @@ export default {
 
                         players.push({
                             license: "license:" + license.replace(".csv", ""),
+                            cid: coords._,
                             x: coords.x,
                             y: coords.y,
                             i: coords.i
