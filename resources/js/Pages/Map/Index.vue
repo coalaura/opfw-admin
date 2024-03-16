@@ -172,7 +172,7 @@
                         </button>
 
                         <div class="absolute z-1k inset-0 text-lg font-semibold backdrop-blur backdrop-filter justify-center items-center flex" v-if="loadingScreenStatus">
-                            <i class="fas fa-spinner animate-spin mr-1"></i> {{ loadingScreenStatus }}
+                            <i class="fas fa-spinner animate-spin mr-3"></i> {{ loadingScreenStatus }}
                         </div>
                     </div>
 
@@ -626,9 +626,8 @@ export default {
             }
         },
         async renderHistory(license, from, till) {
-            if (this.loadingScreenStatus) {
-                return;
-            }
+            if (this.loadingScreenStatus) return;
+
             this.loadingScreenStatus = this.t('map.historic_fetch');
 
             const server = this.activeServer,
