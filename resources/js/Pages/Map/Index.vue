@@ -289,6 +289,7 @@ import Player from './Player';
 import Vector3 from "./Vector3";
 import Bounds from './map.config';
 import DataCompressor from "./DataCompressor";
+import { mapNumber } from './helper';
 
 (function (global) {
     let MarkerMixin = {
