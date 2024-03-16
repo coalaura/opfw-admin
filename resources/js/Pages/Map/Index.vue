@@ -825,14 +825,16 @@ export default {
         formatCharacterFlags(pFlags) {
             pFlags = pFlags ? pFlags : 0;
 
+            const generic = "text-gray-700 hover:text-gray-900 transition-colors";
+
             return [
-                !!(pFlags & 64) ? `<i class="fas fa-smile" title="spawned"></i>` : false,
-                !!(pFlags & 32) ? `<i class="fas fa-ice-cream" title="frozen"></i>` : false,
-                !!(pFlags & 16) ? `<i class="fas fa-fist-raised" title="invincible"></i>` : false,
-                !!(pFlags & 8) ? `<i class="fas fa-eye-slash" title="invisible"></i>` : false,
-                !!(pFlags & 4) ? `<i class="fas fa-egg" title="in_shell"></i>` : false,
-                !!(pFlags & 2) ? `<i class="fas fa-truck-loading" title="in_trunk"></i>` : false,
-                !!(pFlags & 1) ? `<i class="fas fa-skull-crossbones" title="dead"></i>` : false,
+                !!(pFlags & 64) ? `<i class="fas fa-smile ${generic}" title="spawned"></i>` : false,
+                !!(pFlags & 32) ? `<i class="fas fa-ice-cream ${generic}" title="frozen"></i>` : false,
+                !!(pFlags & 16) ? `<i class="fas fa-fist-raised ${generic}" title="invincible"></i>` : false,
+                !!(pFlags & 8) ? `<i class="fas fa-eye-slash ${generic}" title="invisible"></i>` : false,
+                !!(pFlags & 4) ? `<i class="fas fa-egg ${generic}" title="in_shell"></i>` : false,
+                !!(pFlags & 2) ? `<i class="fas fa-truck-loading ${generic}" title="in_trunk"></i>` : false,
+                !!(pFlags & 1) ? `<i class="fas fa-skull-crossbones ${generic}" title="dead"></i>` : false,
             ].filter(Boolean).join("");
         },
         async renderTimestamp(timestamp) {
@@ -904,7 +906,7 @@ export default {
                     const popup = (characterName ? `<a href="/players/${player.license}/characters/${player.cid}" target="_blank" class="block"><i class="fas fa-street-view" title="Character"></i> ${characterName}</a>` : "")
                         + `<a href="/players/${player.license}" target="_blank" class="block"><i class="fas fa-user-circle" title="Player"></i> ${playerName}</a>`
                         + (speed ? `<div class="mt-1 pt-1 border-t border-gray-300">Speed: ${speed}</div>` : "")
-                        + (characterFlags ? `<div class="flex gap-1 justify-between mt-1 pt-1 border-t border-gray-300">Flags: ${characterFlags}</div>` : "");
+                        + (characterFlags ? `<div class="flex gap-2 justify-between mt-1 pt-1 border-t border-gray-300">${characterFlags}</div>` : "");
 
                     marker.bindPopup(popup, {
                         autoPan: false
