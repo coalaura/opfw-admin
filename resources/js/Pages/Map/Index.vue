@@ -906,7 +906,7 @@ export default {
                     const popup = (characterName ? `<a href="/players/${player.license}/characters/${player.cid}" target="_blank" class="block"><i class="fas fa-street-view" title="Character"></i> ${characterName}</a>` : "")
                         + `<a href="/players/${player.license}" target="_blank" class="block"><i class="fas fa-user-circle" title="Player"></i> ${playerName}</a>`
                         + (speed ? `<div class="mt-1 pt-1 border-t border-gray-300">Speed: ${speed}</div>` : "")
-                        + (characterFlags ? `<div class="flex gap-2 justify-between mt-1 pt-1 border-t border-gray-300">${characterFlags}</div>` : "");
+                        + (characterFlags ? `<div class="flex gap-2 mt-1 pt-1 border-t border-gray-300">${characterFlags}</div>` : "");
 
                     marker.bindPopup(popup, {
                         autoPan: false
