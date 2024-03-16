@@ -825,7 +825,7 @@ export default {
         formatCharacterFlags(pFlags) {
             pFlags = pFlags ? pFlags : 0;
 
-            const generic = "text-gray-700 hover:text-gray-900 transition-colors";
+            const generic = "text-gray-600 hover:text-lime-600 transition-colors";
 
             return [
                 !!(pFlags & 64) ? `<i class="fas fa-smile ${generic}" title="spawned"></i>` : false,
