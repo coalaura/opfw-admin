@@ -924,9 +924,9 @@ export default {
                         userFlags = this.formatUserFlags(player.userFlags);
 
                     const infos = [
-                        `<div>Heading: ${heading}&deg;</div>`,
-                        altitude ? `<div>Altitude: ${altitude}m</div>` : false,
-                        speed ? `<div>Speed: ${speed}</div>` : false,
+                        `<div>Heading: <i>${heading}&deg;</i></div>`,
+                        altitude ? `<div>Altitude: <i>${altitude}m</i></div>` : false,
+                        speed ? `<div>Speed: <i>${speed}</i></div>` : false,
                     ].filter(Boolean).join("");
 
                     const flags = [
@@ -936,7 +936,7 @@ export default {
 
                     const popup = (characterName ? `<a href="/players/${player.license}/characters/${player.cid}" target="_blank" class="block"><i class="fas fa-street-view" title="Character"></i> ${characterName}</a>` : "")
                         + `<a href="/players/${player.license}" target="_blank" class="block"><i class="fas fa-user-circle" title="Player"></i> ${playerName}</a>`
-                        + `<div class="mt-1 pt-1 border-t border-gray-300 flex flex-col gap-1">${infos}</div>`
+                        + `<div class="mt-1 pt-1 border-t border-gray-300 flex flex-col">${infos}</div>`
                         + (flags ? `<div class="flex flex-col gap-1 mt-1 pt-1 border-t border-gray-300">${flags}</div>` : "");
 
                     marker.bindPopup(popup, {
