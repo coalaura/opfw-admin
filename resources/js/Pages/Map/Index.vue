@@ -170,6 +170,8 @@
                         <button class="absolute z-1k leaflet-tl ml-29 text-white bg-rose-700 hover:bg-rose-800 px-2 font-base" v-if="trackServerId" @click="track('')">
                             <i class="fas fa-trash"></i>
                         </button>
+
+                        <div class="absolute z-1k inset-0 bg-black bg-opacity-10 backdrop-blur backdrop-filter text-center items-center flex" v-if="loadingScreenStatus">{{ loadingScreenStatus }}</div>
                     </div>
 
                     <!-- Map Legend -->
