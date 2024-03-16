@@ -898,13 +898,13 @@ export default {
 
                     const playerName = playerInfos.players[player.license]?.trim() || player.license.substring(8),
                         characterName = playerInfos.characters[player.cid]?.trim() || false,
-                        speed = player.speed && player.speed > 0 ? Math.floor(player.speed * 2.236936) + "mph" : false,
+                        speed = player.speed && player.speed > 0.45 ? Math.floor(player.speed * 2.236936) + "mph" : false,
                         characterFlags = this.formatCharacterFlags(player.characterFlags);
 
                     const popup = (characterName ? `<a href="/players/${player.license}/characters/${player.cid}" target="_blank" class="block"><i class="fas fa-street-view" title="Character"></i> ${characterName}</a>` : "")
                         + `<a href="/players/${player.license}" target="_blank" class="block"><i class="fas fa-user-circle" title="Player"></i> ${playerName}</a>`
-                        + (speed ? `<div class="mt-1 pt-1 border-t border-gray-500">Speed: ${speed}</div>` : "")
-                        + (characterFlags ? `<div class="flex gap-1 justify-between mt-1 pt-1 border-t border-gray-500">Flags: ${characterFlags}</div>` : "");
+                        + (speed ? `<div class="mt-1 pt-1 border-t border-gray-300">Speed: ${speed}</div>` : "")
+                        + (characterFlags ? `<div class="flex gap-1 justify-between mt-1 pt-1 border-t border-gray-300">Flags: ${characterFlags}</div>` : "");
 
                     marker.bindPopup(popup, {
                         autoPan: false
