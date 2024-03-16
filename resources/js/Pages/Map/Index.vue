@@ -833,8 +833,21 @@ export default {
                 !!(pFlags & 16) ? `<i class="fas fa-fist-raised ${generic}" title="invincible"></i>` : false,
                 !!(pFlags & 8) ? `<i class="fas fa-eye-slash ${generic}" title="invisible"></i>` : false,
                 !!(pFlags & 4) ? `<i class="fas fa-egg ${generic}" title="in_shell"></i>` : false,
-                !!(pFlags & 2) ? `<i class="fas fa-truck-loading ${generic}" title="in_trunk"></i>` : false,
+                !!(pFlags & 2) ? `<i class="fas fa-truck-loading ${generic}" title="in trunk"></i>` : false,
                 !!(pFlags & 1) ? `<i class="fas fa-skull-crossbones ${generic}" title="dead"></i>` : false,
+            ].filter(Boolean).join("");
+        },
+        formatUserFlags(pFlags) {
+            pFlags = pFlags ? pFlags : 0;
+
+            const generic = "text-gray-800 hover:text-blue-600 transition-colors";
+
+            return [
+                !!(pFlags & 16) ? `<i class="fas fa-newspaper ${generic}" title="in queue"></i>` : false,
+                !!(pFlags & 8) ? `<i class="fas fa-camera-retro ${generic}" title="modified camera coords"></i>` : false,
+                !!(pFlags & 4) ? `<i class="fas fa-gamepad ${generic}" title="in minigame"></i>` : false,
+                // !!(pFlags & 2) fakeDisconnected
+                // !!(pFlags & 1) identityOverride
             ].filter(Boolean).join("");
         },
         async renderTimestamp(timestamp) {
@@ -901,12 +914,13 @@ export default {
                     const playerName = playerInfos.players[player.license]?.trim() || player.license.substring(8),
                         characterName = playerInfos.characters[player.cid]?.trim() || false,
                         speed = player.speed && player.speed > 0.45 ? Math.floor(player.speed * 2.236936) + "mph" : false,
-                        characterFlags = this.formatCharacterFlags(player.characterFlags);
+                        characterFlags = this.formatCharacterFlags(player.characterFlags),
+                        userFlags = this.formatUserFlags(player.userFlags);
 
                     const popup = (characterName ? `<a href="/players/${player.license}/characters/${player.cid}" target="_blank" class="block"><i class="fas fa-street-view" title="Character"></i> ${characterName}</a>` : "")
                         + `<a href="/players/${player.license}" target="_blank" class="block"><i class="fas fa-user-circle" title="Player"></i> ${playerName}</a>`
                         + (speed ? `<div class="mt-1 pt-1 border-t border-gray-300">Speed: ${speed}</div>` : "")
-                        + (characterFlags ? `<div class="flex gap-2 mt-1 pt-1 border-t border-gray-300">${characterFlags}</div>` : "");
+                        + `<div class="flex gap-2 mt-1 pt-1 border-t border-gray-300">${characterFlags}</div><div class="flex gap-2 mt-1">${userFlags}</div>`
 
                     marker.bindPopup(popup, {
                         autoPan: false
@@ -939,7 +953,8 @@ export default {
                             y: coords.y,
                             i: coords.i,
 
-                            characterFlags: coords.cf
+                            characterFlags: coords.cf,
+                            userFlags: coords.uf
                         });
                     }
 
