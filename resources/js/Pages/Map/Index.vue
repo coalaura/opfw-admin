@@ -914,12 +914,18 @@ export default {
                     const playerName = playerInfos.players[player.license]?.trim() || player.license.substring(8),
                         characterName = playerInfos.characters[player.cid]?.trim() || false,
                         speed = player.speed && player.speed > 0.45 ? Math.floor(player.speed * 2.236936) + "mph" : false,
+                        heading = Math.round(player.heading),
                         characterFlags = this.formatCharacterFlags(player.characterFlags),
                         userFlags = this.formatUserFlags(player.userFlags);
 
+                    const infos = [
+                        `<div>Heading: ${heading}</div>`,
+                        speed ? `<div>Speed: ${speed}</div>` : false,
+                    ].filter(Boolean).join("");
+
                     const popup = (characterName ? `<a href="/players/${player.license}/characters/${player.cid}" target="_blank" class="block"><i class="fas fa-street-view" title="Character"></i> ${characterName}</a>` : "")
                         + `<a href="/players/${player.license}" target="_blank" class="block"><i class="fas fa-user-circle" title="Player"></i> ${playerName}</a>`
-                        + (speed ? `<div class="mt-1 pt-1 border-t border-gray-300">Speed: ${speed}</div>` : "")
+                        + `<div class="mt-1 pt-1 border-t border-gray-300 flex flex-col gap-1">${infos}</div>`
                         + `<div class="flex gap-2 mt-1 pt-1 border-t border-gray-300">${characterFlags}</div><div class="flex gap-2 mt-1">${userFlags}</div>`
 
                     marker.bindPopup(popup, {
@@ -948,10 +954,11 @@ export default {
                         players.push({
                             license: "license:" + license.replace(".csv", ""),
                             cid: coords._,
+                            heading: coords.h,
                             speed: coords.s,
                             x: coords.x,
                             y: coords.y,
-                            i: coords.i,
+                            z: coords.z,
 
                             characterFlags: coords.cf,
                             userFlags: coords.uf
