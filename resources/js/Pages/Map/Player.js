@@ -1,6 +1,6 @@
 import Vector3 from './Vector3';
-import {shouldIgnoreInvisible, mapNumber, replaceLast} from './helper';
-import {Character, Vehicle} from './Objects';
+import { shouldIgnoreInvisible, mapNumber } from './helper';
+import { Character, Vehicle } from './Objects';
 import L from "leaflet";
 import Bounds from "./map.config";
 
@@ -200,7 +200,7 @@ class Player {
     }
 
     static newMarker() {
-        let marker = L.marker({lat: 0, lng: 0}, {});
+        let marker = L.marker({ lat: 0, lng: 0 }, {});
 
         marker.bindPopup('', {
             autoPan: false

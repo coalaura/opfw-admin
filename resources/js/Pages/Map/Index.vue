@@ -895,11 +895,10 @@ export default {
                 cluster.addTo(this.map);
 
                 for (let x = 0; x < players.length; x++) {
-                    const player = players[x];
+                    const player = players[x],
+                        location = Vector3.fromGameCoords(player.x, player.y, 0.0);
 
-                    const location = Vector3.fromGameCoords(player.x, player.y, 0.0);
-
-                    let marker = L.marker(location.toMap(),
+                    const marker = L.marker(location.toMap(),
                         {
                             icon: new L.Icon(
                                 {
@@ -911,10 +910,14 @@ export default {
                         }
                     );
 
+                    const markerHeading = mapNumber(-player.heading, -180, 180, 0, 360) - 180;
+
+                    marker.setRotationAngle(markerHeading);
+
                     const playerName = playerInfos.players[player.license]?.trim() || player.license.substring(8),
                         characterName = playerInfos.characters[player.cid]?.trim() || false,
                         speed = player.speed && player.speed > 0.45 ? Math.floor(player.speed * 2.236936) + "mph" : false,
-                        heading = Math.round(-player.heading + 180.0),
+                        heading = Math.round(player.heading < 0 ? player.heading + 360 : player.heading),
                         characterFlags = this.formatCharacterFlags(player.characterFlags),
                         userFlags = this.formatUserFlags(player.userFlags);
 
