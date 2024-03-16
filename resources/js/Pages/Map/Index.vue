@@ -171,7 +171,7 @@
                             <i class="fas fa-trash"></i>
                         </button>
 
-                        <div class="absolute z-1k inset-0 bg-black bg-opacity-10 backdrop-blur backdrop-filter text-center items-center flex" v-if="loadingScreenStatus">{{ loadingScreenStatus }}</div>
+                        <div class="absolute z-1k inset-0 text-lg font-semibold backdrop-blur backdrop-filter text-center items-center flex" v-if="loadingScreenStatus">{{ loadingScreenStatus }}</div>
                     </div>
 
                     <!-- Map Legend -->
