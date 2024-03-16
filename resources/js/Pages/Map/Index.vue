@@ -924,6 +924,7 @@ export default {
 
                     const infos = [
                         `<div>Heading: ${heading}&deg;</div>`,
+                        `<div>Altitude: ${location.z.toFixed(1)}m</div>`,
                         speed ? `<div>Speed: ${speed}</div>` : false,
                     ].filter(Boolean).join("");
 
