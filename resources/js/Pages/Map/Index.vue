@@ -914,12 +914,12 @@ export default {
                     const playerName = playerInfos.players[player.license]?.trim() || player.license.substring(8),
                         characterName = playerInfos.characters[player.cid]?.trim() || false,
                         speed = player.speed && player.speed > 0.45 ? Math.floor(player.speed * 2.236936) + "mph" : false,
-                        heading = Math.round(player.heading),
+                        heading = Math.round(-player.heading + 180.0),
                         characterFlags = this.formatCharacterFlags(player.characterFlags),
                         userFlags = this.formatUserFlags(player.userFlags);
 
                     const infos = [
-                        `<div>Heading: ${heading}</div>`,
+                        `<div>Heading: ${heading}&deg;</div>`,
                         speed ? `<div>Speed: ${speed}</div>` : false,
                     ].filter(Boolean).join("");
 
