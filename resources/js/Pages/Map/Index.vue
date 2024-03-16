@@ -822,12 +822,24 @@ export default {
 
             return null;
         },
+        formatCharacterFlags(pFlags) {
+            pFlags = pFlags ? pFlags : 0;
+
+            return [
+                !!(pFlags & 64) ? `<i class="fas fa-smile" title="spawned"></i>` : false,
+                !!(pFlags & 32) ? `<i class="fas fa-ice-cream" title="frozen"></i>` : false,
+                !!(pFlags & 16) ? `<i class="fas fa-fist-raised" title="invincible"></i>` : false,
+                !!(pFlags & 8) ? `<i class="fas fa-eye-slash" title="invisible"></i>` : false,
+                !!(pFlags & 4) ? `<i class="fas fa-egg" title="in_shell"></i>` : false,
+                !!(pFlags & 2) ? `<i class="fas fa-truck-loading" title="in_trunk"></i>` : false,
+                !!(pFlags & 1) ? `<i class="fas fa-skull-crossbones" title="dead"></i>` : false,
+            ].filter(Boolean).join("");
+        },
         async renderTimestamp(timestamp) {
             this.historyRange.view = false;
 
-            if (this.loadingScreenStatus) {
-                return;
-            }
+            if (this.loadingScreenStatus) return;
+
             this.loadingScreenStatus = this.t('map.timestamp_fetch');
 
             const server = this.activeServer,
@@ -886,11 +898,13 @@ export default {
 
                     const playerName = playerInfos.players[player.license]?.trim() || player.license.substring(8),
                         characterName = playerInfos.characters[player.cid]?.trim() || false,
-                        speed = "s" in player ? Math.floor(player.s * 2.236936) + "mph" : false;
+                        speed = player.speed && player.speed > 0 ? Math.floor(player.speed * 2.236936) + "mph" : false,
+                        characterFlags = this.formatCharacterFlags(player.characterFlags);
 
-                    const popup = (characterName ? `<a href="/players/${player.license}/characters/${player.cid}" target="_blank"><i class="fas fa-street-view" title="Character"></i> ${characterName}</a><br>` : "")
-                        + `<a href="/players/${player.license}" target="_blank"><i class="fas fa-user-circle" title="Player"></i> ${playerName}</a>`
-                        + (speed ? `<br>Speed: ${speed}` : "");
+                    const popup = (characterName ? `<a href="/players/${player.license}/characters/${player.cid}" target="_blank" class="block"><i class="fas fa-street-view" title="Character"></i> ${characterName}</a>` : "")
+                        + `<a href="/players/${player.license}" target="_blank" class="block"><i class="fas fa-user-circle" title="Player"></i> ${playerName}</a>`
+                        + (speed ? `<div class="mt-1 pt-1 border-t border-gray-500">Speed: ${speed}</div>` : "")
+                        + (characterFlags ? `<div class="flex gap-1 justify-between mt-1 pt-1 border-t border-gray-500">Flags: ${characterFlags}</div>` : "");
 
                     marker.bindPopup(popup, {
                         autoPan: false
@@ -918,9 +932,12 @@ export default {
                         players.push({
                             license: "license:" + license.replace(".csv", ""),
                             cid: coords._,
+                            speed: coords.s,
                             x: coords.x,
                             y: coords.y,
-                            i: coords.i
+                            i: coords.i,
+
+                            characterFlags: coords.cf
                         });
                     }
 
