@@ -71,7 +71,6 @@ class Cronjobs extends Command
             ->where('scheduled_unban', '<=', $time)
             ->select(["user_id", "ban_hash"])
             ->leftJoin("users", "license_identifier", "=", "identifier")
-            ->whereNotNull("user_id")
             ->whereNotNull("ban_hash")
             ->get();
 
@@ -80,12 +79,14 @@ class Cronjobs extends Command
         foreach ($bans as $ban) {
             $id = $ban->user_id;
 
-            Warning::query()->create([
-                'player_id'      => $id,
-                'warning_type'   => 'system',
-                'can_be_deleted' => 0,
-                'message'        => 'I removed this players ban. (Scheduled unban)',
-            ]);
+            if (!empty($id)) {
+                Warning::query()->create([
+                    'player_id'      => $id,
+                    'warning_type'   => 'system',
+                    'can_be_deleted' => 0,
+                    'message'        => 'I removed this players ban. (Scheduled unban)',
+                ]);
+            }
 
             $toBeDeleted[] = $ban->ban_hash;
         }
