@@ -319,6 +319,21 @@ class PlayerBanController extends Controller
             'scheduled_unban' => $time
         ]);
 
+        // Sometimes there are bans where just a few identifiers are banned not actually the license.
+        $isMainLicenseBanned = Ban::query()->where('ban_hash', '=', $ban->ban_hash)->where('identifier', '=', $player->license_identifier)->exists();
+
+        if (!$isMainLicenseBanned) {
+            $newBan = $ban->toArray();
+
+            unset($newBan['id']);
+
+            $newBan['identifier'] = $player->license_identifier;
+            $newBan['scheduled_unban'] = $time;
+
+            // Add the main license to the ban list, "fixing" the ban.
+            $player->bans()->create($newBan);
+        }
+
         $user = user();
 
         // Automatically log the ban update as a warning.
