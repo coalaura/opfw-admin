@@ -964,7 +964,9 @@
             "source_helpful": "\"Hewpfuw\" Staff actions",
             "source_helpful_details": "Amount of \"hewpfuw\" actions pewfowmed by this staff membew in the wast 30 days. This means using commands that awe genewawwy mowe used to hewp OTHUW pwayews: /tp_pwayew, /tp_hewe, /tp_to, /spectate, /staffpm, /wipe, /fweeze, /unfweeze, /job, /west_job, /wevive and /wevive_wange (othews onwy) with commands mowe commonwy used to twoll othew staff wike /swap and /damage excwuded.",
             "stretch_res": "Pwayew is pwaying a {0} aspect watio on a {1} wesowution. (Stwetched-Wesowution)",
-            "schedule_info": "Aw da sewected date, de ban wiww automaticawwy be wemoved at 12 AM UTC."
+            "schedule_info": "Aw da sewected date, de ban wiww automaticawwy be wemoved at 12 AM UTC.",
+            "remove_ban_exception": "Wemove pwayews twitch ban exception?",
+            "remove_ban_exception_confirm": "Awe you suwe you want to wemove dis pwayews twitch ban exception? Dis cannot be undone fwom the panew."
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

@@ -58,8 +58,6 @@ class PanelLog extends Model
 
     /**
      * Returns all related identifiers
-     *
-     * @return array
      */
     public function identifiers(): array
     {
@@ -76,11 +74,6 @@ class PanelLog extends Model
 
     /**
      * Logs a character edit from the panel
-     *
-     * @param string $fromIdentifier
-     * @param string $toIdentifier
-     * @param string $character
-     * @param array $changedFields
      */
     public static function logCharacterEdit(string $fromIdentifier, string $toIdentifier, string $character, array $changedFields)
     {
@@ -97,11 +90,6 @@ class PanelLog extends Model
 
     /**
      * Logs a character balance edit from the panel
-     *
-     * @param string $fromIdentifier
-     * @param string $toIdentifier
-     * @param string $character
-     * @param array $changedBalance
      */
     public static function logCharacterBalanceEdit(string $fromIdentifier, string $toIdentifier, string $character, array $changedBalance)
     {
@@ -118,11 +106,6 @@ class PanelLog extends Model
 
     /**
      * Logs tattoo removals from the panel
-     *
-     * @param string $fromIdentifier
-     * @param string $toIdentifier
-     * @param string $character
-     * @param string $zone
      */
     public static function logTattooRemoval(string $fromIdentifier, string $toIdentifier, string $character, string $zone)
     {
@@ -135,11 +118,6 @@ class PanelLog extends Model
 
     /**
      * Logs spawn resets from the panel
-     *
-     * @param string $fromIdentifier
-     * @param string $toIdentifier
-     * @param string $character
-     * @param string $spawn
      */
     public static function logSpawnReset(string $fromIdentifier, string $toIdentifier, string $character, string $spawn)
     {
@@ -152,10 +130,6 @@ class PanelLog extends Model
 
     /**
      * Logs a staffPM sent from the panel
-     *
-     * @param string $fromIdentifier
-     * @param string $toIdentifier
-     * @param string $message
      */
     public static function logStaffPM(string $fromIdentifier, string $toIdentifier, string $message)
     {
@@ -168,10 +142,6 @@ class PanelLog extends Model
 
     /**
      * Logs a kick from the panel
-     *
-     * @param string $fromIdentifier
-     * @param string $toIdentifier
-     * @param string $reason
      */
     public static function logKick(string $fromIdentifier, string $toIdentifier, string $reason)
     {
@@ -184,9 +154,6 @@ class PanelLog extends Model
 
     /**
      * Logs a revive from the panel
-     *
-     * @param string $fromIdentifier
-     * @param string $toIdentifier
      */
     public static function logRevive(string $fromIdentifier, string $toIdentifier)
     {
@@ -199,11 +166,6 @@ class PanelLog extends Model
 
     /**
      * Logs a license add from the panel
-     *
-     * @param string $fromIdentifier
-     * @param string $toIdentifier
-     * @param string $character
-     * @param string $license
      */
     public static function logLicenseUpdate(string $fromIdentifier, string $toIdentifier, string $character)
     {
@@ -216,9 +178,6 @@ class PanelLog extends Model
 
     /**
      * Logs a system ban removal from the panel
-     *
-     * @param string $fromIdentifier
-     * @param string $toIdentifier
      */
     public static function logSystemBanRemove(string $fromIdentifier, string $toIdentifier)
     {
@@ -231,11 +190,6 @@ class PanelLog extends Model
 
     /**
      * Logs a character unload from the panel
-     *
-     * @param string $fromIdentifier
-     * @param string $toIdentifier
-     * @param string $character
-     * @param string $reason
      */
     public static function logUnload(string $fromIdentifier, string $toIdentifier, string $character, string $reason)
     {
@@ -250,11 +204,6 @@ class PanelLog extends Model
 
     /**
      * Logs unlinking 2 players
-     *
-     * @param string $fromIdentifier
-     * @param string $toIdentifier
-     * @param string $character
-     * @param string $reason
      */
     public static function logUnlink(string $type, string $staffLicense, string $player1License, string $player2License)
     {
@@ -269,10 +218,24 @@ class PanelLog extends Model
     }
 
     /**
+     * Logs updating a player's ban exception
+     */
+    public static function logBanExceptionUpdate(string $type, string $staffLicense, string $playerLicense, ?string $twitch)
+    {
+        $staff = self::resolvePlayerLogName($staffLicense);
+        $player = self::resolvePlayerLogName($playerLicense);
+
+        if ($twitch) {
+            $log = $staff . ' removed the twitch ban exception from ' . $player;
+        } else {
+            $log = $staff . ' set the twitch ban exception of ' . $player . ' to ' . $twitch;
+        }
+
+        self::createLog($staffLicense, $playerLicense, $log, 'Updated Ban Exception', false);
+    }
+
+    /**
      * Returns "Laura (license:2ced2cabd90f1208e7e056485d4704c7e1284196)"
-     *
-     * @param string $identifier
-     * @return string
      */
     private static function resolvePlayerLogName(string $identifier): string
     {
@@ -284,10 +247,6 @@ class PanelLog extends Model
 
     /**
      * Returns "Laura (license:2ced2cabd90f1208e7e056485d4704c7e1284196)'s character (#739)"
-     *
-     * @param string $identifier
-     * @param string $character
-     * @return string
      */
     private static function resolvePlayerCharacterLogName(string $identifier, string $character): string
     {
@@ -296,12 +255,6 @@ class PanelLog extends Model
 
     /**
      * Creates a log entry
-     *
-     * @param string $source
-     * @param string $target
-     * @param string $log
-     * @param string $action
-     * @param bool $ignoreRoot
      */
     private static function createLog(string $source, string $target, string $log, string $action, bool $ignoreRoot = false)
     {

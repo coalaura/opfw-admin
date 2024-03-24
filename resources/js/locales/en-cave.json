@@ -964,7 +964,9 @@
             "source_helpful": "\"Helpful\" Tribe do things",
             "source_helpful_details": "Many \"helpful\" do by tribe member in last 30 suns. Do use things that help OTHER tribe: /tp_player, /tp_here, /tp_to, /spectate, /staffpm, /wipe, /freeze, /unfreeze, /job, /reset_job, /revive and /revive_range (others only), no include tricks on tribe like /slap and /damage.",
             "stretch_res": "Player play {0} shape lots side on {1} many dots. (Big-Stretchy-Resolution)",
-            "schedule_info": "On chosen sun time, no more stop thing at first night moon time UTC."
+            "schedule_info": "On chosen sun time, no more stop thing at first night moon time UTC.",
+            "remove_ban_exception": "Take out player twitch no-ban oops?",
+            "remove_ban_exception_confirm": "You sure want take out player twitch no-ban oops? No go back in magic screen box."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

@@ -964,7 +964,9 @@
             "source_helpful": "\"Helpful\" Staff actions",
             "source_helpful_details": "Number of \"helpful\" deeds this here team member done did in the past month or so. We're talkin' 'bout usin' them commands that's mostly for lendin' a hand to OTHER players like: /tp_player, /tp_here, /tp_to, /spectate, /staffpm, /wipe, /freeze, /unfreeze, /job, /reset_job, /revive and /revive_range (just them for the others), not includin' the ones more often than not used for messin' 'round with other staff, like /slap and /damage, y'hear?",
             "stretch_res": "Player's playin' a {0} aspect ratio on a {1} resolution. (Stretched-Resolution)",
-            "schedule_info": "On the date y'all picked out, the ban's gonna be lifted clean off at 12 AM UTC, automatically."
+            "schedule_info": "On the date y'all picked out, the ban's gonna be lifted clean off at 12 AM UTC, automatically.",
+            "remove_ban_exception": "Remove players twitch ban exception?",
+            "remove_ban_exception_confirm": "Y'all sure ya wanna remove this player's twitch ban exception? This cain't be undone from the panel."
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

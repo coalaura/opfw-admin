@@ -974,7 +974,9 @@
             "source_helpful": "\"Sahayak\" Staff karyavaahiyaan",
             "source_helpful_details": "Is staff sadasya dwara pichhle 30 dino me ki gayi \"sahayak\" kriyaon ki matra. Iska matlab hai aise command ka upyog jo aam taur par dusre khiladiyon ki madad ke liye jyada istemal kiye jaate hain: /tp_player, /tp_here, /tp_to, /spectate, /staffpm, /wipe, /freeze, /unfreeze, /job, /reset_job, /revive aur /revive_range (keval dusron ke liye) ko shamil karte hue aur dusre staff ko pareshan karne wale commands jaise /slap aur /damage ko chhod kar.",
             "stretch_res": "Player ek {0} aspect ratio {1} resolution par chala raha hai. (Stretched-Resolution)",
-            "schedule_info": "Chune gaye din par, pratibandh swatah hi raat ke 12 AM UTC par hat jayega."
+            "schedule_info": "Chune gaye din par, pratibandh swatah hi raat ke 12 AM UTC par hat jayega.",
+            "remove_ban_exception": "Players ka twitch ban exception hataaye?",
+            "remove_ban_exception_confirm": "Kya aap sure hain ki aap is player ka twitch ban exception hataana chahte hain? Panel se isey undo nahi kiya ja sakta."
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",

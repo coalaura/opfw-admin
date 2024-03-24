@@ -79,6 +79,7 @@ class Player extends Model
         'average_fps',
         'panel_settings',
         'staff_points',
+        'user_data',
     ];
 
     /**

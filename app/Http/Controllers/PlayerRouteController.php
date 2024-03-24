@@ -280,20 +280,50 @@ class PlayerRouteController extends Controller
     }
 
     /**
-     * Sets the soft ban status
+     * Sets the ban exception status
      *
      * @param Player $player
-     * @param int $status
      * @param Request $request
      * @return RedirectResponse
      */
-    public function updateSoftBanStatus(Player $player, int $status, Request $request): RedirectResponse
+    public function updateBanExceptionStatus(Player $player, Request $request): RedirectResponse
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_BAN_EXCEPTION)) {
+            return backWith('error', 'You dont have permissions to do this.');
+        }
+
+        $twitch = $request->input('twitch');
+        $twitch = is_string($twitch) ? preg_replace('/[^a-zA-Z0-9_]/', '', $twitch) : false;
+
+        $data = $player->user_data ?? [];
+
+        if (empty($twitch)) {
+            unset($data['twitchBanException']);
+        } else {
+            $data['twitchBanException'] = $twitch;
+        }
+
+        $player->update([
+            'user_data' => $data,
+        ]);
+
+        return backWith('success', 'Ban exception status has been updated successfully.');
+    }
+
+    /**
+     * Sets the soft ban status
+     *
+     * @param Player $player
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function updateSoftBanStatus(Player $player, Request $request): RedirectResponse
     {
         if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_SOFT_BAN)) {
             return backWith('error', 'You dont have permissions to do this.');
         }
 
-        $status = $status ? 1 : 0;
+        $status = $request->input('status') ? 1 : 0;
 
         $player->update([
             'is_soft_banned' => $status,

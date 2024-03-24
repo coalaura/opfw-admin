@@ -974,7 +974,9 @@
             "source_helpful": "\"Hjelpsomme\" ansattehandlinger",
             "source_helpful_details": "Antall \"hjelpsomme\" handlinger utført av dette stabmedlemmet de siste 30 dagene. Dette refererer til bruk av kommandoer som generelt brukes mer for å hjelpe ANDRE spillere: /tp_spiller, /tp_hit, /tp_til, /observere, /stabpm, /tømme, /fryse, /tine, /jobb, /tilbakestill_jobb, /gjenopplive og /gjenopplive_område (kun andre), med kommandoer som oftere brukes for å trolle andre stabmedlemmer som /slå og /skade ekskludert.",
             "stretch_res": "Spilleren spiller med et {0} sideforhold på en {1} oppløsning. (Strukket oppløsning)",
-            "schedule_info": "På den valgte datoen vil forbudet automatisk bli fjernet kl. 12 AM UTC."
+            "schedule_info": "På den valgte datoen vil forbudet automatisk bli fjernet kl. 12 AM UTC.",
+            "remove_ban_exception": "Fjern spillers unntak fra Twitch-utestengelse?",
+            "remove_ban_exception_confirm": "Er du sikker på at du vil fjerne dette spillers unntak fra Twitch-utestengelsen? Dette kan ikke angres fra panelet."
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",

@@ -991,6 +991,8 @@
             "soft_ban_confirm": "Are you sure you want to change this users soft ban status?",
             "remove_soft_ban": "Remove this players soft ban",
             "add_soft_ban": "Soft Ban",
+            "remove_ban_exception": "Remove players twitch ban exception?",
+            "remove_ban_exception_confirm": "Are you sure you want to remove this players twitch ban exception? This cannot be undone from the panel.",
             "aliases": "Aliases",
             "original_name": "Original Name",
             "more_info": "More Info",

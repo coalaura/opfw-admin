@@ -180,6 +180,10 @@
                 <a class="px-4 py-2 font-semibold border-2 rounded bg-yellow-100 dark:bg-yellow-700 border-yellow-200 flex items-center gap-1" :href="'https://twitch.tv/' + player.streamerException" target="_blank" v-if="player.streamerException" :title="t('players.show.streamer_exception_title', player.streamerException)">
                     <i class="fab fa-twitch mr-1"></i>
                     {{ t('players.show.streamer_exception') }}
+
+                    <a href="#" @click="removeBanException($event)" class="ml-1 text-white" :title="t('players.show.remove_ban_exception')" v-if="this.perm.check(this.perm.PERM_BAN_EXCEPTION)">
+                        <i class="fas fa-times"></i>
+                    </a>
                 </a>
 
                 <!-- Blacklisted -->
@@ -2455,13 +2459,25 @@ export default {
             this.isStaffPM = false;
             this.form.pm.message = null;
         },
+        async removeBanException() {
+            if (!confirm(this.t('players.show.remove_ban_exception_confirm'))) {
+                return;
+            }
+
+            // Send request.
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateBanExceptionStatus', {
+                twitch: false
+            });
+        },
         async removeSoftBan() {
             if (!confirm(this.t('players.show.soft_ban_confirm'))) {
                 return;
             }
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateSoftBanStatus/0');
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateSoftBanStatus', {
+                status: true
+            });
         },
         async addSoftBan() {
             if (!confirm(this.t('players.show.soft_ban_confirm'))) {
@@ -2469,7 +2485,9 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateSoftBanStatus/1');
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateSoftBanStatus', {
+                status: false
+            });
         },
         async removeTag() {
             this.isTagging = false;
