@@ -90,6 +90,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::resource('players.bans', PlayerBanController::class);
     Route::resource('players.warnings', PlayerWarningController::class);
 
+    // Player information.
     Route::get('/players/{player}/statistics/{source}', [PlayerController::class, 'statistics']);
     Route::get('/players/{player}/data', [PlayerController::class, 'extraData']);
     Route::get('/players/{player}/linked', [PlayerRouteController::class, 'linkedAccounts']);
@@ -98,16 +99,14 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/players/{player}/antiCheat', [PlayerRouteController::class, 'antiCheat']);
     Route::get('/players/{player}/ban', [PlayerRouteController::class, 'ban']);
 
+    // Player actions.
     Route::post('/players/{player}/kick', [PlayerRouteController::class, 'kick']);
     Route::post('/players/{player}/staffPM', [PlayerRouteController::class, 'staffPM']);
     Route::post('/players/{player}/unloadCharacter', [PlayerRouteController::class, 'unloadCharacter']);
     Route::post('/players/{player}/revivePlayer', [PlayerRouteController::class, 'revivePlayer']);
     Route::post('/players/{player}/attachScreenshot', [PlayerRouteController::class, 'attachScreenshot']);
-    Route::post('/players/{player}/bans/{ban}/lock', [PlayerBanController::class, 'lockBan']);
-    Route::post('/players/{player}/bans/{ban}/unlock', [PlayerBanController::class, 'unlockBan']);
-    Route::post('/players/{player}/bans/{ban}/schedule', [PlayerBanController::class, 'schedule']);
-    Route::post('/players/{player}/bans/{ban}/unschedule', [PlayerBanController::class, 'unschedule']);
 
+    // Update player data.
     Route::post('/players/{player}/updateEnabledCommands', [PlayerDataController::class, 'updateEnabledCommands']);
     Route::post('/players/{player}/updateSoftBanStatus', [PlayerDataController::class, 'updateSoftBanStatus']);
     Route::post('/players/{player}/updateBanExceptionStatus', [PlayerDataController::class, 'updateBanExceptionStatus']);
@@ -115,29 +114,36 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::post('/players/{player}/updateTag', [PlayerDataController::class, 'updateTag']);
     Route::post('/players/{player}/updateRole', [PlayerDataController::class, 'updateRole']);
 
+    // Ban actions.
+    Route::get('/smurf/{hash}', [PlayerBanController::class, 'smurfBan']);
     Route::post('/players/{player}/unlink/{player2}', [PlayerBanController::class, 'unlinkIdentifiers']);
     Route::post('/players/{player}/unlink_hwid/{player2}', [PlayerBanController::class, 'unlinkHWID']);
+    Route::post('/players/{player}/bans/{ban}/lock', [PlayerBanController::class, 'lockBan']);
+    Route::post('/players/{player}/bans/{ban}/unlock', [PlayerBanController::class, 'unlockBan']);
+    Route::post('/players/{player}/bans/{ban}/schedule', [PlayerBanController::class, 'schedule']);
+    Route::post('/players/{player}/bans/{ban}/unschedule', [PlayerBanController::class, 'unschedule']);
 
-    Route::get('/smurf/{hash}', [PlayerBanController::class, 'smurfBan']);
-
+    // Unrelated player things.
     Route::get('/new_players', [PlayerController::class, 'newPlayers']);
     Route::get('/backstories', [PlayerCharacterController::class, 'backstories']);
     Route::get('/api/backstories', [PlayerCharacterController::class, 'backstoriesApi']);
 
+    // Bans.
     Route::get('/bans', [PlayerBanController::class, 'index']);
     Route::get('/my_bans', [PlayerBanController::class, 'indexMine']);
     Route::get('/system_bans', [PlayerBanController::class, 'indexSystem']);
 
+    // Ban API.
     Route::get('/findUserBanHash/{hash}', [PlayerBanController::class, 'findUserBanHash']);
     Route::get('/ban_info/{hash}', [PlayerBanController::class, 'banInfo']);
 
-    // Epic linked account finders
+    // Linked accounts.
     Route::get('/linked_ips/{license}', [PlayerBanController::class, 'linkedIPs']);
     Route::get('/linked_tokens/{license}', [PlayerBanController::class, 'linkedTokens']);
     Route::get('/linked_identifiers/{license}', [PlayerBanController::class, 'linkedIdentifiers']);
     Route::get('/linked_print/{license}', [PlayerBanController::class, 'linkedPrint']);
 
-    // Epic damage logs
+    // Damage logs.
     Route::get('/damage', [LogController::class, 'damageLogs']);
     Route::get('/who_damaged/{license}', [PlayerRouteController::class, 'whoDamaged']);
     Route::get('/who_was_damaged/{license}', [PlayerRouteController::class, 'whoWasDamagedBy']);
@@ -167,7 +173,6 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
         Route::get('/blacklist', [BlacklistController::class, 'index']);
         Route::post('/blacklist', [BlacklistController::class, 'store']);
         Route::delete('/blacklist/{identifier}', [BlacklistController::class, 'destroy']);
-
         Route::post('/blacklist/import', [BlacklistController::class, 'import']);
 
         // Loading screen pictures
@@ -257,6 +262,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/queue/{server}', [QueueController::class, 'render']);
     Route::get('/api/queue/{server}', [QueueController::class, 'api']);
 
+    // Test.
     Route::get('/test/logs/{action}', [TestController::class, 'logs']);
     Route::get('/test/smart_watch', [TestController::class, 'smartWatchLeaderboard']);
     Route::get('/test/bans', [TestController::class, 'banLeaderboard']);
@@ -266,17 +272,19 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/test/staff_activity', [TestController::class, 'staffActivity']);
     Route::get('/test/staff_activity_2', [TestController::class, 'staffActivity2']);
 
+    // Graphs.
     Route::get('/graph/bans', [GraphController::class, 'systemBans']);
     Route::get('/graph/bans/{type}', [GraphController::class, 'systemBansType']);
     Route::get('/graph/crashes', [GraphController::class, 'crashes']);
     Route::get('/graph/crashes/{type}', [GraphController::class, 'crashTypes']);
     Route::get('/graph/gems', [GraphController::class, 'minedGems']);
 
-    Route::get('/test/test', [TestController::class, 'test']);
-
     // API.
     Route::get('/api/crafting', [ApiController::class, 'crafting']);
     Route::get('/api/debug', [ApiController::class, 'debug']);
+
+    // Generic playground route.
+    Route::get('/test/test', [TestController::class, 'test']);
 });
 
 Route::group(['middleware' => ['staff', 'session'], 'prefix' => 'api'], function () {
