@@ -280,6 +280,41 @@ class PlayerRouteController extends Controller
     }
 
     /**
+     * Sets the whitelist status
+     *
+     * @param Player $player
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function updateWhitelistStatus(Player $player, Request $request): RedirectResponse
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_WHITELIST)) {
+            return backWith('error', 'You dont have permissions to do this.');
+        }
+
+        $whitelisted = DB::table('user_whitelist')
+            ->select(['license_identifier'])
+            ->where('license_identifier', '=', $player->license_identifier)
+            ->exists();
+
+        $status = $request->input('status');
+
+        if ($status) {
+            if (!$whitelisted) {
+                DB::table('user_whitelist')->insert([
+                    'license_identifier' => $player->license_identifier,
+                ]);
+            }
+        } else {
+            if ($whitelisted) {
+                DB::table('user_whitelist')->where('license_identifier', '=', $player->license_identifier)->delete();
+            }
+        }
+
+        return backWith('success', 'Whitelist status has been updated successfully.');
+    }
+
+    /**
      * Sets the ban exception status
      *
      * @param Player $player

@@ -44,6 +44,7 @@ const Permissions = {
             PERM_ANTI_CHEAT: 'anti_cheat',
             PERM_DARK_CHAT: 'dark_chat',
             PERM_BAN_EXCEPTION: 'ban_exception',
+            PERM_WHITELIST: 'whitelist',
 
             level(permission) {
                 if (!(permission in permissions)) {

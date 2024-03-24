@@ -966,7 +966,11 @@
             "stretch_res": "Player's playin' a {0} aspect ratio on a {1} resolution. (Stretched-Resolution)",
             "schedule_info": "On the date y'all picked out, the ban's gonna be lifted clean off at 12 AM UTC, automatically.",
             "remove_ban_exception": "Remove players twitch ban exception?",
-            "remove_ban_exception_confirm": "Y'all sure ya wanna remove this player's twitch ban exception? This cain't be undone from the panel."
+            "remove_ban_exception_confirm": "Y'all sure ya wanna remove this player's twitch ban exception? This cain't be undone from the panel.",
+            "whitelist_confirm": "Y'all certain ya wanna add this player to the whitelist?",
+            "unwhitelist_confirm": "Y'all sure ya wanna take this player off the whitelist?",
+            "whitelist": "Add this player to the whitelist?",
+            "unwhitelist": "Take this player off the whitelist?"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

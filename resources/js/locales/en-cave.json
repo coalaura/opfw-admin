@@ -966,7 +966,11 @@
             "stretch_res": "Player play {0} shape lots side on {1} many dots. (Big-Stretchy-Resolution)",
             "schedule_info": "On chosen sun time, no more stop thing at first night moon time UTC.",
             "remove_ban_exception": "Take out player twitch no-ban oops?",
-            "remove_ban_exception_confirm": "You sure want take out player twitch no-ban oops? No go back in magic screen box."
+            "remove_ban_exception_confirm": "You sure want take out player twitch no-ban oops? No go back in magic screen box.",
+            "whitelist_confirm": "Grunk sure you want make player safe in tribe?",
+            "unwhitelist_confirm": "Grunk sure you want make player not safe in tribe anymore?",
+            "whitelist": "Make player safe in tribe?",
+            "unwhitelist": "Make player not safe in tribe anymore?"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

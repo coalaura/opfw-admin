@@ -174,6 +174,10 @@
                 <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale px-4 py-2" v-if="whitelisted">
                     <i class="fas fa-clipboard-check mr-1"></i>
                     <span class="font-semibold">{{ t('global.whitelisted') }}</span>
+
+                    <a href="#" @click="updateWhitelistStatus(false)" class="ml-1 text-white" :title="t('players.show.unwhitelist')" v-if="this.perm.check(this.perm.PERM_WHITELIST)">
+                        <i class="fas fa-times"></i>
+                    </a>
                 </badge>
 
                 <!-- Streamer Ban exception -->
@@ -181,7 +185,7 @@
                     <i class="fab fa-twitch mr-1"></i>
                     {{ t('players.show.streamer_exception') }}
 
-                    <a href="#" @click="removeBanException($event)" class="ml-1 text-white" :title="t('players.show.remove_ban_exception')" v-if="this.perm.check(this.perm.PERM_BAN_EXCEPTION)">
+                    <a href="#" @click="removeBanException()" class="ml-1 text-white" :title="t('players.show.remove_ban_exception')" v-if="this.perm.check(this.perm.PERM_BAN_EXCEPTION)">
                         <i class="fas fa-times"></i>
                     </a>
                 </a>
@@ -198,7 +202,7 @@
 
                     <span class="font-semibold">{{ t('global.soft_banned') }}</span>
 
-                    <a href="#" @click="removeSoftBan($event)" class="ml-1 text-white" :title="t('players.show.remove_soft_ban')">
+                    <a href="#" @click="removeSoftBan()" class="ml-1 text-white" :title="t('players.show.remove_soft_ban')">
                         <i class="fas fa-times"></i>
                     </a>
                 </badge>
@@ -316,6 +320,12 @@
                 <button class="p-1 text-sm font-bold leading-4 text-center rounded border-green-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" @click="isTagging = true" :title="t('players.show.edit_tag')" v-if="this.perm.check(this.perm.PERM_EDIT_TAG)">
                     <i class="fas fa-tag mr-1"></i>
                     Tag
+                </button>
+
+                <!-- Add to Whitelist -->
+                <button class="p-1 text-sm font-bold leading-4 text-center rounded border-green-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" @click="updateWhitelistStatus(true)" :title="t('players.show.whitelist')" v-if="!whitelisted && this.perm.check(this.perm.PERM_WHITELIST)">
+                    <i class="fas fa-vote-yea mr-1"></i>
+                    WL
                 </button>
 
                 <div class="w-px bg-white bg-opacity-30 h-full separator">&nbsp;</div>
@@ -2467,6 +2477,16 @@ export default {
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateBanExceptionStatus', {
                 twitch: false
+            });
+        },
+        async updateWhitelistStatus(status) {
+            if (!confirm(this.t('players.show.' + (status ? 'whitelist_confirm' : 'unwhitelist_confirm')))) {
+                return;
+            }
+
+            // Send request.
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateWhitelistStatus', {
+                status: status
             });
         },
         async removeSoftBan() {

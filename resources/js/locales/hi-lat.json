@@ -976,7 +976,11 @@
             "stretch_res": "Player ek {0} aspect ratio {1} resolution par chala raha hai. (Stretched-Resolution)",
             "schedule_info": "Chune gaye din par, pratibandh swatah hi raat ke 12 AM UTC par hat jayega.",
             "remove_ban_exception": "Players ka twitch ban exception hataaye?",
-            "remove_ban_exception_confirm": "Kya aap sure hain ki aap is player ka twitch ban exception hataana chahte hain? Panel se isey undo nahi kiya ja sakta."
+            "remove_ban_exception_confirm": "Kya aap sure hain ki aap is player ka twitch ban exception hataana chahte hain? Panel se isey undo nahi kiya ja sakta.",
+            "whitelist_confirm": "Kya aap vaakai mein is khiladi ko whitelist mein shaamil karna chahte hain?",
+            "unwhitelist_confirm": "Kya aap vaakai mein is khiladi ko whitelist se hatana chahte hain?",
+            "whitelist": "Is khiladi ko whitelist mein shaamil karen?",
+            "unwhitelist": "Is khiladi ko whitelist se hataen?"
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",

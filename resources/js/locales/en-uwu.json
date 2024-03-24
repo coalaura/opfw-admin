@@ -966,7 +966,11 @@
             "stretch_res": "Pwayew is pwaying a {0} aspect watio on a {1} wesowution. (Stwetched-Wesowution)",
             "schedule_info": "Aw da sewected date, de ban wiww automaticawwy be wemoved at 12 AM UTC.",
             "remove_ban_exception": "Wemove pwayews twitch ban exception?",
-            "remove_ban_exception_confirm": "Awe you suwe you want to wemove dis pwayews twitch ban exception? Dis cannot be undone fwom the panew."
+            "remove_ban_exception_confirm": "Awe you suwe you want to wemove dis pwayews twitch ban exception? Dis cannot be undone fwom the panew.",
+            "whitelist_confirm": "Awwe you suwe you want to whitewist dis pwayew?",
+            "unwhitelist_confirm": "Awwe you suwe you want to un-whitewist dis pwayew?",
+            "whitelist": "Whitewist dis pwayew?",
+            "unwhitelist": "Un-Whitewist dis pwayew?"
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

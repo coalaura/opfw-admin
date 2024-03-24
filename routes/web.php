@@ -103,15 +103,16 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::post('/players/{player}/revivePlayer', [PlayerRouteController::class, 'revivePlayer']);
     Route::delete('/players/{player}/removeIdentifier/{identifier}', [PlayerRouteController::class, 'removeIdentifier']);
     Route::post('/players/{player}/attachScreenshot', [PlayerRouteController::class, 'attachScreenshot']);
-    Route::post('/players/{player}/updateSoftBanStatus', [PlayerRouteController::class, 'updateSoftBanStatus']);
-    Route::post('/players/{player}/updateBanExceptionStatus', [PlayerRouteController::class, 'updateBanExceptionStatus']);
-    Route::post('/players/{player}/updateTag', [PlayerRouteController::class, 'updateTag']);
-    Route::post('/players/{player}/updateRole', [PlayerRouteController::class, 'updateRole']);
     Route::post('/players/{player}/updateEnabledCommands', [PlayerRouteController::class, 'updateEnabledCommands']);
     Route::post('/players/{player}/bans/{ban}/lock', [PlayerBanController::class, 'lockBan']);
     Route::post('/players/{player}/bans/{ban}/unlock', [PlayerBanController::class, 'unlockBan']);
     Route::post('/players/{player}/bans/{ban}/schedule', [PlayerBanController::class, 'schedule']);
     Route::post('/players/{player}/bans/{ban}/unschedule', [PlayerBanController::class, 'unschedule']);
+    Route::post('/players/{player}/updateSoftBanStatus', [PlayerRouteController::class, 'updateSoftBanStatus']);
+    Route::post('/players/{player}/updateBanExceptionStatus', [PlayerRouteController::class, 'updateBanExceptionStatus']);
+    Route::post('/players/{player}/updateWhitelistStatus', [PlayerRouteController::class, 'updateWhitelistStatus']);
+    Route::post('/players/{player}/updateTag', [PlayerRouteController::class, 'updateTag']);
+    Route::post('/players/{player}/updateRole', [PlayerRouteController::class, 'updateRole']);
 
     Route::post('/players/{player}/unlink/{player2}', [PlayerBanController::class, 'unlinkIdentifiers']);
     Route::post('/players/{player}/unlink_hwid/{player2}', [PlayerBanController::class, 'unlinkHWID']);
