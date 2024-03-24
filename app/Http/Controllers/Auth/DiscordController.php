@@ -6,6 +6,7 @@ use App\Player;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
+use App\Helpers\LoggingHelper;
 
 /**
  * A controller to authenticate with discord.
@@ -72,9 +73,13 @@ class DiscordController extends Controller
 
         if ($player) {
             if (!$player->isStaff()) {
+                LoggingHelper::log(printf('Player %s found for discord id %s, but is not staff', $player->license_identifier, $id));
+
                 return redirectWith('/login', 'error', "Player with last-used discord-id $id: \"" . $player->getSafePlayerName() . "\" is not a staff member.");
             }
         } else {
+            LoggingHelper::log(printf('No player found for discord id %s', $id));
+
             return redirectWith('/login', 'error', "No player with last-used discord-id $id not found. Connect to the FiveM server with your discord linked first.");
         }
 
@@ -108,6 +113,7 @@ class DiscordController extends Controller
                 return $data['access_token'];
             }
         } catch (\Throwable $e) {
+            LoggingHelper::log(printf('Failed to resolve discord access token: %s', $e->getMessage()));
         }
 
         return null;
@@ -131,6 +137,7 @@ class DiscordController extends Controller
                 return $data['user'];
             }
         } catch (\Throwable $e) {
+            LoggingHelper::log(printf('Failed to resolve discord user: %s', $e->getMessage()));
         }
 
         return null;
