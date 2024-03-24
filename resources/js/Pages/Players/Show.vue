@@ -229,6 +229,11 @@
                     <i class="fas fa-edit"></i>
                     {{ t('players.show.edit_ban') }}
                 </inertia-link>
+                <!-- Unmute -->
+                <button class="px-4 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="unmutePlayer()" v-if="player.mute">
+                    <i class="fas fa-microphone-alt"></i>
+                    {{ t('players.show.unmute') }}
+                </button>
                 <!-- Unbanning -->
                 <button class="px-4 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="unbanPlayer()" v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
                     <i class="fas fa-lock-open"></i>
@@ -816,7 +821,7 @@
         </div>
 
         <!-- Mute -->
-        <alert class="bg-rose-500 dark:bg-rose-500" v-if="player.mute">
+        <alert class="bg-rose-500 dark:bg-rose-500 relative" v-if="player.mute">
             <div class="flex items-center justify-between mb-2">
                 <h2 class="text-lg font-semibold" v-if="player.mute.expires">
                     {{ t('players.show.muted', formatTime(player.mute.expires * 1000)) }}
@@ -2487,6 +2492,16 @@ export default {
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateWhitelistStatus', {
                 status: status
+            });
+        },
+        async unmutePlayer() {
+            if (!confirm(this.t('players.show.unmute_confirm'))) {
+                return;
+            }
+
+            // Send request.
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateMuteStatus', {
+                status: false
             });
         },
         async removeSoftBan() {

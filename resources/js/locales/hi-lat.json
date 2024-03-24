@@ -980,7 +980,9 @@
             "whitelist_confirm": "Kya aap vaakai mein is khiladi ko whitelist mein shaamil karna chahte hain?",
             "unwhitelist_confirm": "Kya aap vaakai mein is khiladi ko whitelist se hatana chahte hain?",
             "whitelist": "Is khiladi ko whitelist mein shaamil karen?",
-            "unwhitelist": "Is khiladi ko whitelist se hataen?"
+            "unwhitelist": "Is khiladi ko whitelist se hataen?",
+            "unmute": "Unmute kariye",
+            "unmute_confirm": "Kya aap sach mein is khiladi ko unmute karna chahte hain?"
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",

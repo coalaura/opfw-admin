@@ -970,7 +970,9 @@
             "whitelist_confirm": "❓✅📝👤🎮?",
             "unwhitelist_confirm": "❓✅⛔📝👤🎮?",
             "whitelist": "📝👤🎮?",
-            "unwhitelist": "⛔📝👤🎮?"
+            "unwhitelist": "⛔📝👤🎮?",
+            "unmute": "🔊",
+            "unmute_confirm": "❓ 🤔 💭 🔄 🔊 🎮?"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

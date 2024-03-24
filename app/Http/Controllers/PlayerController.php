@@ -7,7 +7,7 @@ use App\BlacklistedIdentifier;
 use App\Character;
 use App\Helpers\GeneralHelper;
 use App\Helpers\StatisticsHelper;
-use App\Http\Controllers\PlayerRouteController;
+use App\Http\Controllers\PlayerDataController;
 use App\Http\Resources\CharacterResource;
 use App\Http\Resources\PanelLogResource;
 use App\Http\Resources\PlayerIndexResource;
@@ -75,7 +75,7 @@ class PlayerController extends Controller
 
         // Filtering by enabled command
         $enablable = $request->input('enablable');
-        if (in_array($enablable, PlayerRouteController::EnablableCommands)) {
+        if (in_array($enablable, PlayerDataController::EnablableCommands)) {
             $query->where(DB::raw('JSON_CONTAINS(enabled_commands, \'"' . $enablable . '"\')'), '=', '1');
         }
 
@@ -117,7 +117,7 @@ class PlayerController extends Controller
             'links'     => $this->getPageUrls($page),
             'page'      => $page,
             'time'      => $end - $start,
-            'enablable' => PlayerRouteController::EnablableCommands,
+            'enablable' => PlayerDataController::EnablableCommands,
         ]);
     }
 
@@ -229,7 +229,7 @@ class PlayerController extends Controller
             'blacklisted'       => !!$blacklisted,
             'tags'              => Player::resolveTags(),
             'allowRoleEdit'     => env('ALLOW_ROLE_EDITING', false) && $this->isSuperAdmin($request),
-            'enablableCommands' => PlayerRouteController::EnablableCommands,
+            'enablableCommands' => PlayerDataController::EnablableCommands,
         ]);
     }
 

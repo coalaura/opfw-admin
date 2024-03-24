@@ -970,7 +970,9 @@
             "whitelist_confirm": "Y'all certain ya wanna add this player to the whitelist?",
             "unwhitelist_confirm": "Y'all sure ya wanna take this player off the whitelist?",
             "whitelist": "Add this player to the whitelist?",
-            "unwhitelist": "Take this player off the whitelist?"
+            "unwhitelist": "Take this player off the whitelist?",
+            "unmute": "Unmute",
+            "unmute_confirm": "Y'all sure y'wanna unmute this player?"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

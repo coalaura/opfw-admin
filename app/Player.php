@@ -467,6 +467,21 @@ class Player extends Model
         ];
     }
 
+    public function setUserData(string $key, $value)
+    {
+        $data = $this->user_data ?? [];
+
+        if ($value && !empty($value)) {
+            $data[$key] = $value;
+        } else {
+            unset($data[$key]);
+        }
+
+        $this->update([
+            'user_data' => $data,
+        ]);
+    }
+
     public function resolveRouteBinding($value, $field = null)
     {
         // Steam Identifier

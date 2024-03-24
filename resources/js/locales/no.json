@@ -980,7 +980,9 @@
             "whitelist_confirm": "Er du sikker på at du vil sette denne spilleren på hvitelisten?",
             "unwhitelist_confirm": "Er du sikker på at du vil fjerne denne spilleren fra hvitelisten?",
             "whitelist": "Sett denne spilleren på hvitelisten?",
-            "unwhitelist": "Fjern denne spilleren fra hvitelisten?"
+            "unwhitelist": "Fjern denne spilleren fra hvitelisten?",
+            "unmute": "Slå på lyd",
+            "unmute_confirm": "Er du sikker på at du vil slå på lyden for denne spilleren?"
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",

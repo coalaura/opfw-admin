@@ -970,7 +970,9 @@
             "whitelist_confirm": "Awwe you suwe you want to whitewist dis pwayew?",
             "unwhitelist_confirm": "Awwe you suwe you want to un-whitewist dis pwayew?",
             "whitelist": "Whitewist dis pwayew?",
-            "unwhitelist": "Un-Whitewist dis pwayew?"
+            "unwhitelist": "Un-Whitewist dis pwayew?",
+            "unmute": "Unmyuwt",
+            "unmute_confirm": "Awe yuw suwe yuw want tuwu unmyuwt dis pwayew?"
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

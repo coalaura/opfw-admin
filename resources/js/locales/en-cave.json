@@ -970,7 +970,9 @@
             "whitelist_confirm": "Grunk sure you want make player safe in tribe?",
             "unwhitelist_confirm": "Grunk sure you want make player not safe in tribe anymore?",
             "whitelist": "Make player safe in tribe?",
-            "unwhitelist": "Make player not safe in tribe anymore?"
+            "unwhitelist": "Make player not safe in tribe anymore?",
+            "unmute": "Make talky noise",
+            "unmute_confirm": "You sure want make talky noise for this player?"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

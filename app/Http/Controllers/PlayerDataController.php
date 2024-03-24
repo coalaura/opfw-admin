@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\PermissionHelper;
+use App\PanelLog;
 use App\Player;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,6 +20,45 @@ class PlayerDataController extends Controller
         "orbitcam",
         "player_stats",
     ];
+
+    /**
+     * Sets the mute status
+     *
+     * @param Player $player
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function updateMuteStatus(Player $player, Request $request): RedirectResponse
+    {
+        $status = !!$request->input('status');
+
+        if ($status) {
+            $reason = $request->input('reason');
+            $expires = $request->input('expires');
+
+            if (empty($reason) || empty($expires) || strtotime($expires) > time()) {
+                return backWith('error', 'You need to provide a reason and expiration date.');
+            }
+
+            $mute = $player->getActiveMute();
+
+            if ($mute) {
+                return backWith('error', 'Player is already muted.');
+            }
+
+            $player->setUserData('muted', [
+                'reason'  => $reason,
+                'expiryTimestamp' => $expires,
+                'creatorName' => user()->player_name,
+            ]);
+        } else {
+            $player->setUserData('muted', null);
+        }
+
+        PanelLog::logMuteUpdate(license(), $player->license_identifier, $status);
+
+        return backWith('success', 'Muted status has been updated successfully.');
+    }
 
     /**
      * Sets the whitelist status
@@ -71,17 +111,9 @@ class PlayerDataController extends Controller
         $twitch = $request->input('twitch');
         $twitch = is_string($twitch) ? preg_replace('/[^a-zA-Z0-9_]/', '', $twitch) : false;
 
-        $data = $player->user_data ?? [];
+        $player->setUserData('twitchBanException', $twitch);
 
-        if (empty($twitch)) {
-            unset($data['twitchBanException']);
-        } else {
-            $data['twitchBanException'] = $twitch;
-        }
-
-        $player->update([
-            'user_data' => $data,
-        ]);
+        PanelLog::logBanExceptionUpdate(license(), $player->license_identifier, $twitch ?? null);
 
         return backWith('success', 'Ban exception status has been updated successfully.');
     }

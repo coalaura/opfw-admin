@@ -111,6 +111,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::post('/players/{player}/updateSoftBanStatus', [PlayerDataController::class, 'updateSoftBanStatus']);
     Route::post('/players/{player}/updateBanExceptionStatus', [PlayerDataController::class, 'updateBanExceptionStatus']);
     Route::post('/players/{player}/updateWhitelistStatus', [PlayerDataController::class, 'updateWhitelistStatus']);
+    Route::post('/players/{player}/updateMuteStatus', [PlayerDataController::class, 'updateMuteStatus']);
     Route::post('/players/{player}/updateTag', [PlayerDataController::class, 'updateTag']);
     Route::post('/players/{player}/updateRole', [PlayerDataController::class, 'updateRole']);
 

@@ -970,7 +970,9 @@
             "whitelist_confirm": "Be ye certain ye wish to mark this hearty as trusty?",
             "unwhitelist_confirm": "Be ye certain ye wish to revoke this bucko's trusty status?",
             "whitelist": "Mark this hearty as trusty, arr?",
-            "unwhitelist": "Revoke this bucko's trusty status, aye?"
+            "unwhitelist": "Revoke this bucko's trusty status, aye?",
+            "unmute": "Unshush",
+            "unmute_confirm": "Be ye certain ye wish t' unshush this here sea dog?"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

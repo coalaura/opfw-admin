@@ -220,7 +220,7 @@ class PanelLog extends Model
     /**
      * Logs updating a player's ban exception
      */
-    public static function logBanExceptionUpdate(string $type, string $staffLicense, string $playerLicense, ?string $twitch)
+    public static function logBanExceptionUpdate(string $staffLicense, string $playerLicense, ?string $twitch)
     {
         $staff = self::resolvePlayerLogName($staffLicense);
         $player = self::resolvePlayerLogName($playerLicense);
@@ -232,6 +232,25 @@ class PanelLog extends Model
         }
 
         self::createLog($staffLicense, $playerLicense, $log, 'Updated Ban Exception', false);
+    }
+
+    /**
+     * Logs updating a player's mute
+     */
+    public static function logMuteUpdate(string $staffLicense, string $playerLicense, bool $status)
+    {
+        $staff = self::resolvePlayerLogName($staffLicense);
+        $player = self::resolvePlayerLogName($playerLicense);
+
+        if ($status) {
+            $action = 'Muted Player';
+            $log = $staff . ' muted ' . $player;
+        } else {
+            $action = 'Unmuted Player';
+            $log = $staff . ' unmuted ' . $player;
+        }
+
+        self::createLog($staffLicense, $playerLicense, $log, $action, false);
     }
 
     /**
