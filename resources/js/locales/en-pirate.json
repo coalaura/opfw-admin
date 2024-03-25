@@ -497,7 +497,9 @@
             "anti_cheat": "Behold Anti-Cheat Scrolls & Scrawls",
             "twitter_verify": "Verify Swashbucklin' Scallawags",
             "twitter_edit": "Amend yer Twitter Messages",
-            "dark_chat": "Spy 'pon Dark Gabbin'"
+            "dark_chat": "Spy 'pon Dark Gabbin'",
+            "ban_exception": "Keelhaul Ban Exceptions",
+            "whitelist": "Handle Bucko Whitelist"
         },
         "world_time": "World O' Time",
         "world_time_desc": "The time in the {0} most used doubloon zones.",

@@ -497,7 +497,9 @@
             "anti_cheat": "Peek at cave drawings of Anti-Cheat & Scheming",
             "twitter_verify": "Make sure Twitter peeps is legit",
             "twitter_edit": "Change Tweet Things",
-            "dark_chat": "See Dark Talk"
+            "dark_chat": "See Dark Talk",
+            "ban_exception": "Take out Not Banned Ones",
+            "whitelist": "Handle List Okay Players"
         },
         "world_time": "World Time-Big",
         "world_time_desc": "The time in the {0} most used timezones. Listen, sun go up, sun go down.",

@@ -497,7 +497,9 @@
             "anti_cheat": "👀 🚫-⚖️ 📜s & 📷s",
             "twitter_verify": "🔐🐦👤",
             "twitter_edit": "✏️🐦📝",
-            "dark_chat": "👀🌚💬"
+            "dark_chat": "👀🌚💬",
+            "ban_exception": "🚫🚫❌",
+            "whitelist": "🎮🧑‍⚖️✅📃"
         },
         "world_time": "🌍⏰",
         "world_time_desc": "⌚🌍{0}",

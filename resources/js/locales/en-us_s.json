@@ -497,7 +497,9 @@
             "anti_cheat": "Peep at them Anti-Cheat Logs & Screenshots",
             "twitter_verify": "Verify Y'all's Twitter Folks",
             "twitter_edit": "Edit them Twitter Posts",
-            "dark_chat": "Vee-uh Dark Chat"
+            "dark_chat": "Vee-uh Dark Chat",
+            "ban_exception": "Remove Ban 'Ceptions",
+            "whitelist": "Manage Player Whitelist"
         },
         "world_time": "World Time",
         "world_time_desc": "The time in the {0} most used timezones.",

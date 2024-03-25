@@ -506,7 +506,9 @@
             "money_logs": "Vis Pengelogg",
             "anti_cheat": "Vis Anti-Cheat Logger og Skjermbilder",
             "twitter_edit": "Rediger Twitter-innlegg",
-            "dark_chat": "Vis mørk prat"
+            "dark_chat": "Vis mørk prat",
+            "ban_exception": "Fjern unntak fra utestengelse",
+            "whitelist": "Administrer spillers hviteliste"
         },
         "world_time": "Verdenstid",
         "world_time_desc": "Tiden i de {0} mest brukte tidssonene.",

@@ -537,7 +537,9 @@
             "phone_logs": "View Phone Logs",
             "money_logs": "View Money Logs",
             "anti_cheat": "View Anti-Cheat Logs & Screenshots",
-            "dark_chat": "View Dark Chat"
+            "dark_chat": "View Dark Chat",
+            "ban_exception": "Remove Ban Exceptions",
+            "whitelist": "Manage Player Whitelist"
         },
 
         "world_time": "World Time",

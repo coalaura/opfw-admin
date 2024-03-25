@@ -497,7 +497,9 @@
             "anti_cheat": "View Anti-Cheat Wogs & Screenshots",
             "twitter_verify": "Vewify Twittew Usews",
             "twitter_edit": "Edit Twittew Posts",
-            "dark_chat": "View Dawk Chat"
+            "dark_chat": "View Dawk Chat",
+            "ban_exception": "Wemove Ban Exceptions",
+            "whitelist": "Manage Pwayew Whitewist"
         },
         "world_time": "Wowld Timeowo",
         "world_time_desc": "The time in the {0} most used timezonesowo.",
