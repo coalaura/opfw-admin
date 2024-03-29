@@ -323,20 +323,18 @@ export default {
             const fullTrace = error.full_trace;
 
             if (fullTrace) {
-                let location = false;
-
-                fullTrace.forEach(entry => {
+                for (const entry of fullTrace) {
                     if (entry.match(/^(C|citizen)[:@]/gm)) {
-                        return;
+                        continue;
                     }
 
-                    const match = entry.matchAll(/^.+?\/(.+?\/.+?)[/:@]/gm).next().value;
+                    const match = entry.match(/(?<=^\[.+?] |^)([\w_-]+?\/){1,2}[\w_-]+/gm);
 
-                    location = match ? match[1] : entry;
-                });
+                    if (match && match.length > 0) {
+                        const location = match[0].match(/[\w_-]+\/[\w_-]+$/m);
 
-                if (location) {
-                    return location;
+                        return location[0];
+                    }
                 }
             }
 
