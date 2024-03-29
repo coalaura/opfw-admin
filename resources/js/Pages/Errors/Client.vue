@@ -328,12 +328,18 @@ export default {
                         continue;
                     }
 
-                    const match = entry.match(/(?<=^\[.+?] |^)([\w_-]+?\/){1,2}[\w_-]+/gm);
+                    const match = entry.match(/(?<=^\[.+?] |^)([\w_-]+?\/){1,2}[\w_-]+/m);
 
                     if (match && match.length > 0) {
                         const location = match[0].match(/[\w_-]+\/[\w_-]+$/m);
 
                         return location[0];
+                    }
+
+                    const oldMatch = entry.match(/(?<=\^0\(\^4)\w+\/\w+(?=:)/);
+
+                    if (oldMatch && oldMatch.length > 0) {
+                        return oldMatch[0];
                     }
                 }
             }
