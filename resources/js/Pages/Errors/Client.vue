@@ -254,6 +254,8 @@ export default {
             this.isLoading = false;
         },
         cleanupTrace(trace) {
+            if (!trace) return 'no trace';
+
             const cleaned = trace.replace(/^.+:\d+: /gm, '').trim();
 
             return this.formatChatColors(cleaned ? cleaned : trace);
@@ -360,6 +362,8 @@ export default {
             return str;
         },
         formatChatColors(text) {
+            if (!text) return 'no trace';
+
             const colors = {
                 "^1": "#FD4343",
                 "^2": "#99CC00",
