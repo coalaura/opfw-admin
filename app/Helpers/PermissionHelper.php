@@ -29,6 +29,7 @@ class PermissionHelper
         self::PERM_DARK_CHAT      => ['dark_chat', self::LEVEL_SENIOR],
         self::PERM_BAN_EXCEPTION  => ['ban_exception', self::LEVEL_SUPERADMIN],
         self::PERM_WHITELIST      => ['whitelist', self::LEVEL_SUPERADMIN],
+        self::PERM_API_TOKENS     => ['api_tokens', self::LEVEL_SUPERADMIN],
     ];
 
     const PERM_SCREENSHOT     = 'P_SCREENSHOT';
@@ -53,6 +54,7 @@ class PermissionHelper
     const PERM_DARK_CHAT      = 'P_DARK_CHAT';
     const PERM_BAN_EXCEPTION  = 'P_BAN_EXCEPTION';
     const PERM_WHITELIST      = 'P_WHITELIST';
+    const PERM_API_TOKENS     = 'P_API_TOKENS';
 
     const LEVEL_STAFF      = 1;
     const LEVEL_SENIOR     = 2;

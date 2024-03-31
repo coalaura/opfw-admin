@@ -78,12 +78,6 @@ module.exports = {
             },
             height: {
                 'side-close':      '37px',
-                'side-open-one':   '87px',
-                'side-open-two':   '128px',
-                'side-open-three': '169px',
-                'side-open-four':  '210px',
-                'side-open-five':  '250px',
-                'side-open-six':   '292px',
                 'max':             'calc(100vh - (210px + 120px))',
                 'inventory_slot':  '100px',
                 'box':             '15px',
@@ -178,6 +172,9 @@ module.exports = {
                 'green-950': 'rgb(5, 46, 22)',
                 'teal-950': 'rgb(4, 47, 46)',
                 'gray-950': 'rgb(18, 22, 33)',
+
+                // Input border color
+                'input': '#6b7280',
 
                 // Theme colors.
                 'primary':   defaultTheme.colors.indigo['600'],

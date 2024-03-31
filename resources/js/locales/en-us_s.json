@@ -1405,5 +1405,16 @@
         "player": "Player",
         "week_0": "This Week",
         "description": "Staff p'ints are stored in them balls!"
+    },
+    "tokens": {
+        "title": "API Tokens",
+        "description": "Right here on this here page, y'all can take a gander at and handle them server API tokens.",
+        "delete": "Delete",
+        "delete_confirm": "Y'all sure ya wanna get rid of this here token?",
+        "save": "Save",
+        "note_placeholder": "Note",
+        "permissions": "Permissions",
+        "no_permissions": "Ain't no permissions set.",
+        "not_used": "Ain't been used yet."
     }
 }

@@ -1405,5 +1405,16 @@
         "player": "Play-person",
         "week_0": "This Sun Time",
         "description": "Stick points keep in round rocks!"
+    },
+    "tokens": {
+        "title": "API Rock-words",
+        "description": "Here see and boss server's API rock-words.",
+        "delete": "Make-go-away",
+        "delete_confirm": "You sure-make-go-away this rock-word?",
+        "save": "Keep",
+        "note_placeholder": "Remember-thing",
+        "permissions": "Allow-do-things",
+        "no_permissions": "No allow-do-things set.",
+        "not_used": "Not use yet."
     }
 }

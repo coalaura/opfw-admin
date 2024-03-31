@@ -45,6 +45,7 @@ const Permissions = {
             PERM_DARK_CHAT: 'dark_chat',
             PERM_BAN_EXCEPTION: 'ban_exception',
             PERM_WHITELIST: 'whitelist',
+            PERM_API_TOKENS: 'api_tokens',
 
             level(permission) {
                 if (!(permission in permissions)) {

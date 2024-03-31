@@ -87,6 +87,7 @@
     <i class="fas fa-mail-bulk" v-else-if="name === 'mail'"></i>
     <i class="fas fa-medkit" v-else-if="name === 'medkit'"></i>
     <i class="fas fa-street-view" v-else-if="name === 'street-view'"></i>
+    <i class="fas fa-key" v-else-if="name === 'key'"></i>
 </template>
 
 <script>

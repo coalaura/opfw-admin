@@ -1405,5 +1405,16 @@
         "player": "Spiller",
         "week_0": "Denne uken",
         "description": "De ansatte poengene lagres i ballene!"
+    },
+    "tokens": {
+        "title": "API-nøkler",
+        "description": "På denne siden kan du se og administrere serverens API-nøkler.",
+        "delete": "Slett",
+        "delete_confirm": "Er du sikker på at du vil slette denne nøkkelen?",
+        "save": "Lagre",
+        "note_placeholder": "Notat",
+        "permissions": "Tillatelser",
+        "no_permissions": "Ingen tillatelser satt.",
+        "not_used": "Ikke brukt enda."
     }
 }

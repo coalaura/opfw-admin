@@ -14,7 +14,7 @@
                         <icon class="w-4 h-4 mr-3 fill-current" :name="link.icon"></icon>
                         {{ link.raw ? link.raw : t(link.label) }}
                     </inertia-link>
-                    <a href="#" class="flex flex-wrap items-center px-5 py-2 mb-2 -mt-1 rounded hover:bg-gray-700v hover:text-white overflow-hidden" :class="len(link.sub, $page.auth.player.isSuperAdmin)" v-if="link.sub && len(link.sub, $page.auth.player.isSuperAdmin)" @click="$event.preventDefault()">
+                    <a href="#" class="flex flex-wrap items-center px-5 py-2 mb-2 -mt-1 rounded hover:bg-gray-700v hover:text-white overflow-hidden" :class="height(link.sub, $page.auth.player.isSuperAdmin)" v-if="link.sub && height(link.sub, $page.auth.player.isSuperAdmin)" @click="$event.preventDefault()">
                         <span class="block w-full mb-2 whitespace-nowrap drop-shadow">
                             <icon class="w-4 h-4 mr-3 fill-current" :name="link.icon"></icon>
                             {{ link.raw ? link.raw : t(link.label) }}
@@ -157,6 +157,23 @@ export default {
                             label: 'casino.title',
                             icon: 'chess',
                             url: '/casino',
+                        },
+                        {
+                            label: 'panel_logs.title',
+                            icon: 'paperstack',
+                            url: '/panel_logs',
+                        },
+                        {
+                            label: 'search_logs.title',
+                            icon: 'binoculars',
+                            url: '/searches',
+                            hidden: !this.perm.check(this.perm.PERM_ADVANCED),
+                        },
+                        {
+                            label: 'screenshot_logs.title',
+                            icon: 'portrait',
+                            url: '/screenshot_logs',
+                            hidden: !this.perm.check(this.perm.PERM_ADVANCED),
                         }
                     ]
                 },
@@ -186,6 +203,12 @@ export default {
                     icon: 'tasks',
                     sub: [
                         {
+                            label: 'tokens.title',
+                            icon: 'key',
+                            hidden: !this.perm.check(this.perm.PERM_API_TOKENS),
+                            url: '/tokens',
+                        },
+                        {
                             label: 'blacklist.title',
                             icon: 'shield',
                             private: true,
@@ -196,23 +219,6 @@ export default {
                             icon: 'spinner',
                             hidden: !this.perm.check(this.perm.PERM_LOADING_SCREEN),
                             url: '/loading_screen',
-                        },
-                        {
-                            label: 'panel_logs.title',
-                            icon: 'paperstack',
-                            url: '/panel_logs',
-                        },
-                        {
-                            label: 'search_logs.title',
-                            icon: 'binoculars',
-                            url: '/searches',
-                            hidden: !this.perm.check(this.perm.PERM_ADVANCED),
-                        },
-                        {
-                            label: 'screenshot_logs.title',
-                            icon: 'portrait',
-                            url: '/screenshot_logs',
-                            hidden: !this.perm.check(this.perm.PERM_ADVANCED),
                         }
                     ]
                 },
@@ -355,6 +361,8 @@ export default {
 
         data.collapsed = false;
 
+        data.heights = {};
+
         return data;
     },
     watch: {
@@ -368,25 +376,10 @@ export default {
             if (this.url.substring(1) === '' || url.substring(1) === '') return false;
             return this.url.startsWith(url);
         },
-        len(sub, isSuperAdmin) {
+        height(sub, isSuperAdmin) {
             const length = sub.filter(l => (!l.private || isSuperAdmin) && !l.hidden).length;
 
-            switch (length) {
-                case 1:
-                    return 'h-side-close hover:h-side-open-one';
-                case 2:
-                    return 'h-side-close hover:h-side-open-two';
-                case 3:
-                    return 'h-side-close hover:h-side-open-three';
-                case 4:
-                    return 'h-side-close hover:h-side-open-four';
-                case 5:
-                    return 'h-side-close hover:h-side-open-five';
-                case 6:
-                    return 'h-side-close hover:h-side-open-six';
-                default:
-                    return '';
-            }
+            return `side-close side-${length}`;
         },
         isMobile() {
             return $(window).width() <= 640;
@@ -396,6 +389,42 @@ export default {
 
             this.collapsed = !this.collapsed;
         }
+    },
+    beforeMount() {
+        let max = 0;
+
+        for (const link of this.links) {
+            if (!link.sub) continue;
+
+            const length = link.sub.filter(l => (!l.private || this.$page.auth.player.isSuperAdmin) && !l.hidden).length;
+
+            if (length > max) {
+                max = length;
+            }
+        }
+
+        const styles = document.createElement('style');
+
+        // Closed
+        styles.innerHTML += `.side-close { height: 37px; }`;
+
+        for (let i = 1; i <= max; i++) {
+            // 37px = height of closed sidebar item
+            let height = 37;
+
+            // Each entry is 37.5px
+            height += i * 37.5;
+
+            // plus 0.25rem margin top (for each entry)
+            height += (0.25 * 16) * i;
+
+            // and 0.5rem padding bottom
+            height += 0.5 * 16;
+
+            styles.innerHTML += `.side-${i}:hover { height: ${height}px; }`;
+        }
+
+        document.head.appendChild(styles);
     }
 };
 </script>

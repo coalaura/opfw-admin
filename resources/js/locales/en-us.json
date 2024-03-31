@@ -539,7 +539,8 @@
             "anti_cheat": "View Anti-Cheat Logs & Screenshots",
             "dark_chat": "View Dark Chat",
             "ban_exception": "Remove Ban Exceptions",
-            "whitelist": "Manage Player Whitelist"
+            "whitelist": "Manage Player Whitelist",
+            "api_tokens": "Manage API Tokens"
         },
 
         "world_time": "World Time",
@@ -1421,6 +1422,17 @@
         "no_data": "No API data available",
 		"server_data": "The server has been up for <b>{0}</b> at <b>{1}</b> with a max capacity of <b>{2}</b> players.",
 		"no_server_data": "The server is currently unavailable."
+    },
+    "tokens": {
+        "title": "API Tokens",
+        "description": "On this page you can view and manage the server's API tokens.",
+        "delete": "Delete",
+        "delete_confirm": "Are you sure you want to delete this token?",
+        "save": "Save",
+        "note_placeholder": "Note",
+        "permissions": "Permissions",
+        "no_permissions": "No permissions set.",
+        "not_used": "Not yet used."
     },
     "login": {
         "title": "Login with your Discord account.",

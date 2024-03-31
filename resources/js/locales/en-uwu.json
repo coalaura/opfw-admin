@@ -1405,5 +1405,16 @@
         "player": "Pwayew",
         "week_0": "Dis Week",
         "description": "Staff points awe stowed in the bawws!"
+    },
+    "tokens": {
+        "title": "API Tokens UwU",
+        "description": "On this pwage you can view and manwage the sewvew's API tokens nyaa.",
+        "delete": "Dewete",
+        "delete_confirm": "Awe you suwe you want to dewete this token owo?",
+        "save": "Save",
+        "note_placeholder": "Note UwU",
+        "permissions": "Pewmissions",
+        "no_permissions": "No pewmissions set owo.",
+        "not_used": "Not yet used nyaa."
     }
 }

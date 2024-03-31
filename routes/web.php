@@ -46,6 +46,7 @@ use App\Http\Controllers\LookupController;
 use App\Http\Controllers\SuspiciousController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TwitterController;
+use App\Http\Controllers\TokenController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
@@ -249,6 +250,12 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     // Errors.
     Route::get('/errors/client', [ErrorController::class, 'client']);
     Route::get('/errors/server', [ErrorController::class, 'server']);
+
+    // Tokens.
+    Route::get('/tokens', [TokenController::class, 'index']);
+    Route::post('/tokens', [TokenController::class, 'create']);
+    Route::put('/tokens/{token}', [TokenController::class, 'update']);
+    Route::delete('/tokens/{token}', [TokenController::class, 'delete']);
 
     // Settings.
     Route::get('/settings', [SettingsController::class, 'index']);

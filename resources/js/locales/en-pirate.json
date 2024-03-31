@@ -1405,5 +1405,16 @@
         "player": "Pirate",
         "week_0": "This Tide",
         "description": "Me hearties, th' staff points be stashed in th' balls!"
+    },
+    "tokens": {
+        "title": "API Doubloons",
+        "description": "On this scroll ye can spy and handle the server's API doubloons.",
+        "delete": "Scuttle",
+        "delete_confirm": "Be ye certain ye want to scuttle this doubloon?",
+        "save": "Stow",
+        "note_placeholder": "Scrawlin'",
+        "permissions": "Permissions",
+        "no_permissions": "No permissions be set.",
+        "not_used": "Not yet made use of."
     }
 }

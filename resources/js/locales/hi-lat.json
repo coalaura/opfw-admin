@@ -1405,5 +1405,16 @@
         "player": "Khiladi",
         "week_0": "Is Saptah",
         "description": "Staff points gend mein store kiye jaate hain!"
+    },
+    "tokens": {
+        "title": "API Tokens",
+        "description": "Is page par aap server ke API tokens ko dekh sakte hain aur manage kar sakte hain.",
+        "delete": "Delete karen",
+        "delete_confirm": "Kya aap vishwas se is token ko delete karna chahte hain?",
+        "save": "Save karen",
+        "note_placeholder": "Dhyaan den",
+        "permissions": "Anumatiyan",
+        "no_permissions": "Koi permissions set nahi ki gayi hain.",
+        "not_used": "Abhi tak istemal nahi kiya gaya."
     }
 }
