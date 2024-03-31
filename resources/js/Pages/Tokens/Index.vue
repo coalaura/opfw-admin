@@ -18,7 +18,7 @@
 
         <div class="mt-14">
             <div class="flex flex-wrap gap-4">
-                <div v-for="token in list" :key="token.id" class="bg-gray-200 dark:bg-gray-700 border-gray-500 px-4 py-2 rounded-sm shadow-sm relative w-72">
+                <div v-for="token in list" :key="token.id" class="bg-gray-200 dark:bg-gray-700 border-gray-500 px-4 py-2 rounded-sm shadow-sm relative w-80">
                     <div class="flex justify-between gap-3 items-center">
                         <input v-model="token.note" class="px-1.5 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full" :placeholder="t('tokens.note_placeholder')" @input="token.changed = true" v-if="token.id === editingNameId" />
                         <b class="cursor-pointer block" @click="editingNameId = token.id" v-else>{{ token.note ? token.note : `Token #${token.id}` }}</b>
@@ -43,11 +43,15 @@
                         </div>
 
                         <div class="text-sm bg-gray-200 dark:bg-gray-700 flex" v-for="(permission, index) in token.permissions" :key="index">
-                            <select v-model="permission.method" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-24 border-r-0" @change="token.changed = true">
+                            <select v-model="permission.method" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-32 border-r-0" @change="token.changed = true">
                                 <option v-for="method in methods" :value="method">{{ method }}</option>
                             </select>
 
-                            <input v-model="permission.path" class="px-1.5 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full" @change="token.changed = true" />
+                            <select v-model="permission.path" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full" @change="token.changed = true">
+                                <option value="*">*</option>
+
+                                <option v-for="path in routes[permission.method]" :value="path">{{ path }}</option>
+                            </select>
 
                             <button class="p-0.5 w-8 flex items-center justify-center bg-gray-200 dark:bg-gray-800 border border-input border-l-0">
                                 <i class="fas fa-minus cursor-pointer" @click="token.permissions.splice(index, 1)"></i>
@@ -87,6 +91,10 @@ export default {
         },
         methods: {
             type: Array,
+            required: true
+        },
+        routes: {
+            type: Object,
             required: true
         }
     },

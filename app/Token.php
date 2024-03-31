@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Helpers\OPFWHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -9,7 +10,7 @@ class Token extends Model
 {
     use HasFactory;
 
-    const ValidMethods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'REST'];
+    const ValidMethods = ['*', 'REST', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
     /**
      * The table associated with the model.
@@ -57,13 +58,17 @@ class Token extends Model
 
     public function getPermissions(): array
     {
-        if (!$this->permissions) return [];
+        if (!$this->permissions) {
+            return [];
+        }
 
         return self::stringToPermissions($this->permissions);
     }
 
     public static function stringToPermissions(string $permissions): array
     {
+        $routes = self::getAvailableRoutes();
+
         $result = [];
 
         $routes = explode(',', $permissions);
@@ -75,9 +80,18 @@ class Token extends Model
                 continue;
             }
 
+            $method = strtoupper($parts[0]);
+            $path   = trim($parts[1]);
+
+            $allowed = $routes[$method] ?? [];
+
+            if (!in_array($path, $allowed) && $path !== '*') {
+                continue;
+            }
+
             $result[] = [
-                'method' => $parts[0],
-                'path'  => $parts[1],
+                'method' => $method,
+                'path'   => $path,
             ];
         }
 
@@ -94,7 +108,7 @@ class Token extends Model
             }
 
             $method = strtoupper($permission['method']);
-            $path = trim($permission['path']);
+            $path   = trim($permission['path']);
 
             if (!in_array($method, self::ValidMethods) || empty($path)) {
                 continue;
@@ -108,7 +122,9 @@ class Token extends Model
 
     public static function permissionsValid(?string $permissions): bool
     {
-        if (!$permissions) return true;
+        if (!$permissions) {
+            return true;
+        }
 
         $data = self::stringToPermissions($permissions);
 
@@ -125,5 +141,37 @@ class Token extends Model
         }
 
         return $token;
+    }
+
+    public static function getAvailableRoutes(): array
+    {
+        $available = [];
+
+        foreach (self::ValidMethods as $method) {
+            $available[$method] = [];
+        }
+
+        $routes = OPFWHelper::getRoutesJSON(Server::getFirstServerIP()) ?: [];
+
+        foreach ($routes as $route) {
+            if (!$route['restricted']) {
+                continue;
+            }
+
+            $method = strtoupper($route['method']);
+            $path   = $route['path'];
+
+            $available[$method][] = $path;
+        }
+
+        foreach ($available as $method => $paths) {
+            $paths = array_unique($paths);
+
+            sort($paths);
+
+            $available[$method] = $paths;
+        }
+
+        return $available;
     }
 }

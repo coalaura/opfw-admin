@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\TokenResource;
 use App\Helpers\PermissionHelper;
+use App\Http\Resources\TokenResource;
 use App\Token;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -21,6 +21,7 @@ class TokenController extends Controller
         return Inertia::render('Tokens/Index', [
             'tokens'  => TokenResource::collection($tokens),
             'methods' => Token::ValidMethods,
+            'routes'  => Token::getAvailableRoutes(),
         ]);
     }
 

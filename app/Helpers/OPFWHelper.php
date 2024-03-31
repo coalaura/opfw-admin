@@ -497,6 +497,32 @@ class OPFWHelper
     }
 
     /**
+     * Gets the routes.json
+     *
+     * @param string $serverIp
+     * @return array|null
+     */
+    public static function getRoutesJSON(string $serverIp): ?array
+    {
+        $serverIp = Server::fixApiUrl($serverIp);
+        $cache = 'routes_' . md5($serverIp);
+
+        if (CacheHelper::exists($cache)) {
+            return CacheHelper::read($cache, []);
+        } else {
+            $data = self::executeRoute($serverIp, $serverIp . 'routes.json', [], 'GET', 3);
+
+            if ($data->data) {
+                CacheHelper::write($cache, $data->data, 6 * CacheHelper::HOUR);
+            } else if (!$data->status) {
+                CacheHelper::write($cache, [], 10);
+            }
+
+            return $data->data;
+        }
+    }
+
+    /**
      * Creates a screenshot
      *
      * @param string $serverIp
