@@ -2,7 +2,7 @@
     <div>
         <portal to="title">
             <div class="mb-6">
-                <h1 class="dark:text-white flex items-middle gap-2">
+                <h1 class="dark:text-white flex items-center gap-2">
                     <i class="mr-3 fas fa-unlock-alt" :title="perm.restriction(perm.PERM_LIVEMAP)"></i>
 
                     <span id="map_title">{{ t('map.title') }}</span>
