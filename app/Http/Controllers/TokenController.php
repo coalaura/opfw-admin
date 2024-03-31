@@ -16,7 +16,7 @@ class TokenController extends Controller
             abort(401);
         }
 
-        $tokens = Token::all();
+        $tokens = Token::query()->where('token', '!=', env('OP_FW_TOKEN', ''))->get();
 
         return Inertia::render('Tokens/Index', [
             'tokens'  => TokenResource::collection($tokens),
