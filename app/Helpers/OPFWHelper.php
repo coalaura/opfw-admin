@@ -550,6 +550,13 @@ class OPFWHelper
 
         $url = "http://localhost:9999/" . $route;
 
+        if (!HttpHelper::ping($url, 400)) {
+            LoggingHelper::log(HttpHelper::lastError());
+            LoggingHelper::log("Cancelled GET request to $url");
+
+            return false;
+        }
+
         $client = new Client(
             [
                 'verify' => false,
@@ -615,6 +622,13 @@ class OPFWHelper
 
         if (Str::contains($route, 'localhost')) {
             $route = str_replace('https://', 'http://', $route);
+        }
+
+        if (!HttpHelper::ping($route, 800)) {
+            LoggingHelper::log(HttpHelper::lastError());
+            LoggingHelper::log("Cancelled $requestType request to $route");
+
+            return new OPFWResponse(false, 'Failed to connect to OP-FW server.');
         }
 
         $result = null;
