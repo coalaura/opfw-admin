@@ -67,7 +67,7 @@ class Token extends Model
 
     public static function stringToPermissions(string $permissions): array
     {
-        $routes = self::getAvailableRoutes();
+        $available = self::getAvailableRoutes();
 
         $result = [];
 
@@ -83,7 +83,7 @@ class Token extends Model
             $method = strtoupper($parts[0]);
             $path   = trim($parts[1]);
 
-            $allowed = $routes[$method] ?? [];
+            $allowed = $available[$method] ?? [];
 
             if (!in_array($path, $allowed) && $path !== '*') {
                 continue;
@@ -154,10 +154,6 @@ class Token extends Model
         $routes = OPFWHelper::getRoutesJSON(Server::getFirstServerIP()) ?: [];
 
         foreach ($routes as $route) {
-            if (!$route['restricted']) {
-                continue;
-            }
-
             $method = strtoupper($route['method']);
             $path   = $route['path'];
 
