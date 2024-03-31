@@ -138,7 +138,6 @@
         "lookup": "Wookup",
         "administration": "Administwation",
         "data_stats": "Data & Stats",
-        "serial_numbers": "Sewiaw Numbews",
         "tools": "Toows"
     },
     "queue": {
@@ -499,7 +498,8 @@
             "twitter_edit": "Edit Twittew Posts",
             "dark_chat": "View Dawk Chat",
             "ban_exception": "Wemove Ban Exceptions",
-            "whitelist": "Manage Pwayew Whitewist"
+            "whitelist": "Manage Pwayew Whitewist",
+            "api_tokens": "Manwage API Tokens"
         },
         "world_time": "Wowld Timeowo",
         "world_time_desc": "The time in the {0} most used timezonesowo.",
@@ -557,22 +557,6 @@
             "amount": "Vawue"
         },
         "no_logs": "Nyo entwies found"
-    },
-    "serials": {
-        "title": "Siwial Nyumber Wookup",
-        "description": "Wookup gun siwial nyumbers, wegistewed ow nyot.",
-        "serial": "Siwial Nyumber",
-        "result": "Wookup Wesuwt",
-        "table": {
-            "item": "Weapon typuwu",
-            "inventory": "Cuwwent Inventoryuwu",
-            "character": "Chawactuwu"
-        },
-        "no_character": "Nyo Chawactuwu infowmation founduwu",
-        "no_result": "Secwet nyumbew c-couwd nyot be twaced b-back tuwu a weapon, nyya~!",
-        "search": "Seawch fow secwet, nyaa~",
-        "registered": "(W-Wegistewed), nyaa~",
-        "un_registered": "(Un-Wegistewed), nya~"
     },
     "advanced": {
         "title": "Advanshed Seawch, nyaa~",

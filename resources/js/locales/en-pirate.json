@@ -138,7 +138,6 @@
         "lookup": "Scour",
         "administration": "Ship's Management",
         "data_stats": "Figures & Tally",
-        "serial_numbers": "Series o' Numbers",
         "tools": "Implements"
     },
     "queue": {
@@ -499,7 +498,8 @@
             "twitter_edit": "Amend yer Twitter Messages",
             "dark_chat": "Spy 'pon Dark Gabbin'",
             "ban_exception": "Keelhaul Ban Exceptions",
-            "whitelist": "Handle Bucko Whitelist"
+            "whitelist": "Handle Bucko Whitelist",
+            "api_tokens": "Manage API Planks o' Permissions"
         },
         "world_time": "World O' Time",
         "world_time_desc": "The time in the {0} most used doubloon zones.",
@@ -557,22 +557,6 @@
             "amount": "Pirate's Booty"
         },
         "no_logs": "Arr, no records found"
-    },
-    "serials": {
-        "title": "Serial Number Scour",
-        "description": "Scour gun serial numbers, registered or not.",
-        "serial": "Serial Code",
-        "result": "Scour Result",
-        "table": {
-            "item": "Weapon Type",
-            "inventory": "Current Plunder",
-            "character": "Scallywag"
-        },
-        "no_character": "No Scallywag info found",
-        "no_result": "Arrr! No treasure be found with that serial number, matey!",
-        "search": "Scour th' seas fer a serial",
-        "registered": "(Listed)",
-        "un_registered": "(Not Listed)"
     },
     "advanced": {
         "title": "Advanc'd Scoutin'",

@@ -138,7 +138,6 @@
         "lookup": "Lookup",
         "administration": "Administration",
         "data_stats": "Data & Stats",
-        "serial_numbers": "Serial Numbers",
         "tools": "Tools"
     },
     "queue": {
@@ -499,7 +498,8 @@
             "twitter_edit": "Edit them Twitter Posts",
             "dark_chat": "Vee-uh Dark Chat",
             "ban_exception": "Remove Ban 'Ceptions",
-            "whitelist": "Manage Player Whitelist"
+            "whitelist": "Manage Player Whitelist",
+            "api_tokens": "Manage them there API Tokens"
         },
         "world_time": "World Time",
         "world_time_desc": "The time in the {0} most used timezones.",
@@ -557,22 +557,6 @@
             "amount": "Worth"
         },
         "no_logs": "Ain't nothin' here"
-    },
-    "serials": {
-        "title": "Serial Number Hunt",
-        "description": "Find them gun serial numbers, registered or not.",
-        "serial": "Serial Code",
-        "result": "Huntin' Result",
-        "table": {
-            "item": "Weapon type",
-            "inventory": "Current Hoard",
-            "character": "Outlaw"
-        },
-        "no_character": "No Outlaw info found",
-        "no_result": "That serial number ain't tied to no shootin' iron.",
-        "search": "Give me a holler 'bout that serial",
-        "registered": "(Done gone and got registered)",
-        "un_registered": "(Ain't been registered)"
     },
     "advanced": {
         "title": "Fancy-Pants Search",

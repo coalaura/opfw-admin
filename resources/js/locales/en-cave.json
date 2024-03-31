@@ -138,7 +138,6 @@
         "lookup": "Findy",
         "administration": "Big tribe rule stuff",
         "data_stats": "Count and number stuff",
-        "serial_numbers": "Many number marks",
         "tools": "Use things"
     },
     "queue": {
@@ -499,7 +498,8 @@
             "twitter_edit": "Change Tweet Things",
             "dark_chat": "See Dark Talk",
             "ban_exception": "Take out Not Banned Ones",
-            "whitelist": "Handle List Okay Players"
+            "whitelist": "Handle List Okay Players",
+            "api_tokens": "Handle API Rocks"
         },
         "world_time": "World Time-Big",
         "world_time_desc": "The time in the {0} most used timezones. Listen, sun go up, sun go down.",
@@ -557,22 +557,6 @@
             "amount": "Ugabunga"
         },
         "no_logs": "Ug-ug, no logs found"
-    },
-    "serials": {
-        "title": "Ug-Ug Number Lookup",
-        "description": "Ug-Ug gruk ug, ug-ugalug or ug-ungalug.",
-        "serial": "Ug-Ug Number",
-        "result": "Ug-Ug Result",
-        "table": {
-            "item": "Ugabunga type",
-            "inventory": "Ug-Ug Wug-Wug",
-            "character": "Ug-Ug"
-        },
-        "no_character": "Ug-Ug, no Ugabunga information found",
-        "no_result": "Serial number could not be traced back to a weapon.",
-        "search": "Search for serial",
-        "registered": "(Registered)",
-        "un_registered": "(Un-Registered)"
     },
     "advanced": {
         "title": "Advanced Search",

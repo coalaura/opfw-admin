@@ -138,7 +138,6 @@
         "lookup": "Khoj",
         "administration": "Prashasan",
         "data_stats": "Aankada aur Aankde",
-        "serial_numbers": "Kramank Sankhya",
         "tools": "Upkaran"
     },
     "queue": {
@@ -508,7 +507,8 @@
             "twitter_edit": "Twitter Posts Sampadit Karein",
             "dark_chat": "Dekhein Dark Chat",
             "ban_exception": "Hataayein Pratibandh Apavaad",
-            "whitelist": "Khilaadi Safelist Sambhalen"
+            "whitelist": "Khilaadi Safelist Sambhalen",
+            "api_tokens": "API Tokens Prabandhit Karen"
         },
         "world_time": "Vishwa Samay",
         "world_time_desc": "{0} sabse adhik upayog kiye jaane waale samay kshetron ka samay.",
@@ -557,22 +557,6 @@
             "amount": "Mulya"
         },
         "no_logs": "Koi pravishthi nahin mili"
-    },
-    "serials": {
-        "title": "Serial Number Khoojein",
-        "description": "Bandook ke serial number ka pata kijiye, panjikrit ho ya nahi.",
-        "serial": "Serial Number",
-        "result": "Khoojo Natija",
-        "table": {
-            "item": "Hathyar ka prakar",
-            "inventory": "Vartmaan Inventory",
-            "character": "Charitra"
-        },
-        "no_character": "Charitra kee jaankari nahin mili",
-        "no_result": "Serial number se koi hathyar ka pata nahin chala.",
-        "search": "Serial keliye khojein",
-        "registered": "(Panjikrit)",
-        "un_registered": "(A-Panjikrit)"
     },
     "weapons": {
         "title": "Hathyar ki Jaankari",

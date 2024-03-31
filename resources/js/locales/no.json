@@ -138,7 +138,6 @@
         "lookup": "Søk opp",
         "administration": "Administrasjon",
         "data_stats": "Data og statistikk",
-        "serial_numbers": "Serienumre",
         "tools": "Verktøy"
     },
     "queue": {
@@ -508,7 +507,8 @@
             "twitter_edit": "Rediger Twitter-innlegg",
             "dark_chat": "Vis mørk prat",
             "ban_exception": "Fjern unntak fra utestengelse",
-            "whitelist": "Administrer spillers hviteliste"
+            "whitelist": "Administrer spillers hviteliste",
+            "api_tokens": "Administrer API-nøkler"
         },
         "world_time": "Verdenstid",
         "world_time_desc": "Tiden i de {0} mest brukte tidssonene.",
@@ -557,22 +557,6 @@
             "amount": "Verdi"
         },
         "no_logs": "Ingen oppføringer funnet"
-    },
-    "serials": {
-        "title": "Serienummer Søk",
-        "description": "Søk etter serienumre på våpen, registrert eller ikke.",
-        "serial": "Serienummer",
-        "result": "Søkeresultat",
-        "table": {
-            "item": "Våpentype",
-            "inventory": "Gjeldende beholdning",
-            "character": "Karakter"
-        },
-        "no_character": "Ingen informasjon om karakter funnet",
-        "no_result": "Serienummer kunne ikke spores tilbake til et våpen.",
-        "search": "Søk etter serienummer",
-        "registered": "(Registrert)",
-        "un_registered": "(Uregistrert)"
     },
     "weapons": {
         "title": "Våpeninformasjon",

@@ -37,7 +37,6 @@ use App\Http\Controllers\PlayerDataController;
 use App\Http\Controllers\PlayerWarningController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\ScreenshotController;
-use App\Http\Controllers\SerialsController;
 use App\Http\Controllers\ServerController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StaffChatController;
@@ -186,9 +185,6 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Suspicious.
     Route::get('/suspicious', [SuspiciousController::class, 'index']);
-
-    // Serials.
-    Route::get('/serials', [SerialsController::class, 'index']);
 
     // Twitter.
     Route::get('twitter', [TwitterController::class, 'index']);

@@ -138,7 +138,6 @@
         "lookup": "9. 🔍",
         "administration": "10. 🏛️",
         "data_stats": "11. 📊📈",
-        "serial_numbers": "12. 🔢🔢",
         "tools": "13. 🛠️"
     },
     "queue": {
@@ -499,7 +498,8 @@
             "twitter_edit": "✏️🐦📝",
             "dark_chat": "👀🌚💬",
             "ban_exception": "🚫🚫❌",
-            "whitelist": "🎮🧑‍⚖️✅📃"
+            "whitelist": "🎮🧑‍⚖️✅📃",
+            "api_tokens": "🔧 🔑🔑"
         },
         "world_time": "🌍⏰",
         "world_time_desc": "⌚🌍{0}",
@@ -557,22 +557,6 @@
             "amount": "💰"
         },
         "no_logs": "📭"
-    },
-    "serials": {
-        "title": "🔎",
-        "description": "🔒⚖️",
-        "serial": "🔢",
-        "result": "🔍",
-        "table": {
-            "item": "🔫🔫",
-            "inventory": "📚",
-            "character": "👤"
-        },
-        "no_character": "🚫👤",
-        "no_result": "🚫🔢❌ could not 💨 traced back 🔄 a 🔫.",
-        "search": "🔎 4️⃣",
-        "registered": "(📝)",
-        "un_registered": "(📜-📝)"
     },
     "advanced": {
         "title": "🔍➕🔢",

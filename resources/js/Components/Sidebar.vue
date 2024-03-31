@@ -219,6 +219,12 @@ export default {
                             icon: 'spinner',
                             hidden: !this.perm.check(this.perm.PERM_LOADING_SCREEN),
                             url: '/loading_screen',
+                        },
+                        {
+                            label: 'screenshot.anti_cheat_title',
+                            icon: 'ghost',
+                            url: '/anti_cheat',
+                            hidden: !this.perm.check(this.perm.PERM_ANTI_CHEAT),
                         }
                     ]
                 },
@@ -240,12 +246,6 @@ export default {
                             label: 'screenshot.label',
                             icon: 'images',
                             url: '/screenshots',
-                        },
-                        {
-                            label: 'screenshot.anti_cheat_title',
-                            icon: 'ghost',
-                            url: '/anti_cheat',
-                            hidden: !this.perm.check(this.perm.PERM_ANTI_CHEAT),
                         }
                     ]
                 },
@@ -253,11 +253,6 @@ export default {
                     label: 'sidebar.tools',
                     icon: 'tools',
                     sub: [
-                        {
-                            label: 'sidebar.serial_numbers',
-                            icon: 'fingerprint',
-                            url: '/serials',
-                        },
                         {
                             label: 'sidebar.overwatch',
                             icon: 'camera',
