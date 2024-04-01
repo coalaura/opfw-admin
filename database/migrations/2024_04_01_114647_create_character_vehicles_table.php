@@ -47,6 +47,7 @@ class CreateCharacterVehiclesTable extends Migration
 			!in_array("was_boosted", $columns) && $table->tinyInteger("was_boosted")->nullable()->default("0");
 			!in_array("oil_mileage_after", $columns) && $table->integer("oil_mileage_after")->nullable();
 			!in_array("created_at", $columns) && $table->integer("created_at")->nullable();
+			!in_array("image_url", $columns) && $table->longText("image_url")->nullable();
 
 			!in_array("owner_cid", $indexes) && $table->index("owner_cid");
 			!in_array("plate", $indexes) && $table->index("plate");

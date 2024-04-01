@@ -39,6 +39,8 @@ class BuildMigrations extends Command
 	 */
 	public function handle()
 	{
+		$this->info("Using cluster " . CLUSTER);
+
 		$this->info("Cleaning up old migrations");
 		system('rm -rf ' . base_path('_migrate'));
 

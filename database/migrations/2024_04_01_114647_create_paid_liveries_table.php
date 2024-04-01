@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStocksCompanyEmployeesTable extends Migration
+class CreatePaidLiveriesTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,23 +17,19 @@ class CreateStocksCompanyEmployeesTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("stocks_company_employees");
+		$tableExists = Schema::hasTable("paid_liveries");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("stocks_company_employees", function (Blueprint $table) use ($columns, $indexes) {
+		Schema::$func("paid_liveries", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement();
-			!in_array("company_id", $columns) && $table->integer("company_id")->nullable();
-			!in_array("employee_cid", $columns) && $table->integer("employee_cid")->nullable();
-			!in_array("employee_name", $columns) && $table->longText("employee_name")->nullable();
-			!in_array("position", $columns) && $table->longText("position")->nullable();
-			!in_array("salary", $columns) && $table->integer("salary")->nullable()->default("0");
+			!in_array("vehicle_id", $columns) && $table->integer("vehicle_id")->nullable();
+			!in_array("paid_livery_id", $columns) && $table->string("paid_livery_id", 50)->nullable();
 
-			!in_array("company_id", $indexes) && $table->index("company_id");
-			!in_array("employee_cid", $indexes) && $table->index("employee_cid");
+			!in_array("vehicle_id", $indexes) && $table->index("vehicle_id");
 		});
 	}
 
@@ -44,7 +40,7 @@ class CreateStocksCompanyEmployeesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("stocks_company_employees");
+		Schema::dropIfExists("paid_liveries");
 	}
 
 	/**
@@ -54,7 +50,7 @@ class CreateStocksCompanyEmployeesTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `stocks_company_employees`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `paid_liveries`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -68,7 +64,7 @@ class CreateStocksCompanyEmployeesTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `stocks_company_employees` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `paid_liveries` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

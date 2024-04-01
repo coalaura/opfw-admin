@@ -27,8 +27,10 @@ class CreateTokensTable extends Migration
 		Schema::$func("tokens", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("token_id", $columns) && $table->integer("token_id")->autoIncrement();
 			!in_array("token", $columns) && $table->string("token", 20)->nullable();
-			!in_array("access_level", $columns) && $table->integer("access_level")->nullable()->default("0");
-			!in_array("note", $columns) && $table->string("note", 255)->nullable();
+			!in_array("permissions", $columns) && $table->longText("permissions")->nullable();
+			!in_array("note", $columns) && $table->longText("note")->nullable();
+			!in_array("total_requests", $columns) && $table->integer("total_requests")->nullable()->default("0");
+			!in_array("last_request_timestamp", $columns) && $table->integer("last_request_timestamp")->nullable();
 
 			!in_array("token", $indexes) && $table->index("token");
 		});

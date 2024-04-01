@@ -47,7 +47,6 @@ class CreateCharactersTable extends Migration
 			!in_array("tattoos_data", $columns) && $table->longText("tattoos_data")->nullable();
 			!in_array("phone_number", $columns) && $table->longText("phone_number")->nullable();
 			!in_array("is_dead", $columns) && $table->tinyInteger("is_dead")->nullable();
-			!in_array("model", $columns) && $table->longText("model")->nullable();
 			!in_array("stocks_balance", $columns) && $table->double("stocks_balance")->nullable()->default("0");
 			!in_array("jail", $columns) && $table->integer("jail")->nullable();
 			!in_array("character_creation_timestamp", $columns) && $table->integer("character_creation_timestamp")->nullable();

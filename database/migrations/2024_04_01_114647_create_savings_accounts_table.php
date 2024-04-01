@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOutfitsTable extends Migration
+class CreateSavingsAccountsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,22 +17,24 @@ class CreateOutfitsTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("outfits");
+		$tableExists = Schema::hasTable("savings_accounts");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("outfits", function (Blueprint $table) use ($columns, $indexes) {
+		Schema::$func("savings_accounts", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement();
-			!in_array("character_id", $columns) && $table->integer("character_id")->nullable();
-			!in_array("name", $columns) && $table->longText("name")->nullable();
-			!in_array("ped_data", $columns) && $table->longText("ped_data")->nullable();
-			!in_array("updated_at", $columns) && $table->integer("updated_at")->nullable();
+			!in_array("character_id", $columns) && $table->integer("character_id");
+			!in_array("name", $columns) && $table->string("name", 255)->nullable();
+			!in_array("balance", $columns) && $table->integer("balance")->nullable();
+			!in_array("access", $columns) && $table->longText("access")->nullable();
+			!in_array("last_transaction", $columns) && $table->integer("last_transaction")->nullable();
 
+			!in_array("id", $indexes) && $table->index("id");
 			!in_array("character_id", $indexes) && $table->index("character_id");
-			!in_array("name", $indexes) && $table->index("name");
+			!in_array("access", $indexes) && $table->index("access");
 		});
 	}
 
@@ -43,7 +45,7 @@ class CreateOutfitsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("outfits");
+		Schema::dropIfExists("savings_accounts");
 	}
 
 	/**
@@ -53,7 +55,7 @@ class CreateOutfitsTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `outfits`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `savings_accounts`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -67,7 +69,7 @@ class CreateOutfitsTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `outfits` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `savings_accounts` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

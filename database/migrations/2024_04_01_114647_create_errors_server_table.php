@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSavingsAccountsTable extends Migration
+class CreateErrorsServerTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,23 +17,20 @@ class CreateSavingsAccountsTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("savings_accounts");
+		$tableExists = Schema::hasTable("errors_server");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("savings_accounts", function (Blueprint $table) use ($columns, $indexes) {
-			!in_array("id", $columns) && $table->integer("id")->autoIncrement();
-			!in_array("character_id", $columns) && $table->integer("character_id");
-			!in_array("name", $columns) && $table->string("name", 255)->nullable();
-			!in_array("balance", $columns) && $table->integer("balance")->nullable();
-			!in_array("access", $columns) && $table->longText("access")->nullable();
-
-			!in_array("id", $indexes) && $table->index("id");
-			!in_array("character_id", $indexes) && $table->index("character_id");
-			!in_array("access", $indexes) && $table->index("access");
+		Schema::$func("errors_server", function (Blueprint $table) use ($columns, $indexes) {
+			!in_array("error_id", $columns) && $table->integer("error_id")->autoIncrement();
+			!in_array("error_location", $columns) && $table->longText("error_location")->nullable();
+			!in_array("error_trace", $columns) && $table->longText("error_trace")->nullable();
+			!in_array("server_id", $columns) && $table->integer("server_id")->nullable();
+			!in_array("timestamp", $columns) && $table->integer("timestamp")->nullable();
+			!in_array("server_version", $columns) && $table->string("server_version", 50)->nullable();
 		});
 	}
 
@@ -44,7 +41,7 @@ class CreateSavingsAccountsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("savings_accounts");
+		Schema::dropIfExists("errors_server");
 	}
 
 	/**
@@ -54,7 +51,7 @@ class CreateSavingsAccountsTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `savings_accounts`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `errors_server`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -68,7 +65,7 @@ class CreateSavingsAccountsTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `savings_accounts` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `errors_server` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;
