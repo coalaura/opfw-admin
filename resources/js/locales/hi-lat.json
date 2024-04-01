@@ -1401,6 +1401,7 @@
         "no_permissions": "Koi permissions set nahi ki gayi hain.",
         "not_used": "Abhi tak istemal nahi kiya gaya.",
         "api_logs": "API Log",
-        "no_logs": "Koi API log nahi mila."
+        "no_logs": "Koi API log nahi mila.",
+        "panel_token": "Admin Panel Ka Token"
     }
 }

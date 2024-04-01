@@ -18,7 +18,7 @@
 
         <div class="mt-14">
             <div class="flex flex-wrap gap-4">
-                <div v-for="token in list" :key="token.id" class="bg-gray-200 dark:bg-gray-700 border-gray-500 px-4 py-2 rounded-sm shadow-sm relative w-80">
+                <div v-for="token in list" :key="token.id" class="bg-gray-200 dark:bg-gray-700 border-gray-500 px-4 py-2 rounded-sm shadow-sm relative w-80" :class="{'!bg-blue-500 !bg-opacity-20': token.disabled}">
                     <div class="flex justify-between gap-3 items-center">
                         <input v-model="token.note" class="px-1.5 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full" :placeholder="t('tokens.note_placeholder')" @input="token.changed = true" v-if="token.id === editingNameId" autofocus />
                         <b class="cursor-pointer block" @click="editingNameId = token.id" v-else>{{ token.note ? token.note : `Token #${token.id}` }}</b>
@@ -26,7 +26,7 @@
                         <i class="fas fa-copy cursor-pointer" @click="copyToken(token)"></i>
                     </div>
 
-                    <div class="mt-1 pt-1 border-t border-gray-500 w-full text-sm">
+                    <div class="mt-1 pt-1 border-t border-gray-500 w-full text-sm" :class="{'!border-blue-400': token.disabled}">
                         <template v-if="token.requests > 0">
                             <span class="italic">{{ numberFormat(token.requests, 0, false) }}</span> total requests.<br>
                             Last used <span class="italic">{{ token.lastRequest * 1000 | formatTime }}</span>
@@ -35,25 +35,25 @@
                         <template v-else>{{ t('tokens.not_used') }}</template>
                     </div>
 
-                    <div class="mt-1 pt-1 border-t border-gray-500 flex flex-col gap-1">
-                        <div class="font-semibold text-sm border-b border-gray-500 border-dashed flex justify-between items-center">
+                    <div class="mt-1 pt-1 border-t border-gray-500 flex flex-col gap-1" :class="{'!border-blue-400': token.disabled}">
+                        <div class="font-semibold text-sm border-b border-gray-500 border-dashed flex justify-between items-center" :class="{'!border-blue-400': token.disabled}">
                             {{ t('tokens.permissions') }}
 
-                            <i class="fas fa-plus cursor-pointer" @click="addEmptyPermission(token)"></i>
+                            <i class="fas fa-plus cursor-pointer" @click="addEmptyPermission(token)" v-if="!token.disabled"></i>
                         </div>
 
                         <div class="text-sm bg-gray-200 dark:bg-gray-700 flex" v-for="(permission, index) in token.permissions" :key="index">
-                            <select v-model="permission.method" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-32 border-r-0" @change="token.changed = true">
+                            <select v-model="permission.method" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-32 border-r-0" @change="token.changed = true" :disabled="token.disabled" :class="{'!bg-blue-500 !bg-opacity-20 border-blue-400': token.disabled}">
                                 <option v-for="method in methods" :value="method">{{ method }}</option>
                             </select>
 
-                            <select v-model="permission.path" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full" @change="token.changed = true">
+                            <select v-model="permission.path" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full" @change="token.changed = true" :disabled="token.disabled" :class="{'!bg-blue-500 !bg-opacity-20 border-blue-400': token.disabled}">
                                 <option value="*">*</option>
 
                                 <option v-for="path in routes[permission.method]" :value="path">{{ path }}</option>
                             </select>
 
-                            <button class="p-0.5 w-8 flex items-center justify-center bg-gray-200 dark:bg-gray-800 border border-input border-l-0">
+                            <button class="p-0.5 w-8 flex items-center justify-center bg-gray-200 dark:bg-gray-800 border border-input border-l-0" v-if="!token.disabled">
                                 <i class="fas fa-minus cursor-pointer" @click="token.permissions.splice(index, 1)"></i>
                             </button>
                         </div>
@@ -63,8 +63,12 @@
                         </div>
                     </div>
 
-                    <div class="flex gap-2 mt-1 pt-1 border-t border-gray-500">
-                        <button class="p-1 mt-2 text-sm font-bold leading-4 text-center w-full rounded-sm border-red-400 bg-secondary dark:bg-dark-secondary border-2 block" @click="deleteToken(token.id)" v-if="token.id">
+                    <div class="absolute bottom-0.5 left-1.5 text-xs italic" v-if="token.disabled">
+                        {{ t('tokens.panel_token') }}
+                    </div>
+
+                    <div class="flex gap-2 mt-1 pt-1 border-t border-gray-500" v-if="!token.disabled">
+                        <button class="p-1 mt-2 text-sm font-bold leading-4 text-center w-full rounded-sm border-red-400 bg-secondary dark:bg-dark-secondary border-2 block" @click="deleteToken(token.id)">
                             {{ t('tokens.delete') }}
                         </button>
 
@@ -90,7 +94,7 @@
                     <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-red-600 text-white" v-else-if="log.status_code >= 500 && log.status_code < 600">{{ log.status_code }}</div>
                     <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-gray-800 text-white" v-else>{{ log.status_code }}</div>
 
-                    <div class="px-1 py-0.5 w-36 truncate flex-shrink-0">{{ log.ip_address }}</div>
+                    <div class="px-1 py-0.5 w-36 truncate flex-shrink-0" :title="log.ip_address">{{ getLogTokenNote(log) }}</div>
                     <div class="px-1 py-0.5 w-12 flex-shrink-0 font-semibold">{{ log.method }}</div>
                     <div class="px-1 py-0.5 w-full truncate">{{ log.path }}</div>
                     <div class="px-1 py-0.5 w-48 flex-shrink-0 text-right">{{ log.timestamp * 1000 | formatTime(true) }}</div>
@@ -109,6 +113,9 @@ import Layout from './../../Layouts/App';
 export default {
     layout: Layout,
     props: {
+        panel: {
+            type: String
+        },
         tokens: {
             type: Array,
             required: true
@@ -128,6 +135,8 @@ export default {
             editingNameId: false,
 
             list: this.tokens.map(token => {
+                token.disabled = this.panel === token.token;
+
                 token.changed = false;
 
                 return token;
@@ -236,6 +245,17 @@ export default {
             } catch (e) { }
 
             this.isLoadingLogs = false;
+        },
+        getLogTokenNote(log) {
+            const tokenId = log.token_id;
+
+            if (!tokenId) return log.ip_address;
+
+            const token = tokenId ? this.list.find(token => token.id === tokenId) : null;
+
+            console.log(token, tokenId, this.list)
+
+            return token ? token.note : `Token #${tokenId}`;
         }
     },
     mounted() {

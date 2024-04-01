@@ -1417,7 +1417,8 @@
         "no_permissions": "No permissions set.",
         "not_used": "Not yet used.",
         "api_logs": "API Logs",
-        "no_logs": "No API logs found."
+        "no_logs": "No API logs found.",
+        "panel_token": "Admin Panel Token"
     },
     "login": {
         "title": "Login with your Discord account.",

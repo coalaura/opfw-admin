@@ -1401,6 +1401,7 @@
         "no_permissions": "No allow-do-things set.",
         "not_used": "Not use yet.",
         "api_logs": "API Logs",
-        "no_logs": "No API logs found."
+        "no_logs": "No API logs found.",
+        "panel_token": "Boss Rock Sign"
     }
 }

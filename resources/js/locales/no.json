@@ -1401,6 +1401,7 @@
         "no_permissions": "Ingen tillatelser satt.",
         "not_used": "Ikke brukt enda.",
         "api_logs": "API-loggfiler",
-        "no_logs": "Ingen API-loggfiler funnet."
+        "no_logs": "Ingen API-loggfiler funnet.",
+        "panel_token": "Adminpaneltoken"
     }
 }
