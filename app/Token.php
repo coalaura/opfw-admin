@@ -77,6 +77,16 @@ class Token extends Model
             $query->where('id', '<', $beforeId);
         }
 
+        $panelToken = env('OP_FW_TOKEN', '');
+
+        if ($panelToken) {
+            $panelTokenId = Token::where('token', $panelToken)->value('token_id');
+
+            if ($panelTokenId) {
+                $query->where('token_id', '!=', $panelTokenId);
+            }
+        }
+
         return $query->get()->toArray();
     }
 
