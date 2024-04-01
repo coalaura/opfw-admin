@@ -78,6 +78,7 @@ class Token extends Model
             $query->where('id', '<', $beforeId);
         }
 
+        /*
         $panelToken = env('OP_FW_TOKEN', '');
 
         if ($panelToken) {
@@ -87,6 +88,7 @@ class Token extends Model
                 $query->where('token_id', '!=', $panelTokenId);
             }
         }
+        */
 
         return $query->get()->toArray();
     }
