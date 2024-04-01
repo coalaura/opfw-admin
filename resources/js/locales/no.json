@@ -1402,6 +1402,7 @@
         "not_used": "Ikke brukt enda.",
         "api_logs": "API-loggfiler",
         "no_logs": "Ingen API-loggfiler funnet.",
-        "panel_token": "Adminpaneltoken"
+        "panel_token": "Adminpaneltoken",
+        "no_more_logs": "Ingen flere logger å laste."
     }
 }

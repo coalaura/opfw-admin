@@ -1402,6 +1402,7 @@
         "not_used": "Ain't been used yet.",
         "api_logs": "API Lahgs",
         "no_logs": "No API lahgs fahnd.",
-        "panel_token": "Admin Panel Token"
+        "panel_token": "Admin Panel Token",
+        "no_more_logs": "Ain't no more logs to haul."
     }
 }

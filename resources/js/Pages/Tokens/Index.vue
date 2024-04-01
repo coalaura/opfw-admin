@@ -18,15 +18,18 @@
 
         <div class="mt-14">
             <div class="flex flex-wrap gap-4">
-                <div v-for="token in list" :key="token.id" class="bg-gray-200 dark:bg-gray-700 border-gray-500 px-4 py-2 rounded-sm shadow-sm relative w-80" :class="{'!bg-blue-500 !bg-opacity-20': token.disabled}">
+                <div v-for="token in list" :key="token.id" class="bg-gray-200 dark:bg-gray-700 border-gray-500 px-4 py-2 rounded-sm shadow-sm relative w-80" :class="{ '!bg-blue-500 !bg-opacity-20': token.disabled }">
                     <div class="flex justify-between gap-3 items-center">
                         <input v-model="token.note" class="px-1.5 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full" :placeholder="t('tokens.note_placeholder')" @input="token.changed = true" v-if="token.id === editingNameId" autofocus />
                         <b class="cursor-pointer block" @click="editingNameId = token.id" v-else>{{ token.note ? token.note : `Token #${token.id}` }}</b>
 
-                        <i class="fas fa-copy cursor-pointer" @click="copyToken(token)"></i>
+                        <div class="flex gap-2">
+                            <i class="fas fa-receipt cursor-pointer" @click="viewLogs(token.id)"></i>
+                            <i class="fas fa-copy cursor-pointer" @click="copyToken(token)"></i>
+                        </div>
                     </div>
 
-                    <div class="mt-1 pt-1 border-t border-gray-500 w-full text-sm" :class="{'!border-blue-400': token.disabled}">
+                    <div class="mt-1 pt-1 border-t border-gray-500 w-full text-sm" :class="{ '!border-blue-400': token.disabled }">
                         <template v-if="token.requests > 0">
                             <span class="italic">{{ numberFormat(token.requests, 0, false) }}</span> total requests.<br>
                             Last used <span class="italic">{{ token.lastRequest * 1000 | formatTime }}</span>
@@ -35,19 +38,19 @@
                         <template v-else>{{ t('tokens.not_used') }}</template>
                     </div>
 
-                    <div class="mt-1 pt-1 border-t border-gray-500 flex flex-col gap-1" :class="{'!border-blue-400': token.disabled}">
-                        <div class="font-semibold text-sm border-b border-gray-500 border-dashed flex justify-between items-center" :class="{'!border-blue-400': token.disabled}">
+                    <div class="mt-1 pt-1 border-t border-gray-500 flex flex-col gap-1" :class="{ '!border-blue-400': token.disabled }">
+                        <div class="font-semibold text-sm border-b border-gray-500 border-dashed flex justify-between items-center" :class="{ '!border-blue-400': token.disabled }">
                             {{ t('tokens.permissions') }}
 
                             <i class="fas fa-plus cursor-pointer" @click="addEmptyPermission(token)" v-if="!token.disabled"></i>
                         </div>
 
                         <div class="text-sm bg-gray-200 dark:bg-gray-700 flex" v-for="(permission, index) in token.permissions" :key="index">
-                            <select v-model="permission.method" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-32 border-r-0" @change="token.changed = true" :disabled="token.disabled" :class="{'!bg-blue-500 !bg-opacity-20 border-blue-400': token.disabled}">
+                            <select v-model="permission.method" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-32 border-r-0" @change="token.changed = true" :disabled="token.disabled" :class="{ '!bg-blue-500 !bg-opacity-20 border-blue-400': token.disabled }">
                                 <option v-for="method in methods" :value="method">{{ method }}</option>
                             </select>
 
-                            <select v-model="permission.path" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full" @change="token.changed = true" :disabled="token.disabled" :class="{'!bg-blue-500 !bg-opacity-20 border-blue-400': token.disabled}">
+                            <select v-model="permission.path" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full" @change="token.changed = true" :disabled="token.disabled" :class="{ '!bg-blue-500 !bg-opacity-20 border-blue-400': token.disabled }">
                                 <option value="*">*</option>
 
                                 <option v-for="path in routes[permission.method]" :value="path">{{ path }}</option>
@@ -80,38 +83,56 @@
             </div>
         </div>
 
-        <div class="w-full border-t border-gray-500 my-4"></div>
+        <modal :show.sync="showingLogs">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('tokens.api_logs') }}
+                </h1>
+                <p>
+                    {{ getLogTokenNote(logTokenId) }}
+                </p>
+            </template>
 
-        <div class="max-w-xl">
-            <h2 class="mb-2">{{ t('tokens.api_logs') }}</h2>
+            <template #default>
+                <div class="max-h-96 overflow-y-auto border-gray-500 border" ref="logs">
+                    <div class="text-sm bg-gray-200 dark:bg-gray-700 flex border-b border-gray-500" v-for="log in logs" :key="log.id">
+                        <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-blue-600 text-white" v-if="log.status_code >= 100 && log.status_code < 200">{{ log.status_code }}</div>
+                        <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-lime-600 text-white" v-else-if="log.status_code >= 200 && log.status_code < 300">{{ log.status_code }}</div>
+                        <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-yellow-600 text-white" v-else-if="log.status_code >= 300 && log.status_code < 400">{{ log.status_code }}</div>
+                        <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-purple-600 text-white" v-else-if="log.status_code >= 400 && log.status_code < 500">{{ log.status_code }}</div>
+                        <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-red-600 text-white" v-else-if="log.status_code >= 500 && log.status_code < 600">{{ log.status_code }}</div>
+                        <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-gray-800 text-white" v-else>{{ log.status_code }}</div>
 
-            <div class="max-h-96 overflow-y-auto border-gray-500 border" ref="logs">
-                <div class="text-sm bg-gray-200 dark:bg-gray-700 flex border-b border-gray-500" v-for="log in logs" :key="log.id">
-                    <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-blue-600 text-white" v-if="log.status_code >= 100 && log.status_code < 200">{{ log.status_code }}</div>
-                    <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-lime-600 text-white" v-else-if="log.status_code >= 200 && log.status_code < 300">{{ log.status_code }}</div>
-                    <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-yellow-600 text-white" v-else-if="log.status_code >= 300 && log.status_code < 400">{{ log.status_code }}</div>
-                    <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-purple-600 text-white" v-else-if="log.status_code >= 400 && log.status_code < 500">{{ log.status_code }}</div>
-                    <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-red-600 text-white" v-else-if="log.status_code >= 500 && log.status_code < 600">{{ log.status_code }}</div>
-                    <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-gray-800 text-white" v-else>{{ log.status_code }}</div>
+                        <div class="px-1 py-0.5 w-28 truncate flex-shrink-0">{{ log.ip_address.replace(/:\d+$/m, '') }}</div>
+                        <div class="px-1 py-0.5 w-12 flex-shrink-0 font-semibold">{{ log.method }}</div>
+                        <div class="px-1 py-0.5 w-full truncate">{{ log.path }}</div>
+                        <div class="px-1 py-0.5 w-48 flex-shrink-0 text-right">{{ log.timestamp * 1000 | formatTime(true) }}</div>
+                    </div>
 
-                    <div class="px-1 py-0.5 w-28 truncate flex-shrink-0" :title="log.ip_address">{{ getLogTokenNote(log) }}</div>
-                    <div class="px-1 py-0.5 w-12 flex-shrink-0 font-semibold">{{ log.method }}</div>
-                    <div class="px-1 py-0.5 w-full truncate">{{ log.path }}</div>
-                    <div class="px-1 py-0.5 w-48 flex-shrink-0 text-right">{{ log.timestamp * 1000 | formatTime(true) }}</div>
+                    <div class="px-1 py-0.5 text-sm bg-gray-200 dark:bg-gray-700 flex justify-center" v-if="logs.length === 0">{{ t('tokens.no_logs') }}</div>
+                    <div class="px-1 py-0.5 text-sm bg-gray-200 dark:bg-gray-700 flex justify-center" v-if="logs.length > 0 && !moreLogs">{{ t('tokens.no_more_logs') }}</div>
                 </div>
+            </template>
 
-                <div class="px-1 py-0.5 text-sm bg-gray-200 dark:bg-gray-700 flex justify-center" v-if="logsLoaded && logs.length === 0">{{ t('tokens.no_logs') }}</div>
-            </div>
-        </div>
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showingLogs = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
 
     </div>
 </template>
 
 <script>
 import Layout from './../../Layouts/App';
+import Modal from './../../Components/Modal';
 
 export default {
     layout: Layout,
+    components: {
+        Modal
+    },
     props: {
         panel: {
             type: String
@@ -142,9 +163,10 @@ export default {
                 return token;
             }),
 
+            showingLogs: false,
+            logTokenId: false,
             isLoadingLogs: false,
             moreLogs: false,
-            logsLoaded: false,
             logs: [],
         };
     },
@@ -229,10 +251,18 @@ export default {
             this.isLoadingLogs = true;
 
             const lastId = this.logs.length ? this.logs[this.logs.length - 1].id : 0,
-                query = lastId ? `?before=${lastId}` : '';
+                query = [];
+
+            if (this.logTokenId) {
+                query.push(`id=${this.logTokenId}`);
+            }
+
+            if (lastId) {
+                query.push(`before=${lastId}`);
+            }
 
             try {
-                const result = await axios.get('/tokens/logs' + query);
+                const result = await axios.get('/tokens/logs?' + query.join('&'));
 
                 if (result.data && result.data.status) {
                     const logs = result.data.data;
@@ -246,27 +276,30 @@ export default {
 
             this.isLoadingLogs = false;
         },
-        getLogTokenNote(log) {
-            const tokenId = log.token_id;
-
-            if (!tokenId) return log.ip_address?.replace(/:\d+$/m, '');
-
-            const token = tokenId ? this.list.find(token => token.id === tokenId) : null;
+        getLogTokenNote(tokenId) {
+            const token = this.list.find(token => token.id === tokenId);
 
             return token ? token.note : `Token #${tokenId}`;
+        },
+        viewLogs(tokenId) {
+            this.showingLogs = true;
+            this.logTokenId = tokenId;
+            this.logs = [];
+            this.moreLogs = false;
+
+            this.loadMoreLogs();
+
+            this.$nextTick(() => {
+                // Infinite scroll, pog
+                this.$refs.logs.addEventListener('scroll', () => {
+                    if (this.isLoadingLogs || !this.moreLogs) return;
+
+                    if (this.$refs.logs.scrollTop + this.$refs.logs.clientHeight >= this.$refs.logs.scrollHeight) {
+                        this.loadMoreLogs();
+                    }
+                });
+            });
         }
-    },
-    mounted() {
-        this.loadMoreLogs();
-
-        // Infinite scroll, pog
-        this.$refs.logs.addEventListener('scroll', () => {
-            if (this.isLoadingLogs || !this.moreLogs) return;
-
-            if (this.$refs.logs.scrollTop + this.$refs.logs.clientHeight >= this.$refs.logs.scrollHeight) {
-                this.loadMoreLogs();
-            }
-        });
     }
 }
 </script>

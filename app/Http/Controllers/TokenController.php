@@ -82,9 +82,10 @@ class TokenController extends Controller
             abort(401);
         }
 
+        $tokenId = $request->input('id') ?: null;
         $before = $request->input('before') ?: null;
 
-        $logs = Token::getRecentLogs($before, 50);
+        $logs = Token::getRecentLogs($tokenId, $before, 50);
 
         return $this->json(true, $logs);
     }

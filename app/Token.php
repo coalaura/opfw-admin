@@ -66,11 +66,10 @@ class Token extends Model
         return self::stringToPermissions($this->permissions);
     }
 
-    public static function getRecentLogs(?int $beforeId, int $limit)
+    public static function getRecentLogs(?int $tokenId, ?int $beforeId, int $limit)
     {
         $query = DB::table('api_logs')
-            //->select(['id', 'token_id', 'ip_address', 'method', 'path', 'status_code', 'timestamp'])
-            ->select(['id', 'ip_address', 'method', 'path', 'status_code', 'timestamp'])
+            ->select(['id', 'token_id', 'ip_address', 'method', 'path', 'status_code', 'timestamp'])
             ->orderBy('timestamp', 'desc')
             ->limit($limit);
 
@@ -78,17 +77,9 @@ class Token extends Model
             $query->where('id', '<', $beforeId);
         }
 
-        /*
-        $panelToken = env('OP_FW_TOKEN', '');
-
-        if ($panelToken) {
-            $panelTokenId = Token::where('token', $panelToken)->value('token_id');
-
-            if ($panelTokenId) {
-                $query->where('token_id', '!=', $panelTokenId);
-            }
+        if ($tokenId) {
+            $query->where('token_id', '=', $tokenId);
         }
-        */
 
         return $query->get()->toArray();
     }

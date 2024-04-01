@@ -1418,7 +1418,8 @@
         "not_used": "Not yet used.",
         "api_logs": "API Logs",
         "no_logs": "No API logs found.",
-        "panel_token": "Admin Panel Token"
+        "panel_token": "Admin Panel Token",
+        "no_more_logs": "No more logs to load."
     },
     "login": {
         "title": "Login with your Discord account.",
