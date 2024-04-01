@@ -1399,6 +1399,8 @@
         "note_placeholder": "Note",
         "permissions": "Permissions",
         "no_permissions": "Ain't no permissions set.",
-        "not_used": "Ain't been used yet."
+        "not_used": "Ain't been used yet.",
+        "api_logs": "API Lahgs",
+        "no_logs": "No API lahgs fahnd."
     }
 }

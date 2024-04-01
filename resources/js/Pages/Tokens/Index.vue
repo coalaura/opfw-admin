@@ -76,6 +76,30 @@
             </div>
         </div>
 
+        <div class="w-full border-t border-gray-500 my-4"></div>
+
+        <div class="max-w-xl">
+            <h2 class="mb-2">{{ t('tokens.api_logs') }}</h2>
+
+            <div class="max-h-96 overflow-y-auto border-gray-500 border" ref="logs">
+                <div class="text-sm bg-gray-200 dark:bg-gray-700 flex border-b border-gray-500" v-for="log in logs" :key="log.id">
+                    <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-blue-600 text-white" v-if="log.status_code >= 100 && log.status_code < 200">{{ log.status_code }}</div>
+                    <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-lime-600 text-white" v-else-if="log.status_code >= 200 && log.status_code < 300">{{ log.status_code }}</div>
+                    <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-yellow-600 text-white" v-else-if="log.status_code >= 300 && log.status_code < 400">{{ log.status_code }}</div>
+                    <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-purple-600 text-white" v-else-if="log.status_code >= 400 && log.status_code < 500">{{ log.status_code }}</div>
+                    <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-red-600 text-white" v-else-if="log.status_code >= 500 && log.status_code < 600">{{ log.status_code }}</div>
+                    <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-gray-800 text-white" v-else>{{ log.status_code }}</div>
+
+                    <div class="px-1 py-0.5 w-36 truncate flex-shrink-0">{{ log.ip_address }}</div>
+                    <div class="px-1 py-0.5 w-12 flex-shrink-0 font-semibold">{{ log.method }}</div>
+                    <div class="px-1 py-0.5 w-full truncate">{{ log.path }}</div>
+                    <div class="px-1 py-0.5 w-48 flex-shrink-0 text-right">{{ log.timestamp * 1000 | formatTime(true) }}</div>
+                </div>
+
+                <div class="px-1 py-0.5 text-sm bg-gray-200 dark:bg-gray-700 flex justify-center" v-if="logsLoaded && logs.length === 0">{{ t('tokens.no_logs') }}</div>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -107,7 +131,12 @@ export default {
                 token.changed = false;
 
                 return token;
-            })
+            }),
+
+            isLoadingLogs: false,
+            moreLogs: false,
+            logsLoaded: false,
+            logs: [],
         };
     },
     methods: {
@@ -184,7 +213,42 @@ export default {
         },
         copyToken(token) {
             this.copyToClipboard(token.token);
+        },
+        async loadMoreLogs() {
+            if (this.isLoadingLogs) return;
+
+            this.isLoadingLogs = true;
+
+            const lastId = this.logs.length ? this.logs[this.logs.length - 1].id : 0,
+                query = lastId ? `?before=${lastId}` : '';
+
+            try {
+                const result = await axios.get('/tokens/logs' + query);
+
+                if (result.data && result.data.status) {
+                    const logs = result.data.data;
+
+                    this.logs = this.logs.concat(logs);
+
+                    this.moreLogs = logs.length === 50;
+                    this.logsLoaded = true;
+                }
+            } catch (e) { }
+
+            this.isLoadingLogs = false;
         }
+    },
+    mounted() {
+        this.loadMoreLogs();
+
+        // Infinite scroll, pog
+        this.$refs.logs.addEventListener('scroll', () => {
+            if (this.isLoadingLogs || !this.moreLogs) return;
+
+            if (this.$refs.logs.scrollTop + this.$refs.logs.clientHeight >= this.$refs.logs.scrollHeight) {
+                this.loadMoreLogs();
+            }
+        });
     }
 }
 </script>

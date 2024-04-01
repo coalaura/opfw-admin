@@ -1399,6 +1399,8 @@
         "note_placeholder": "Notat",
         "permissions": "Tillatelser",
         "no_permissions": "Ingen tillatelser satt.",
-        "not_used": "Ikke brukt enda."
+        "not_used": "Ikke brukt enda.",
+        "api_logs": "API-loggfiler",
+        "no_logs": "Ingen API-loggfiler funnet."
     }
 }

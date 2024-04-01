@@ -1399,6 +1399,8 @@
         "note_placeholder": "Scrawlin'",
         "permissions": "Permissions",
         "no_permissions": "No permissions be set.",
-        "not_used": "Not yet made use of."
+        "not_used": "Not yet made use of.",
+        "api_logs": "API Ledgers",
+        "no_logs": "Avast, no API ledgers be spotted."
     }
 }

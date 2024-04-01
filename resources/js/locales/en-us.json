@@ -1415,7 +1415,9 @@
         "note_placeholder": "Note",
         "permissions": "Permissions",
         "no_permissions": "No permissions set.",
-        "not_used": "Not yet used."
+        "not_used": "Not yet used.",
+        "api_logs": "API Logs",
+        "no_logs": "No API logs found."
     },
     "login": {
         "title": "Login with your Discord account.",

@@ -1399,6 +1399,8 @@
         "note_placeholder": "📝",
         "permissions": "🔒👁️‍🗨️",
         "no_permissions": "❌🔒👁️‍🗨️",
-        "not_used": "❌🕒🤳"
+        "not_used": "❌🕒🤳",
+        "api_logs": "📜🔍",
+        "no_logs": "❌ 📜🔍 🗃️"
     }
 }

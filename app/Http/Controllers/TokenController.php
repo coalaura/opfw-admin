@@ -74,4 +74,17 @@ class TokenController extends Controller
 
         return $this->json(true);
     }
+
+    public function logs(Request $request)
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_API_TOKENS)) {
+            abort(401);
+        }
+
+        $before = $request->input('before') ?: null;
+
+        $logs = Token::getRecentLogs($before, 50);
+
+        return $this->json(true, $logs);
+    }
 }

@@ -5,6 +5,7 @@ namespace App;
 use App\Helpers\OPFWHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Token extends Model
 {
@@ -63,6 +64,20 @@ class Token extends Model
         }
 
         return self::stringToPermissions($this->permissions);
+    }
+
+    public static function getRecentLogs(?int $beforeId, int $limit)
+    {
+        $query = DB::table('api_logs')
+            ->select(['id', 'ip_address', 'method', 'path', 'status_code', 'timestamp'])
+            ->orderBy('timestamp', 'desc')
+            ->limit($limit);
+
+        if ($beforeId) {
+            $query->where('id', '<', $beforeId);
+        }
+
+        return $query->get()->toArray();
     }
 
     public static function stringToPermissions(string $permissions): array
