@@ -69,7 +69,8 @@ class Token extends Model
     public static function getRecentLogs(?int $beforeId, int $limit)
     {
         $query = DB::table('api_logs')
-            ->select(['id', 'token_id', 'ip_address', 'method', 'path', 'status_code', 'timestamp'])
+            //->select(['id', 'token_id', 'ip_address', 'method', 'path', 'status_code', 'timestamp'])
+            ->select(['id', 'ip_address', 'method', 'path', 'status_code', 'timestamp'])
             ->orderBy('timestamp', 'desc')
             ->limit($limit);
 
