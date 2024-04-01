@@ -249,11 +249,9 @@ export default {
         getLogTokenNote(log) {
             const tokenId = log.token_id;
 
-            if (!tokenId) return log.ip_address;
+            if (!tokenId) return log.ip_address?.replace(/:\d+$/m, '');
 
             const token = tokenId ? this.list.find(token => token.id === tokenId) : null;
-
-            console.log(token, tokenId, this.list)
 
             return token ? token.note : `Token #${tokenId}`;
         }
