@@ -94,7 +94,7 @@
                     <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-red-600 text-white" v-else-if="log.status_code >= 500 && log.status_code < 600">{{ log.status_code }}</div>
                     <div class="px-1 py-0.5 w-10 flex-shrink-0 bg-gray-800 text-white" v-else>{{ log.status_code }}</div>
 
-                    <div class="px-1 py-0.5 w-36 truncate flex-shrink-0" :title="log.ip_address">{{ getLogTokenNote(log) }}</div>
+                    <div class="px-1 py-0.5 w-28 truncate flex-shrink-0" :title="log.ip_address">{{ getLogTokenNote(log) }}</div>
                     <div class="px-1 py-0.5 w-12 flex-shrink-0 font-semibold">{{ log.method }}</div>
                     <div class="px-1 py-0.5 w-full truncate">{{ log.path }}</div>
                     <div class="px-1 py-0.5 w-48 flex-shrink-0 text-right">{{ log.timestamp * 1000 | formatTime(true) }}</div>
