@@ -1403,6 +1403,7 @@
         "api_logs": "API Ledgers",
         "no_logs": "Avast, no API ledgers be spotted.",
         "panel_token": "Cap'n's Quarters Token",
-        "no_more_logs": "Arr, no more timbers t' hoist aboard."
+        "no_more_logs": "Arr, no more timbers t' hoist aboard.",
+        "loading_logs": "Hoistin' ye logs..."
     }
 }

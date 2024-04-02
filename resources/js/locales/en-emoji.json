@@ -1403,6 +1403,7 @@
         "api_logs": "📜🔍",
         "no_logs": "❌ 📜🔍 🗃️",
         "panel_token": "👩‍💼🔧🔑",
-        "no_more_logs": "🚫🪵📥"
+        "no_more_logs": "🚫🪵📥",
+        "loading_logs": "⏳🪵🪵..."
     }
 }

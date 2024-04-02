@@ -109,8 +109,11 @@
                         <div class="px-1 py-0.5 w-48 flex-shrink-0 text-right">{{ log.timestamp * 1000 | formatTime(true) }}</div>
                     </div>
 
-                    <div class="px-1 py-0.5 text-sm bg-gray-200 dark:bg-gray-700 flex justify-center" v-if="logs.length === 0">{{ t('tokens.no_logs') }}</div>
-                    <div class="px-1 py-0.5 text-sm bg-gray-200 dark:bg-gray-700 flex justify-center" v-if="logs.length > 0 && !moreLogs">{{ t('tokens.no_more_logs') }}</div>
+                    <div class="px-1 py-0.5 text-sm bg-gray-200 dark:bg-gray-700 flex justify-center" v-if="isLoadingLogs">
+                        {{ t('tokens.loading_logs') }}
+                    </div>
+                    <div class="px-1 py-0.5 text-sm bg-gray-200 dark:bg-gray-700 flex justify-center" v-else-if="logs.length === 0">{{ t('tokens.no_logs') }}</div>
+                    <div class="px-1 py-0.5 text-sm bg-gray-200 dark:bg-gray-700 flex justify-center" v-else-if="logs.length > 0 && !moreLogs">{{ t('tokens.no_more_logs') }}</div>
                 </div>
             </template>
 
@@ -163,6 +166,7 @@ export default {
                 return token;
             }),
 
+            controller: new AbortController(),
             showingLogs: false,
             logTokenId: false,
             isLoadingLogs: false,
@@ -246,7 +250,11 @@ export default {
             this.copyToClipboard(token.token);
         },
         async loadMoreLogs() {
-            if (this.isLoadingLogs) return;
+            if (this.isLoadingLogs) {
+                this.controller.abort();
+
+                this.controller = new AbortController();
+            }
 
             this.isLoadingLogs = true;
 
@@ -262,7 +270,9 @@ export default {
             }
 
             try {
-                const result = await axios.get('/tokens/logs?' + query.join('&'));
+                const result = await axios.get('/tokens/logs?' + query.join('&'), {
+                    signal: this.controller.signal
+                });
 
                 if (result.data && result.data.status) {
                     const logs = result.data.data;

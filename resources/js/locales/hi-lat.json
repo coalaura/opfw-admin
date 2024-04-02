@@ -1403,6 +1403,7 @@
         "api_logs": "API Log",
         "no_logs": "Koi API log nahi mila.",
         "panel_token": "Admin Panel Ka Token",
-        "no_more_logs": "Ab aur log load karne ke liye nahi hai."
+        "no_more_logs": "Ab aur log load karne ke liye nahi hai.",
+        "loading_logs": "Loding logs..."
     }
 }

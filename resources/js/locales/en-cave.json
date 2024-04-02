@@ -1403,6 +1403,7 @@
         "api_logs": "API Logs",
         "no_logs": "No API logs found.",
         "panel_token": "Boss Rock Sign",
-        "no_more_logs": "No more wood to carry."
+        "no_more_logs": "No more wood to carry.",
+        "loading_logs": "Wait... logs heavy..."
     }
 }
