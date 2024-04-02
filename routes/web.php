@@ -250,6 +250,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     // Tokens.
     Route::get('/tokens', [TokenController::class, 'index']);
     Route::get('/tokens/logs', [TokenController::class, 'logs']);
+    Route::get('/tokens/rps', [TokenController::class, 'rps']);
     Route::post('/tokens', [TokenController::class, 'create']);
     Route::put('/tokens/{token}', [TokenController::class, 'update']);
     Route::delete('/tokens/{token}', [TokenController::class, 'delete']);

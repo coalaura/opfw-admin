@@ -1420,7 +1420,8 @@
         "no_logs": "No API logs found.",
         "panel_token": "Admin Panel Token",
         "no_more_logs": "No more logs to load.",
-        "loading_logs": "Loading logs..."
+        "loading_logs": "Loading logs...",
+        "per_second": "{0} requests per second. {1} in the last 5 minutes."
     },
     "login": {
         "title": "Login with your Discord account.",

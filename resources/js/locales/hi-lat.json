@@ -1404,6 +1404,7 @@
         "no_logs": "Koi API log nahi mila.",
         "panel_token": "Admin Panel Ka Token",
         "no_more_logs": "Ab aur log load karne ke liye nahi hai.",
-        "loading_logs": "Loding logs..."
+        "loading_logs": "Loding logs...",
+        "per_second": "Prati second {0} requests. Pichhle 5 minute mein {1}."
     }
 }

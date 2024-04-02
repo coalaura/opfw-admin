@@ -82,11 +82,31 @@ class TokenController extends Controller
             abort(401);
         }
 
-        $tokenId = $request->input('id') ?: null;
+        $tokenId = $request->input('id');
+
+        if (!$tokenId || !is_numeric($tokenId)) {
+            return $this->json(false, null, 'Invalid token ID');
+        }
+
         $before = $request->input('before') ?: null;
 
         $logs = Token::getRecentLogs($tokenId, $before, 50);
 
         return $this->json(true, $logs);
+    }
+
+    public function rps(Request $request)
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_API_TOKENS)) {
+            abort(401);
+        }
+
+        $tokenId = $request->input('id');
+
+        if (!$tokenId || !is_numeric($tokenId)) {
+            return $this->json(false, null, 'Invalid token ID');
+        }
+
+        return $this->json(true, Token::getRequestsPerSecond($tokenId));
     }
 }

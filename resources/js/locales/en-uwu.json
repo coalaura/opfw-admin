@@ -1404,6 +1404,7 @@
         "no_logs": "No API wogs found.",
         "panel_token": "Admin Pawnew Token UwU",
         "no_more_logs": "Nyo mowe wogs to woad.",
-        "loading_logs": "Woading wogs..."
+        "loading_logs": "Woading wogs...",
+        "per_second": "{0} wequests pew second. {1} in da wast 5 minutes."
     }
 }

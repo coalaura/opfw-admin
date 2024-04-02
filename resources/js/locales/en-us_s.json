@@ -1404,6 +1404,7 @@
         "no_logs": "No API lahgs fahnd.",
         "panel_token": "Admin Panel Token",
         "no_more_logs": "Ain't no more logs to haul.",
-        "loading_logs": "Loadin' logs..."
+        "loading_logs": "Loadin' logs...",
+        "per_second": "{0} requests per second, y'all. {1} in the last 5 minutes."
     }
 }

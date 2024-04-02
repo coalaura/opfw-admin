@@ -88,8 +88,11 @@
                 <h1 class="dark:text-white">
                     {{ t('tokens.api_logs') }}
                 </h1>
-                <p>
+                <p class="!not-italic font-semibold">
                     {{ getLogTokenNote(logTokenId) }}
+                </p>
+                <p class="text-sm" v-if="logInfo">
+                    {{ t('tokens.per_second', logInfo.rps, logInfo.count) }}
                 </p>
             </template>
 
@@ -172,6 +175,7 @@ export default {
             isLoadingLogs: false,
             moreLogs: false,
             logs: [],
+            logInfo: false
         };
     },
     methods: {
@@ -250,20 +254,10 @@ export default {
             this.copyToClipboard(token.token);
         },
         async loadMoreLogs() {
-            if (this.isLoadingLogs) {
-                this.controller.abort();
-
-                this.controller = new AbortController();
-            }
-
             this.isLoadingLogs = true;
 
             const lastId = this.logs.length ? this.logs[this.logs.length - 1].id : 0,
-                query = [];
-
-            if (this.logTokenId) {
-                query.push(`id=${this.logTokenId}`);
-            }
+                query = [`id=${this.logTokenId}`];
 
             if (lastId) {
                 query.push(`before=${lastId}`);
@@ -286,17 +280,31 @@ export default {
 
             this.isLoadingLogs = false;
         },
+        async loadLogInfo() {
+            try {
+                const result = await axios.get(`/tokens/rps?id=${this.logTokenId}`, {
+                    signal: this.controller.signal
+                });
+
+                if (result.data && result.data.status) {
+                    this.logInfo = result.data.data;
+                }
+            } catch (e) { }
+        },
         getLogTokenNote(tokenId) {
             const token = this.list.find(token => token.id === tokenId);
 
             return token ? token.note : `Token #${tokenId}`;
         },
         viewLogs(tokenId) {
+            this.controller.abort();
+
             this.showingLogs = true;
             this.logTokenId = tokenId;
             this.logs = [];
             this.moreLogs = false;
 
+            this.loadLogInfo();
             this.loadMoreLogs();
 
             this.$nextTick(() => {

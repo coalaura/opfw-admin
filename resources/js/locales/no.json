@@ -1404,6 +1404,7 @@
         "no_logs": "Ingen API-loggfiler funnet.",
         "panel_token": "Adminpaneltoken",
         "no_more_logs": "Ingen flere logger å laste.",
-        "loading_logs": "Laster logger..."
+        "loading_logs": "Laster logger...",
+        "per_second": "{0} forespørsler per sekund. {1} de siste 5 minuttene."
     }
 }

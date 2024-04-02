@@ -66,10 +66,11 @@ class Token extends Model
         return self::stringToPermissions($this->permissions);
     }
 
-    public static function getRecentLogs(?int $tokenId, ?int $beforeId, int $limit)
+    public static function getRecentLogs(int $tokenId, ?int $beforeId = null, int $limit = 50): array
     {
         $query = DB::table('api_logs')
             ->select(['id', 'token_id', 'ip_address', 'method', 'path', 'status_code', 'timestamp'])
+            ->where('token_id', '=', $tokenId)
             ->orderBy('timestamp', 'desc')
             ->limit($limit);
 
@@ -77,11 +78,22 @@ class Token extends Model
             $query->where('id', '<', $beforeId);
         }
 
-        if ($tokenId) {
-            $query->where('token_id', '=', $tokenId);
-        }
-
         return $query->get()->toArray();
+    }
+
+    public static function getRequestsPerSecond(int $tokenId): array
+    {
+        $interval = 5 * 60;
+
+        $count = DB::table('api_logs')
+            ->where('token_id', '=', $tokenId)
+            ->where('timestamp', '>', time() - $interval)
+            ->count();
+
+        return [
+            'count' => $count,
+            'rps' => round($count / $interval, 2)
+        ];
     }
 
     public static function stringToPermissions(string $permissions): array
