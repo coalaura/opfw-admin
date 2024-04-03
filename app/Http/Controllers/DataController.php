@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class DataController extends Controller
 {
+    const Head = '<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="icon" type="image/png" href="https://c3.legacy-roleplay.com/favicon.jpg" />';
+
     public function banExceptions(Request $request)
     {
         $exceptions = Player::query()
@@ -37,7 +39,7 @@ class DataController extends Controller
 
     private function respond(string $title, string $data)
     {
-        $data = sprintf('<title>%s</title><h3 style="margin:0 0 5px 0">%s</h3>%s', $title, $title, $data);
+        $data = sprintf('%s<title>%s</title><h3 style="margin:0 0 5px 0">%s</h3>%s', self::Head, $title, $title, $data);
 
         return $this->fakeText(200, $data);
     }
