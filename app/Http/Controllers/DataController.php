@@ -32,6 +32,13 @@ class DataController extends Controller
             return strcasecmp(strip_tags($a), strip_tags($b));
         });
 
-        return $this->fakeText(200, '<h3 style="margin:0 0 5px 0">Ban Exceptions</h3>' . implode("\n", $list));
+        return $this->respond("Ban Exceptions", implode("\n", $list));
+    }
+
+    private function respond(string $title, string $data)
+    {
+        $data = sprintf('<title>%s</title><h3 style="margin:0 0 5px 0">%s</h3>%s', $title, $title, $data);
+
+        return $this->fakeText(200, $data);
     }
 }
