@@ -97,6 +97,6 @@ class ApiController extends Controller
             return strcasecmp(strip_tags($a), strip_tags($b));
         });
 
-        return $this->fakeText(200, implode("\n", $list));
+        return $this->fakeText(200, '<h3 style="margin:0 0 5px 0">Ban Exceptions</h3>' . implode("\n", $list));
     }
 }
