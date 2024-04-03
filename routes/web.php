@@ -288,6 +288,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     // API.
     Route::get('/api/crafting', [ApiController::class, 'crafting']);
     Route::get('/api/debug', [ApiController::class, 'debug']);
+    Route::get('/api/ban_exceptions', [ApiController::class, 'banExceptions']);
 
     // Generic playground route.
     Route::get('/test/test', [TestController::class, 'test']);

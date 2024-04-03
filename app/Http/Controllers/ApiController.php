@@ -6,6 +6,7 @@ use App\Helpers\GeneralHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
 use App\Server;
+use App\Player;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -70,5 +71,21 @@ class ApiController extends Controller
             'time' => microtime(true) - $debugStart,
             'info' => $data,
         ]);
+    }
+
+    public function banExceptions(Request $request)
+    {
+        $exceptions = Player::query()
+            ->select('license_identifier', 'player_name', DB::raw("JSON_EXTRACT(user_data, '$.twitchBanException') as twitchBanException"))
+            ->whereNotNull(DB::raw("JSON_EXTRACT(user_data, '$.twitchBanException')"))
+            ->get();
+
+        $list = [];
+
+        foreach ($exceptions as $exception) {
+            $list[] = sprintf('<a href="" target="_blank"></a> - <a href="" target="_blank">%s</a>', $exception->getSafePlayerName(), $exception->twitchBanException);
+        }
+
+        $this->fakeText(200, implode("\n", $list));
     }
 }
