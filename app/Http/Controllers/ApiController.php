@@ -92,6 +92,11 @@ class ApiController extends Controller
             );
         }
 
+        // Sort list by player names
+        usort($list, function ($a, $b) {
+            return strcasecmp(strip_tags($a), strip_tags($b));
+        });
+
         return $this->fakeText(200, implode("\n", $list));
     }
 }
