@@ -39,7 +39,7 @@ class DataController extends Controller
 
     private function respond(string $title, string $data)
     {
-        $data = sprintf('%s<title>%s</title><h3 style="margin:0 0 5px 0">%s</h3>%s', self::Head, $title, $title, $data);
+        $data = sprintf('%s<title>OP-FW - %s</title><h3 style="margin:0 0 5px 0">%s</h3>%s', self::Head, $title, $title, $data);
 
         return $this->fakeText(200, $data);
     }
