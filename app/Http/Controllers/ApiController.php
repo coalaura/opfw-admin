@@ -83,7 +83,13 @@ class ApiController extends Controller
         $list = [];
 
         foreach ($exceptions as $exception) {
-            $list[] = sprintf('<a href="" target="_blank"></a> - <a href="" target="_blank">%s</a>', $exception->getSafePlayerName(), $exception->twitchBanException);
+            $list[] = sprintf(
+                '<a href="/players/%s" target="_blank">%s</a> - <a href="https://twitch.tv/%s" target="_blank">%s</a>',
+                $exception->license_identifier,
+                $exception->getSafePlayerName(),
+                $exception->twitchBanException,
+                $exception->twitchBanException
+            );
         }
 
         return $this->fakeText(200, implode("\n", $list));
