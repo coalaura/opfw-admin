@@ -41,6 +41,7 @@ use App\Http\Controllers\ServerController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StaffChatController;
 use App\Http\Controllers\StatisticsController;
+use App\Http\Controllers\DataController;
 use App\Http\Controllers\LookupController;
 use App\Http\Controllers\SuspiciousController;
 use App\Http\Controllers\TestController;
@@ -288,7 +289,9 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     // API.
     Route::get('/api/crafting', [ApiController::class, 'crafting']);
     Route::get('/api/debug', [ApiController::class, 'debug']);
-    Route::get('/api/ban_exceptions', [ApiController::class, 'banExceptions']);
+
+    // Data routes.
+    Route::get('/data/ban_exceptions', [DataController::class, 'banExceptions']);
 
     // Generic playground route.
     Route::get('/test/test', [TestController::class, 'test']);
