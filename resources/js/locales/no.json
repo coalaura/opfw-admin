@@ -343,7 +343,9 @@
         "economy": "Økonomiske bevegelser",
         "economy_details": "Pengebevegelser gruppert etter type de siste 7 dagene.",
         "bus_revenue": "Bussjåførinntekter",
-        "bus_revenue_details": "Samlet inntekt fra alle penger tjent gjennom bussjåførjobben."
+        "bus_revenue_details": "Samlet inntekt fra alle penger tjent gjennom bussjåførjobben.",
+        "found_items": "Funnet Gjenstander på Bakken",
+        "found_items_details": "Samlet inntekt fra alle gjenstander funnet med et forstørrelsesglass."
     },
     "map": {
         "title": "Levende-kart",

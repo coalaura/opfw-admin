@@ -343,7 +343,9 @@
         "economy": "Trade Things Move",
         "economy_details": "Shiny Pebble move by make marks in past many suns.",
         "bus_revenue": "Wheel-Box Go Man Bring-Shiny",
-        "bus_revenue_details": "All shine-stones from wheel-box go work."
+        "bus_revenue_details": "All shine-stones from wheel-box go work.",
+        "found_items": "Found Things on Dirt",
+        "found_items_details": "Make all shiny-rock from things see-close with big-eye rock."
     },
     "map": {
         "title": "Ooga-Map",

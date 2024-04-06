@@ -343,7 +343,9 @@
         "economy": "Trade Winds o' Fortune",
         "economy_details": "Coin shiftin' by sort 'n the past seven suns.",
         "bus_revenue": "Booty Collected by the Bus Cap'n",
-        "bus_revenue_details": "Total plunder from all doubloons amassed through steerin' the bus."
+        "bus_revenue_details": "Total plunder from all doubloons amassed through steerin' the bus.",
+        "found_items": "Booty Spotted 'pon the Deck",
+        "found_items_details": "Scurvy loot tally from all treasures spotted with a spyin' glass."
     },
     "map": {
         "title": "Sailin' Map",

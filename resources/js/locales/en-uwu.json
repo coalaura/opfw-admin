@@ -343,7 +343,9 @@
         "economy": "Econyomwy Movwements",
         "economy_details": "Money mwovements gwouped by type in the wast 7 days.",
         "bus_revenue": "Bus Dwivew Wevenue",
-        "bus_revenue_details": "Combwined wevenue fwom aww money eawned thwough the bus dwivew job."
+        "bus_revenue_details": "Combwined wevenue fwom aww money eawned thwough the bus dwivew job.",
+        "found_items": "Fouwnd Items on Gwound",
+        "found_items_details": "Combinyed wevenue fwom aww items fouwnd with a magnyifying gwass."
     },
     "map": {
         "title": "Wive-Map UwU",

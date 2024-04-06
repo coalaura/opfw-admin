@@ -364,6 +364,8 @@
         "daily_refresh_details": "Combined amount of all paid daily activities refreshes.",
         "bus_revenue": "Bus Driver Revenue",
         "bus_revenue_details": "Combined revenue from all money earned through the bus driver job.",
+        "found_items": "Found Items on Ground",
+        "found_items_details": "Combined revenue from all items found with a magnifying glass.",
 
         "economy": "Economy Movements",
         "economy_details": "Money movements grouped by type in the last 7 days."

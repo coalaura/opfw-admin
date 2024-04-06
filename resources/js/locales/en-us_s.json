@@ -343,7 +343,9 @@
         "economy": "Economy Movements",
         "economy_details": "Money movements grouped up by type in the las' 7 days.",
         "bus_revenue": "Bus Driver Income",
-        "bus_revenue_details": "Total income from all the cash made drivin' them buses."
+        "bus_revenue_details": "Total income from all the cash made drivin' them buses.",
+        "found_items": "Foun' Items on the Groun'",
+        "found_items_details": "Combin'd revenue from all items found with a magnifyin' glass."
     },
     "map": {
         "title": "Active Map",
