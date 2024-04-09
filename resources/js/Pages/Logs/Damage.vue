@@ -359,8 +359,6 @@ export default {
 			} catch (e) {
 			}
 
-			console.log(this.weapons);
-
 			this.isLoading = false;
 		},
 		playerName(licenseIdentifier) {
