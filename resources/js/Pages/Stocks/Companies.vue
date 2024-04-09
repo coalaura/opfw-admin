@@ -10,14 +10,14 @@
         </portal>
 
         <div class="mb-10 rounded-lg shadow bg-secondary dark:bg-dark-secondary max-w-6xl" v-for="(company, id) in companies" :key="id">
-            <header class="flex items-center gap-6 border-b-2 border-gray-500 bg-gray-300 dark:bg-gray-600">
+            <header class="flex items-center gap-6 border-b-2 border-gray-500 bg-gray-300 dark:bg-gray-600 relative">
                 <img :src="company.logo" class="w-32 h-32 rounded-tl-lg" @error="company.logo = '/images/realty_image_broken.png'" />
 
                 <h2>
                     {{ company.name }}
                 </h2>
 
-                <span class="bg-rose-600 text-white py-0.5 px-2 text-xs rounded-sm shadow-sm" v-if="company.bankrupt">{{ t("stocks.bankrupt") }}</span>
+                <span class="bg-rose-600 text-white py-0.5 px-2 text-xs rounded-sm shadow-sm absolute top-1 right-1.5" v-if="company.bankrupt">{{ t("stocks.bankrupt") }}</span>
             </header>
 
             <div class="px-8 py-3 italic border-b-2 border-gray-500 bg-gray-300 dark:bg-gray-700 text-sm">{{ company.description }}</div>
