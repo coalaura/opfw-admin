@@ -40,6 +40,10 @@
                             <td class="px-2 py-1 italic">{{ employee.position }}</td>
                             <td class="px-2 py-1 pr-3">{{ numberFormat(employee.salary, 0, true) }}</td>
                         </tr>
+
+                        <tr v-if="Object.keys(company.employees).length === 0">
+                            <td class="px-3 py-1 italic" colspan="5">{{ t('stocks.empty') }}</td>
+                        </tr>
                     </table>
                 </div>
             </div>
@@ -49,7 +53,7 @@
                     {{ t('stocks.properties') }}
 
                     <sup v-if="company.filled_properties === 0" class="text-sm">0%</sup>
-                    <sup v-if="company.empty_properties === 0" class="text-sm">100%</sup>
+                    <sup v-else-if="company.empty_properties === 0" class="text-sm">100%</sup>
                     <sup v-else class="text-sm">{{ Math.round(company.filled_properties / (company.filled_properties + company.empty_properties) * 100) }}%</sup>
                 </h3>
 
@@ -77,6 +81,10 @@
                                 <td class="px-2 py-1 italic">{{ t('stocks.empty') }}</td>
                                 <td class="px-2 py-1 pr-3 italic">{{ t('stocks.empty') }}</td>
                             </template>
+                        </tr>
+
+                        <tr v-if="Object.keys(company.properties).length === 0">
+                            <td class="px-3 py-1 italic" colspan="5">{{ t('stocks.empty') }}</td>
                         </tr>
                     </table>
                 </div>
