@@ -45,7 +45,11 @@
             </div>
 
             <div class="px-8 py-3">
-                <h3 class="mb-1">{{ t('stocks.properties') }}</h3>
+                <h3 class="mb-1">
+                    {{ t('stocks.properties') }}
+
+                    <sup v-if="company.empty_properties">{{ company.empty_properties }}x {{ t('stocks.empty') }}</sup>
+                </h3>
 
                 <div class="max-h-48 overflow-y-auto">
                     <table class="w-full bg-gray-300 dark:bg-gray-600 text-sm">

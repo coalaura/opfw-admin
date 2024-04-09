@@ -25,14 +25,15 @@ class StocksController extends Controller
             $companyId = $company->company_id;
 
             $companies[$companyId] = [
-                'name'          => $company->company_name,
-                'description'   => $company->company_description,
-                'logo'          => $company->company_logo,
-                'owner'         => $company->owner_name,
-                'reg_timestamp' => $company->company_reg_timestamp,
-                'bankrupt'      => $company->bankrupt,
-                'properties'    => [],
-                'employees'     => [],
+                'name'             => $company->company_name,
+                'description'      => $company->company_description,
+                'logo'             => $company->company_logo,
+                'owner'            => $company->owner_name,
+                'reg_timestamp'    => $company->company_reg_timestamp,
+                'bankrupt'         => $company->bankrupt,
+                'properties'       => [],
+                'employees'        => [],
+                'empty_properties' => 0,
             ];
         }
 
@@ -51,6 +52,10 @@ class StocksController extends Controller
                 'renter'   => $property->property_renter,
                 'last_pay' => $property->property_last_pay,
             ];
+
+            if (!$property->property_renter) {
+                $companies[$companyId]['empty_properties']++;
+            }
         }
 
         foreach ($dbEmployees as $employee) {
