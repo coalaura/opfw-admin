@@ -54,7 +54,7 @@
 
                     <sup v-if="company.filled_properties === 0" class="text-sm">0%</sup>
                     <sup v-else-if="company.empty_properties === 0" class="text-sm">100%</sup>
-                    <sup v-else class="text-sm">{{ Math.round(company.filled_properties / (company.filled_properties + company.empty_properties) * 100) }}%</sup>
+                    <sup v-else-if="company.empty_properties > 0 && company.filled_properties > 0" class="text-sm">{{ Math.round(company.filled_properties / (company.filled_properties + company.empty_properties) * 100) }}%</sup>
                 </h3>
 
                 <div class="max-h-48 overflow-y-auto">
