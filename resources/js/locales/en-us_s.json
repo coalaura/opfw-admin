@@ -1419,6 +1419,18 @@
         "permission_0": "Employee",
         "permission_1": "Realtor",
         "permission_2": "Owner",
-        "bankrupt": "Broke as all get-out"
+        "bankrupt": "Broke as all get-out",
+        "interior": "Inside",
+        "type_1": "Motel",
+        "type_2": "Trevor's Trailer",
+        "type_3": "Janitor Apartmint",
+        "type_4": "Low-End Apartmint",
+        "type_5": "Lester's House",
+        "type_6": "Franklin's House",
+        "type_7": "Mid-End Apartmint",
+        "type_8": "Trevor's Beach House",
+        "type_9": "Michael's Mansion",
+        "type_10": "Franklin's Mansion",
+        "type_11": "High-End Apartmint"
     }
 }

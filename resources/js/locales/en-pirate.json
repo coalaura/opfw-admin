@@ -1419,6 +1419,18 @@
         "permission_0": "Hand",
         "permission_1": "Landlubber Liaison",
         "permission_2": "Cap'n",
-        "bankrupt": "Bereft o' Booty"
+        "bankrupt": "Bereft o' Booty",
+        "interior": "Innards o' a ship",
+        "type_1": "Fleabag inn",
+        "type_2": "Trevor's Floatin' Den",
+        "type_3": "Swab's Quarters",
+        "type_4": "Humble Seafarer's Cabin",
+        "type_5": "Lester's Abode",
+        "type_6": "Franklin's Cabin",
+        "type_7": "Fair Seafarer's Quarters",
+        "type_8": "Trevor's Seashore Shack",
+        "type_9": "Michael's Grand Estate",
+        "type_10": "Franklin's Grand Estate",
+        "type_11": "Luxury Seafarer's Quarters"
     }
 }

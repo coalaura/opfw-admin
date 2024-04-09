@@ -1419,6 +1419,18 @@
         "permission_0": "Karmachari",
         "permission_1": "Realtor",
         "permission_2": "Malik",
-        "bankrupt": "Diwaliya"
+        "bankrupt": "Diwaliya",
+        "interior": "Andarunee",
+        "type_1": "Motel",
+        "type_2": "Trevor ka Trailer",
+        "type_3": "Jamadar ka Apartment",
+        "type_4": "Kam Daam ka Apartment",
+        "type_5": "Lester ka Ghar",
+        "type_6": "Franklin ka Ghar",
+        "type_7": "Madhyamik Daam ka Apartment",
+        "type_8": "Trevor ka Beach House",
+        "type_9": "Michael ka Mahal",
+        "type_10": "Franklin ka Mahal",
+        "type_11": "Ucch Koti ka Apartment"
     }
 }

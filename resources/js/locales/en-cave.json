@@ -1419,6 +1419,18 @@
         "permission_0": "Tribe Member",
         "permission_1": "Rock-home talker",
         "permission_2": "Big cave own-person",
-        "bankrupt": "No money, lose all"
+        "bankrupt": "No money, lose all",
+        "interior": "Inside Place",
+        "type_1": "Sleep Place Many Beds",
+        "type_2": "Trevor Sleep Box",
+        "type_3": "Cleaner Live Place",
+        "type_4": "Not Fancy Sleep Place",
+        "type_5": "Lester Sleep Place",
+        "type_6": "Franklin Sleep Place",
+        "type_7": "Okay Fancy Sleep Place",
+        "type_8": "Trevor Water Edge Sleep Place",
+        "type_9": "Michael Big Sleep Rock",
+        "type_10": "Franklin Big Sleep Rock",
+        "type_11": "Very Fancy Sleep Place"
     }
 }

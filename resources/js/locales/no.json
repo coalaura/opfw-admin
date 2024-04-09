@@ -1419,6 +1419,18 @@
         "permission_0": "Ansatt",
         "permission_1": "Eiendomsmegler",
         "permission_2": "Eier",
-        "bankrupt": "Konkurs"
+        "bankrupt": "Konkurs",
+        "interior": "Interiør",
+        "type_1": "Motell",
+        "type_2": "Trevors tilhenger",
+        "type_3": "Vaktmesterleilighet",
+        "type_4": "Leilighet av lav standard",
+        "type_5": "Lesters hus",
+        "type_6": "Franklins hus",
+        "type_7": "Leilighet av middels standard",
+        "type_8": "Trevors strandhus",
+        "type_9": "Michaels herskapshus",
+        "type_10": "Franklins herskapshus",
+        "type_11": "Leilighet av høy standard"
     }
 }

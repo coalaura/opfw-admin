@@ -50,13 +50,15 @@
                 <div class="max-h-48 overflow-y-auto">
                     <table class="w-full bg-gray-300 dark:bg-gray-600 text-sm">
                         <tr class="border-b-2 border-gray-500 text-left">
+                            <th class="px-1 py-1 pl-3">{{ t('stocks.interior') }}</th>
                             <th class="px-1 py-1 pl-3">{{ t('stocks.address') }}</th>
                             <th class="px-2 py-1">{{ t('stocks.renter') }}</th>
                             <th class="px-2 py-1">{{ t('stocks.rent') }}</th>
                             <th class="px-2 py-1 pr-3">{{ t('stocks.last_pay') }}</th>
                         </tr>
 
-                        <tr v-for="(property, id) in company.properties" :key="id" class="border-t border-gray-500">
+                        <tr v-for="(property, id) in company.properties" :key="id" class="border-t border-gray-500" :class="{ 'text-lime-800 dark:text-lime-200': !property.renter }">
+                            <td class="px-1 py-1 pl-3">{{ t('stocks.type_' + property.type) }}</td>
                             <td class="px-1 py-1 pl-3">{{ property.address }}</td>
 
                             <template v-if="property.renter">

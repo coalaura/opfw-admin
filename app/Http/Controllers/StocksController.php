@@ -45,6 +45,7 @@ class StocksController extends Controller
             }
 
             $companies[$companyId]['properties'][$propertyId] = [
+                'type'     => $property->property_type,
                 'address'  => $property->property_address,
                 'income'   => $property->property_income,
                 'renter'   => $property->property_renter,
