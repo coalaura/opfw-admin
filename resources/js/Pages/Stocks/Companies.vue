@@ -48,7 +48,7 @@
                 <h3 class="mb-1">
                     {{ t('stocks.properties') }}
 
-                    <sup v-if="company.empty_properties">{{ company.empty_properties }}x {{ t('stocks.empty') }}</sup>
+                    <sup v-if="company.empty_properties" class="text-sm">{{ Math.round(company.empty_properties / company.properties.length * 100) }}%</sup>
                 </h3>
 
                 <div class="max-h-48 overflow-y-auto">
