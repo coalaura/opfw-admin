@@ -522,9 +522,9 @@ export default {
 			this.isLoading = true;
 			try {
 				const beforeDate = $('#before-date').val(),
-					beforeTime = $('#before-time').val(),
+					beforeTime = $('#before-time').val() || '00:00',
 					afterDate = $('#after-date').val(),
-					afterTime = $('#after-time').val();
+					afterTime = $('#after-time').val() || '23:59';
 
 				if (beforeDate && beforeTime) {
 					this.filters.before = Math.round((new Date(beforeDate + ' ' + beforeTime)).getTime() / 1000);
