@@ -374,6 +374,8 @@ export default {
         height(sub, isSuperAdmin) {
             const length = sub.filter(l => (!l.private || isSuperAdmin) && !l.hidden).length;
 
+            if (length === 0) return 'hidden';
+
             return `side-close side-${length}`;
         },
         isMobile() {
