@@ -62,7 +62,7 @@
                             <template v-if="property.renter">
                                 <td class="px-2 py-1">{{ property.renter }}</td>
                                 <td class="px-2 py-1">{{ numberFormat(property.income, 0, true) }}</td>
-                                <td class="px-2 py-1 pr-3">{{ property.last_pay | formatTime(false) }}</td>
+                                <td class="px-2 py-1 pr-3">{{ property.last_pay * 1000 | formatTime(false) }}</td>
                             </template>
                             <template v-else>
                                 <td class="px-2 py-1 italic">{{ t('stocks.empty') }}</td>
