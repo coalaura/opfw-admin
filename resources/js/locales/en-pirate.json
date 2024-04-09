@@ -1418,6 +1418,7 @@
         "last_pay": "Last Pieces o' Eight Tendered",
         "permission_0": "Hand",
         "permission_1": "Landlubber Liaison",
-        "permission_2": "Cap'n"
+        "permission_2": "Cap'n",
+        "bankrupt": "Bereft o' Booty"
     }
 }

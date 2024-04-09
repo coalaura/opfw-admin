@@ -1418,6 +1418,7 @@
         "last_pay": "Shiny give last sun",
         "permission_0": "Tribe Member",
         "permission_1": "Rock-home talker",
-        "permission_2": "Big cave own-person"
+        "permission_2": "Big cave own-person",
+        "bankrupt": "No money, lose all"
     }
 }

@@ -1415,6 +1415,7 @@
         "renter": "Renter",
         "rent": "Rent",
         "last_pay": "Last Paid",
+        "bankrupt": "Bankrupt",
 
         "permission_0": "Employee",
         "permission_1": "Realtor",

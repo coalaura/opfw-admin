@@ -1418,6 +1418,7 @@
         "last_pay": "Last Paid",
         "permission_0": "Employee",
         "permission_1": "Realtor",
-        "permission_2": "Owner"
+        "permission_2": "Owner",
+        "bankrupt": "Broke as all get-out"
     }
 }

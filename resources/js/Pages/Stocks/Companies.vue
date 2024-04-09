@@ -16,6 +16,8 @@
                 <h2>
                     {{ company.name }}
                 </h2>
+
+                <span class="bg-rose-600 text-white py-0.5 px-2 text-xs rounded-sm shadow-sm" v-if="company.bankrupt">{{ t("stocks.bankrupt") }}</span>
             </header>
 
             <div class="px-8 py-3 italic border-b-2 border-gray-500 bg-gray-300 dark:bg-gray-700 text-sm">{{ company.description }}</div>
@@ -60,7 +62,7 @@
                             <template v-if="property.renter">
                                 <td class="px-2 py-1">{{ property.renter }}</td>
                                 <td class="px-2 py-1">{{ numberFormat(property.income, 0, true) }}</td>
-                                <td class="px-2 py-1 pr-3">{{ property.last_pay }}</td>
+                                <td class="px-2 py-1 pr-3">{{ property.last_pay | formatTime(false) }}</td>
                             </template>
                             <template v-else>
                                 <td class="px-2 py-1 italic">{{ t('stocks.empty') }}</td>
