@@ -17,7 +17,7 @@
                     {{ company.name }}
                 </h2>
 
-                <span class="bg-rose-600 text-white py-0.5 px-2 text-xs rounded-sm shadow-sm absolute top-1 right-1.5" v-if="company.bankrupt">{{ t("stocks.bankrupt") }}</span>
+                <span class="bg-rose-600 text-white py-0.5 px-1.5 text-xs rounded-sm shadow-sm absolute top-1.5 right-1.5" v-if="company.bankrupt">{{ t("stocks.bankrupt") }}</span>
             </header>
 
             <div class="px-8 py-3 italic border-b-2 border-gray-500 bg-gray-300 dark:bg-gray-700 text-sm">{{ company.description }}</div>
