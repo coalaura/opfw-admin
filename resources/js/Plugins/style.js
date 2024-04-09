@@ -78,7 +78,7 @@ const Style = {
 			});
 
 			// Input and placeholder colors.
-			style.push(`[type="text"],[type="url"],[type="number"],input,select,textarea,.border-input{border-color:hsl(${h},${s}%,45%)}input::placeholder,textarea::placeholder{color:hsl(${h},${s}%,50%)}`);
+			style.push(`[type="text"],[type="url"],[type="number"],[type="date"],[type="time"],input,select,textarea,.border-input{border-color:hsl(${h},${s}%,45%)}input::placeholder,textarea::placeholder{color:hsl(${h},${s}%,50%)}`);
 
 			// Link colors.
 			const ls = s === 0 ? 0 : 70;

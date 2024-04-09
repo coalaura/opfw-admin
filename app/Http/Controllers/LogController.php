@@ -541,6 +541,16 @@ class LogController extends Controller
             }
         }
 
+        // Filtering by before.
+        if ($before = intval($request->input('before'))) {
+            $query->where(DB::raw('timestamp_ms'), '<', $before * 1000);
+        }
+
+        // Filtering by after.
+        if ($after = intval($request->input('after'))) {
+            $query->where(DB::raw('timestamp_ms'), '>', $after * 1000);
+        }
+
         $page = Paginator::resolveCurrentPage('page');
         $query->limit(30)->offset(($page - 1) * 30);
 
@@ -556,7 +566,9 @@ class LogController extends Controller
                 'attacker',
                 'victim',
                 'weapon',
-                'entity'
+                'entity',
+                'after',
+                'before'
             ),
             'links'     => $this->getPageUrls($page),
             'time'      => $end - $start,

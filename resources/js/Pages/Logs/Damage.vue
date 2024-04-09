@@ -73,6 +73,38 @@
 								<option value="object">{{ t('logs.objects') }}</option>
 							</select>
 						</div>
+
+						<!-- After Date -->
+						<div class="w-1/4 px-3 mobile:w-full mobile:mb-3 mt-3">
+							<label class="block mb-2" for="after-date">
+								{{ t('logs.after-date') }}
+							</label>
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="after-date" type="date" placeholder="">
+						</div>
+
+						<!-- After Time -->
+						<div class="w-1/4 px-3 mobile:w-full mobile:mb-3 mt-3">
+							<label class="block mb-2" for="after-time">
+								{{ t('logs.after-time') }}
+							</label>
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="after-time" type="time" placeholder="">
+						</div>
+
+						<!-- Before Date -->
+						<div class="w-1/4 px-3 mobile:w-full mobile:mb-3 mt-3">
+							<label class="block mb-2" for="before-date">
+								{{ t('logs.before-date') }}
+							</label>
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="before-date" type="date" placeholder="">
+						</div>
+
+						<!-- Before Time -->
+						<div class="w-1/4 px-3 mobile:w-full mobile:mb-3 mt-3">
+							<label class="block mb-2" for="before-time">
+								{{ t('logs.before-time') }}
+							</label>
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="before-time" type="time" placeholder="">
+						</div>
 					</div>
 
 					<!-- Description -->
@@ -238,6 +270,8 @@ export default {
 			victim: String,
 			weapon: String,
 			entity: String,
+			before: Number,
+			after: Number,
 		},
 		playerMap: {
 			type: Object,
@@ -294,6 +328,27 @@ export default {
 
 			this.isLoading = true;
 
+			const beforeDate = $('#before-date').val(),
+				beforeTime = $('#before-time').val(),
+				afterDate = $('#after-date').val(),
+				afterTime = $('#after-time').val();
+
+			if (beforeDate && beforeTime) {
+				this.filters.before = Math.round((new Date(beforeDate + ' ' + beforeTime)).getTime() / 1000);
+
+				if (isNaN(this.filters.before)) {
+					this.filters.before = null;
+				}
+			}
+
+			if (afterDate && afterTime) {
+				this.filters.after = Math.round((new Date(afterDate + ' ' + afterTime)).getTime() / 1000);
+
+				if (isNaN(this.filters.after)) {
+					this.filters.after = null;
+				}
+			}
+
 			try {
 				await this.$inertia.replace('/damage', {
 					data: this.filters,
@@ -327,6 +382,21 @@ export default {
 			}
 
 			return '';
+		}
+	},
+	mounted() {
+		if (this.filters.before) {
+			const d = this.$moment.utc(this.filters.before * 1000);
+
+			$('#before-date').val(d.format('YYYY-MM-DD'));
+			$('#before-time').val(d.format('HH:mm'));
+		}
+
+		if (this.filters.after) {
+			const d = this.$moment.utc(this.filters.after * 1000);
+
+			$('#after-date').val(d.format('YYYY-MM-DD'));
+			$('#after-time').val(d.format('HH:mm'));
 		}
 	}
 };
