@@ -41,7 +41,7 @@
                             <td class="px-2 py-1 pr-3">{{ numberFormat(employee.salary, 0, true) }}</td>
                         </tr>
 
-                        <tr v-if="Object.keys(company.employees).length === 0">
+                        <tr v-if="Object.keys(company.employees).length === 0" class="text-center">
                             <td class="px-3 py-1 italic" colspan="5">{{ t('stocks.empty') }}</td>
                         </tr>
                     </table>
@@ -83,7 +83,7 @@
                             </template>
                         </tr>
 
-                        <tr v-if="Object.keys(company.properties).length === 0">
+                        <tr v-if="Object.keys(company.properties).length === 0" class="text-center">
                             <td class="px-3 py-1 italic" colspan="5">{{ t('stocks.empty') }}</td>
                         </tr>
                     </table>
