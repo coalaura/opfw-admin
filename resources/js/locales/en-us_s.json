@@ -1348,13 +1348,6 @@
         "placeholder_log": "Laura kicked Twentz",
         "search": "Search lahgs"
     },
-    "servers": {
-        "title": "Servahs",
-        "description": "A lil' overview of them game servers, darlin'.",
-        "no_data": "No API data available, bless your heart.",
-        "no_server_data": "Bless your heart, the server ain't available right now.",
-        "server_data": "Th' server's been up fer <b>{0}</b> at <b>{1}</b> with a max holy roller o' <b>{2}</b> players."
-    },
     "login": {
         "title": "Login with y'alls Discord account, sugah.",
         "description": "Please login with the same Discord account that's linked to the user y'all got them staff permissions on. Usin' a different one'll result in y'all not bein' able to access the server panel, now.",
@@ -1408,5 +1401,23 @@
         "no_more_logs": "Ain't no more logs to haul.",
         "loading_logs": "Loadin' logs...",
         "per_second": "{0} requests per second, y'all. {1} in the last 5 minutes."
+    },
+    "stocks": {
+        "title": "Realty Companies",
+        "description": "Ah rundown of all them realty companies.",
+        "employees": "Employees",
+        "properties": "Properties",
+        "empty": "Empty",
+        "permissions": "Permissions",
+        "employee": "Employee",
+        "position": "Position",
+        "salary": "Salary",
+        "address": "Address",
+        "renter": "Renter",
+        "rent": "Rent",
+        "last_pay": "Last Paid",
+        "permission_0": "Employee",
+        "permission_1": "Realtor",
+        "permission_2": "Owner"
     }
 }

@@ -1348,13 +1348,6 @@
         "placeholder_log": "📋🙍‍♀️🚫🙍‍♂️",
         "search": "🔍📋📜❓"
     },
-    "servers": {
-        "title": "🖥️🖥️🖥️",
-        "description": "✨📚🎮🌐🔍",
-        "no_data": "🚫📊👎",
-        "no_server_data": "🎮🌐🚫💻👎",
-        "server_data": "📊🆙 for ⌛️🎮 with a 🌈🔝 of 🤼‍♂️👥."
-    },
     "login": {
         "title": "🔑🔒🔐🛂",
         "description": "🔑🔒🔐🛂📝👤💼",
@@ -1408,5 +1401,23 @@
         "no_more_logs": "🚫🪵📥",
         "loading_logs": "⏳🪵🪵...",
         "per_second": "🔢👇⏱️. 🔢🕔📅."
+    },
+    "stocks": {
+        "title": "🏠🏢",
+        "description": "🔍🏠🏢",
+        "employees": "👥",
+        "properties": "🏘️",
+        "empty": "🈳",
+        "permissions": "🔑",
+        "employee": "👤",
+        "position": "🧑‍💼",
+        "salary": "💸",
+        "address": "🏠📬",
+        "renter": "🧍‍♂️🏠",
+        "rent": "💰🏠",
+        "last_pay": "🕒💸",
+        "permission_0": "👤",
+        "permission_1": "👩‍💼🏠",
+        "permission_2": "👤👑"
     }
 }

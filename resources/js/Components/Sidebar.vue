@@ -250,6 +250,11 @@ export default {
                     ]
                 },
                 {
+                    label: 'stocks.title',
+                    icon: 'home',
+                    url: '/stocks/companies',
+                },
+                {
                     label: 'sidebar.tools',
                     icon: 'tools',
                     sub: [
@@ -278,23 +283,6 @@ export default {
                     ]
                 },
                 {
-                    label: 'sidebar.errors',
-                    icon: 'bug',
-                    hidden: !this.$page.auth.player.isRoot,
-                    sub: [
-                        {
-                            label: 'errors.client.title',
-                            icon: 'spider',
-                            url: '/errors/client?server_version=newest',
-                        },
-                        {
-                            label: 'errors.server.title',
-                            icon: 'virus',
-                            url: '/errors/server?server_version=newest'
-                        }
-                    ]
-                },
-                {
                     label: 'sidebar.advanced',
                     icon: 'cogs',
                     sub: [
@@ -319,9 +307,21 @@ export default {
                     ]
                 },
                 {
-                    label: 'servers.title',
-                    icon: 'office',
-                    url: '/servers',
+                    label: 'sidebar.errors',
+                    icon: 'bug',
+                    hidden: !this.$page.auth.player.isRoot,
+                    sub: [
+                        {
+                            label: 'errors.client.title',
+                            icon: 'spider',
+                            url: '/errors/client?server_version=newest',
+                        },
+                        {
+                            label: 'errors.server.title',
+                            icon: 'virus',
+                            url: '/errors/server?server_version=newest'
+                        }
+                    ]
                 }
             ],
         };

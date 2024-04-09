@@ -1348,13 +1348,6 @@
         "search": "Scour the Logs",
         "placeholder_log": "Laura keelhauled Twentz"
     },
-    "servers": {
-        "title": "Warships",
-        "description": "A mighty look at th' game servers, arrr!",
-        "no_data": "Avast! No API data be available.",
-        "no_server_data": "Arr! Th' server be currently unavailable.",
-        "server_data": "Arr, the ship has been sailin' fer <b>{0}</b> at <b>{1}</b> wi' a max capacity o' <b>{2}</b> swashbucklers."
-    },
     "login": {
         "title": "Set yer sails an' login wit' yer Discord account.",
         "description": "Arr, matey! Login wit' th' same Discord account that be linked t' th' scurvy dog ye be holdin' yer staff permissions on. Usin' a different one will result in ye not bein' able t' access th' server panel.",
@@ -1408,5 +1401,23 @@
         "no_more_logs": "Arr, no more timbers t' hoist aboard.",
         "loading_logs": "Hoistin' ye logs...",
         "per_second": "{0} requests per tick o' the clock. {1} in the last 5 minutes, arr."
+    },
+    "stocks": {
+        "title": "Realty Crews",
+        "description": "A broadside view o' all realty crews.",
+        "employees": "Hands",
+        "properties": "Harbored Properties",
+        "empty": "Bare",
+        "permissions": "Rites o' Parlay",
+        "employee": "Hand",
+        "position": "Standing",
+        "salary": "Doubloons",
+        "address": "Domicile",
+        "renter": "Leaser",
+        "rent": "Anchor Silver",
+        "last_pay": "Last Pieces o' Eight Tendered",
+        "permission_0": "Hand",
+        "permission_1": "Landlubber Liaison",
+        "permission_2": "Cap'n"
     }
 }

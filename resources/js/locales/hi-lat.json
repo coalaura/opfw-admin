@@ -1357,13 +1357,6 @@
         "placeholder_log": "Laura ne Twentz ko nikala",
         "search": "Log khoje"
     },
-    "servers": {
-        "title": "Sarvar",
-        "description": "Game sarvaron ka avlokan.",
-        "no_data": "API data uplabdh nahi hai",
-        "server_data": "Sarvar <b>{0}</b> se <b>{1}</b> tak chalu hai aur iski adhiktam kshamata <b>{2}</b> khilaadiyon ki hai.",
-        "no_server_data": "Sarvar is samay uplabdh nahi hai."
-    },
     "login": {
         "title": "Apne Discord account se login karein.",
         "description": "Kripaya usi Discord account se login karein jo aapke user ke saath staff anumatiyon ke liye link hai. Alag account ka upyog karne par aapko server panel tak pahunchane mein asamarthta ho sakti hai.",
@@ -1408,5 +1401,23 @@
         "no_more_logs": "Ab aur log load karne ke liye nahi hai.",
         "loading_logs": "Loding logs...",
         "per_second": "Prati second {0} requests. Pichhle 5 minute mein {1}."
+    },
+    "stocks": {
+        "title": "Realty Companiyan",
+        "description": "Sabhi realty companiyan ka ek avlokan.",
+        "employees": "Karmachari",
+        "properties": "Sampattiyan",
+        "empty": "Khali",
+        "permissions": "Anumatiyan",
+        "employee": "Karmachari",
+        "position": "Pad",
+        "salary": "Vetan",
+        "address": "Pata",
+        "renter": "Kirayedar",
+        "rent": "Kiraya",
+        "last_pay": "Antim Bhugtan",
+        "permission_0": "Karmachari",
+        "permission_1": "Realtor",
+        "permission_2": "Malik"
     }
 }

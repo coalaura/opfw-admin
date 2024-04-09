@@ -1348,13 +1348,6 @@
         "search": "Ugga uggs",
         "placeholder_log": "Laura bonk Twentz"
     },
-    "servers": {
-        "title": "Uggas",
-        "description": "Feed Ba-ba for big game servers.",
-        "no_data": "No boom boom data.",
-        "no_server_data": "Big game server not here right now.",
-        "server_data": "Ugga ugga! Da server been up for <b>{0}</b> moons at <b>{1}</b> wit a max ooga-booga ooga-booga of <b>{2}</b> cavepeople."
-    },
     "login": {
         "title": "Login using your cave man word account.",
         "description": "Make talk with same cave man word account like staff-guy do. If different, no access to server panel for you.",
@@ -1408,5 +1401,23 @@
         "no_more_logs": "No more wood to carry.",
         "loading_logs": "Wait... logs heavy...",
         "per_second": "{0} ask many fast. {1} when sun move little."
+    },
+    "stocks": {
+        "title": "Rock-home Groups",
+        "description": "All Rock-home Groups Look",
+        "employees": "Tribe Members",
+        "properties": "Caves",
+        "empty": "No Stuff",
+        "permissions": "Can do what",
+        "employee": "Tribe Member",
+        "position": "Place in Tribe",
+        "salary": "Shiny rocks get",
+        "address": "Sleep place",
+        "renter": "Cave Sleep-person",
+        "rent": "Cave Sleep-shiny",
+        "last_pay": "Shiny give last sun",
+        "permission_0": "Tribe Member",
+        "permission_1": "Rock-home talker",
+        "permission_2": "Big cave own-person"
     }
 }

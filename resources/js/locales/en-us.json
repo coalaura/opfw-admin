@@ -1401,12 +1401,24 @@
         "placeholder_log": "Laura kicked Twentz",
         "search": "Search logs"
     },
-    "servers": {
-        "title": "Servers",
-        "description": "An overview of the game servers.",
-        "no_data": "No API data available",
-		"server_data": "The server has been up for <b>{0}</b> at <b>{1}</b> with a max capacity of <b>{2}</b> players.",
-		"no_server_data": "The server is currently unavailable."
+    "stocks": {
+        "title": "Realty Companies",
+        "description": "An overview of all realty companies.",
+        "employees": "Employees",
+        "properties": "Properties",
+        "empty": "Empty",
+        "permissions": "Permissions",
+        "employee": "Employee",
+        "position": "Position",
+        "salary": "Salary",
+        "address": "Address",
+        "renter": "Renter",
+        "rent": "Rent",
+        "last_pay": "Last Paid",
+
+        "permission_0": "Employee",
+        "permission_1": "Realtor",
+        "permission_2": "Owner"
     },
     "tokens": {
         "title": "API Tokens",

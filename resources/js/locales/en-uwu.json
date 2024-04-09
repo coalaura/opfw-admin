@@ -1348,13 +1348,6 @@
         "search": "Sewarch wogs",
         "placeholder_log": "Wawa kicked Twentz"
     },
-    "servers": {
-        "title": "Swervers",
-        "description": "An oversiew of the game sowvewos.",
-        "no_data": "No API data avaiwabwe",
-        "no_server_data": "The sewvew is cuwwentwy unavaiwabwe.",
-        "server_data": "DA server has been up fow <b>{0}</b> at <b>{1}</b> with a MAXIMUM CAPACITY of <b>{2}</b> players. UwU"
-    },
     "login": {
         "title": "Wogin with youw Discord account.",
         "description": "Pwease wogin with the same Discord account that is winked to the usew you have youw staff pewmissions on. Using a diffewent one wiww wesuwt in you not being abwe to access the sewvew panew.",
@@ -1408,5 +1401,23 @@
         "no_more_logs": "Nyo mowe wogs to woad.",
         "loading_logs": "Woading wogs...",
         "per_second": "{0} wequests pew second. {1} in da wast 5 minutes."
+    },
+    "stocks": {
+        "title": "Weawty Companies",
+        "description": "An ovewview of aww weawty companies.",
+        "employees": "Empwoyees",
+        "properties": "Pwopewties",
+        "empty": "Empty",
+        "permissions": "Pewmissions",
+        "employee": "Empwoyee",
+        "position": "Position",
+        "salary": "Sawawy",
+        "address": "Addwess",
+        "renter": "Wentew",
+        "rent": "Went",
+        "last_pay": "Wast Paid",
+        "permission_0": "Empwoyee",
+        "permission_1": "Weawtow",
+        "permission_2": "Ownyew"
     }
 }

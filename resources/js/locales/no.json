@@ -1357,13 +1357,6 @@
         "placeholder_log": "Laura sparket Twentz",
         "search": "Søk i logger"
     },
-    "servers": {
-        "title": "Servere",
-        "description": "En oversikt over spillserverne.",
-        "no_data": "Ingen API-data tilgjengelig",
-        "server_data": "Serveren har vært oppe i <b>{0}</b> på <b>{1}</b> med en maksimal kapasitet på <b>{2}</b> spillere.",
-        "no_server_data": "Serveren er for øyeblikket utilgjengelig."
-    },
     "login": {
         "title": "Logg inn med din Discord-konto.",
         "description": "Vennligst logg inn med samme Discord-konto som er koblet til brukeren du har dine ansattrettigheter på. Å bruke en annen vil resultere i at du ikke kan få tilgang til serverpanelet.",
@@ -1408,5 +1401,23 @@
         "no_more_logs": "Ingen flere logger å laste.",
         "loading_logs": "Laster logger...",
         "per_second": "{0} forespørsler per sekund. {1} de siste 5 minuttene."
+    },
+    "stocks": {
+        "title": "Eiendomsselskaper",
+        "description": "En oversikt over alle eiendomsselskaper.",
+        "employees": "Ansatte",
+        "properties": "Eiendommer",
+        "empty": "Tomt",
+        "permissions": "Tillatelser",
+        "employee": "Ansatt",
+        "position": "Stilling",
+        "salary": "Lønn",
+        "address": "Adresse",
+        "renter": "Leietaker",
+        "rent": "Leie",
+        "last_pay": "Sist Betalt",
+        "permission_0": "Ansatt",
+        "permission_1": "Eiendomsmegler",
+        "permission_2": "Eier"
     }
 }

@@ -37,7 +37,7 @@ use App\Http\Controllers\PlayerDataController;
 use App\Http\Controllers\PlayerWarningController;
 use App\Http\Controllers\QueueController;
 use App\Http\Controllers\ScreenshotController;
-use App\Http\Controllers\ServerController;
+use App\Http\Controllers\StocksController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StaffChatController;
 use App\Http\Controllers\StatisticsController;
@@ -221,8 +221,8 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::post('/players/{player}/characters/{character}/addVehicle', [PlayerCharacterController::class, 'addVehicle']);
     Route::post('/players/{player}/characters/{character}/updateLicenses', [PlayerCharacterController::class, 'updateLicenses']);
 
-    // Servers.
-    Route::get('/servers', [ServerController::class, 'index']);
+    // Stocks Companies (realty).
+    Route::get('/stocks/companies', [StocksController::class, 'companies']);
 
     // Map.
     Route::get('/map/{server?}', [MapController::class, 'index']);
