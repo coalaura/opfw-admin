@@ -200,7 +200,7 @@ class StatisticsHelper
     {
         $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'received $', -1), '.', 1)");
         $items = implode(' OR ', array_map(function($name) {
-            return "SUBSTRING_INDEX(SUBSTRING_INDEX(details, '`', -1), '`', 1) = '$name'";
+            return "SUBSTRING_INDEX(SUBSTRING_INDEX(details, '`', -2), '`', 1) = '$name'";
         }, [
             'Small Frog',
             'Lucky Penny',
