@@ -52,6 +52,7 @@
 import Modal from './Modal';
 import HashResolver from './HashResolver';
 
+import moment from 'moment';
 import hljs from 'highlight.js';
 import json from 'highlight.js/lib/languages/json';
 
@@ -108,6 +109,19 @@ const CustomPreProcessors = {
 
 const CustomFormatters = {
     "closestBlip": data => `"${data.distance.toFixed(1)}m - ${data.label}"`,
+    "timings": data => {
+        let lastTime;
+
+        return data.map(timing => {
+            const date = moment(timing.timestamp * 1000).format('MM/DD h:mm:ss A'),
+                diff = lastTime ? (timing.time - lastTime) : false,
+                diffStr = diff ? (diff < 0 ? '-' : '+') + Math.abs(diff) + 'ms' : '';
+
+            lastTime = timing.time;
+
+            return `${date} - ${timing.time}ms ${diffStr}`;
+        }).join("\n");
+    },
 };
 
 export default {
@@ -170,11 +184,15 @@ export default {
                         continue;
                     }
 
+                    const wasObject = typeof value === "object";
+
                     if (key in CustomPreProcessors) {
                         value = CustomPreProcessors[key](value);
+                    } else if (key in CustomFormatters && value) {
+                        value = CustomFormatters[key](value);
                     }
 
-                    if (typeof value === "object") {
+                    if (wasObject) {
                         const label = key + (Array.isArray(value) ? ` (${value.length})` : "");
 
                         metadataJSON.push({
@@ -240,6 +258,10 @@ export default {
             return fmt.join(" ");
         },
         highlightJSON(object) {
+            if (typeof object !== "object") {
+                return object;
+            }
+
             const isArray = Array.isArray(object),
                 maxLine = Object.keys(object).map(k => k.length).reduce((a, b) => Math.max(a, b), 0);
 
