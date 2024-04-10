@@ -501,7 +501,8 @@
             "dark_chat": "Vee-uh Dark Chat",
             "ban_exception": "Remove Ban 'Ceptions",
             "whitelist": "Manage Player Whitelist",
-            "api_tokens": "Manage them there API Tokens"
+            "api_tokens": "Manage them there API Tokens",
+            "realty_edit": "Edit Real Estate"
         },
         "world_time": "World Time",
         "world_time_desc": "The time in the {0} most used timezones.",

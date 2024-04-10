@@ -501,7 +501,8 @@
             "dark_chat": "Spy 'pon Dark Gabbin'",
             "ban_exception": "Keelhaul Ban Exceptions",
             "whitelist": "Handle Bucko Whitelist",
-            "api_tokens": "Manage API Planks o' Permissions"
+            "api_tokens": "Manage API Planks o' Permissions",
+            "realty_edit": "Amend Yer Property Holdings"
         },
         "world_time": "World O' Time",
         "world_time_desc": "The time in the {0} most used doubloon zones.",

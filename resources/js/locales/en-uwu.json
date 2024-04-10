@@ -501,7 +501,8 @@
             "dark_chat": "View Dawk Chat",
             "ban_exception": "Wemove Ban Exceptions",
             "whitelist": "Manage Pwayew Whitewist",
-            "api_tokens": "Manwage API Tokens"
+            "api_tokens": "Manwage API Tokens",
+            "realty_edit": "Edit Weal Estate"
         },
         "world_time": "Wowld Timeowo",
         "world_time_desc": "The time in the {0} most used timezonesowo.",

@@ -541,7 +541,8 @@
             "dark_chat": "View Dark Chat",
             "ban_exception": "Remove Ban Exceptions",
             "whitelist": "Manage Player Whitelist",
-            "api_tokens": "Manage API Tokens"
+            "api_tokens": "Manage API Tokens",
+            "realty_edit": "Edit Real Estate"
         },
 
         "world_time": "World Time",

@@ -510,7 +510,8 @@
             "dark_chat": "Dekhein Dark Chat",
             "ban_exception": "Hataayein Pratibandh Apavaad",
             "whitelist": "Khilaadi Safelist Sambhalen",
-            "api_tokens": "API Tokens Prabandhit Karen"
+            "api_tokens": "API Tokens Prabandhit Karen",
+            "realty_edit": "Real Estate Sampadan Karein"
         },
         "world_time": "Vishwa Samay",
         "world_time_desc": "{0} sabse adhik upayog kiye jaane waale samay kshetron ka samay.",

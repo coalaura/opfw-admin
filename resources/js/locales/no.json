@@ -510,7 +510,8 @@
             "dark_chat": "Vis mørk prat",
             "ban_exception": "Fjern unntak fra utestengelse",
             "whitelist": "Administrer spillers hviteliste",
-            "api_tokens": "Administrer API-nøkler"
+            "api_tokens": "Administrer API-nøkler",
+            "realty_edit": "Rediger eiendom"
         },
         "world_time": "Verdenstid",
         "world_time_desc": "Tiden i de {0} mest brukte tidssonene.",
