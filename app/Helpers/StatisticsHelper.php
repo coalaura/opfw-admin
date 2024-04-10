@@ -63,9 +63,10 @@ class StatisticsHelper
     // Material Vendor sales
     public static function collectMaterialVendorStatistics(): array
     {
+        $count = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'sold ', -1), 'x', 1)");
         $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), '.', 1)");
 
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Sold Materials' GROUP BY date ORDER BY timestamp DESC");
+        return self::collectStatistics("SELECT SUM($count) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Sold Materials' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Casino revenue
@@ -85,9 +86,10 @@ class StatisticsHelper
     // Store sales
     public static function collectStoreSaleStatistics(): array
     {
+        $count = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'purchased ', -1), 'x', 1)");
         $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), 'with', 1)");
 
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Item(s) Purchased' GROUP BY date ORDER BY timestamp DESC");
+        return self::collectStatistics("SELECT SUM($count) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Item(s) Purchased' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Hourly paychecks
