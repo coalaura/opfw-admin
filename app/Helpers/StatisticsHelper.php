@@ -54,9 +54,10 @@ class StatisticsHelper
     // Pawnshop sales
     public static function collectPawnshopStatistics(): array
     {
+        $count = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'sold ', -1), ' `', 1)");
         $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'received $', -1), '.', 1)");
 
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Used Pawn Shop' GROUP BY date ORDER BY timestamp DESC");
+        return self::collectStatistics("SELECT SUM($count) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Used Pawn Shop' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Material Vendor sales
@@ -198,6 +199,7 @@ class StatisticsHelper
     // Found items revenue
     public static function collectFoundItemsStatistics(): array
     {
+        $count = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'sold ', -1), ' `', 1)");
         $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'received $', -1), '.', 1)");
         $items = implode(' OR ', array_map(function($name) {
             return "SUBSTRING_INDEX(SUBSTRING_INDEX(details, '`', -2), '`', 1) = '$name'";
@@ -210,7 +212,7 @@ class StatisticsHelper
             'Seashell'
         ]));
 
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Used Pawn Shop' AND ($items) GROUP BY date ORDER BY timestamp DESC");
+        return self::collectStatistics("SELECT SUM($count) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Used Pawn Shop' AND ($items) GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Generic Economy Statistics
