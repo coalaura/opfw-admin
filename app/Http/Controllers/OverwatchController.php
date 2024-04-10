@@ -41,7 +41,7 @@ class OverwatchController extends Controller
             return self::json(false, null, 'You can not use the screenshot functionality');
         }
 
-        $players = Player::getAllOnlinePlayers(true);
+        $players = Player::getAllOnlinePlayers(true) ?? [];
 
         $players = array_filter($players, function($player) {
             return $player && $player['character'] && !GeneralHelper::isUserRoot($player['license']) && !in_array('in_shell', $player["characterData"]);

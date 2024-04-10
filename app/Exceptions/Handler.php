@@ -46,7 +46,7 @@ class Handler extends ExceptionHandler
         if (request()->expectsJson()) {
             $prep = $this->prepareException($exception);
 
-            $code = $prep->getCode();
+            $code = intval($prep->getCode()) ?? 0;
             $code = $code >= 100 ? $code : 500;
 
             return response()->json([
