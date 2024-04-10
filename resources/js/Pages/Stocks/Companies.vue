@@ -90,7 +90,7 @@
                         </tr>
 
                         <tr v-if="Object.keys(company.properties).length === 0" class="text-center">
-                            <td class="px-3 py-1 italic" colspan="5">{{ t('stocks.empty') }}</td>
+                            <td class="px-3 py-1 italic" :colspan="canEdit ? 6 : 5">{{ t('stocks.empty') }}</td>
                         </tr>
                     </table>
                 </div>
