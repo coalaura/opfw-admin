@@ -198,7 +198,18 @@ class StatisticsHelper
     // Found items revenue
     public static function collectFoundItemsStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from money_logs WHERE details = 'magnifying-glass-item-sale' GROUP BY date ORDER BY timestamp DESC");
+        $items = implode(' OR ', array_map(function($name) {
+            return "SUBSTRING_INDEX(SUBSTRING_INDEX(details, '`', -1), '`', 1) = '$name'";
+        }, [
+            'Small Frog',
+            'Lucky Penny',
+            'Caterpillar',
+            '4 Leaf Clover',
+            'Small Frog MK2',
+            'Seashell'
+        ]));
+
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM(amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Used Pawn Shop' AND ($items) GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Generic Economy Statistics
