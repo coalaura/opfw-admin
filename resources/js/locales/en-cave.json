@@ -1431,6 +1431,14 @@
         "type_8": "Trevor Water Edge Sleep Place",
         "type_9": "Michael Big Sleep Rock",
         "type_10": "Franklin Big Sleep Rock",
-        "type_11": "Very Fancy Sleep Place"
+        "type_11": "Very Fancy Sleep Place",
+        "renter_cid": "Renter Number Thing",
+        "property_edit": "Cave Change",
+        "update_property": "Make Cave New",
+        "shared_keys": "Together Metal-Teeth",
+        "no_shared_keys": "No together metal-teeth put.",
+        "level_1": "Go in",
+        "level_2": "All",
+        "level_3": "Boss of Cave"
     }
 }

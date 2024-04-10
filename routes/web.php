@@ -223,6 +223,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Stocks Companies (realty).
     Route::get('/stocks/companies', [StocksController::class, 'companies']);
+    Route::post('/stocks/property/{propertyId}', [StocksController::class, 'updateProperty']);
 
     // Map.
     Route::get('/map/{server?}', [MapController::class, 'index']);
@@ -288,6 +289,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // API.
     Route::get('/api/crafting', [ApiController::class, 'crafting']);
+    Route::get('/api/character/{character}', [ApiController::class, 'character']);
     Route::get('/api/debug', [ApiController::class, 'debug']);
 
     // Data routes.

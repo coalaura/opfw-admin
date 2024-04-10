@@ -30,6 +30,7 @@ class PermissionHelper
         self::PERM_BAN_EXCEPTION  => ['ban_exception', self::LEVEL_SUPERADMIN],
         self::PERM_WHITELIST      => ['whitelist', self::LEVEL_SUPERADMIN],
         self::PERM_API_TOKENS     => ['api_tokens', self::LEVEL_SUPERADMIN],
+        self::PERM_REALTY_EDIT    => ['realty_edit', self::LEVEL_SUPERADMIN],
     ];
 
     const PERM_SCREENSHOT     = 'P_SCREENSHOT';
@@ -55,6 +56,7 @@ class PermissionHelper
     const PERM_BAN_EXCEPTION  = 'P_BAN_EXCEPTION';
     const PERM_WHITELIST      = 'P_WHITELIST';
     const PERM_API_TOKENS     = 'P_API_TOKENS';
+    const PERM_REALTY_EDIT    = 'P_REALTY_EDIT';
 
     const LEVEL_STAFF      = 1;
     const LEVEL_SENIOR     = 2;

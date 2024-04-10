@@ -1431,6 +1431,14 @@
         "type_8": "Twevow's Beach House",
         "type_9": "Michaew's Mansion",
         "type_10": "Fwankwin's Mansion",
-        "type_11": "High-End Apawtment"
+        "type_11": "High-End Apawtment",
+        "renter_cid": "Wentew CID",
+        "property_edit": "Pwopewty Edit",
+        "update_property": "Update Pwopewty",
+        "shared_keys": "Shawed Keys",
+        "no_shared_keys": "No shawed keys set.",
+        "level_1": "Entwy",
+        "level_2": "Fuww",
+        "level_3": "Managew"
     }
 }

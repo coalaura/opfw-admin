@@ -1431,6 +1431,14 @@
         "type_8": "Trevor ka Beach House",
         "type_9": "Michael ka Mahal",
         "type_10": "Franklin ka Mahal",
-        "type_11": "Ucch Koti ka Apartment"
+        "type_11": "Ucch Koti ka Apartment",
+        "renter_cid": "Kirayedar CID",
+        "property_edit": "Sampatti Sampadan",
+        "update_property": "Sampatti Update Karein",
+        "shared_keys": "Sajaaye Huee Chabiyaan",
+        "no_shared_keys": "Koi sajaaye huee chabiyaan set nahi ki gayi.",
+        "level_1": "Pravesh",
+        "level_2": "Pura",
+        "level_3": "Prabandhak"
     }
 }

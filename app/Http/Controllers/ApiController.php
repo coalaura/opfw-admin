@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Character;
 use App\Helpers\GeneralHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
@@ -22,6 +23,15 @@ class ApiController extends Controller
 
         return (new Response($data, 200))
             ->header('Content-Type', 'text/plain');
+    }
+
+    public function character(Character $character): Response
+    {
+        return $this->json(true, [
+            'id'         => $character->character_id,
+            'first_name' => $character->first_name,
+            'last_name'  => $character->last_name,
+        ]);
     }
 
     public function debug(Request $request): Response

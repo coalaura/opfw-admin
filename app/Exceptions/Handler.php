@@ -3,11 +3,12 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -41,10 +42,23 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
+        // JSON handling
+        if (request()->expectsJson()) {
+            $prep = $this->prepareException($exception);
+
+            $code = $prep->getCode();
+            $code = $code >= 100 ? $code : 500;
+
+            return response()->json([
+                'status'  => false,
+                'message' => $prep->getMessage(),
+            ], $code);
+        }
+
         if (
-            $exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException || // 404 doesn't need to be logged to avoid filling the log file
-            $exception instanceof \Illuminate\Encryption\MissingAppKeyException || // /api/players Illuminate\Encryption\MissingAppKeyException: No application encryption key has been specified.
-            ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException && $exception->getStatusCode() === 503)
+            $exception instanceof NotFoundHttpException  || // 404 doesn't need to be logged to avoid filling the log file
+            $exception instanceof \Illuminate\Encryption\MissingAppKeyException  || // /api/players Illuminate\Encryption\MissingAppKeyException: No application encryption key has been specified.
+            ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException  && $exception->getStatusCode() === 503)
         ) {
             parent::report($exception);
             return;
@@ -55,10 +69,10 @@ class Handler extends ExceptionHandler
             abort(503, 'Database connection unavailable');
         }
 
-        $log = storage_path('logs/' . CLUSTER . '_error-' . date('Y-m-d') . '.log');
+        $log       = storage_path('logs/' . CLUSTER . '_error-' . date('Y-m-d') . '.log');
         $timestamp = date(\DateTimeInterface::RFC3339);
-        $trace = $exception->getTrace();
-        $stack = [];
+        $trace     = $exception->getTrace();
+        $stack     = [];
 
         $base = realpath(__DIR__ . '/../../');
         foreach ($trace as $index => $item) {
@@ -83,7 +97,7 @@ class Handler extends ExceptionHandler
             $args = !empty($item['args']) ? array_map(function ($arg) {
                 $type = gettype($arg);
                 switch ($type) {
-                    case 'object':
+                    case 'object' :
                         $type = get_class($arg);
                         break;
                     case 'array':
@@ -101,7 +115,7 @@ class Handler extends ExceptionHandler
                 }
 
                 return $type;
-            }, $item['args']) : [];
+            }, $item['args']): [];
 
             $line = '#' . $index . ' ' . $item['file'] . '(' . $item['line'] . '): ';
             if (isset($item['class']) && isset($item['type'])) {
@@ -113,7 +127,7 @@ class Handler extends ExceptionHandler
         }
 
         $stack = get_class($exception) . ': ' . $exception->getMessage() . PHP_EOL . '        ' . implode(PHP_EOL . '        ', array_reverse($stack));
-        $path = explode('?', isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '*')[0];
+        $path  = explode('?', isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '*')[0];
 
         put_contents($log, '[' . $timestamp . '] ' . $path . PHP_EOL .
             '    ' . $stack . PHP_EOL . PHP_EOL, FILE_APPEND);

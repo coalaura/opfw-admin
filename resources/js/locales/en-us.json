@@ -1413,6 +1413,7 @@
         "salary": "Salary",
         "address": "Address",
         "renter": "Renter",
+        "renter_cid": "Renter CID",
         "rent": "Rent",
         "last_pay": "Last Paid",
         "bankrupt": "Bankrupt",
@@ -1432,7 +1433,15 @@
         "type_8": "Trevor's Beach House",
         "type_9": "Michael's Mansion",
         "type_10": "Franklin's Mansion",
-        "type_11": "High-End Apartment"
+        "type_11": "High-End Apartment",
+
+        "property_edit": "Property Edit",
+        "update_property": "Update Property",
+        "shared_keys": "Shared Keys",
+        "no_shared_keys": "No shared keys set.",
+        "level_1": "Entry",
+        "level_2": "Full",
+        "level_3": "Manager"
     },
     "tokens": {
         "title": "API Tokens",

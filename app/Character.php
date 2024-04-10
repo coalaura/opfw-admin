@@ -114,12 +114,12 @@ class Character extends Model
 
     /**
      * @param int $characterId
-     * @return array|null
+     * @return Character|null
      */
-    public static function find(int $characterId): ?array
+    public static function find(int $characterId): ?self
     {
         if (!isset(self::$cache[$characterId])) {
-            self::$cache[$characterId] = self::query()->where('character_id', '=', $characterId)->first()->toArray() ?? [];
+            self::$cache[$characterId] = self::query()->where('character_id', '=', $characterId)->first();
         }
 
         return self::$cache[$characterId];

@@ -46,6 +46,7 @@ const Permissions = {
             PERM_BAN_EXCEPTION: 'ban_exception',
             PERM_WHITELIST: 'whitelist',
             PERM_API_TOKENS: 'api_tokens',
+            PERM_REALTY_EDIT: 'realty_edit',
 
             level(permission) {
                 if (!(permission in permissions)) {

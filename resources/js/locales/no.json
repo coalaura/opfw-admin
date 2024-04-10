@@ -1431,6 +1431,14 @@
         "type_8": "Trevors strandhus",
         "type_9": "Michaels herskapshus",
         "type_10": "Franklins herskapshus",
-        "type_11": "Leilighet av høy standard"
+        "type_11": "Leilighet av høy standard",
+        "renter_cid": "Legg inn CID",
+        "property_edit": "Eiendomsredigering",
+        "update_property": "Oppdater eiendom",
+        "shared_keys": "Delt nøkler",
+        "no_shared_keys": "Ingen delte nøkler angitt.",
+        "level_1": "Inngang",
+        "level_2": "Full",
+        "level_3": "Forvalter"
     }
 }

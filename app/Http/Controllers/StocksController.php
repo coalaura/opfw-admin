@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Character;
+use App\Helpers\PermissionHelper;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -13,7 +16,7 @@ class StocksController extends Controller
      *
      * @return Response
      */
-    public function companies(): Response
+    public function companies(Request $request): Response
     {
         $dbCompanies  = DB::table('stocks_companies')->orderBy('company_name')->get();
         $dbEmployees  = DB::table('stocks_company_employees')->orderByDesc('permissions')->get();
@@ -46,12 +49,31 @@ class StocksController extends Controller
                 continue;
             }
 
+            $sharedKeys = false;
+
+            if (PermissionHelper::hasPermission($request, PermissionHelper::PERM_REALTY_EDIT)) {
+                $keys = explode(';', $property->shared_keys ?? '');
+                $keys = array_values(array_filter($keys));
+
+                $sharedKeys = array_map(function ($key) {
+                    $key = explode('-', $key);
+
+                    return [
+                        'cid'   => intval($key[2]),
+                        'name'  => $key[0],
+                        'level' => intval($key[1]),
+                    ];
+                }, $keys);
+            }
+
             $companies[$companyId]['properties'][$propertyId] = [
-                'type'     => $property->property_type,
-                'address'  => $property->property_address,
-                'income'   => $property->property_income,
-                'renter'   => $property->property_renter,
-                'last_pay' => $property->property_last_pay,
+                'type'       => $property->property_type,
+                'address'    => $property->property_address,
+                'income'     => $property->property_income,
+                'renter_cid' => $property->property_renter_cid,
+                'renter'     => $property->property_renter,
+                'last_pay'   => $property->property_last_pay,
+                'keys'       => $sharedKeys,
             ];
 
             if ($property->property_renter) {
@@ -79,5 +101,81 @@ class StocksController extends Controller
         return Inertia::render('Stocks/Companies', [
             'companies' => $companies,
         ]);
+    }
+
+    public function updateProperty(Request $request, int $propertyId)
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_REALTY_EDIT)) {
+            abort(401);
+        }
+
+        $property = DB::table('stocks_company_properties')->where('property_id', $propertyId)->first();
+
+        if (!$property) {
+            return backWith('error', 'Property not found');
+        }
+
+        $propertyLastPay = $property->property_last_pay;
+
+        $renter  = $request->input('renter');
+        $income  = $request->input('income') ?? $property->property_cost;
+        $lastPay = strtotime($request->input('last_pay'));
+        $keys    = $request->input('keys');
+
+        if (!$lastPay || $lastPay < $propertyLastPay) {
+            return backWith('error', 'Invalid last pay date');
+        }
+
+        if ($income <= 0 || $income > 50000) {
+            return backWith('error', 'Invalid rent amount');
+        }
+
+        if (!$keys || !is_array($keys)) {
+            return backWith('error', 'Invalid shared keys');
+        }
+
+        $character = Character::find($renter);
+
+        if (!$character) {
+            return backWith('error', 'Property Renter CID is invalid');
+        }
+
+        $sharedKeys = '';
+
+        foreach ($keys as $key) {
+            $cid   = intval($key['cid']);
+            $level = intval($key['level']);
+
+            // Invalid cid
+            if (!$cid || $cid <= 0) {
+                return backWith('error', 'Invalid shared key (cid)');
+            }
+
+            // Invalid level
+            if (!$level || !in_array($level, [1, 2, 3])) {
+                return backWith('error', 'Invalid shared key (level)');
+            }
+
+            $keyCharacter = Character::find($cid);
+
+            // Invalid character
+            if (!$keyCharacter) {
+                return backWith('error', 'Invalid shared key (character not found)');
+            }
+
+            $name = str_replace('-', ' ', $keyCharacter->name);
+
+            $sharedKeys .= sprintf('%s-%s-%s;', $name, $level, $cid);
+        }
+
+        DB::table('stocks_company_properties')->where('property_id', $propertyId)->update([
+            'property_renter'     => $character->name,
+            'property_renter_cid' => $character->character_id,
+            'property_income'     => $income,
+            'property_last_pay'   => $lastPay,
+            'shared_keys'         => $sharedKeys,
+        ]);
+
+        return backWith('success', 'Property updated');
     }
 }

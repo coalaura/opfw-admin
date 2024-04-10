@@ -1431,6 +1431,14 @@
         "type_8": "Trevor's Seashore Shack",
         "type_9": "Michael's Grand Estate",
         "type_10": "Franklin's Grand Estate",
-        "type_11": "Luxury Seafarer's Quarters"
+        "type_11": "Luxury Seafarer's Quarters",
+        "renter_cid": "Enter yer CID",
+        "property_edit": "Make Yer Marks on th' Property",
+        "update_property": "Update th' Property",
+        "shared_keys": "Shared Keelhaulers",
+        "no_shared_keys": "No shared keelhaulers be set.",
+        "level_1": "Boardin'",
+        "level_2": "Bulgin'",
+        "level_3": "Cap'n"
     }
 }

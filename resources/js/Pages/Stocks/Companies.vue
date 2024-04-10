@@ -60,16 +60,22 @@
                 <div class="max-h-48 overflow-y-auto">
                     <table class="w-full bg-gray-300 dark:bg-gray-600 text-sm">
                         <tr class="border-b-2 border-gray-500 text-left">
-                            <th class="px-1 py-1 pl-3">{{ t('stocks.interior') }}</th>
-                            <th class="px-1 py-1 pl-3">{{ t('stocks.address') }}</th>
+                            <th class="px-1 pl-3" v-if="canEdit">&nbsp;</th>
+
+                            <th class="px-1 py-1" :class="{ 'pl-3': !canEdit }">{{ t('stocks.interior') }}</th>
+                            <th class="px-1 py-1">{{ t('stocks.address') }}</th>
                             <th class="px-2 py-1">{{ t('stocks.renter') }}</th>
                             <th class="px-2 py-1">{{ t('stocks.rent') }}</th>
                             <th class="px-2 py-1 pr-3">{{ t('stocks.last_pay') }}</th>
                         </tr>
 
                         <tr v-for="(property, id) in company.properties" :key="id" class="border-t border-gray-500" :class="{ 'text-lime-800 dark:text-lime-200': !property.renter }">
-                            <td class="px-1 py-1 pl-3">{{ t('stocks.type_' + property.type) }}</td>
-                            <td class="px-1 py-1 pl-3">{{ property.address }}</td>
+                            <th class="px-1 pl-3" v-if="canEdit">
+                                <i class="fas fa-tools cursor-pointer" @click="editProperty(id, property)"></i>
+                            </th>
+
+                            <td class="px-1 py-1" :class="{ 'pl-3': !canEdit }">{{ t('stocks.type_' + property.type) }}</td>
+                            <td class="px-1 py-1">{{ property.address }}</td>
 
                             <template v-if="property.renter">
                                 <td class="px-2 py-1">{{ property.renter }}</td>
@@ -91,22 +97,183 @@
             </div>
         </div>
 
+        <modal :show.sync="isEditingProperty">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('stocks.property_edit') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="w-full mb-3 flex">
+                    <div class="w-1/3 px-3">
+                        <label class="block mb-2 font-semibold" for="renter">
+                            {{ t('stocks.renter_cid') }}
+                        </label>
+                        <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="renter" name="renter" placeholder="12345" min="1" v-model="editingProperty.renter" />
+                    </div>
+
+                    <div class="w-1/3 px-3">
+                        <label class="block mb-2 font-semibold" for="income">
+                            {{ t('stocks.rent') }}
+                        </label>
+                        <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="income" name="income" placeholder="2000" min="10" max="50000" v-model="editingProperty.income" />
+                    </div>
+
+                    <div class="w-1/3 px-3">
+                        <label class="block mb-2 font-semibold" for="last_pay">
+                            {{ t('stocks.last_pay') }}
+                        </label>
+                        <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" type="date" id="last_pay" name="last_pay" :min="editingPropertyMinDate" :max="maxDate" v-model="editingProperty.last_pay" />
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-500"></div>
+
+                <div class="w-full mt-3">
+                    <h2 class="font-semibold border-b border-gray-500 border-dashed flex justify-between items-center mb-2 text-lg">
+                        {{ t('stocks.shared_keys') }}
+                    </h2>
+
+                    <div class="text-sm bg-gray-200 dark:bg-gray-700 flex" v-for="(key, index) in editingProperty.keys" :key="index">
+                        <input class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-32 border-r-0 focus:outline-none" placeholder="12345" min="1" v-model="key.cid" @change="updateCharacterName(key)" />
+
+                        <input class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-32 border-r-0 focus:outline-none" placeholder="John Doe" :value="key.name" readonly />
+
+                        <select v-model="key.level" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full">
+                            <option value="1">{{ t('stocks.level_1') }}</option>
+                            <option value="2">{{ t('stocks.level_2') }}</option>
+                            <option value="3">{{ t('stocks.level_3') }}</option>
+                        </select>
+
+                        <button class="p-0.5 w-8 flex items-center justify-center bg-gray-200 dark:bg-gray-800 border border-input border-l-0" v-if="!key.empty || key.cid">
+                            <i class="fas fa-plus cursor-pointer" @click="addSharedKey()" v-if="key.empty"></i>
+                            <i class="fas fa-minus cursor-pointer" @click="editingProperty.keys.splice(index, 1)" v-else></i>
+                        </button>
+                    </div>
+
+                    <div class="text-sm bg-gray-200 dark:bg-gray-700" v-if="editingProperty.keys.length === 0">
+                        {{ t('stocks.no_shared_keys') }}
+                    </div>
+                </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isEditingProperty = false">
+                    {{ t('global.cancel') }}
+                </button>
+                <button type="submit" class="px-5 py-2 text-white bg-indigo-600 rounded dark:bg-indigo-400" @click="updateProperty">
+                    <span v-if="!isLoading">
+                        <i class="mr-1 fa fa-pencil-alt"></i>
+                        {{ t('stocks.update_property') }}
+                    </span>
+                    <span v-else>
+                        <i class="fas fa-cog animate-spin"></i>
+                        {{ t('global.loading') }}
+                    </span>
+                </button>
+            </template>
+        </modal>
+
     </div>
 </template>
 
 <script>
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
+import Modal from './../../Components/Modal';
 
 export default {
     layout: Layout,
     components: {
         VSection,
+        Modal
     },
     props: {
         companies: {
-            type: Array,
+            type: Object,
             required: true
+        }
+    },
+    computed: {
+        canEdit() {
+            return this.perm.check(this.perm.PERM_REALTY_EDIT);
+        },
+
+        maxDate() {
+            return this.$moment().add(1, 'year').format('YYYY-MM-DD');
+        }
+    },
+    data() {
+        return {
+            isLoading: false,
+
+            isEditingProperty: false,
+            editingPropertyId: false,
+            editingProperty: false,
+            editingPropertyMinDate: false
+        };
+    },
+    methods: {
+        editProperty(propertyId, property) {
+            this.isEditingProperty = true;
+
+            const lastPay = this.$moment(property.last_pay * 1000).format('YYYY-MM-DD');
+
+            this.editingPropertyId = propertyId;
+            this.editingProperty = {
+                renter: property.renter_cid,
+                income: property.income,
+                last_pay: lastPay,
+                keys: property.keys || []
+            };
+            this.editingPropertyMinDate = lastPay;
+
+            this.addSharedKey();
+        },
+        addSharedKey() {
+            if (!this.editingProperty) return;
+
+            this.editingProperty.keys = this.editingProperty.keys.filter(key => key.cid).map(key => {
+                key.empty = false;
+
+                return key;
+            });
+
+            this.editingProperty.keys.push({
+                cid: '',
+                name: '-',
+                level: 1,
+
+                empty: true
+            });
+        },
+        async updateCharacterName(key) {
+            key.name = '-';
+
+            if (!key.cid) return;
+
+            try {
+                const response = await axios.get('/api/character/' + key.cid),
+                    data = response.data;
+
+                if (data && data.status) {
+                    key.name = data.data.first_name + ' ' + data.data.last_name;
+                }
+            } catch (e) {
+            }
+        },
+        async updateProperty() {
+            if (this.isLoading) return;
+
+            this.isLoading = true;
+
+            this.editingProperty.keys = this.editingProperty.keys.filter(key => key.cid);
+
+            await this.$inertia.post('/stocks/property/' + this.editingPropertyId, this.editingProperty);
+
+            this.isLoading = false;
+            this.isEditingProperty = false;
         }
     }
 }

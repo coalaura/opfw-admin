@@ -404,10 +404,10 @@ class AdvancedSearchController extends Controller
 
         return [
             'target' => $character
-            ? '/players/' . $character['license_identifier'] . '/characters/' . $character['character_id']
+            ? '/players/' . $character->license_identifier . '/characters/' . $character->character_id
             : '',
             'label'  => $character
-            ? $character['first_name'] . ' ' . $character['last_name']
+            ? $character->name
             : ($characterId ?? 'N/A'),
         ];
     }
