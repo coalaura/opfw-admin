@@ -539,42 +539,42 @@ class PlayerBanController extends Controller
             ->count();
 
         $counts = DB::table('anti_cheat_events')
-            ->selectRaw("DATE_FORMAT(FROM_UNIXTIME(anti_cheat_events.timestamp), '%d-%m-%Y') as date, COUNT(DISTINCT CASE WHEN ban_hash IS NOT NULL THEN license_identifier END) as banned, COUNT(DISTINCT CASE WHEN ban_hash IS NULL THEN license_identifier END) as unbanned")
+            ->selectRaw("DATE_FORMAT(FROM_UNIXTIME(user_bans.timestamp), '%d-%m-%Y') as date, ban_hash")
             ->leftJoin('user_bans', 'anti_cheat_events.license_identifier', '=', 'user_bans.identifier')
             ->where('type', '=', $type)
             ->where('anti_cheat_events.timestamp', '>', $time)
-            ->where('anti_cheat_events.license_identifier', '!=', $player->license_identifier)
-            ->groupBy('date')
+        //->where('anti_cheat_events.license_identifier', '!=', $player->license_identifier)
+            ->orderBy('anti_cheat_events.timestamp')
+            ->groupBy('license_identifier')
             ->get();
 
-        $banned      = [];
-        $bannedTotal = 0;
-
-        $unbanned      = [];
+        $entries       = [];
+        $bannedTotal   = 0;
         $unbannedTotal = 0;
 
         for ($t = $time; $t <= time(); $t += 86400) {
-            $banned[$t]   = 0;
-            $unbanned[$t] = 0;
+            $date = date('d-m-Y', $t);
+
+            // banned / unbanned
+            $entries[$date] = [0, 0];
         }
 
         foreach ($counts as $count) {
-            $time = strtotime($count->date);
+            $date = $count->date;
 
-            $bannedTotal += $count->banned;
-            $unbannedTotal += $count->unbanned;
-
-            $banned[$time]   = $count->banned;
-            $unbanned[$time] = $count->unbanned;
+            if ($count->ban_hash) {
+                $bannedTotal += 1;
+                $entries[$date][0] += 1;
+            } else {
+                $unbannedTotal += 1;
+                $entries[$date][1] += 1;
+            }
         }
 
-        $graph = $this->renderGraph([
-            array_values($banned),
-            array_values($unbanned),
-        ], '', ["green", "red"]);
+        $graph = $this->renderGraph(array_values($entries), '', ["green", "red"]);
 
         $totalPlayers = $bannedTotal + $unbannedTotal;
-        $accuracy = $totalPlayers > 0 ? ($bannedTotal > 0 ? round(($bannedTotal / $totalPlayers) * 100, 2) : 0) : 'N/A';
+        $accuracy     = $totalPlayers > 0 ? ($bannedTotal > 0 ? round(($bannedTotal / $totalPlayers) * 100, 2) : 0) : 'N/A';
 
         return $this->json(true, [
             'total'    => $total,
