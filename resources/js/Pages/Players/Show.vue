@@ -947,7 +947,7 @@
                 </div>
 
                 <div class="mt-4 text-sm pt-1 border-t border-dashed" v-if="player.ban.info">
-                    <b class="whitespace-nowrap cursor-help" @click="showSystemInfo()">{{ player.ban.original }}:</b> <i>{{ player.ban.info }}</i>
+                    <b class="whitespace-nowrap" :class="{'cursor-help': isModdingBan()}" @click="showSystemInfo()">{{ player.ban.original }}:</b> <i>{{ player.ban.info }}</i>
                 </div>
             </alert>
 
@@ -1840,12 +1840,15 @@ export default {
         }
     },
     methods: {
+        isModdingBan() {
+            return this.player.ban.original && this.player.ban.original.startsWith('MODDING');
+        },
         async showSystemInfo() {
-            this.isShowingSystemInfo = true;
-
-            if (this.isSystemInfoLoading) {
+            if (this.isSystemInfoLoading || !this.isModdingBan()) {
                 return;
             }
+
+            this.isShowingSystemInfo = true;
 
             this.isSystemInfoLoading = true;
             this.systemInfo = false;
