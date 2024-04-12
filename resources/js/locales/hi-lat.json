@@ -467,7 +467,6 @@
         "logout": "Logout kare",
         "report": "Bug ki report karein!",
         "update": "Update uplabdh hai",
-        "refresh_login": "Login ko refresh karein",
         "debug_info": "Debug soochana",
         "debug_info_failed": "Debug soochana lene mein asafal.",
         "debug_collecting": "Soochna jama ki ja rahi hai...",
@@ -521,7 +520,8 @@
         "streamer": "Ubaasi lage? Is streamer ko dekho!",
         "streamer_many": "Ubaasi lage? In {0} streamers ko dekho!",
         "streamer_title": "Sakriya Streamers",
-        "minesweeper": "Baroodi Surangon Ka Khel"
+        "minesweeper": "Baroodi Surangon Ka Khel",
+        "refresh_discord": "Discord ko refresh karo"
     },
     "pagination": {
         "previous": "Pichhla",

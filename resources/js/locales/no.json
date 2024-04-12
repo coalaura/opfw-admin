@@ -467,7 +467,6 @@
         "logout": "Logg ut",
         "report": "Rapporter en feil!",
         "update": "Oppdatering tilgjengelig",
-        "refresh_login": "Oppdater innlogging",
         "debug_info": "Feilsøkingsinfo",
         "debug_info_failed": "Feilet å hente feilsøkingsinfo.",
         "debug_collecting": "Samler informasjon...",
@@ -521,7 +520,8 @@
         "streamer": "Kjeder du deg? Ta en titt på denne streameren!",
         "streamer_many": "Kjeder du deg? Ta en titt på disse {0} streamerne!",
         "streamer_title": "Aktive Streamere",
-        "minesweeper": "Minerydder"
+        "minesweeper": "Minerydder",
+        "refresh_discord": "Oppdater Discord"
     },
     "pagination": {
         "previous": "Forrige",

@@ -467,7 +467,6 @@
         "logout": "🔓",
         "report": "🐛 a 🪲!",
         "update": "🔄 🆕",
-        "refresh_login": "🔄 🔐",
         "debug_info": "🔍 ℹ️",
         "debug_info_failed": "❌🔍 Failed to fetch debug info.",
         "permissions": "🔒 Permissions",
@@ -521,7 +520,8 @@
         "streamer": "😒❓✅👀💻🎥🕹️",
         "streamer_many": "😒❓✅👀👆🕺💻🎥🕹️!",
         "streamer_title": "🟢🎥🕹️👥",
-        "minesweeper": "💣🧹✨"
+        "minesweeper": "💣🧹✨",
+        "refresh_discord": "🔄 Discord"
     },
     "pagination": {
         "previous": "⬅️",

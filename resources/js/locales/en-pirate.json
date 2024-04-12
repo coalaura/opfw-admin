@@ -467,7 +467,6 @@
         "logout": "Abandon Ship",
         "report": "Tell a tale o' a bug!",
         "update": "New treasure be available",
-        "refresh_login": "Refresh Port",
         "debug_info": "Coded Secrets",
         "debug_info_failed": "Failed to fetch debug intel, arr.",
         "permissions": "Pirate Privileges",
@@ -521,7 +520,8 @@
         "streamer": "Marooned on t' island o' dullness? Feast yer eyes on this sea dog who be streamin'!",
         "streamer_many": "Marooned on t' island o' dullness? Lay yer gaze upon these {0} swashbucklers who be streamin'!",
         "streamer_title": "Live Buccaneers",
-        "minesweeper": "Minehunter"
+        "minesweeper": "Minehunter",
+        "refresh_discord": "Swab th' deck o' Discord"
     },
     "pagination": {
         "previous": "Avast!",

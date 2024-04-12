@@ -467,7 +467,6 @@
         "logout": "Done logged out",
         "report": "Report a bug, ya heah!",
         "update": "Update done come up",
-        "refresh_login": "Refresh Login",
         "debug_info": "Fancy Debug Info",
         "debug_info_failed": "Done messed up fetchin' debug info.",
         "permissions": "Permissuns",
@@ -521,7 +520,8 @@
         "streamer": "Bored? Go on now, take a gander at this here streamer!",
         "streamer_many": "Bored? Go on now, take a gander at these here {0} streamers!",
         "streamer_title": "Actuh Streamers",
-        "minesweeper": "Minesweepuh"
+        "minesweeper": "Minesweepuh",
+        "refresh_discord": "Refresh Discord, y'all."
     },
     "pagination": {
         "previous": "Aforehand",
