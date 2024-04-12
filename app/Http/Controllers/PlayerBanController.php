@@ -539,7 +539,7 @@ class PlayerBanController extends Controller
             ->count();
 
         $counts = DB::table('anti_cheat_events')
-            ->selectRaw("DATE_FORMAT(FROM_UNIXTIME(user_bans.timestamp), '%d-%m-%Y') as date, ban_hash")
+            ->selectRaw("DATE_FORMAT(FROM_UNIXTIME(IF(user_bans.ban_hash, user_bans.timestamp, MIN(anti_cheat_events.timestamp))), '%d-%m-%Y') as date, ban_hash")
             ->leftJoin('user_bans', 'anti_cheat_events.license_identifier', '=', 'user_bans.identifier')
             ->where('type', '=', $type)
             ->where('anti_cheat_events.timestamp', '>', $time)
