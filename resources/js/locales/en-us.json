@@ -930,7 +930,7 @@
             "no_system_info": "Failed to load system ban info.",
             "system_details": "The <b>{0}</b> detection was triggered <b>{1}</b> times in the last 6 months, affecting <b>{2}</b> players. <b>{3}</b> of which are still banned and <b>{4}</b> of which are not. This results an estimated accuracy of about <b>{5}%</b>.",
             "system_no_details": "The <b>{0}</b> detection has not been triggered in the last 6 months.",
-            "system_caption": "Players detected by this detection. Green are banned, red are not.",
+            "system_caption": "Players detected by this detection. Green are still banned, red are not.",
             "staff_stats": "Staff Activity Statistics",
             "source_bans": "Bans",
             "source_bans_details": "Amount of bans issued by this staff member in the last 30 days.",
