@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Player;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
 use App\Helpers\LoggingHelper;
+use App\Http\Controllers\Controller;
+use App\Player;
+use GuzzleHttp\Client;
+use Illuminate\Http\Request;
 
 /**
  * A controller to authenticate with discord.
@@ -49,13 +49,16 @@ class DiscordController extends Controller
             return redirectWith('/login', 'error', 'Missing oauth2 code.');
         }
 
-        $token = $this->resolveAccessToken($request, $code);
+        $tokens = $this->resolveTokens($request, $code);
 
-        if (!$token) {
+        if (!$tokens) {
             return redirectWith('/login', 'error', 'Failed to resolve access token.');
         }
 
-        $user = $this->resolveUser($token);
+        $accessToken  = $tokens['access'];
+        $refreshToken = $tokens['refresh'];
+
+        $user = $this->resolveUser($accessToken);
 
         if (!$user) {
             return redirectWith('/login', 'error', 'Failed to resolve user.');
@@ -84,17 +87,65 @@ class DiscordController extends Controller
         }
 
         $session->put('user', $player->user_id);
-
         $session->put('discord', $user);
+        $session->put('refresh', $refreshToken);
 
         return redirect($session->get('returnTo') ?? '/');
     }
 
-    private function resolveAccessToken(Request $request, string $code)
+    public function refresh(Request $request)
     {
+        $session = sessionHelper();
+
+        $refresh = $session->get('refresh');
+
+        if (!$refresh) {
+            return $this->login($request);
+        }
+
+        $tokens = $this->resolveTokens($request, null, $refresh);
+
+        if (!$tokens) {
+            return $this->login($request);
+        }
+
+        $user = $this->resolveUser($tokens['access']);
+
+        if (!$user) {
+            return $this->login($request);
+        }
+
+        $session->put('discord', $user);
+        $session->put('refresh', $tokens['refresh']);
+
+        return back();
+    }
+
+    private function resolveTokens(Request $request, ?string $code, ?string $refreshToken = null)
+    {
+        $data = $data = [
+            'client_id'     => env('DISCORD_OAUTH_ID'),
+            'client_secret' => env('DISCORD_OAUTH_SECRET'),
+        ];
+
+        if ($code) {
+            $data = array_merge($data, [
+                'grant_type'   => 'authorization_code',
+                'code'         => $code,
+                'redirect_uri' => $this->redirectUrl($request),
+                'scope'        => 'identify',
+                //'prompt'       => 'none',
+            ]);
+        } else if ($refreshToken) {
+            $data = array_merge($data, [
+                'grant_type'    => 'refresh_token',
+                'refresh_token' => $refreshToken,
+            ]);
+        }
+
         try {
             $client = new Client();
-            $res = $client->request('POST', 'https://discord.com/api/oauth2/token', [
+            $res    = $client->request('POST', 'https://discord.com/api/oauth2/token', [
                 'form_params' => [
                     'client_id'     => env('DISCORD_OAUTH_ID'),
                     'client_secret' => env('DISCORD_OAUTH_SECRET'),
@@ -110,7 +161,10 @@ class DiscordController extends Controller
             $data = json_decode($response, true);
 
             if ($data && isset($data['access_token'])) {
-                return $data['access_token'];
+                return [
+                    'access'  => $data['access_token'],
+                    'refresh' => isset($data['refresh_token']) ? $data['refresh_token'] : $refreshToken,
+                ];
             }
         } catch (\Throwable $e) {
             LoggingHelper::log(printf('Failed to resolve discord access token: %s', $e->getMessage()));
@@ -123,10 +177,10 @@ class DiscordController extends Controller
     {
         try {
             $client = new Client();
-            $res = $client->request('GET', 'https://discord.com/api/oauth2/@me', [
+            $res    = $client->request('GET', 'https://discord.com/api/oauth2/@me', [
                 'headers' => [
                     'Authorization' => 'Bearer ' . $accessToken,
-                ]
+                ],
             ]);
 
             $response = $res->getBody()->getContents();

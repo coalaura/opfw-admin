@@ -490,7 +490,7 @@
         "logout": "Logout",
         "report": "Report a bug!",
         "update": "Update available",
-        "refresh_login": "Refresh Login",
+        "refresh_discord": "Refresh Discord",
         "minesweeper": "Minesweeper",
         "debug_info": "Debug Info",
         "debug_info_failed": "Failed to fetch debug info.",

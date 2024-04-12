@@ -69,6 +69,9 @@ Route::group(['namespace' => 'Auth', 'middleware' => ['session']], function () {
 
 // Routes requiring being logged in as a staff member.
 Route::group(['middleware' => ['log', 'staff', 'session']], function () {
+    // Refresh Discord
+    Route::get('/auth/refresh', [DiscordController::class, 'refresh']);
+
     // Home.
     Route::get('/', [HomeController::class, 'render']);
     Route::post('/announcement', [HomeController::class, 'serverAnnouncement']);
