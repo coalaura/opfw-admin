@@ -562,6 +562,10 @@ class PlayerBanController extends Controller
         foreach ($counts as $count) {
             $date = $count->date;
 
+            if (!$date) {
+                continue;
+            }
+
             if ($count->ban_hash) {
                 $bannedTotal += 1;
                 $entries[$date][0] += 1;
