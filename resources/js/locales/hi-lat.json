@@ -974,9 +974,9 @@
             "unmute_confirm": "Kya aap sach mein is khiladi ko unmute karna chahte hain?",
             "system_info": "System Pratibandh Jankari",
             "no_system_info": "System pratibandh jankari load karna asafal raha.",
-            "system_details": "<b>{0}</b> pata lagane ki prakriya pichhle 6 mahino mein <b>{1}</b> baar sakriya hui, jisse <b>{2}</b> khiladi prabhavit huye. Jinme se <b>{3}</b> abhi bhi prabandhit hain aur <b>{4}</b> prabandhit nahin hain. Iska anumanit sahiyata dar lagbhag <b>{5}%</b> hai.",
             "system_no_details": "Pichhle 6 mahino mein <b>{0}</b> pata lagane ki prakriya kisi bhi baar sakriya nahi hui.",
-            "system_caption": "Is pata lagane ki prakriya dwaara pehchaane gaye khiladi. Harit rang ke prabandhit hain, laal rang ke prabandhit nahi hain."
+            "system_caption": "Is pata lagane ki prakriya dwaara pehchaane gaye khiladi. Harit rang ke prabandhit hain, laal rang ke prabandhit nahi hain.",
+            "system_details": "<b>{0}</b> pata lagane ka system <b>{1}</b> baar pichhle 6 mahinon mei saktivate hua, jisse <b>{2}</b> khiladi prabhavit huye (lagbhag prati khiladi <b>{3}</b>x). Unme se <b>{4}</b> abhi bhi pranibadhit hain aur <b>{5}</b> nahi hain. Isse ek anumanit sahiyata dar lagbhag <b>{6}%</b> hai."
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",

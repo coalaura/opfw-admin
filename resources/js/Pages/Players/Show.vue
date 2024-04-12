@@ -419,7 +419,7 @@
                     {{ t('players.show.no_system_info') }}
                 </div>
                 <div v-else>
-                    <p v-html="t('players.show.system_details', systemInfo.type, systemInfo.total, systemInfo.players, systemInfo.banned, systemInfo.unbanned, systemInfo.accuracy)" v-if="systemInfo.players > 0"></p>
+                    <p v-html="t('players.show.system_details', systemInfo.type, systemInfo.total, systemInfo.players, systemInfo.average, systemInfo.banned, systemInfo.unbanned, systemInfo.accuracy)" v-if="systemInfo.players > 0"></p>
                     <p v-html="t('players.show.system_no_details', systemInfo.type)" v-else></p>
 
                     <img :src="systemInfo.graph" class="w-full mt-3" />

@@ -539,16 +539,17 @@ class PlayerBanController extends Controller
             ->count();
 
         $counts = DB::table('anti_cheat_events')
-            ->selectRaw("DATE_FORMAT(FROM_UNIXTIME(IF(user_bans.ban_hash, user_bans.timestamp, MIN(anti_cheat_events.timestamp))), '%d-%m-%Y') as date, ban_hash")
+            ->selectRaw("DATE_FORMAT(FROM_UNIXTIME(IF(user_bans.ban_hash, user_bans.timestamp, MIN(anti_cheat_events.timestamp))), '%d-%m-%Y') as date, SUM(1) as triggers, ban_hash")
             ->leftJoin('user_bans', 'anti_cheat_events.license_identifier', '=', 'user_bans.identifier')
             ->where('type', '=', $type)
             ->where('anti_cheat_events.timestamp', '>', $time)
-        //->where('anti_cheat_events.license_identifier', '!=', $player->license_identifier)
+            ->where('anti_cheat_events.license_identifier', '!=', $player->license_identifier)
             ->orderBy('anti_cheat_events.timestamp')
             ->groupBy('license_identifier')
             ->get();
 
         $entries       = [];
+        $averages      = [];
         $bannedTotal   = 0;
         $unbannedTotal = 0;
 
@@ -561,6 +562,8 @@ class PlayerBanController extends Controller
 
         foreach ($counts as $count) {
             $date = $count->date;
+
+            $averages[] = $count->triggers;
 
             if (!$date) {
                 continue;
@@ -580,12 +583,15 @@ class PlayerBanController extends Controller
         $totalPlayers = $bannedTotal + $unbannedTotal;
         $accuracy     = $totalPlayers > 0 ? ($bannedTotal > 0 ? round(($bannedTotal / $totalPlayers) * 100, 2) : 0) : 'N/A';
 
+        $average = round(array_sum($averages) / sizeof($averages), 1);
+
         return $this->json(true, [
             'total'    => $total,
             'players'  => $totalPlayers,
             'banned'   => $bannedTotal,
             'unbanned' => $unbannedTotal,
             'accuracy' => $accuracy,
+            'average'  => $average,
             'graph'    => $graph,
             'since'    => $time,
             'type'     => $type,

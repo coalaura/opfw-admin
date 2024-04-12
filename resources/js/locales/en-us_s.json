@@ -964,9 +964,9 @@
             "unmute_confirm": "Y'all sure y'wanna unmute this player?",
             "system_info": "Syst'm Ban Info",
             "no_system_info": "Failed t'load syst'm ban info.",
-            "system_details": "The <b>{0}</b> detection wur triggered <b>{1}</b> times in th' last 6 months, affectin' <b>{2}</b> players. <b>{3}</b> of which're still banned an' <b>{4}</b> of which ain't. This results an estimated accuracy of about <b>{5}%</b>.",
             "system_no_details": "The <b>{0}</b> detection ain't been triggered in th' last 6 months.",
-            "system_caption": "Players detected by this detection. Green are banned, red ain't."
+            "system_caption": "Players detected by this detection. Green are banned, red ain't.",
+            "system_details": "The <b>{0}</b> detection done got set off <b>{1}</b> times in the last 6 months, affectin' <b>{2}</b> players (that's 'bout <b>{3}</b>x per player). <b>{4}</b> o' them are still banned and <b>{5}</b> ain't. This leads us to a guessin' 'bout a <b>{6}%</b> accuracy."
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",
