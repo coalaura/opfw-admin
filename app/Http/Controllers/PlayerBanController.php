@@ -10,16 +10,16 @@ use App\Http\Requests\BanStoreRequest;
 use App\Http\Requests\BanUpdateRequest;
 use App\Http\Resources\BanResource;
 use App\Http\Resources\PlayerResource;
+use App\PanelLog;
 use App\Player;
 use App\Warning;
-use App\PanelLog;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Facades\DB;
 
 class PlayerBanController extends Controller
 {
@@ -90,14 +90,14 @@ class PlayerBanController extends Controller
             ->first() : null;
 
         $data = [
-            "player" => $ban->player_name,
+            "player"  => $ban->player_name,
             "creator" => $creator ? $creator->player_name : $ban->creator_name,
-            "reason" => $ban->reason,
-            "date" => $ban->timestamp->format('jS \\of F Y'),
+            "reason"  => $ban->reason,
+            "date"    => $ban->timestamp->format('jS \\of F Y'),
 
-            "note" => $note ? $note->message : false,
+            "note"    => $note ? $note->message : false,
 
-            "url" => "/players/{$ban->license_identifier}"
+            "url"     => "/players/{$ban->license_identifier}",
         ];
 
         return $this->json(true, $data);
@@ -109,17 +109,17 @@ class PlayerBanController extends Controller
 
         $query->select([
             'license_identifier', 'player_name',
-            'reason', 'timestamp', 'expire', 'creator_name', 'creator_identifier'
+            'reason', 'timestamp', 'expire', 'creator_name', 'creator_identifier',
         ]);
 
-		// Filtering by ban hash.
+        // Filtering by ban hash.
         $this->searchQuery($request, $query, 'banHash', 'ban_hash');
 
-		// Filtering by reason.
+        // Filtering by reason.
         $this->searchQuery($request, $query, 'reason', 'reason');
 
-		// Filtering by creator.
-		if ($creator = $request->input('creator')) {
+        // Filtering by creator.
+        if ($creator = $request->input('creator')) {
             $query->where('creator_identifier', $creator);
         }
 
@@ -141,11 +141,11 @@ class PlayerBanController extends Controller
             });
         }
 
-		if ($showSystem) {
-			$query->whereNull('creator_name');
-		} else {
-			$query->whereNotNull('creator_name');
-		}
+        if ($showSystem) {
+            $query->whereNull('creator_name');
+        } else {
+            $query->whereNotNull('creator_name');
+        }
 
         $query
             ->whereNotNull('reason')
@@ -160,14 +160,14 @@ class PlayerBanController extends Controller
 
         return Inertia::render('Players/Bans', [
             'players' => $players->toArray(),
-            'staff' => $staff,
-            'links' => $this->getPageUrls($page),
-            'page' => $page,
-			'filters' => [
+            'staff'   => $staff,
+            'links'   => $this->getPageUrls($page),
+            'page'    => $page,
+            'filters' => [
                 'banHash' => $request->input('banHash'),
-                'reason' => $request->input('reason'),
+                'reason'  => $request->input('reason'),
                 'creator' => $request->input('creator'),
-                'locked' => $request->input('locked')
+                'locked'  => $request->input('locked'),
             ],
         ]);
     }
@@ -191,8 +191,8 @@ class PlayerBanController extends Controller
 
         // Create ban.
         $ban = array_merge([
-            'ban_hash' => $hash,
-            'creator_name' => $user->player_name,
+            'ban_hash'           => $hash,
+            'creator_name'       => $user->player_name,
             'creator_identifier' => $user->license_identifier,
         ], $request->validated());
 
@@ -201,7 +201,7 @@ class PlayerBanController extends Controller
 
         // Go through the player's identifiers and create a ban record for each of them.
         foreach ($identifiers as $identifier) {
-            $b = $ban;
+            $b               = $ban;
             $b['identifier'] = $identifier;
 
             $player->bans()->updateOrCreate($b);
@@ -209,15 +209,15 @@ class PlayerBanController extends Controller
 
         // Create reason.
         $reason = $request->input('reason')
-            ? 'I banned this person with the reason: `' . $request->input('reason') . '`'
-            : 'I banned this person without a reason';
+        ? 'I banned this person with the reason: `' . $request->input('reason') . '`'
+        : 'I banned this person without a reason';
 
         $reason .= ($ban['expire'] ? ' for ' . GeneralHelper::formatSeconds(intval($ban['expire'])) : ' indefinitely') . '.';
 
         // Automatically log the ban as a warning.
         $player->warnings()->create([
-            'issuer_id' => $user->user_id,
-            'message' => $reason . ' This warning was generated automatically as a result of banning someone.',
+            'issuer_id'      => $user->user_id,
+            'message'        => $reason . ' This warning was generated automatically as a result of banning someone.',
             'can_be_deleted' => 0,
         ]);
 
@@ -228,8 +228,8 @@ class PlayerBanController extends Controller
         }
 
         $kickReason = $request->input('reason')
-            ? 'You have been banned by ' . $staffName . ' for reason `' . $request->input('reason') . '`.'
-            : 'You have been banned without a specified reason by ' . $staffName;
+        ? 'You have been banned by ' . $staffName . ' for reason `' . $request->input('reason') . '`.'
+        : 'You have been banned without a specified reason by ' . $staffName;
 
         OPFWHelper::kickPlayer($user->license_identifier, $user->player_name, $player, $kickReason);
 
@@ -264,14 +264,14 @@ class PlayerBanController extends Controller
             ->whereNotNull('smurf_account')
             ->delete();
 
-		if (!$ban->creator_name) {
-			PanelLog::logSystemBanRemove($user->license_identifier, $player->license_identifier);
-		}
+        if (!$ban->creator_name) {
+            PanelLog::logSystemBanRemove($user->license_identifier, $player->license_identifier);
+        }
 
         // Automatically log the ban update as a warning.
         $player->warnings()->create([
             'issuer_id' => $user->user_id,
-            'message' => 'I removed this players ban.',
+            'message'   => 'I removed this players ban.',
         ]);
 
         return backWith('success', 'The player has successfully been unbanned.');
@@ -284,7 +284,7 @@ class PlayerBanController extends Controller
         }
 
         Ban::query()->where('ban_hash', '=', $ban->ban_hash)->update([
-            'locked' => 1
+            'locked' => 1,
         ]);
 
         return backWith('success', 'The ban has been successfully locked.');
@@ -297,7 +297,7 @@ class PlayerBanController extends Controller
         }
 
         Ban::query()->where('ban_hash', '=', $ban->ban_hash)->update([
-            'locked' => 0
+            'locked' => 0,
         ]);
 
         return backWith('success', 'The ban has been successfully unlocked.');
@@ -316,7 +316,7 @@ class PlayerBanController extends Controller
         }
 
         Ban::query()->where('ban_hash', '=', $ban->ban_hash)->update([
-            'scheduled_unban' => $time
+            'scheduled_unban' => $time,
         ]);
 
         // Sometimes there are bans where just a few identifiers are banned not actually the license.
@@ -327,7 +327,7 @@ class PlayerBanController extends Controller
 
             unset($newBan['id']);
 
-            $newBan['identifier'] = $player->license_identifier;
+            $newBan['identifier']      = $player->license_identifier;
             $newBan['scheduled_unban'] = $time;
 
             // Add the main license to the ban list, "fixing" the ban.
@@ -339,7 +339,7 @@ class PlayerBanController extends Controller
         // Automatically log the ban update as a warning.
         $player->warnings()->create([
             'issuer_id' => $user->user_id,
-            'message' => 'I scheduled the removal of this players ban for ' . gmdate('m/d/Y', $time) . '.',
+            'message'   => 'I scheduled the removal of this players ban for ' . gmdate('m/d/Y', $time) . '.',
         ]);
 
         return backWith('success', 'The ban has been successfully scheduled for removal.');
@@ -348,7 +348,7 @@ class PlayerBanController extends Controller
     public function unschedule(Player $player, Ban $ban, Request $request): RedirectResponse
     {
         $ban->update([
-            'scheduled_unban' => null
+            'scheduled_unban' => null,
         ]);
 
         return backWith('success', 'The ban has been successfully unscheduled.');
@@ -360,22 +360,22 @@ class PlayerBanController extends Controller
             abort(401);
         }
 
-        $tokens = $player->getTokens();
+        $tokens  = $player->getTokens();
         $tokens2 = $player2->getTokens();
 
         if (empty(array_intersect($tokens, $tokens2))) {
             return backWith('error', 'Players are not linked.');
         }
 
-        $newTokens = array_values(array_diff($tokens, $tokens2));
+        $newTokens  = array_values(array_diff($tokens, $tokens2));
         $newTokens2 = array_values(array_diff($tokens2, $tokens));
 
         $player->update([
-            'player_tokens' => $newTokens
+            'player_tokens' => $newTokens,
         ]);
 
         $player2->update([
-            'player_tokens' => $newTokens2
+            'player_tokens' => $newTokens2,
         ]);
 
         PanelLog::logUnlink("hwid", license(), $player->license_identifier, $player2->license_identifier);
@@ -389,10 +389,10 @@ class PlayerBanController extends Controller
             abort(401);
         }
 
-        $identifiers = $player->getIdentifiers();
+        $identifiers  = $player->getIdentifiers();
         $identifiers2 = $player2->getIdentifiers();
 
-        $lastUsed = $player->getLastUsedIdentifiers(true);
+        $lastUsed  = $player->getLastUsedIdentifiers(true);
         $lastUsed2 = $player2->getLastUsedIdentifiers(true);
 
         if (!Player::isLinked($identifiers, $identifiers2)) {
@@ -401,11 +401,11 @@ class PlayerBanController extends Controller
 
         $intersect = array_values(array_intersect($identifiers, $identifiers2));
 
-        $newIdentifiers = array_values(array_filter($identifiers, function($identifier) use ($intersect, $lastUsed) {
+        $newIdentifiers = array_values(array_filter($identifiers, function ($identifier) use ($intersect, $lastUsed) {
             return !in_array($identifier, $intersect) || in_array($identifier, $lastUsed);
         }));
 
-        $newIdentifiers2 = array_values(array_filter($identifiers2, function($identifier) use ($intersect, $lastUsed2) {
+        $newIdentifiers2 = array_values(array_filter($identifiers2, function ($identifier) use ($intersect, $lastUsed2) {
             return !in_array($identifier, $intersect) || in_array($identifier, $lastUsed2);
         }));
 
@@ -415,11 +415,11 @@ class PlayerBanController extends Controller
         }
 
         $player->update([
-            'identifiers' => $newIdentifiers
+            'identifiers' => $newIdentifiers,
         ]);
 
         $player2->update([
-            'identifiers' => $newIdentifiers2
+            'identifiers' => $newIdentifiers2,
         ]);
 
         PanelLog::logUnlink("identifier", license(), $player->license_identifier, $player2->license_identifier);
@@ -443,7 +443,7 @@ class PlayerBanController extends Controller
 
         return Inertia::render('Players/Ban/Edit', [
             'player' => new PlayerResource($player),
-            'ban' => new BanResource($ban),
+            'ban'    => new BanResource($ban),
         ]);
     }
 
@@ -461,14 +461,14 @@ class PlayerBanController extends Controller
             abort(401);
         }
 
-        $user = user();
+        $user   = user();
         $reason = $request->input('reason') ?: 'No reason.';
 
         $expireBefore = $ban->getExpireTimeInSeconds() ? GeneralHelper::formatSeconds($ban->getExpireTimeInSeconds()) : 'permanent';
-        $expireAfter = $request->input('expire') ? GeneralHelper::formatSeconds(intval($request->input('expire')) + (time() - $ban->getTimestamp())) : 'permanent';
+        $expireAfter  = $request->input('expire') ? GeneralHelper::formatSeconds(intval($request->input('expire')) + (time() - $ban->getTimestamp())) : 'permanent';
 
-		$before = $ban->getExpireTimeInSeconds() || null;
-		$after = $request->input('expire') ? intval($request->input('expire')) + (time() - $ban->getTimestamp()) : null;
+        $before = $ban->getExpireTimeInSeconds() || null;
+        $after  = $request->input('expire') ? intval($request->input('expire')) + (time() - $ban->getTimestamp()) : null;
 
         $message = '';
 
@@ -490,158 +490,93 @@ class PlayerBanController extends Controller
         // Automatically log the ban update as a warning.
         $player->warnings()->create([
             'issuer_id' => $user->user_id,
-            'message' => $message .
-                'This warning was generated automatically as a result of updating a ban.',
+            'message'   => $message .
+            'This warning was generated automatically as a result of updating a ban.',
         ]);
 
         return backWith('success', 'Ban was successfully updated, redirecting back to player page...');
     }
 
-    public function smurfBan(Request $request, string $hash): RedirectResponse
-	{
-		if (!$hash) {
-			abort(404);
-		}
-
-		$ban = Ban::query()->where('ban_hash', '=', $hash)->whereRaw("SUBSTRING_INDEX(identifier, ':', 1) = 'license'")->first();
-
-		if (!$ban) {
-			abort(404);
-		}
-
-		$license = $ban->identifier;
-
-		return redirect("/players/{$license}");
-	}
-
-    public function linkedIPs(Request $request, string $license): \Illuminate\Http\Response
+    public function systemInfo(Player $player, Ban $ban)
     {
-        $player = $this->findPlayer($request, $license);
-
-        if (!$player) {
-			return $this->text(404, "Player not found.");
-		}
-
-		$ips = $player->getIps();
-
-        if (empty($ips)) {
-            return $this->text(404, "No ips found.");
+        if ($ban->creator_name) {
+            return $this->json(false, null, 'Not a system ban.');
         }
 
-        $badIps = [];
+        $parts = explode('-', $ban->reason);
 
-		$ips = array_filter($ips, function($ip) use (&$badIps) {
-			$info = GeneralHelper::ipInfo($ip);
-
-			if ($info) {
-				if (in_array($info['isp'], ['OVH SAS'])) {
-                    $badIps[] = $info;
-
-					return false;
-				}
-
-				if ($info['proxy']) {
-                    $badIps[] = $info;
-
-					return false;
-				}
-			}
-
-			return true;
-		});
-
-        if (empty($ips)) {
-            $grouped = [];
-
-            foreach ($badIps as $ip) {
-                $key = $ip["isp"] . " - " . $ip["country"] . "/" . $ip["city"];
-
-                if (!isset($grouped[$key])) {
-                    $grouped[$key] = $ip;
-                    $grouped[$key]["ips"] = [
-                        $ip["ip"]
-                    ];
-                }
-
-                $grouped[$key]["proxy"] = $grouped[$key]["proxy"] || $ip["proxy"];
-
-                $grouped[$key]["ips"][] = $ip["ip"];
-            }
-
-            $fmt = implode("\n\n", array_map(function($isp) {
-                return "$isp[isp]\n - $isp[country]" . ($isp["city"] ? "/$isp[city]" : "") . ($isp["proxy"] ? "\n - Proxy IP" : "") . "\n - " . implode("\n - ", $isp["ips"]);
-            }, array_values($grouped)));
-
-            return $this->text(404, "Only VPN/Proxy IPs found. This means the user has always used a VPN/Proxy when connecting to the server. " . sizeof($badIps) . " IPs found:\n\n$fmt");
+        if (sizeof($parts) < 2 || $parts[0] !== 'MODDING') {
+            return $this->json(false, null, 'Not a modding ban.');
         }
 
-		$where = implode(' OR ', array_map(function($ip) {
-			return 'JSON_CONTAINS(ips, \'"' . $ip . '"\', \'$\')';
-		}, $ips));
+        $type = strtolower($parts[1]);
 
-		return $this->drawLinked($player, $where);
+        // Some ban reasons are different to the anti cheat type
+        switch ($type) {
+            case 'spectating':
+                $type = 'spectate';
+                break;
+            case 'weapon_spawn':
+                $type = 'illegal_weapon';
+                break;
+            case 'thermal_nightvision':
+                $type = 'thermal_night_vision';
+                break;
+            case 'freecam':
+                $type = 'freecam_detected';
+                break;
+            case 'bad_entity_spawn':
+                $type = 'spawned_object';
+                break;
+        }
+
+        $time = strtotime('-6 months');
+
+        $total = DB::table('anti_cheat_events')
+            ->where('type', '=', $type)
+            ->where('anti_cheat_events.license_identifier', '!=', $player->license_identifier)
+            ->where('anti_cheat_events.timestamp', '>', $time)
+            ->count();
+
+        $counts = DB::table('anti_cheat_events')
+            ->selectRaw('COUNT(DISTINCT CASE WHEN ban_hash IS NOT NULL THEN license_identifier END) as banned, COUNT(DISTINCT CASE WHEN ban_hash IS NULL THEN license_identifier END) as unbanned')
+            ->leftJoin('user_bans', 'anti_cheat_events.license_identifier', '=', 'user_bans.identifier')
+            ->where('type', '=', $type)
+            ->where('anti_cheat_events.timestamp', '>', $time)
+            ->where('anti_cheat_events.license_identifier', '!=', $player->license_identifier)
+            ->groupBy('type')
+            ->first();
+
+        $banned   = $counts ? $counts->banned : 0;
+        $unbanned = $counts ? $counts->unbanned : 0;
+
+        return $this->json(true, [
+            'total'    => $total,
+            'banned'   => $banned,
+            'unbanned' => $unbanned
+        ]);
     }
 
-    public function linkedTokens(Request $request, string $license): \Illuminate\Http\Response
+    public function smurfBan(string $hash): RedirectResponse
     {
-        $player = $this->findPlayer($request, $license);
-
-        if (!$player) {
-			return $this->text(404, "Player not found.");
-		}
-
-		$tokens = $player->getTokens();
-
-        if (empty($tokens)) {
-            return $this->text(404, "No tokens found.");
+        if (!$hash) {
+            abort(404);
         }
 
-		$where = "JSON_OVERLAPS(player_tokens, '" . json_encode($player->getTokens()) . "') = 1";
+        $ban = Ban::query()->where('ban_hash', '=', $hash)->whereRaw("SUBSTRING_INDEX(identifier, ':', 1) = 'license'")->first();
 
-		return $this->drawLinked($player, $where);
-    }
-
-    public function linkedIdentifiers(Request $request, string $license): \Illuminate\Http\Response
-    {
-        $player = $this->findPlayer($request, $license);
-
-        if (!$player) {
-			return $this->text(404, "Player not found.");
-		}
-
-		$identifiers = $player->getBannableIdentifiers();
-
-        if (empty($identifiers)) {
-            return $this->text(404, "No identifiers found.");
+        if (!$ban) {
+            abort(404);
         }
 
-		$where = "JSON_OVERLAPS(identifiers, '" . json_encode($player->getBannableIdentifiers()) . "') = 1";
+        $license = $ban->identifier;
 
-		return $this->drawLinked($player, $where);
+        return redirect("/players/{$license}");
     }
 
-    public function linkedPrint(Request $request, string $license): \Illuminate\Http\Response
+    protected function findPlayer(Request $request, string $license)
     {
-        $player = $this->findPlayer($request, $license);
-
-        if (!$player) {
-			return $this->text(404, "Player not found.");
-		}
-
-		$fingerprint = $player->getFingerprint();
-
-        if (!$fingerprint) {
-            return $this->text(404, "No fingerprint found.");
-        }
-
-		$where = "JSON_EXTRACT(user_variables, '$.ofFingerprint') = '" . $fingerprint . "'";
-
-		return $this->drawLinked($player, $where);
-    }
-
-	protected function findPlayer(Request $request, string $license)
-	{
-		if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LINKED)) {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LINKED)) {
             abort(401);
         }
 
@@ -652,85 +587,210 @@ class PlayerBanController extends Controller
         $player = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'user_variables'])->where('license_identifier', '=', $license)->get()->first();
 
         if (!$player) {
-			return false;
+            return false;
         }
 
-		return $player;
-	}
+        return $player;
+    }
 
-	protected function drawLinked(Player $player, string $where)
-	{
-		$license = $player->license_identifier;
+    public function linkedIPs(Request $request, string $license): \Illuminate\Http\Response
+    {
+        $player = $this->findPlayer($request, $license);
 
-		$tokens = $player->getTokens();
-		$ips = $player->getIps();
-		$identifiers = $player->getBannableIdentifiers();
-		$fingerprint = $player->getFingerprint();
+        if (!$player) {
+            return $this->text(404, "Player not found.");
+        }
 
-		$players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'user_variables', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function($join) {
-			$join->on(DB::raw("JSON_CONTAINS(identifiers, JSON_QUOTE(identifier), '$')"), '=', DB::raw('1'));
-		})->whereRaw($where)->groupBy('license_identifier')->get();
+        $ips = $player->getIps();
+
+        if (empty($ips)) {
+            return $this->text(404, "No ips found.");
+        }
+
+        $badIps = [];
+
+        $ips = array_filter($ips, function ($ip) use (&$badIps) {
+            $info = GeneralHelper::ipInfo($ip);
+
+            if ($info) {
+                if (in_array($info['isp'], ['OVH SAS'])) {
+                    $badIps[] = $info;
+
+                    return false;
+                }
+
+                if ($info['proxy']) {
+                    $badIps[] = $info;
+
+                    return false;
+                }
+            }
+
+            return true;
+        });
+
+        if (empty($ips)) {
+            $grouped = [];
+
+            foreach ($badIps as $ip) {
+                $key = $ip["isp"] . " - " . $ip["country"] . "/" . $ip["city"];
+
+                if (!isset($grouped[$key])) {
+                    $grouped[$key]        = $ip;
+                    $grouped[$key]["ips"] = [
+                        $ip["ip"],
+                    ];
+                }
+
+                $grouped[$key]["proxy"] = $grouped[$key]["proxy"] || $ip["proxy"];
+
+                $grouped[$key]["ips"][] = $ip["ip"];
+            }
+
+            $fmt = implode("\n\n", array_map(function ($isp) {
+                return "$isp[isp]\n - $isp[country]" . ($isp["city"] ? "/$isp[city]" : "") . ($isp["proxy"] ? "\n - Proxy IP" : "") . "\n - " . implode("\n - ", $isp["ips"]);
+            }, array_values($grouped)));
+
+            return $this->text(404, "Only VPN/Proxy IPs found. This means the user has always used a VPN/Proxy when connecting to the server. " . sizeof($badIps) . " IPs found:\n\n$fmt");
+        }
+
+        $where = implode(' OR ', array_map(function ($ip) {
+            return 'JSON_CONTAINS(ips, \'"' . $ip . '"\', \'$\')';
+        }, $ips));
+
+        return $this->drawLinked($player, $where);
+    }
+
+    public function linkedTokens(Request $request, string $license): \Illuminate\Http\Response
+    {
+        $player = $this->findPlayer($request, $license);
+
+        if (!$player) {
+            return $this->text(404, "Player not found.");
+        }
+
+        $tokens = $player->getTokens();
+
+        if (empty($tokens)) {
+            return $this->text(404, "No tokens found.");
+        }
+
+        $where = "JSON_OVERLAPS(player_tokens, '" . json_encode($player->getTokens()) . "') = 1";
+
+        return $this->drawLinked($player, $where);
+    }
+
+    public function linkedIdentifiers(Request $request, string $license): \Illuminate\Http\Response
+    {
+        $player = $this->findPlayer($request, $license);
+
+        if (!$player) {
+            return $this->text(404, "Player not found.");
+        }
+
+        $identifiers = $player->getBannableIdentifiers();
+
+        if (empty($identifiers)) {
+            return $this->text(404, "No identifiers found.");
+        }
+
+        $where = "JSON_OVERLAPS(identifiers, '" . json_encode($player->getBannableIdentifiers()) . "') = 1";
+
+        return $this->drawLinked($player, $where);
+    }
+
+    public function linkedPrint(Request $request, string $license): \Illuminate\Http\Response
+    {
+        $player = $this->findPlayer($request, $license);
+
+        if (!$player) {
+            return $this->text(404, "Player not found.");
+        }
+
+        $fingerprint = $player->getFingerprint();
+
+        if (!$fingerprint) {
+            return $this->text(404, "No fingerprint found.");
+        }
+
+        $where = "JSON_EXTRACT(user_variables, '$.ofFingerprint') = '" . $fingerprint . "'";
+
+        return $this->drawLinked($player, $where);
+    }
+
+    protected function drawLinked(Player $player, string $where)
+    {
+        $license = $player->license_identifier;
+
+        $tokens      = $player->getTokens();
+        $ips         = $player->getIps();
+        $identifiers = $player->getBannableIdentifiers();
+        $fingerprint = $player->getFingerprint();
+
+        $players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'user_variables', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function ($join) {
+            $join->on(DB::raw("JSON_CONTAINS(identifiers, JSON_QUOTE(identifier), '$')"), '=', DB::raw('1'));
+        })->whereRaw($where)->groupBy('license_identifier')->get();
 
         $raw = [];
 
         foreach ($players as $found) {
             if ($found->license_identifier !== $license) {
-                $foundTokens = $found->getTokens();
-				$foundIps = $found->getIps();
-				$foundIdentifiers = $found->getBannableIdentifiers();
-				$foundFingerprint = $found->getFingerprint();
+                $foundTokens      = $found->getTokens();
+                $foundIps         = $found->getIps();
+                $foundIdentifiers = $found->getBannableIdentifiers();
+                $foundFingerprint = $found->getFingerprint();
 
-				$count = sizeof(array_intersect($tokens, $foundTokens));
-				$countIps = sizeof(array_intersect($ips, $foundIps));
-				$countIdentifiers = sizeof(array_intersect($identifiers, $foundIdentifiers));
-				$countFingerprint = $fingerprint && $foundFingerprint && $fingerprint === $foundFingerprint ? 1 : 0;
+                $count            = sizeof(array_intersect($tokens, $foundTokens));
+                $countIps         = sizeof(array_intersect($ips, $foundIps));
+                $countIdentifiers = sizeof(array_intersect($identifiers, $foundIdentifiers));
+                $countFingerprint = $fingerprint && $foundFingerprint && $fingerprint === $foundFingerprint ? 1 : 0;
 
-				$total = $count + $countIps + $countIdentifiers + $countFingerprint;
+                $total = $count + $countIps + $countIdentifiers + $countFingerprint;
 
-				$counts = '<span style="color:#ff5b5b">' . $count . '</span>/<span style="color:#5bc2ff">' . $countIps . '</span>/<span style="color:#65d54e">' . $countIdentifiers . '</span>/<span style="color:#f0c622">' . $countFingerprint . '</span>';
+                $counts = '<span style="color:#ff5b5b">' . $count . '</span>/<span style="color:#5bc2ff">' . $countIps . '</span>/<span style="color:#65d54e">' . $countIdentifiers . '</span>/<span style="color:#f0c622">' . $countFingerprint . '</span>';
 
-				$playtime = "Playtime is about " . GeneralHelper::formatSeconds($found->playtime);
+                $playtime = "Playtime is about " . GeneralHelper::formatSeconds($found->playtime);
 
                 $raw[] = [
-					'label' => '[' . $counts . '] - ' . GeneralHelper::formatTimestamp($found->last_connection) . ' - <a href="/players/' . $found->license_identifier . '" target="_blank" title="' . $playtime . '">' . $found->player_name . '</a>',
-					'connection' => $found->last_connection,
-					'count' => $total,
-					'banned' => $found->ban_hash !== null
-				];
+                    'label'      => '[' . $counts . '] - ' . GeneralHelper::formatTimestamp($found->last_connection) . ' - <a href="/players/' . $found->license_identifier . '" target="_blank" title="' . $playtime . '">' . $found->player_name . '</a>',
+                    'connection' => $found->last_connection,
+                    'count'      => $total,
+                    'banned'     => $found->ban_hash !== null,
+                ];
             }
         }
 
-		usort($raw, function($a, $b) {
-			if ($a['connection'] === $b['connection']) {
-				return $a['count'] < $b['count'];
-			}
+        usort($raw, function ($a, $b) {
+            if ($a['connection'] === $b['connection']) {
+                return $a['count'] < $b['count'];
+            }
 
-			return $a['connection'] < $b['connection'];
-		});
+            return $a['connection'] < $b['connection'];
+        });
 
-		$linked = [];
-		$banned = [];
+        $linked = [];
+        $banned = [];
 
-		foreach ($raw as $item) {
-			if ($item['banned']) {
-				$banned[] = $item['label'];
-			} else {
-				$linked[] = $item['label'];
-			}
-		}
+        foreach ($raw as $item) {
+            if ($item['banned']) {
+                $banned[] = $item['label'];
+            } else {
+                $linked[] = $item['label'];
+            }
+        }
 
-		if (empty($linked)) {
-			$linked[] = "<i>None</i>";
-		}
+        if (empty($linked)) {
+            $linked[] = "<i>None</i>";
+        }
 
-		if (empty($banned)) {
-			$banned[] = "<i>None</i>";
-		}
+        if (empty($banned)) {
+            $banned[] = "<i>None</i>";
+        }
 
-		$counts = '<span style="color:#ff5b5b">Tokens</span> / <span style="color:#5bc2ff">IPs</span> / <span style="color:#65d54e">Identifiers</span> / <span style="color:#f0c622">Fingerprint</span>';
+        $counts = '<span style="color:#ff5b5b">Tokens</span> / <span style="color:#5bc2ff">IPs</span> / <span style="color:#65d54e">Identifiers</span> / <span style="color:#f0c622">Fingerprint</span>';
 
-		$print = $fingerprint ? " <span style='color:#a0bcff'>{<i>" . $fingerprint . "</i>}</span>" : "";
+        $print = $fingerprint ? " <span style='color:#a0bcff'>{<i>" . $fingerprint . "</i>}</span>" : "";
 
         return $this->fakeText(200, "Found: <b>" . sizeof($raw) . "</b> Accounts for <a href='/players/" . $license . "' target='_blank'>" . $player->player_name . "</a>" . $print . "\n\n<i style='color:#c68dbf'>[" . $counts . "] - Last Connection - Player Name</i>\n\n<i style='color:#a3ff9b'>- Not Banned</i>\n" . implode("\n", $linked) . "\n\n<i style='color:#ff8e8e'>- Banned</i>\n" . implode("\n", $banned));
-	}
+    }
 }
