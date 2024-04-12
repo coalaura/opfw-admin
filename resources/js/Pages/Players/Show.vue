@@ -401,6 +401,39 @@
 
         <metadataViewer :title="t('players.show.user_variables')" :metadata="player.variables" :show.sync="showingUserVariables"></metadataViewer>
 
+        <!-- System Ban Info -->
+        <modal :show.sync="isShowingSystemInfo">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.show.system_info') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="h-20 flex justify-center items-center" v-if="isSystemInfoLoading">
+                    <i class="fas fa-spinner animate-spin mr-1"></i>
+                    {{ t('global.loading') }}
+                </div>
+                <div class="h-20 flex justify-center items-center" v-else-if="!systemInfo">
+                    <i class="fas fa-cross mr-1"></i>
+                    {{ t('players.show.no_system_info') }}
+                </div>
+                <div v-else>
+                    <p v-html="t('players.show.system_details', systemInfo.type, systemInfo.total, systemInfo.players, systemInfo.banned, systemInfo.unbanned, systemInfo.accuracy)" v-if="systemInfo.players > 0"></p>
+                    <p v-html="t('players.show.system_no_details', systemInfo.type)" v-else></p>
+
+                    <img :src="systemInfo.graph" class="w-full mt-3" />
+                    <caption class="text-sm italic text-left text-gray-600 dark:text-gray-400 block">{{ t('players.show.system_caption') }}</caption>
+                </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingSystemInfo = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
+
         <!-- Staff Statistics -->
         <modal :show.sync="isShowingStaffStatistics" extraClass="max-w-large">
             <template #header>
@@ -914,11 +947,7 @@
                 </div>
 
                 <div class="mt-4 text-sm pt-1 border-t border-dashed" v-if="player.ban.info">
-                    <b class="whitespace-nowrap">{{ player.ban.original }}:</b> <i>{{ player.ban.info }}</i>
-                </div>
-
-                <div class="mt-2 text-sm" v-if="player.ban.accuracy && !confirmedAccuracy" :title="t('players.show.accuracy_title', player.ban.accuracy.banned, player.ban.accuracy.total)">
-                    <b class="whitespace-nowrap">{{ t('players.show.accuracy') }}:</b> <i>~{{ player.ban.accuracy.accuracy }}%</i>
+                    <b class="whitespace-nowrap cursor-help" @click="showSystemInfo()">{{ player.ban.original }}:</b> <i>{{ player.ban.info }}</i>
                 </div>
             </alert>
 
@@ -1742,6 +1771,10 @@ export default {
 
             playerTime: false,
 
+            isShowingSystemInfo: false,
+            isSystemInfoLoading: false,
+            systemInfo: false,
+
             charactersCollapsed: false,
             warningsCollapsed: true && !autoExpandCollapsed,
             extraDataCollapsed: true && !autoExpandCollapsed,
@@ -1807,6 +1840,27 @@ export default {
         }
     },
     methods: {
+        async showSystemInfo() {
+            this.isShowingSystemInfo = true;
+
+            if (this.isSystemInfoLoading) {
+                return;
+            }
+
+            this.isSystemInfoLoading = true;
+            this.systemInfo = false;
+
+            try {
+                const response = await axios.get('/players/' + this.player.licenseIdentifier + '/bans/' + this.player.ban.id + '/system');
+
+                if (response.data && response.data.status) {
+                    this.systemInfo = response.data.data;
+                }
+            } catch (e) {
+            }
+
+            this.isSystemInfoLoading = false;
+        },
         warningMessageChanged() {
             const message = this.form.warning.message;
 

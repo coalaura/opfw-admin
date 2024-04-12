@@ -961,7 +961,12 @@
             "whitelist": "Whitewist dis pwayew?",
             "unwhitelist": "Un-Whitewist dis pwayew?",
             "unmute": "Unmyuwt",
-            "unmute_confirm": "Awe yuw suwe yuw want tuwu unmyuwt dis pwayew?"
+            "unmute_confirm": "Awe yuw suwe yuw want tuwu unmyuwt dis pwayew?",
+            "system_info": "Systwem Ban Info UwU",
+            "no_system_info": "Faiwed to woad systwem ban info. >w<",
+            "system_details": "De <b>{0}</b> detectiown was twiggewwed <b>{1}</b> times in da wast 6 munths, affewcting <b>{2}</b> pwayews. <b>{3}</b> of which awe stiww banned and <b>{4}</b> of which awe not. Dis wesuwts an estimated accuwacy of about <b>{5}%</b>. >w<",
+            "system_no_details": "De <b>{0}</b> detectiown has not been twiggewwed in da wast 6 munths. uwu",
+            "system_caption": "Pwayews detected by dis detectiown. Gween awe banned, wed awe not. uwu"
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

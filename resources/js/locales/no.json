@@ -971,7 +971,12 @@
             "whitelist": "Sett denne spilleren på hvitelisten?",
             "unwhitelist": "Fjern denne spilleren fra hvitelisten?",
             "unmute": "Slå på lyd",
-            "unmute_confirm": "Er du sikker på at du vil slå på lyden for denne spilleren?"
+            "unmute_confirm": "Er du sikker på at du vil slå på lyden for denne spilleren?",
+            "system_info": "Systemutestengelsesinformasjon",
+            "no_system_info": "Klarte ikke å laste informasjon om systemutestengelse.",
+            "system_details": "Deteksjonen for <b>{0}</b> ble utløst <b>{1}</b> ganger de siste 6 månedene, som påvirket <b>{2}</b> spillere. <b>{3}</b> av dem er fremdeles utestengt og <b>{4}</b> av dem er ikke. Dette resulterer i en estimert nøyaktighet på omtrent <b>{5}%</b>.",
+            "system_no_details": "Deteksjonen for <b>{0}</b> har ikke blitt utløst de siste 6 månedene.",
+            "system_caption": "Spillere oppdaget av denne deteksjonen. Grønn er utestengt, rød er ikke."
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",

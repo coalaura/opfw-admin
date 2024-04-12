@@ -961,7 +961,12 @@
             "whitelist": "Make player safe in tribe?",
             "unwhitelist": "Make player not safe in tribe anymore?",
             "unmute": "Make talky noise",
-            "unmute_confirm": "You sure want make talky noise for this player?"
+            "unmute_confirm": "You sure want make talky noise for this player?",
+            "system_info": "Ooga Ban Stuff",
+            "no_system_info": "Ooga no load ban stuff.",
+            "system_details": "Ooga <b>{0}</b> catch-many <b>{1}</b> times last moon-moons, touch-many <b>{2}</b> tribesfolk. <b>{3}</b> still no-allowed, but <b>{4}</b> now run free. Think-think hit-targets about <b>{5}%</b> good.",
+            "system_no_details": "Ooga <b>{0}</b> catch-none last moon-moons.",
+            "system_caption": "Tribesfolk get caught by catch. Green no-allowed, red go-go."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

@@ -961,7 +961,12 @@
             "whitelist": "Add this player to the whitelist?",
             "unwhitelist": "Take this player off the whitelist?",
             "unmute": "Unmute",
-            "unmute_confirm": "Y'all sure y'wanna unmute this player?"
+            "unmute_confirm": "Y'all sure y'wanna unmute this player?",
+            "system_info": "Syst'm Ban Info",
+            "no_system_info": "Failed t'load syst'm ban info.",
+            "system_details": "The <b>{0}</b> detection wur triggered <b>{1}</b> times in th' last 6 months, affectin' <b>{2}</b> players. <b>{3}</b> of which're still banned an' <b>{4}</b> of which ain't. This results an estimated accuracy of about <b>{5}%</b>.",
+            "system_no_details": "The <b>{0}</b> detection ain't been triggered in th' last 6 months.",
+            "system_caption": "Players detected by this detection. Green are banned, red ain't."
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

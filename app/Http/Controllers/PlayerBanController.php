@@ -539,22 +539,51 @@ class PlayerBanController extends Controller
             ->count();
 
         $counts = DB::table('anti_cheat_events')
-            ->selectRaw('COUNT(DISTINCT CASE WHEN ban_hash IS NOT NULL THEN license_identifier END) as banned, COUNT(DISTINCT CASE WHEN ban_hash IS NULL THEN license_identifier END) as unbanned')
+            ->selectRaw("DATE_FORMAT(FROM_UNIXTIME(anti_cheat_events.timestamp), '%d-%m-%Y') as date, COUNT(DISTINCT CASE WHEN ban_hash IS NOT NULL THEN license_identifier END) as banned, COUNT(DISTINCT CASE WHEN ban_hash IS NULL THEN license_identifier END) as unbanned")
             ->leftJoin('user_bans', 'anti_cheat_events.license_identifier', '=', 'user_bans.identifier')
             ->where('type', '=', $type)
             ->where('anti_cheat_events.timestamp', '>', $time)
             ->where('anti_cheat_events.license_identifier', '!=', $player->license_identifier)
-            ->groupBy('type')
-            ->first();
+            ->groupBy('date')
+            ->get();
 
-        $banned   = $counts ? $counts->banned : 0;
-        $unbanned = $counts ? $counts->unbanned : 0;
+        $banned      = [];
+        $bannedTotal = 0;
+
+        $unbanned      = [];
+        $unbannedTotal = 0;
+
+        for ($t = $time; $t <= time(); $t += 86400) {
+            $banned[$t]   = 0;
+            $unbanned[$t] = 0;
+        }
+
+        foreach ($counts as $count) {
+            $time = strtotime($count->date);
+
+            $bannedTotal += $count->banned;
+            $unbannedTotal += $count->unbanned;
+
+            $banned[$time]   = $count->banned;
+            $unbanned[$time] = $count->unbanned;
+        }
+
+        $graph = $this->renderGraph([
+            array_values($banned),
+            array_values($unbanned),
+        ], '', ["green", "red"]);
+
+        $totalPlayers = $bannedTotal + $unbannedTotal;
+        $accuracy = $totalPlayers > 0 ? ($bannedTotal > 0 ? round(($bannedTotal / $totalPlayers) * 100, 2) : 0) : 'N/A';
 
         return $this->json(true, [
             'total'    => $total,
-            'banned'   => $banned,
-            'unbanned' => $unbanned,
-            'time'     => $time,
+            'players'  => $totalPlayers,
+            'banned'   => $bannedTotal,
+            'unbanned' => $unbannedTotal,
+            'accuracy' => $accuracy,
+            'graph'    => $graph,
+            'since'    => $time,
             'type'     => $type,
         ]);
     }

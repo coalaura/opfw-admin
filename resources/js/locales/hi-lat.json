@@ -971,7 +971,12 @@
             "whitelist": "Is khiladi ko whitelist mein shaamil karen?",
             "unwhitelist": "Is khiladi ko whitelist se hataen?",
             "unmute": "Unmute kariye",
-            "unmute_confirm": "Kya aap sach mein is khiladi ko unmute karna chahte hain?"
+            "unmute_confirm": "Kya aap sach mein is khiladi ko unmute karna chahte hain?",
+            "system_info": "System Pratibandh Jankari",
+            "no_system_info": "System pratibandh jankari load karna asafal raha.",
+            "system_details": "<b>{0}</b> pata lagane ki prakriya pichhle 6 mahino mein <b>{1}</b> baar sakriya hui, jisse <b>{2}</b> khiladi prabhavit huye. Jinme se <b>{3}</b> abhi bhi prabandhit hain aur <b>{4}</b> prabandhit nahin hain. Iska anumanit sahiyata dar lagbhag <b>{5}%</b> hai.",
+            "system_no_details": "Pichhle 6 mahino mein <b>{0}</b> pata lagane ki prakriya kisi bhi baar sakriya nahi hui.",
+            "system_caption": "Is pata lagane ki prakriya dwaara pehchaane gaye khiladi. Harit rang ke prabandhit hain, laal rang ke prabandhit nahi hain."
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",

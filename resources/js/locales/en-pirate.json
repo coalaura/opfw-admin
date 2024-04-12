@@ -961,7 +961,12 @@
             "whitelist": "Mark this hearty as trusty, arr?",
             "unwhitelist": "Revoke this bucko's trusty status, aye?",
             "unmute": "Unshush",
-            "unmute_confirm": "Be ye certain ye wish t' unshush this here sea dog?"
+            "unmute_confirm": "Be ye certain ye wish t' unshush this here sea dog?",
+            "system_info": "System Ban Ledger",
+            "no_system_info": "Couldn't hoist the system ban ledger.",
+            "system_details": "The <b>{0}</b> spyglass was spyin' <b>{1}</b> times in the past half a year, markin' <b>{2}</b> sea dogs. <b>{3}</b> of 'em be still marooned and <b>{4}</b> of 'em be sailin' free. This be yieldin' a reckonin' o' 'bout <b>{5}%</b> true aim.",
+            "system_no_details": "The <b>{0}</b> spyglass ain't spied a thing in the past half a year.",
+            "system_caption": "Scallywags spied by this spyglass. The green 'uns be barred, the red 'uns be not."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

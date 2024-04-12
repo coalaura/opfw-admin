@@ -961,7 +961,12 @@
             "whitelist": "📝👤🎮?",
             "unwhitelist": "⛔📝👤🎮?",
             "unmute": "🔊",
-            "unmute_confirm": "❓ 🤔 💭 🔄 🔊 🎮?"
+            "unmute_confirm": "❓ 🤔 💭 🔄 🔊 🎮?",
+            "system_info": "🚫💻ℹ️",
+            "no_system_info": "❌🔄💻🚫ℹ️.",
+            "system_details": "👁️‍🗨️<b>{0}</b> ⚠️<b>{1}</b>🕒📆 6️⃣🌗, 🕹️<b>{2}</b>👥. <b>{3}</b>🔒⛔️❤️ <b>{4}</b>✅. This results an estimated accuracy of about <b>{5}%</b>.",
+            "system_no_details": "👁️‍🗨️<b>{0}</b> ⚠️ has not been triggered 📆 6️⃣🌗.",
+            "system_caption": "🕹️👥 detected by this ⚠️. 🟩 are banned, 🔴 are not."
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",
