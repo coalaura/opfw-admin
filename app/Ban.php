@@ -154,42 +154,6 @@ class Ban extends Model
         "VEHICLE_SPAWN"            => "illegal_vehicle_spawn",
     ];
 
-    public static function getAccuracy(string $reason): ?array
-    {
-        if (!Str::startsWith($reason, 'MODDING-')) {
-            return null;
-        }
-
-        $reason = explode('-', $reason)[1] ?? null;
-
-        $event = self::AC_EVENT_MAP[$reason] ?? null;
-
-        if (!$event) {
-            return null;
-        }
-
-        $data = DB::table('anti_cheat_events')
-            ->select(DB::raw('COUNT(*) as total, SUM(IF(ban_hash IS NULL, 1, 0)) as unbanned, SUM(IF(ban_hash IS NOT NULL, 1, 0)) as banned'))
-            ->leftJoin('user_bans', 'license_identifier', '=', 'identifier')
-            ->where('type', $event)
-            ->where('anti_cheat_events.timestamp', '>', time() - 14 * 24 * 60 * 60)
-            ->first();
-
-        if (!$data || $data->total === 0) {
-            return null;
-        }
-
-        $unbanned = intval($data->unbanned);
-        $banned   = intval($data->banned);
-
-        return [
-            'total'    => $data->total,
-            'banned'   => $banned,
-            'unbanned' => $unbanned,
-            'accuracy' => $banned > 0 ? round($banned / $data->total * 100, 1) : 0,
-        ];
-    }
-
     public static function getAutomatedReasons()
     {
         if (self::$automatedReasons === null) {

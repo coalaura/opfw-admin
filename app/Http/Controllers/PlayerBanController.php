@@ -437,7 +437,7 @@ class PlayerBanController extends Controller
      */
     public function edit(Request $request, Player $player, Ban $ban): Response
     {
-        if ($ban->locked && !PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN)) {
+        if (!$ban->creator_name || ($ban->locked && !PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN))) {
             abort(401);
         }
 
@@ -553,7 +553,9 @@ class PlayerBanController extends Controller
         return $this->json(true, [
             'total'    => $total,
             'banned'   => $banned,
-            'unbanned' => $unbanned
+            'unbanned' => $unbanned,
+            'time'     => $time,
+            'type'     => $type,
         ]);
     }
 

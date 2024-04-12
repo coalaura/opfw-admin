@@ -225,7 +225,7 @@
                     {{ t('players.show.kick') }}
                 </button>
                 <!-- Edit Ban -->
-                <inertia-link class="px-4 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/edit'" v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
+                <inertia-link class="px-4 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/edit'" v-if="player.isBanned && player.ban.issuer && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
                     <i class="fas fa-edit"></i>
                     {{ t('players.show.edit_ban') }}
                 </inertia-link>
