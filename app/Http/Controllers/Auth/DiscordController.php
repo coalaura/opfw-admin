@@ -21,7 +21,7 @@ class DiscordController extends Controller
 
         $host = $request->getHttpHost();
 
-        $url = 'https://discord.com/api/oauth2/authorize?client_id=' . $clientId . '&redirect_uri=' . urlencode($this->redirectUrl($request)) . '&response_type=code&scope=identify&state=' . $host;
+        $url = 'https://discord.com/api/oauth2/authorize?client_id=' . $clientId . '&redirect_uri=' . urlencode($this->redirectUrl($request)) . '&response_type=code&scope=identify&prompt=none&state=' . $host;
 
         return redirect($url);
     }
@@ -76,19 +76,24 @@ class DiscordController extends Controller
 
         if ($player) {
             if (!$player->isStaff()) {
-                LoggingHelper::log(printf('Player %s found for discord id %s, but is not staff', $player->license_identifier, $id));
+                LoggingHelper::log(sprintf('Player %s found for discord id %s, but is not staff', $player->license_identifier, $id));
 
                 return redirectWith('/login', 'error', "Player with last-used discord-id $id: \"" . $player->getSafePlayerName() . "\" is not a staff member.");
             }
         } else {
-            LoggingHelper::log(printf('No player found for discord id %s', $id));
+            LoggingHelper::log(sprintf('No player found for discord id %s', $id));
 
             return redirectWith('/login', 'error', "No player with last-used discord-id $id not found. Connect to the FiveM server with your discord linked first.");
         }
 
         $session->put('user', $player->user_id);
         $session->put('discord', $user);
-        $session->put('refresh', $refreshToken);
+
+        $session->put('tokens', [
+            'expires' => $tokens['expires'],
+            'access'  => $accessToken,
+            'refresh' => $refreshToken,
+        ]);
 
         return redirect($session->get('returnTo') ?? '/');
     }
@@ -97,26 +102,52 @@ class DiscordController extends Controller
     {
         $session = sessionHelper();
 
-        $refresh = $session->get('refresh');
-
-        if (!$refresh) {
-            return $this->login($request);
-        }
-
-        $tokens = $this->resolveTokens($request, null, $refresh);
+        $tokens = $session->get('tokens');
 
         if (!$tokens) {
+            LoggingHelper::log('No tokens found in session, redirecting to login page');
+
             return $this->login($request);
         }
 
-        $user = $this->resolveUser($tokens['access']);
+        $accessToken = $tokens['access'] ?? '';
+        $expires = $tokens['expires'] ?? 0;
+
+        if (!$accessToken || $expires <= time()) {
+            $refreshToken = $tokens['refresh'];
+
+            if (!$refreshToken) {
+                LoggingHelper::log('Access token expired and no refresh token found, redirecting to login page');
+
+                return $this->login($request);
+            }
+
+            $tokens = $this->resolveTokens($request, null, $refreshToken);
+
+            if (!$tokens) {
+                LoggingHelper::log('Failed to refresh access token with refresh token, redirecting to login page');
+
+                return $this->login($request);
+            }
+
+            LoggingHelper::log('Refreshed access token with refresh token');
+
+            $accessToken  = $tokens['access'];
+
+            $session->put('tokens', $tokens);
+        }
+
+        $user = $this->resolveUser($accessToken);
 
         if (!$user) {
+            LoggingHelper::log('Failed to resolve discord user, redirecting to login page');
+
             return $this->login($request);
         }
 
         $session->put('discord', $user);
-        $session->put('refresh', $tokens['refresh']);
+
+        LoggingHelper::log('Refreshed discord user with access token');
 
         return back();
     }
@@ -134,7 +165,6 @@ class DiscordController extends Controller
                 'code'         => $code,
                 'redirect_uri' => $this->redirectUrl($request),
                 'scope'        => 'identify',
-                //'prompt'       => 'none',
             ]);
         } else if ($refreshToken) {
             $data = array_merge($data, [
@@ -146,14 +176,7 @@ class DiscordController extends Controller
         try {
             $client = new Client();
             $res    = $client->request('POST', 'https://discord.com/api/oauth2/token', [
-                'form_params' => [
-                    'client_id'     => env('DISCORD_OAUTH_ID'),
-                    'client_secret' => env('DISCORD_OAUTH_SECRET'),
-                    'grant_type'    => 'authorization_code',
-                    'code'          => $code,
-                    'redirect_uri'  => $this->redirectUrl($request),
-                    'scope'         => 'identify',
-                ],
+                'form_params' => $data,
             ]);
 
             $response = $res->getBody()->getContents();
@@ -163,11 +186,12 @@ class DiscordController extends Controller
             if ($data && isset($data['access_token'])) {
                 return [
                     'access'  => $data['access_token'],
-                    'refresh' => isset($data['refresh_token']) ? $data['refresh_token'] : $refreshToken,
+                    'refresh' => $data['refresh_token'],
+                    'expires' => time() + $data['expires_in'],
                 ];
             }
         } catch (\Throwable $e) {
-            LoggingHelper::log(printf('Failed to resolve discord access token: %s', $e->getMessage()));
+            LoggingHelper::log(sprintf('Failed to resolve discord access token: %s', $e->getMessage()));
         }
 
         return null;
@@ -191,7 +215,7 @@ class DiscordController extends Controller
                 return $data['user'];
             }
         } catch (\Throwable $e) {
-            LoggingHelper::log(printf('Failed to resolve discord user: %s', $e->getMessage()));
+            LoggingHelper::log(sprintf('Failed to resolve discord user: %s', $e->getMessage()));
         }
 
         return null;

@@ -86,7 +86,7 @@ module.exports = {
             minWidth: {
                 'box':     '350px',
                 'input':   '200px',
-                'context': '140px',
+                'context': '150px',
                 'base':    '24px'
             },
             minHeight: {
