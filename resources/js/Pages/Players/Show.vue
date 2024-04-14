@@ -1259,7 +1259,7 @@
                                         </div>
 
                                         <div class="flex items-center py-4">
-                                            <span class="italic text-xs text-muted dark:text-dark-muted text-left">{{ warning.message }}</span>
+                                            <span class="italic text-xs text-muted dark:text-dark-muted text-left" v-html="formatWarning(warning.message)"></span>
                                         </div>
                                     </div>
 
@@ -2782,10 +2782,10 @@ export default {
             const message = warning.message,
                 type = warning.warningType;
 
-            if (warning.includes('This warning was generated automatically')) return true;
-            if (warning.startsWith('I scheduled the removal of this players ban for')) return true;
-            if (warning.startsWith('I removed this players ban')) return true;
-            if (warning.startsWith('Smurf account detected. Ban applied,')) return true;
+            if (message.includes('This warning was generated automatically')) return true;
+            if (message.startsWith('I scheduled the removal of this players ban for')) return true;
+            if (message.startsWith('I removed this players ban')) return true;
+            if (message.startsWith('Smurf account detected. Ban applied,')) return true;
 
             return type === 'system';
         },
