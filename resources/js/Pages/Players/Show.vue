@@ -1246,8 +1246,8 @@
 
             <template>
                 <template v-for="(warning, index) in warnings">
-                    <template v-if="isAutomatedWarning(warning.message)">
-                        <div v-if="showSystemWarnings" class="flex flex-col px-8 mb-5 bg-white dark:bg-gray-600 rounded-lg shadow-sm relative opacity-50 hover:opacity-100" :class="{ 'mb-3': index + 1 < warnings.length && isAutomatedWarning(warnings[index + 1].message) }">
+                    <template v-if="isAutomatedWarning(warning)">
+                        <div v-if="showSystemWarnings" class="flex flex-col px-8 mb-5 bg-white dark:bg-gray-600 rounded-lg shadow-sm relative opacity-50 hover:opacity-100" :class="{ 'mb-3': index + 1 < warnings.length && isAutomatedWarning(warnings[index + 1]) }">
                             <header class="text-center">
                                 <div class="flex justify-between gap-4">
                                     <div class="flex justify-between gap-4">
@@ -1823,7 +1823,7 @@ export default {
             return this.$moment.utc(this.player.ban.scheduled * 1000).fromNow();
         },
         systemNoteCount() {
-            return this.warnings.filter(warn => this.isAutomatedWarning(warn.message)).length;
+            return this.warnings.filter(warn => this.isAutomatedWarning(warn)).length;
         },
         deletedCharacterCount() {
             return this.characters.filter(c => c.characterDeleted).length;
@@ -2779,7 +2779,15 @@ export default {
             }, 500);
         },
         isAutomatedWarning(warning) {
-            return warning.includes('This warning was generated automatically') || warning.startsWith('I scheduled the removal of this players ban for') || warning.startsWith('I removed this players ban.');
+            const message = warning.message,
+                type = warning.warningType;
+
+            if (warning.includes('This warning was generated automatically')) return true;
+            if (warning.startsWith('I scheduled the removal of this players ban for')) return true;
+            if (warning.startsWith('I removed this players ban')) return true;
+            if (warning.startsWith('Smurf account detected. Ban applied,')) return true;
+
+            return type === 'system';
         },
         formatWarning(warning) {
             warning = warning.replace(/(https?:\/\/(.+?)\/players\/)?(steam:\w{15})/gmi, (full, _ignore, host, steam) => {
