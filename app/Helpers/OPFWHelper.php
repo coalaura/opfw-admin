@@ -577,8 +577,8 @@ class OPFWHelper
         $url = "http://localhost:9999/" . $route;
 
         if (!HttpHelper::ping($url, 400)) {
+            LoggingHelper::log("Cancelled GET request to $url (ping failed)");
             LoggingHelper::log(HttpHelper::lastError());
-            LoggingHelper::log("Cancelled GET request to $url (ping failed: " . (HttpHelper::lastError() || "N/A") . ")");
 
             return false;
         }
