@@ -1152,7 +1152,8 @@
             },
             "no_coords": "Sorry y'all, I cain't give ya the last known whereabouts of a player while they're online.",
             "save_changes": "Save y'all's changes",
-            "show": "Show {0} done been deleted"
+            "show": "Show {0} done been deleted",
+            "to_player": "Playa Profile"
         },
         "edit": {
             "born": "Born on <b>{0}</b>, bless their lil' heart",

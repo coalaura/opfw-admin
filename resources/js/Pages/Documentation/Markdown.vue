@@ -78,18 +78,19 @@ multiple lines
                 </ul>
             </div>
         </v-section>
+
+        <scoped-style>
+            header {
+                display: none !important;
+            }
+
+            p {
+                width: 100%;
+            }
+        </scoped-style>
     </div>
 </template>
 
-<style>
-header {
-    display: none !important;
-}
-
-p {
-    width: 100%;
-}
-</style>
 <script>
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';

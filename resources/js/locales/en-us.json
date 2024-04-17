@@ -1117,6 +1117,7 @@
             "edit_stocks": "Stocks balance",
             "save_changes": "Save changes",
             "no_coords": "Last coords are unavailable while the player is online.",
+            "to_player": "Player Profile",
             "reset_spawn": "Reset Spawn",
             "sure_spawn": "Are you sure you want to reset this characters spawn-point?",
             "spawn_point": "Reset location",

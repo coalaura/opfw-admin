@@ -88,6 +88,12 @@ Vue.directive('click-outside', {
     },
 });
 
+Vue.component('scoped-style', {
+    render: function (createElement) {
+        return createElement('style', this.$slots.default)
+    }
+});
+
 // Create global event bus.
 Vue.prototype.$bus = new Vue();
 

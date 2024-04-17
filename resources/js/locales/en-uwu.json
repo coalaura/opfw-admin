@@ -1152,7 +1152,8 @@
             },
             "no_coords": "Wast cwoods awa unwavaiwabwe whiwe the pwayew is onwine.",
             "save_changes": "Vewwy important! Save changies",
-            "show": "Show {0} deweted"
+            "show": "Show {0} deweted",
+            "to_player": "Pwayew Pwofiwe"
         },
         "edit": {
             "born": "Bowwn on <b>{0}</b>wU",

@@ -42,14 +42,15 @@
                 </p>
             </div>
         </v-section>
+
+        <scoped-style>
+            header {
+                display: none !important;
+            }
+        </scoped-style>
     </div>
 </template>
 
-<style>
-header {
-    display: none !important;
-}
-</style>
 <script>
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';

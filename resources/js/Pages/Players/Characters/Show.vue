@@ -34,9 +34,9 @@
                     {{ t('players.characters.reset_spawn') }}
                 </a>
                 <!-- Back -->
-                <a class="px-5 py-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary mobile:block mobile:w-full mobile:m-0 mobile:mb-3" :href="returnTo" v-if="returnTo">
+                <a class="px-5 py-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary mobile:block mobile:w-full mobile:m-0 mobile:mb-3" :href="'/players/' + character.licenseIdentifier">
                     <i class="fas fa-backward"></i>
-                    {{ t('global.back') }}
+                    {{ t('players.characters.to_player') }}
                 </a>
             </div>
         </portal>
@@ -1018,9 +1018,6 @@ export default {
                 formLicenses = this.licenseForm.licenses.sort();
 
             return JSON.stringify(licenses) !== JSON.stringify(formLicenses);
-        },
-        returnTo() {
-            return document.referrer || `/players/${this.player.licenseIdentifier}`;
         },
         characterEdited() {
             if (this.form.first_name.trim() !== this.character.firstName) return true;

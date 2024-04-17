@@ -74,7 +74,7 @@ export default {
         },
 
         padVerticalOverflows() {
-            $(".overflow-y-auto").each(function() {
+            $(".overflow-y-auto").each(function () {
                 const isOverflowing = this.scrollHeight > this.clientHeight;
 
                 if (isOverflowing) {

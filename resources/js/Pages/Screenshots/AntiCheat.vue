@@ -148,18 +148,17 @@
 
         <metadataViewer :title="t('screenshot.metadata')" :image="showingMetadataImage" :metadata="showingMetadata" :show.sync="isShowingMetadata"></metadataViewer>
 
+        <scoped-style>
+            .ac-subtitle {
+                filter: brightness(0.8);
+            }
+
+            .dark .ac-subtitle {
+                filter: brightness(1.2);
+            }
+        </scoped-style>
     </div>
 </template>
-
-<style>
-.ac-subtitle {
-    filter: brightness(0.8);
-}
-
-.dark .ac-subtitle {
-    filter: brightness(1.2);
-}
-</style>
 
 <script>
 import Layout from './../../Layouts/App';

@@ -1162,7 +1162,8 @@
                 "boat": "Båtlisens",
                 "passenger": "PPL - Passasjer"
             },
-            "show": "Vis {0} slettede"
+            "show": "Vis {0} slettede",
+            "to_player": "Spillerprofil"
         },
         "edit": {
             "born": "Født den <b>{0}</b>",

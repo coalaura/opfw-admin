@@ -1162,7 +1162,8 @@
                 "boat": "Naukayen Chalane ka License",
                 "passenger": "PPL - Passenger"
             },
-            "show": "{0} hataaye gaye dikhao"
+            "show": "{0} hataaye gaye dikhao",
+            "to_player": "Khilaadi Profile"
         },
         "edit": {
             "born": "<b>{0}</b> par janma",
