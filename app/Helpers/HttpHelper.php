@@ -25,7 +25,7 @@ class HttpHelper
         if ($connection) {
             fclose($connection);
         } else {
-            self::$error = $errstr;
+            self::$error = sprintf("%s (%s)", $errstr, $errno);
         }
 
         return !!$connection;
