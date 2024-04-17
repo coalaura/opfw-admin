@@ -55,11 +55,7 @@ class Handler extends ExceptionHandler
             ], $code);
         }
 
-        if (
-            $exception instanceof NotFoundHttpException  || // 404 doesn't need to be logged to avoid filling the log file
-            $exception instanceof \Illuminate\Encryption\MissingAppKeyException  || // /api/players Illuminate\Encryption\MissingAppKeyException: No application encryption key has been specified.
-            ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException  && $exception->getStatusCode() === 503)
-        ) {
+        if ($this->shouldIgnoreException($exception)) {
             parent::report($exception);
             return;
         }
@@ -145,6 +141,21 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
         return parent::render($request, $exception);
+    }
+
+    private function shouldIgnoreException(Throwable $exception): bool
+    {
+        // Don't need to log 404's
+        if ($exception instanceof ModelNotFoundException || $exception instanceof NotFoundHttpException) {
+            return true;
+        }
+
+        // Don't need to log missing app key
+        if ($exception instanceof \Illuminate\Encryption\MissingAppKeyException) {
+            return true;
+        }
+
+        return false;
     }
 
 }
