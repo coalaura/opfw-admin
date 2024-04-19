@@ -1392,7 +1392,7 @@
                                     <i class="fab fa-markdown"></i>
                                 </inertia-link>
 
-                                <button class="text-black dark:text-white no-underline absolute bottom-0.5 right-1.5" type="submit">
+                                <button class="text-black dark:text-white no-underline absolute bottom-0.5 right-1.5 shadow" type="submit">
                                     <i class="fas fa-paper-plane"></i>
                                 </button>
 
