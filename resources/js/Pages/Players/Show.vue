@@ -2554,15 +2554,15 @@ export default {
 
             switch (type) {
                 case 'strike':
-                    return '<span class="cursor-help text-red-500"><i class="fas fa-bolt" title="' + label + '"></i></span>';
+                    return '<span class="cursor-help text-red-400"><i class="fas fa-bolt" title="' + label + '"></i></span>';
                 case 'warning':
-                    return '<span class="cursor-help text-yellow-600"><i class="fas fa-exclamation-triangle" title="' + label + '"></i></span>';
+                    return '<span class="cursor-help text-orange-400"><i class="fas fa-exclamation-triangle" title="' + label + '"></i></span>';
                 case 'note':
                     return '<span class="cursor-help text-yellow-400"><i class="fas fa-sticky-note" title="' + label + '"></i></span>';
                 case 'system':
-                    return '<span class="cursor-help text-blue-500"><i class="fas fa-robot" title="' + label + '"></i></span>';
+                    return '<span class="cursor-help text-blue-400"><i class="fas fa-robot" title="' + label + '"></i></span>';
                 case 'hidden':
-                    return '<span class="cursor-help text-pink-500"><i class="fas fa-eye-slash" title="' + label + '"></i></span>';
+                    return '<span class="cursor-help text-pink-400"><i class="fas fa-eye-slash" title="' + label + '"></i></span>';
             }
 
             return '';
