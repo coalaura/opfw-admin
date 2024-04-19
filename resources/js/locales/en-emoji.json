@@ -981,12 +981,14 @@
         "warning": {
             "give": "📝",
             "placeholder": "{0} 🙈",
-            "do_strike": "⚡",
-            "do_warn": "⚠️",
-            "do_note": "🗒️",
-            "do_hidden_note": "🗒️🙈",
             "remember": "<b>🔔 Remember!</b> Make sure to select <u>⚡</u> or <u>❗</u> when handing them out. 📝 should only be used for... well... 📝",
-            "discord_attachment": "⚠️❗️ Discord 🖇️🔗⏰! 📈🗨️🏞️🎥🔄🏠📌✉️💡."
+            "discord_attachment": "⚠️❗️ Discord 🖇️🔗⏰! 📈🗨️🏞️🎥🔄🏠📌✉️💡.",
+            "new": "🆕{0}",
+            "create_new": "🖋️🆕:",
+            "strike": "✖️",
+            "warning": "⚠️",
+            "note": "📝",
+            "hidden": "🔒📝"
         },
         "job": {
             "job": "💼",

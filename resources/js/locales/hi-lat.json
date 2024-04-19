@@ -992,11 +992,13 @@
             "give": "Chetavni / tippani joden",
             "remember": "<b>Dhyan De!</b> Jab aap Strike ya Warning de rahe ho to sahi vikalp ko chunna zaroori hai. Tippaniyan keval… khair… tippaniyon ke liye honi chahiye.",
             "placeholder": "{0} ne galti ki hai.",
-            "do_strike": "Strike ke roop mein joden",
-            "do_warn": "Warning ke roop mein joden",
-            "do_note": "Tippani ke roop mein joden",
-            "do_hidden_note": "Chhupa hua tippani ke roop mein joden",
-            "discord_attachment": "<b>Chetavani!</b> Discord attachment ke links samapt ho jaate hain! Anushansa ki jaati hai ki image/video ko kisi sthaai jagah par upload karke uska link de."
+            "discord_attachment": "<b>Chetavani!</b> Discord attachment ke links samapt ho jaate hain! Anushansa ki jaati hai ki image/video ko kisi sthaai jagah par upload karke uska link de.",
+            "new": "Naya {0}",
+            "create_new": "Naya banaye:",
+            "strike": "Hadtaal",
+            "warning": "Chetavani",
+            "note": "Dhyaan dena",
+            "hidden": "Chhupa Hua Dhyaan"
         },
         "job": {
             "job": "Kaam",

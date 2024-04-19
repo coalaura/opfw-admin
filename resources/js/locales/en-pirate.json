@@ -981,12 +981,14 @@
         "warning": {
             "give": "Log an Incident",
             "placeholder": "{0} made a blunder, arr.",
-            "do_strike": "Mark as Strike",
-            "do_warn": "Mark as Warning",
-            "do_note": "Make a Note",
-            "do_hidden_note": "Make a Secret Note",
             "remember": "<b>Yo Ho Ho!</b> Make sure to select <u>Strike</u> or <u>Warning</u> when givin' 'em out. Notes should only be used for... well... notes, me hearties.",
-            "discord_attachment": "<b>Avast!</b> Discord attachment links be walkin' the plank soon! It be wise to hoist th' image/video to a more steadfast berth and link that instead, me hearty."
+            "discord_attachment": "<b>Avast!</b> Discord attachment links be walkin' the plank soon! It be wise to hoist th' image/video to a more steadfast berth and link that instead, me hearty.",
+            "new": "New {0}",
+            "create_new": "Craft a new:",
+            "strike": "Keelhaul",
+            "warning": "Avast",
+            "note": "Scrawl",
+            "hidden": "Stowed Scrawl"
         },
         "job": {
             "job": "Pirate Vocation",

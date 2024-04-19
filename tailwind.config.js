@@ -166,6 +166,17 @@ module.exports = {
                 'teal-800': 'rgb(17, 94, 89)',
                 'teal-900': 'rgb(19, 78, 74)',
 
+                // Orange
+                'orange-100': 'rgb(255, 237, 213)',
+                'orange-200': 'rgb(254, 215, 170)',
+                'orange-300': 'rgb(253, 186, 116)',
+                'orange-400': 'rgb(251, 146, 60)',
+                'orange-500': 'rgb(249, 115, 22)',
+                'orange-600': 'rgb(234, 88, 12)',
+                'orange-700': 'rgb(194, 65, 12)',
+                'orange-800': 'rgb(154, 52, 18)',
+                'orange-900': 'rgb(124, 45, 18)',
+
                 // Extra dark color variants
                 'red-950': 'rgb(69, 10, 10)',
                 'yellow-950': 'rgb(69, 26, 3)',

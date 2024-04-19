@@ -992,11 +992,13 @@
             "give": "Legg til advarsel/notat",
             "remember": "<b>Husk!</b> Pass på å velge <u>Strike</u> eller <u>Warning</u> når du gir dem ut. Notater bør bare brukes for... vel... notater",
             "placeholder": "{0} gjorde en feil.",
-            "do_strike": "Legg til som strike",
-            "do_warn": "Legg til som advarsel",
-            "do_note": "Legg til som notat",
-            "do_hidden_note": "Legg til som skjult notat",
-            "discord_attachment": "<b>Advarsel!</b> Lenker for vedlegg i Discord utløper! Det anbefales å laste opp bildet/videoen til en mer permanent plassering og lenke til den i stedet."
+            "discord_attachment": "<b>Advarsel!</b> Lenker for vedlegg i Discord utløper! Det anbefales å laste opp bildet/videoen til en mer permanent plassering og lenke til den i stedet.",
+            "new": "Ny {0}",
+            "create_new": "Opprett en ny:",
+            "strike": "Streik",
+            "warning": "Advarsel",
+            "note": "Notat",
+            "hidden": "Skjult notat"
         },
         "job": {
             "job": "Jobb",

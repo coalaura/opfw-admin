@@ -1036,10 +1036,13 @@
             "remember": "<b>Remember!</b> Make sure to select <u>Strike</u> or <u>Warning</u> when handing them out. Notes should only be used for... well... notes",
             "discord_attachment": "<b>Warning!</b> Discord attachment links expire! It is recommended to upload the image/video to a more permanent location and link that instead.",
             "placeholder": "{0} did an oopsie.",
-            "do_strike": "Add as strike",
-            "do_warn": "Add as warning",
-            "do_note": "Add as note",
-            "do_hidden_note": "Add as hidden note"
+            "new": "New {0}",
+            "create_new": "Create a new:",
+
+            "strike": "Strike",
+            "warning": "Warning",
+            "note": "Note",
+            "hidden": "Hidden Note"
         },
         "job": {
             "job": "Job",

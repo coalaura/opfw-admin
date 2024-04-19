@@ -1356,30 +1356,50 @@
 
                     <div class="px-2 py-1 rounded italic bg-red-500 border border-red-700 text-white mt-2 text-sm inline-block shadow-sm" v-if="warningMessageNotice" v-html="warningMessageNotice"></div>
 
-                    <div class="relative mt-3">
-                        <inertia-link class="text-black dark:text-white no-underline absolute top-0.5 right-1.5" :title="t('global.support_markdown')" href="/docs/markdown">
-                            <i class="fab fa-markdown"></i>
-                        </inertia-link>
+                    <div class="mt-3 mb-5 bg-gray-200 dark:bg-gray-600 shadow rounded px-5 py-4">
+                        <div class="flex gap-3 items-center" v-if="!form.warning.warning_type">
+                            <span class="font-semibold">{{ t('players.warning.create_new') }}</span>
 
-                        <textarea class="w-full p-5 mb-5 bg-gray-200 rounded shadow dark:bg-gray-600" id="message" name="message" rows="4" :placeholder="t('players.warning.placeholder', player.playerName)" v-model="form.warning.message" @input="warningMessageChanged()" required></textarea>
+                            <div class="flex gap-2">
+                                <button class="px-2.5 py-0.5 text-white bg-red-400 dark:bg-red-500 rounded hover:!bg-red-600" @click="form.warning.warning_type = 'strike'">
+                                    <i class="fas fa-bolt mr-0.5"></i>
+                                    {{ t('players.warning.strike') }}
+                                </button>
+                                <button class="px-2.5 py-0.5 text-white bg-orange-400 dark:bg-orange-500 rounded hover:!bg-orange-600" @click="form.warning.warning_type = 'warning'">
+                                    <i class="fas fa-exclamation-triangle mr-0.5"></i>
+                                    {{ t('players.warning.warning') }}
+                                </button>
+                                <button class="px-2.5 py-0.5 text-white bg-yellow-400 dark:bg-yellow-500 rounded hover:!bg-yellow-600" @click="form.warning.warning_type = 'note'">
+                                    <i class="fas fa-sticky-note mr-0.5"></i>
+                                    {{ t('players.warning.note') }}
+                                </button>
+                                <button class="px-2.5 py-0.5 text-white bg-pink-400 dark:bg-pink-500 rounded hover:!bg-pink-600" @click="form.warning.warning_type = 'hidden'">
+                                    <i class="fas fa-eye-slash mr-0.5"></i>
+                                    {{ t('players.warning.hidden') }}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div v-else>
+                            <h4 class="text-lg font-semibold mb-3 flex justify-between items-center">
+                                {{ t('players.warning.new', t('players.warning.' + form.warning.warning_type)) }}
+
+                                <i class="fas fa-backspace cursor-pointer text-base" @click="form.warning.warning_type = ''; form.warning.message = ''; warningMessageChanged()"></i>
+                            </h4>
+
+                            <div class="relative">
+                                <inertia-link class="text-black dark:text-white no-underline absolute top-0.5 right-1.5" :title="t('global.support_markdown')" href="/docs/markdown">
+                                    <i class="fab fa-markdown"></i>
+                                </inertia-link>
+
+                                <button class="text-black dark:text-white no-underline absolute bottom-0.5 right-1.5" type="submit">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+
+                                <textarea class="w-full p-5 rounded bg-gray-200 dark:bg-gray-600" id="message" name="message" rows="4" :placeholder="t('players.warning.placeholder', player.playerName)" v-model="form.warning.message" @input="warningMessageChanged()" required></textarea>
+                            </div>
+                        </div>
                     </div>
-
-                    <button class="px-5 py-2 font-semibold text-white bg-red-500 dark:bg-red-500 rounded" @click="form.warning.warning_type = 'strike'" type="submit">
-                        <i class="mr-1 fas fa-bolt"></i>
-                        {{ t('players.warning.do_strike') }}
-                    </button>
-                    <button class="px-5 py-2 ml-2 font-semibold text-white bg-yellow-600 rounded" @click="form.warning.warning_type = 'warning'" type="submit">
-                        <i class="mr-1 fas fa-exclamation-triangle"></i>
-                        {{ t('players.warning.do_warn') }}
-                    </button>
-                    <button class="px-5 py-2 ml-2 font-semibold text-white bg-yellow-400 dark:bg-yellow-500 rounded" @click="form.warning.warning_type = 'note'" type="submit">
-                        <i class="mr-1 fas fa-sticky-note"></i>
-                        {{ t('players.warning.do_note') }}
-                    </button>
-                    <button class="px-5 py-2 ml-2 font-semibold text-white bg-pink-400 dark:bg-pink-500 rounded" @click="form.warning.warning_type = 'hidden'" type="submit" v-if="$page.auth.player.isSeniorStaff">
-                        <i class="mr-1 fas fa-eye-slash"></i>
-                        {{ t('players.warning.do_hidden_note') }}
-                    </button>
                 </form>
             </template>
         </v-section>
@@ -1897,9 +1917,19 @@ export default {
             this.isSystemInfoLoading = false;
         },
         warningMessageChanged() {
-            const message = this.form.warning.message;
+            const message = this.form.warning.message,
+                type = this.form.warning.warning_type;
 
-            sessionStorage.setItem(`warning_${this.player.licenseIdentifier}`, message);
+            if (!message || !type) {
+                sessionStorage.removeItem(`warning_${this.player.licenseIdentifier}`);
+
+                return;
+            }
+
+            sessionStorage.setItem(`warning_${this.player.licenseIdentifier}`, JSON.stringify({
+                message,
+                type
+            }));
         },
         resolveStaffStatistics(pSource) {
             return axios.get('/players/' + this.player.licenseIdentifier + '/statistics/' + pSource);
@@ -2868,8 +2898,14 @@ export default {
         }
 
         const savedMessage = sessionStorage.getItem(`warning_${this.player.licenseIdentifier}`);
+
         if (savedMessage) {
-            this.form.warning.message = savedMessage;
+            try {
+                const json = JSON.parse(savedMessage);
+
+                this.form.warning.message = json.message;
+                this.form.warning.warning_type = json.type;
+            } catch (e) {}
         }
 
         // Delay loading of extra data since it blocks other resources from loading
