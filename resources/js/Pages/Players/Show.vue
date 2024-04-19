@@ -1373,7 +1373,7 @@
                                     <i class="fas fa-sticky-note mr-0.5"></i>
                                     {{ t('players.warning.note') }}
                                 </button>
-                                <button class="px-2.5 py-0.5 text-white bg-pink-400 dark:bg-pink-500 rounded hover:!bg-pink-600" @click="form.warning.warning_type = 'hidden'">
+                                <button class="px-2.5 py-0.5 text-white bg-pink-400 dark:bg-pink-500 rounded hover:!bg-pink-600" @click="form.warning.warning_type = 'hidden'" v-if="$page.auth.player.isSeniorStaff">
                                     <i class="fas fa-eye-slash mr-0.5"></i>
                                     {{ t('players.warning.hidden') }}
                                 </button>
