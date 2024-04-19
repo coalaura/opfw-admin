@@ -1,5 +1,5 @@
 <template>
-    <div v-if="show">
+    <div v-if="show" class="mt-2">
         <!-- Success -->
         <alert v-if="$page.flash.success" class="bg-green-500 mb-6">
             <p>
