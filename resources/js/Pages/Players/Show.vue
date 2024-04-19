@@ -1381,20 +1381,26 @@
                         </div>
 
                         <div v-else>
-                            <h4 class="text-lg font-semibold mb-3 flex justify-between items-center">
-                                {{ t('players.warning.new', t('players.warning.' + form.warning.warning_type)) }}
+                            <div class="mb-3 flex justify-between items-center">
+                                <h4 class="text-lg font-semibold">
+                                    {{ t('players.warning.new', t('players.warning.' + form.warning.warning_type)) }}
+                                </h4>
 
-                                <i class="fas fa-backspace cursor-pointer text-base" @click="form.warning.warning_type = ''; form.warning.message = ''; warningMessageChanged()"></i>
-                            </h4>
+                                <div class="flex gap-3">
+                                    <button class="text-black dark:text-white shadow-sm text-base" @click="form.warning.warning_type = ''; form.warning.message = ''; warningMessageChanged()">
+                                        <i class="fas fa-backspace"></i>
+                                    </button>
+
+                                    <button class="text-black dark:text-white shadow-sm text-base" type="submit">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
 
                             <div class="relative">
                                 <inertia-link class="text-black dark:text-white no-underline absolute top-0.5 right-1.5" :title="t('global.support_markdown')" href="/docs/markdown">
                                     <i class="fab fa-markdown"></i>
                                 </inertia-link>
-
-                                <button class="text-black dark:text-white no-underline absolute bottom-0.5 right-1.5 shadow" type="submit">
-                                    <i class="fas fa-paper-plane"></i>
-                                </button>
 
                                 <textarea class="w-full p-5 rounded bg-gray-200 dark:bg-gray-600" id="message" name="message" rows="4" :placeholder="t('players.warning.placeholder', player.playerName)" v-model="form.warning.message" @input="warningMessageChanged()" required></textarea>
                             </div>
