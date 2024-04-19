@@ -1169,9 +1169,13 @@
                         </template>
 
                         <template>
-                            <div class="max-h-72 overflow-y-auto text-sm leading-5 italic">
-                                <p class="break-words">
+                            <div class="overflow-y-auto text-sm leading-5 italic">
+                                <p class="break-words" v-if="character.backstory.length < 120">
                                     {{ character.backstory }}
+                                </p>
+
+                                <p class="break-words" v-else :title="character.backstory">
+                                    {{ character.backstory.substr(0, 120) }}...
                                 </p>
                             </div>
                         </template>
