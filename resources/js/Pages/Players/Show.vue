@@ -1290,7 +1290,7 @@
                                         </span>
 
                                         <button class="block px-2 py-1 text-sm font-semibold text-white bg-red-500 rounded hover:bg-red-600" @click="deleteWarning(warning.id)" v-bind:href="'/players/' + player.licenseIdentifier + '/warnings/' + warning.id" v-if="warning.canDelete || $page.auth.player.isSeniorStaff">
-                                            <i class="fas fa-trash"></i>
+                                            <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -1326,7 +1326,7 @@
                                         <i class="fas fa-ban"></i>
                                     </button>
                                     <inertia-link class="px-2 py-1 ml-4 text-sm font-semibold text-white bg-red-500 rounded hover:bg-red-600" method="DELETE" v-bind:href="'/players/' + player.licenseIdentifier + '/warnings/' + warning.id" v-if="warning.canDelete || $page.auth.player.isSeniorStaff">
-                                        <i class="fas fa-trash"></i>
+                                        <i class="fas fa-trash-alt"></i>
                                     </inertia-link>
                                 </div>
                             </div>
