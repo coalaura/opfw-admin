@@ -1028,7 +1028,6 @@
         "characters": {
             "characters": "👤👥",
             "hide": "🙈",
-            "created": "🎨 at {0}",
             "loaded": "👤 This character is currently loaded",
             "none": "👤 This player has not created any characters yet.",
             "remove_tattoo": "🩹 💉 🚮",
@@ -1040,7 +1039,6 @@
             "is_female": "👩‍🦰🙍‍♀️",
             "is_male": "👨‍🦰🙍‍♂️",
             "born": "👶",
-            "playtime": "⏰🎮📆",
             "last_loaded": "🕑🔄:",
             "no_mugshot": "🚫👥",
             "zone": {
@@ -1153,7 +1151,13 @@
             "no_coords": "Last 🌐 are unavailable while the player is 📴.",
             "save_changes": "💾🔄",
             "show": "👁️ {0} ❌",
-            "to_player": "🎮👤📄"
+            "to_player": "🎮👤📄",
+            "created_at": "✅",
+            "deleted_at": "❌",
+            "playtime_label": "⏱️🎮",
+            "married_to": "💍👫",
+            "who_married": "📱⁉️🤷",
+            "inventory_logs": "📦📜"
         },
         "edit": {
             "born": "📍 Born on <b>{0}</b>",

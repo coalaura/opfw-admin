@@ -15,7 +15,11 @@
                 </div>
             </div>
 
-            <div class="mt-2 italic text-sm font-mono text-gray-500 dark:text-gray-400" v-if="character.coords">
+            <div class="mt-2 italic text-sm font-mono text-gray-500 dark:text-gray-400">
+                {{ pedModel(character.pedModelHash) }}
+            </div>
+
+            <div class="mt-0.5 italic text-sm font-mono text-gray-500 dark:text-gray-400" v-if="character.coords">
                 <span v-if="isOffline">{{ character.coords.x.toFixed(1) }}, {{ character.coords.y.toFixed(1) }}, {{ character.coords.z.toFixed(1) }}</span>
                 <span class="blur-xs font-semibold" :title="t('players.characters.no_coords')" v-else>123.4, -567.8, 901.2</span>
             </div>
@@ -595,7 +599,7 @@
                         <template #header>
                             <img :src="vehicle.image" class="w-full h-40 object-contain rounded mb-5" v-if="vehicle.image" />
 
-                            <h3 class="text-lg text-center font-semibold" :class="{'-mb-3': vehicle.image}">
+                            <h3 class="text-lg text-center font-semibold" :class="{ '-mb-3': vehicle.image }">
                                 {{ vehicle.display_name ? vehicle.display_name : vehicle.model_name }}
                             </h3>
 
@@ -811,8 +815,11 @@ import VSection from './../../../Components/Section';
 import Card from './../../../Components/Card';
 import Badge from './../../../Components/Badge';
 import Modal from "../../../Components/Modal";
+
 import { ModelSelect } from 'vue-search-select';
 import axios from 'axios';
+
+import models from "../../../data/ped_models.json";
 
 let jobsObject = [];
 
@@ -1037,6 +1044,13 @@ export default {
         }
     },
     methods: {
+        pedModel(hash) {
+            if (!hash) {
+                return 'unknown';
+            }
+
+            return models[hash] || hash;
+        },
         getResetCoords() {
             return this.resetCoords
                 .map(coords => {

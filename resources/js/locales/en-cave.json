@@ -1028,7 +1028,6 @@
         "characters": {
             "characters": "Ugga! Characters",
             "hide": "Hide deleted",
-            "created": "Made at {0}",
             "loaded": "Grok's caveman be having this character",
             "none": "This caveperson no made any characters yet",
             "remove_tattoo": "Banish Characters' Paint",
@@ -1040,7 +1039,6 @@
             "is_female": "This being is female.",
             "is_male": "This being is male.",
             "born": "Spawned",
-            "playtime": "Being's time playing since around mid August 2022",
             "last_loaded": "Previously loaded:",
             "no_mugshot": "No cave painting found",
             "zone": {
@@ -1153,7 +1151,13 @@
             "no_coords": "Last coords not knowed when player be online.",
             "save_changes": "Ugga bugga changes",
             "show": "Show {0} gone",
-            "to_player": "Player Rock-Book"
+            "to_player": "Player Rock-Book",
+            "created_at": "Made thing",
+            "deleted_at": "Gone thing",
+            "playtime_label": "Fun time",
+            "married_to": "Choose forever mate",
+            "who_married": "Who you with new talky rock?",
+            "inventory_logs": "Thing list history"
         },
         "edit": {
             "born": "Cavebaby on <b>{0}</b>",

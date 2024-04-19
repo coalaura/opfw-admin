@@ -29,6 +29,7 @@ class ApiController extends Controller
     {
         return $this->json(true, [
             'id'         => $character->character_id,
+            'license'    => $character->license_identifier,
             'first_name' => $character->first_name,
             'last_name'  => $character->last_name,
         ]);

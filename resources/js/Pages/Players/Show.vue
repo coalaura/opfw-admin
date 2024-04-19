@@ -881,7 +881,7 @@
                         {{ t('players.show.unban_system_confirm') }}
                     </p>
 
-                    <input class="w-full px-4 py-2 !border-red-400 !bg-red-500 !bg-opacity-10 border rounded my-3" v-model="confirmingUnbanInput" placeholder="confirm" :class="{'!border-lime-400 !bg-lime-500 !bg-opacity-10': confirmingUnbanInput === 'confirm'}" />
+                    <input class="w-full px-4 py-2 !border-red-400 !bg-red-500 !bg-opacity-10 border rounded my-3" v-model="confirmingUnbanInput" placeholder="confirm" :class="{ '!border-lime-400 !bg-lime-500 !bg-opacity-10': confirmingUnbanInput === 'confirm' }" />
                 </div>
                 <div class="flex justify-end mt-2">
                     <button type="button" class="px-5 py-2 font-semibold text-white rounded bg-dark-secondary dark:text-black dark:bg-secondary" @click="isConfirmingUnban = false">
@@ -927,7 +927,7 @@
                     <h2 class="text-lg font-semibold">
                         <i class="fas fa-shield-alt mr-1 cursor-help" v-if="player.streamerException" :title="t('players.show.streamer_exception_title', player.streamerException)"></i>
 
-                        <span v-html="local.ban" :class="{'line-through': status && player.streamerException}"></span>
+                        <span v-html="local.ban" :class="{ 'line-through': status && player.streamerException }"></span>
                     </h2>
                     <div class="font-semibold">
                         <i class="mr-1 fas fa-lock" v-if="player.ban.locked" :title="t('players.show.ban_locked')"></i>
@@ -947,7 +947,7 @@
                 </div>
 
                 <div class="mt-4 text-sm pt-1 border-t border-dashed" v-if="player.ban.info">
-                    <b class="whitespace-nowrap" :class="{'cursor-help': isModdingBan()}" @click="showSystemInfo()">{{ player.ban.original }}:</b> <i>{{ player.ban.info }}</i>
+                    <b class="whitespace-nowrap" :class="{ 'cursor-help': isModdingBan() }" @click="showSystemInfo()">{{ player.ban.original }}:</b> <i>{{ player.ban.info }}</i>
                 </div>
             </alert>
 
@@ -1113,33 +1113,57 @@
                 <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 wide:grid-cols-4 gap-9 max-h-section overflow-y-auto">
                     <card v-for="(character) in characters" :key="character.id" v-bind:deleted="character.characterDeleted" class="relative mb-0" :class="{ 'shadow-lg': status && status.character === character.id }">
                         <template #header>
-                            <div class="flex justify-between">
+                            <div class="flex justify-between gap-3">
                                 <div class="flex-shrink-0">
-                                    <img class="w-32 h-32 rounded-3xl" src="/images/loading.svg" :data-lazy="character.mugshot" v-if="character.mugshot" />
-                                    <img class="w-32 h-32 rounded-3xl" src="/images/no_mugshot.png" v-else :title="t('players.characters.no_mugshot')" />
+                                    <img class="w-32 h-32 rounded-2xl" src="/images/loading.svg" :data-lazy="character.mugshot" v-if="character.mugshot" />
+                                    <img class="w-32 h-32 rounded-2xl" src="/images/no_mugshot.png" v-else :title="t('players.characters.no_mugshot')" />
                                 </div>
                                 <div class="w-full">
-                                    <h3 class="mb-2">
-                                        {{ character.name }} (#{{ character.id }})
+                                    <h3 class="mb-2 border-b-2 border-dashed border-gray-500">
+                                        {{ character.name }}
                                     </h3>
-                                    <h4 class="text-primary dark:text-dark-primary" :title="t('players.characters.created', $moment(character.characterCreationTimestamp).format('l'))">
-                                        {{ t('players.characters.born') }} {{ $moment(character.dateOfBirth).format('l') }}
-                                    </h4>
-                                    <h4 class="text-red-700 dark:text-red-300" v-if="character.characterDeleted">
-                                        {{ t('players.edit.deleted') }} {{ $moment(character.characterDeletionTimestamp).format('l') }}
-                                    </h4>
-                                    <h4 class="text-gray-700 dark:text-gray-300 text-sm italic font-mono mt-1">
-                                        {{ pedModel(character.pedModelHash) }}
-                                        <span v-if="character.creationTime" :title="t('players.new.creation_time')">
-                                            ({{ formatSecondDiff(character.creationTime) }})
-                                        </span>
-                                    </h4>
-                                    <h4 class="text-gray-700 dark:text-gray-300 text-xs italic font-mono mt-1" v-if="character.playtime" :title="t('players.characters.playtime')">
-                                        {{ formatSecondDiff(character.playtime) }}
-                                    </h4>
-                                    <h4 class="text-gray-700 dark:text-gray-300 text-xs italic font-mono mt-1" v-if="character.last_loaded">
-                                        {{ t('players.characters.last_loaded') }} {{ formatSecondDiff(Math.floor(Date.now() / 1000) - character.last_loaded) }}
-                                    </h4>
+
+                                    <div class="absolute bottom-1 left-1.5 text-sm font-semibold">#{{ character.id }}</div>
+
+                                    <table class="whitespace-nowrap text-sm text-left w-full">
+                                        <tr class="border-t border-gray-500">
+                                            <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.created_at') }}</th>
+                                            <td class="px-2 py-0.5 italic w-full">{{ $moment(character.characterCreationTimestamp).format('LLL') }}</td>
+                                        </tr>
+
+                                        <tr class="border-t border-gray-500" v-if="character.characterDeleted">
+                                            <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.deleted_at') }}</th>
+                                            <td class="px-2 py-0.5 italic w-full">{{ $moment(character.characterDeletionTimestamp).format('LLL') }}</td>
+                                        </tr>
+
+                                        <tr class="border-t border-gray-500">
+                                            <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.playtime_label') }}</th>
+                                            <td class="px-2 py-0.5 italic w-full">{{ formatSecondDiff(character.playtime) }}</td>
+                                        </tr>
+
+                                        <tr class="border-t border-gray-500">
+                                            <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.born') }}</th>
+                                            <td class="px-2 py-0.5 italic w-full">{{ $moment(character.dateOfBirth).format('LL') }}</td>
+                                        </tr>
+
+                                        <tr class="border-t border-gray-500" v-if="character.marriedTo">
+                                            <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.married_to') }}</th>
+                                            <td class="px-2 py-0.5 italic w-full">
+                                                <template v-if="typeof character.marriedTo === 'object'">
+                                                    <a :href="'/players/' + character.marriedTo.license + '/characters/' + character.marriedTo.id" class="text-indigo-600 dark:text-indigo-400" target="_blank">
+                                                        {{ character.marriedTo.first_name }} {{ character.marriedTo.last_name }}
+                                                        #{{ character.marriedTo.id }}
+                                                    </a>
+                                                </template>
+
+                                                <template v-else>
+                                                    #{{ character.marriedTo }}
+
+                                                    <i class="fas fa-user-astronaut ml-1 cursor-pointer" @click="loadMarriedTo(character)" :title="t('players.characters.who_married')"></i>
+                                                </template>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </template>
@@ -1155,22 +1179,10 @@
                         <template #footer>
                             <div class="flex justify-between flex-wrap">
                                 <div class="flex justify-between gap-2 w-full">
-                                    <inertia-link class="block w-1/2 px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/players/' + (player.overrideLicense ? player.overrideLicense : player.licenseIdentifier) + '/characters/' + character.id">
+                                    <inertia-link class="block w-full px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/players/' + (player.overrideLicense ? player.overrideLicense : player.licenseIdentifier) + '/characters/' + character.id">
                                         <i class="fas fa-eye mr-1"></i>
                                         {{ t('global.view') }}
                                     </inertia-link>
-
-                                    <inertia-link class="block w-1/2 px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventories/character/' + character.id">
-                                        <i class="fas fa-briefcase mr-1"></i>
-                                        {{ t('inventories.view') }}
-                                    </inertia-link>
-                                </div>
-
-                                <div class="flex justify-between gap-2 w-full mt-2">
-                                    <button class="block w-full px-3 py-2 text-center text-white bg-warning dark:bg-dark-warning rounded" v-if="status && status.character === character.id" @click="form.unload.character = character.id; isUnloading = true">
-                                        <i class="fas fa-bolt mr-1"></i>
-                                        {{ t('players.show.unload') }}
-                                    </button>
 
                                     <inertia-link class="block w-full px-3 py-2 text-center text-white bg-red-600 dark:bg-red-400 rounded" href="#" @click="deleteCharacter($event, character.id)" v-if="!character.characterDeleted && $page.auth.player.isSuperAdmin">
                                         <i class="fas fa-trash-alt mr-1"></i>
@@ -1179,32 +1191,37 @@
                                 </div>
 
                                 <!-- Small icon buttons -->
-                                <div class="absolute top-1 left-1 right-1 flex gap-2 justify-between">
+                                <div class="absolute top-1 left-1 right-1 flex gap-2 justify-between text-white">
                                     <!-- Top left -->
-                                    <div class="flex gap-2">
+                                    <div class="flex gap-1.5">
                                         <!-- Show inventory -->
-                                        <inertia-link class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-300 bg-secondary dark:bg-dark-secondary border-2 block" :href="'/inventory/character-' + character.id + ':1'" :title="t('inventories.show_inv')">
+                                        <inertia-link class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-300 bg-blue-600 dark:bg-blue-400 border-2 block" :href="'/inventory/character-' + character.id + ':1'" :title="t('inventories.show_inv')">
                                             <i class="fas fa-box"></i>
+                                        </inertia-link>
+
+                                        <!-- Show inventory logs -->
+                                        <inertia-link class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-300 bg-blue-600 dark:bg-blue-400 border-2 block" :href="'/inventories/character/' + character.id" :title="t('players.characters.inventory_logs')">
+                                            <i class="fas fa-suitcase"></i>
                                         </inertia-link>
                                     </div>
 
                                     <!-- Top right -->
-                                    <div class="flex gap-2 justify-end">
+                                    <div class="flex gap-1.5 justify-end">
                                         <!-- Character loaded -->
-                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-green-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help" :title="t('players.characters.loaded')" v-if="status && status.character === character.id">
+                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-lime-300 bg-lime-600 dark:bg-lime-400 border-2 block cursor-help" :title="t('players.show.unload')" v-if="status && status.character === character.id" @click="form.unload.character = character.id; isUnloading = true">
                                             <i class="fas fa-plug"></i>
                                         </button>
 
                                         <!-- Character dead -->
-                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-red-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help" v-if="character.isDead" :class="{ 'left-10': status && status.character === character.id }">
+                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-red-300 bg-red-600 dark:bg-red-400 border-2 block cursor-help" v-if="character.isDead" :class="{ 'left-10': status && status.character === character.id }">
                                             <i class="fas fa-skull-crossbones"></i>
                                         </button>
 
                                         <!-- Gender -->
-                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-pink-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help" v-if="character.gender === 1" :title="t('players.characters.is_female')">
+                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-pink-300 bg-pink-600 dark:bg-pink-400 border-2 block" v-if="character.gender === 1" :title="t('players.characters.is_female')">
                                             <i class="fas fa-female"></i>
                                         </button>
-                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-300 bg-secondary dark:bg-dark-secondary border-2 block cursor-help" v-if="character.gender === 0" :title="t('players.characters.is_male')">
+                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-300 bg-blue-600 dark:bg-blue-400 border-2 block" v-if="character.gender === 0" :title="t('players.characters.is_male')">
                                             <i class="fas fa-male"></i>
                                         </button>
                                     </div>
@@ -1254,7 +1271,7 @@
                                         <div class="flex items-center py-4 pr-4 border-r border-gray-200 dark:border-gray-400 w-32 flex-shrink-0">
                                             <h4 class="truncate" v-if="warning.issuer.playerName === null">{{ t('global.system') }}</h4>
                                             <h4 class="truncate" :title="warning.issuer.playerName">
-                                                <a :href="'/players/' + warning.issuer.licenseIdentifier" >{{ warning.issuer.playerName }}</a>
+                                                <a :href="'/players/' + warning.issuer.licenseIdentifier">{{ warning.issuer.playerName }}</a>
                                             </h4>
                                         </div>
 
@@ -1582,8 +1599,6 @@ import Modal from './../../Components/Modal';
 import MetadataViewer from './../../Components/MetadataViewer';
 import StatisticsTable from './../../Components/StatisticsTable';
 
-import models from "../../data/ped_models.json";
-
 export default {
     layout: Layout,
     components: {
@@ -1842,6 +1857,19 @@ export default {
     methods: {
         isModdingBan() {
             return this.player.ban.original && this.player.ban.original.startsWith('MODDING');
+        },
+        async loadMarriedTo(character) {
+            const marriedTo = character.marriedTo;
+
+            if (!marriedTo || !Number.isInteger(marriedTo)) return;
+
+            try {
+                const response = await axios.get('/api/character/' + marriedTo);
+
+                if (response.data && response.data.status) {
+                    character.marriedTo = response.data.data;
+                }
+            } catch (e) {}
         },
         async showSystemInfo() {
             if (this.isSystemInfoLoading || !this.isModdingBan()) {
@@ -2504,13 +2532,6 @@ export default {
             }
 
             return '';
-        },
-        pedModel(hash) {
-            if (!hash) {
-                return 'unknown';
-            }
-
-            return models[hash] || hash;
         },
         localizeBan() {
             if (!this.player.ban) {

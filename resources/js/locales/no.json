@@ -1038,7 +1038,6 @@
         "characters": {
             "characters": "Karakterer",
             "hide": "Skjul slettede",
-            "created": "Opprettet den {0}",
             "loaded": "Denne karakteren er for øyeblikket lastet",
             "none": "Denne spilleren har ikke opprettet noen karakterer ennå.",
             "remove_tattoo": "Fjern tatoveringer",
@@ -1050,7 +1049,6 @@
             "is_female": "Dette karakteren er en kvinne.",
             "is_male": "Dette karakteren er en mann.",
             "born": "Født",
-            "playtime": "Karakters spilletid sporet siden omtrent midten av august 2022.",
             "last_loaded": "Sist lastet:",
             "no_mugshot": "Ingen mugshot tilgjengelig",
             "zone": {
@@ -1163,7 +1161,13 @@
                 "passenger": "PPL - Passasjer"
             },
             "show": "Vis {0} slettede",
-            "to_player": "Spillerprofil"
+            "to_player": "Spillerprofil",
+            "created_at": "Opprettet",
+            "deleted_at": "Slettet",
+            "playtime_label": "Spilletid",
+            "married_to": "Gift med",
+            "who_married": "Ny telefon, hvem er dette?",
+            "inventory_logs": "Inventarlogger"
         },
         "edit": {
             "born": "Født den <b>{0}</b>",

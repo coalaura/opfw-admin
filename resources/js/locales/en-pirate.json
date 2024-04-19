@@ -1028,7 +1028,6 @@
         "characters": {
             "characters": "Scallywags",
             "hide": "Hide sent ta Davey Jones' Locker",
-            "created": "Created at {0}, arrr!",
             "loaded": "This scallywag be currently loaded",
             "none": "This landlubber hasn't crafted any characters yet, arrr!",
             "remove_tattoo": "Scuttle characters' tattoos",
@@ -1040,7 +1039,6 @@
             "is_female": "This scallywag be a lassie.",
             "is_male": "This scallywag be a buccaneer.",
             "born": "Be born",
-            "playtime": "Character plunderin' tracked since about mid August 2022.",
             "last_loaded": "Last Loaded:",
             "no_mugshot": "No portrait of the scallywag",
             "zone": {
@@ -1153,7 +1151,13 @@
             "no_coords": "Avast! The last known whereabouts of ye scurvy dog be hidin' from me while ye be sailin' the high seas.",
             "save_changes": "Preserve Changes, Matey",
             "show": "Display {0} walked the plank",
-            "to_player": "Pirate Dossier"
+            "to_player": "Pirate Dossier",
+            "created_at": "Cobbled together",
+            "deleted_at": "Sent to Davy Jones's Locker",
+            "playtime_label": "Sailing Time",
+            "married_to": "Betrothed to",
+            "who_married": "New speakin' trumpet, who be hailin'?",
+            "inventory_logs": "Log o' Booty"
         },
         "edit": {
             "born": "Set sail on <b>{0}</b>",

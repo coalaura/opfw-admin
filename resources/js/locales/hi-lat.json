@@ -1038,7 +1038,6 @@
         "characters": {
             "characters": "Characters",
             "hide": "Mite hue ko chhupaye",
-            "created": "Banaya gaya {0}",
             "loaded": "Yah character abhi load kiya gaya hai",
             "none": "Is khiladi ne abhi tak koi character nahi banaya hai.",
             "remove_tattoo": "Tattoo Hataye",
@@ -1050,7 +1049,6 @@
             "is_female": "Yah character mahila hai.",
             "is_male": "Yah character purush hai.",
             "born": "Janma",
-            "playtime": "Character playtime August 2022 ke madhy se track kiya ja raha hai.",
             "last_loaded": "Antim baar load kiya gaya:",
             "no_mugshot": "Koi mugshot uplabdh nahi hai",
             "zone": {
@@ -1163,7 +1161,13 @@
                 "passenger": "PPL - Passenger"
             },
             "show": "{0} hataaye gaye dikhao",
-            "to_player": "Khilaadi Profile"
+            "to_player": "Khilaadi Profile",
+            "created_at": "Banaaya gaya",
+            "deleted_at": "Hata diya gaya",
+            "playtime_label": "Khelne ka samay",
+            "married_to": "Se vivahit",
+            "who_married": "Naya phone, kaun bol raha hai?",
+            "inventory_logs": "Suchi logs"
         },
         "edit": {
             "born": "<b>{0}</b> par janma",

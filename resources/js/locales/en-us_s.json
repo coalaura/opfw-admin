@@ -1028,7 +1028,6 @@
         "characters": {
             "characters": "Characters, y'all",
             "hide": "Hide them deleted ones",
-            "created": "Done got created at {0} y'all",
             "loaded": "This here character is currently loaded",
             "none": "This player reckon ain't got no characters yet.",
             "remove_tattoo": "Get rid of them characters tattoos",
@@ -1040,7 +1039,6 @@
             "is_female": "This here character is a lady.",
             "is_male": "This here character is a fella.",
             "born": "Born 'n raised",
-            "playtime": "Time this character's been runnin' 'round since 'bout mid August 2022.",
             "last_loaded": "Last time seen:",
             "no_mugshot": "Ain't got no pic",
             "zone": {
@@ -1153,7 +1151,13 @@
             "no_coords": "Sorry y'all, I cain't give ya the last known whereabouts of a player while they're online.",
             "save_changes": "Save y'all's changes",
             "show": "Show {0} done been deleted",
-            "to_player": "Playa Profile"
+            "to_player": "Playa Profile",
+            "created_at": "Cre-eight-ed",
+            "deleted_at": "Dee-leeted",
+            "playtime_label": "Play-time",
+            "married_to": "Married tuh",
+            "who_married": "New phone, hoo dis?",
+            "inventory_logs": "Invent'ry Logs"
         },
         "edit": {
             "born": "Born on <b>{0}</b>, bless their lil' heart",
