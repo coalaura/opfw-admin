@@ -1190,7 +1190,13 @@
             "accounts": "Sparekontoer",
             "none": "Denne karakteren eier ikke eller har tilgang til noen sparekontoer.",
             "owner": "Kontoeier",
-            "access": "Har tilgang"
+            "access": "Har tilgang",
+            "logs": "Transaksjonslogger",
+            "logs_none": "Ingen transaksjonslogger funnet.",
+            "character": "Tegn",
+            "action": "Aksjon",
+            "amount": "Beløp",
+            "timestamp": "Tid"
         }
     },
     "casino": {

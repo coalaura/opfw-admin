@@ -1181,7 +1181,13 @@
             "accounts": "Savings Piles",
             "none": "This human no have or get in savings piles.",
             "owner": "Pile Keeper",
-            "access": "Get In"
+            "access": "Get In",
+            "logs": "Trade Markings",
+            "logs_none": "No trade markings find.",
+            "character": "Person",
+            "action": "Do",
+            "amount": "Many Rocks",
+            "timestamp": "Sun-Moon"
         }
     },
     "casino": {

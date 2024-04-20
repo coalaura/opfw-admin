@@ -1181,7 +1181,13 @@
             "accounts": "Treasure Hoardin' Ledgers",
             "none": "This scallywag be havin' no claim nor entry to any treasure hoardin' ledgers.",
             "owner": "Cap'n o' the Ledger",
-            "access": "Be Granted Entry"
+            "access": "Be Granted Entry",
+            "logs": "Ledgers o' Dealin's",
+            "logs_none": "No ledgers o' dealin's be spotted.",
+            "character": "Pirate",
+            "action": "Deed",
+            "amount": "Plunder",
+            "timestamp": "Chronometer"
         }
     },
     "casino": {

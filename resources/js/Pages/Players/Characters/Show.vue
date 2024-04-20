@@ -797,6 +797,11 @@
                                 <i class="fas fa-thumbtack"></i>
                                 {{ t('players.savings.access') }}
                             </div>
+
+                            <button class="absolute top-1 right-1.5 text-yellow-600 dark:text-yellow-400 text-sm font-semibold" @click="showSavingsLogs(account)" v-if="perm.check(perm.PERM_SAVINGS_LOGS)">
+                                <i class="fas fa-clipboard-list"></i>
+                                {{ t('players.savings.logs') }}
+                            </button>
                         </template>
                     </card>
                 </div>
@@ -805,6 +810,57 @@
                 </p>
             </template>
         </v-section>
+
+        <modal :show="isShowingSavingsLogs">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.savings.logs') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="flex justify-center p-4" v-if="isLoadingSavingsLogs">
+                    <i class="fas fa-spinner animate-spin"></i>
+                </div>
+                <div class="flex justify-center p-4" v-else-if="savingsLogs.length === 0">
+                    {{ t('players.savings.logs_none') }}
+                </div>
+                <div v-else>
+                    <table class="whitespace-nowrap w-full">
+                        <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
+                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.character') }}</th>
+                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.action') }}</th>
+                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.amount') }}</th>
+                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.timestamp') }}</th>
+                        </tr>
+
+                        <tr class="border-t border-gray-500" v-for="(log, index) in savingsLogs" :key="index">
+                            <td class="px-2 py-0.5">
+                                {{ log.name }}
+                                <a :href="'/players/' + log.license + '/characters/' + log.character_id" class="text-blue-800 dark:text-blue-200">#{{ log.character_id }}</a>
+                            </td>
+                            <td class="px-2 py-0.5">{{ log.action }}</td>
+                            <td class="px-2 py-0.5">
+                                <span class="text-red-800 dark:text-red-200" v-if="log.action === 'withdraw'">
+                                    -{{ numberFormat(log.amount, 0, true) }}
+                                </span>
+
+                                <span class="text-green-800 dark:text-green-200" v-else>
+                                    +{{ numberFormat(log.amount, 0, true) }}
+                                </span>
+                            </td>
+                            <td class="px-2 py-0.5">{{ log.timestamp * 1000 | formatTime(true) }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingSavingsLogs = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
 
     </div>
 </template>
@@ -1016,7 +1072,11 @@ export default {
             vehicleEditError: null,
             isVehicleAdd: false,
             isLicenseEdit: false,
-            isOffline: false
+            isOffline: false,
+
+            isShowingSavingsLogs: false,
+            isLoadingSavingsLogs: false,
+            savingsLogs: []
         };
     },
     computed: {
@@ -1050,6 +1110,24 @@ export default {
             }
 
             return models[hash] || hash;
+        },
+        async showSavingsLogs(account) {
+            if (this.isShowingSavingsLogs) return;
+
+            this.isShowingSavingsLogs = true;
+            this.isLoadingSavingsLogs = true;
+            this.savingsLogs = [];
+
+            try {
+                const response = await axios.get('/savings/' + account.id + '/logs');
+
+                if (response.data && response.data.status) {
+                    this.savingsLogs = response.data.data;
+                }
+            } catch (e) {
+            }
+
+            this.isLoadingSavingsLogs = false;
         },
         getResetCoords() {
             return this.resetCoords

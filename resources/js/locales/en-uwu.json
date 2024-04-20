@@ -1181,7 +1181,13 @@
             "accounts": "Savings Accouwunts",
             "none": "Dis chawactew does not own ow has access any savings accouwunts.",
             "owner": "Account Ownyew",
-            "access": "Has Access"
+            "access": "Has Access",
+            "logs": "Twansaction Wogs",
+            "logs_none": "Nyo twansaction wogs found.",
+            "character": "Chawactew",
+            "action": "Action",
+            "amount": "Amount",
+            "timestamp": "Time"
         }
     },
     "casino": {

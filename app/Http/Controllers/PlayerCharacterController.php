@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Character;
 use App\Helpers\OPFWHelper;
+use App\Helpers\PermissionHelper;
 use App\Http\Requests\CharacterUpdateRequest;
 use App\Http\Resources\CharacterIndexResource;
 use App\Http\Resources\CharacterResource;
@@ -719,6 +720,26 @@ class PlayerCharacterController extends Controller
         }
 
         return self::text(200, implode(PHP_EOL, $export));
+    }
+
+    public function savingsLogs(Request $request, int $id)
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_SAVINGS_LOGS)) {
+            abort(401);
+        }
+
+        if (!$id || $id < 1) {
+            return $this->json(false, null, 'Invalid ID');
+        }
+
+        $logs = DB::table('savings_accounts_logs')
+            ->select(DB::raw('characters.license_identifier as license, characters.character_id, CONCAT(first_name, " ", last_name) as name, action, amount, reason, timestamp'))
+            ->leftJoin('characters', 'savings_accounts_logs.character_id', '=', 'characters.character_id')
+            ->where('account_id', '=', $id)
+            ->orderByDesc('timestamp')
+            ->get()->toArray();
+
+        return $this->json(true, $logs);
     }
 
 }

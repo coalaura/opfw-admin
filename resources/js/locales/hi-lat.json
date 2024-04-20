@@ -1190,7 +1190,13 @@
             "accounts": "Bachat Khate",
             "none": "Is character ke paas koi bachat khata nahi hai aur na hi us tak pahunch hai.",
             "owner": "Khata Malik",
-            "access": "Pahunch Hai"
+            "access": "Pahunch Hai",
+            "logs": "Len-Den ke Log",
+            "logs_none": "Koi len-den ke log nahi mile.",
+            "character": "Charitra",
+            "action": "Kriya",
+            "amount": "Raashi",
+            "timestamp": "Samaay"
         }
     },
     "casino": {

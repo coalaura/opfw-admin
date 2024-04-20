@@ -225,6 +225,9 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::post('/players/{player}/characters/{character}/addVehicle', [PlayerCharacterController::class, 'addVehicle']);
     Route::post('/players/{player}/characters/{character}/updateLicenses', [PlayerCharacterController::class, 'updateLicenses']);
 
+    // Savings Accounts.
+    Route::get('/savings/{id}/logs', [PlayerCharacterController::class, 'savingsLogs']);
+
     // Stocks Companies (realty).
     Route::get('/stocks/companies', [StocksController::class, 'companies']);
     Route::post('/stocks/property/{propertyId}', [StocksController::class, 'updateProperty']);

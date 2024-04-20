@@ -1181,7 +1181,13 @@
             "accounts": "Savin's Accounts",
             "none": "This here character don't own ner has access to any savin's accounts, I'll tell ya what.",
             "owner": "Account Own'r",
-            "access": "Has Access"
+            "access": "Has Access",
+            "logs": "Transaction Logs",
+            "logs_none": "Ain't no transaction logs 'round here.",
+            "character": "Character",
+            "action": "Action",
+            "amount": "Amount",
+            "timestamp": "Time"
         }
     },
     "casino": {
