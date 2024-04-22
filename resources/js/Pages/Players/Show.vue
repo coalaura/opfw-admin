@@ -8,7 +8,7 @@
                         <i class="fas fa-copy relative top-2px"></i>
                     </div>
 
-                    <CountryFlag :country="flagFromTZ(player.variables.timezone)" :title="player.variables.timezone" class="rounded-sm" v-if="player.variables && player.variables.timezone" />
+                    <CountryFlag :country="flagFromTZ(player.variables.timezone)" :title="player.variables.timezone + ' - ' + playerTime" class="rounded-sm" v-if="player.variables && player.variables.timezone" />
 
                     <h1 class="dark:text-white">
                         {{ player.safePlayerName }}
@@ -66,19 +66,7 @@
                         </span>
                     </badge>
 
-                    <badge class="border-gray-200 overflow-hidden bg-center bg-cover w-32 cursor-help" style="background-image: url('/images/wide_putin.webp')" v-if="player.stretchedRes" :title="t('players.show.stretch_res', estimateRatio(player.stretchedRes.aspectRatio), estimateRatio(player.stretchedRes.pixelRatio))"></badge>
-
-                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary" :title="formatSecondDiff(player.playTime)" v-html="local.played"></badge>
-
-                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary italic" v-if="player.averagePing" :title="t('players.show.average_ping')">
-                        <i class="fas fa-table-tennis"></i>
-                        {{ player.averagePing }}ms
-                    </badge>
-
-                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary italic" v-if="player.averageFps" :title="t('players.show.average_fps')">
-                        <i class="fas fa-stopwatch"></i>
-                        {{ player.averageFps }}fps
-                    </badge>
+                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary" :title="t('players.show.playtime', formatSecondDiff(player.playTime), formatSecondDiff(player.recentPlayTime))" v-html="local.played"></badge>
 
                     <badge class="border-pink-300 bg-pink-200 dark:bg-pink-700" v-if="player.tag">
                         <span class="font-semibold">{{ player.tag }}</span>
@@ -112,76 +100,64 @@
                         <span v-else><i class="fas fa-chevron-right"></i> {{ t('players.show.more_info') }}</span>
                     </span>
                 </div>
-                <div class="text-sm italic mt-1">
-                    <span class="block" v-if="getPlayerMetadata()">
-                        <span class="font-bold">{{ t('players.show.metadata') }}:</span>
-                        {{ getPlayerMetadata() }}
-                    </span>
-                    <span class="block">
-                        <span class="font-bold">{{ t('players.show.enabled_commands') }}:</span>
-                        {{ player.enabledCommands.length > 0 ? player.enabledCommands.map(e => '/' + e).join(", ") : "N/A" }}
+                <table class="whitespace-nowrap !w-auto !m-0">
+                    <!-- Last Connection -->
+                    <tr class="border-t border-gray-500">
+                        <th class="px-2 py-0.5">{{ t('players.show.last_connection') }}</th>
+                        <td class="px-2 py-0.5" :title="$moment(player.lastConnection).fromNow()">{{ player.lastConnection | formatTime(true) }}</td>
+                    </tr>
 
-                        <a href="#" class="text-indigo-600 dark:text-indigo-400" @click="$event.preventDefault(); isEnablingCommands = true" v-if="$page.auth.player.isSuperAdmin">{{ t('players.show.edit') }}</a>
-                    </span>
-                    <span class="block">
-                        <span class="font-bold">{{ t('players.show.recent_playtime') }}:</span>
-                        {{ formatSecondDiff(player.recentPlayTime) }}
-                        <span class="italic text-gray-600 dark:text-gray-400">{{ t('players.show.recent_playtime_after') }}</span>
-                    </span>
-                    <span class="block" v-if="player.lastConnection">
-                        <span class="font-bold">{{ t('players.show.last_connection') }}:</span>
-                        {{ player.lastConnection | formatTime(true) }} ({{ $moment(player.lastConnection).fromNow() }})
-                    </span>
-                </div>
-                <div class="text-sm italic mt-1">
-                    <span class="block" v-if="player.countryName" :title="t('players.show.country_detail')">
-                        <span class="font-bold">{{ t('players.show.country_name') }}:</span>
-                        {{ player.countryName }}
-                    </span>
+                    <!-- System specs -->
+                    <tr class="border-t border-gray-500">
+                        <th class="px-2 py-0.5">{{ t('players.show.specs') }}</th>
+                        <td class="px-2 py-0.5">
+                            <div class="flex gap-2">
+                                <span v-if="playerResolution" :title="t('players.show.resolution')">
+                                    <i class="fas fa-desktop"></i> {{ playerResolution }}
+                                </span>
 
-                    <span class="block" v-if="player.variables && player.variables.timezone && typeof player.variables.timezoneOffset === 'number'">
-                        <span class="font-bold">{{ t('players.show.timezone') }}:</span>
-                        {{ player.variables.timezone }} - <span class="font-semibold">{{ playerTime }}</span>
-                    </span>
+                                <span :title="t('players.show.average_ping')">
+                                    <i class="fas fa-table-tennis"></i> {{ player.averagePing }}ms
+                                </span>
 
-                    <span class="block" v-if="player.variables && player.variables.screenWidth && player.variables.screenHeight">
-                        <span class="font-bold">{{ t('players.show.resolution') }}:</span>
-                        {{ player.variables.screenWidth + "x" + player.variables.screenHeight }}
-                    </span>
-                    <span class="block" v-if="player.variables && player.variables.ofFingerprint && this.perm.check(this.perm.PERM_LINKED)">
-                        <span class="font-bold">{{ t('players.show.ofFingerprint') }}:</span>
-                        <a :href="'/linked_print/' + player.licenseIdentifier" target="_blank" class="text-indigo-600 dark:text-indigo-400 !no-underline">{{ player.variables.ofFingerprint }}</a>
-                    </span>
-                </div>
+                                <span :title="t('players.show.average_fps')">
+                                    <i class="fas fa-stopwatch"></i> {{ player.averageFps }}fps
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </portal>
 
         <div class="flex flex-wrap justify-between mb-6">
             <div class="mb-3 flex flex-wrap gap-3">
+                <!-- Wide Screen -->
+                <badge class="border-gray-200 overflow-hidden bg-center bg-cover w-32 cursor-help" style="background-image: url('/images/wide_putin.webp')" v-if="player.stretchedRes" :title="t('players.show.stretch_res', estimateRatio(player.stretchedRes.aspectRatio), estimateRatio(player.stretchedRes.pixelRatio))">
+                </badge>
+
                 <!-- Debugger -->
-                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale px-4 py-2" :title="t('global.debugger_title')" v-if="player.isDebugger && !player.isRoot">
-                    <i class="fas fa-toolbox mr-1"></i>
-                    <span class="font-semibold">{{ t('global.debugger') }}</span>
+                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('global.debugger_title')" v-if="player.isDebugger && !player.isRoot" sqare>
+                    <i class="fas fa-toolbox"></i>
                 </badge>
 
                 <!-- Panel drug department -->
-                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale px-4 py-2" v-if="$page.auth.player.isSuperAdmin && player.panelDrugDepartment">
-                    <i class="fas fa-tablets mr-1"></i>
-                    <span class="font-semibold" :title="t('players.show.drug_department_title')">{{ t('players.show.drug_department') }}</span>
+                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('players.show.drug_department_title')" v-if="$page.auth.player.isSuperAdmin && player.panelDrugDepartment" square>
+                    <i class="fas fa-tablets"></i>
+                </badge>
+
+                <!-- Blacklisted -->
+                <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale" :title="t('global.blacklisted')" v-if="blacklisted" square>
+                    <i class="fas fa-hand-paper"></i>
                 </badge>
 
                 <!-- Whitelisted -->
-                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale px-4 py-2" v-if="whitelisted">
-                    <i class="fas fa-clipboard-check mr-1"></i>
-                    <span class="font-semibold">{{ t('global.whitelisted') }}</span>
-
-                    <a href="#" @click="updateWhitelistStatus(false)" class="ml-1 text-white" :title="t('players.show.unwhitelist')" v-if="this.perm.check(this.perm.PERM_WHITELIST)">
-                        <i class="fas fa-times"></i>
-                    </a>
+                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('global.whitelisted')" v-if="whitelisted" square>
+                    <i class="fas fa-clipboard-check"></i>
                 </badge>
 
                 <!-- Streamer Ban exception -->
-                <a class="px-4 py-2 font-semibold border-2 rounded bg-yellow-100 dark:bg-yellow-700 border-yellow-200 flex items-center gap-1" :href="'https://twitch.tv/' + player.streamerException" target="_blank" v-if="player.streamerException" :title="t('players.show.streamer_exception_title', player.streamerException)">
+                <a class="font-semibold border-2 rounded bg-yellow-100 dark:bg-yellow-700 border-yellow-200 flex items-center gap-1" :href="'https://twitch.tv/' + player.streamerException" target="_blank" v-if="player.streamerException" :title="t('players.show.streamer_exception_title', player.streamerException)">
                     <i class="fab fa-twitch mr-1"></i>
                     {{ t('players.show.streamer_exception') }}
 
@@ -190,14 +166,8 @@
                     </a>
                 </a>
 
-                <!-- Blacklisted -->
-                <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale px-4 py-2" v-if="blacklisted">
-                    <i class="fas fa-hand-paper mr-1"></i>
-                    <span class="font-semibold">{{ t('global.blacklisted') }}</span>
-                </badge>
-
                 <!-- Soft Ban -->
-                <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale px-4 py-2" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && player.isSoftBanned">
+                <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && player.isSoftBanned">
                     <i class="fas fa-feather-alt mr-1"></i>
 
                     <span class="font-semibold">{{ t('global.soft_banned') }}</span>
@@ -209,58 +179,58 @@
             </div>
 
             <div class="mb-3 flex flex-wrap justify-end gap-3">
-                <button class="px-4 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="addSoftBan()" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && !player.isSoftBanned">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="addSoftBan()" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && !player.isSoftBanned">
                     <i class="fas fa-smoking-ban"></i>
                     {{ t('players.show.add_soft_ban') }}
                 </button>
 
                 <!-- StaffPM -->
-                <button class="px-4 py-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 flex items-center gap-1" @click="isStaffPM = true" v-if="status">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 flex items-center gap-1" @click="isStaffPM = true" v-if="status">
                     <i class="fas fa-envelope-open-text"></i>
                     {{ t('players.show.staffpm') }}
                 </button>
                 <!-- Kicking -->
-                <button class="px-4 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" @click="isKicking = true" v-if="status">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" @click="isKicking = true" v-if="status">
                     <i class="fas fa-user-minus"></i>
                     {{ t('players.show.kick') }}
                 </button>
                 <!-- Edit Ban -->
-                <inertia-link class="px-4 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/edit'" v-if="player.isBanned && player.ban.issuer && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
+                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/edit'" v-if="player.isBanned && player.ban.issuer && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
                     <i class="fas fa-edit"></i>
                     {{ t('players.show.edit_ban') }}
                 </inertia-link>
                 <!-- Unmute -->
-                <button class="px-4 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="unmutePlayer()" v-if="player.mute">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="unmutePlayer()" v-if="player.mute">
                     <i class="fas fa-microphone-alt"></i>
                     {{ t('players.show.unmute') }}
                 </button>
                 <!-- Unbanning -->
-                <button class="px-4 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="unbanPlayer()" v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="unbanPlayer()" v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
                     <i class="fas fa-lock-open"></i>
                     {{ t('players.show.unban') }}
                 </button>
                 <!-- Schedule Unban -->
-                <button class="px-4 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" @click="isSchedulingUnban = true" v-if="player.isBanned && !player.ban.scheduled">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" @click="isSchedulingUnban = true" v-if="player.isBanned && !player.ban.scheduled">
                     <i class="fas fa-calendar-day"></i>
                     {{ t('players.show.schedule_unban') }}
                 </button>
                 <!-- Remove Scheduled Unban -->
-                <inertia-link class="px-4 py-2 font-semibold text-white rounded bg-purple-600 dark:bg-purple-500 flex items-center gap-1" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/unschedule'" v-if="player.isBanned && player.ban.scheduled">
+                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-purple-600 dark:bg-purple-500 flex items-center gap-1" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/unschedule'" v-if="player.isBanned && player.ban.scheduled">
                     <i class="fas fa-calendar-times"></i>
                     {{ t('players.show.remove_schedule') }}
                 </inertia-link>
                 <!-- Banning -->
-                <button class="px-4 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="isBanning = true" v-else-if="!player.isBanned">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="isBanning = true" v-else-if="!player.isBanned">
                     <i class="fas fa-gavel"></i>
                     {{ t('players.show.issue') }}
                 </button>
                 <!-- Lock ban -->
-                <inertia-link class="px-4 py-2 font-semibold text-white rounded bg-purple-600 dark:bg-purple-500 flex items-center gap-1" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/lock'" v-if="player.isBanned && !player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
+                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-purple-600 dark:bg-purple-500 flex items-center gap-1" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/lock'" v-if="player.isBanned && !player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
                     <i class="fas fa-lock"></i>
                     {{ t('players.show.lock_ban') }}
                 </inertia-link>
                 <!-- Unlock ban -->
-                <inertia-link class="px-4 py-2 font-semibold text-white rounded bg-purple-600 dark:bg-purple-500 flex items-center gap-1" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/unlock'" v-if="player.isBanned && player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
+                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-purple-600 dark:bg-purple-500 flex items-center gap-1" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/unlock'" v-if="player.isBanned && player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
                     <i class="fas fa-lock-open"></i>
                     {{ t('players.show.unlock_ban') }}
                 </inertia-link>
@@ -268,6 +238,10 @@
 
             <!-- Small icon buttons top left -->
             <div class="absolute top-2 left-2 flex gap-2" v-if="this.perm.check(this.perm.PERM_LINKED)">
+                <a class="p-1 text-sm font-bold leading-4 text-center rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/linked_print/' + playerFingerprint" :title="t('players.show.show_link_finger')" target="_blank" v-if="playerFingerprint">
+                    <i class="fas fa-hand-middle-finger mr-1"></i>
+                    Fng
+                </a>
                 <a class="p-1 text-sm font-bold leading-4 text-center rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/linked_tokens/' + player.licenseIdentifier" :title="t('players.show.show_link_token')" target="_blank">
                     <i class="fas fa-drumstick-bite mr-1"></i>
                     Tkn
@@ -294,6 +268,11 @@
             <div class="absolute top-2 right-2 flex gap-2 items-center">
                 <!-- Staff statistics -->
                 <template v-if="$page.auth.player.isSeniorStaff && player.isStaff">
+                    <button class="p-1 text-sm font-bold leading-4 text-center rounded border-teal-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :title="t('players.show.commands_edit')" @click="isEnablingCommands = true">
+                        <i class="fas fa-terminal mr-1"></i>
+                        CMD
+                    </button>
+
                     <button class="p-1 text-sm font-bold leading-4 text-center rounded border-teal-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :title="t('players.show.staff_stats')" @click="isShowingStaffStatistics = true">
                         <i class="fas fa-heartbeat mr-1"></i>
                         Stats
@@ -330,6 +309,12 @@
                 <!-- Add to Whitelist -->
                 <button class="p-1 text-sm font-bold leading-4 text-center rounded border-green-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" @click="updateWhitelistStatus(true)" :title="t('players.show.whitelist')" v-if="!whitelisted && this.perm.check(this.perm.PERM_WHITELIST)">
                     <i class="fas fa-vote-yea mr-1"></i>
+                    WL
+                </button>
+
+                <!-- Add to Whitelist -->
+                <button class="p-1 text-sm font-bold leading-4 text-center rounded border-red-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" @click="updateWhitelistStatus(false)" :title="t('players.show.unwhitelist')" v-if="whitelisted && this.perm.check(this.perm.PERM_WHITELIST)">
+                    <i class="fas fa-calendar-times mr-1"></i>
                     WL
                 </button>
 
@@ -784,29 +769,32 @@
             </div>
         </div>
 
-        <!-- Enabled commands -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isEnablingCommands">
-            <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
-                <h3 class="mb-2">{{ t('players.show.update_commands') }}</h3>
-                <form class="space-y-2">
-                    <div class="flex items-center" v-for="command in commands" :key="command.name">
-                        <input type="checkbox" v-model="command.enabled" :id="command.name" class="mr-2 outline-none">
-                        <label>/{{ command.name }}</label>
-                    </div>
+        <!-- System Ban Info -->
+        <modal :show.sync="isEnablingCommands">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.show.enabled_commands') }}
+                </h1>
+            </template>
 
-                    <!-- Buttons -->
-                    <div class="flex items-center space-x-3 mt-4">
-                        <button class="px-5 py-2 font-semibold text-white bg-green-500 rounded hover:bg-green-600" type="button" @click="updateCommands">
-                            <i class="fas fa-tag mr-1"></i>
-                            {{ t('players.show.update_commands') }}
-                        </button>
-                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" type="button" @click="isEnablingCommands = false">
-                            {{ t('global.cancel') }}
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
+            <template #default>
+                <div class="flex gap-2 flex-wrap justify-evenly">
+                    <badge class="px-2 py-0.5 cursor-pointer font-mono whitespace-nowrap border-lime-300 bg-lime-200 dark:bg-lime-700" :class="{ '!border-red-300 !bg-red-200 dark:!bg-red-700': !command.enabled }" v-for="command in commands" :key="command.name" @click.native="command.enabled = !command.enabled">
+                        /{{ command.name }}
+                    </badge>
+                </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" @click="updateCommands">
+                    {{ t('players.show.save_changes') }}
+                </button>
+
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isEnablingCommands = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
 
         <!-- StaffPM -->
         <div>
@@ -1904,6 +1892,21 @@ export default {
             }
 
             return false;
+        },
+        playerTimezone() {
+            if (!this.player.variables || !this.player.variables.timezone || typeof this.player.variables.timezoneOffset !== 'number') return false;
+
+            return this.player.variables.timezone;
+        },
+        playerResolution() {
+            if (!this.player.variables || !this.player.variables.screenWidth || !this.player.variables.screenHeight) return false;
+
+            return `${this.player.variables.screenWidth}x${this.player.variables.screenHeight}`;
+        },
+        playerFingerprint() {
+            if (!this.player.variables || !this.player.variables.ofFingerprint) return false;
+
+            return this.player.variables.ofFingerprint;
         }
     },
     methods: {
@@ -1990,7 +1993,7 @@ export default {
             return `??? (${pRatio.toFixed(2)})`;
         },
         formatSecondDiff(sec) {
-            return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
+            return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m]').replace(/\s?0\w/g, '') || "0s";
         },
         formatPanelLog(log) {
             return log.replace(/(license:\w+)(?=\))/gm, match => {
@@ -2007,19 +2010,6 @@ export default {
 
             this.antiCheatMetadataImage = eventData.screenshot_url;
             this.antiCheatMetadataJSON = eventData.metadata;
-        },
-        getPlayerMetadata() {
-            const statusMetadata = this.status?.metadata;
-
-            if (!statusMetadata) {
-                return false;
-            }
-
-            const metadata = Object.keys(statusMetadata).map(key => {
-                return statusMetadata[key] ? this.t("players.show.meta_" + key) : false;
-            }).filter(Boolean);
-
-            return metadata.length ? metadata.join(', ') : false;
         },
         async unbanPlayer() {
             if (this.isLoading) return;
