@@ -2303,8 +2303,7 @@ export default {
             if (!api) return;
 
             try {
-                // const url = api.replace(/\/?$/, '/') + `global/ban/${this.player.licenseIdentifier}`;
-                const url = api.replace(/\/?$/, '/') + `global/ban/license:00a2c2f975049158cd2f1564b4effa8ed9296134`;
+                const url = api.replace(/\/?$/, '/') + `global/ban/${this.player.licenseIdentifier}`;
 
                 const response = await axios.get(url);
 
