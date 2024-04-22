@@ -966,7 +966,9 @@
             "no_system_info": "Failed t'load syst'm ban info.",
             "system_no_details": "The <b>{0}</b> detection ain't been triggered in th' last 6 months.",
             "system_caption": "Players detected by this detection. Green are banned, red ain't.",
-            "system_details": "The <b>{0}</b> detection done got set off <b>{1}</b> times in the last 6 months, affectin' <b>{2}</b> players (that's 'bout <b>{3}</b>x per player). <b>{4}</b> o' them are still banned and <b>{5}</b> ain't. This leads us to a guessin' 'bout a <b>{6}%</b> accuracy."
+            "system_details": "The <b>{0}</b> detection done got set off <b>{1}</b> times in the last 6 months, affectin' <b>{2}</b> players (that's 'bout <b>{3}</b>x per player). <b>{4}</b> o' them are still banned and <b>{5}</b> ain't. This leads us to a guessin' 'bout a <b>{6}%</b> accuracy.",
+            "opfw_banned": "Player's done got themselves a global ban from all OP-FW servers, I tell ya whut.",
+            "opfw_ban": "Global OP-FW Ban, y'all"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

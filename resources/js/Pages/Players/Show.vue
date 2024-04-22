@@ -89,8 +89,8 @@
                         <span class="font-semibold">{{ t('players.show.echo_info') }}</span>
                     </badge>
 
-                    <badge class="border-red-300 bg-red-200 dark:bg-red-700 cursor-pointer" v-if="globalBans.length > 0" :title="t('players.show.global_title', globalBans.length)" :click="showGlobalBans">
-                        <i class="fas fa-x-ray mr-1"></i>
+                    <badge class="border-red-300 bg-red-200 dark:bg-red-700 cursor-pointer" v-if="globalBans.length > 0 || opfwBanned" :title="opfwBanned ? t('players.show.opfw_banned') : t('players.show.global_title', globalBans.length)" :click="showGlobalBans">
+                        <i class="fas fa-skull-crossbones mr-1"></i>
                         <span class="font-semibold">{{ t('players.show.global_info') }}</span>
                     </badge>
                 </div>
@@ -468,9 +468,26 @@
             </template>
 
             <template #default>
+                <div class="flex flex-col gap-3 text-left" :class="{ 'mb-3 pb-3 border-b-2 border-dashed border-gray-500': globalBans.length }" v-if="opfwBanned">
+                    <div class="py-4 px-6 rounded-lg shadow-lg border-2 border-red-500 bg-red-100 dark:bg-red-950 relative">
+                        <h1 class="text-lg border-b border-gray-700 dark:border-gray-200">
+                            {{ t('players.show.opfw_ban') }}
+                        </h1>
+
+                        <div class="text-xs mb-1 flex justify-between opacity-70">
+                            <span>{{ opfwBanned.serverName }}</span>
+                            <span>{{ opfwBanned.timestamp * 1000 | formatTime }}</span>
+                        </div>
+
+                        <div class="italic">{{ opfwBanned.banReason }}</div>
+
+                        <div class="text-xs font-semibold absolute bottom-0.5 right-1">{{ opfwBanned.banHash }}</div>
+                    </div>
+                </div>
+
                 <div class="flex flex-col gap-3 text-left">
                     <div v-for="ban in globalBans" :key="ban.serverId" class="py-4 px-6 rounded-lg shadow-lg border-2 border-red-500 bg-red-100 dark:bg-red-950">
-                        <h1 class="text-lg border-b border-gray-700 dark:border-gray-200">
+                        <h1 class="text-lg border-b border-gray-700 dark:border-gray-200 relative">
                             {{ ban.serverName }}
                         </h1>
 
@@ -482,6 +499,8 @@
                         </div>
 
                         <div class="italic">{{ ban.reason }}</div>
+
+                        <div class="text-xs font-semibold absolute bottom-0.5 right-1">{{ ban.serverId }}</div>
                     </div>
                 </div>
             </template>
@@ -1813,8 +1832,8 @@ export default {
             echo: false,
             showingEchoInfo: false,
 
-            // Not actually opfw bans but rather bans on other subdivisions.
             globalBans: [],
+            opfwBanned: false,
             showingGlobalBans: false,
 
             playerTime: false,
@@ -1902,7 +1921,7 @@ export default {
                 if (response.data && response.data.status) {
                     character.marriedTo = response.data.data;
                 }
-            } catch (e) {}
+            } catch (e) { }
         },
         async showSystemInfo() {
             if (this.isSystemInfoLoading || !this.isModdingBan()) {
@@ -2283,7 +2302,24 @@ export default {
                 const response = await axios.get(url);
 
                 if (response.data && Array.isArray(response.data)) {
-                    this.globalBans = response.data;
+                    this.globalBans = response.data.filter(ban => !ban.serverId || !ban.serverId.startsWith(this.$page.auth.cluster));
+                }
+            } catch (e) {
+            }
+        },
+        async loadOPFWBan() {
+            const api = this.$page.api;
+
+            if (!api) return;
+
+            try {
+                // const url = api.replace(/\/?$/, '/') + `global/ban/${this.player.licenseIdentifier}`;
+                const url = api.replace(/\/?$/, '/') + `global/ban/license:00a2c2f975049158cd2f1564b4effa8ed9296134`;
+
+                const response = await axios.get(url);
+
+                if (response.data && response.data.banned) {
+                    this.opfwBanned = response.data.ban;
                 }
             } catch (e) {
             }
@@ -2914,7 +2950,7 @@ export default {
 
                 this.form.warning.message = json.message;
                 this.form.warning.warning_type = json.type;
-            } catch (e) {}
+            } catch (e) { }
         }
 
         // Delay loading of extra data since it blocks other resources from loading
@@ -2923,6 +2959,7 @@ export default {
             this.loadHWIDLink();
             this.loadStatus();
             this.loadGlobalBans();
+            this.loadOPFWBan();
             this.loadEchoStatus();
         }, 500);
 

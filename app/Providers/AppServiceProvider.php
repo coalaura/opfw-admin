@@ -136,7 +136,8 @@ class AppServiceProvider extends ServiceProvider
             },
 
             'echo'       => env('ECHO_SERVER', null),
-            'global'     => env('GLOBAL_SERVER', null),
+            'global'     => env('GLOBAL_SERVER', 'https://global.op-framework.com/'),
+            'api'        => env('API_SERVER', 'https://op-framework.com/api'),
 
             // Authentication.
             'auth'       => function () {
@@ -156,5 +157,4 @@ class AppServiceProvider extends ServiceProvider
             'lang'       => env('VUE_APP_LOCALE', 'en-us'),
         ]);
     }
-
 }

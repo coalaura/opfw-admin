@@ -966,7 +966,9 @@
             "no_system_info": "Couldn't hoist the system ban ledger.",
             "system_no_details": "The <b>{0}</b> spyglass ain't spied a thing in the past half a year.",
             "system_caption": "Scallywags spied by this spyglass. The green 'uns be barred, the red 'uns be not.",
-            "system_details": "Th' <b>{0}</b> detection be set off <b>{1}</b> times in th' last 6 moons, affectin' <b>{2}</b> buccaneers (about <b>{3}</b>x per pirate). <b>{4}</b> o' which be still marooned and <b>{5}</b> o' which be not. This ends in a reckon'd precision o' about <b>{6}%</b>."
+            "system_details": "Th' <b>{0}</b> detection be set off <b>{1}</b> times in th' last 6 moons, affectin' <b>{2}</b> buccaneers (about <b>{3}</b>x per pirate). <b>{4}</b> o' which be still marooned and <b>{5}</b> o' which be not. This ends in a reckon'd precision o' about <b>{6}%</b>.",
+            "opfw_banned": "Player be marooned from all the OP-FW ships across the seven seas.",
+            "opfw_ban": "Ye be blackspotted from OP-FW, ye scallywag!"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

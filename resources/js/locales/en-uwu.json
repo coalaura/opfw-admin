@@ -966,7 +966,9 @@
             "no_system_info": "Faiwed to woad systwem ban info. >w<",
             "system_no_details": "De <b>{0}</b> detectiown has not been twiggewwed in da wast 6 munths. uwu",
             "system_caption": "Pwayews detected by dis detectiown. Gween awe banned, wed awe not. uwu",
-            "system_details": "De <b>{0}</b> detection was twiggewd <b>{1}</b> times in de wast 6 munfs, affecting <b>{2}</b> pwayews (abouwt <b>{3}</b>x pew pwayew). <b>{4}</b> of which awe stiww banned and <b>{5}</b> of which awe not. Dis wesuwts an estimated accuwacy of abouwt <b>{6}%</b>."
+            "system_details": "De <b>{0}</b> detection was twiggewd <b>{1}</b> times in de wast 6 munfs, affecting <b>{2}</b> pwayews (abouwt <b>{3}</b>x pew pwayew). <b>{4}</b> of which awe stiww banned and <b>{5}</b> of which awe not. Dis wesuwts an estimated accuwacy of abouwt <b>{6}%</b>.",
+            "opfw_banned": "Pwayew is gwobawwy bawned fwom aww OP-FW sewvews.",
+            "opfw_ban": "Gwobaw OP-FW Bawn"
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

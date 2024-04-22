@@ -966,7 +966,9 @@
             "no_system_info": "❌🔄💻🚫ℹ️.",
             "system_no_details": "👁️‍🗨️<b>{0}</b> ⚠️ has not been triggered 📆 6️⃣🌗.",
             "system_caption": "🕹️👥 detected by this ⚠️. 🟩 are banned, 🔴 are not.",
-            "system_details": "🔍 <b>{0}</b> 🚨 was ⏱️ <b>{1}</b> times in the last 🗓️ 6 months, affecting <b>{2}</b> 👥 (about <b>{3}</b>x per 👤). <b>{4}</b> of which are still 🚫 and <b>{5}</b> of which are not. This results an estimated accuracy of about <b>{6}%</b>."
+            "system_details": "🔍 <b>{0}</b> 🚨 was ⏱️ <b>{1}</b> times in the last 🗓️ 6 months, affecting <b>{2}</b> 👥 (about <b>{3}</b>x per 👤). <b>{4}</b> of which are still 🚫 and <b>{5}</b> of which are not. This results an estimated accuracy of about <b>{6}%</b>.",
+            "opfw_banned": "🎮🚫🌐🔒🖥️",
+            "opfw_ban": "🌐🔒🖥️🚫"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

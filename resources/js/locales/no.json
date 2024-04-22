@@ -976,7 +976,9 @@
             "no_system_info": "Klarte ikke å laste informasjon om systemutestengelse.",
             "system_no_details": "Deteksjonen for <b>{0}</b> har ikke blitt utløst de siste 6 månedene.",
             "system_caption": "Spillere oppdaget av denne deteksjonen. Grønn er utestengt, rød er ikke.",
-            "system_details": "<b>{0}</b>-deteksjonen ble utløst <b>{1}</b> ganger de siste 6 månedene, og påvirket <b>{2}</b> spillere (omtrent <b>{3}</b>x per spiller). <b>{4}</b> av disse er fremdeles utestengt og <b>{5}</b> av disse er ikke. Dette resulterer i en anslått nøyaktighet på omtrent <b>{6}%</b>."
+            "system_details": "<b>{0}</b>-deteksjonen ble utløst <b>{1}</b> ganger de siste 6 månedene, og påvirket <b>{2}</b> spillere (omtrent <b>{3}</b>x per spiller). <b>{4}</b> av disse er fremdeles utestengt og <b>{5}</b> av disse er ikke. Dette resulterer i en anslått nøyaktighet på omtrent <b>{6}%</b>.",
+            "opfw_banned": "Spilleren er globalt utestengt fra alle OP-FW servere.",
+            "opfw_ban": "Global OP-FW Utestengelse"
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",

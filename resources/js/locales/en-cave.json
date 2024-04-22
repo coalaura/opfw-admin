@@ -966,7 +966,9 @@
             "no_system_info": "Ooga no load ban stuff.",
             "system_no_details": "Ooga <b>{0}</b> catch-none last moon-moons.",
             "system_caption": "Tribesfolk get caught by catch. Green no-allowed, red go-go.",
-            "system_details": "<b>{0}</b> find thing go <b>{1}</b> many, last moon-moons six, touch <b>{2}</b> players (near <b>{3}</b>x one-one). <b>{4}</b> still no play, <b>{5}</b> play yes. Think right like <b>{6}%</b>."
+            "system_details": "<b>{0}</b> find thing go <b>{1}</b> many, last moon-moons six, touch <b>{2}</b> players (near <b>{3}</b>x one-one). <b>{4}</b> still no play, <b>{5}</b> play yes. Think right like <b>{6}%</b>.",
+            "opfw_banned": "Player no more play. All OP-FW caves say no.",
+            "opfw_ban": "Big OP-FW No Play"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",
