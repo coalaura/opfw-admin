@@ -967,7 +967,9 @@
             "save_changes": "Stow yer tweakin's",
             "specs": "Ship's Riggings",
             "specs_title": "Computation contraptions an' yardarms",
-            "show_link_finger": "Reveal scallywags tied with they thumb marks"
+            "show_link_finger": "Reveal scallywags tied with they thumb marks",
+            "multiple_bans": "Plenty o' black spots",
+            "multiple_bans_details": "Player be havin' {0} active black spots. Scallywags with a heap o' active black spots can't be marked fer settin' free an' must be freed by hand, arr!"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

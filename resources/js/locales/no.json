@@ -977,7 +977,9 @@
             "save_changes": "Lagre endringer",
             "specs": "Spesifikasjoner",
             "specs_title": "Data spesifikasjoner og målinger",
-            "show_link_finger": "Vis kontoer koblet til via fingeravtrykk"
+            "show_link_finger": "Vis kontoer koblet til via fingeravtrykk",
+            "multiple_bans": "Flere utestengelser",
+            "multiple_bans_details": "Spilleren har {0} aktive utestengelser. Spillere med flere aktive utestengelser kan ikke planlegges for oppheving av utestengelse og må fjernes manuelt."
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",

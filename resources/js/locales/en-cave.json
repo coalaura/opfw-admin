@@ -967,7 +967,9 @@
             "save_changes": "Keep New Words No Forget",
             "specs": "Thing Parts",
             "specs_title": "Rock-Thinker Parts and Count-Grains",
-            "show_link_finger": "See Other-Hunters Touch-Mark Join"
+            "show_link_finger": "See Other-Hunters Touch-Mark Join",
+            "multiple_bans": "Many no-plays",
+            "multiple_bans_details": "Human with {0} no-plays now. Humans with many no-plays no get wait-list-freedom. Need hand-free from no-play by other."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

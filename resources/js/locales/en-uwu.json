@@ -967,7 +967,9 @@
             "save_changes": "Save chawnges",
             "specs": "Spwecs",
             "specs_title": "Computew specifications and metwics",
-            "show_link_finger": "Show accounties winked via fingewpwint"
+            "show_link_finger": "Show accounties winked via fingewpwint",
+            "multiple_bans": "Muwtipwe bawns",
+            "multiple_bans_details": "Pwayew has {0} active bawns. Pwayews wif muwtipwe active bawns cawn't be scheduwed fow unban and have to be unbanned manyuawwy."
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

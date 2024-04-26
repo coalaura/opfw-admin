@@ -977,7 +977,9 @@
             "save_changes": "Parivartan ko Sajiv Karein",
             "specs": "Visheshatayein",
             "specs_title": "Computer visheshatayen aur maapan",
-            "show_link_finger": "Angootha chhaap se judi accounts dikhayein"
+            "show_link_finger": "Angootha chhaap se judi accounts dikhayein",
+            "multiple_bans": "Kayi prakar ke pratibandh",
+            "multiple_bans_details": "Khiladi ke {0} sakriya pratibandh hain. Ek se adhik sakriya pratibandhon wale khiladiyon ko aniyamit roop se pratibandh mukt nahi kiya ja sakta aur unhe manually pratibandh mukt karna padega."
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",

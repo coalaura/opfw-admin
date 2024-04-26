@@ -435,19 +435,12 @@
             "is_not_dead": "❌ Not dead 💀",
             "is_invisible": "👻 Invisible 🙈",
             "is_not_invisible": "❌ Visible 👀",
-            "is_staff": "",
-            "is_not_staff": "",
-            "is_highlighted": "",
-            "is_not_highlighted": "",
-            "is_male": "",
-            "is_female": ""
-        },
-        "area_type": {
-            "title": "",
-            "normal": "",
-            "normal_description": "",
-            "persistent": "",
-            "persistent_description": ""
+            "is_staff": "👥✅",
+            "is_not_staff": "👥❌",
+            "is_highlighted": "✨✅",
+            "is_not_highlighted": "✨❌",
+            "is_male": "🚹✅",
+            "is_female": "🚺✅"
         },
         "area_inside": "📍 is 🏢",
         "area_not_inside": "📍 is ❌ 🏢",
@@ -459,7 +452,14 @@
         "historic_render": "🎨📊🖼️",
         "historic_title": "📜🚶‍♂️🗓️ - 📏🚶‍♀️🏃‍♂️🤔",
         "timestamp_title": "⌛️🔝🕓🌍- 🗓🤷‍♂️🚶‍♂️👥",
-        "fpm_title": "🖼️🙋‍♀️"
+        "fpm_title": "🖼️🙋‍♀️",
+        "area_type": {
+            "title": "📍🔲",
+            "normal": "🌀",
+            "normal_description": "👀👤👉📍✅",
+            "persistent": "🕓➿",
+            "persistent_description": "👀👥👉📍🕓📈"
+        }
     },
     "nav": {
         "dark": "🌑",
@@ -812,14 +812,6 @@
             "accuracy_title": "{0} 🏷️🚫 were 🚫 in the 🕑 14 🌙.",
             "confirmed_accuracy": "✅ 📈",
             "confirmed_accuracy_title": "Due to the way this 🚫 is built, there is no way for ❌ 🤷‍♂️ to occur. This 🚫 should not be ❌.",
-            "ban_locked": "",
-            "ban": "",
-            "ban_text": "",
-            "ban_forever_text": "",
-            "no_reason": "",
-            "hwid_ban": "",
-            "unlink": "",
-            "unlink_confirm": "",
             "ban_info": "🚫 Info",
             "muted": "🔇 {0}",
             "muted_forever": "🔇 Forever",
@@ -967,7 +959,17 @@
             "save_changes": "💾 ✍️",
             "specs": "🔍📊",
             "specs_title": "💻 📋 📊",
-            "show_link_finger": "👁️‍🗨️ 🖇️ ✋🔍"
+            "show_link_finger": "👁️‍🗨️ 🖇️ ✋🔍",
+            "ban_locked": "🚫🔒",
+            "ban": "🚫🏷️<i>{0}</i> 🔜 <i>{1}</i>",
+            "ban_text": "⏳{0}",
+            "ban_forever_text": "♾️",
+            "no_reason": "❌💬",
+            "hwid_ban": "🔗🚫🎮🏷️🧑‍💻-ID",
+            "multiple_bans": "🧑‍⚖️🚫🔢",
+            "multiple_bans_details": "🎮🏷️{0}⚡🚫. 🎮🚫🔢⚡⚠️🚫📅🚫❌🔓🔧⚒️",
+            "unlink": "🔗🔗❌🎮🚷",
+            "unlink_confirm": "❓➡️🔗🔗❌❌🎮🚷? ✅❌👤💭❌👥 / 🚫🚫🔓"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

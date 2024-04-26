@@ -950,6 +950,20 @@ class Player extends Model
     }
 
     /**
+     * Gets the unique ban hashes associated with this player.
+     *
+     * @return array
+     */
+    public function uniqueBans(): array
+    {
+        $bans = $this->bans()->select(['ban_hash'])->groupBy('ban_hash')->get();
+
+        return array_map(function ($ban) {
+            return $ban['ban_hash'];
+        }, $bans->toArray());
+    }
+
+    /**
      * Returns a map of licenseIdentifier->serverId,server for each online player
      *
      * @param bool $useCache

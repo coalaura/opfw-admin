@@ -210,7 +210,7 @@
                     {{ t('players.show.unban') }}
                 </button>
                 <!-- Schedule Unban -->
-                <button class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" @click="isSchedulingUnban = true" v-if="player.isBanned && !player.ban.scheduled">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" @click="isSchedulingUnban = true" v-if="player.isBanned && !player.ban.scheduled && uniqueBans === 1">
                     <i class="fas fa-calendar-day"></i>
                     {{ t('players.show.schedule_unban') }}
                 </button>
@@ -929,53 +929,67 @@
             </div>
 
             <!-- Viewing -->
-            <alert class="bg-danger dark:bg-dark-danger px-6 py-4" v-if="player.isBanned">
-                <div class="flex items-center justify-between mb-2">
-                    <h2 class="text-lg font-semibold">
-                        <i class="fas fa-shield-alt mr-1 cursor-help" v-if="player.streamerException" :title="t('players.show.streamer_exception_title', player.streamerException)"></i>
+            <div class="mb-10">
+                <alert class="bg-danger dark:bg-dark-danger px-6 py-4 mb-4" v-if="player.isBanned">
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-lg font-semibold">
+                            <i class="fas fa-shield-alt mr-1 cursor-help" v-if="player.streamerException" :title="t('players.show.streamer_exception_title', player.streamerException)"></i>
 
-                        <span v-html="local.ban" :class="{ 'line-through': status && player.streamerException }"></span>
-                    </h2>
-                    <div class="font-semibold">
-                        <i class="mr-1 fas fa-lock" v-if="player.ban.locked" :title="t('players.show.ban_locked')"></i>
-                        {{ player.ban.timestamp | formatTime }}
+                            <span v-html="local.ban" :class="{ 'line-through': status && player.streamerException }"></span>
+                        </h2>
+                        <div class="font-semibold">
+                            <i class="mr-1 fas fa-lock" v-if="player.ban.locked" :title="t('players.show.ban_locked')"></i>
+                            {{ player.ban.timestamp | formatTime }}
+                        </div>
                     </div>
-                </div>
 
-                <p class="text-gray-100">
-                    <span class="whitespace-pre-line">{{ player.ban.reason || t('players.show.no_reason') }}</span>
-                </p>
-
-                <div class="flex justify-between">
-                    <p class="text-sm italic monospace">{{ player.ban.banHash }}</p>
-                    <p class="text-sm monospace font-semibold" v-if="player.ban.smurfAccount" :title="t('players.show.original_ban')">
-                        <a :href="'/smurf/' + player.ban.smurfAccount" target="_blank" class="text-white hover:text-gray-800">{{ player.ban.smurfAccount }}</a>
+                    <p class="text-gray-100">
+                        <span class="whitespace-pre-line">{{ player.ban.reason || t('players.show.no_reason') }}</span>
                     </p>
-                </div>
 
-                <div class="mt-4 text-sm pt-1 border-t border-dashed" v-if="player.ban.info">
-                    <b class="whitespace-nowrap" :class="{ 'cursor-help': isModdingBan() }" @click="showSystemInfo()">{{ player.ban.original }}:</b> <i>{{ player.ban.info }}</i>
-                </div>
-            </alert>
-
-            <alert class="bg-rose-500" v-if="hwidBan">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-lg font-semibold">
-                        {{ t('players.show.hwid_ban') }}
-                    </h2>
-
-                    <div class="flex gap-4">
-                        <button @click="unlinkHWID" class="text-rose-700 font-semibold px-3 py-1 rounded bg-white shadow" v-if="$page.auth.player.isSuperAdmin" :title="t('players.show.unlink')">
-                            <i class="fas fa-unlink"></i>
-                        </button>
-
-                        <inertia-link :href="'/players/' + hwidBan.license" class="text-rose-700 font-semibold px-3 py-1 rounded bg-white shadow">
-                            {{ hwidBan.hash }}
-                            <i class="fas fa-chevron-right"></i>
-                        </inertia-link>
+                    <div class="flex justify-between">
+                        <p class="text-sm italic monospace">{{ player.ban.banHash }}</p>
+                        <p class="text-sm monospace font-semibold" v-if="player.ban.smurfAccount" :title="t('players.show.original_ban')">
+                            <a :href="'/smurf/' + player.ban.smurfAccount" target="_blank" class="text-white hover:text-gray-800">{{ player.ban.smurfAccount }}</a>
+                        </p>
                     </div>
-                </div>
-            </alert>
+
+                    <div class="mt-4 text-sm pt-1 border-t border-dashed" v-if="player.ban.info">
+                        <b class="whitespace-nowrap" :class="{ 'cursor-help': isModdingBan() }" @click="showSystemInfo()">{{ player.ban.original }}:</b> <i>{{ player.ban.info }}</i>
+                    </div>
+                </alert>
+
+                <alert class="bg-orange-500 mb-4" v-if="uniqueBans > 1">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-semibold">
+                            {{ t('players.show.multiple_bans') }}
+                        </h2>
+                    </div>
+
+                    <p class="text-gray-100 italic text-sm">
+                        {{ t('players.show.multiple_bans_details', uniqueBans) }}
+                    </p>
+                </alert>
+
+                <alert class="bg-rose-500 mb-4" v-if="hwidBan">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-semibold">
+                            {{ t('players.show.hwid_ban') }}
+                        </h2>
+
+                        <div class="flex gap-4">
+                            <button @click="unlinkHWID" class="text-rose-700 font-semibold px-3 py-1 rounded bg-white shadow" v-if="$page.auth.player.isSuperAdmin" :title="t('players.show.unlink')">
+                                <i class="fas fa-unlink"></i>
+                            </button>
+
+                            <inertia-link :href="'/players/' + hwidBan.license" class="text-rose-700 font-semibold px-3 py-1 rounded bg-white shadow">
+                                {{ hwidBan.hash }}
+                                <i class="fas fa-chevron-right"></i>
+                            </inertia-link>
+                        </div>
+                    </div>
+                </alert>
+            </div>
 
             <!-- Issuing -->
             <div class="p-8 mb-10 bg-gray-100 rounded dark:bg-dark-secondary" v-if="isBanning">
@@ -1685,6 +1699,9 @@ export default {
         },
         allowRoleEdit: {
             type: Boolean
+        },
+        uniqueBans: {
+            type: Number
         }
     },
     data() {

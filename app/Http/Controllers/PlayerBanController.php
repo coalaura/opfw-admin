@@ -315,6 +315,12 @@ class PlayerBanController extends Controller
             return backWith('error', 'Invalid ban.');
         }
 
+        $count = sizeof($player->uniqueBans());
+
+        if ($count > 1) {
+            return backWith('error', 'Cannot schedule ban. Player has multiple active bans.');
+        }
+
         Ban::query()->where('ban_hash', '=', $ban->ban_hash)->update([
             'scheduled_unban' => $time,
         ]);

@@ -876,6 +876,8 @@
             "unmute": "Unmute",
             "unmute_confirm": "Are you sure you want to unmute this player?",
             "hwid_ban": "Linked to banned player by Hardware-ID.",
+            "multiple_bans": "Multiple bans",
+            "multiple_bans_details": "Player has {0} active bans. Players with multiple active bans can't be scheduled for unban and have to be unbanned manually.",
             "unlink": "Unlink players from each other.",
             "unlink_confirm": "Are you sure you want to unlink these players from each other? Only do this when you are certain they are not the same person / ban evading.",
             "ban_info": "Ban Info",

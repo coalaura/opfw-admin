@@ -967,7 +967,9 @@
             "save_changes": "Save changes",
             "specs": "Specs",
             "specs_title": "Computer specifications and metrics",
-            "show_link_finger": "Show accounts linked via fingerprint"
+            "show_link_finger": "Show accounts linked via fingerprint",
+            "multiple_bans": "Multiple bans",
+            "multiple_bans_details": "Player got {0} active bans. Players with a bunch of active bans can't be scheduled for unban an' gotta be unbanned by hand, y'all."
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",
