@@ -274,7 +274,7 @@ class Ban extends Model
             $key      = array_shift($parts);
 
             if ($reasons && $category && $key && isset($reasons[$category]) && isset($reasons[$category][$key])) {
-                $reason = $reasons[$category][$key];
+                $reason = $reasons[$category][$key]['reason'];
 
                 $info = isset(self::SYSTEM_INFO[$category]) && isset(self::SYSTEM_INFO[$category][$key]) ? self::SYSTEM_INFO[$category][$key] : false;
 
