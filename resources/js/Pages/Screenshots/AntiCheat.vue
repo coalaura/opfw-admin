@@ -128,14 +128,12 @@
 
             <template #default>
                 <template v-for="(contents, category) in reasons">
-                    <h2 class="mt-5">{{ category }}</h2>
+                    <h2 class="mt-5 pb-2 border-b-2 border-dashed border-gray-500">{{ category }}</h2>
 
-                    <table class="w-full">
-                        <tr class="text-left hover:bg-gray-100 dark:hover:bg-gray-600" v-for="(value, key) in contents">
-                            <td class="font-semibold py-2 px-1 border-t">{{ key }}</td>
-                            <td class="py-2 px-1 italic border-t text-sm">{{ value }}</td>
-                        </tr>
-                    </table>
+                    <div class="mt-3 relative" v-for="(value, key) in contents">
+                        <p class="font-bold mb-1">{{ key }}</p>
+                        <div class="text-sm whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm italic">{{ value }}</div>
+                    </div>
                 </template>
             </template>
 
