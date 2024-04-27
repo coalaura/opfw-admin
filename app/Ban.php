@@ -159,6 +159,17 @@ class Ban extends Model
     {
         if (self::$automatedReasons === null) {
             self::$automatedReasons = json_decode(file_get_contents(__DIR__ . '/../helpers/automated-bans.json'), true);
+
+            foreach(self::$automatedReasons as $category => $bans) {
+                foreach($bans as $key => $reason) {
+                    $info = isset(self::SYSTEM_INFO[$category]) && isset(self::SYSTEM_INFO[$category][$key]) ? self::SYSTEM_INFO[$category][$key] : false;
+
+                    self::$automatedReasons[$category][$key] = [
+                        'reason' => $reason,
+                        'info'   => $info
+                    ];
+                }
+            }
         }
 
         return self::$automatedReasons;

@@ -128,11 +128,22 @@
 
             <template #default>
                 <template v-for="(contents, category) in reasons">
-                    <h2 class="mt-5 pb-2 border-b-2 border-dashed border-gray-500">{{ category }}</h2>
+                    <h2 class="mt-5 border-b-2 border-dashed border-gray-500">{{ category }}</h2>
 
-                    <div class="mt-3 relative" v-for="(value, key) in contents">
-                        <p class="font-bold mb-1">{{ key }}</p>
-                        <div class="text-sm whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm italic">{{ value }}</div>
+                    <div class="flex flex-col px-4 py-3 bg-white dark:bg-gray-600 rounded-lg shadow-sm mt-3" v-for="(value, key) in contents" :key="key">
+                        <header class="mb-3 border-b border-gray-200 dark:border-gray-400 text-lg font-semibold">
+                            {{ key }}
+                        </header>
+
+                        <div class="flex-grow text-muted dark:text-dark-muted">
+                            <h4 class="text-sm font-bold border-b border-gray-500 mb-1">{{ t('screenshot.anti_cheat_reason') }}</h4>
+                            <div class="italic text-sm">{{ value.reason.replace("${DATA}", "xyz") }}</div>
+
+                            <template v-if="value.info">
+                                <h4 class="text-sm font-bold border-b border-gray-500 mt-3 mb-1">{{ t('screenshot.anti_cheat_info') }}</h4>
+                                <div class="italic text-sm">{{ value.info }}</div>
+                            </template>
+                        </div>
                     </div>
                 </template>
             </template>
@@ -148,11 +159,11 @@
 
         <scoped-style>
             .ac-subtitle {
-                filter: brightness(0.8);
+            filter: brightness(0.8);
             }
 
             .dark .ac-subtitle {
-                filter: brightness(1.2);
+            filter: brightness(1.2);
             }
         </scoped-style>
     </div>

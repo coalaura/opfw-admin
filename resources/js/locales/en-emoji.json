@@ -225,7 +225,9 @@
         "metadata": "📦",
         "logs": "📜s",
         "playtime": "⌛ Playtime",
-        "flags": "🏳️‍🌈🏴‍☠️"
+        "flags": "🏳️‍🌈🏴‍☠️",
+        "anti_cheat_reason": "🤔",
+        "anti_cheat_info": "🕵️‍♂️💡"
     },
     "changelog": {
         "title": "🆕🔄",

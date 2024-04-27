@@ -225,7 +225,9 @@
         "player": "Khiladi",
         "label": "Screenshots",
         "documentation": "Is screenshot/capture ko kyun banaya gaya iske bare mein adhik jaankari dikhaye.",
-        "flags": "Charitr Dhvaj"
+        "flags": "Charitr Dhvaj",
+        "anti_cheat_reason": "Karan",
+        "anti_cheat_info": "Pata Laganeki Jankari"
     },
     "changelog": {
         "title": "Haal ki Updates",

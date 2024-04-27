@@ -225,7 +225,9 @@
         "metadata": "Metadater",
         "logs": "Git yer eyes on them there logs, y'all",
         "playtime": "Playtime, y'all",
-        "flags": "Charactuh Flags"
+        "flags": "Charactuh Flags",
+        "anti_cheat_reason": "Reason",
+        "anti_cheat_info": "Detection Info"
     },
     "changelog": {
         "title": "Latest Happ'nins",

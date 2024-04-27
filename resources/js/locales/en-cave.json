@@ -225,7 +225,9 @@
         "metadata": "Ugga",
         "logs": "Rock Carvings",
         "playtime": "Grugtime",
-        "flags": "Character Banners"
+        "flags": "Character Banners",
+        "anti_cheat_reason": "Reason why",
+        "anti_cheat_info": "Find out thing"
     },
     "changelog": {
         "title": "Big Uggz",

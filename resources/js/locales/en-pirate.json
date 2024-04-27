@@ -225,7 +225,9 @@
         "metadata": "Bootytreasure",
         "logs": "Scrolls",
         "playtime": "Adventure Time",
-        "flags": "Jolly Rogers"
+        "flags": "Jolly Rogers",
+        "anti_cheat_reason": "Rhyme or Reason",
+        "anti_cheat_info": "Spyin' Particulars"
     },
     "changelog": {
         "title": "Latest Sea Changes",
