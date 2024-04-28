@@ -427,6 +427,12 @@ export default {
                     const flags = metadata.playerPed.flags.join(', ') || 'no flags';
 
                     return `${flags}` + (metadata.playerPed.inVehicle ? ' (in vehicle)' : '');
+                case 'illegal_handling_field':
+                    if (!metadata.fields) return false;
+
+                    const fields = metadata.fields.map(field => field.split(':').shift()).join(', ');
+
+                    return `*${fields}*`;
             }
 
             return false;
