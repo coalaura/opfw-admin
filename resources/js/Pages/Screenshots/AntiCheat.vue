@@ -131,8 +131,10 @@
                     <h2 class="mt-5 border-b-2 border-dashed border-gray-500">{{ category }}</h2>
 
                     <div class="flex flex-col px-4 py-3 bg-white dark:bg-gray-600 rounded-lg shadow-sm mt-3" v-for="(value, key) in contents" :key="key">
-                        <header class="mb-3 border-b border-gray-200 dark:border-gray-400 text-lg font-semibold">
+                        <header class="mb-3 border-b border-gray-200 dark:border-gray-400 text-lg font-semibold flex justify-between items-center">
                             {{ key }}
+
+                            <div class="flex items-center gap-1 text-base" v-html="getDetectionStars(category, value)"></div>
                         </header>
 
                         <div class="flex-grow text-muted dark:text-dark-muted">
@@ -159,11 +161,11 @@
 
         <scoped-style>
             .ac-subtitle {
-            filter: brightness(0.8);
+                filter: brightness(0.8);
             }
 
             .dark .ac-subtitle {
-            filter: brightness(1.2);
+                filter: brightness(1.2);
             }
         </scoped-style>
     </div>
@@ -252,6 +254,29 @@ export default {
             } catch (e) { }
 
             this.isLoading = false;
+        },
+        getDetectionStars(category, ban) {
+            if (category === 'INJECTION') {
+                return `<i class="fas fa-asterisk"></i>`;
+            }
+
+            if (!ban.info) return '';
+
+            const star = `<i class="fas fa-star"></i>`,
+                half = `<i class="fas fa-star-half-alt"></i>`,
+                empty = `<i class="far fa-star"></i>`;
+
+            if (ban.info.startsWith("Impossible to be scuff")) {
+                return star + star + star;
+            } else if (ban.info.startsWith("Highly unlikely to be scuff")) {
+                return star + star + half;
+            } else if (ban.info.startsWith("Very unlikely to be scuff")) {
+                return star + half + empty;
+            } else if (ban.info.startsWith("Unlikely to be scuff")) {
+                return half + empty + empty;
+            }
+
+            return '';
         },
         formatSecondDiff(sec) {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
