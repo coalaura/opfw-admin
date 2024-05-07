@@ -181,9 +181,11 @@
 						<td class="p-3 pl-8 mobile:block max-w-56">
 							<div class="absolute top-1 left-1 text-sm leading-3 font-semibold italic" v-html="getLogTag(log.action, log.metadata)"></div>
 
-							<inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.licenseIdentifier">
+							<inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.licenseIdentifier" v-if="log.licenseIdentifier">
 								{{ playerName(log.licenseIdentifier) }}
 							</inertia-link>
+
+							<div class="block px-4 py-2 truncate font-semibold text-center text-white bg-teal-600 rounded" v-else>{{ t('global.system') }}</div>
 						</td>
 						<td class="p-3 mobile:block whitespace-nowrap">
 							<span class="font-semibold" v-if="statusLoading">

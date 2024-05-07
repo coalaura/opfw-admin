@@ -1,33 +1,26 @@
 const Socket = {
     async install(Vue, options) {
-        const cache = {};
-
         let originUnavailable = false;
 
-        Vue.prototype.requestData = async function (route, useCache = false) {
+        async function executeRequest(vue, type, route) {
             if (originUnavailable) return null;
 
-            if (!route.startsWith('/')) route = '/' + route;
+            route = route.replace(/^\/|\/$/, '');
 
             const isDev = window.location.hostname === 'localhost';
 
-            const token = this.$page.auth.token,
-                server = this.$page.auth.server,
-                host = isDev ? 'http://localhost:9999' : 'https://' + window.location.host;
+            const token = vue.$page.auth.token,
+                server = vue.$page.auth.server,
+                host = isDev ? 'http://localhost:9999' : 'https://' + window.location.host,
+                query = type === "data" ? `?token=${token}`: '';
 
-            const url = host + '/data/' + server + route + '?token=' + token;
-
-            if (useCache && url in cache) {
-                return cache[url];
-            }
+            const url = `${host}/socket/${server}/${type}/${route}${query}`;
 
             try {
                 const data = await axios.get(url);
 
                 if (data.data && data.data.status) {
                     const value = data.data.data;
-
-                    cache[url] = value;
 
                     return value;
                 } else {
@@ -43,8 +36,6 @@ const Socket = {
 
                     return null;
                 }
-
-                if (isDev) return null;
 
                 return false;
             }
@@ -69,25 +60,16 @@ const Socket = {
             }
         };
 
-        Vue.prototype.requestGenerated = async function (route, noServer = false) {
-            if (!route.startsWith('/')) route = '/' + route;
+        Vue.prototype.requestData = async function (route) {
+            return await executeRequest(this, "data", route);
+        };
 
-            const isDev = window.location.hostname === 'localhost',
-                host = isDev ? 'http://localhost:9999' : 'https://' + window.location.host,
-                server = this.$page.auth.server;
+        Vue.prototype.requestStatic = async function (route) {
+            return await executeRequest(this, "static", route);
+        };
 
-            const url = host + '/generated' + (!noServer ? '/' + server : '') + route;
-
-            try {
-                const response = await axios.get(url),
-                    data = response.data;
-
-                if (!data || typeof data !== 'object') return false;
-
-                return data;
-            } catch (e) {
-                return false;
-            }
+        Vue.prototype.requestMisc = async function (route) {
+            return await executeRequest(this, "misc", route);
         };
     },
 }

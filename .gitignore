@@ -21,7 +21,7 @@
 /public/storage
 /storage/*.key
 /storage/debugbar
-/storage/sessions.json
+/storage/sessions
 /vendor
 envs/.env
 deploy.env

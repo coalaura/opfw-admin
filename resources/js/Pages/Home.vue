@@ -261,7 +261,7 @@ export default {
             }, 750);
         },
         refresh: async function () {
-            const players = await this.requestGenerated("/count.json");
+            const players = await this.requestStatic("/count");
 
             if (typeof players === "number") {
                 this.playerCount = this.t('home.player_count', players);

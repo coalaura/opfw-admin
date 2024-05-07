@@ -474,7 +474,7 @@ export default {
         async updateServerStatus() {
             this.serverStatusLoading = true;
 
-            const info = await this.requestGenerated("/info.json");
+            const info = await this.requestStatic("/server");
 
             if (info && info.uptime) {
                 this.serverUptime = this.formatUptime(info.uptime, false);
@@ -496,26 +496,19 @@ export default {
                 this.serverLogo = false;
             }
 
+            if (info && 'baseTime' in info) {
+                this.gameTime = info.baseTime;
+                this.gameTimeUpdated = Date.now();
+            }
+
             this.serverStatusLoading = false;
 
             setTimeout(() => {
                 this.updateServerStatus();
             }, 20000);
         },
-        async updateGameTime() {
-            const world = await this.requestGenerated("/world.json");
-
-            if (world && 'baseTime' in world) {
-                this.gameTime = world.baseTime;
-                this.gameTimeUpdated = Date.now();
-            }
-
-            setTimeout(() => {
-                this.updateGameTime();
-            }, 60000);
-        },
         async updateStreamers() {
-            const streamers = await this.requestGenerated("/streamers.json", true);
+            const streamers = await this.requestMisc("/twitch");
 
             if (streamers && streamers.length > 0) {
                 this.streamers = streamers;
@@ -532,7 +525,6 @@ export default {
         // Delay loading of extra data since it blocks other resources from loading
         setTimeout(() => {
             this.updateServerStatus();
-            this.updateGameTime();
             this.updateStreamers();
         }, 500);
 

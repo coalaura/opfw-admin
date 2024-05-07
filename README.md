@@ -154,24 +154,12 @@ server {
 
     # This would be the socket server's configuration.
     # If you are not running it on the standard port you will have to change it here.
-    location ~ ^/(historic|timestamp|socket\.io|data) {
+    location ~ ^/(socket|socket\.io) {
         proxy_pass http://127.0.0.1:9999;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "Upgrade";
         proxy_set_header Host $host;
-    }
-
-    location ~ ^/generated/.+\.json$ {
-        root /path/to/admin-panel-socket;
-
-        add_header 'Pragma' 'no-cache';
-
-        try_files $uri =404;
-
-        if (!-d $request_filename){
-            rewrite ^/(.*)/$ /$1 permanent;
-        }
     }
 
     location ~ ^/_data {

@@ -336,7 +336,13 @@ class SessionHelper
 
     public static function sessionDumpFile(): string
     {
-        return storage_path('sessions.json');
+        $dir = storage_path('sessions');
+
+        if (!is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        return $dir . '/' . CLUSTER . '.json';
     }
 
     public static function dumpSessions(bool $force = false)

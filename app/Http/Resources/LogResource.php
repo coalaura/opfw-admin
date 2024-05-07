@@ -18,15 +18,15 @@ class LogResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id'              => $this->id,
-            'action'          => $this->action,
-            'details'         => $this->details,
-            'metadata'        => $this->metadata,
-            'timestamp'       => $this->timestamp,
-            'server'          => $this->metadata['serverId'],
+            'id'                => $this->id,
+            'action'            => $this->action,
+            'details'           => $this->details,
+            'metadata'          => $this->metadata,
+            'timestamp'         => $this->timestamp,
+            'server'            => $this->metadata['serverId'],
             'licenseIdentifier' => $this->identifier,
-            'playerName'      => $this->player_name,
-            'status'          => Player::getOnlineStatus($this->identifier, true),
+            'playerName'        => $this->player_name,
+            'status'            => $this->identifier ? Player::getOnlineStatus($this->identifier, true) : false,
         ];
     }
 

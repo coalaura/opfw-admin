@@ -283,7 +283,7 @@ class OPFWHelper
             return null;
         }
 
-        $data = self::executeSocketRoute("data/$server/players");
+        $data = self::executeSocketRoute("data", $server, "players");
 
         return $data ?? null;
     }
@@ -565,7 +565,7 @@ class OPFWHelper
      *
      * @param string $route
      */
-    private static function executeSocketRoute(string $route)
+    private static function executeSocketRoute(string $type, string $server, string $route)
     {
         $token = sessionKey();
         $license = license();
@@ -574,7 +574,7 @@ class OPFWHelper
             return false;
         }
 
-        $url = "http://localhost:9999/" . $route;
+        $url = "http://localhost:9999/socket/$server/$type/$route";
 
         if (!HttpHelper::ping($url, 400)) {
             LoggingHelper::log("Cancelled GET request to $url (ping failed)");
