@@ -3,6 +3,7 @@
 namespace App\Http\Middleware {
     use Closure;
     use Illuminate\Http\Request;
+    use App\Helpers\SessionHelper;
 
     class StartSession
     {
@@ -16,14 +17,9 @@ namespace App\Http\Middleware {
         public function handle(Request $request, Closure $next)
         {
             // Force initialization of the session
-            $instance = sessionHelper();
+            sessionHelper();
 
-            $sessionsFile = storage_path('sessions.json');
-            $shouldRegenerate = !file_exists($sessionsFile) || time() - filemtime($sessionsFile) > 10*60;
-
-            if ($shouldRegenerate) {
-                $instance->dumpSessions($sessionsFile);
-            }
+            SessionHelper::dumpSessions();
 
             return $next($request);
         }

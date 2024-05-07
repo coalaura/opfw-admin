@@ -240,6 +240,8 @@ class SessionHelper
         $lifetime = time() - self::Lifetime;
 
         Session::query()->where('last_accessed', '<', $lifetime)->delete();
+
+        self::dumpSessions(true);
     }
 
     /**
@@ -332,8 +334,19 @@ class SessionHelper
         return $player->license_identifier;
     }
 
-    public function dumpSessions(string $file)
+    public static function sessionDumpFile(): string
     {
+        return storage_path('sessions.json');
+    }
+
+    public static function dumpSessions(bool $force = false)
+    {
+        $file = self::sessionDumpFile();
+
+        $shouldRegenerate = $force || !file_exists($file) || time() - filemtime($file) > 10*60;
+
+        if (!$shouldRegenerate) return;
+
         $fh = fopen($file, 'w+');
 
         // Try to lock it for writing
