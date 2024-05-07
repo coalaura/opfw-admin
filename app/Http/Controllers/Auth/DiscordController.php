@@ -87,6 +87,7 @@ class DiscordController extends Controller
         }
 
         $session->put('user', $player->user_id);
+        $session->put('name', $player->getSafePlayerName());
         $session->put('discord', $user);
 
         $session->put('tokens', [

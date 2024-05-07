@@ -2,8 +2,9 @@
 
 namespace App\Helpers;
 
-use App\Session;
 use App\Player;
+use App\Session;
+use Illuminate\Support\Facades\DB;
 
 class SessionHelper
 {
@@ -216,7 +217,9 @@ class SessionHelper
      */
     public function updateCookie()
     {
-        if ($this->lastCookie === $this->sessionKey) return;
+        if ($this->lastCookie === $this->sessionKey) {
+            return;
+        }
 
         $cookie = CLUSTER . self::Cookie;
 
@@ -327,5 +330,36 @@ class SessionHelper
         }
 
         return $player->license_identifier;
+    }
+
+    public function dumpSessions(string $file)
+    {
+        $fh = fopen($file, 'w+');
+
+        // Try to lock it for writing
+        if (flock($fh, LOCK_EX)) {
+            $sessions = Session::query()
+                ->select(DB::raw("`key`, JSON_EXTRACT(data, '$.name') as name, JSON_EXTRACT(data, '$.discord.id') as discord_id"))
+                ->whereNotNull(DB::raw("JSON_EXTRACT(data, '$.user')"))
+                ->get();
+
+            $data = [];
+
+            foreach ($sessions as $session) {
+                $key     = $session->key;
+                $name    = json_decode($session->name);
+                $discord = json_decode($session->discord_id);
+
+                $data[$key] = [
+                    'name'    => $name,
+                    'discord' => $discord,
+                ];
+            }
+
+            fwrite($fh, json_encode($data));
+            flock($fh, LOCK_UN);
+        }
+
+        fclose($fh);
     }
 }
