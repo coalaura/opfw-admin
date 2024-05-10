@@ -1,14 +1,14 @@
 <template>
     <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mt-4" v-if="shown">
-        <div class="flex">
-            <h2 class="text-lg flex gap-2" @click="collapsed && toggleCollapsed()" :class="{'cursor-pointer': collapsed}">
+        <div class="flex" :class="{ 'mb-3': label }">
+            <h2 class="text-lg flex gap-2" @click="collapsed && toggleCollapsed()" :class="{ 'cursor-pointer': collapsed }">
                 <div class="flex items-center" v-if="tag">
                     <span class="bg-lime-400 dark:bg-lime-700 py-0.5 px-2 text-xs rounded-sm shadow-sm" v-if="tag === 'money'">{{ t("statistics.tag_money") }}</span>
                     <span class="bg-teal-400 dark:bg-teal-700 py-0.5 px-2 text-xs rounded-sm shadow-sm" v-else-if="tag === 'amount'">{{ t("statistics.tag_amount") }}</span>
                 </div>
 
                 <span>
-                    {{ t((this.locale ? this.locale : 'statistics.') + source) }}
+                    {{ title }}
                     <sup v-if="totalAmount > 0 || totalCount > 0">
                         {{ numberFormat(totalAmount, false, currency) }}
                         <span v-if="currency">- x{{ numberFormat(totalCount, false, false) }}</span>
@@ -17,7 +17,7 @@
             </h2>
         </div>
 
-        <p class="text-sm italic mb-3">{{ t((this.locale ? this.locale : 'statistics.') + source + '_details') }}</p>
+        <p class="text-sm italic mb-3" v-if="!label">{{ t((this.locale ? this.locale : 'statistics.') + source + '_details') }}</p>
 
         <span class="absolute bottom-1 right-2 text-xs" v-if="time">{{ numberFormat(time, false, false) }}ms</span>
 
@@ -97,7 +97,9 @@ export default {
         locale: {
             type: String,
         },
-
+        label: {
+            type: String,
+        },
         search: {
             type: String,
         },
@@ -116,10 +118,19 @@ export default {
         shown() {
             if (!this.search) return true;
 
-            const title = this.t('statistics.' + this.source).toLowerCase(),
+            const title = this.title.toLowerCase(),
                 search = this.search.toLowerCase().trim();
 
             return !search || title.includes(search);
+        },
+        title() {
+            if (this.label) {
+                return this.label;
+            } else if (this.locale) {
+                return this.t(this.locale + this.source);
+            }
+
+            return this.t('statistics.' + this.source);
         }
     },
     data() {

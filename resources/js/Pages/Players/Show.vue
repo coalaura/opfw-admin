@@ -431,10 +431,25 @@
                 <StatisticsTable source="bans" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
                 <StatisticsTable source="notes" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
                 <StatisticsTable source="helpful" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
-                <StatisticsTable source="staff" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
-                <StatisticsTable source="staff_pm" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
-                <StatisticsTable source="noclip" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
-                <StatisticsTable source="spectate" locale="players.show.source_" :currency="false" :resolve="resolveStaffStatistics" />
+
+                <div class="border-t-2 border-gray-500 my-6"></div>
+
+                <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
+                    <h2 class="text-lg mb-1">
+                        {{ t("players.show.staff_commands") }}
+                    </h2>
+
+                    <input class="block w-full px-4 py-2 bg-gray-200 border rounded dark:bg-gray-600" v-model="statisticsSearch" type="text" placeholder="/revive" />
+                </div>
+
+                <StatisticsTable source="armor_self" label="/body_armor (self)" :currency="false" :resolve="resolveStaffStatistics" :search="statisticsSearch" />
+                <StatisticsTable source="armor" label="/body_armor (other)" :currency="false" :resolve="resolveStaffStatistics" :search="statisticsSearch" />
+                <StatisticsTable source="noclip" label="/noclip" :currency="false" :resolve="resolveStaffStatistics" :search="statisticsSearch" />
+                <StatisticsTable source="revive_self" label="/revive (self)" :currency="false" :resolve="resolveStaffStatistics" :search="statisticsSearch" />
+                <StatisticsTable source="revive" label="/revive (other)" :currency="false" :resolve="resolveStaffStatistics" :search="statisticsSearch" />
+                <StatisticsTable source="spectate" label="/spectate" :currency="false" :resolve="resolveStaffStatistics" :search="statisticsSearch" />
+                <StatisticsTable source="staff" label="/staff" :currency="false" :resolve="resolveStaffStatistics" :search="statisticsSearch" />
+                <StatisticsTable source="staff_pm" label="/staff_pm" :currency="false" :resolve="resolveStaffStatistics" :search="statisticsSearch" />
             </template>
 
             <template #actions>
@@ -1859,6 +1874,7 @@ export default {
             showingUserVariables: false,
 
             isShowingStaffStatistics: false,
+            statisticsSearch: '',
             staffStatistics: {}
         }
     },
