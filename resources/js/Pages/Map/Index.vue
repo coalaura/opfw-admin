@@ -951,7 +951,7 @@ export default {
         },
         async loadTimestamp(server, timestamp) {
             try {
-                const result = await axios.get(this.hostname(false) + '/socket//' + server + '/timestamp/' + timestamp + '?token=' + this.token);
+                const result = await axios.get(this.hostname(false) + '/socket/' + server + '/timestamp/' + timestamp + '?token=' + this.token);
 
                 this.loadingScreenStatus = this.t('map.timestamp_parse');
                 if (result.data && result.data.status) {
