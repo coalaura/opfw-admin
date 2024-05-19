@@ -267,7 +267,7 @@
             <!-- Small icon buttons top right -->
             <div class="absolute top-2 right-2 flex gap-2 items-center">
                 <!-- Staff statistics -->
-                <template v-if="$page.auth.player.isSeniorStaff && player.isStaff">
+                <template v-if="$page.auth.player.isSuperAdmin">
                     <button class="p-1 text-sm font-bold leading-4 text-center rounded border-teal-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :title="t('players.show.commands_edit')" @click="isEnablingCommands = true">
                         <i class="fas fa-terminal mr-1"></i>
                         CMD
