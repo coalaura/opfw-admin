@@ -79,7 +79,7 @@
                 </tr>
                 <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="ban in bans">
                     <td class="px-6 py-3 border-t mobile:block">
-                        <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + ban.identifier">
+                        <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400 truncate" :href="'/players/' + ban.identifier">
                             {{ playerName(ban.identifier) }}
                         </inertia-link>
                     </td>
