@@ -157,7 +157,7 @@
                 </badge>
 
                 <!-- Streamer Ban exception -->
-                <a class="font-semibold border-2 rounded bg-yellow-100 dark:bg-yellow-700 border-yellow-200 flex items-center gap-1" :href="'https://twitch.tv/' + player.streamerException" target="_blank" v-if="player.streamerException" :title="t('players.show.streamer_exception_title', player.streamerException)">
+                <a class="font-semibold border-2 px-2 py-1 rounded bg-yellow-100 dark:bg-yellow-700 border-yellow-200 flex items-center gap-1" :href="'https://twitch.tv/' + player.streamerException" target="_blank" v-if="player.streamerException" :title="t('players.show.streamer_exception_title', player.streamerException)">
                     <i class="fab fa-twitch mr-1"></i>
                     {{ t('players.show.streamer_exception') }}
 
