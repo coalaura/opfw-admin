@@ -39,7 +39,15 @@
                     </tr>
 
                     <tr v-for="(player, license) in points" :key="license" class="odd:bg-gray-200 dark:odd:bg-gray-500" :class="{'border-2 border-gray-400': license === $page.auth.player.licenseIdentifier}">
-                        <td class="italic px-4 py-1.5">{{ player.name }}</td>
+                        <td class="italic px-4 py-1.5">
+                            <a :href="`/players/${license}`" target="_blank">
+                                {{ player.name }}
+
+                                <span class="font-semibold" v-if="status[license]">
+                                    [{{ status[license].source }}]
+                                </span>
+                            </a>
+                        </td>
 
                         <td class="px-4 py-1.5 text-center" colspan="8" v-if="isLoading">
                             <i class="fas fa-spinner animate-spin"></i>
@@ -65,7 +73,9 @@ export default {
     },
     data() {
         return {
-            isLoading: false
+            isLoading: false,
+
+            status: {}
         }
     },
     methods: {
@@ -81,9 +91,20 @@ export default {
                     preserveScroll: true,
                     only: ['points'],
                 });
+
+                this.updateStatus();
             } catch (e) { }
 
             this.isLoading = false;
+        },
+        async updateStatus() {
+            const identifiers = Object.keys(this.points);
+
+            if (identifiers) {
+                this.status = await this.requestData("/online/" + identifiers);
+            } else {
+                this.status = {};
+            }
         },
         getColorForPoints(points) {
             if (typeof points === 'number') {
@@ -100,5 +121,8 @@ export default {
             return this.$moment.utc().subtract(week, 'weeks').day("Monday").format('Do MMM');
         }
     },
+    mounted() {
+        this.updateStatus();
+    }
 }
 </script>
