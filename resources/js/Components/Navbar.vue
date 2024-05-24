@@ -533,33 +533,36 @@ export default {
                     const parts = socketInfo.split("\n\n"),
                         now = new Date();
 
+                    let info = socketInfo
+
                     if (parts.length === 2) {
-                        this.socketInfo = parts[0].split('\n').map(info => {
-                            info = info.replace(/\(.+?\)$/m, match => {
+                        this.socketInfo = parts[0] + "\n\n" + parts[1].split('\n').toReversed().join('\n');
+                    }
+
+                    this.socketInfo = info.split('\n').map(line => {
+                        // Is it an info entry?
+                        if (line.match(/^[+-]/m)) {
+                            line = line.replace(/\(.+?\)$/m, match => {
                                 return `<span class="italic" title="${match.slice(1, -1)}">${match}</span>`
                             });
 
-                            return `<span class="${info.startsWith('+') ? 'text-green-300' : 'text-red-300'}">${info}</span>`;
-                        }).join('\n');
+                            return `<span class="${line.startsWith('+') ? 'text-green-300' : 'text-red-300'}">${line}</span>`;
+                        }
 
-                        this.socketInfo += "\n\n" + parts[1].split('\n').map(log => {
-                            // Format date
-                            log = log.replace(/^\[.+?]/m, match => {
-                                const m = moment(new Date(match.slice(1, -1)));
+                        // Format date
+                        line = line.replace(/^\[.+?]/m, match => {
+                            const m = moment(new Date(match.slice(1, -1)));
 
-                                return `<span class="opacity-60" title="${m.format("llll")} (${m.from(now)})">[${m.format('DD/MM/YYYY HH:mm:ss')}]</span>`;
-                            });
+                            return `<span class="opacity-60" title="${m.format("llll")} (${m.from(now)})">[${m.format('DD/MM/YYYY HH:mm:ss')}]</span>`;
+                        });
 
-                            // Format errors
-                            log = log.replace(/(?<=: ).+?$/gm, match => {
-                                return `<span class="italic">${match}</span>`;
-                            })
+                        // Format errors
+                        line = line.replace(/(?<=: ).+?$/gm, match => {
+                            return `<span class="italic">${match}</span>`;
+                        })
 
-                            return log;
-                        }).toReversed().join('\n');
-                    } else {
-                        this.socketInfo = socketInfo;
-                    }
+                        return line;
+                    }).join('\n');
 
                     this.socketTime = time;
                 }
