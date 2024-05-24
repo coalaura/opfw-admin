@@ -523,7 +523,10 @@
         "streamer_many": "Bored? Go on now, take a gander at these here {0} streamers!",
         "streamer_title": "Actuh Streamers",
         "minesweeper": "Minesweepuh",
-        "refresh_discord": "Refresh Discord, y'all."
+        "refresh_discord": "Refresh Discord, y'all.",
+        "socket_info": "Sockit Info",
+        "socket_info_failed": "Failed to fetch sockit info.",
+        "socket_collecting": "Collectin' sockit info..."
     },
     "pagination": {
         "previous": "Aforehand",

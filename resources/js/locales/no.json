@@ -523,7 +523,10 @@
         "streamer_many": "Kjeder du deg? Ta en titt på disse {0} streamerne!",
         "streamer_title": "Aktive Streamere",
         "minesweeper": "Minerydder",
-        "refresh_discord": "Oppdater Discord"
+        "refresh_discord": "Oppdater Discord",
+        "socket_info": "Sokkelinfo",
+        "socket_info_failed": "Kunne ikke hente sokkelinfo.",
+        "socket_collecting": "Samler sokkelinfo..."
     },
     "pagination": {
         "previous": "Forrige",

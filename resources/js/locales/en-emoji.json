@@ -523,7 +523,10 @@
         "streamer_many": "😒❓✅👀👆🕺💻🎥🕹️!",
         "streamer_title": "🟢🎥🕹️👥",
         "minesweeper": "💣🧹✨",
-        "refresh_discord": "🔄 Discord"
+        "refresh_discord": "🔄 Discord",
+        "socket_info": "🔌 ℹ️",
+        "socket_info_failed": "❌ 🔄 🔌 ℔",
+        "socket_collecting": "🔍 🔌 ℔..."
     },
     "pagination": {
         "previous": "⬅️",

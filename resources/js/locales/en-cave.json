@@ -523,7 +523,10 @@
         "streamer_many": "Uh? Look-see many moving picture persons!",
         "streamer_title": "Active Streamers not exist in Caveman Speak, closest translation: \"Fire alive picture magic show-ers\"",
         "minesweeper": "Rock-Boom Find Game",
-        "refresh_discord": "Make magic talking rock new again"
+        "refresh_discord": "Make magic talking rock new again",
+        "socket_info": "Socket Thing",
+        "socket_info_failed": "Get socket thing no work.",
+        "socket_collecting": "Grabbing socket stuff..."
     },
     "pagination": {
         "previous": "Before",

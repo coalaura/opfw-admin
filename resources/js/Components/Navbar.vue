@@ -83,6 +83,11 @@
                             {{ t('nav.debug_info') }}
                         </button>
 
+                        <button @click="showSocketInfo" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" v-if="$page.auth.player.isRoot">
+                            <i class="fas fa-socks mr-1"></i>
+                            {{ t('nav.socket_info') }}
+                        </button>
+
                         <a href="/settings" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500">
                             <i class="fas fa-cogs mr-1"></i>
                             {{ t('settings.title') }}
@@ -170,6 +175,36 @@
 
             <template #actions>
                 <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showingDebugInfo = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
+
+        <modal :show.sync="showingSocketInfo" class="relative" extraClass="max-w-large">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('nav.socket_info') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div v-if="socketTime" class="absolute top-1 right-2 text-sm">{{ socketTime }}ms</div>
+
+                <p v-if="loadingSocket" class="py-2 text-center text-xl">
+                    <i class="fas fa-spinner animate-spin mr-2"></i>
+                    {{ t("nav.socket_collecting") }}
+                </p>
+
+                <p v-else-if="!socketInfo" class="py-2 text-center text-xl">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    {{ t("nav.socket_info_failed") }}
+                </p>
+
+                <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm" v-else v-html="socketInfo"></pre>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showingSocketInfo = false">
                     {{ t('global.close') }}
                 </button>
             </template>
@@ -309,6 +344,11 @@ export default {
             showingDebugInfo: false,
             debugInfo: false,
             debugTime: false,
+
+            loadingSocket: false,
+            showingSocketInfo: false,
+            socketInfo: false,
+            socketTime: false,
 
             showingWorldTime: false,
             timezones: timezones,
@@ -470,6 +510,64 @@ export default {
             }
 
             this.loadingDebug = false;
+        },
+        async showSocketInfo() {
+            if (this.loadingSocket) return;
+
+            this.hideContext();
+
+            this.loadingSocket = true;
+            this.showingSocketInfo = true;
+
+            this.socketTime = false;
+            this.socketInfo = false;
+
+            try {
+                const start = Date.now();
+
+                const socketInfo = await this.requestStatic('/health');
+
+                const time = Date.now() - start;
+
+                if (socketInfo) {
+                    const parts = socketInfo.split("\n\n"),
+                        now = new Date();
+
+                    if (parts.length === 2) {
+                        this.socketInfo = parts[0].split('\n').map(info => {
+                            info = info.replace(/\(.+?\)$/m, match => {
+                                return `<span class="italic" title="${match.slice(1, -1)}">${match}</span>`
+                            });
+
+                            return `<span class="${info.startsWith('+') ? 'text-green-300' : 'text-red-300'}">${info}</span>`;
+                        }).join('\n');
+
+                        this.socketInfo += "\n\n" + parts[1].split('\n').map(log => {
+                            // Format date
+                            log = log.replace(/^\[.+?]/m, match => {
+                                const m = moment(new Date(match.slice(1, -1)));
+
+                                return `<span class="opacity-60" title="${m.format("llll")} (${m.from(now)})">[${m.format('DD/MM/YYYY HH:mm:ss')}]</span>`;
+                            });
+
+                            // Format errors
+                            log = log.replace(/(?<=: ).+?$/gm, match => {
+                                return `<span class="italic">${match}</span>`;
+                            })
+
+                            return log;
+                        }).toReversed().join('\n');
+                    } else {
+                        this.socketInfo = socketInfo;
+                    }
+
+                    this.socketTime = time;
+                }
+            } catch (e) {
+                console.error(e);
+            }
+
+            this.loadingSocket = false;
         },
         async updateServerStatus() {
             this.serverStatusLoading = true;

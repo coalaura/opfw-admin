@@ -523,7 +523,10 @@
         "streamer_many": "Marooned on t' island o' dullness? Lay yer gaze upon these {0} swashbucklers who be streamin'!",
         "streamer_title": "Live Buccaneers",
         "minesweeper": "Minehunter",
-        "refresh_discord": "Swab th' deck o' Discord"
+        "refresh_discord": "Swab th' deck o' Discord",
+        "socket_info": "Socket Tidings",
+        "socket_info_failed": "Failed t' plunder socket tidings.",
+        "socket_collecting": "Harvestin' socket info..."
     },
     "pagination": {
         "previous": "Avast!",

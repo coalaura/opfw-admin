@@ -523,7 +523,10 @@
         "streamer_many": "Bowd? Chek out theses {0} stweamews uwu!",
         "streamer_title": "Active Stweamews",
         "minesweeper": "Minesweepamwu",
-        "refresh_discord": "Wefwesh Diswowd"
+        "refresh_discord": "Wefwesh Diswowd",
+        "socket_info": "Socky Info",
+        "socket_info_failed": "Faiwed to fetch socky info.",
+        "socket_collecting": "Cowwecting socky info..."
     },
     "pagination": {
         "previous": "Pwevious",

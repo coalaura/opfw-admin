@@ -19,10 +19,15 @@ const Socket = {
             try {
                 const data = await axios.get(url);
 
-                if (data.data && data.data.status) {
-                    const value = data.data.data;
+                const contentType = data.headers['content-type'];
 
-                    return value;
+                // Its a text response
+                if (contentType && contentType.indexOf('text/plain') !== -1) {
+                    return data.data;
+                }
+
+                if (data.data && data.data.status) {
+                    return data.data.data;
                 } else {
                     return false;
                 }

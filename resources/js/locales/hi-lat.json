@@ -523,7 +523,10 @@
         "streamer_many": "Ubaasi lage? In {0} streamers ko dekho!",
         "streamer_title": "Sakriya Streamers",
         "minesweeper": "Baroodi Surangon Ka Khel",
-        "refresh_discord": "Discord ko refresh karo"
+        "refresh_discord": "Discord ko refresh karo",
+        "socket_info": "Soket Jaankari",
+        "socket_info_failed": "Soket jaankari lene mein asafal.",
+        "socket_collecting": "Soket jaankari ekatrit kar raha hai..."
     },
     "pagination": {
         "previous": "Pichhla",
