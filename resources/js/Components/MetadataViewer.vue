@@ -77,7 +77,10 @@ const KnownTypes = {
 };
 
 const CustomPreProcessors = {
-    "trace": data => data.split("\n"),
+    "trace": data => {
+        console.log(data, data.split("\n"));
+        return data.split("\n");
+    },
     "modifications": data => data.split("\n"),
 
     "changes": data => {
@@ -184,15 +187,13 @@ export default {
                         continue;
                     }
 
-                    const wasObject = typeof value === "object";
-
                     if (key in CustomPreProcessors) {
                         value = CustomPreProcessors[key](value);
                     } else if (key in CustomFormatters && value) {
                         value = CustomFormatters[key](value);
                     }
 
-                    if (wasObject) {
+                    if (typeof value === "object") {
                         const label = key + (Array.isArray(value) ? ` (${value.length})` : "");
 
                         metadataJSON.push({
