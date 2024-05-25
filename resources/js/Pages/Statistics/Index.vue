@@ -99,7 +99,15 @@
                     </div>
                 </div>
 
-                <LineChart :chartData="moneyLogData" v-if="moneyLogData"></LineChart>
+                <div class="relative min-h-base" v-if="moneyLogData || moneyLogLoading">
+                    <LineChart :chartData="moneyLogData" v-if="moneyLogData"></LineChart>
+
+                    <div class="absolute top-0 left-0 right-0 bottom-0 backdrop-blur-md" v-if="moneyLogLoading">
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            <i class="fas fa-spinner animate-spin text-xl"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="w-full border-t border-gray-500 mb-4"></div>
@@ -159,6 +167,7 @@ export default {
             moneyLogTypes: [],
             moneyLogStyles: [],
             moneyLogAbort: false,
+            moneyLogLoading: false,
             moneyLogData: false
         }
     },
@@ -192,6 +201,7 @@ export default {
                 this.moneyLogAbort.abort();
             }
 
+            this.moneyLogLoading = true;
             this.moneyLogAbort = new AbortController();
 
             try {
@@ -215,8 +225,14 @@ export default {
                 } else {
                     this.moneyLogData = false;
                 }
+
+                this.moneyLogLoading = false;
             } catch (e) {
                 this.moneyLogData = false;
+
+                if (e.message !== "canceled") {
+                    this.moneyLogLoading = false;
+                }
             }
         },
         async loadEconomyStatistics() {

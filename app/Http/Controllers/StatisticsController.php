@@ -243,6 +243,7 @@ class StatisticsController extends Controller
                 $chart['datasets'][$i]['data'][] = $entry[$type] ?? 0;
             }
         }
+        sleep(5);
 
         return $this->json(true, [
             'chart' => $chart,

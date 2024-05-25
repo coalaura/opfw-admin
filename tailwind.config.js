@@ -90,7 +90,8 @@ module.exports = {
                 'base':    '24px'
             },
             minHeight: {
-                '50': '50px'
+                '50': '50px',
+                'base': '10rem'
             },
             maxWidth: {
                 '56':    '14rem',
