@@ -196,6 +196,7 @@ export default {
 
             try {
                 const response = await axios.post('/statistics/money', {
+                    signal: this.moneyLogAbort.signal,
                     types: this.moneyLogTypes
                 }),
                     data = response.data;
