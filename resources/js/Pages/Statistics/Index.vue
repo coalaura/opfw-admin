@@ -218,8 +218,6 @@ export default {
             } catch (e) {
                 this.moneyLogData = false;
             }
-
-            this.moneyLogAbort = false;
         },
         async loadEconomyStatistics() {
             if (this.isLoading || this.economy) return;
