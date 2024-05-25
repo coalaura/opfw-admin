@@ -23,6 +23,8 @@ const Theme = {
 			}
 
 			refreshTheme();
+
+			Vue.prototype.$bus.$emit('themeChanged');
 		};
 
 		Vue.prototype.isDarkMode = () => darkMode;

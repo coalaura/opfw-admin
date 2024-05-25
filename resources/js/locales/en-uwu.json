@@ -347,7 +347,9 @@
         "bus_revenue": "Bus Dwivew Wevenue",
         "bus_revenue_details": "Combwined wevenue fwom aww money eawned thwough the bus dwivew job.",
         "found_items": "Fouwnd Items on Gwound",
-        "found_items_details": "Combinyed wevenue fwom aww items fouwnd with a magnyifying gwass."
+        "found_items_details": "Combinyed wevenue fwom aww items fouwnd with a magnyifying gwass.",
+        "money_logs": "Muney Wogs",
+        "money_logs_details": "Cumpawe diffewent muney wogs in a gwaph fow the wast 30 days."
     },
     "map": {
         "title": "Wive-Map UwU",

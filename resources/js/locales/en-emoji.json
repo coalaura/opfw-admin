@@ -347,7 +347,9 @@
         "bus_revenue": "🚌🚍💼💵",
         "bus_revenue_details": "🔗💵🚌🚍👨‍✈️👩‍✈️💼💸",
         "found_items": "🔍👀🎁🌍",
-        "found_items_details": "🔍💰💼🤝📈👓🎁"
+        "found_items_details": "🔍💰💼🤝📈👓🎁",
+        "money_logs": "💵📜",
+        "money_logs_details": "🔍 📊💵📜 📈 📆 3️⃣0️⃣ ➡️."
     },
     "map": {
         "title": "🌍 Live-Map",

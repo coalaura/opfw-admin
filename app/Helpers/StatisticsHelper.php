@@ -230,6 +230,16 @@ class StatisticsHelper
         ];
     }
 
+    // Specific Money Statistics
+    public static function collectSpecificMoneyStatistics(array $types): array
+    {
+        $cleanTypes = implode(', ', array_filter(array_map(function($type) {
+            return '"' . preg_replace('/[^\w-]/', '', $type) . '"';
+        }, $types)));
+
+        return DB::select("SELECT details, COUNT(id) as count, SUM(amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from money_logs WHERE timestamp > DATE_SUB(NOW(), INTERVAL 30 DAY) AND details IN ({$cleanTypes}) GROUP BY date, details ORDER BY timestamp DESC");
+    }
+
     public static function collectUserLogsCountStatistics(string ...$action): array
     {
         if (sizeof($action) === 1) {

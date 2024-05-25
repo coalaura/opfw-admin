@@ -347,7 +347,9 @@
         "bus_revenue": "Bas Chalak Ke Aamdani",
         "bus_revenue_details": "Sabhi bas chalak ke kaam se arjit sabhi aamdani ka yog.",
         "found_items": "Zameen Par Payi Gayi Vastuen",
-        "found_items_details": "Magnifying glass se dhundhi gayi sabhi vastuen ki samahit aay."
+        "found_items_details": "Magnifying glass se dhundhi gayi sabhi vastuen ki samahit aay.",
+        "money_logs": "Paisa Log",
+        "money_logs_details": "Pichhle 30 dino ke liye alag alag paisa log ko ek graph mein tulna kare."
     },
     "map": {
         "title": "Live-Naksha",

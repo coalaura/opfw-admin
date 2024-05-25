@@ -370,7 +370,9 @@
         "found_items_details": "Combined revenue from all items found with a magnifying glass.",
 
         "economy": "Economy Movements",
-        "economy_details": "Money movements grouped by type in the last 7 days."
+        "economy_details": "Money movements grouped by type in the last 7 days.",
+        "money_logs": "Money Logs",
+        "money_logs_details": "Compare different money logs in a graph for the last 30 days."
     },
     "map": {
         "title": "Live-Map",

@@ -347,7 +347,9 @@
         "bus_revenue": "Bus Driver Income",
         "bus_revenue_details": "Total income from all the cash made drivin' them buses.",
         "found_items": "Foun' Items on the Groun'",
-        "found_items_details": "Combin'd revenue from all items found with a magnifyin' glass."
+        "found_items_details": "Combin'd revenue from all items found with a magnifyin' glass.",
+        "money_logs": "Munny Logs",
+        "money_logs_details": "Compare diff'rent munny logs in a graph fer the last 30 days."
     },
     "map": {
         "title": "Active Map",

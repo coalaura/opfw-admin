@@ -347,7 +347,9 @@
         "bus_revenue": "Wheel-Box Go Man Bring-Shiny",
         "bus_revenue_details": "All shine-stones from wheel-box go work.",
         "found_items": "Found Things on Dirt",
-        "found_items_details": "Make all shiny-rock from things see-close with big-eye rock."
+        "found_items_details": "Make all shiny-rock from things see-close with big-eye rock.",
+        "money_logs": "Shiny Pebble Stacks",
+        "money_logs_details": "Look many shiny pebble stacks, draw hills on wall, last 30 suns."
     },
     "map": {
         "title": "Ooga-Map",

@@ -39,6 +39,9 @@ Vue.directive('linkified', linkify);
 const app = document.getElementById('app'),
     page = JSON.parse(app.dataset.page);
 
+// Create global event bus.
+Vue.prototype.$bus = new Vue();
+
 // Plugins.
 Vue.use(InertiaApp);
 Vue.use(Interceptor);
@@ -93,9 +96,6 @@ Vue.component('scoped-style', {
         return createElement('style', this.$slots.default)
     }
 });
-
-// Create global event bus.
-Vue.prototype.$bus = new Vue();
 
 // Create Vue.
 const vue = new Vue({

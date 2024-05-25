@@ -347,7 +347,9 @@
         "bus_revenue": "Booty Collected by the Bus Cap'n",
         "bus_revenue_details": "Total plunder from all doubloons amassed through steerin' the bus.",
         "found_items": "Booty Spotted 'pon the Deck",
-        "found_items_details": "Scurvy loot tally from all treasures spotted with a spyin' glass."
+        "found_items_details": "Scurvy loot tally from all treasures spotted with a spyin' glass.",
+        "money_logs": "Booty Ledgers",
+        "money_logs_details": "Contrast various booty ledgers on a chart fer th' last 30 days."
     },
     "map": {
         "title": "Sailin' Map",

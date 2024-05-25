@@ -347,7 +347,9 @@
         "bus_revenue": "Bussjåførinntekter",
         "bus_revenue_details": "Samlet inntekt fra alle penger tjent gjennom bussjåførjobben.",
         "found_items": "Funnet Gjenstander på Bakken",
-        "found_items_details": "Samlet inntekt fra alle gjenstander funnet med et forstørrelsesglass."
+        "found_items_details": "Samlet inntekt fra alle gjenstander funnet med et forstørrelsesglass.",
+        "money_logs": "Pengetransaksjonslogger",
+        "money_logs_details": "Sammenlign ulike pengetransaksjonslogger i et graf for de siste 30 dagene."
     },
     "map": {
         "title": "Levende-kart",

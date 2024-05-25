@@ -23,7 +23,7 @@
 
             <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
                 <div class="flex">
-                    <h2 class="text-lg flex gap-2" @click="loadEconomyStatistics()" :class="{'cursor-pointer': !isLoading && !economy}">
+                    <h2 class="text-lg flex gap-2" @click="loadEconomyStatistics()" :class="{ 'cursor-pointer': !isLoading && !economy }">
                         {{ t('statistics.economy') }}
                     </h2>
                 </div>
@@ -80,6 +80,30 @@
 
             <div class="w-full border-t border-gray-500 mb-4"></div>
 
+            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
+                <div class="flex">
+                    <h2 class="text-lg flex gap-2">
+                        {{ t('statistics.money_logs') }}
+                    </h2>
+                </div>
+
+                <p class="text-sm italic mb-3">{{ t('statistics.money_logs_details') }}</p>
+
+                <div class="flex gap-x-3 gap-y-1 flex-wrap items-center mb-3">
+                    <input class="block w-52 px-2 py-0.5 border-0 border-b border-gray-500 bg-gray-300 dark:bg-gray-700" v-model="moneyLogType" type="text" placeholder="hourly-sal..." @keyup.enter="addMoneyLogType()" />
+
+                    <div v-for="(typ, idx) in moneyLogTypes" :key="typ" :style="moneyLogStyles[idx]" class="flex gap-2 items-center border-gray-500 bg-gray-300 dark:bg-gray-700 rounded-sm px-2 py-0.5">
+                        <span>{{ typ }}</span>
+
+                        <i class="fas fa-times cursor-pointer" @click="removeMoneyLogType(typ)"></i>
+                    </div>
+                </div>
+
+                <LineChart :chartData="moneyLogData" v-if="moneyLogData"></LineChart>
+            </div>
+
+            <div class="w-full border-t border-gray-500 mb-4"></div>
+
             <StatisticsTable source="airlifts" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="bills" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="bus_revenue" tag="money" :currency="true" :search="search" />
@@ -115,11 +139,13 @@
 <script>
 import Layout from './../../Layouts/App';
 import StatisticsTable from '../../Components/StatisticsTable.vue';
+import LineChart from '../../Components/Charts/LineChart.vue';
 
 export default {
     layout: Layout,
     components: {
         StatisticsTable,
+        LineChart,
     },
     data() {
         return {
@@ -127,10 +153,72 @@ export default {
             search: "",
 
             economy: false,
-            economySearch: ""
+            economySearch: "",
+
+            moneyLogType: "",
+            moneyLogTypes: [],
+            moneyLogStyles: [],
+            moneyLogAbort: false,
+            moneyLogData: false
         }
     },
     methods: {
+        addMoneyLogType() {
+            const type = this.moneyLogType;
+
+            if (this.moneyLogTypes.includes(type)) {
+                return;
+            }
+
+            this.moneyLogTypes.push(type);
+            this.moneyLogStyles.push("background: rgba(128, 128, 128, 0.3); border: 1px solid rgba(128, 128, 128, 1.0);");
+
+            this.moneyLogType = "";
+
+            this.loadMoneyLogs();
+        },
+        removeMoneyLogType(type) {
+            const index = this.moneyLogTypes.indexOf(type);
+
+            if (index > -1) {
+                this.moneyLogTypes.splice(index, 1);
+                this.moneyLogStyles.splice(index, 1);
+
+                this.loadMoneyLogs();
+            }
+        },
+        async loadMoneyLogs() {
+            if (this.moneyLogAbort) {
+                this.moneyLogAbort.abort();
+            }
+
+            this.moneyLogAbort = new AbortController();
+
+            try {
+                const response = await axios.post('/statistics/money', {
+                    types: this.moneyLogTypes
+                }),
+                    data = response.data;
+
+                if (data.status) {
+                    this.moneyLogData = data.data.chart;
+
+                    this.moneyLogTypes = data.data.types;
+
+                    for (let i = 0; i < this.moneyLogTypes.length; i++) {
+                        const dataset = this.moneyLogData.datasets[i];
+
+                        this.moneyLogStyles[i] = `background: ${dataset.backgroundColor}; border: 1px solid ${dataset.borderColor}`;
+                    }
+                } else {
+                    this.moneyLogData = false;
+                }
+            } catch (e) {
+                this.moneyLogData = false;
+            }
+
+            this.moneyLogAbort = false;
+        },
         async loadEconomyStatistics() {
             if (this.isLoading || this.economy) return;
 

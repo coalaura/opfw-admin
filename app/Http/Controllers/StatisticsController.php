@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\CacheHelper;
 use App\Helpers\StatisticsHelper;
+use App\MoneyLog;
 use App\Player;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,6 +12,7 @@ use Inertia\Response;
 
 class StatisticsController extends Controller
 {
+    private $colorHueStart;
 
     /**
      * Renders the home page.
@@ -38,7 +40,7 @@ class StatisticsController extends Controller
 
         if (!$result) {
             switch ($source) {
-                // Currency statistics
+                    // Currency statistics
                 case 'pdm':
                     $result = StatisticsHelper::collectPDMStatistics();
                     break;
@@ -94,7 +96,7 @@ class StatisticsController extends Controller
                     $result = StatisticsHelper::collectFoundItemsStatistics();
                     break;
 
-                // Non currency statistics
+                    // Non currency statistics
                 case 'robberies':
                     $result = StatisticsHelper::collectRobberiesStatistics();
                     break;
@@ -123,7 +125,7 @@ class StatisticsController extends Controller
                     $result = StatisticsHelper::collectDumpsterStatistics();
                     break;
 
-                // Other statistics
+                    // Other statistics
                 case 'economy':
                     $result = StatisticsHelper::collectGenericEconomyStatistics();
                     break;
@@ -172,4 +174,92 @@ class StatisticsController extends Controller
         ]);
     }
 
+    public function moneyLogs(Request $request)
+    {
+        $types = $request->input('types', []);
+
+        if (!is_array($types) || empty($types)) {
+            return $this->json(false, null, 'Invalid types');
+        }
+
+        $types = array_values(array_filter(array_map(function ($type) {
+            return preg_replace('/[^\w-]/', '', $type);
+        }, $types)));
+
+        $data = StatisticsHelper::collectSpecificMoneyStatistics($types);
+
+        if (empty($data)) {
+            return $this->json(false, null, 'No data found');
+        }
+
+        // Map the data
+        $map = [];
+
+        foreach ($data as $value) {
+            $date = strtotime($value->date);
+
+            $details = $value->details;
+            $count = $value->count;
+            $amount = $value->amount;
+
+            if (!isset($map[$date])) {
+                $map[$date] = [];
+            }
+
+            if (!isset($map[$date][$details])) {
+                $map[$date][$details] = round($amount / $count);
+            }
+        }
+
+        $times = array_keys($map);
+        $min = min($times);
+        $max = max($times);
+
+        rsort($times);
+
+        $chart = [
+            'datasets'   => [],
+            'labels' => [],
+            'names'  => $types,
+        ];
+
+        for ($t = $min; $t <= $max; $t += 86400) {
+            $date = date('Y-m-d', $t);
+
+            $chart['labels'][] = $date;
+
+            $entry = $map[$t] ?? [];
+
+            foreach ($types as $i => $type) {
+                if (sizeof($chart['datasets']) <= $i) {
+                    $chart['datasets'][$i] = [
+                        'label' => $type,
+                        'data'  => [],
+                        'backgroundColor' => $this->color($i, sizeof($types), 0.3),
+                        'borderColor' => $this->color($i, sizeof($types), 1),
+                    ];
+                }
+
+                $chart['datasets'][$i]['data'][] = $entry[$type] ?? 0;
+            }
+        }
+
+        return $this->json(true, [
+            'chart' => $chart,
+            'types' => $types,
+        ]);
+    }
+
+    private function color($index, $total, $alpha): string
+    {
+        if (!isset($this->colorHueStart)) {
+            $this->colorHueStart = rand(0, 360);
+        }
+
+        $step = 360 / ($total + 1);
+
+        $hue = ($this->colorHueStart + ($index * $step)) % 360;
+
+        return "hsla({$hue}, 70%, 65%, {$alpha})";
+    }
 }
