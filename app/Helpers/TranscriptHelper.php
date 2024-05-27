@@ -10,6 +10,9 @@ class TranscriptHelper
     {
         if (empty($warning->message)) return;
 
+        // For some weird ass reason, tickettool now blocks bots using cloudflare, completely breaking this feature :(
+        if (true) return;
+
         /**
          * Old ticket-tool links
          * https://tickettool.xyz/direct?url=https://cdn.discordapp.com/...
@@ -67,7 +70,7 @@ class TranscriptHelper
         $hash = md5($id . '-' . $msgId);
         $hash = substr($hash, 0, 3) . substr($hash, -3);
 
-        $relative = '/_transcripts/'. $id . '-' . $hash . '.html';
+        $relative = '/_transcripts/' . $id . '-' . $hash . '.html';
         $path = public_path($relative);
 
         if (file_exists($path)) {
