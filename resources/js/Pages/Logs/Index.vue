@@ -666,7 +666,7 @@ export default {
 				const start = pMatch.substring(8, 12),
 					end = pMatch.substring(pMatch.length - 4);
 
-				return `<span class="copy_title text-gray-700 dark:text-gray-300 cursor-pointer" title="${pMatch}">${start}...${end}</span>`;
+				return `<span class="copy_title text-gray-700 dark:text-gray-300 cursor-pointer license_id" title="${pMatch}">${start}...${end}</span>`;
 			});
 
 			details = details.replace(/URL `(.+?)`/gm, (pMatch, pUrl) => {
@@ -734,6 +734,17 @@ export default {
 			$(this).data('timeout', setTimeout(() => {
 				$(this).text(original);
 			}, 2000));
+		});
+
+		$('body').on('mousedown', '.license_id', function (e) {
+			// Middle mouse
+			if (e.which !== 2) {
+				return;
+			}
+
+			const license = $(this).attr('title');
+
+			window.open(`/players/${license}`, '_blank');
 		});
 
 		if (this.filters.before) {
