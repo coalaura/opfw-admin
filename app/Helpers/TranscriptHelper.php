@@ -74,13 +74,17 @@ class TranscriptHelper
             return $relative;
         }
 
-        $data = file_get_contents($cdn);
+        try {
+            $data = file_get_contents($cdn);
 
-        if (empty($data)) {
+            if (empty($data)) {
+                return null;
+            }
+
+            file_put_contents($path, $data);
+        } catch (\Exception $e) {
             return null;
         }
-
-        file_put_contents($path, $data);
 
         return $relative;
     }
