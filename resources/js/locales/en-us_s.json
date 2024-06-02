@@ -349,7 +349,9 @@
         "found_items": "Foun' Items on the Groun'",
         "found_items_details": "Combin'd revenue from all items found with a magnifyin' glass.",
         "money_logs": "Munny Logs",
-        "money_logs_details": "Compare diff'rent munny logs in a graph fer the last 30 days."
+        "money_logs_details": "Compare diff'rent munny logs in a graph fer the last 30 days.",
+        "ls_customs": "LS Customs Purchases",
+        "ls_customs_details": "Combined revenue from all LS Customs purchases."
     },
     "map": {
         "title": "Active Map",

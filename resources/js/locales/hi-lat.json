@@ -349,7 +349,9 @@
         "found_items": "Zameen Par Payi Gayi Vastuen",
         "found_items_details": "Magnifying glass se dhundhi gayi sabhi vastuen ki samahit aay.",
         "money_logs": "Paisa Log",
-        "money_logs_details": "Pichhle 30 dino ke liye alag alag paisa log ko ek graph mein tulna kare."
+        "money_logs_details": "Pichhle 30 dino ke liye alag alag paisa log ko ek graph mein tulna kare.",
+        "ls_customs": "LS Customs Kharidari",
+        "ls_customs_details": "Sabhi LS Customs kharidari se prapt aay ka sanyojan."
     },
     "map": {
         "title": "Live-Naksha",

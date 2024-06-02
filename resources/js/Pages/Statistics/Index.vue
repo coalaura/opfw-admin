@@ -126,6 +126,7 @@
             <StatisticsTable source="gem" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="impounds" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="joins" tag="amount" :currency="false" :search="search" />
+            <StatisticsTable source="ls_customs" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="material_vendor" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="mining_explosions" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="ooc" tag="amount" :currency="false" :search="search" />

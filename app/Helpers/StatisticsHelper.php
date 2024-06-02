@@ -198,6 +198,12 @@ class StatisticsHelper
         return self::collectStatistics("SELECT COUNT(id) as count, SUM(amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from money_logs WHERE details IN ('bus_driver_mission', 'bus-driver-mission') GROUP BY date ORDER BY timestamp DESC");
     }
 
+    // LS Customs revenue
+    public static function collectLSCustomsStatistics(): array
+    {
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM(amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from money_logs WHERE details 'ls-customs-purchase' GROUP BY date ORDER BY timestamp DESC");
+    }
+
     // Found items revenue
     public static function collectFoundItemsStatistics(): array
     {

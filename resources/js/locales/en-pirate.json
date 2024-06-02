@@ -349,7 +349,9 @@
         "found_items": "Booty Spotted 'pon the Deck",
         "found_items_details": "Scurvy loot tally from all treasures spotted with a spyin' glass.",
         "money_logs": "Booty Ledgers",
-        "money_logs_details": "Contrast various booty ledgers on a chart fer th' last 30 days."
+        "money_logs_details": "Contrast various booty ledgers on a chart fer th' last 30 days.",
+        "ls_customs": "LS Customs Booty",
+        "ls_customs_details": "Combined doubloons from all LS Customs plunderin'."
     },
     "map": {
         "title": "Sailin' Map",

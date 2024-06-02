@@ -95,6 +95,9 @@ class StatisticsController extends Controller
                 case 'found_items':
                     $result = StatisticsHelper::collectFoundItemsStatistics();
                     break;
+                case 'ls_customs':
+                    $result = StatisticsHelper::collectLSCustomsStatistics();
+                    break;
 
                     // Non currency statistics
                 case 'robberies':
