@@ -528,40 +528,39 @@ export default {
             try {
                 const start = Date.now();
 
-                const data = await this.requestStatic('/health');
+                const data = await this.requestStatic('/health', true),
+                    time = Date.now() - start;
 
-                const time = Date.now() - start;
+                const now = new Date(),
+                    info = data.info,
+                    logs = data.logs;
 
-                if (data) {
-                    const now = new Date(),
-                        info = data.info,
-                        logs = data.logs;
+                // Format info lines
+                this.socketInfo = info.split('\n').map(line => {
+                    line = line.replace(/\(.+?\)$/m, match => {
+                        return `<span class="italic" title="${match.slice(1, -1)}">${match}</span>`
+                    });
 
-                    // Format info lines
-                    this.socketInfo = info.split('\n').map(line => {
-                        line = line.replace(/\(.+?\)$/m, match => {
-                            return `<span class="italic" title="${match.slice(1, -1)}">${match}</span>`
-                        });
+                    return `<span class="${line.startsWith('+') ? 'text-green-300' : 'text-red-300'}">${line}</span>`;
+                }).join('\n');
 
-                        return `<span class="${line.startsWith('+') ? 'text-green-300' : 'text-red-300'}">${line}</span>`;
-                    }).join('\n');
+                // Format log lines
+                this.socketInfo += `\n\n<pre class="bg-black py-1 px-1.5 rounded-sm console">`;
+                this.socketInfo += logs.split('\n').map(line => {
+                    // Format date & ANSI codes
+                    return line.replace(/^(\[.+?])(.+?)$/m, (match, date, rest) => {
+                        const m = moment(new Date(date.slice(1, -1)));
 
-                    // Format log lines
-                    this.socketInfo += `\n\n<pre class="bg-black py-1 px-1.5 rounded-sm console">`;
-                    this.socketInfo += logs.split('\n').map(line => {
-                        // Format date & ANSI codes
-                        return line.replace(/^(\[.+?])(.+?)$/m, (match, date, rest) => {
-                            const m = moment(new Date(date.slice(1, -1)));
+                        return `<span class="muted" title="${m.format("llll")} (${m.from(now)})">[${m.format('DD/MM/YYYY HH:mm:ss')}]</span>` + this.ansi.toHtml(rest);
+                    });
+                }).join('\n');
+                this.socketInfo += '</pre>';
 
-                            return `<span class="muted" title="${m.format("llll")} (${m.from(now)})">[${m.format('DD/MM/YYYY HH:mm:ss')}]</span>` + this.ansi.toHtml(rest);
-                        });
-                    }).join('\n');
-                    this.socketInfo += '</pre>';
-
-                    this.socketTime = time;
-                }
+                this.socketTime = time;
             } catch (e) {
                 console.error(e);
+
+                this.socketInfo = `<span class="text-red-300">${e.message}</span>`;
             }
 
             this.loadingSocket = false;

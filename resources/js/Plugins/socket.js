@@ -2,7 +2,7 @@ const Socket = {
     async install(Vue, options) {
         let originUnavailable = false;
 
-        async function executeRequest(vue, type, route) {
+        async function executeRequest(vue, type, route, throwError) {
             if (originUnavailable) return null;
 
             route = route.replace(/^\/|\/$/, '');
@@ -29,6 +29,8 @@ const Socket = {
                 if (data.data && data.data.status) {
                     return data.data.data;
                 } else {
+                    if (throwError) throw new Error(data?.data?.error || 'Unknown error');
+
                     return false;
                 }
             } catch (e) {
@@ -41,6 +43,8 @@ const Socket = {
 
                     return null;
                 }
+
+                if (throwError) throw e;
 
                 return false;
             }
@@ -65,16 +69,16 @@ const Socket = {
             }
         };
 
-        Vue.prototype.requestData = async function (route) {
-            return await executeRequest(this, "data", route);
+        Vue.prototype.requestData = async function (route, throwError = false) {
+            return await executeRequest(this, "data", route, throwError);
         };
 
-        Vue.prototype.requestStatic = async function (route) {
-            return await executeRequest(this, "static", route);
+        Vue.prototype.requestStatic = async function (route, throwError = false) {
+            return await executeRequest(this, "static", route, throwError);
         };
 
-        Vue.prototype.requestMisc = async function (route) {
-            return await executeRequest(this, "misc", route);
+        Vue.prototype.requestMisc = async function (route, throwError = false) {
+            return await executeRequest(this, "misc", route, throwError);
         };
     },
 }
