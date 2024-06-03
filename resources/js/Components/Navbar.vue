@@ -302,6 +302,7 @@
 
 <script>
 import moment from 'moment';
+import Convert from 'ansi-to-html';
 import Icon from './Icon';
 import Modal from './Modal';
 
@@ -361,7 +362,9 @@ export default {
             banner: false,
 
             streamers: false,
-            showingStreamers: false
+            showingStreamers: false,
+
+            ansi: new Convert()
         }
     },
     computed: {
@@ -525,44 +528,35 @@ export default {
             try {
                 const start = Date.now();
 
-                const socketInfo = await this.requestStatic('/health');
+                const data = await this.requestStatic('/health');
 
                 const time = Date.now() - start;
 
-                if (socketInfo) {
-                    const parts = socketInfo.split("\n\n"),
-                        now = new Date();
+                if (data) {
+                    const now = new Date(),
+                        info = data.info,
+                        logs = data.logs;
 
-                    let info = socketInfo
-
-                    if (parts.length === 2) {
-                        this.socketInfo = parts[0] + "\n\n" + parts[1].split('\n').toReversed().join('\n');
-                    }
-
+                    // Format info lines
                     this.socketInfo = info.split('\n').map(line => {
-                        // Is it an info entry?
-                        if (line.match(/^[+-]/m)) {
-                            line = line.replace(/\(.+?\)$/m, match => {
-                                return `<span class="italic" title="${match.slice(1, -1)}">${match}</span>`
-                            });
-
-                            return `<span class="${line.startsWith('+') ? 'text-green-300' : 'text-red-300'}">${line}</span>`;
-                        }
-
-                        // Format date
-                        line = line.replace(/^\[.+?]/m, match => {
-                            const m = moment(new Date(match.slice(1, -1)));
-
-                            return `<span class="opacity-60" title="${m.format("llll")} (${m.from(now)})">[${m.format('DD/MM/YYYY HH:mm:ss')}]</span>`;
+                        line = line.replace(/\(.+?\)$/m, match => {
+                            return `<span class="italic" title="${match.slice(1, -1)}">${match}</span>`
                         });
 
-                        // Format errors
-                        line = line.replace(/(?<=: ).+?$/gm, match => {
-                            return `<span class="italic">${match}</span>`;
-                        })
-
-                        return line;
+                        return `<span class="${line.startsWith('+') ? 'text-green-300' : 'text-red-300'}">${line}</span>`;
                     }).join('\n');
+
+                    // Format log lines
+                    this.socketInfo += `\n\n<pre class="bg-black py-1 px-1.5 rounded-sm console">`;
+                    this.socketInfo += logs.split('\n').map(line => {
+                        // Format date & ANSI codes
+                        return line.replace(/^(\[.+?])(.+?)$/m, (match, date, rest) => {
+                            const m = moment(new Date(date.slice(1, -1)));
+
+                            return `<span class="muted" title="${m.format("llll")} (${m.from(now)})">[${m.format('DD/MM/YYYY HH:mm:ss')}]</span>` + this.ansi.toHtml(rest);
+                        });
+                    }).join('\n');
+                    this.socketInfo += '</pre>';
 
                     this.socketTime = time;
                 }
