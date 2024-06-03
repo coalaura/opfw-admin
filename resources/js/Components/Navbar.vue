@@ -558,8 +558,6 @@ export default {
 
                 this.socketTime = time;
             } catch (e) {
-                console.error(e);
-
                 this.socketInfo = `<span class="text-red-300">${e.message}</span>`;
             }
 
