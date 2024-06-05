@@ -414,7 +414,7 @@ class Player extends Model
 
     public function getSafePlayerName(): string
     {
-        return self::getFilteredPlayerName($this->player_name, $this->player_aliases, $this->license_identifier);
+        return self::getFilteredPlayerName($this->player_name ?? "", $this->player_aliases, $this->license_identifier);
     }
 
     public function getRecentPlaytime(int $weeks): int
