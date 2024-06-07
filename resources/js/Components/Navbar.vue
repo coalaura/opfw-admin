@@ -531,6 +531,10 @@ export default {
                 const data = await this.requestStatic('/health', true),
                     time = Date.now() - start;
 
+                if (!data || !data.info || !data.logs) {
+                    throw new Error('No data received: ' . JSON.stringify(data));
+                }
+
                 const now = new Date(),
                     info = data.info,
                     logs = data.logs;
