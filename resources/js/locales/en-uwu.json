@@ -971,7 +971,8 @@
             "show_link_finger": "Show accounties winked via fingewpwint",
             "multiple_bans": "Muwtipwe bawns",
             "multiple_bans_details": "Pwayew has {0} active bawns. Pwayews wif muwtipwe active bawns cawn't be scheduwed fow unban and have to be unbanned manyuawwy.",
-            "staff_commands": "Stawf Commands"
+            "staff_commands": "Stawf Commands",
+            "global_opfw_ban": "Gwobaw OP-FW Bawn UwU"
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

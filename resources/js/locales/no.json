@@ -981,7 +981,8 @@
             "show_link_finger": "Vis kontoer koblet til via fingeravtrykk",
             "multiple_bans": "Flere utestengelser",
             "multiple_bans_details": "Spilleren har {0} aktive utestengelser. Spillere med flere aktive utestengelser kan ikke planlegges for oppheving av utestengelse og må fjernes manuelt.",
-            "staff_commands": "Ansatte Kommandoer"
+            "staff_commands": "Ansatte Kommandoer",
+            "global_opfw_ban": "Global OP-FW-utestengelse"
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",

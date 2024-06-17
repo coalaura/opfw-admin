@@ -981,7 +981,8 @@
             "show_link_finger": "Angootha chhaap se judi accounts dikhayein",
             "multiple_bans": "Kayi prakar ke pratibandh",
             "multiple_bans_details": "Khiladi ke {0} sakriya pratibandh hain. Ek se adhik sakriya pratibandhon wale khiladiyon ko aniyamit roop se pratibandh mukt nahi kiya ja sakta aur unhe manually pratibandh mukt karna padega.",
-            "staff_commands": "Staff Aadesh"
+            "staff_commands": "Staff Aadesh",
+            "global_opfw_ban": "Vishwa OP-FW Pratibandh"
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",

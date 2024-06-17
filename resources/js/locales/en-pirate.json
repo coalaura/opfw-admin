@@ -971,7 +971,8 @@
             "show_link_finger": "Reveal scallywags tied with they thumb marks",
             "multiple_bans": "Plenty o' black spots",
             "multiple_bans_details": "Player be havin' {0} active black spots. Scallywags with a heap o' active black spots can't be marked fer settin' free an' must be freed by hand, arr!",
-            "staff_commands": "Crew Orders"
+            "staff_commands": "Crew Orders",
+            "global_opfw_ban": "Worldwide Order fer Plunderin' an' Fightin' Prohibition"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

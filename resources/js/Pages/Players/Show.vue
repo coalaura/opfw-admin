@@ -205,12 +205,12 @@
                     {{ t('players.show.unmute') }}
                 </button>
                 <!-- Unbanning -->
-                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="unbanPlayer()" v-if="player.isBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="unbanPlayer()" v-if="player.isBanned && !opfwBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
                     <i class="fas fa-lock-open"></i>
                     {{ t('players.show.unban') }}
                 </button>
                 <!-- Schedule Unban -->
-                <button class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" @click="isSchedulingUnban = true" v-if="player.isBanned && !player.ban.scheduled && uniqueBans === 1">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" @click="isSchedulingUnban = true" v-if="player.isBanned && !player.ban.scheduled && uniqueBans === 1 && !opfwBanned">
                     <i class="fas fa-calendar-day"></i>
                     {{ t('players.show.schedule_unban') }}
                 </button>
@@ -943,8 +943,11 @@
 
             <!-- Viewing -->
             <div class="mb-10">
-                <alert class="bg-danger dark:bg-dark-danger px-6 py-4 mb-4 relative" :class="{ 'border-2 border-red-800 bg-red-600': opfwBanned }" v-if="player.isBanned">
-                    <div v-if="opfwBanned" class="absolute top-0 left-0.5 text-sm font-semibold">{{ t('players.show.global_opfw_ban') }}</div>
+                <alert class="bg-danger dark:bg-dark-danger px-6 py-4 mb-4 relative" :class="{ 'border-2 border-red-900 bg-red-700 pt-5': opfwBanned }" v-if="player.isBanned">
+                    <div v-if="opfwBanned" class="absolute top-0.5 left-1 text-xxs font-semibold">
+                        <i class="fas fa-smoking-ban"></i>
+                        {{ t('players.show.global_opfw_ban') }}
+                    </div>
 
                     <div class="flex items-center justify-between mb-2">
                         <h2 class="text-lg font-semibold">

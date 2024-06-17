@@ -971,7 +971,8 @@
             "show_link_finger": "See Other-Hunters Touch-Mark Join",
             "multiple_bans": "Many no-plays",
             "multiple_bans_details": "Human with {0} no-plays now. Humans with many no-plays no get wait-list-freedom. Need hand-free from no-play by other.",
-            "staff_commands": "Stick Orders"
+            "staff_commands": "Stick Orders",
+            "global_opfw_ban": "\\\"World No-Allow OP-FW\\\""
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",
