@@ -944,7 +944,7 @@
             <!-- Viewing -->
             <div class="mb-10">
                 <alert class="bg-danger dark:bg-dark-danger px-6 py-4 mb-4 relative" :class="{ 'border-double border-4 border-red-400 !bg-red-800 pt-6': opfwBanned }" v-if="player.isBanned">
-                    <a v-if="opfwBanned" class="absolute top-0.5 left-1 text-xxs font-semibold" href="https://forms.gle/nr83BeJvFNHUhTfd7" target="_blank" title="OPFW Global Ban appeal form.">
+                    <a v-if="opfwBanned" class="absolute top-0.5 left-1 text-xxs font-semibold" :href="opfwBanned.appeal" target="_blank" title="OPFW Global Ban appeal form.">
                         {{ t('players.show.global_opfw_ban') }}
                     </a>
 
@@ -2352,6 +2352,8 @@ export default {
 
                 if (response.data && response.data.banned) {
                     this.opfwBanned = response.data.ban;
+
+                    this.opfwBanned.appeal = `https://docs.google.com/forms/d/e/1FAIpQLSeZZnSHR6wdfQsbMow9pZ5Xo2rKmgCVIt5bVesVCAud_NB2KQ/viewform?entry.122814002=${encodeURIComponent(this.opfwBanned.banHash)}&entry.123013618=${encodeURIComponent(this.player.licenseIdentifier)}`;
                 }
             } catch (e) {
             }
