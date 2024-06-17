@@ -943,7 +943,9 @@
 
             <!-- Viewing -->
             <div class="mb-10">
-                <alert class="bg-danger dark:bg-dark-danger px-6 py-4 mb-4" v-if="player.isBanned">
+                <alert class="bg-danger dark:bg-dark-danger px-6 py-4 mb-4 relative" :class="{ 'border-2 border-red-800 bg-red-600': opfwBanned }" v-if="player.isBanned">
+                    <div v-if="opfwBanned" class="absolute top-0 left-0.5 text-sm font-semibold">{{ t('players.show.global_opfw_ban') }}</div>
+
                     <div class="flex items-center justify-between mb-2">
                         <h2 class="text-lg font-semibold">
                             <i class="fas fa-shield-alt mr-1 cursor-help" v-if="player.streamerException" :title="t('players.show.streamer_exception_title', player.streamerException)"></i>

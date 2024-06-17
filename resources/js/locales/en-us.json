@@ -878,6 +878,7 @@
             "high_accuracy": "High Accuracy",
             "high_accuracy_title": "This detection is built in a way that false positives are highly unlikely. Make sure you are 100% certain this ban is false before removing it.",
             "ban_locked": "This ban has been locked.",
+            "global_opfw_ban": "Global OP-FW Ban",
             "ban": "Banned by <i>{0}</i> until <i>{1}</i>",
             "ban_text": "Till {0}",
             "ban_forever_text": "Indefinitely",
