@@ -2356,6 +2356,8 @@ export default {
             } catch (e) {
             }
 
+            this.local.ban = this.localizeBan();
+
             this.loadingOpfwBan = false;
         },
         async loadStatus() {
