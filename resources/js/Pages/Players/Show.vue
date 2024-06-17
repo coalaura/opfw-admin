@@ -2353,7 +2353,11 @@ export default {
                 if (response.data && response.data.banned) {
                     this.opfwBanned = response.data.ban;
 
-                    this.opfwBanned.appeal = `https://docs.google.com/forms/d/e/1FAIpQLSeZZnSHR6wdfQsbMow9pZ5Xo2rKmgCVIt5bVesVCAud_NB2KQ/viewform?entry.122814002=${encodeURIComponent(this.opfwBanned.banHash)}&entry.123013618=${encodeURIComponent(this.player.licenseIdentifier)}`;
+                    const steam = encodeURIComponent(this.player.steam.shift() || this.player.licenseIdentifier),
+                        steamUrl = encodeURIComponent(this.player.steamProfileUrl),
+                        banHash = encodeURIComponent(this.opfwBanned.banHash);
+
+                    this.opfwBanned.appeal = `https://docs.google.com/forms/d/e/1FAIpQLSeZZnSHR6wdfQsbMow9pZ5Xo2rKmgCVIt5bVesVCAud_NB2KQ/viewform?entry.516511948=${steamUrl}&entry.123013618=${steam}&entry.122814002=${banHash}`;
                 }
             } catch (e) {
             }
