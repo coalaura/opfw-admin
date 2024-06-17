@@ -806,7 +806,8 @@
             "search_btn": "Ugga Bans",
             "title": "Ug Bans",
             "description": "Ooga ooga list of ooga banned players.",
-            "locked": "Locked not there in Caveman Speak, but me try \"No open!\""
+            "locked": "Locked not there in Caveman Speak, but me try \"No open!\"",
+            "forever_op": "Whole earth no let <i>{0}</i> player play forever"
         },
         "show": {
             "played": "<b>{0}</b> ooga",
@@ -972,7 +973,8 @@
             "multiple_bans": "Many no-plays",
             "multiple_bans_details": "Human with {0} no-plays now. Humans with many no-plays no get wait-list-freedom. Need hand-free from no-play by other.",
             "staff_commands": "Stick Orders",
-            "global_opfw_ban": "\\\"World No-Allow OP-FW\\\""
+            "global_opfw_ban": "\\\"World No-Allow OP-FW\\\"",
+            "ban_op": "Whole earth say no by <i>{0}</i> till <i>{1}</i>"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

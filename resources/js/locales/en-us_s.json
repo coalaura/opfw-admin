@@ -806,7 +806,8 @@
             "search_btn": "Search Bans",
             "title": "Bans",
             "description": "List of all banned players.",
-            "locked": "Lock'd up"
+            "locked": "Lock'd up",
+            "forever_op": "<i>{0}</i> went an' banned this player all over the dang place ferevermore"
         },
         "show": {
             "played": "<b>{0}</b> done played",
@@ -972,7 +973,8 @@
             "multiple_bans": "Multiple bans",
             "multiple_bans_details": "Player got {0} active bans. Players with a bunch of active bans can't be scheduled for unban an' gotta be unbanned by hand, y'all.",
             "staff_commands": "Staff Commans",
-            "global_opfw_ban": "Global OP-FW Ban"
+            "global_opfw_ban": "Global OP-FW Ban",
+            "ban_op": "Banned all 'round the world by <i>{0}</i> 'til <i>{1}</i>"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

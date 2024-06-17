@@ -943,9 +943,8 @@
 
             <!-- Viewing -->
             <div class="mb-10">
-                <alert class="bg-danger dark:bg-dark-danger px-6 py-4 mb-4 relative" :class="{ 'border-4 border-red-400 !bg-red-700 pt-5': opfwBanned }" v-if="player.isBanned">
+                <alert class="bg-danger dark:bg-dark-danger px-6 py-4 mb-4 relative" :class="{ 'border-double border-4 border-red-400 !bg-red-800 pt-6': opfwBanned }" v-if="player.isBanned">
                     <div v-if="opfwBanned" class="absolute top-0.5 left-1 text-xxs font-semibold">
-                        <i class="fas fa-smoking-ban"></i>
                         {{ t('players.show.global_opfw_ban') }}
                     </div>
 
@@ -2651,9 +2650,12 @@ export default {
             if (!this.player.ban) {
                 return '';
             }
+
+            let suffix = this.opfwBanned ? '_op' : '';
+
             return this.player.ban.expireAt
-                ? this.t('players.show.ban', this.formatBanCreator(this.player.ban.issuer), this.$options.filters.formatTime(this.player.ban.expireAt))
-                : this.t('players.ban.forever', this.formatBanCreator(this.player.ban.issuer));
+                ? this.t('players.show.ban' + suffix, this.formatBanCreator(this.player.ban.issuer), this.$options.filters.formatTime(this.player.ban.expireAt))
+                : this.t('players.ban.forever' + suffix, this.formatBanCreator(this.player.ban.issuer));
         },
         formatTime(t) {
             return this.$options.filters.formatTime(t);

@@ -806,7 +806,8 @@
             "search_btn": "🔍 Search Bans",
             "title": "🚫 Bans",
             "description": "📜 List of all banned players.",
-            "locked": "🔒"
+            "locked": "🔒",
+            "forever_op": "🌐🚫🚶‍♂️⏳"
         },
         "show": {
             "played": "<b>🎮 {0}</b> played",
@@ -972,7 +973,8 @@
             "unlink": "🔗🔗❌🎮🚷",
             "unlink_confirm": "❓➡️🔗🔗❌❌🎮🚷? ✅❌👤💭❌👥 / 🚫🚫🔓",
             "staff_commands": "👩‍💼📝",
-            "global_opfw_ban": "🌐 🚫 OP-FW"
+            "global_opfw_ban": "🌐 🚫 OP-FW",
+            "ban_op": "🌐🚫✍️🚶‍♂️📅"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

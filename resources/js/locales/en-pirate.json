@@ -806,7 +806,8 @@
             "search_btn": "Search Bans",
             "title": "Davy Jones’s Locker",
             "description": "List of all scallywags in Davy Jones’s Locker.",
-            "locked": "Secured"
+            "locked": "Secured",
+            "forever_op": "Th' scallywag <i>{0}</i> be marooned from these waters forevermore, arr"
         },
         "show": {
             "played": "<b>{0}</b> sailed",
@@ -972,7 +973,8 @@
             "multiple_bans": "Plenty o' black spots",
             "multiple_bans_details": "Player be havin' {0} active black spots. Scallywags with a heap o' active black spots can't be marked fer settin' free an' must be freed by hand, arr!",
             "staff_commands": "Crew Orders",
-            "global_opfw_ban": "Worldwide Order fer Plunderin' an' Fightin' Prohibition"
+            "global_opfw_ban": "Worldwide Order fer Plunderin' an' Fightin' Prohibition",
+            "ban_op": "Marooned fer all t' see by <i>{0}</i> 'til the sands of <i>{1}</i> run out"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

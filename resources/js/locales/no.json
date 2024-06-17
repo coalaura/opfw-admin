@@ -816,7 +816,8 @@
             "search_btn": "Søk etter utestengelser",
             "title": "Utestengelser",
             "description": "Liste over alle utestengte spillere.",
-            "locked": "Låst"
+            "locked": "Låst",
+            "forever_op": "Spilleren ble utestengt på ubestemt tid av <i>{0}</i>"
         },
         "show": {
             "played": "<b>{0}</b> spilte",
@@ -982,7 +983,8 @@
             "multiple_bans": "Flere utestengelser",
             "multiple_bans_details": "Spilleren har {0} aktive utestengelser. Spillere med flere aktive utestengelser kan ikke planlegges for oppheving av utestengelse og må fjernes manuelt.",
             "staff_commands": "Ansatte Kommandoer",
-            "global_opfw_ban": "Global OP-FW-utestengelse"
+            "global_opfw_ban": "Global OP-FW-utestengelse",
+            "ban_op": "Globalt utestengt av <i>{0}</i> til <i>{1}</i>"
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",

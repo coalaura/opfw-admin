@@ -816,7 +816,8 @@
             "search_btn": "Bans khojo",
             "title": "Pratibandhit",
             "description": "Sabhi pratibandhit khiladiyon ki soochi.",
-            "locked": "Taala laga hua hai"
+            "locked": "Taala laga hua hai",
+            "forever_op": "Is khiladi ko <i>{0}</i> ne anishchit kal ke liye duniya bhar mein ban kiya hai"
         },
         "show": {
             "played": "<b>{0}</b> ne khela",
@@ -982,7 +983,8 @@
             "multiple_bans": "Kayi prakar ke pratibandh",
             "multiple_bans_details": "Khiladi ke {0} sakriya pratibandh hain. Ek se adhik sakriya pratibandhon wale khiladiyon ko aniyamit roop se pratibandh mukt nahi kiya ja sakta aur unhe manually pratibandh mukt karna padega.",
             "staff_commands": "Staff Aadesh",
-            "global_opfw_ban": "Vishwa OP-FW Pratibandh"
+            "global_opfw_ban": "Vishwa OP-FW Pratibandh",
+            "ban_op": "<i>{0}</i> dwara duniya bhar mein <i>{1}</i> tak ke liye ban kiya gaya hai"
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",
