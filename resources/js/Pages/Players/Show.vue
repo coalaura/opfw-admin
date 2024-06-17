@@ -205,12 +205,12 @@
                     {{ t('players.show.unmute') }}
                 </button>
                 <!-- Unbanning -->
-                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="unbanPlayer()" v-if="player.isBanned && !opfwBanned && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="unbanPlayer()" v-if="player.isBanned && !(loadingOpfwBan || opfwBanned) && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
                     <i class="fas fa-lock-open"></i>
                     {{ t('players.show.unban') }}
                 </button>
                 <!-- Schedule Unban -->
-                <button class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" @click="isSchedulingUnban = true" v-if="player.isBanned && !player.ban.scheduled && uniqueBans === 1 && !opfwBanned">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" @click="isSchedulingUnban = true" v-if="player.isBanned && !player.ban.scheduled && uniqueBans === 1 && !(loadingOpfwBan || opfwBanned)">
                     <i class="fas fa-calendar-day"></i>
                     {{ t('players.show.schedule_unban') }}
                 </button>
@@ -1856,8 +1856,10 @@ export default {
             showingEchoInfo: false,
 
             globalBans: [],
-            opfwBanned: false,
             showingGlobalBans: false,
+
+            loadingOpfwBan: true,
+            opfwBanned: false,
 
             playerTime: false,
 
@@ -2336,18 +2338,26 @@ export default {
         async loadOPFWBan() {
             const api = this.$page.api;
 
-            if (!api) return;
+            if (!api) {
+                this.loadingOpfwBan = false;
+
+                return;
+            }
 
             try {
                 const url = api.replace(/\/?$/, '/') + `global/ban/${this.player.licenseIdentifier}`;
 
-                const response = await axios.get(url);
+                const response = await axios.get(url, null, {
+                    signal: AbortSignal.timeout(3000)
+                });
 
                 if (response.data && response.data.banned) {
                     this.opfwBanned = response.data.ban;
                 }
             } catch (e) {
             }
+
+            this.loadingOpfwBan = false;
         },
         async loadStatus() {
             this.statusLoading = true;
