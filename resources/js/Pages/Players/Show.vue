@@ -944,9 +944,9 @@
             <!-- Viewing -->
             <div class="mb-10">
                 <alert class="bg-danger dark:bg-dark-danger px-6 py-4 mb-4 relative" :class="{ 'border-double border-4 border-red-400 !bg-red-800 pt-6': opfwBanned }" v-if="player.isBanned">
-                    <div v-if="opfwBanned" class="absolute top-0.5 left-1 text-xxs font-semibold">
+                    <a v-if="opfwBanned" class="absolute top-0.5 left-1 text-xxs font-semibold" href="https://forms.gle/nr83BeJvFNHUhTfd7" target="_blank" title="OPFW Global Ban appeal form.">
                         {{ t('players.show.global_opfw_ban') }}
-                    </div>
+                    </a>
 
                     <div class="flex items-center justify-between mb-2">
                         <h2 class="text-lg font-semibold">
