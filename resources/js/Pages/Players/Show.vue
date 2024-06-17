@@ -943,7 +943,7 @@
 
             <!-- Viewing -->
             <div class="mb-10">
-                <alert class="bg-danger dark:bg-dark-danger px-6 py-4 mb-4 relative" :class="{ 'border-2 border-red-900 bg-red-700 pt-5': opfwBanned }" v-if="player.isBanned">
+                <alert class="bg-danger dark:bg-dark-danger px-6 py-4 mb-4 relative" :class="{ 'border-4 border-red-400 !bg-red-700 pt-5': opfwBanned }" v-if="player.isBanned">
                     <div v-if="opfwBanned" class="absolute top-0.5 left-1 text-xxs font-semibold">
                         <i class="fas fa-smoking-ban"></i>
                         {{ t('players.show.global_opfw_ban') }}
