@@ -687,6 +687,7 @@
         "show_trunk": "Show trunk inventory",
         "show_glovebox": "Show glovebox inventory",
         "show_motel": "Show motel dresser inventory",
+        "view_logs": "Show Inventory Logs",
         "search": {
             "title": "Search Inventories",
             "label": "Inventories",
@@ -724,7 +725,8 @@
                 "locker-police": "This inventory is someones police locker.",
                 "locker-mechanic": "This inventory is someones mechanic locker.",
                 "locker-ems": "This inventory is someones ems locker.",
-                "motel": "This inventory is a storage container inside a motel."
+                "motel": "This inventory is a storage container inside a motel.",
+                "container": "This is a storage container inventory."
             },
             "vehicle": "Vehicle",
             "owner": "Vehicle Owner",
@@ -1426,6 +1428,17 @@
         "placeholder_action": "Kicked Player",
         "placeholder_log": "Laura kicked Twentz",
         "search": "Search logs"
+    },
+    "containers": {
+        "title": "Storage Containers",
+        "description": "An overview of all rented storage containers.",
+        "rented_containers": "Rented Containers",
+        "container": "Container",
+        "container_id": "Container ID",
+        "renter": "Renter",
+        "paid_until": "Paid Until",
+        "items": "Items",
+        "copy_loc": "Copy coordinates to clipboard"
     },
     "stocks": {
         "title": "Realty Companies",

@@ -104,7 +104,7 @@
                     <!-- Last Connection -->
                     <tr class="border-t border-gray-500">
                         <th class="px-2 py-0.5">{{ t('players.show.last_connection') }}</th>
-                        <td class="px-2 py-0.5" :title="$moment(player.lastConnection).fromNow()">{{ player.lastConnection | formatTime(true) }}</td>
+                        <td class="px-2 py-0.5" :title="$moment.utc(player.lastConnection).fromNow()">{{ player.lastConnection | formatTime(true) }}</td>
                     </tr>
 
                     <!-- System specs -->

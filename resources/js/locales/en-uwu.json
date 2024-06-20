@@ -678,7 +678,8 @@
                 "locker-police": "Dis inventory is somwone's police lockwer.",
                 "locker-mechanic": "Dis inventory is somwone's mechanic lockwer.",
                 "locker-ems": "Dis inventory is somwone's ems lockwer.",
-                "motel": "Dis inventory is a storwage contwainer insidw a motel."
+                "motel": "Dis inventory is a storwage contwainer insidw a motel.",
+                "container": "Dis is a stowage containew inventowy."
             },
             "vehicle": "Vehicwe",
             "owner": "Vehicwe Ownwer",
@@ -711,7 +712,8 @@
             "movement": "Muuvement",
             "item": "Mooowy Item",
             "unknown": "UwUknown"
-        }
+        },
+        "view_logs": "Show Inventowy Wogs"
     },
     "twitter": {
         "title": "Twiwtew Feed",
@@ -1467,5 +1469,16 @@
         "level_1": "Entwy",
         "level_2": "Fuww",
         "level_3": "Managew"
+    },
+    "containers": {
+        "title": "Stowage Containews",
+        "description": "An ovewview of aww wented stowage containews.",
+        "rented_containers": "Wented Containews",
+        "container": "Containew",
+        "container_id": "Containew ID",
+        "renter": "Wentew",
+        "paid_until": "Paid Untiw",
+        "items": "Itewms",
+        "copy_loc": "Copy cwoowdinates to cwipboawd"
     }
 }

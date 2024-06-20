@@ -678,7 +678,8 @@
                 "locker-police": "This here inventory belongs to a good ol' police fella.",
                 "locker-mechanic": "This here inventory belongs to a hardworkin' mechanic.",
                 "locker-ems": "This here inventory belongs to a dedicated EMS professional.",
-                "motel": "This here inventory is a storage container within a cozy motel."
+                "motel": "This here inventory is a storage container within a cozy motel.",
+                "container": "This here's a storage container tally."
             },
             "vehicle": "Motorcar",
             "owner": "Motorcar Owner",
@@ -711,7 +712,8 @@
             "movement": "Gittin' 'Round",
             "item": "Done Moved Somethin'",
             "unknown": "Don't Know"
-        }
+        },
+        "view_logs": "Shew Inventory Logs"
     },
     "twitter": {
         "title": "Twitter Peckin's",
@@ -1467,5 +1469,16 @@
         "level_1": "Entry",
         "level_2": "Full",
         "level_3": "Manager"
+    },
+    "containers": {
+        "title": "Storage Bins",
+        "description": "A broad look-see at all them rented storage bins.",
+        "rented_containers": "Rented Bins",
+        "container": "Bin",
+        "container_id": "Bin ID",
+        "renter": "Folks Rentin'",
+        "paid_until": "Done Paid Up Till",
+        "items": "Stuff",
+        "copy_loc": "Copy them coordinates to yer clipboard"
     }
 }

@@ -108,6 +108,16 @@ export default {
                             url: '/characters',
                         },
                         {
+                            label: 'stocks.title',
+                            icon: 'home',
+                            url: '/stocks/companies',
+                        },
+                        {
+                            label: 'containers.title',
+                            icon: 'warehouse',
+                            url: '/containers',
+                        },
+                        {
                             label: 'twitter.title',
                             icon: 'twitter',
                             url: '/twitter',
@@ -248,11 +258,6 @@ export default {
                             url: '/screenshots',
                         }
                     ]
-                },
-                {
-                    label: 'stocks.title',
-                    icon: 'home',
-                    url: '/stocks/companies',
                 },
                 {
                     label: 'sidebar.tools',

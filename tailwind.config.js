@@ -113,6 +113,9 @@ module.exports = {
                 'attr2': '118.5px',
                 '2px':   '2px'
             },
+            animation: {
+                'spin-once': 'spin 1s ease-in-out',
+            },
             colors: {
                 // Light & dark.
                 'light': defaultTheme.colors.white,

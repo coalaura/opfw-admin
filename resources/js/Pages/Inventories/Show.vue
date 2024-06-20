@@ -32,9 +32,9 @@
                 <inertia-link
                     class="block px-2 py-1 text-center text-white absolute top-1 right-10 bg-blue-600 dark:bg-blue-400 rounded"
                     :href="'/inventories/raw/' + inventory.title"
-                    :title="t('inventories.view')"
+                    :title="t('inventories.view_logs')"
                 >
-                    <i class="fas fa-briefcase"></i>
+                    <i class="fas fa-dolly-flatbed"></i>
                 </inertia-link>
             </template>
 
@@ -113,8 +113,8 @@
                                 :href="'/logs?action=%3DItem+Moved&details=' + inventory.title"
                                 v-else
                             >
-                                <i class="fas fa-briefcase mr-1"></i>
-                                {{ t('inventories.view') }}
+                                <i class="fas fa-dolly-flatbed mr-1"></i>
+                                {{ t('inventories.view_logs') }}
                             </inertia-link>
                         </template>
                     </card>
@@ -139,8 +139,8 @@
                                 class="block px-4 py-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded"
                                 :href="'/logs?action=%3DItem+Moved&details=' + inventory.title"
                             >
-                                <i class="fas fa-briefcase mr-1"></i>
-                                {{ t('inventories.view') }}
+                                <i class="fas fa-dolly-flatbed mr-1"></i>
+                                {{ t('inventories.view_logs') }}
                             </inertia-link>
                         </template>
                     </card>
@@ -247,8 +247,8 @@
                                 class="block px-4 py-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded"
                                 :href="'/logs?action=%3DItem+Moved&details=' + inventory.title"
                             >
-                                <i class="fas fa-briefcase mr-1"></i>
-                                {{ t('inventories.view') }}
+                                <i class="fas fa-dolly-flatbed mr-1"></i>
+                                {{ t('inventories.view_logs') }}
                             </inertia-link>
                         </template>
                     </card>

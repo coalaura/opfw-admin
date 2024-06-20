@@ -687,7 +687,8 @@
                 "locker-police": "Dette lageret er noen sin politilås.",
                 "locker-mechanic": "Dette lageret tilhører en mekaniker.",
                 "locker-ems": "Dette lageret tilhører en ambulansemedarbeider.",
-                "motel": "Dette lageret er en oppbevaringsboks inne på et motell."
+                "motel": "Dette lageret er en oppbevaringsboks inne på et motell.",
+                "container": "Dette er en inventarliste for en oppbevaringsbeholder."
             },
             "vehicle": "Kjøretøy",
             "owner": "Kjøretøy Eier",
@@ -720,7 +721,8 @@
             "movement": "Bevegelse",
             "item": "Flyttet gjenstand",
             "unknown": "Ukjent"
-        }
+        },
+        "view_logs": "Vis inventarlogger"
     },
     "twitter": {
         "title": "Twitter-strøm",
@@ -1467,5 +1469,16 @@
         "level_1": "Inngang",
         "level_2": "Full",
         "level_3": "Forvalter"
+    },
+    "containers": {
+        "title": "Oppbevaringscontainere",
+        "description": "En oversikt over alle leide oppbevaringscontainere.",
+        "rented_containers": "Leide Containere",
+        "container": "Container",
+        "container_id": "Container-ID",
+        "renter": "Leietaker",
+        "paid_until": "Betalt til",
+        "items": "Elementer",
+        "copy_loc": "Kopier koordinater til utklippstavlen"
     }
 }

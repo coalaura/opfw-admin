@@ -678,7 +678,8 @@
                 "locker-police": "Arr, this be a pirate's plunder chest.",
                 "locker-mechanic": "Ahoy! This here be a scallywag's wrench chest.",
                 "locker-ems": "Arr, this be a matey's medical chest.",
-                "motel": "Arr, this be a stash chest inside a pirate's den."
+                "motel": "Arr, this be a stash chest inside a pirate's den.",
+                "container": "Yarr, this be a holdin' crate tally."
             },
             "vehicle": "Ship",
             "owner": "Ship Captain",
@@ -711,7 +712,8 @@
             "movement": "Sailin' and Swaggerin'",
             "item": "Relocated Booty",
             "unknown": "Uncharted Waters"
-        }
+        },
+        "view_logs": "Display Plunderin' Records"
     },
     "twitter": {
         "title": "Ye Olde Twitter Parrot",
@@ -1467,5 +1469,16 @@
         "level_1": "Boardin'",
         "level_2": "Bulgin'",
         "level_3": "Cap'n"
+    },
+    "containers": {
+        "title": "Holdin' Crates",
+        "description": "A broadside view o' all the commandeered holdin' crates.",
+        "rented_containers": "Commandeered Crates",
+        "container": "Crate",
+        "container_id": "Crate Markin'",
+        "renter": "Scallywag",
+        "paid_until": "Square with us 'til",
+        "items": "Booty",
+        "copy_loc": "Mark down the map spot to yer scribblin' slab"
     }
 }

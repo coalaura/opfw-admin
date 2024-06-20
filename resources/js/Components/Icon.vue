@@ -89,6 +89,7 @@
     <i class="fas fa-street-view" v-else-if="name === 'street-view'"></i>
     <i class="fas fa-key" v-else-if="name === 'key'"></i>
     <i class="fas fa-home" v-else-if="name === 'home'"></i>
+    <i class="fas fa-warehouse" v-else-if="name === 'warehouse'"></i>
 </template>
 
 <script>

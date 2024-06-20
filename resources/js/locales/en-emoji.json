@@ -678,7 +678,8 @@
                 "locker-police": "🚔 This inventory is someone's police locker.",
                 "locker-mechanic": "🔧 This inventory is someone's mechanic locker.",
                 "locker-ems": "🚑 This inventory is someone's EMS locker.",
-                "motel": "🏨 This inventory is a storage container inside a motel."
+                "motel": "🏨 This inventory is a storage container inside a motel.",
+                "container": "📦 🗄️ 📝."
             },
             "vehicle": "🚗 Vehicle",
             "owner": "👤 Vehicle Owner",
@@ -711,7 +712,8 @@
             "movement": "🚶",
             "item": "📦",
             "unknown": "🤷‍♂️"
-        }
+        },
+        "view_logs": "📝 \"🔍 📦 📈\""
     },
     "twitter": {
         "title": "🐦",
@@ -1467,5 +1469,16 @@
         "level_1": "🚪",
         "level_2": "📦",
         "level_3": "🧑‍💼"
+    },
+    "containers": {
+        "title": "📦🗄️",
+        "description": "🗂️ 📦🗄️ 🏠🛢️.",
+        "rented_containers": "🏠🛢️ 📦🗄️",
+        "container": "🗄️",
+        "container_id": "🗄️ 🔢",
+        "renter": "👤🏠🛢️",
+        "paid_until": "💳 📅",
+        "items": "🛍️",
+        "copy_loc": "📋📌 🌐🧭 ➡️ 📋"
     }
 }

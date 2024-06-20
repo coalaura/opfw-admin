@@ -687,7 +687,8 @@
                 "locker-police": "Yeh kisika police locker ka bhandar hai.",
                 "locker-mechanic": "Yeh kisika mechanic locker ka bhandar hai.",
                 "locker-ems": "Yeh kisika ems locker ka bhandar hai.",
-                "motel": "Yeh motel ke andar ka storage container ka bhandar hai."
+                "motel": "Yeh motel ke andar ka storage container ka bhandar hai.",
+                "container": "Yeh ek storage container ki inventory hai."
             },
             "vehicle": "Vahan",
             "owner": "Vahan ke malik",
@@ -720,7 +721,8 @@
             "movement": "Gati",
             "item": "Bhautik vastu ko sthanantirit kiya gaya",
             "unknown": "Agyaat"
-        }
+        },
+        "view_logs": "Dikhao Inventory Logs"
     },
     "twitter": {
         "title": "Twitter Feed",
@@ -1467,5 +1469,16 @@
         "level_1": "Pravesh",
         "level_2": "Pura",
         "level_3": "Prabandhak"
+    },
+    "containers": {
+        "title": "Storage Containers",
+        "description": "Sabhi kiraye par liye gaye storage containers ka ek overview.",
+        "rented_containers": "Kiraye par Liye Gaye Containers",
+        "container": "Container",
+        "container_id": "Container ID",
+        "renter": "Kirayedar",
+        "paid_until": "Bhugtan Kiya Gaya Hai Agle",
+        "items": "Vastuen",
+        "copy_loc": "Naksha nirdeshansh ki prati clipboard par copy karein"
     }
 }

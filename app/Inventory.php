@@ -22,7 +22,8 @@ class Inventory
         'locker-\w+?',
         'motel-\w+?',
         'evidence',
-        'ped'
+        'ped',
+        'container'
     ];
 
     /**
@@ -80,6 +81,13 @@ class Inventory
      * @var ?Property
      */
     public ?Property $property;
+
+    /**
+     * The Container associated with this inventory
+     *
+     * @var ?Container
+     */
+    public ?Container $container;
 
     /**
      * Inventory constructor.
@@ -142,6 +150,12 @@ class Inventory
                 if (!is_numeric($inventory->id)) {
                     return new Inventory($descriptor);
                 }
+                break;
+            case 'container':
+                if (!is_numeric($inventory->id)) {
+                    return new Inventory($descriptor);
+                }
+
                 break;
             case 'trunk':
             case 'glovebox':
@@ -221,6 +235,15 @@ class Inventory
 
                 if ($motel) {
                     $this->character = Character::query()->where('character_id', $motel->cid)->first();
+                }
+
+                return $this;
+            case 'container':
+                $query = Container::query()->where('container_id', $this->id);
+                $this->container = $query->first();
+
+                if ($this->container) {
+                    //$this->character = Character::query()->where('character_id', $this->container->character_id)->first();
                 }
 
                 return $this;

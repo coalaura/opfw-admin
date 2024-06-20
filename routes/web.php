@@ -19,6 +19,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\BlacklistController;
 use App\Http\Controllers\CasinoLogController;
+use App\Http\Controllers\ContainerController;
 use App\Http\Controllers\DocumentationController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\GraphController;
@@ -231,6 +232,9 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     // Stocks Companies (realty).
     Route::get('/stocks/companies', [StocksController::class, 'companies']);
     Route::post('/stocks/property/{propertyId}', [StocksController::class, 'updateProperty']);
+
+    // Storage Containers.
+    Route::get('/containers', [ContainerController::class, 'containers']);
 
     // Map.
     Route::get('/map/{server?}', [MapController::class, 'index']);

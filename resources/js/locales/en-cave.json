@@ -678,7 +678,8 @@
                 "locker-police": "This here inventory is someone's police locker.",
                 "locker-mechanic": "This here inventory is someone's mechanic locker.",
                 "locker-ems": "This here inventory is someone's ems locker.",
-                "motel": "This here inventory is a storage container inside a motel."
+                "motel": "This here inventory is a storage container inside a motel.",
+                "container": "This Place Hold Stuff List."
             },
             "vehicle": "Vehicle",
             "owner": "Vehicle Owner",
@@ -711,7 +712,8 @@
             "movement": "Ugg-Ugg",
             "item": "Uggit Moved",
             "unknown": "Ugga-Ugga"
-        }
+        },
+        "view_logs": "Show What We Have List"
     },
     "twitter": {
         "title": "Ugg-Ugg Feed",
@@ -1467,5 +1469,16 @@
         "level_1": "Go in",
         "level_2": "All",
         "level_3": "Boss of Cave"
+    },
+    "containers": {
+        "title": "Keep Stuff Box",
+        "description": "Look at All Boxes We Rent.",
+        "rented_containers": "Boxes We Borrow",
+        "container": "Box",
+        "container_id": "Box Number",
+        "renter": "Who Borrow",
+        "paid_until": "Give Shiny Rocks Until",
+        "items": "Things Inside",
+        "copy_loc": "Make Stick Remember Place"
     }
 }
