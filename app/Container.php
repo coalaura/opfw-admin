@@ -63,7 +63,7 @@ class Container extends Model
 
     public static function items()
     {
-        DB::table("inventories")
+        return DB::table("inventories")
             ->select(DB::raw("COUNT(inventory_name) as count"), "inventory_name")
             ->where(DB::raw("SUBSTR(inventory_name, 1, 9)"), "=", "container")
             ->groupBy("inventory_name")
