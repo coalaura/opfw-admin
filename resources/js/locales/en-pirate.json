@@ -1479,6 +1479,7 @@
         "renter": "Scallywag",
         "paid_until": "Square with us 'til",
         "items": "Booty",
-        "copy_loc": "Mark down the map spot to yer scribblin' slab"
+        "copy_loc": "Mark down the map spot to yer scribblin' slab",
+        "empty": "Avast! No borrowed chests be spotted."
     }
 }

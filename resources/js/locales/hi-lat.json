@@ -1479,6 +1479,7 @@
         "renter": "Kirayedar",
         "paid_until": "Bhugtan Kiya Gaya Hai Agle",
         "items": "Vastuen",
-        "copy_loc": "Naksha nirdeshansh ki prati clipboard par copy karein"
+        "copy_loc": "Naksha nirdeshansh ki prati clipboard par copy karein",
+        "empty": "Kiraye ke containers nahi mile."
     }
 }

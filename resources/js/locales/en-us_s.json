@@ -1479,6 +1479,7 @@
         "renter": "Folks Rentin'",
         "paid_until": "Done Paid Up Till",
         "items": "Stuff",
-        "copy_loc": "Copy them coordinates to yer clipboard"
+        "copy_loc": "Copy them coordinates to yer clipboard",
+        "empty": "Ain't found no rented containers."
     }
 }

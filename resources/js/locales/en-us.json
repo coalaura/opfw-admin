@@ -1438,7 +1438,8 @@
         "renter": "Renter",
         "paid_until": "Paid Until",
         "items": "Items",
-        "copy_loc": "Copy coordinates to clipboard"
+        "copy_loc": "Copy coordinates to clipboard",
+        "empty": "No rented containers found."
     },
     "stocks": {
         "title": "Realty Companies",

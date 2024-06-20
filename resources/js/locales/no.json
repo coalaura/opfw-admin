@@ -1479,6 +1479,7 @@
         "renter": "Leietaker",
         "paid_until": "Betalt til",
         "items": "Elementer",
-        "copy_loc": "Kopier koordinater til utklippstavlen"
+        "copy_loc": "Kopier koordinater til utklippstavlen",
+        "empty": "Ingen leide containere funnet."
     }
 }

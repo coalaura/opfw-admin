@@ -43,7 +43,7 @@
                 </tr>
 
                 <tr v-if="containers.length === 0" class="text-center">
-                    <td class="px-3 py-1 italic" colspan="5">{{ t('stocks.empty') }}</td>
+                    <td class="px-3 py-1 italic" colspan="5">{{ t('containers.empty') }}</td>
                 </tr>
             </table>
         </div>

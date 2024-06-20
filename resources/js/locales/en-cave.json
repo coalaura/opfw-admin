@@ -1479,6 +1479,7 @@
         "renter": "Who Borrow",
         "paid_until": "Give Shiny Rocks Until",
         "items": "Things Inside",
-        "copy_loc": "Make Stick Remember Place"
+        "copy_loc": "Make Stick Remember Place",
+        "empty": "No rent boxes found."
     }
 }

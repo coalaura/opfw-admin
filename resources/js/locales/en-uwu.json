@@ -1479,6 +1479,7 @@
         "renter": "Wentew",
         "paid_until": "Paid Untiw",
         "items": "Itewms",
-        "copy_loc": "Copy cwoowdinates to cwipboawd"
+        "copy_loc": "Copy cwoowdinates to cwipboawd",
+        "empty": "Nyo wented containews found."
     }
 }
