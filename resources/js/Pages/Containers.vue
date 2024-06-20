@@ -17,7 +17,8 @@
                     <th class="px-1 py-1 pl-3">{{ t('containers.container_id') }}</th>
                     <th class="px-2 py-1">{{ t('containers.renter') }}</th>
                     <th class="px-2 py-1">{{ t('containers.paid_until') }}</th>
-                    <th class="px-2 py-1 pr-3">{{ t('containers.items') }}</th>
+                    <th class="px-2 py-1">{{ t('containers.items') }}</th>
+                    <th class="px-2 py-1 pr-3">&nbsp;</th>
                 </tr>
 
                 <tr v-for="(container, id) in containers" :key="id" class="border-t border-gray-500">
