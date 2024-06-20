@@ -80,7 +80,7 @@ export default {
             return this.items.find(count => count.inventory_name === inventoryName)?.count || 0;
         },
         copyLocation(id) {
-            const location = locations[id];
+            const location = locations[id - 1]; // -1 cause lua has 1 based indexing 🤓
 
             this.copyToClipboard(`/tp_coords ${location[0]} ${location[1]} ${location[2]}`);
         }
