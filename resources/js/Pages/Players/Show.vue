@@ -2030,7 +2030,7 @@ export default {
             return `??? (${pRatio.toFixed(2)})`;
         },
         formatSecondDiff(sec) {
-            return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m]').replace(/\s?0\w/g, '') || "0s";
+            return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m]').replace(/(?<=\s|^)0\w/gm, '') || "0s";
         },
         formatPanelLog(log) {
             return log.replace(/(license:\w+)(?=\))/gm, match => {
