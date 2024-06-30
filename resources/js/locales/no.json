@@ -1170,7 +1170,9 @@
                 "weapon": "Våpen",
                 "mining": "Gruvedrift",
                 "boat": "Båtlisens",
-                "passenger": "PPL - Passasjer"
+                "passenger": "PPL - Passasjer",
+                "driver": "Førerkort",
+                "press": "Presse"
             },
             "show": "Vis {0} slettede",
             "to_player": "Spillerprofil",

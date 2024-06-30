@@ -1158,7 +1158,9 @@
                 "weapon": "🔫 - Weapon",
                 "mining": "⛏️ - Mining",
                 "boat": "⛵️📜",
-                "passenger": "✈️🆔📜"
+                "passenger": "✈️🆔📜",
+                "driver": "🚗💳",
+                "press": "📰💁‍♀️💁‍♂️"
             },
             "no_coords": "Last 🌐 are unavailable while the player is 📴.",
             "save_changes": "💾🔄",

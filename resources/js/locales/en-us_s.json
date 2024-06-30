@@ -1158,7 +1158,9 @@
                 "weapon": "Weap'n",
                 "mining": "Minin'",
                 "boat": "Gots a boatin' license",
-                "passenger": "PPL - Passenger"
+                "passenger": "PPL - Passenger",
+                "driver": "Driver's Lahcense",
+                "press": "Press (Jurnalist)"
             },
             "no_coords": "Sorry y'all, I cain't give ya the last known whereabouts of a player while they're online.",
             "save_changes": "Save y'all's changes",

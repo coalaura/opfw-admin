@@ -1158,7 +1158,9 @@
                 "weapon": "Blunderbuss",
                 "mining": "Diggin'",
                 "boat": "Boatin' License",
-                "passenger": "PPL - Passenger"
+                "passenger": "PPL - Passenger",
+                "driver": "Mariner's Papers",
+                "press": "Quill-Weilder (Scribe)"
             },
             "no_coords": "Avast! The last known whereabouts of ye scurvy dog be hidin' from me while ye be sailin' the high seas.",
             "save_changes": "Preserve Changes, Matey",

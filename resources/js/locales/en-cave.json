@@ -1158,7 +1158,9 @@
                 "weapon": "Wapen",
                 "mining": "Mine",
                 "boat": "Ugga Ugga - Boat",
-                "passenger": "Ugga Ugga - Traveler"
+                "passenger": "Ugga Ugga - Traveler",
+                "driver": "Wheel Man Paper",
+                "press": "News Clubber"
             },
             "no_coords": "Last coords not knowed when player be online.",
             "save_changes": "Ugga bugga changes",

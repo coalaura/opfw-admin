@@ -1232,7 +1232,9 @@
                 "weapon": "Weapon",
                 "mining": "Mining",
                 "boat": "Boating License",
-                "passenger": "PPL - Passenger"
+                "passenger": "PPL - Passenger",
+                "driver": "Driver's License",
+                "press": "Press (Journalist)"
             }
         },
         "edit": {

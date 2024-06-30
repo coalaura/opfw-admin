@@ -1170,7 +1170,9 @@
                 "weapon": "Hathiyaar",
                 "mining": "Khanan",
                 "boat": "Naukayen Chalane ka License",
-                "passenger": "PPL - Passenger"
+                "passenger": "PPL - Passenger",
+                "driver": "Driving License",
+                "press": "Patrakar"
             },
             "show": "{0} hataaye gaye dikhao",
             "to_player": "Khilaadi Profile",
