@@ -20,7 +20,7 @@
                             {{ link.raw ? link.raw : t(link.label) }}
                         </span>
                         <ul class="w-full">
-                            <li v-for="sub in link.sub" :key="sub.label" v-if="(!sub.private || $page.auth.player.isSuperAdmin) && !sub.hidden">
+                            <li v-for="sub in link.sub" :key="sub.label" v-if="(!sub.private || $page.auth.player.isSuperAdmin) && !sub.hidden && !link.hidden">
                                 <inertia-link class="flex items-center px-5 py-2 mt-1 rounded hover:bg-gray-900 hover:text-white whitespace-nowrap drop-shadow" :class="isUrl(sub.url) ? ['bg-gray-900', 'text-white'] : ''" :href="sub.url">
                                     <icon class="w-4 h-4 mr-3 fill-current" :name="sub.icon"></icon>
                                     {{ sub.raw ? sub.raw : t(sub.label) }}
@@ -314,7 +314,7 @@ export default {
                 {
                     label: 'sidebar.errors',
                     icon: 'bug',
-                    hidden: !this.$page.auth.player.isRoot,
+                    hidden: !this.$page.auth.player.isSuperAdmin,
                     sub: [
                         {
                             label: 'errors.client.title',

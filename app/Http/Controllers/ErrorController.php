@@ -21,6 +21,10 @@ class ErrorController extends Controller
      */
     public function client(Request $request): Response
     {
+        if (!$this->isSuperAdmin($request)) {
+            abort(403);
+        }
+
         $start = round(microtime(true) * 1000);
 
         $versions = ClientError::query()
@@ -81,6 +85,10 @@ class ErrorController extends Controller
      */
     public function server(Request $request): Response
     {
+        if (!$this->isSuperAdmin($request)) {
+            abort(403);
+        }
+
         $start = round(microtime(true) * 1000);
 
         $versions = ServerError::query()
