@@ -354,7 +354,7 @@ export default {
         }
 
         if (this.setting('expandSidenav')) {
-            const flattened = data.links.reduce((acc, val) => acc.concat(v.sub ? v.sub : v).map(v => ({
+            const flattened = data.links.reduce((acc, val) => acc.concat(val.sub ? val.sub : val).map(v => ({
                 hidden: val.hidden,
                 ...v
             })), []);
