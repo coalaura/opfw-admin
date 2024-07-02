@@ -189,7 +189,7 @@ export default {
     },
     props: {
         characters: {
-            type: Object,
+            type: Array,
             required: true,
         },
         filters: {
