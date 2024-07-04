@@ -99,7 +99,8 @@
         "showSystemNotes": "Shwuwu syswuwem nowotes by defwault",
         "locale": "Wanguage",
         "banner": "UwU Pwage Bwanner (ony fow uwU)",
-        "bannerAlpha": "Bwanner-Thweme use Awpha (opwacity)"
+        "bannerAlpha": "Bwanner-Thweme use Awpha (opwacity)",
+        "relativeTime": "Show wewative time instead of absowute"
     },
     "loading_screen": {
         "remove": "Wemove",

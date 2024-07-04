@@ -99,7 +99,8 @@
         "showSystemNotes": "Show sum system notes by default",
         "locale": "Language",
         "banner": "Page Y'all Come On In (jest fer y'all)",
-        "bannerAlpha": "Banner-Thang use Alpha (kinda see-thru)"
+        "bannerAlpha": "Banner-Thang use Alpha (kinda see-thru)",
+        "relativeTime": "Show how long ago 'stead of the exact time"
     },
     "loading_screen": {
         "sidebar": "Loading screen",

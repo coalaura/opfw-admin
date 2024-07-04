@@ -99,7 +99,8 @@
         "expandCollapsed": "Auto-Vistaarit Karein Samkuchit (Notes, aadi)",
         "expandSidenav": "Side-Navigation ko hamesha poora vistaarit karein",
         "showSystemNotes": "System notes ko default roop se dikhayein",
-        "locale": "Bhasha"
+        "locale": "Bhasha",
+        "relativeTime": "Sapeksh samay dikhayen purn samay ke bajaay"
     },
     "loading_screen": {
         "sidebar": "Loading Screen",

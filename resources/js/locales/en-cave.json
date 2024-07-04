@@ -99,7 +99,8 @@
         "showSystemNotes": "Me want show system notes by default",
         "locale": "Me blabber",
         "banner": "Ug Banner (only for you)",
-        "bannerAlpha": "Ug-Theme use Alpha (see-throughness)"
+        "bannerAlpha": "Ug-Theme use Alpha (see-throughness)",
+        "relativeTime": "Use sun and moon pass, not fixed time"
     },
     "loading_screen": {
         "sidebar": "Uggga buggga",

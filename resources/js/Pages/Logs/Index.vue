@@ -170,7 +170,7 @@
 						<th class="p-3 whitespace-nowrap">{{ t('logs.server_id') }}</th>
 						<th class="p-3">{{ t('logs.action') }}</th>
 						<th class="p-3">{{ t('logs.details') }}</th>
-						<th class="p-3 pr-8">
+						<th class="p-3 pr-8 whitespace-nowrap">
 							{{ t('logs.timestamp') }}
 							<a href="#" :title="t('logs.toggle_diff')" @click="$event.preventDefault(); showLogTimeDifference = !showLogTimeDifference">
 								<i class="fas fa-stopwatch"></i>

@@ -99,7 +99,8 @@
         "expandCollapsed": "Auto-utvid visning av sammenfoldede (Notater, osv.)",
         "expandSidenav": "Alltid helt utvid sidenavigasjonen",
         "showSystemNotes": "Vis systemnotater som standard",
-        "locale": "Språk"
+        "locale": "Språk",
+        "relativeTime": "Vis relativ tid istedenfor absolutt"
     },
     "loading_screen": {
         "sidebar": "Lasteskjerm",

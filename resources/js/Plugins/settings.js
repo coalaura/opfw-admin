@@ -3,7 +3,7 @@ const Settings = {
         const settings = options.props.auth.settings;
 
         Vue.prototype.setting = key => {
-            if (!settings) return null;
+            if (!settings || !(key in settings)) return null;
 
             return settings[key].value;
         };

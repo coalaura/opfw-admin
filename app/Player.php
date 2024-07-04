@@ -152,6 +152,10 @@ class Player extends Model
             "type"    => "boolean",
             "default" => false,
         ],
+        "relativeTime" => [
+            "type"    => "boolean",
+            "default" => false,
+        ],
         "locale"          => [
             "type"    => "string",
             "default" => "en-us",

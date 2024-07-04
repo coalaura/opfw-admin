@@ -110,6 +110,7 @@
         "expandCollapsed": "Auto-Expand Collapsed (Notes, etc.)",
         "expandSidenav": "Always fully expand the Side-Navigation",
         "showSystemNotes": "Show system notes by default",
+        "relativeTime": "Show relative time instead of absolute",
         "locale": "Language"
     },
     "loading_screen": {

@@ -99,7 +99,8 @@
         "showSystemNotes": "Ever fully expand the Side-Navigation, matey",
         "locale": "Show system notes by default",
         "banner": "Jolly Roger (only for ye)",
-        "bannerAlpha": "Jolly Roger-Theme use Alpha (tranquility)"
+        "bannerAlpha": "Jolly Roger-Theme use Alpha (tranquility)",
+        "relativeTime": "Display time wi' relation, not wi' fixed points"
     },
     "loading_screen": {
         "sidebar": "Display system notes by default, me hearties",
