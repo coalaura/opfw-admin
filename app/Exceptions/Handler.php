@@ -42,27 +42,10 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
-        // JSON handling
-        if (request()->expectsJson()) {
-            $prep = $this->prepareException($exception);
-
-            $code = intval($prep->getCode()) ?? 0;
-            $code = $code >= 100 ? $code : 500;
-
-            return response()->json([
-                'status'  => false,
-                'message' => $prep->getMessage(),
-            ], $code);
-        }
-
         if ($this->shouldIgnoreException($exception)) {
             parent::report($exception);
-            return;
-        }
 
-        // [2006] MySQL server has gone away
-        if ($exception->getCode() === 2006) {
-            abort(503, 'Database connection unavailable');
+            return;
         }
 
         $log       = storage_path('logs/' . CLUSTER . '_error-' . date('Y-m-d') . '.log');
@@ -140,6 +123,28 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        // JSON handling
+        if (request()->expectsJson()) {
+            $prep = $this->prepareException($exception);
+
+            $code = intval($prep->getCode()) ?? 0;
+            $code = $code >= 100 ? $code : 500;
+
+            return response()->json([
+                'status'  => false,
+                'message' => $prep->getMessage(),
+            ], $code);
+        }
+
+        // Database exceptions
+        $error = $this->isFatalDatabaseException($exception);
+
+        if ($error) {
+            return response()->view('errors.db', [
+                'message' => $error
+            ], 503);
+        }
+
         return parent::render($request, $exception);
     }
 
@@ -156,6 +161,29 @@ class Handler extends ExceptionHandler
         }
 
         return false;
+    }
+
+    private function isFatalDatabaseException(Throwable $exception): ?string
+    {
+        switch ($exception->getCode()) {
+            // [1045] Access denied for user
+            case 1045:
+                return "Invalid database credentials";
+
+            // [1049] Unknown database
+            case 1049:
+                return "Unknown database";
+
+            // [2002] A connection attempt failed because the connected party did not properly respond after a period of time
+            case 2002:
+                return "Database connection refused";
+
+            // [2006] MySQL server has gone away
+            case 2006:
+                return "Database connection lost";
+        }
+
+        return null;
     }
 
 }
