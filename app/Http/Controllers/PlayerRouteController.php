@@ -423,6 +423,10 @@ class PlayerRouteController extends Controller
 
         $path = storage_path('screenshots') . '/' . $screenshot;
 
+        if (!file_exists($path)) {
+            abort(404);
+        }
+
         return response()->file($path, [
             'Content-type: image/jpeg',
         ]);
