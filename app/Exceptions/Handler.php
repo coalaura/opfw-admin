@@ -165,6 +165,7 @@ class Handler extends ExceptionHandler
 
     private function isFatalDatabaseException(Throwable $exception): ?string
     {
+        // Find by code
         switch ($exception->getCode()) {
             // [1045] Access denied for user
             case 1045:
@@ -181,6 +182,13 @@ class Handler extends ExceptionHandler
             // [2006] MySQL server has gone away
             case 2006:
                 return "Database connection lost";
+        }
+
+        // Find by message
+        $message = $exception->getMessage();
+
+        if ($message === 'Database connection unavailable') {
+            return "Database connection unavailable";
         }
 
         return null;
