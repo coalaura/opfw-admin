@@ -40,10 +40,6 @@ class SuspiciousController extends Controller
                     $logs = SuspiciousChecker::findSuspiciousCharacters();
                     $map = 'license_identifier';
                     break;
-                case 'vehicles':
-                    $logs = SuspiciousChecker::findSuspiciousCharacterVehicles();
-                    $map = 'license_identifier';
-                    break;
                 case 'pawn':
                     $logs = SuspiciousChecker::findSuspiciousPawnShopUsages();
                     break;

@@ -32,7 +32,6 @@
                                 <option value="" disabled>{{ t('suspicious.types.none') }}</option>
                                 <option value="items">{{ t('suspicious.types.items') }}</option>
                                 <option value="characters">{{ t('suspicious.types.characters') }}</option>
-                                <option value="vehicles">{{ t('suspicious.types.vehicles') }}</option>
                                 <option value="pawn">{{ t('suspicious.types.pawn') }}</option>
                                 <option value="warehouse">{{ t('suspicious.types.warehouse') }}</option>
                                 <option value="unusual">{{ t('suspicious.types.unusual') }}</option>
