@@ -103,6 +103,10 @@ body {
     }
 }
 
+.dark-purple {
+    background: rgba(102, 36, 146, 0.85);
+}
+
 .purple {
     background: rgba(125, 63, 166, 0.85);
 }
@@ -240,6 +244,32 @@ export default {
 
             return message;
 		},
+        formatTitle(message) {
+            let type = message.type.toUpperCase();
+
+            switch (message.type) {
+                case "report":
+                    type = `REPORT-${message.reportId}`;
+
+                    break;
+                case "staff":
+                    type = message.local ? "LOCAL STAFF" : "STAFF";
+
+                    break;
+            }
+
+            return `${type} ${message.user.playerName} (${message.user.source})`;
+        },
+        formatColor(message) {
+            switch (message.type) {
+                case "report":
+                    return "green";
+                case "staff":
+                    return message.local ? "dark-purple" : "purple";
+            }
+
+            return "";
+        },
         init() {
             if (this.socket) return;
 
@@ -276,14 +306,11 @@ export default {
                     }
 
                     this.messages = messages.map(message => {
-                        const type = message.type,
-                            user = message.user;
-
                         return {
-                            license: user.licenseIdentifier,
-                            title: (type === "staff" ? "STAFF " : `REPORT-${message.reportId} `) + user.playerName + (type === "staff" ? "" : " (" + user.source + ")"),
+                            license: message.user.licenseIdentifier,
+                            title: this.formatTitle(message),
                             text: this.formatMessage(message.message),
-                            color: type === "staff" ? "purple" : "green",
+                            color: this.formatColor(message),
                             createdAt: message.createdAt,
                             time: this.$moment.utc(message.createdAt * 1000).local().fromNow()
                         };
