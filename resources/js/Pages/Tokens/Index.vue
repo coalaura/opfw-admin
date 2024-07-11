@@ -18,7 +18,7 @@
 
         <div class="mt-14">
             <div class="flex flex-wrap gap-4">
-                <div v-for="token in list" :key="token.id" class="bg-gray-200 dark:bg-gray-700 border-gray-500 px-4 py-2 rounded-sm shadow-sm relative w-80" :class="{ '!bg-blue-500 !bg-opacity-20': token.disabled }">
+                <div v-for="token in list" :key="token.id" class="bg-gray-200 dark:bg-gray-700 border-gray-500 px-4 py-2 rounded-sm shadow-sm relative w-80" :class="{ '!bg-blue-500 !bg-opacity-20 pb-6': token.disabled }">
                     <div class="flex justify-between gap-3 items-center">
                         <input v-model="token.note" class="px-1.5 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full" :placeholder="t('tokens.note_placeholder')" @input="token.changed = true" v-if="token.id === editingNameId" autofocus />
                         <b class="cursor-pointer block" @click="editingNameId = token.id" v-else>{{ token.note ? token.note : `Token #${token.id}` }}</b>
@@ -27,6 +27,10 @@
                             <i class="fas fa-receipt cursor-pointer" @click="viewLogs(token.id)"></i>
                             <i class="fas fa-copy cursor-pointer" @click="copyToken(token)"></i>
                         </div>
+                    </div>
+
+                    <div class="text-sm text-gray-600 dark:text-gray-300 font-mono italic mt-1 pt-1 border-t border-gray-500" :class="{ '!border-blue-400': token.disabled }">
+                        Token: {{ token.token.substring(0, 3) }}{{ ".".repeat(token.token.length - 5) }}{{ token.token.substring(token.token.length - 3) }}
                     </div>
 
                     <div class="mt-1 pt-1 border-t border-gray-500 w-full text-sm" :class="{ '!border-blue-400': token.disabled }">
