@@ -110,7 +110,7 @@ class Server
             try {
                 $json = OPFWHelper::getUsersJSON($serverIp);
 
-                if (!$json) {
+                if ($json === null || !is_array($json)) {
                     return null;
                 }
             } catch (Throwable $t) {

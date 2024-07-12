@@ -288,7 +288,7 @@ class OPFWHelper
 
         $data = self::executeSocketRoute("data", $server, "players");
 
-        return $data ?? null;
+        return is_array($data) ? $data : null;
     }
 
     /**
