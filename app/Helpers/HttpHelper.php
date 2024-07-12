@@ -11,10 +11,11 @@ class HttpHelper
      *
      * @param string $url The URL to ping
      * @param int $timeout The timeout for the connection in milliseconds
+     * @return bool
      */
     public static function ping(string $url, int $timeout = 500): bool
     {
-        $errno = 0;
+        $errno  = 0;
         $errstr = "";
 
         $host = parse_url($url, PHP_URL_HOST);
@@ -29,6 +30,25 @@ class HttpHelper
         }
 
         return !!$connection;
+    }
+
+    /**
+     * Returns true if the given port is open on the current machine
+     *
+     * @param int $port The port to check
+     * @return bool
+     */
+    public static function isLocalPortOpen(int $port): bool
+    {
+        if (strtoupper(substr(PHP_OS, 0, 3)) === "WIN") {
+            $output = shell_exec("netstat -aon | findstr :$port");
+
+            return strpos($output, "LISTENING") !== false;
+        } else {
+            $output = shell_exec("netstat -atlpn | grep :" . $port);
+
+            return strpos($output, "LISTEN") !== false;
+        }
     }
 
     /**

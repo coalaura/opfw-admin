@@ -15,6 +15,9 @@ class OPFWHelper
 {
     const RetryAttempts = 2;
 
+    private static $isSocketDown = false;
+    private static $isServerDown = false;
+
     /**
      * Sends a staff pm to a player
      *
@@ -576,9 +579,12 @@ class OPFWHelper
 
         $url = "http://localhost:9999/socket/$server/$type/$route";
 
-        if (!HttpHelper::ping($url, 400)) {
-            LoggingHelper::log("Cancelled GET request to $url (ping failed)");
-            LoggingHelper::log(HttpHelper::lastError());
+        if (self::$isSocketDown || !HttpHelper::isLocalPortOpen(9999)) {
+            if (!self::$isSocketDown) {
+                LoggingHelper::log("Cancelled GET request to $url (:9999 is not open)");
+            }
+
+            self::$isSocketDown = true;
 
             return false;
         }
