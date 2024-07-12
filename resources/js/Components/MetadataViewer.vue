@@ -77,11 +77,9 @@ const KnownTypes = {
 };
 
 const CustomPreProcessors = {
-    "trace": data => {
-        console.log(data, data.split("\n"));
-        return data.split("\n");
-    },
+    "trace": data => data.split("\n"),
     "modifications": data => data.split("\n"),
+    "devices": data => data.split("\n"),
 
     "changes": data => {
         // LS Customs logs
