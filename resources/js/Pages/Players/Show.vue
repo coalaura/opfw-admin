@@ -258,7 +258,7 @@
                 <div class="w-px bg-white bg-opacity-30 h-full separator">&nbsp;</div>
 
                 <!-- User Variables -->
-                <button class="p-1 text-sm font-bold leading-4 text-center rounded border-teal-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" @click="showingUserVariables = true" :title="t('players.show.user_variables')">
+                <button class="p-1 text-sm font-bold leading-4 text-center rounded border-teal-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" @click="showingUserVariables = true" :title="t('players.show.user_variables')" v-if="this.$page.auth.player.isSeniorStaff">
                     <i class="fas fa-memory mr-1"></i>
                     UVs
                 </button>
