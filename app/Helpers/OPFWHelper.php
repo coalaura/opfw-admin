@@ -39,8 +39,8 @@ class OPFWHelper
 
         $response = self::executeRoute($status->serverIp . 'execute/staffPrivateMessage', [
             'licenseIdentifier' => $staffLicenseIdentifier,
-            'targetSource'    => $status->serverId,
-            'message'         => $message,
+            'targetSource'      => $status->serverId,
+            'message'           => $message,
         ]);
 
         if ($response->status) {
@@ -68,7 +68,7 @@ class OPFWHelper
 
         $response = self::executeRoute($serverIp . 'execute/staffChatMessage', [
             'licenseIdentifier' => $staffLicenseIdentifier,
-            'message'         => $message,
+            'message'           => $message,
         ]);
 
         if ($response->status) {
@@ -126,7 +126,7 @@ class OPFWHelper
         }
 
         $response = self::executeRoute($status->serverIp . 'execute/kickPlayer', [
-            'licenseIdentifier'         => $license,
+            'licenseIdentifier'       => $license,
             'reason'                  => 'You have been kicked by ' . $staffPlayerName . ' for reason `' . $reason . '`',
             'removeReconnectPriority' => false,
         ]);
@@ -185,7 +185,7 @@ class OPFWHelper
 
         $response = self::executeRoute($status->serverIp . 'execute/refreshTattoos', [
             'licenseIdentifier' => $license,
-            'characterId'     => $character_id,
+            'characterId'       => $character_id,
         ]);
 
         if ($response->status) {
@@ -233,7 +233,7 @@ class OPFWHelper
     public static function refreshInventory(string $serverIp, string $inventory): OPFWResponse
     {
         $response = self::executeRoute($serverIp . 'execute/refreshInventory', [
-            'inventoryName' => $inventory
+            'inventoryName' => $inventory,
         ]);
 
         if ($response->status) {
@@ -263,8 +263,8 @@ class OPFWHelper
 
         $response = self::executeRoute($status->serverIp . 'execute/unloadCharacter', [
             'licenseIdentifier' => $license,
-            'characterId'     => $character_id,
-            'message'         => $message,
+            'characterId'       => $character_id,
+            'message'           => $message,
         ]);
 
         if ($response->status) {
@@ -288,7 +288,7 @@ class OPFWHelper
     {
         return self::executeRoute($serverIp . 'execute/setQueuePosition', [
             'licenseIdentifier' => $licenseIdentifier,
-            'targetPosition'  => $targetPosition,
+            'targetPosition'    => $targetPosition,
         ], 'PATCH');
     }
 
@@ -321,7 +321,7 @@ class OPFWHelper
     public static function getQueueJSON(string $serverIp, bool $forceRefresh = false): ?array
     {
         $serverIp = Server::fixApiUrl($serverIp);
-        $cache = 'queue_json_' . md5($serverIp);
+        $cache    = 'queue_json_' . md5($serverIp);
 
         if (CacheHelper::exists($cache) && !$forceRefresh) {
             return CacheHelper::read($cache, []);
@@ -348,7 +348,7 @@ class OPFWHelper
     public static function getItemsJSON(string $serverIp, bool $forceRefresh = false): ?array
     {
         $serverIp = Server::fixApiUrl($serverIp);
-        $cache = 'items_json_' . md5($serverIp);
+        $cache    = 'items_json_' . md5($serverIp);
 
         if (CacheHelper::exists($cache) && !$forceRefresh) {
             return CacheHelper::read($cache, []);
@@ -374,7 +374,7 @@ class OPFWHelper
     public static function getCraftingTxt(string $serverIp): ?string
     {
         $serverIp = Server::fixApiUrl($serverIp);
-        $cache = 'crafting_' . md5($serverIp);
+        $cache    = 'crafting_' . md5($serverIp);
 
         if (CacheHelper::exists($cache)) {
             return CacheHelper::read($cache, "");
@@ -400,7 +400,7 @@ class OPFWHelper
     public static function getJobsJSON(string $serverIp): ?array
     {
         $serverIp = Server::fixApiUrl($serverIp);
-        $cache = 'jobs_json_' . md5($serverIp);
+        $cache    = 'jobs_json_' . md5($serverIp);
 
         if (CacheHelper::exists($cache)) {
             return CacheHelper::read($cache, []);
@@ -426,7 +426,7 @@ class OPFWHelper
     public static function getChatEmotesJSON(string $serverIp): ?array
     {
         $serverIp = Server::fixApiUrl($serverIp);
-        $cache = 'emotes_' . md5($serverIp);
+        $cache    = 'emotes_' . md5($serverIp);
 
         if (CacheHelper::exists($cache)) {
             return CacheHelper::read($cache, []);
@@ -434,7 +434,7 @@ class OPFWHelper
             $data = self::executeRoute($serverIp . 'chatEmotes.json', [], 'GET', 3);
 
             if ($data->data) {
-                $emotes = array_map(function($emote) {
+                $emotes = array_map(function ($emote) {
                     $emote['url'] = "https://cdn.discordapp.com/emojis/$emote[id]." . ($emote['animated'] ? 'gif' : 'png') . '?size=96&quality=lossless';
 
                     return $emote;
@@ -458,7 +458,7 @@ class OPFWHelper
     public static function getVehiclesJSON(string $serverIp): ?array
     {
         $serverIp = Server::fixApiUrl($serverIp);
-        $cache = 'vehicles_' . md5($serverIp);
+        $cache    = 'vehicles_' . md5($serverIp);
 
         if (CacheHelper::exists($cache)) {
             return CacheHelper::read($cache, []);
@@ -484,7 +484,7 @@ class OPFWHelper
     public static function getEDMJSON(string $serverIp): ?array
     {
         $serverIp = Server::fixApiUrl($serverIp);
-        $cache = 'exclusive_dealership_' . md5($serverIp);
+        $cache    = 'exclusive_dealership_' . md5($serverIp);
 
         if (CacheHelper::exists($cache)) {
             return CacheHelper::read($cache, []);
@@ -510,7 +510,7 @@ class OPFWHelper
     public static function getModelsJSON(string $serverIp): ?array
     {
         $serverIp = Server::fixApiUrl($serverIp);
-        $cache = 'models_' . md5($serverIp);
+        $cache    = 'models_' . md5($serverIp);
 
         if (CacheHelper::exists($cache)) {
             return CacheHelper::read($cache, []);
@@ -555,7 +555,7 @@ class OPFWHelper
     public static function getRoutesJSON(string $serverIp): ?array
     {
         $serverIp = Server::fixApiUrl($serverIp);
-        $cache = 'routes_' . md5($serverIp);
+        $cache    = 'routes_' . md5($serverIp);
 
         if (CacheHelper::exists($cache)) {
             return CacheHelper::read($cache, []);
@@ -586,8 +586,8 @@ class OPFWHelper
         return self::executeRoute($serverIp . 'execute/createScreenshot', [
             'serverId' => $id,
             'lifespan' => $lifespan,
-            'drawHTML' => $drawHTML
-        ]);
+            'drawHTML' => $drawHTML,
+        ], 'POST', 10);
     }
 
     /**
@@ -605,8 +605,8 @@ class OPFWHelper
         return self::executeRoute($serverIp . 'execute/createScreenshot', [
             'serverId' => $id,
             'lifespan' => 60 * 60,
-            'fps' => 30,
-            'duration' => $duration * 1000
+            'fps'      => 30,
+            'duration' => $duration * 1000,
         ], 'POST', $duration + 15);
     }
 
@@ -617,7 +617,7 @@ class OPFWHelper
      */
     private static function executeSocketRoute(string $type, string $server, string $route)
     {
-        $token = sessionKey();
+        $token   = sessionKey();
         $license = license();
 
         if (!$token || !$license) {
@@ -638,8 +638,8 @@ class OPFWHelper
 
         $client = new Client(
             [
-                'verify' => false,
-                'timeout' => 2
+                'verify'  => false,
+                'timeout' => 2,
             ]
         );
 
@@ -714,16 +714,19 @@ class OPFWHelper
 
         $client = new Client(
             [
-                'verify' => false,
-                'timeout' => $timeout,
-                'headers' => [
+                'verify'          => false,
+                'timeout'         => $timeout,
+                'connect_timeout' => 2,
+                'http_errors'     => false,
+                'headers'         => [
                     'Authorization' => 'Bearer ' . $token,
                 ],
             ]
         );
 
         for ($x = 0; $x < self::RetryAttempts; $x++) {
-            $statusCode = 0;
+            $statusCode    = 0;
+            $statusCodeInt = 0;
 
             LoggingHelper::log('Do ' . $requestType . ' to "' . $route . '"');
             LoggingHelper::log('Data: ' . json_encode($data));
@@ -735,7 +738,8 @@ class OPFWHelper
 
                 $response = (string) $res->getBody();
 
-                $statusCode = $res->getStatusCode() . " " . $res->getReasonPhrase();
+                $statusCodeInt = $res->getStatusCode();
+                $statusCode    = $statusCodeInt . " " . $res->getReasonPhrase();
             } catch (Throwable $t) {
                 $response = $t->getMessage();
             }
@@ -758,7 +762,7 @@ class OPFWHelper
 
             $result = self::parseResponse($response);
 
-            if (!$result->status && $statusCode !== 404) {
+            if (!$result->status && $statusCodeInt !== 404) {
                 if ($x + 1 < self::RetryAttempts) {
                     sleep(2);
                 }
@@ -784,7 +788,7 @@ class OPFWHelper
         $code = 0;
 
         if ($json && isset($json['statusCode'])) {
-            $code = intval($json['statusCode']);
+            $code     = intval($json['statusCode']);
             $category = floor(intval($json['statusCode']) / 100);
 
             switch (intval($json['statusCode'])) {
