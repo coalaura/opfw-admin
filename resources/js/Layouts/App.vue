@@ -13,7 +13,7 @@
                 <sidebar class="flex-shrink-0" v-if="!isMobile()" />
 
                 <!-- Content -->
-                <div class="flex flex-col flex-grow overflow-y-auto bg-white dark:bg-gray-800 dark:text-white" scroll-region>
+                <div class="flex flex-col flex-grow overflow-y-auto bg-white dark:bg-gray-800 dark:text-white" scroll-region ref="scrollable">
                     <div class="flex-grow p-12 pt-10 mobile:px-4 relative">
 
                         <!-- Flash message -->
@@ -43,6 +43,10 @@
 
                     </div>
 
+                    <button class="fixed bottom-3 right-3 bg-gray-300 dark:bg-gray-500 rounded shadow-lg w-8 h-8 flex justify-center items-center" v-if="scrolled" @click="scrollTop">
+                        <i class="fas fa-level-up-alt"></i>
+                    </button>
+
                     <!-- Mobile Sidebar -->
                     <sidebar class="flex-shrink-0" v-if="isMobile()" />
 
@@ -68,6 +72,11 @@ export default {
         Sidebar,
         Navbar,
     },
+    data() {
+        return {
+            scrolled: false
+        };
+    },
     methods: {
         isMobile() {
             return $(window).width() <= 640;
@@ -82,6 +91,13 @@ export default {
                 } else {
                     $(this).removeClass("overflowing");
                 }
+            });
+        },
+
+        scrollTop() {
+            this.$refs.scrollable.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
         }
     },
@@ -110,6 +126,10 @@ export default {
 
         $(window).on("resize", () => {
             this.padVerticalOverflows();
+        });
+
+        $(this.$refs.scrollable).on("scroll", () => {
+            this.scrolled = this.$refs.scrollable.scrollTop > 50;
         });
     }
 };
