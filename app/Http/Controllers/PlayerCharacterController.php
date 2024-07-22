@@ -115,12 +115,11 @@ class PlayerCharacterController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Request $request
      * @param Player $player
      * @param Character $character
      * @return Response
      */
-    public function show(Request $request, Player $player, Character $character): Response
+    public function show(Player $player, Character $character): Response
     {
         $resetCoords = json_decode(file_get_contents(__DIR__ . '/../../../helpers/coords_reset.json'), true);
         $motels      = Motel::query()->where('cid', $character->character_id)->get()->sortBy(['motel', 'room_id']);
@@ -150,7 +149,7 @@ class PlayerCharacterController extends Controller
         ]);
     }
 
-    public function backstories(Request $request): Response
+    public function backstories(): Response
     {
         return Inertia::render('Players/Characters/Backstories');
     }

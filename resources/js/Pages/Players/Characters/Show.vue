@@ -531,47 +531,56 @@
         </div>
 
         <!-- Vehicle Adding -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isVehicleAdd">
-            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
-                <h3 class="mb-2">{{ t('players.characters.vehicle.add') }}</h3>
-                <div class="w-full p-3 flex justify-between">
-                    <label class="mr-4 block w-1/3 text-center pt-2 font-bold">
+        <modal :show.sync="isVehicleAdd">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.characters.vehicle.add') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="flex gap-3 items-center">
+                    <label class="block w-40" for="modelName">
                         {{ t('players.characters.vehicle.model') }}
                     </label>
-                    <model-select class="block w-2/3 px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" :options="vehicleList" v-model="vehicleAdd" />
-                </div>
-                <div class="flex justify-end">
-                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-dark-secondary mr-3 dark:text-black dark:bg-secondary" @click="isVehicleAdd = false">
-                        {{ t('global.cancel') }}
-                    </button>
-                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-success mr-3 dark:bg-dark-success" @click="addVehicle">
-                        {{ t('players.characters.vehicle.add') }}
-                    </button>
-                </div>
-            </div>
-        </div>
 
-        <!-- Edit License -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isLicenseEdit">
-            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
-                <h3 class="mb-2">{{ t('players.characters.license.add') }}</h3>
-
-                <select multiple class="w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" v-model="licenseForm.licenses">
-                    <option :value="license" v-for="license in licenses">
-                        {{ t('players.characters.license.' + license) }}
-                    </option>
-                </select>
-
-                <div class="flex justify-end">
-                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-dark-secondary mr-3 dark:text-black dark:bg-secondary" @click="isLicenseEdit = false">
-                        {{ t('global.cancel') }}
-                    </button>
-                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-success dark:bg-dark-success" @click="updateLicenses" v-if="licensesChanged">
-                        {{ t('players.characters.license.add') }}
-                    </button>
+                    <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" :class="{ 'border-red-500': !vehicleAddModelValid }" id="modelName" placeholder="sultan2" minlength="1" maxlength="250" v-model="vehicleAddModel" />
                 </div>
-            </div>
-        </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isVehicleAdd = false">
+                    {{ t('global.cancel') }}
+                </button>
+
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" @click="addVehicle" v-if="vehicleAddModelValid">
+                    {{ t('players.characters.vehicle.add') }}
+                </button>
+            </template>
+        </modal>
+
+        <!-- Edit Licenses -->
+        <modal :show.sync="isLicenseEdit">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.characters.license.add') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <MultiSelector :items="licenses" locale="players.characters.license" v-model="licenseForm.licenses" />
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isLicenseEdit = false">
+                    {{ t('global.cancel') }}
+                </button>
+
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" @click="updateLicenses" v-if="licensesChanged">
+                    {{ t('players.characters.license.add') }}
+                </button>
+            </template>
+        </modal>
 
         <!-- Vehicles -->
         <v-section :noFooter="true">
@@ -866,6 +875,7 @@ import VSection from './../../../Components/Section';
 import Card from './../../../Components/Card';
 import Badge from './../../../Components/Badge';
 import Modal from "../../../Components/Modal";
+import MultiSelector from '../../../Components/MultiSelector';
 
 import { ModelSelect } from 'vue-search-select';
 import axios from 'axios';
@@ -882,6 +892,7 @@ export default {
         Badge,
         Modal,
         ModelSelect,
+        MultiSelector,
     },
     props: {
         player: {
@@ -893,7 +904,7 @@ export default {
             required: true,
         },
         vehicles: {
-            type: [Object, Array],
+            type: Object,
             required: true,
         },
         horns: {
@@ -901,7 +912,7 @@ export default {
             required: true,
         },
         jobs: {
-            type: [Object, Array],
+            type: Object,
             required: true,
         },
         motelMap: {
@@ -985,15 +996,6 @@ export default {
             }
         }
 
-        const sortedVehicles = Object.values(this.vehicles)
-            .map(value => {
-                return {
-                    value: value.model,
-                    text: value.label
-                };
-            })
-            .sort((a, b) => a.text.localeCompare(b.text));
-
         const money = this.getMoneyLocals();
 
         const totalVehicleValue = this.numberFormat(this.character.vehicles.map(vehicle => {
@@ -1021,11 +1023,7 @@ export default {
                 position_name: this.character.positionName,
             },
             totalVehicleValue: totalVehicleValue,
-            vehicleList: sortedVehicles,
-            vehicleAdd: {
-                value: '',
-                text: ''
-            },
+            vehicleAddModel: '',
             location: window.location.href,
             vehicleForm: {
                 id: 0,
@@ -1096,6 +1094,9 @@ export default {
             if (parseInt(this.balanceForm.stocks) !== this.character.stocksBalance) return true;
 
             return false;
+        },
+        vehicleAddModelValid() {
+            return !!Object.values(this.vehicles).find(vehicle => vehicle.model === this.vehicleAddModel);
         }
     },
     methods: {
@@ -1307,20 +1308,13 @@ export default {
             this.isVehicleEdit = false;
         },
         async addVehicle() {
-            const vehicle = Object.values(this.vehicles).find(v => this.vehicleAdd.value === v.model);
-
-            if (!vehicle) {
-                alert('Unknown vehicle model "' + this.vehicleAdd.value + '"');
-
-                return;
-            }
-
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + '/addVehicle', {
-                model: this.vehicleAdd.value
+                model: this.vehicleAddModel
             });
 
             // Reset.
+            this.vehicleAddModel = '';
             this.isVehicleAdd = false;
         },
         async updateLicenses() {

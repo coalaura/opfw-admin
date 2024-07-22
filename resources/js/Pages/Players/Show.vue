@@ -269,7 +269,7 @@
             <!-- Small icon buttons top right -->
             <div class="absolute top-2 right-2 flex gap-2 items-center">
                 <!-- Staff statistics -->
-                <button v-if="$page.auth.player.isSuperAdmin" class="p-1 text-sm font-bold leading-4 text-center rounded border-teal-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :title="t('players.show.commands_edit')" @click="isEnablingCommands = true">
+                <button v-if="$page.auth.player.isSuperAdmin" class="p-1 text-sm font-bold leading-4 text-center rounded border-teal-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :title="t('players.show.commands_edit')" @click="isEnablingCommands = true; enabledCommands = player.enabledCommands">
                     <i class="fas fa-terminal mr-1"></i>
                     CMD
                 </button>
@@ -784,7 +784,7 @@
             </div>
         </div>
 
-        <!-- System Ban Info -->
+        <!-- Enablable commands -->
         <modal :show.sync="isEnablingCommands">
             <template #header>
                 <h1 class="dark:text-white">
@@ -793,11 +793,7 @@
             </template>
 
             <template #default>
-                <div class="flex gap-2 flex-wrap justify-evenly">
-                    <badge class="px-2 py-0.5 cursor-pointer font-mono whitespace-nowrap border-lime-300 bg-lime-200 dark:bg-lime-700" :class="{ '!border-red-300 !bg-red-200 dark:!bg-red-700': !command.enabled }" v-for="command in commands" :key="command.name" @click.native="command.enabled = !command.enabled">
-                        /{{ command.name }}
-                    </badge>
-                </div>
+                <MultiSelector :items="enablableCommands" prefix="/" v-model="enabledCommands" />
             </template>
 
             <template #actions>
@@ -1671,6 +1667,7 @@ import ScreenshotAttacher from './../../Components/ScreenshotAttacher';
 import Modal from './../../Components/Modal';
 import MetadataViewer from './../../Components/MetadataViewer';
 import StatisticsTable from './../../Components/StatisticsTable';
+import MultiSelector from './../../Components/MultiSelector';
 
 export default {
     layout: Layout,
@@ -1684,6 +1681,7 @@ export default {
         Modal,
         MetadataViewer,
         StatisticsTable,
+        MultiSelector,
         CountryFlag
     },
     props: {
@@ -1735,13 +1733,6 @@ export default {
         } else {
             selectedRole = 'player';
         }
-
-        const commands = this.enablableCommands.sort().map(c => {
-            return {
-                name: c,
-                enabled: this.player.enabledCommands.includes(c),
-            };
-        });
 
         const autoExpandCollapsed = this.setting('expandCollapsed'),
             showSystemNotes = this.setting('showSystemNotes');
@@ -1796,8 +1787,8 @@ export default {
             isSchedulingUnban: false,
             scheduledUnbanDate: false,
 
-            commands: commands,
             isEnablingCommands: false,
+            enabledCommands: [],
 
             isShowingDiscord: false,
             isShowingDiscordLoading: false,
@@ -2091,13 +2082,11 @@ export default {
 
             this.isEnablingCommands = false;
 
-            const enabledCommands = this.commands.filter(c => c.enabled).map(c => c.name);
-
             this.isLoading = true;
 
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateEnabledCommands', {
-                enabledCommands: enabledCommands,
+                enabledCommands: this.enabledCommands,
             });
 
             this.isLoading = false;
