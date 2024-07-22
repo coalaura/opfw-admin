@@ -247,7 +247,7 @@ class InventoryController extends Controller
             DB::table('inventories')->whereIn('id', $delete)->delete();
         }
 
-        LoggingHelper::log(consoleName() . ' changed all items in '. $inventory .' (slot ' . $slot . ') to ' . $amount . 'x ' . $name . ' (' . json_encode($metadata) . ').');
+        LoggingHelper::log(consoleName() . ' changed all items in '. $inventory .' (slot ' . $slot . ') to ' . $amount . 'x ' . $name . ' (' . $metadata . ').');
 
         DB::table('inventories')->where('inventory_name', '=', $inventory)->where('inventory_slot', '=', $slot)->update([
             'item_name'     => $name,
