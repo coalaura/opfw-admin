@@ -9,9 +9,9 @@
                     <i class="fas fa-dolly-flatbed"></i>
                 </inertia-link>
             </h1>
-			<p v-if="totalItems > 0">
-				{{ t('inventories.show.description', totalItems, totalWeight) }}
-			</p>
+            <p v-if="totalItems > 0">
+                {{ t('inventories.show.description', totalItems, totalWeight) }}
+            </p>
         </portal>
 
         <!-- Table -->
@@ -231,10 +231,22 @@ export default {
             const metadata = {};
 
             for (const entry of this.editingMetadata) {
-                const key = entry.key?.trim(),
-                      value = entry.value?.trim();
+                let key = entry.key,
+                    value = entry.value;
 
-                if (!key || !value) continue;
+                if (typeof value === "string") {
+                    value = value.trim();
+                } else if (value === "true" || value === "false") {
+                    value = value === "true";
+                } else if (value.match(/^-?\d+$/)) {
+                    value = parseInt(value);
+                } else if (value.match(/^-?\d+\.?\d*$/)) {
+                    value = parseFloat(value);
+                } else {
+                    value = null;
+                }
+
+                if (!key || (!value && value !== false)) continue;
 
                 try {
                     metadata[key] = JSON.parse(value);
@@ -272,7 +284,7 @@ export default {
 
                     this.editingMetadata.push({
                         key: key,
-                        value: typeof value === "object" ? JSON.stringify(value) : value
+                        value: typeof value === "object" ? JSON.stringify(value) : value + ""
                     });
                 }
             } else {
