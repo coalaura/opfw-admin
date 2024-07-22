@@ -14,7 +14,7 @@
         <v-section class="overflow-x-auto relative" :noHeader="true" :noFooter="true">
             <template>
                 <div class="grid grid-cols-5 gap-3 w-max">
-                    <div v-for="(items, slot) in contents" :key="slot" class="bg-black bg-opacity-10 rounded-sm border border-gray-500 w-item relative pt-2">
+                    <div v-for="(items, slot) in contents" :key="slot" class="bg-black bg-opacity-10 rounded-sm border border-gray-500 w-item relative pt-2 text-white">
                         <template v-if="items.length > 0">
                             <div class="text-sm absolute top-0.5 right-1.5 select-none">{{ items.length }}</div>
 
