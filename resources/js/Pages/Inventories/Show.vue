@@ -231,8 +231,8 @@ export default {
             const metadata = {};
 
             for (const entry of this.editingMetadata) {
-                const key = entry.key.trim(),
-                      value = entry.value.trim();
+                const key = entry.key?.trim(),
+                      value = entry.value?.trim();
 
                 if (!key || !value) continue;
 
