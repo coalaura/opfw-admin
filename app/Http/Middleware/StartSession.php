@@ -46,6 +46,15 @@ namespace {
         return sessionHelper()->getPlayer();
     }
 
+    function consoleName(): ?string
+    {
+        $user = user();
+
+        if (!$user) return null;
+
+        return $user->getSafePlayerName() . ' (' . $user->license_identifier . ')';
+    }
+
     function license(): ?string
     {
         return sessionHelper()->getCurrentLicense();

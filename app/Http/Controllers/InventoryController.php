@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\LoggingHelper;
 use App\Helpers\OPFWHelper;
 use App\Http\Resources\InventoryLogResource;
 use App\Http\Resources\LogResource;
@@ -246,6 +247,8 @@ class InventoryController extends Controller
             DB::table('inventories')->whereIn('id', $delete)->delete();
         }
 
+        LoggingHelper::log(consoleName() . ' changed all items in '. $inventory .' (slot ' . $slot . ') to ' . $amount . 'x ' . $name . ' (' . json_encode($metadata) . ').');
+
         DB::table('inventories')->where('inventory_name', '=', $inventory)->where('inventory_slot', '=', $slot)->update([
             'item_name'     => $name,
             'item_metadata' => $metadata,
@@ -269,6 +272,8 @@ class InventoryController extends Controller
         if (!$this->isSuperAdmin($request)) {
             abort(403);
         }
+
+        LoggingHelper::log(consoleName() . ' deleted all items in '. $inventory .' (slot ' . $slot . ').');
 
         DB::table('inventories')->where('inventory_name', '=', $inventory)->where('inventory_slot', '=', $slot)->delete();
 
