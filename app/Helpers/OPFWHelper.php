@@ -224,6 +224,26 @@ class OPFWHelper
     }
 
     /**
+     * Updates an inventory if its laoded.
+     *
+     * @param string $serverIp
+     * @param string $inventory
+     * @return OPFWResponse
+     */
+    public static function refreshInventory(string $serverIp, string $inventory): OPFWResponse
+    {
+        $response = self::executeRoute($serverIp, $serverIp . 'execute/refreshInventory', [
+            'inventoryName' => $inventory
+        ]);
+
+        if ($response->status) {
+            $response->message = 'Successfully refreshed inventory.';
+        }
+
+        return $response;
+    }
+
+    /**
      * Unloads someone's character
      *
      * @param string $staffLicenseIdentifier
@@ -316,6 +336,33 @@ class OPFWHelper
 
             return $data->data;
         }
+    }
+
+    /**
+     * Gets the items.json
+     *
+     * @param string $serverIp
+     * @param bool $forceRefresh
+     * @return array|null
+     */
+    public static function getItemsJSON(string $serverIp, bool $forceRefresh = false): ?array
+    {
+        $serverIp = Server::fixApiUrl($serverIp);
+        $cache = 'items_json_' . md5($serverIp);
+
+        if (CacheHelper::exists($cache) && !$forceRefresh) {
+            return CacheHelper::read($cache, []);
+        } else {
+            $data = self::executeRoute($serverIp, $serverIp . 'items.json', [], 'GET', 3);
+
+            if ($data->data) {
+                CacheHelper::write($cache, $data->data, 6 * CacheHelper::HOUR);
+            }
+
+            return $data->data;
+        }
+
+        return null;
     }
 
     /**

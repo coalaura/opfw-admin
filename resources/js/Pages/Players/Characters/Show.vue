@@ -615,9 +615,9 @@
                         </template>
 
                         <template #footer>
-                            <inertia-link class="block px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventories/vehicle/' + vehicle.id">
+                            <inertia-link class="block px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/resolve/trunk-' + vehicle.id">
                                 <i class="fas fa-briefcase mr-1"></i>
-                                {{ t('inventories.view') }}
+                                {{ t('inventories.show_trunk') }}
                             </inertia-link>
 
                             <div class="flex justify-between gap-2 w-full" v-if="$page.auth.player.isSuperAdmin">
@@ -646,10 +646,10 @@
                                 <i class="fas fa-ambulance"></i>
                             </button>
 
-                            <inertia-link class="block px-2 py-1 text-center text-white absolute top-1 right-10 bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory_find/trunk/' + vehicle.id" :title="t('inventories.show_trunk')">
+                            <inertia-link class="block px-2 py-1 text-center text-white absolute top-1 right-10 bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/resolve/trunk-' + vehicle.id" :title="t('inventories.show_trunk')">
                                 <i class="fas fa-car-side"></i>
                             </inertia-link>
-                            <inertia-link class="block px-2 py-1 text-center text-white absolute top-1 right-1 bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory_find/glovebox/' + vehicle.id" :title="t('inventories.show_glovebox')">
+                            <inertia-link class="block px-2 py-1 text-center text-white absolute top-1 right-1 bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/glovebox-' + vehicle.id" :title="t('inventories.show_glovebox')">
                                 <i class="fas fa-car"></i>
                             </inertia-link>
                         </template>
@@ -689,9 +689,9 @@
                         </template>
 
                         <template #footer>
-                            <inertia-link class="block px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventories/property/' + property.property_id">
+                            <inertia-link class="block px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/resolve/property-' + property.property_id">
                                 <i class="fas fa-briefcase mr-1"></i>
-                                {{ t('inventories.view') }}
+                                {{ t('inventories.show_inv') }}
                             </inertia-link>
                         </template>
                     </card>
@@ -720,9 +720,9 @@
                         </template>
 
                         <template #footer>
-                            <inertia-link class="block px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventories/property/' + property.property_id">
+                            <inertia-link class="block px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/resolve/property-' + property.property_id">
                                 <i class="fas fa-briefcase mr-1"></i>
-                                {{ t('inventories.view') }}
+                                {{ t('inventories.show_inv') }}
                             </inertia-link>
                         </template>
                     </card>
@@ -753,13 +753,8 @@
                             </h4>
                         </template>
                         <template #footer>
-                            <inertia-link class="block px-2 py-1 text-center text-white absolute top-1 right-1 bg-blue-600 dark:bg-blue-400 rounded" v-if="motel.motel in motelMap" :href="'/inventory/motel-' + motelMap[motel.motel] + '-' + motel.room_id + ':1'" :title="t('inventories.show_motel')">
+                            <inertia-link class="block px-2 py-1 text-center text-white absolute top-1 right-1 bg-blue-600 dark:bg-blue-400 rounded" v-if="motel.motel in motelMap" :href="'/inventory/motel-' + motelMap[motel.motel] + '-' + motel.room_id + ':1'" :title="t('inventories.show_inv')">
                                 <i class="fas fa-archive"></i>
-                            </inertia-link>
-
-                            <inertia-link class="block px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventories/motel/' + motel.id">
-                                <i class="fas fa-briefcase mr-1"></i>
-                                {{ t('inventories.view') }}
                             </inertia-link>
                         </template>
                     </card>

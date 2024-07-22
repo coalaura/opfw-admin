@@ -1244,7 +1244,7 @@
                                         </inertia-link>
 
                                         <!-- Show inventory logs -->
-                                        <inertia-link class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-300 bg-blue-600 dark:bg-blue-400 border-2 block" :href="'/inventories/character/' + character.id" :title="t('players.characters.inventory_logs')">
+                                        <inertia-link class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-blue-300 bg-blue-600 dark:bg-blue-400 border-2 block" :href="'/inventory/logs/character-' + character.id" :title="t('inventories.view_logs')">
                                             <i class="fas fa-suitcase"></i>
                                         </inertia-link>
                                     </div>

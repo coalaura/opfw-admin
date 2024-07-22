@@ -291,7 +291,7 @@ export default {
             }
 
             for (let x = 0; x < inventories.length; x++) {
-                details = details.replaceAll(inventories[x], '<a title="' + this.t('inventories.view') + '" class="text-indigo-600 dark:text-indigo-400" href="/inventory/' + inventories[x] + '">' + inventories[x] + '</a>');
+                details = details.replaceAll(inventories[x], '<a title="' + this.t('inventories.show_inv') + '" class="text-indigo-600 dark:text-indigo-400" href="/inventory/' + inventories[x] + '">' + inventories[x] + '</a>');
             }
 
             return details;

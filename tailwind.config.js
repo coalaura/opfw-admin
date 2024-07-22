@@ -55,7 +55,8 @@ module.exports = {
                 'map-icon': '20px',
             },
             width: {
-                'inventory':          '220px',
+                'item':               '140px',
+                'item-image':         '100px',
                 'small-alert':        '380px',
                 'alert':              '650px',
                 'big-alert':          '650px',
@@ -66,8 +67,6 @@ module.exports = {
                 'split':              'calc(50% - 10px)',
                 'tp':                 '170px',
                 'tp-staff':           '200px',
-                'inventory_contents': '660px',
-                'inventory_slot':     '100px',
                 'map-icon':           '20px',
                 'ch-button':          '32px',
                 'xs-steam':           '150px',
@@ -79,7 +78,6 @@ module.exports = {
             height: {
                 'side-close':      '37px',
                 'max':             'calc(100vh - (210px + 120px))',
-                'inventory_slot':  '100px',
                 'box':             '15px',
                 'twitter-img':     '250px',
             },

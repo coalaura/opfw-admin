@@ -683,83 +683,37 @@
         "none": "No Characters found"
     },
     "inventories": {
-        "view": "Inventory",
         "show_inv": "Show inventory",
+        "view_logs": "Show Inventory Logs",
         "show_trunk": "Show trunk inventory",
         "show_glovebox": "Show glovebox inventory",
-        "show_motel": "Show motel dresser inventory",
-        "view_logs": "Show Inventory Logs",
-        "search": {
-            "title": "Search Inventories",
-            "label": "Inventories",
-            "type": "Inventory Type",
-            "types": {
-                "character": "Locker and Pockets (Police/EMS/etc.)",
-                "vehicle": "Vehicle (Trunk/Glove-box)",
-                "evidence": "Evidence Locker",
-                "motel": "Motels",
-                "property": "Property"
-            },
-            "cid": "CID (Owner/Character)",
-            "plate_id": "Plate / ID",
-            "evidence_id": "Evidence ID",
-            "name": "Inventory Descriptor",
-            "id": "Inventory ID",
-            "none": "No inventories matching your search or no not-empty inventories found"
-        },
-		"history": {
-			"title": "Item History for {0} ({1})",
-			"description": "View the movement history of an item"
-		},
-        "show": {
-            "error": "Invalid Inventory",
-            "title": "Inventory",
-            "snapshot": "Create a snapshot of the inventory",
-            "snap_time": "This is a snapshot taken at {0} by {1}. It will expire at {2}",
-            "type": {
-                "ground": "This is a ground inventory.",
-                "character": "This is a character inventory.",
-                "trunk": "This inventory is the trunk of a vehicle.",
-                "glovebox": "This inventory is the glovebox of a vehicle.",
-                "property": "This inventory is a storage container inside a property.",
-                "evidence": "This inventory is the evidence locker of a police department.",
-                "locker-police": "This inventory is someones police locker.",
-                "locker-mechanic": "This inventory is someones mechanic locker.",
-                "locker-ems": "This inventory is someones ems locker.",
-                "motel": "This inventory is a storage container inside a motel.",
-                "container": "This is a storage container inventory."
-            },
-            "vehicle": "Vehicle",
-            "owner": "Vehicle Owner",
-            "property": "Property",
-            "prop_owner": "Property Owner",
-            "motel_owner": "Motel Owner",
-            "prop_description": "The property is owned by {0} (#{1})",
-            "unknown_prop": "Unknown Property",
-            "character": "Character",
-            "view_character": "View Character",
-            "view_player": "View Player",
-            "plate_id": "Plate / ID",
-            "unknown_vehicle": "Unknown vehicle, possibly npc/local.",
-            "contents": "Inventory Contents",
-            "snap_contents": "Inventory Contents at {0}",
-            "snap_url": "Successfully created snapshot {0}",
-            "empty": "Empty",
-            "content_title": "Slot {0} has {1} of {2}",
-            "content_empty": "Slot {0} is empty",
-            "empty_title": "Empty slot {0}",
-            "empty_confirm": "Are you sure you want to empty slot {0} in this inventory?",
-            "battle_royale": "This item is a Battle Royale item."
-        },
         "logs": {
             "title": "Inventory Logs",
-            "description": "Inventory logs related to a certain inventory",
-			"history": "History"
+            "description": "Inventory logs for {0}.",
+            "refresh": "Refresh",
+            "player": "Player",
+            "server_id": "Server ID",
+            "items_moved": "Item(s) Moved",
+            "from": "From",
+            "to": "To",
+            "timestamp": "Timestamp",
+            "no_logs": "No inventory logs found."
         },
-        "character": {
-            "movement": "Movement",
-            "item": "Moved Item",
-            "unknown": "Unknown"
+        "show": {
+            "description": "{0} items weighing {1}su in total.",
+            "delete_item_slot": "Delete all items in this slot.",
+            "edit_item_slot": "Edit all items in this slot.",
+            "add_item_slot": "Add items to this slot.",
+            "delete_confirm": "Are you sure you want to delete all items from this slot?",
+            "editing_slot": "Editing slot #{0}",
+            "amount": "Amount",
+            "item_name": "Item Name",
+            "infos": "Item Infos",
+            "metadata": "Item Metadata",
+
+            "key": "Key",
+            "value": "Value",
+            "save": "Save Changes"
         }
     },
     "twitter": {

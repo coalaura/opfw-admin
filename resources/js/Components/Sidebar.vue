@@ -302,12 +302,6 @@ export default {
                             icon: 'heart',
                             url: '/suspicious',
                             hidden: !this.perm.check(this.perm.PERM_SUSPICIOUS),
-                        },
-                        {
-                            label: 'inventories.search.label',
-                            icon: 'pallet',
-                            url: '/search_inventory',
-                            private: true,
                         }
                     ]
                 },

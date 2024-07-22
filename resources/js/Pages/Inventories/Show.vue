@@ -2,409 +2,109 @@
     <div>
 
         <portal to="title">
-            <h1 class="dark:text-white" v-if="inventory">
-                {{ t('inventories.show.title') }} {{ inventory.title }} ({{ inventory.type }})
+            <h1 class="dark:text-white">
+                {{ name }}
             </h1>
-            <h1 class="dark:text-white" v-else>
-                {{ t('inventories.show.error') }}
-            </h1>
-            <p v-if="snapshot">
-                {{ t('inventories.show.snap_time', formatTime(snapshot.created), snapshot.created_by.player_name, formatTime(snapshot.expires)) }}
-            </p>
+			<p v-if="totalItems > 0">
+				{{ t('inventories.show.description', totalItems, totalWeight) }}
+			</p>
         </portal>
 
         <!-- Table -->
-        <v-section class="overflow-x-auto relative" v-if="inventory" :noFooter="true">
-            <template #header>
-                <h2>
-                    {{ t('global.info') }}
-                </h2>
-                <p>
-                    {{ t('inventories.show.type.' + inventory.type) }}
-                </p>
-                <a v-if="snapshotUrl" :href="'/inventory/snapshot/' + snapshotUrl" target="_blank" class="mt-3 text-white block px-5 py-2 border-2 rounded border-blue-500 bg-blue-600 dark:bg-blue-400">
-                    {{ t('inventories.show.snap_url', snapshotUrl) }}
-                </a>
-
-                <button class="block px-2 py-1 text-center text-white absolute top-1 right-1 bg-blue-600 dark:bg-blue-400 rounded" :title="t('inventories.show.snapshot')" @click="createSnapshot" v-if="!snapshot && !snapshotUrl">
-                    <i class="fas fa-camera"></i>
-                </button>
-                <inertia-link
-                    class="block px-2 py-1 text-center text-white absolute top-1 right-10 bg-blue-600 dark:bg-blue-400 rounded"
-                    :href="'/inventories/raw/' + inventory.title"
-                    :title="t('inventories.view_logs')"
-                >
-                    <i class="fas fa-dolly-flatbed"></i>
-                </inertia-link>
-            </template>
-
+        <v-section class="overflow-x-auto relative" :noHeader="true" :noFooter="true">
             <template>
-                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9 max-w-screen-lg"
-                     v-if="inventory.type === 'character' || inventory.type === 'locker-police' || inventory.type === 'locker-mechanic' || inventory.type === 'locker-ems'">
-                    <card v-if="inventory.character">
-                        <template #header>
-                            <h3 class="mb-2">
-                                {{ t('inventories.show.character') }}
-                            </h3>
-                            <h4>
-                                {{ inventory.character.first_name }} {{ inventory.character.last_name }}
-                                (#{{ inventory.character.character_id }})
-                            </h4>
-                            <h4 class="text-primary dark:text-dark-primary">
-                                <span>{{ t('players.edit.dob') }}:</span>
-                                {{ $moment(inventory.character.date_of_birth).format('l') }}
-                            </h4>
-                            <h4 class="text-red-700 dark:text-red-300" v-if="inventory.character.character_deleted">
-                                <span>{{ t('players.edit.deleted') }}:</span>
-                                {{ $moment(inventory.character.character_deletion_timestamp).format('l') }}
-                            </h4>
+                <div class="grid grid-cols-5 gap-3 w-max">
+                    <div v-for="(items, slot) in contents" :key="slot" class="bg-black bg-opacity-10 rounded-sm border border-gray-500 w-item relative pt-2">
+                        <template v-if="items.length > 0">
+                            <div class="text-sm absolute top-0.5 right-1.5 select-none">{{ items.length }}</div>
+
+                            <button v-if="canEditItems" class="bg-transparent absolute top-0.5 left-1.5 text-red-600 dark:text-red-500 font-semibold text-sm cursor-pointer" :title="t('inventories.show.delete_item_slot')" @click="deleteItemSlot(slot)">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+
+                            <button v-if="canEditItems" class="bg-transparent absolute top-0.5 left-6 text-yellow-500 dark:text-yellow-400 font-semibold text-sm cursor-pointer" :title="t('inventories.show.edit_item_slot')" @click="editItemSlot(slot, items)">
+                                <i class="fas fa-wrench"></i>
+                            </button>
+
+                            <img :src="`/images/icons/items/${items[0].name}.png`" class="w-full h-32 object-contain crisp" />
                         </template>
 
-                        <template>
-                            <p>
-                                {{ inventory.character.backstory }}
-                            </p>
+                        <template v-else>
+                            <button v-if="canEditItems" class="bg-transparent absolute top-0.5 right-1.5 text-lime-600 dark:text-lime-500 font-semibold text-sm cursor-pointer" :title="t('inventories.show.add_item_slot')" @click="editItemSlot(slot, items)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+
+                            <div class="h-32">&nbsp;</div>
                         </template>
 
-                        <template #footer>
-                            <inertia-link
-                                class="px-4 py-3 mb-3 block text-center text-white bg-indigo-600 dark:bg-indigo-400 rounded"
-                                :href="'/players/' + inventory.character.license_identifier + '/characters/' + inventory.character.character_id">
-                                {{ t('inventories.show.view_character') }}
-                            </inertia-link>
-                            <inertia-link
-                                class="px-4 py-3 block text-center text-white bg-indigo-600 dark:bg-indigo-400 rounded"
-                                :href="'/players/' + inventory.character.license_identifier">
-                                {{ t('inventories.show.view_player') }}
-                            </inertia-link>
-                        </template>
-                    </card>
+                        <div class="px-1 py-0.5 text-center truncate text-sm bg-black bg-opacity-10" v-html="getFirstItemName(items)"></div>
+                    </div>
                 </div>
-                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9 max-w-screen-lg"
-                     v-else-if="inventory.type === 'trunk' || inventory.type === 'glovebox'">
-                    <card v-if="inventory.vehicle">
-                        <template #header>
-                            <h3 class="mb-2">
-                                {{ t('inventories.show.vehicle') }} ({{ inventory.more_info.type }})
-                            </h3>
-                            <h4>
-                                {{ inventory.vehicle.model_name }}
-                            </h4>
-                            <h4 class="text-primary dark:text-dark-primary">
-                                <span>{{ t('players.vehicles.plate') }}:</span> {{ inventory.vehicle.plate }}
-                            </h4>
-                        </template>
-
-                        <template>
-                            <p v-html="t('players.vehicles.parked', inventory.more_info.garage)"></p>
-                        </template>
-
-                        <template #footer>
-                            <inertia-link
-                                class="block px-4 py-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded"
-                                :href="'/inventories/vehicle/' + inventory.id"
-                                v-if="(parseInt(inventory.id)+'') === inventory.id"
-                            >
-                                <i class="fas fa-briefcase mr-1"></i>
-                                {{ t('inventories.view') }}
-                            </inertia-link>
-                            <inertia-link
-                                class="block px-4 py-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded"
-                                :href="'/logs?action=%3DItem+Moved&details=' + inventory.title"
-                                v-else
-                            >
-                                <i class="fas fa-dolly-flatbed mr-1"></i>
-                                {{ t('inventories.view_logs') }}
-                            </inertia-link>
-                        </template>
-                    </card>
-                    <card v-else>
-                        <template #header>
-                            <h3 class="mb-2">
-                                {{ t('inventories.show.vehicle') }} ({{ inventory.more_info.type }})
-                            </h3>
-                            <h4 class="text-primary dark:text-dark-primary">
-                                <span>{{ t('inventories.show.plate_id') }}:</span> {{ inventory.id }}
-                            </h4>
-                        </template>
-
-                        <template>
-                            <p>
-                                {{ t('inventories.show.unknown_vehicle') }}
-                            </p>
-                        </template>
-
-                        <template #footer>
-                            <inertia-link
-                                class="block px-4 py-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded"
-                                :href="'/logs?action=%3DItem+Moved&details=' + inventory.title"
-                            >
-                                <i class="fas fa-dolly-flatbed mr-1"></i>
-                                {{ t('inventories.view_logs') }}
-                            </inertia-link>
-                        </template>
-                    </card>
-                    <card v-if="inventory.character">
-                        <template #header>
-                            <h3 class="mb-2">
-                                {{ t('inventories.show.owner') }}
-                            </h3>
-                            <h4>
-                                {{ inventory.character.first_name }} {{ inventory.character.last_name }}
-                                (#{{ inventory.character.character_id }})
-                            </h4>
-                            <h4 class="text-primary dark:text-dark-primary">
-                                <span>{{ t('players.edit.dob') }}:</span>
-                                {{ $moment(inventory.character.date_of_birth).format('l') }}
-                            </h4>
-                            <h4 class="text-red-700 dark:text-red-300" v-if="inventory.character.character_deleted">
-                                <span>{{ t('players.edit.deleted') }}:</span>
-                                {{ $moment(inventory.character.character_deletion_timestamp).format('l') }}
-                            </h4>
-                        </template>
-
-                        <template>
-                            <p>
-                                {{ inventory.character.backstory }}
-                            </p>
-                        </template>
-
-                        <template #footer>
-                            <inertia-link
-                                class="px-4 py-3 mb-3 block text-center text-white bg-indigo-600 dark:bg-indigo-400 rounded"
-                                :href="'/players/' + inventory.character.license_identifier + '/characters/' + inventory.character.character_id">
-                                {{ t('inventories.show.view_character') }}
-                            </inertia-link>
-                            <inertia-link
-                                class="px-4 py-3 block text-center text-white bg-indigo-600 dark:bg-indigo-400 rounded"
-                                :href="'/players/' + inventory.character.license_identifier">
-                                {{ t('inventories.show.view_player') }}
-                            </inertia-link>
-                            <inertia-link
-                                class="block px-4 py-3 text-center text-white mt-3 bg-blue-600 dark:bg-blue-400 rounded"
-                                :href="'/inventories/character/' + inventory.character.character_id"
-                            >
-                                <i class="fas fa-briefcase mr-1"></i>
-                                {{ t('inventories.view') }}
-                            </inertia-link>
-                        </template>
-                    </card>
-                </div>
-
-                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9 max-w-screen-lg"
-                     v-else-if="inventory.type === 'property'">
-                    <card v-if="inventory.property">
-                        <template #header>
-                            <h3 class="mb-2">
-                                {{ inventory.property.property_address }}
-                            </h3>
-                            <h4 class="text-primary dark:text-dark-primary">
-                                <span>{{ t('players.properties.cost') }}:</span> {{
-                                    numberFormat(inventory.property.property_cost, 0, true)
-                                }}
-                            </h4>
-                            <h4 class="text-primary dark:text-dark-primary">
-                                <span>{{ t('players.properties.rent') }}:</span> {{
-                                    numberFormat(inventory.property.property_income, 0, true)
-                                }}
-                            </h4>
-                        </template>
-
-                        <template>
-                            <p>
-                                {{
-                                    t('inventories.show.prop_description', inventory.property.property_renter, inventory.property.property_renter_cid)
-                                }}
-                            </p>
-                        </template>
-
-                        <template #footer>
-                            <inertia-link
-                                class="block px-4 py-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded"
-                                :href="'/inventories/property/' + inventory.id"
-                                v-if="(parseInt(inventory.id)+'') === inventory.id"
-                            >
-                                <i class="fas fa-briefcase mr-1"></i>
-                                {{ t('inventories.view') }}
-                            </inertia-link>
-                        </template>
-                    </card>
-                    <card v-else>
-                        <template #header>
-                            <h3 class="mb-2">
-                                {{ t('inventories.show.property') }}
-                            </h3>
-                        </template>
-
-                        <template>
-                            <p>
-                                {{ t('inventories.show.unknown_prop') }}
-                            </p>
-                        </template>
-
-                        <template #footer>
-                            <inertia-link
-                                class="block px-4 py-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded"
-                                :href="'/logs?action=%3DItem+Moved&details=' + inventory.title"
-                            >
-                                <i class="fas fa-dolly-flatbed mr-1"></i>
-                                {{ t('inventories.view_logs') }}
-                            </inertia-link>
-                        </template>
-                    </card>
-                    <card v-if="inventory.character">
-                        <template #header>
-                            <h3 class="mb-2">
-                                {{ t('inventories.show.prop_owner') }}
-                            </h3>
-                            <h4>
-                                {{ inventory.character.first_name }} {{ inventory.character.last_name }}
-                                (#{{ inventory.character.character_id }})
-                            </h4>
-                            <h4 class="text-primary dark:text-dark-primary">
-                                <span>{{ t('players.edit.dob') }}:</span>
-                                {{ $moment(inventory.character.date_of_birth).format('l') }}
-                            </h4>
-                            <h4 class="text-red-700 dark:text-red-300" v-if="inventory.character.character_deleted">
-                                <span>{{ t('players.edit.deleted') }}:</span>
-                                {{ $moment(inventory.character.character_deletion_timestamp).format('l') }}
-                            </h4>
-                        </template>
-
-                        <template>
-                            <p>
-                                {{ inventory.character.backstory }}
-                            </p>
-                        </template>
-
-                        <template #footer>
-                            <inertia-link
-                                class="px-4 py-3 mb-3 block text-center text-white bg-indigo-600 dark:bg-indigo-400 rounded"
-                                :href="'/players/' + inventory.character.license_identifier + '/characters/' + inventory.character.character_id">
-                                {{ t('inventories.show.view_character') }}
-                            </inertia-link>
-                            <inertia-link
-                                class="px-4 py-3 block text-center text-white bg-indigo-600 dark:bg-indigo-400 rounded"
-                                :href="'/players/' + inventory.character.license_identifier">
-                                {{ t('inventories.show.view_player') }}
-                            </inertia-link>
-                            <inertia-link
-                                class="block px-4 py-3 text-center text-white mt-3 bg-blue-600 dark:bg-blue-400 rounded"
-                                :href="'/inventories/character/' + inventory.character.character_id"
-                            >
-                                <i class="fas fa-briefcase mr-1"></i>
-                                {{ t('inventories.view') }}
-                            </inertia-link>
-                        </template>
-                    </card>
-                </div>
-
-                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 gap-9 max-w-screen-lg"
-                     v-else-if="inventory.type === 'motel'">
-                    <card v-if="inventory.character">
-                        <template #header>
-                            <h3 class="mb-2">
-                                {{ t('inventories.show.motel_owner') }}
-                            </h3>
-                            <h4>
-                                {{ inventory.character.first_name }} {{ inventory.character.last_name }}
-                                (#{{ inventory.character.character_id }})
-                            </h4>
-                            <h4 class="text-primary dark:text-dark-primary">
-                                <span>{{ t('players.edit.dob') }}:</span>
-                                {{ $moment(inventory.character.date_of_birth).format('l') }}
-                            </h4>
-                            <h4 class="text-red-700 dark:text-red-300" v-if="inventory.character.character_deleted">
-                                <span>{{ t('players.edit.deleted') }}:</span>
-                                {{ $moment(inventory.character.character_deletion_timestamp).format('l') }}
-                            </h4>
-                        </template>
-
-                        <template>
-                            <p>
-                                {{ inventory.character.backstory }}
-                            </p>
-                        </template>
-
-                        <template #footer>
-                            <inertia-link
-                                class="px-4 py-3 mb-3 block text-center text-white bg-indigo-600 dark:bg-indigo-400 rounded"
-                                :href="'/players/' + inventory.character.license_identifier + '/characters/' + inventory.character.character_id">
-                                {{ t('inventories.show.view_character') }}
-                            </inertia-link>
-                            <inertia-link
-                                class="px-4 py-3 block text-center text-white bg-indigo-600 dark:bg-indigo-400 rounded"
-                                :href="'/players/' + inventory.character.license_identifier">
-                                {{ t('inventories.show.view_player') }}
-                            </inertia-link>
-                            <inertia-link
-                                class="block px-4 py-3 text-center text-white mt-3 bg-blue-600 dark:bg-blue-400 rounded"
-                                :href="'/inventories/character/' + inventory.character.character_id"
-                            >
-                                <i class="fas fa-briefcase mr-1"></i>
-                                {{ t('inventories.view') }}
-                            </inertia-link>
-                        </template>
-                    </card>
-                </div>
-
-                <card v-if="cleanContents && $page.auth.player.isSuperAdmin" class="w-inventory_contents max-w-full">
-                    <template #header>
-                        <h3 class="mb-2" v-if="snapshot">
-                            {{ t('inventories.show.snap_contents', formatTime(snapshot.created)) }}
-                        </h3>
-                        <h3 class="mb-2" v-else>
-                            {{ t('inventories.show.contents') }}
-                        </h3>
-                    </template>
-
-                    <template>
-                        <div class="flex flex-wrap justify-between -mx-2">
-                            <div
-                                class="p-2 text-center w-inventory_slot h-inventory_slot break-words dark:bg-gray-700 m-2 rounded border cursor-default relative"
-                                v-for="(item, slot) in cleanContents" :key="slot">
-
-                                <img
-                                    :src="'/images/icons/items/' + item.item + '.png'"
-                                    :alt="item.item"
-                                    :title="t('inventories.show.content_title', slot, item.amount, item.item)"
-                                    class="block h-10/12 w-10/12 m-auto"
-                                    v-if="item.item"
-                                />
-
-                                <span class="block font-semibold relative top-1/2 -translate-y-1/2 transform opacity-70"
-                                      :title="t('inventories.show.content_empty', slot)" v-else>
-                                    {{ t('inventories.show.empty') }}
-                                </span>
-
-                                <span class="block absolute -top-3 right-5 bg-gray-800 py-1 px-2 text-xs rounded" v-if="item.item">
-                                    {{ item.amount }}
-                                </span>
-
-                                <span class="block absolute -top-3 -left-3 bg-gray-800 py-1 px-2 text-xs rounded" v-if="item.battleRoyaleOnly" :title="t('inventories.show.battle_royale')">
-                                    BR
-                                </span>
-
-                                <span class="block absolute bottom-0 left-1/2 transform -translate-x-1/2 py-1 px-2 text-xs w-full overflow-hidden overflow-ellipsis whitespace-nowrap" v-if="item.item">
-                                    {{ item.item }}
-                                </span>
-
-                                <button
-                                    class="py-1 px-2 text-xs text-white bg-red-500 rounded hover:bg-red-600 absolute -top-3 -right-3"
-                                    :title="t('inventories.show.empty_title', slot)"
-                                    v-if="item.item"
-                                    @click="confirmInventoryClear($event, slot)">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </template>
-
-                    <template #footer>
-                    </template>
-                </card>
             </template>
         </v-section>
+
+        <modal :show="isEditing">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('inventories.show.editing_slot', editingSlot) }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="grid grid-cols-2 gap-12">
+                    <div class="flex gap-3 items-center">
+                        <label class="block w-40" for="amount">
+                            {{ t('inventories.show.amount') }}
+                        </label>
+                        <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="amount" placeholder="12" type="number" min="1" max="250" v-model="editingAmount" :readonly="!editedItemStackable" />
+                    </div>
+
+                    <div class="flex gap-3 items-center">
+                        <label class="block w-40" for="amount">
+                            {{ t('inventories.show.item_name') }}
+                        </label>
+                        <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" :class="{ 'border-red-500': !editedItemNameValid }" id="amount" placeholder="skateboard" minlength="1" maxlength="255" v-model="editingItem" @input="changedItemName" />
+                    </div>
+                </div>
+
+                <h3 class="pt-6 mt-6 mb-3 text-lg border-t border-gray-500">{{ t('inventories.show.metadata') }}</h3>
+
+                <table class="w-full bg-gray-300 dark:bg-gray-600 text-sm">
+                    <tr class="border-b-2 border-gray-500 text-left">
+                        <th class="px-2 py-1">
+                            <button class="font-semibold cursor-pointer text-sm" @click="addMetadataKey()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </th>
+                        <th class="px-2 py-1">{{ t('inventories.show.key') }}</th>
+                        <th class="px-2 py-1">{{ t('inventories.show.value') }}</th>
+                    </tr>
+
+                    <tr v-for="(entry, index) in editingMetadata" :key="index" class="border-t border-gray-500">
+                        <td class="px-2 py-1">
+                            <button class="font-semibold cursor-pointer text-sm" @click="removeMetadataKey(entry.key)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </td>
+                        <td class="px-2 py-1">
+                            <input class="text-sm bg-transparent py-1 px-2 bg-black bg-opacity-10 border-0 border-b-2" type="text" v-model="entry.key" />
+                        </td>
+                        <td class="px-2 py-1 w-full">
+                            <input class="w-full text-sm bg-transparent py-1 px-2 bg-black bg-opacity-10 border-0 border-b-2" type="text" v-model="entry.value" />
+                        </td>
+                    </tr>
+                </table>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500" @click="isEditing = false">
+                    {{ t('global.close') }}
+                </button>
+                <button type="button" class="px-5 py-2 rounded bg-lime-200 hover:bg-lime-300 dark:bg-lime-600 dark:hover:bg-lime-500" @click="saveEditing()" v-if="editedItemNameValid">
+                    {{ t('inventories.show.save') }}
+                </button>
+            </template>
+        </modal>
 
     </div>
 </template>
@@ -412,93 +112,183 @@
 <script>
 import Layout from '../../Layouts/App';
 import VSection from '../../Components/Section';
-import Pagination from '../../Components/Pagination';
-import Card from './../../Components/Card';
+import Modal from './../../Components/Modal';
 
 export default {
     layout: Layout,
     components: {
-        Pagination,
         VSection,
-        Card,
-    },
-    methods: {
-        async confirmInventoryClear(e, slot) {
-            if (confirm(this.t('inventories.show.empty_confirm', slot))) {
-                await this.$inertia.delete('/inventory/' + this.inventory.descriptor + '/clear/' + slot);
-            }
-        },
-        async createSnapshot() {
-            try {
-                const data = await axios.post('/inventory/' + this.inventory.descriptor + '/createSnapshot');
-
-                if (data.data && 'hash' in data.data) {
-                    this.snapshotUrl = data.data.hash;
-                    return;
-                }
-            } catch(e) {}
-
-            alert('Failed to create inventory snapshot');
-        },
-        formatTime(t) {
-            return this.$options.filters.formatTime(t * 1000, true);
-        },
-    },
-    data() {
-        let clean = {},
-            maxSlot = 0;
-        $.each(this.contents, function (_, item) {
-            const key = item.inventory_slot;
-
-            if (key > maxSlot) {
-                maxSlot = key;
-            }
-
-            if (key in clean && clean[key].item === item.item_name) {
-                clean[key].amount++;
-            } else {
-                clean[key] = {
-                    item: item.item_name,
-                    amount: 1,
-                    battleRoyaleOnly: item.battleRoyaleOnly
-                };
-            }
-        });
-
-        while (maxSlot === 0 || maxSlot % 5 !== 0) {
-            maxSlot++;
-        }
-
-        let cleaned = {};
-        for (let x = 1; x <= maxSlot; x++) {
-            if (!(x in clean)) {
-                cleaned[x] = {
-                    item: null,
-                    amount: 0
-                };
-            } else {
-                cleaned[x] = clean[x];
-            }
-        }
-
-        return {
-            cleanContents: cleaned,
-            snapshotUrl: ''
-        }
+        Modal
     },
     props: {
-        inventory: {
-            type: Object,
+        name: {
+            type: String,
             required: true,
-        },
-        snapshot: {
-            type: Object,
-            required: false,
         },
         contents: {
-            type: Array,
+            type: Object,
             required: true,
         },
+        items: {
+            type: Object,
+            required: true,
+        },
+    },
+    computed: {
+        canEditItems() {
+            return this.$page.auth.player.isSuperAdmin;
+        },
+        totalWeight() {
+            let weight = 0;
+
+            for (const slot in this.contents) {
+                const items = this.contents[slot],
+                    name = items.length ? items[0].name : null,
+                    item = name ? this.items[name] : null;
+
+                weight += item ? item.weight * items.length : 0;
+            }
+
+            return weight;
+        },
+        totalItems() {
+            let items = 0;
+
+            for (const slot in this.contents) {
+                items += this.contents[slot].length;
+            }
+
+            return items;
+        },
+        editedItemNameValid() {
+            if (!this.editingItem) return false;
+
+            return this.editingItem in this.items;
+        },
+        editedItemStackable() {
+            if (!this.editingItem) return false;
+
+            const item = this.items[this.editingItem];
+
+            return item && item.stackable;
+        }
+    },
+    data() {
+        return {
+            isLoading: false,
+
+            isEditing: false,
+            editingSlot: false,
+            editingItem: false,
+            editingAmount: 1,
+            editingMetadata: []
+        };
+    },
+    methods: {
+        getFirstItemName(items) {
+            if (!items.length) return "&nbsp;";
+
+            const name = items[0].name,
+                item = this.items[name] || {};
+
+            return item.label || name;
+        },
+        changedItemName() {
+            if (this.editedItemStackable) return;
+
+            this.editingAmount = 1;
+        },
+        async deleteItemSlot(slot) {
+            if (this.isLoading || !confirm(this.t('inventories.show.delete_confirm'))) {
+                return;
+            }
+
+            this.isLoading = true;
+
+            await this.$inertia.delete(`/inventory/${this.name}/items/${slot}`);
+
+            this.isLoading = false;
+        },
+        async saveEditing() {
+            if (this.isLoading || !this.editingItem) return;
+
+            this.editingItem = this.editingItem.trim().toLowerCase();
+
+            if (!this.editingItem || !this.editingAmount || this.editingAmount <= 0 || this.editingAmount > 250) {
+                return;
+            }
+
+            if (!this.editedItemStackable) {
+                this.editingAmount = 1;
+            }
+
+            this.isLoading = true;
+
+            const metadata = {};
+
+            for (const entry of this.editingMetadata) {
+                const key = entry.key.trim(),
+                      value = entry.value.trim();
+
+                if (!key || !value) continue;
+
+                try {
+                    metadata[key] = JSON.parse(value);
+                } catch (e) {
+                    metadata[key] = value;
+                }
+            }
+
+            await this.$inertia.put(`/inventory/${this.name}/items/${this.editingSlot}`, {
+                name: this.editingItem,
+                amount: this.editingAmount,
+                metadata: JSON.stringify(metadata)
+            });
+
+            this.isLoading = false;
+            this.isEditing = false;
+        },
+        editItemSlot(slot, items) {
+            if (this.isLoading || this.isEditing) return;
+
+            this.isEditing = true;
+
+            this.editingSlot = slot;
+            this.editingMetadata = [];
+
+            this.newMetadataKey = '';
+            this.newMetadataValue = '';
+
+            if (items.length) {
+                this.editingItem = items[0].name;
+                this.editingAmount = items.length;
+
+                for (const key in items[0].metadata) {
+                    const value = items[0].metadata[key];
+
+                    this.editingMetadata.push({
+                        key: key,
+                        value: typeof value === "object" ? JSON.stringify(value) : value
+                    });
+                }
+            } else {
+                this.editingItem = "";
+                this.editingAmount = 1;
+            }
+        },
+        removeMetadataKey(key) {
+            if (this.isLoading || !this.isEditing) return;
+
+            this.editingMetadata = this.editingMetadata.filter(item => item.key !== key);
+        },
+        addMetadataKey() {
+            if (this.isLoading || !this.isEditing) return;
+
+            this.editingMetadata.push({
+                key: "",
+                value: ""
+            });
+        }
     }
 };
 </script>

@@ -623,28 +623,13 @@ export default {
 				.replace(/'/g, "&#039;");
 		},
 		parseLog(details, action, metadata) {
-			const regex = /(to|from) (inventory )?((trunk|glovebox|character|property|ped|motel-\w+?|evidence|ground|locker-\w+?)-(\d+-)?\d+:\d+)/gmi;
-
-			let inventories = [];
-
 			details = this.escapeHtml(details);
 
 			if (!this.setting('parseLogs')) return details;
 
-			let m;
-			while ((m = regex.exec(details)) !== null) {
-				if (m.index === regex.lastIndex) {
-					regex.lastIndex++;
-				}
-
-				if (m.length > 3 && m[3] && !inventories.includes(m[3])) {
-					inventories.push(m[3]);
-				}
-			}
-
-			for (let x = 0; x < inventories.length; x++) {
-				details = details.replaceAll(inventories[x], '<a title="' + this.t('inventories.view') + '" class="text-indigo-600 dark:text-indigo-400" href="/inventory/' + inventories[x] + '">' + inventories[x] + '</a>');
-			}
+			details = details.replace(/(?<=to |from inventory )[\w-:]+/gmi, inventory => {
+				return `<a title="${this.t('inventories.show_inv')}" class="text-indigo-600 dark:text-indigo-400" href="/inventory/${inventory.replace(/:\d+/, '')}">${inventory}</a>`;
+			});
 
 			if (metadata && metadata.killerLicenseIdentifier) {
 				const killerLicense = metadata.killerLicenseIdentifier;

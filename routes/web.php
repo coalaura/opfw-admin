@@ -156,17 +156,12 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/who_was_damaged/{license}', [PlayerRouteController::class, 'whoWasDamagedBy']);
 
     // Inventories.
-    Route::get('/inventories/character/{character}', [InventoryController::class, 'character']);
-    Route::get('/inventories/vehicle/{vehicle}', [InventoryController::class, 'vehicle']);
-    Route::get('/inventories/property/{property}', [InventoryController::class, 'property']);
-    Route::get('/inventories/motel/{motel}', [InventoryController::class, 'motel']);
-    Route::get('/inventories/raw/{identifier}', [InventoryController::class, 'raw']);
     Route::get('/inventory/{inventory}', [InventoryController::class, 'show']);
-    Route::post('/inventory/{inventory}/createSnapshot', [InventoryController::class, 'createSnapshot']);
-    Route::get('/inventory/snapshot/{snapshot}', [InventoryController::class, 'showSnapshot']);
-    Route::get('/inventory_find/{type}/{id}', [InventoryController::class, 'find']);
-    Route::delete('/inventory/{inventory}/clear/{slot}', [InventoryController::class, 'clear']);
-    Route::get('/search_inventory', [InventoryController::class, 'search']);
+    Route::get('/inventory/resolve/{inventory}', [InventoryController::class, 'resolve']);
+    Route::put('/inventory/{inventory}/items/{slot}', [InventoryController::class, 'update']);
+    Route::delete('/inventory/{inventory}/items/{slot}', [InventoryController::class, 'delete']);
+
+    Route::get('/inventory/logs/{inventory}', [InventoryController::class, 'logs']);
     Route::get('/inventory/item/{id}', [InventoryController::class, 'itemHistory']);
 
     // Advanced search.
