@@ -37,7 +37,7 @@ class OPFWHelper
             return new OPFWResponse(false, 'Player is offline.');
         }
 
-        $response = self::executeRoute($status->serverIp, $status->serverIp . 'execute/staffPrivateMessage', [
+        $response = self::executeRoute($status->serverIp . 'execute/staffPrivateMessage', [
             'licenseIdentifier' => $staffLicenseIdentifier,
             'targetSource'    => $status->serverId,
             'message'         => $message,
@@ -66,7 +66,7 @@ class OPFWHelper
             return new OPFWResponse(false, 'Your message cannot be empty');
         }
 
-        $response = self::executeRoute($serverIp, $serverIp . 'execute/staffChatMessage', [
+        $response = self::executeRoute($serverIp . 'execute/staffChatMessage', [
             'licenseIdentifier' => $staffLicenseIdentifier,
             'message'         => $message,
         ]);
@@ -90,7 +90,7 @@ class OPFWHelper
             return new OPFWResponse(false, 'Your message cannot be empty.');
         }
 
-        $response = self::executeRoute($serverIp, $serverIp . 'execute/announcementMessage', [
+        $response = self::executeRoute($serverIp . 'execute/announcementMessage', [
             'announcementMessage' => $message,
         ]);
 
@@ -125,7 +125,7 @@ class OPFWHelper
             $staffPlayerName = "a staff member";
         }
 
-        $response = self::executeRoute($status->serverIp, $status->serverIp . 'execute/kickPlayer', [
+        $response = self::executeRoute($status->serverIp . 'execute/kickPlayer', [
             'licenseIdentifier'         => $license,
             'reason'                  => 'You have been kicked by ' . $staffPlayerName . ' for reason `' . $reason . '`',
             'removeReconnectPriority' => false,
@@ -154,7 +154,7 @@ class OPFWHelper
             return new OPFWResponse(false, 'Player is offline.');
         }
 
-        $response = self::executeRoute($status->serverIp, $status->serverIp . 'execute/revivePlayer', [
+        $response = self::executeRoute($status->serverIp . 'execute/revivePlayer', [
             'targetSource' => $status->serverId,
         ]);
 
@@ -183,7 +183,7 @@ class OPFWHelper
             return new OPFWResponse(true, 'Player is offline, no refresh needed.');
         }
 
-        $response = self::executeRoute($status->serverIp, $status->serverIp . 'execute/refreshTattoos', [
+        $response = self::executeRoute($status->serverIp . 'execute/refreshTattoos', [
             'licenseIdentifier' => $license,
             'characterId'     => $character_id,
         ]);
@@ -211,7 +211,7 @@ class OPFWHelper
             return OPFWResponse::didNotExecute();
         }
 
-        $response = self::executeRoute($status->serverIp, $status->serverIp . 'execute/refreshCharacter', [
+        $response = self::executeRoute($status->serverIp . 'execute/refreshCharacter', [
             'licenseIdentifier' => $license,
             'characterId'       => $character_id,
         ]);
@@ -232,7 +232,7 @@ class OPFWHelper
      */
     public static function refreshInventory(string $serverIp, string $inventory): OPFWResponse
     {
-        $response = self::executeRoute($serverIp, $serverIp . 'execute/refreshInventory', [
+        $response = self::executeRoute($serverIp . 'execute/refreshInventory', [
             'inventoryName' => $inventory
         ]);
 
@@ -261,7 +261,7 @@ class OPFWHelper
             return new OPFWResponse(true, 'Player is offline, no unload needede.');
         }
 
-        $response = self::executeRoute($status->serverIp, $status->serverIp . 'execute/unloadCharacter', [
+        $response = self::executeRoute($status->serverIp . 'execute/unloadCharacter', [
             'licenseIdentifier' => $license,
             'characterId'     => $character_id,
             'message'         => $message,
@@ -286,7 +286,7 @@ class OPFWHelper
      */
     public static function updateQueuePosition(string $serverIp, string $licenseIdentifier, int $targetPosition): OPFWResponse
     {
-        return self::executeRoute($serverIp, $serverIp . 'execute/setQueuePosition', [
+        return self::executeRoute($serverIp . 'execute/setQueuePosition', [
             'licenseIdentifier' => $licenseIdentifier,
             'targetPosition'  => $targetPosition,
         ], 'PATCH');
@@ -326,7 +326,7 @@ class OPFWHelper
         if (CacheHelper::exists($cache) && !$forceRefresh) {
             return CacheHelper::read($cache, []);
         } else {
-            $data = self::executeRoute($serverIp, $serverIp . 'queue.json', [], 'GET', 3);
+            $data = self::executeRoute($serverIp . 'queue.json', [], 'GET', 3);
 
             if ($data->data) {
                 CacheHelper::write($cache, $data->data, 3);
@@ -353,7 +353,7 @@ class OPFWHelper
         if (CacheHelper::exists($cache) && !$forceRefresh) {
             return CacheHelper::read($cache, []);
         } else {
-            $data = self::executeRoute($serverIp, $serverIp . 'items.json', [], 'GET', 3);
+            $data = self::executeRoute($serverIp . 'items.json', [], 'GET', 3);
 
             if ($data->data) {
                 CacheHelper::write($cache, $data->data, 6 * CacheHelper::HOUR);
@@ -379,7 +379,7 @@ class OPFWHelper
         if (CacheHelper::exists($cache)) {
             return CacheHelper::read($cache, "");
         } else {
-            $data = self::executeRoute($serverIp, $serverIp . 'crafting.txt', [], 'GET', 3, true);
+            $data = self::executeRoute($serverIp . 'crafting.txt', [], 'GET', 3, true);
 
             if ($data->status) {
                 CacheHelper::write($cache, $data->message, 12 * CacheHelper::HOUR);
@@ -405,7 +405,7 @@ class OPFWHelper
         if (CacheHelper::exists($cache)) {
             return CacheHelper::read($cache, []);
         } else {
-            $data = self::executeRoute($serverIp, $serverIp . 'jobs.json', [], 'GET', 3);
+            $data = self::executeRoute($serverIp . 'jobs.json', [], 'GET', 3);
 
             if ($data->data) {
                 CacheHelper::write($cache, $data->data, 12 * CacheHelper::HOUR);
@@ -431,7 +431,7 @@ class OPFWHelper
         if (CacheHelper::exists($cache)) {
             return CacheHelper::read($cache, []);
         } else {
-            $data = self::executeRoute($serverIp, $serverIp . 'chatEmotes.json', [], 'GET', 3);
+            $data = self::executeRoute($serverIp . 'chatEmotes.json', [], 'GET', 3);
 
             if ($data->data) {
                 $emotes = array_map(function($emote) {
@@ -463,7 +463,7 @@ class OPFWHelper
         if (CacheHelper::exists($cache)) {
             return CacheHelper::read($cache, []);
         } else {
-            $data = self::executeRoute($serverIp, $serverIp . 'vehicles.json', [], 'GET', 3);
+            $data = self::executeRoute($serverIp . 'vehicles.json', [], 'GET', 3);
 
             if ($data->data) {
                 CacheHelper::write($cache, $data->data, 12 * CacheHelper::HOUR);
@@ -489,7 +489,7 @@ class OPFWHelper
         if (CacheHelper::exists($cache)) {
             return CacheHelper::read($cache, []);
         } else {
-            $data = self::executeRoute($serverIp, $serverIp . 'exclusiveDealership.json', [], 'GET', 3);
+            $data = self::executeRoute($serverIp . 'exclusiveDealership.json', [], 'GET', 3);
 
             if ($data->data) {
                 CacheHelper::write($cache, $data->data, 1 * CacheHelper::HOUR);
@@ -515,7 +515,7 @@ class OPFWHelper
         if (CacheHelper::exists($cache)) {
             return CacheHelper::read($cache, []);
         } else {
-            $data = self::executeRoute($serverIp, $serverIp . 'models.json', [], 'GET', 3);
+            $data = self::executeRoute($serverIp . 'models.json', [], 'GET', 3);
 
             if ($data->data) {
                 CacheHelper::write($cache, $data->data, 12 * CacheHelper::HOUR);
@@ -537,7 +537,7 @@ class OPFWHelper
     {
         $serverIp = Server::fixApiUrl($serverIp);
 
-        $data = self::executeRoute($serverIp, $serverIp . 'variables.json', [], 'GET', 1);
+        $data = self::executeRoute($serverIp . 'variables.json', [], 'GET', 1);
 
         if (!$data->status) {
             return null;
@@ -560,7 +560,7 @@ class OPFWHelper
         if (CacheHelper::exists($cache)) {
             return CacheHelper::read($cache, []);
         } else {
-            $data = self::executeRoute($serverIp, $serverIp . 'routes.json', [], 'GET', 3);
+            $data = self::executeRoute($serverIp . 'routes.json', [], 'GET', 3);
 
             if ($data->data) {
                 CacheHelper::write($cache, $data->data, 6 * CacheHelper::HOUR);
@@ -583,7 +583,7 @@ class OPFWHelper
     {
         $serverIp = Server::fixApiUrl($serverIp);
 
-        return self::executeRoute($serverIp, $serverIp . 'execute/createScreenshot', [
+        return self::executeRoute($serverIp . 'execute/createScreenshot', [
             'serverId' => $id,
             'lifespan' => $lifespan,
             'drawHTML' => $drawHTML
@@ -602,7 +602,7 @@ class OPFWHelper
     {
         $serverIp = Server::fixApiUrl($serverIp);
 
-        return self::executeRoute($serverIp, $serverIp . 'execute/createScreenshot', [
+        return self::executeRoute($serverIp . 'execute/createScreenshot', [
             'serverId' => $id,
             'lifespan' => 60 * 60,
             'fps' => 30,
@@ -691,7 +691,7 @@ class OPFWHelper
      * @param int $timeout
      * @return OPFWResponse
      */
-    private static function executeRoute(string $serverIp, string $route, array $data, string $requestType = 'POST', int $timeout = 10, bool $isText = false): OPFWResponse
+    private static function executeRoute(string $route, array $data, string $requestType = 'POST', int $timeout = 10, bool $isText = false): OPFWResponse
     {
         $token = env('OP_FW_TOKEN');
 
@@ -758,7 +758,7 @@ class OPFWHelper
 
             $result = self::parseResponse($response);
 
-            if (!$result->status) {
+            if (!$result->status && $statusCode !== 404) {
                 if ($x + 1 < self::RetryAttempts) {
                     sleep(2);
                 }
