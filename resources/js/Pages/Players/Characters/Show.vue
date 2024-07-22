@@ -312,223 +312,227 @@
         </v-section>
 
         <!-- Vehicle Editing -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isVehicleEdit">
-            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
-                <h3 class="mb-2">{{ t('players.characters.vehicle.edit') }}</h3>
-                <p class="text-danger dark:text-dark-danger font-semibold mt-2 mb-2" v-if="vehicleEditError" id="vehicleEditError">{{ vehicleEditError }}</p>
-                <div class="w-full mb-6">
-                    <table class="text-left w-full">
-                        <tr>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.owner') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <input class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" min="0" v-model="vehicleForm.owner_cid" />
-                            </td>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.plate') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <input class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" minlength="3" maxlength="8" v-model="vehicleForm.plate" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.repair') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <select class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent dark:bg-gray-600" v-model="vehicleForm.repair">
-                                    <option value="fix">{{ t('players.characters.vehicle.repair_fix') }}</option>
-                                    <option value="break">{{ t('players.characters.vehicle.repair_break') }}</option>
-                                    <option :value="false">{{ t('players.characters.vehicle.repair_false') }}</option>
-                                </select>
-                            </td>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.fuel') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <input type="number" class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" min="0" max="100" step="0.1" v-model="vehicleForm.fuel" />
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <hr>
-                <div class="w-full mb-6">
-                    <table class="text-left w-full">
-                        <tr>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.neon_enabled') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <select class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent dark:bg-gray-600" v-model="vehicleForm.modifications.neon_enabled">
-                                    <option :value="true">{{ t('global.yes') }}</option>
-                                    <option :value="false">{{ t('global.no') }}</option>
-                                </select>
-                            </td>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.xenon_headlights') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <select class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent dark:bg-gray-600" v-model="vehicleForm.modifications.xenon_headlights">
-                                    <option :value="true">{{ t('global.yes') }}</option>
-                                    <option :value="false">{{ t('global.no') }}</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.tire_smoke') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <input class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" type="color" v-model="vehicleForm.modifications.tire_smoke" />
-                            </td>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.neon') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <input class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" type="color" v-model="vehicleForm.modifications.neon" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.turbo') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <select class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent dark:bg-gray-600" v-model="vehicleForm.modifications.turbo">
-                                    <option :value="true">{{ t('global.yes') }}</option>
-                                    <option :value="false">{{ t('global.no') }}</option>
-                                </select>
-                            </td>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.horn') }}
-                                    <sup>
-                                        <a class="dark:text-blue-300 text-blue-500" href="https://gta.fandom.com/wiki/Los_Santos_Customs/Horns" :title="t('players.characters.vehicle.horn_title')" target="_blank">[?]</a>
-                                    </sup>
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <select class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent dark:bg-gray-600" v-model="vehicleForm.modifications.horn">
-                                    <optgroup :label="group" v-for="(hornList, group) in horns">
-                                        <option :value="horn.index" v-for="horn in hornList">{{ horn.label }}</option>
-                                    </optgroup>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.engine') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <input type="number" class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" min="0" max="4" v-model="vehicleForm.modifications.engine" />
-                            </td>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.transmission') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <input type="number" class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" min="0" max="3" v-model="vehicleForm.modifications.transmission" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.breaks') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <input type="number" class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" min="0" max="3" v-model="vehicleForm.modifications.breaks" />
-                            </td>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.suspension') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <input type="number" class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" min="0" max="4" v-model="vehicleForm.modifications.suspension" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.armor') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <input type="number" class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" min="0" max="5" v-model="vehicleForm.modifications.armor" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.tint') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <select class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent dark:bg-gray-600" v-model="vehicleForm.modifications.tint">
-                                    <option :value="0">{{ t('players.characters.vehicle.tints.0') }}</option>
-                                    <option :value="1">{{ t('players.characters.vehicle.tints.1') }}</option>
-                                    <option :value="2">{{ t('players.characters.vehicle.tints.2') }}</option>
-                                    <option :value="3">{{ t('players.characters.vehicle.tints.3') }}</option>
-                                    <option :value="4">{{ t('players.characters.vehicle.tints.4') }}</option>
-                                    <option :value="5">{{ t('players.characters.vehicle.tints.5') }}</option>
-                                </select>
-                            </td>
-                            <th class="p-2">
-                                <label class="block font-semibold">
-                                    {{ t('players.characters.vehicle.plate_type') }}
-                                </label>
-                            </th>
-                            <td class="p-2">
-                                <select class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent dark:bg-gray-600" v-model="vehicleForm.modifications.plate_type">
-                                    <option :value="0">{{ t('players.characters.vehicle.plates.0') }}</option>
-                                    <option :value="3">{{ t('players.characters.vehicle.plates.3') }}</option>
-                                    <option :value="4">{{ t('players.characters.vehicle.plates.4') }}</option>
-                                    <option :value="2">{{ t('players.characters.vehicle.plates.2') }}</option>
-                                    <option :value="1">{{ t('players.characters.vehicle.plates.1') }}</option>
-                                    <option :value="5">{{ t('players.characters.vehicle.plates.5') }}</option>
-                                </select>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="flex justify-end">
-                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-dark-secondary mr-3 dark:text-black dark:bg-secondary" @click="isVehicleEdit = false">
-                        {{ t('global.cancel') }}
-                    </button>
-                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-success mr-3 dark:bg-dark-success" @click="editVehicle">
-                        <span v-if="!isVehicleLoading">
+        <modal :show.sync="isVehicleEdit">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.characters.vehicle.edit') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <table class="text-left w-full">
+                    <tr>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.owner') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <input class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" min="0" v-model="vehicleForm.owner_cid" />
+                        </td>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.plate') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <input class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" minlength="3" maxlength="8" v-model="vehicleForm.plate" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.repair') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <select class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent dark:bg-gray-600" v-model="vehicleForm.repair">
+                                <option value="fix">{{ t('players.characters.vehicle.repair_fix') }}</option>
+                                <option value="break">{{ t('players.characters.vehicle.repair_break') }}</option>
+                                <option :value="false">{{ t('players.characters.vehicle.repair_false') }}</option>
+                            </select>
+                        </td>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.fuel') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <input type="number" class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" min="0" max="100" step="0.1" v-model="vehicleForm.fuel" />
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="my-6 border-t-2 border-dashed border-gray-500"></div>
+
+                <table class="text-left w-full">
+                    <tr>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.neon_enabled') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <select class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent dark:bg-gray-600" v-model="vehicleForm.modifications.neon_enabled">
+                                <option :value="true">{{ t('global.yes') }}</option>
+                                <option :value="false">{{ t('global.no') }}</option>
+                            </select>
+                        </td>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.xenon_headlights') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <select class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent dark:bg-gray-600" v-model="vehicleForm.modifications.xenon_headlights">
+                                <option :value="true">{{ t('global.yes') }}</option>
+                                <option :value="false">{{ t('global.no') }}</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.tire_smoke') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <input class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" type="color" v-model="vehicleForm.modifications.tire_smoke" />
+                        </td>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.neon') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <input class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" type="color" v-model="vehicleForm.modifications.neon" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.turbo') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <select class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent dark:bg-gray-600" v-model="vehicleForm.modifications.turbo">
+                                <option :value="true">{{ t('global.yes') }}</option>
+                                <option :value="false">{{ t('global.no') }}</option>
+                            </select>
+                        </td>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.horn') }}
+                                <sup>
+                                    <a class="dark:text-blue-300 text-blue-500" href="https://gta.fandom.com/wiki/Los_Santos_Customs/Horns" :title="t('players.characters.vehicle.horn_title')" target="_blank">[?]</a>
+                                </sup>
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <select class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent dark:bg-gray-600" v-model="vehicleForm.modifications.horn">
+                                <optgroup :label="group" v-for="(hornList, group) in horns">
+                                    <option :value="horn.index" v-for="horn in hornList">{{ horn.label }}</option>
+                                </optgroup>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.engine') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <input type="number" class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" min="0" max="4" v-model="vehicleForm.modifications.engine" />
+                        </td>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.transmission') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <input type="number" class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" min="0" max="3" v-model="vehicleForm.modifications.transmission" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.breaks') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <input type="number" class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" min="0" max="3" v-model="vehicleForm.modifications.breaks" />
+                        </td>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.suspension') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <input type="number" class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" min="0" max="4" v-model="vehicleForm.modifications.suspension" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.armor') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <input type="number" class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" min="0" max="5" v-model="vehicleForm.modifications.armor" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.tint') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <select class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent dark:bg-gray-600" v-model="vehicleForm.modifications.tint">
+                                <option :value="0">{{ t('players.characters.vehicle.tints.0') }}</option>
+                                <option :value="1">{{ t('players.characters.vehicle.tints.1') }}</option>
+                                <option :value="2">{{ t('players.characters.vehicle.tints.2') }}</option>
+                                <option :value="3">{{ t('players.characters.vehicle.tints.3') }}</option>
+                                <option :value="4">{{ t('players.characters.vehicle.tints.4') }}</option>
+                                <option :value="5">{{ t('players.characters.vehicle.tints.5') }}</option>
+                            </select>
+                        </td>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.plate_type') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <select class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent dark:bg-gray-600" v-model="vehicleForm.modifications.plate_type">
+                                <option :value="0">{{ t('players.characters.vehicle.plates.0') }}</option>
+                                <option :value="3">{{ t('players.characters.vehicle.plates.3') }}</option>
+                                <option :value="4">{{ t('players.characters.vehicle.plates.4') }}</option>
+                                <option :value="2">{{ t('players.characters.vehicle.plates.2') }}</option>
+                                <option :value="1">{{ t('players.characters.vehicle.plates.1') }}</option>
+                                <option :value="5">{{ t('players.characters.vehicle.plates.5') }}</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isVehicleEdit = false">
+                    {{ t('global.cancel') }}
+                </button>
+
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" @click="editVehicle">
+                    <span v-if="!isVehicleLoading">
                             {{ t('players.characters.vehicle.confirm') }}
                         </span>
                         <span v-else>
                             <i class="fas fa-cog animate-spin"></i>
                             {{ t('global.loading') }}
                         </span>
-                    </button>
-                </div>
-            </div>
-        </div>
+                </button>
+            </template>
+        </modal>
 
         <!-- Vehicle Adding -->
         <modal :show.sync="isVehicleAdd">
