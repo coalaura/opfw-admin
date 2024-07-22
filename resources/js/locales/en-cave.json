@@ -637,84 +637,37 @@
         "none": "No Uggas found"
     },
     "inventories": {
-        "view": "Ugga Bag",
         "show_inv": "Show ugga bag",
         "show_trunk": "Show ugga car bag",
         "show_glovebox": "Show ugga car glovebox bag",
-        "show_motel": "Show big rock inventory",
-        "search": {
-            "title": "Search Big Rock Inventories",
-            "label": "Inventories",
-            "type": "Inventory Type",
-            "types": {
-                "character": "Big Stick and Pockets (Caveman/Unk-unks/etc.)",
-                "vehicle": "Dinomobile (Cave-trunk/Rock-glove)",
-                "evidence": "Big Rock Evidence Hole",
-                "motel": "Big Rock Dwellings",
-                "property": "Property"
-            },
-            "cid": "CID (Me/Unk-unk)",
-            "plate_id": "Ooga / ID",
-            "evidence_id": "Evidence Ooga",
-            "name": "Ooga Descriptor",
-            "id": "Ooga ID",
-            "none": "No oogas matching your search or no not-ooga oogas found"
-        },
-        "history": {
-            "title": "Ooga History for {0} ({1})",
-            "description": "View the ooga history of an ooga"
-        },
-        "show": {
-            "error": "Invalid Ooga",
-            "title": "Ooga",
-            "snapshot": "Create a snapshot of the ooga",
-            "snap_time": "Ugh. This snap taken at {0} by {1}. It expire at {2}.",
-            "type": {
-                "ground": "Me see ground stash.",
-                "character": "Me see person's stash.",
-                "trunk": "Me see stash in car trunk.",
-                "glovebox": "Me see stash in car glovebox.",
-                "property": "Me see stash in cave.",
-                "evidence": "Me see stash in police cave.",
-                "locker-police": "This here inventory is someone's police locker.",
-                "locker-mechanic": "This here inventory is someone's mechanic locker.",
-                "locker-ems": "This here inventory is someone's ems locker.",
-                "motel": "This here inventory is a storage container inside a motel.",
-                "container": "This Place Hold Stuff List."
-            },
-            "vehicle": "Vehicle",
-            "owner": "Vehicle Owner",
-            "property": "Property",
-            "prop_owner": "Property Owner",
-            "motel_owner": "Motel Owner",
-            "prop_description": "Property owned by {0} (#{1})",
-            "unknown_prop": "No know where is.",
-            "character": "Being",
-            "view_character": "See being",
-            "view_player": "See human",
-            "plate_id": "Rock / ID",
-            "unknown_vehicle": "No know vehicle, maybe npc/local.",
-            "contents": "Stuff Inside",
-            "snap_contents": "Stuff Inside at {0}",
-            "snap_url": "Success make picture {0}",
-            "empty": "Ug",
-            "content_title": "Ug {0} ug {1} ug {2}",
-            "content_empty": "Ug {0} ug ug",
-            "empty_title": "Ug ug {0}",
-            "empty_confirm": "Ug ug ug {0} ug ug ug?",
-            "battle_royale": "Ug ug ug ug ug Battle Royale ug."
-        },
         "logs": {
             "title": "Ug Logs",
             "description": "Ug logs ug ug ug ug",
-            "history": "Ug"
+            "refresh": "Make new",
+            "player": "Hunter",
+            "server_id": "Tribe number",
+            "items_moved": "Thing(s) go different place",
+            "from": "Place before",
+            "to": "Place after",
+            "timestamp": "Sun count",
+            "no_logs": "No find things had before."
         },
-        "character": {
-            "movement": "Ugg-Ugg",
-            "item": "Uggit Moved",
-            "unknown": "Ugga-Ugga"
-        },
-        "view_logs": "Show What We Have List"
+        "view_logs": "Show What We Have List",
+        "show": {
+            "description": "{0} thing count heavy {1}stone-under",
+            "delete_item_slot": "Take out all things here.",
+            "edit_item_slot": "Change all things here.",
+            "add_item_slot": "Put more things here.",
+            "delete_confirm": "Know if want take out all things here?",
+            "editing_slot": "Change spot rock-mark {0}",
+            "amount": "Count",
+            "item_name": "Thing called",
+            "infos": "Thing know",
+            "metadata": "Thing secret",
+            "key": "Thing stick",
+            "value": "Thing worth",
+            "save": "Keep diferent"
+        }
     },
     "twitter": {
         "title": "Ugg-Ugg Feed",

@@ -637,84 +637,37 @@
         "none": "No Mateys found"
     },
     "inventories": {
-        "view": "Treasure Hold",
         "show_inv": "Show loot",
         "show_trunk": "Show chest loot",
         "show_glovebox": "Show treasure chest loot",
-        "show_motel": "Spy upon motel chest inventory",
-        "search": {
-            "title": "Scour Inventories",
-            "label": "Hoards",
-            "type": "Plunder Type",
-            "types": {
-                "character": "Sea Rover's Stash (Buccaneer/Healer/etc.)",
-                "vehicle": "Sailing Vessel (Hull/Cachebox)",
-                "evidence": "Treasure Hold",
-                "motel": "Private Cabins",
-                "property": "Treasure Trove"
-            },
-            "cid": "PID (Captain/Sea Dog)",
-            "plate_id": "Pirate Speak: Plate / ID",
-            "evidence_id": "Pirate Speak: Evidence ID",
-            "name": "Pirate Speak: Loot Descriptor",
-            "id": "Pirate Speak: Loot ID",
-            "none": "Pirate Speak: No booty matchin' yer search or no not-empty booties found"
-        },
-        "history": {
-            "title": "Pirate Speak: Booty History for {0} ({1})",
-            "description": "Pirate Speak: View the sailin' history of a booty"
-        },
-        "show": {
-            "error": "Pirate Speak: Invalid Loot",
-            "title": "Pirate Speak: Loot",
-            "snapshot": "Pirate Speak: Create a parchment o' the loot",
-            "snap_time": "Arr, this be a snapshot taken at {0} by {1}. It will rest no later than {2}",
-            "type": {
-                "ground": "Arr, this be a treasure bein' on the ground.",
-                "character": "Arr, this be a treasure in ye character's possession.",
-                "trunk": "Arr, this be a treasure in ye vehicle's trunk.",
-                "glovebox": "Arr, this be a treasure in ye vehicle's glovebox.",
-                "property": "Arr, this be a storage container inside a property holdin' ye valuables.",
-                "evidence": "Arr, this be the lock-up for evidence in a pirate hideaway.",
-                "locker-police": "Arr, this be a pirate's plunder chest.",
-                "locker-mechanic": "Ahoy! This here be a scallywag's wrench chest.",
-                "locker-ems": "Arr, this be a matey's medical chest.",
-                "motel": "Arr, this be a stash chest inside a pirate's den.",
-                "container": "Yarr, this be a holdin' crate tally."
-            },
-            "vehicle": "Ship",
-            "owner": "Ship Captain",
-            "property": "Loot",
-            "prop_owner": "Loot Captain",
-            "motel_owner": "Cove Captain",
-            "prop_description": "Ye be beholden to {0} fer this fine piece o' property (#{1})",
-            "unknown_prop": "Blasted Property",
-            "character": "Scallywag",
-            "view_character": "Spy on Scallywag",
-            "view_player": "Spy on Landlubber",
-            "plate_id": "Plate / Codex",
-            "unknown_vehicle": "Unknown vessel, could be a scallywag or a local.",
-            "contents": "Booty Contents",
-            "snap_contents": "Booty Contents at {0}",
-            "snap_url": "Successfully created parchment {0}",
-            "empty": "Nary a thing in 'ere",
-            "content_title": "Ye got {1} o' {2} in slot {0}",
-            "content_empty": "Slot {0} be as empty as Davy Jones' locker",
-            "empty_title": "Empty slot {0}",
-            "empty_confirm": "Be ye sure ye be wantin' to empty slot {0} in this inventory?",
-            "battle_royale": "This piece be a Battle Royale piece"
-        },
         "logs": {
             "title": "Inventory Logs",
             "description": "Logs o' plunderin' tied to a certain inventory",
-            "history": "Chronicles"
+            "refresh": "Swab the deck",
+            "player": "Pirate",
+            "server_id": "Server Markin'",
+            "items_moved": "Loot(s) Shifted",
+            "from": "From the depths",
+            "to": "To the crow's nest",
+            "timestamp": "Time mark",
+            "no_logs": "No plunder logs to be spottin'."
         },
-        "character": {
-            "movement": "Sailin' and Swaggerin'",
-            "item": "Relocated Booty",
-            "unknown": "Uncharted Waters"
-        },
-        "view_logs": "Display Plunderin' Records"
+        "view_logs": "Display Plunderin' Records",
+        "show": {
+            "description": "{0} treasures totallin' {1}su in heft.",
+            "delete_item_slot": "Scuttle all booty in this hold.",
+            "edit_item_slot": "Amend all booty in this hold.",
+            "add_item_slot": "Stow goods to this hold.",
+            "delete_confirm": "Be ye certain ye want to scuttle all treasures from this hold?",
+            "editing_slot": "Changin' hold #{0}",
+            "amount": "Quantity",
+            "item_name": "Treasure Name",
+            "infos": "Treasure Tales",
+            "metadata": "Treasure Marks",
+            "key": "Key to the chest",
+            "value": "Pieces o' Eight",
+            "save": "Keep ye changes"
+        }
     },
     "twitter": {
         "title": "Ye Olde Twitter Parrot",

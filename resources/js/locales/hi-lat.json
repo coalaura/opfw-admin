@@ -646,84 +646,37 @@
         "none": "Koi Patra Nahin Mila"
     },
     "inventories": {
-        "view": "Suchi",
         "show_inv": "Suchi Dikhayen",
         "show_trunk": "Trunk ki Suchi Dikhayen",
         "show_glovebox": "Dastane Box ki Suchi Dikhayen",
-        "show_motel": "Motel Dresser ki Suchi Dikhayen",
-        "search": {
-            "title": "Suchiyan Khojen",
-            "label": "Suchiyan",
-            "type": "Suchi Prakar",
-            "types": {
-                "character": "Locker aur Jeebon (Police/EMS/aadi)",
-                "vehicle": "Vahan (Trunk/Dastane Box)",
-                "evidence": "Saksham Locker",
-                "motel": "Motels",
-                "property": "Sampatti"
-            },
-            "cid": "CID (Swami/Patra)",
-            "plate_id": "Plate / ID",
-            "evidence_id": "Saksham ID",
-            "name": "Suchi Varnanakarta",
-            "id": "Suchi ID",
-            "none": "Aapke khoj par milne wali suchiyan nahin hain ya koi bhi khali nahi hai"
-        },
-        "history": {
-            "title": "Item Itihas ke liye {0} ({1})",
-            "description": "Kisi item ke move karne ka itihas dekhein"
-        },
-        "show": {
-            "error": "Amawya Suchi",
-            "title": "Suchi",
-            "snapshot": "Suchi ka snapshot banayein",
-            "snap_time": "Yeh ek snapshot hai jo {0} ko {1} ne liya hai. Yeh {2} ko expire ho jayega.",
-            "type": {
-                "ground": "Yeh zameen ka bhandar hai.",
-                "character": "Yeh patra ka bhandar hai.",
-                "trunk": "Yeh vahan ke trunk ka bhandar hai.",
-                "glovebox": "Yeh vahan ke glovebox ka bhandar hai.",
-                "property": "Yeh kisi sampatti ke andar ka storage container hai.",
-                "evidence": "Yeh police vibhag ke evidence locker ka bhandar hai.",
-                "locker-police": "Yeh kisika police locker ka bhandar hai.",
-                "locker-mechanic": "Yeh kisika mechanic locker ka bhandar hai.",
-                "locker-ems": "Yeh kisika ems locker ka bhandar hai.",
-                "motel": "Yeh motel ke andar ka storage container ka bhandar hai.",
-                "container": "Yeh ek storage container ki inventory hai."
-            },
-            "vehicle": "Vahan",
-            "owner": "Vahan ke malik",
-            "property": "Sampatti",
-            "prop_owner": "Sampatti ke malik",
-            "motel_owner": "Motel ke malik",
-            "prop_description": "Sampatti ka malik hai {0} (#{1})",
-            "unknown_prop": "Ajnaat Sampatti",
-            "character": "Patra",
-            "view_character": "Patra ko dekhein",
-            "view_player": "Khiladi ko dekhein",
-            "plate_id": "Plate / ID",
-            "unknown_vehicle": "Ajnaat vahan, shayad npc/local ho sakta hai.",
-            "contents": "Bhandar ka content",
-            "snap_contents": "{0} par bhandar ka content",
-            "snap_url": "Safalta purvak snapshot {0} banaya gaya hai",
-            "empty": "Khaali",
-            "content_title": "Slot {0} mein {1} ka {2} hai",
-            "content_empty": "Slot {0} khaali hai",
-            "empty_title": "Khaali slot {0}",
-            "empty_confirm": "Kya aap sach mein chahte hain ki is bhandar mein slot {0} ko khaali kar dein?",
-            "battle_royale": "Yeh item ek Battle Royale item hai."
-        },
         "logs": {
             "title": "Bhandar Ke Log",
             "description": "Kisi vishesha bhandar se sambandhit bhandar ke log",
-            "history": "Iitihaas"
+            "refresh": "Refresh karein",
+            "player": "Khiladi",
+            "server_id": "Server ID",
+            "items_moved": "Item(s) Ko Sthanaantarit Kiya Gaya",
+            "from": "Se",
+            "to": "Ke Liye",
+            "timestamp": "Samay Rekha",
+            "no_logs": "Koi inventory logs nahin mile."
         },
-        "character": {
-            "movement": "Gati",
-            "item": "Bhautik vastu ko sthanantirit kiya gaya",
-            "unknown": "Agyaat"
-        },
-        "view_logs": "Dikhao Inventory Logs"
+        "view_logs": "Dikhao Inventory Logs",
+        "show": {
+            "description": "{0} saman jinka vajan {1}su hai kul milake.",
+            "delete_item_slot": "Is slot se saare saman nash kar dein.",
+            "edit_item_slot": "Is slot me saare saman ka sampadan karein.",
+            "add_item_slot": "Is slot me saman jodein.",
+            "delete_confirm": "Kya aap nishchit hai ki aap is slot se saare saman nash karna chahte hain?",
+            "editing_slot": "Slot #{0} ka sampadan kar rahe hain",
+            "amount": "Matra",
+            "item_name": "Saman Ka Naam",
+            "infos": "Saman Ki Jankariyaan",
+            "metadata": "Saman Ki Metadata",
+            "key": "Chaabi",
+            "value": "Moolya",
+            "save": "Parivartan Save Karein"
+        }
     },
     "twitter": {
         "title": "Twitter Feed",

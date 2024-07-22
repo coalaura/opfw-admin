@@ -637,84 +637,37 @@
         "none": "🚫 No Characters found"
     },
     "inventories": {
-        "view": "🎒 Inventory",
         "show_inv": "👀 Show inventory",
         "show_trunk": "🚗 Show trunk inventory",
         "show_glovebox": "🧤 Show glovebox inventory",
-        "show_motel": "📦🏨 Show motel dresser inventory",
-        "search": {
-            "title": "🔎 Search Inventories",
-            "label": "📦 Inventories",
-            "type": "🗃️ Inventory Type",
-            "types": {
-                "character": "🔒🤲(👮👨‍⚕️🚑etc.)",
-                "vehicle": "🚗(🚖📦)",
-                "evidence": "📚🔐",
-                "motel": "🏨",
-                "property": "🏠"
-            },
-            "cid": "🆔(👤/👤)",
-            "plate_id": "🚗 / 🆔",
-            "evidence_id": "🔍 ID",
-            "name": "📦 Descriptor",
-            "id": "📦 ID",
-            "none": "🔍 No inventories matching your search or no not-empty inventories found"
-        },
-        "history": {
-            "title": "📚 History for {0} ({1})",
-            "description": "👀 View the movement history of an item"
-        },
-        "show": {
-            "error": "❌ Invalid Inventory",
-            "title": "📦 Inventory",
-            "snapshot": "📸 Create a snapshot of the inventory",
-            "snap_time": "📸🕒💥This is a snapshot taken at {0} by {1}. It will expire at {2}",
-            "type": {
-                "ground": "🛣🌳📦This is a ground inventory.",
-                "character": "👤🎒📦This is a character inventory.",
-                "trunk": "🚗🛄📦This inventory is the trunk of a vehicle.",
-                "glovebox": "🚗🧤📦This inventory is the glovebox of a vehicle.",
-                "property": "🏠📦This inventory is a storage container inside a property.",
-                "evidence": "🚓🔒📦This inventory is the evidence locker of a police department.",
-                "locker-police": "🚔 This inventory is someone's police locker.",
-                "locker-mechanic": "🔧 This inventory is someone's mechanic locker.",
-                "locker-ems": "🚑 This inventory is someone's EMS locker.",
-                "motel": "🏨 This inventory is a storage container inside a motel.",
-                "container": "📦 🗄️ 📝."
-            },
-            "vehicle": "🚗 Vehicle",
-            "owner": "👤 Vehicle Owner",
-            "property": "🏡 Property",
-            "prop_owner": "👤 Property Owner",
-            "motel_owner": "👤 Motel Owner",
-            "prop_description": "The property is owned by 👤 (🔢)",
-            "unknown_prop": "❓ Property",
-            "character": "👤",
-            "view_character": "👀 👤",
-            "view_player": "👀 👥",
-            "plate_id": "🚗 / 🔢",
-            "unknown_vehicle": "❓ vehicle, possibly 👤/🏢.",
-            "contents": "📦 Contents",
-            "snap_contents": "📦 Contents at ⌚️",
-            "snap_url": "✅ created snapshot ⌚️",
-            "empty": "🚫",
-            "content_title": "🎒 {0} 📦 {1} 🔰 {2}",
-            "content_empty": "🎒 {0} 🚫",
-            "empty_title": "Empty 🎒 {0}",
-            "empty_confirm": "❔ 🔢 {0} 🚫?",
-            "battle_royale": "🔫 Battle Royale 🎁"
-        },
         "logs": {
             "title": "📝 Inventory Logs",
             "description": "📝 logs related to a certain 🎒",
-            "history": "📜"
+            "refresh": "🔄",
+            "player": "🧑‍💻",
+            "server_id": "🔢 🆔",
+            "items_moved": "📦➡️",
+            "from": "🏠",
+            "to": "🏢",
+            "timestamp": "⏱️",
+            "no_logs": "❌📦📜🔍"
         },
-        "character": {
-            "movement": "🚶",
-            "item": "📦",
-            "unknown": "🤷‍♂️"
-        },
-        "view_logs": "📝 \"🔍 📦 📈\""
+        "view_logs": "📝 \"🔍 📦 📈\"",
+        "show": {
+            "description": "{0} 📦 ⚖️ {1}su 📊",
+            "delete_item_slot": "🗑️📦👉🎰",
+            "edit_item_slot": "✏️📦👉🎰",
+            "add_item_slot": "➕📦👉🎰",
+            "delete_confirm": "❓✅🗑️📦👉🎰",
+            "editing_slot": "✏️🎰🔢{0}",
+            "amount": "🔢",
+            "item_name": "📦📛",
+            "infos": "📦ℹ️",
+            "metadata": "📦🔢💾",
+            "key": "🔑",
+            "value": "🏷️",
+            "save": "💾🔄"
+        }
     },
     "twitter": {
         "title": "🐦",

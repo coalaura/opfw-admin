@@ -57,6 +57,7 @@ module.exports = {
             width: {
                 'item':               '140px',
                 'item-image':         '100px',
+                'inventory':          'calc((140px * 5) + (0.75rem * 4) + (2rem * 2))',
                 'small-alert':        '380px',
                 'alert':              '650px',
                 'big-alert':          '650px',

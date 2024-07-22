@@ -279,7 +279,7 @@ class InventoryController extends Controller
 
     private function refresh(string $inventory)
     {
-        $serverIp = Server::getFirstServerIP();
+        $serverIp = Server::getFirstServer();
 
         if (!$serverIp) {
             return;
@@ -299,7 +299,7 @@ class InventoryController extends Controller
 
     private function itemList()
     {
-        $serverIp = Server::getFirstServerIP();
+        $serverIp = Server::getFirstServer();
 
         if (!$serverIp) {
             return [];

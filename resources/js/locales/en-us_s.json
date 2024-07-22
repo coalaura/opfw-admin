@@ -637,84 +637,37 @@
         "none": "Ain't no Charactas found"
     },
     "inventories": {
-        "view": "Stash",
         "show_inv": "Show stash",
         "show_trunk": "Show trunk stash",
         "show_glovebox": "Show glovebox stash",
-        "show_motel": "Show motel clothes drawer inventory",
-        "search": {
-            "title": "Rummage through stuff",
-            "label": "Stuff",
-            "type": "Kind of stuff",
-            "types": {
-                "character": "Private stash and pockets (Cops/Medics/etc.)",
-                "vehicle": "Car (Trunk/Glove-box)",
-                "evidence": "Evidence storage",
-                "motel": "Motor Motels",
-                "property": "Property"
-            },
-            "cid": "CID (Owner/Character)",
-            "plate_id": "License Plate / ID",
-            "evidence_id": "Evidence ID",
-            "name": "Inventory Description",
-            "id": "Inventory ID",
-            "none": "Ain't no inventories that match your search or none of 'em got anything in 'em"
-        },
-        "history": {
-            "title": "Item History for {0} ({1})",
-            "description": "Check out the movin' history of an item"
-        },
-        "show": {
-            "error": "Invalid Inventory",
-            "title": "Totes",
-            "snapshot": "Get a picture of the totes",
-            "snap_time": "Y'all take a look at this here snapshot taken 'round {0} by {1}. It's fixin' to expire 'round {2}.",
-            "type": {
-                "ground": "This right here's a ground inventory.",
-                "character": "This here's a character inventory.",
-                "trunk": "This inventory's the trunk of a vehicle, y'all.",
-                "glovebox": "This here inventory's the glovebox of a vehicle.",
-                "property": "This inventory's a storage container inside a property, now.",
-                "evidence": "This here inventory's the evidence locker of a police department, honey.",
-                "locker-police": "This here inventory belongs to a good ol' police fella.",
-                "locker-mechanic": "This here inventory belongs to a hardworkin' mechanic.",
-                "locker-ems": "This here inventory belongs to a dedicated EMS professional.",
-                "motel": "This here inventory is a storage container within a cozy motel.",
-                "container": "This here's a storage container tally."
-            },
-            "vehicle": "Motorcar",
-            "owner": "Motorcar Owner",
-            "property": "Land",
-            "prop_owner": "Land Owner",
-            "motel_owner": "Motel Proprietor",
-            "prop_description": "The dang property is owned by {0} (#{1})",
-            "unknown_prop": "Dang Ol' Unknown Property",
-            "character": "Character",
-            "view_character": "View Yer Character",
-            "view_player": "View Yer Player",
-            "plate_id": "Plate / ID",
-            "unknown_vehicle": "Dang Ol' Unknown vehicle, possibly npc/local.",
-            "contents": "Inventory Contents",
-            "snap_contents": "Inventory Contents at {0}",
-            "snap_url": "Successfully created snapshot {0}",
-            "empty": "Nuthin'",
-            "content_title": "Y'all got {1} of {2} in slot {0}",
-            "content_empty": "Slot {0} ain't got nothin'",
-            "empty_title": "Slot {0} be empty",
-            "empty_confirm": "Y'all sure 'bout emptyin' slot {0} in this here inventory?",
-            "battle_royale": "This here item be a Battle Royale item."
-        },
         "logs": {
             "title": "Inventory Logs",
             "description": "Inventory logs 'bout a certain inventory",
-            "history": "History"
+            "refresh": "Freshen up",
+            "player": "Playa",
+            "server_id": "Servuh ID",
+            "items_moved": "Ite'ms Moved",
+            "from": "Frum",
+            "to": "Tuh",
+            "timestamp": "Time Stamp",
+            "no_logs": "Ain't no inventory logs found."
         },
-        "character": {
-            "movement": "Gittin' 'Round",
-            "item": "Done Moved Somethin'",
-            "unknown": "Don't Know"
-        },
-        "view_logs": "Shew Inventory Logs"
+        "view_logs": "Shew Inventory Logs",
+        "show": {
+            "description": "{0} ite'ms weighin' {1} suh in total.",
+            "delete_item_slot": "Toss out all ite'ms in this here slot.",
+            "edit_item_slot": "Change up all ite'ms in this here slot.",
+            "add_item_slot": "Add ite'ms tuh this slot.",
+            "delete_confirm": "Y'all sure y'wanna get rid of all ite'ms fum this slot?",
+            "editing_slot": "Editin' slot #{0}",
+            "amount": "Quantity",
+            "item_name": "Ite'm Name",
+            "infos": "Ite'm Details",
+            "metadata": "Ite'm Metadata",
+            "key": "Key",
+            "value": "Value",
+            "save": "Save them Changes"
+        }
     },
     "twitter": {
         "title": "Twitter Peckin's",

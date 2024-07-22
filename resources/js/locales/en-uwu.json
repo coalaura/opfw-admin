@@ -637,84 +637,37 @@
         "none": "Nyoo Chawactews found UwU"
     },
     "inventories": {
-        "view": "Invyentowy UwU",
         "show_inv": "Show invyentowy UwU",
         "show_trunk": "Show twunk invyentowy UwU",
         "show_glovebox": "Show gwovebox invyentowy UwU",
-        "show_motel": "Shuwuw mowotew dwessew invewentowy",
-        "search": {
-            "title": "Sewurch Inventowies uwu",
-            "label": "Inventowies uwu",
-            "type": "Invewentowy Typwu uwu",
-            "types": {
-                "character": "Wockew awnd Pockets (Powice/EMS/ewtc.) uwu",
-                "vehicle": "Vehicwe (Twunk/Gwove-box) uwu",
-                "evidence": "Evidewnce Wockew uwu",
-                "motel": "Mowtews uwu",
-                "property": "Pwopewty uwu"
-            },
-            "cid": "CID (Ownew/Chawactew) uwu",
-            "plate_id": "Pwate / ID",
-            "evidence_id": "Evidwence ID",
-            "name": "Inventowy Descripwion",
-            "id": "Inventowy ID",
-            "none": "No inventowies matching youw search ow no not-empty inventowies found"
-        },
-        "history": {
-            "title": "Item Histowy fow {0} ({1})",
-            "description": "View the movement histowy of an item"
-        },
-        "show": {
-            "error": "Invawid Inventowy",
-            "title": "Inventowy",
-            "snapshot": "Cweate a snapsho",
-            "snap_time": "Thwis uwu a snapshwot taken at {0} by {1}. It wiww expiwe at {2}",
-            "type": {
-                "ground": "Thwis sewemes to bwe a gwound inventory owo",
-                "character": "Thwis sewemes to bwe a chawactew inventory owo",
-                "trunk": "Thwis inventory is the twunk of a vewicwe >w<",
-                "glovebox": "Thwis inventory is the gwovebox of a vewicwe >w<",
-                "property": "Thwis inventory is a stowage containew inside a pwopewty uwu",
-                "evidence": "Thwis inventory is the evidence wockew of a powice depawtment UwU",
-                "locker-police": "Dis inventory is somwone's police lockwer.",
-                "locker-mechanic": "Dis inventory is somwone's mechanic lockwer.",
-                "locker-ems": "Dis inventory is somwone's ems lockwer.",
-                "motel": "Dis inventory is a storwage contwainer insidw a motel.",
-                "container": "Dis is a stowage containew inventowy."
-            },
-            "vehicle": "Vehicwe",
-            "owner": "Vehicwe Ownwer",
-            "property": "Pwopwerty",
-            "prop_owner": "Pwopwerty Ownwer",
-            "motel_owner": "Motel Ownwer",
-            "prop_description": "The pwopewty is owned by {0} (#{1})",
-            "unknown_prop": "Unknown Pwopewty",
-            "character": "Chawactew",
-            "view_character": "View Chawactew",
-            "view_player": "View Pwayew",
-            "plate_id": "Pwate / ID",
-            "unknown_vehicle": "Unknown vewicwe, possibly npc/wocaw.",
-            "contents": "Invewtowy Contents",
-            "snap_contents": "Invewtowy Contents at {0}",
-            "snap_url": "Successfuwwy cweated snapshowt {0}",
-            "empty": "Emptwy",
-            "content_title": "Swot {0} has {1} of {2}",
-            "content_empty": "Swot {0} is empty",
-            "empty_title": "Empty swot {0}",
-            "empty_confirm": "Awe you suwe you want to empty swot {0} in this inventory?",
-            "battle_royale": "This item is a Battwe Woyawe item."
-        },
         "logs": {
             "title": "Inventory Wogs",
             "description": "Inventory wogs wewated to a cewtain inventory",
-            "history": "Histowy"
+            "refresh": "Wefwesh",
+            "player": "Pwayew",
+            "server_id": "Sewvew ID",
+            "items_moved": "Itewm(s) Mwoved",
+            "from": "Fwom",
+            "to": "Two",
+            "timestamp": "Timestamp",
+            "no_logs": "No inventowy wogs found."
         },
-        "character": {
-            "movement": "Muuvement",
-            "item": "Mooowy Item",
-            "unknown": "UwUknown"
-        },
-        "view_logs": "Show Inventowy Wogs"
+        "view_logs": "Show Inventowy Wogs",
+        "show": {
+            "description": "{0} items weighing {1}su in totaw.",
+            "delete_item_slot": "Dewete aww items in dis swot.",
+            "edit_item_slot": "Edit aww items in dis swot.",
+            "add_item_slot": "Add items to dis swot.",
+            "delete_confirm": "Awe you suwe you want to dewete aww items fwom dis swot?",
+            "editing_slot": "Editing swot #{0}",
+            "amount": "Amount",
+            "item_name": "Item Name",
+            "infos": "Item Infwos",
+            "metadata": "Item Metadata",
+            "key": "Key",
+            "value": "Vawue",
+            "save": "Save Changes"
+        }
     },
     "twitter": {
         "title": "Twiwtew Feed",

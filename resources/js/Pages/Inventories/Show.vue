@@ -4,6 +4,10 @@
         <portal to="title">
             <h1 class="dark:text-white">
                 {{ name }}
+
+                <inertia-link class="sup font-semibold bg-transparent text-blue-600 dark:text-blue-400" :title="t('inventories.view_logs')" :href="'/inventory/logs/' + name">
+                    <i class="fas fa-dolly-flatbed"></i>
+                </inertia-link>
             </h1>
 			<p v-if="totalItems > 0">
 				{{ t('inventories.show.description', totalItems, totalWeight) }}
@@ -11,7 +15,7 @@
         </portal>
 
         <!-- Table -->
-        <v-section class="overflow-x-auto relative" :noHeader="true" :noFooter="true">
+        <v-section class="overflow-x-auto w-inventory" :noHeader="true" :noFooter="true">
             <template>
                 <div class="grid grid-cols-5 gap-3 w-max">
                     <div v-for="(items, slot) in contents" :key="slot" class="bg-black bg-opacity-10 rounded-sm border border-gray-500 w-item relative pt-2 text-white">

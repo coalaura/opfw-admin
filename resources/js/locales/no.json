@@ -646,84 +646,37 @@
         "none": "Ingen karakterer funnet"
     },
     "inventories": {
-        "view": "Inventar",
         "show_inv": "Vis inventar",
         "show_trunk": "Vis bagasjerommet-inventar",
         "show_glovebox": "Vis hanskerommet-inventar",
-        "show_motel": "Vis motell-kommode-inventar",
-        "search": {
-            "title": "Søk i Inventarer",
-            "label": "Inventarer",
-            "type": "Type of Inventory",
-            "types": {
-                "character": "Safe and Pockets (Police/EMS/etc.)",
-                "vehicle": "Vehicle (Trunk/Compartment)",
-                "evidence": "Evidence Storage",
-                "motel": "Motel Rooms",
-                "property": "Owned Property"
-            },
-            "cid": "CID (Owner/Character)",
-            "plate_id": "License Plate / ID",
-            "evidence_id": "Evidence ID",
-            "name": "Inventory Description",
-            "id": "Lagersøk ID",
-            "none": "Ingen lager som samsvarer med søket ditt, eller ingen ikke-tomme lagere funnet"
-        },
-        "history": {
-            "title": "Varehistorikk for {0} ({1})",
-            "description": "Vis bevegelseshistorikken til en vare"
-        },
-        "show": {
-            "error": "Ugyldig Lager",
-            "title": "Lager",
-            "snapshot": "Opprett et øyeblikksbilde av lageret",
-            "snap_time": "Dette er et øyeblikksbilde tatt {0} av {1}. Det vil utløpe {2}",
-            "type": {
-                "ground": "Dette er et jordlager.",
-                "character": "Dette er et rollelager.",
-                "trunk": "Dette lageret er bagasjerommet til et kjøretøy.",
-                "glovebox": "Dette lageret er hanskerommet til et kjøretøy.",
-                "property": "Dette lageret er en oppbevaringsbeholder inne i en eiendom.",
-                "evidence": "Dette lageret er bevislåsen til en politistasjon.",
-                "locker-police": "Dette lageret er noen sin politilås.",
-                "locker-mechanic": "Dette lageret tilhører en mekaniker.",
-                "locker-ems": "Dette lageret tilhører en ambulansemedarbeider.",
-                "motel": "Dette lageret er en oppbevaringsboks inne på et motell.",
-                "container": "Dette er en inventarliste for en oppbevaringsbeholder."
-            },
-            "vehicle": "Kjøretøy",
-            "owner": "Kjøretøy Eier",
-            "property": "Eiendom",
-            "prop_owner": "Eiendom Eier",
-            "motel_owner": "Motell Eier",
-            "prop_description": "Eiendommen eies av {0} (#{1})",
-            "unknown_prop": "Ukjent eiendom",
-            "character": "Karakter",
-            "view_character": "Se karakter",
-            "view_player": "Se spiller",
-            "plate_id": "Skilt / ID",
-            "unknown_vehicle": "Ukjent kjøretøy, muligens npc/lokal.",
-            "contents": "Innhold i inventar",
-            "snap_contents": "Innhold i inventar ved {0}",
-            "snap_url": "Vellykket opprettet øyeblikksbilde {0}",
-            "empty": "Tom",
-            "content_title": "Plass {0} inneholder {1} av {2}",
-            "content_empty": "Plass {0} er tom",
-            "empty_title": "Tom plass {0}",
-            "empty_confirm": "Er du sikker på at du vil tømme plass {0} i dette inventaret?",
-            "battle_royale": "Denne gjenstanden er en Battle Royale-gjenstand."
-        },
         "logs": {
             "title": "Inventarlogger",
             "description": "Inventarlogger relatert til et bestemt inventar",
-            "history": "Historie"
+            "refresh": "Oppdater",
+            "player": "Spiller",
+            "server_id": "Server-ID",
+            "items_moved": "Flyttede objekt(er)",
+            "from": "Fra",
+            "to": "Til",
+            "timestamp": "Tidsstempel",
+            "no_logs": "Ingen lagerlogger funnet."
         },
-        "character": {
-            "movement": "Bevegelse",
-            "item": "Flyttet gjenstand",
-            "unknown": "Ukjent"
-        },
-        "view_logs": "Vis inventarlogger"
+        "view_logs": "Vis inventarlogger",
+        "show": {
+            "description": "{0} objekter med en samlet vekt på {1}su.",
+            "delete_item_slot": "Slett alle gjenstander i dette feltet.",
+            "edit_item_slot": "Rediger alle gjenstander i dette feltet.",
+            "add_item_slot": "Legg til gjenstander i dette feltet.",
+            "delete_confirm": "Er du sikker på at du vil slette alle gjenstander fra dette feltet?",
+            "editing_slot": "Redigerer felt nr. {0}",
+            "amount": "Antall",
+            "item_name": "Gjenstandsnavn",
+            "infos": "Gjenstandsinformasjon",
+            "metadata": "Gjenstands Metadata",
+            "key": "Nøkkel",
+            "value": "Verdi",
+            "save": "Lagre endringer"
+        }
     },
     "twitter": {
         "title": "Twitter-strøm",
