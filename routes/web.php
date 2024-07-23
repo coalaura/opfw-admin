@@ -102,6 +102,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/players/{player}/linked_hwid', [PlayerRouteController::class, 'linkedHWID']);
     Route::get('/players/{player}/discord', [PlayerRouteController::class, 'discordAccounts']);
     Route::get('/players/{player}/antiCheat', [PlayerRouteController::class, 'antiCheat']);
+    Route::get('/players/{player}/ip', [PlayerRouteController::class, 'playerIPInfo']);
     Route::get('/players/{player}/ban', [PlayerRouteController::class, 'ban']);
     Route::get('/players/{player}/bans/{ban}/system', [PlayerBanController::class, 'systemInfo']);
 

@@ -930,7 +930,8 @@
             "multiple_bans_details": "Player got {0} active bans. Players with a bunch of active bans can't be scheduled for unban an' gotta be unbanned by hand, y'all.",
             "staff_commands": "Staff Commans",
             "global_opfw_ban": "Global OP-FW Ban",
-            "ban_op": "Banned all 'round the world by <i>{0}</i> 'til <i>{1}</i>"
+            "ban_op": "Banned all 'round the world by <i>{0}</i> 'til <i>{1}</i>",
+            "using_vpn": "Playa was usin' a VPN when they hitched up to the server."
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

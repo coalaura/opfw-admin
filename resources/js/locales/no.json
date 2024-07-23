@@ -940,7 +940,8 @@
             "multiple_bans_details": "Spilleren har {0} aktive utestengelser. Spillere med flere aktive utestengelser kan ikke planlegges for oppheving av utestengelse og må fjernes manuelt.",
             "staff_commands": "Ansatte Kommandoer",
             "global_opfw_ban": "Global OP-FW-utestengelse",
-            "ban_op": "Globalt utestengt av <i>{0}</i> til <i>{1}</i>"
+            "ban_op": "Globalt utestengt av <i>{0}</i> til <i>{1}</i>",
+            "using_vpn": "Spilleren brukte en VPN da de koblet seg til serveren."
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",

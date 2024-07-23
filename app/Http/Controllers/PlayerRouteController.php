@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\CacheHelper;
+use App\Helpers\HttpHelper;
 use App\Helpers\LoggingHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
@@ -429,6 +430,37 @@ class PlayerRouteController extends Controller
 
         return response()->file($path, [
             'Content-type: image/jpeg',
+        ]);
+    }
+
+    /**
+     * Returns information about the last used IP.
+     *
+     * @param Player $player
+     */
+    public function playerIPInfo(Player $player)
+    {
+        $ip = $player->last_ip_identifier;
+
+        if (!$ip) {
+            return $this->jsonRaw([
+                "success" => false,
+                "error"   => 'No IP found',
+            ]);
+        }
+
+        $info = HttpHelper::getIPInfo($ip);
+
+        if (!$info || !$info["success"]) {
+            return $this->jsonRaw([
+                "success" => false,
+                "error"   => 'Failed to get IP information',
+            ]);
+        }
+
+        return $this->jsonRaw([
+            "success" => true,
+            "is_vpn"  => $info["is_vpn"] ?? false,
         ]);
     }
 }

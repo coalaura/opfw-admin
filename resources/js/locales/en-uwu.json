@@ -930,7 +930,8 @@
             "multiple_bans_details": "Pwayew has {0} active bawns. Pwayews wif muwtipwe active bawns cawn't be scheduwed fow unban and have to be unbanned manyuawwy.",
             "staff_commands": "Stawf Commands",
             "global_opfw_ban": "Gwobaw OP-FW Bawn UwU",
-            "ban_op": "Gwobawwy bannwed by <i>{0}</i> untiw <i>{1}</i>"
+            "ban_op": "Gwobawwy bannwed by <i>{0}</i> untiw <i>{1}</i>",
+            "using_vpn": "Pwayew was using a VPN when dey connected to the sewvew uwu."
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

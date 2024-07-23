@@ -930,7 +930,8 @@
             "multiple_bans_details": "Human with {0} no-plays now. Humans with many no-plays no get wait-list-freedom. Need hand-free from no-play by other.",
             "staff_commands": "Stick Orders",
             "global_opfw_ban": "\\\"World No-Allow OP-FW\\\"",
-            "ban_op": "Whole earth say no by <i>{0}</i> till <i>{1}</i>"
+            "ban_op": "Whole earth say no by <i>{0}</i> till <i>{1}</i>",
+            "using_vpn": "Player hide behind magic net mask when join tribe rock-talk place."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

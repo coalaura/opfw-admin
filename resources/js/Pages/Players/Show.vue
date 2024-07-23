@@ -136,6 +136,11 @@
                 <badge class="border-gray-200 overflow-hidden bg-center bg-cover w-32 cursor-help" style="background-image: url('/images/wide_putin.webp')" v-if="player.stretchedRes" :title="t('players.show.stretch_res', estimateRatio(player.stretchedRes.aspectRatio), estimateRatio(player.stretchedRes.pixelRatio))">
                 </badge>
 
+                <!-- VPN -->
+                <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale" v-if="isUsingVPN" :title="t('players.show.using_vpn')" square>
+                    <i class="fas fa-network-wired"></i>
+                </badge>
+
                 <!-- Debugger -->
                 <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('global.debugger_title')" v-if="player.isDebugger && !player.isRoot" sqare>
                     <i class="fas fa-toolbox"></i>
@@ -1865,6 +1870,8 @@ export default {
 
             hwidBan: null,
 
+            isUsingVPN: false,
+
             isLoading: false,
             showingMoreInfo: false,
 
@@ -2356,6 +2363,16 @@ export default {
             this.local.ban = this.localizeBan();
 
             this.loadingOpfwBan = false;
+        },
+        async loadIPInfo() {
+            try {
+                const response = await axios.get('/players/' + this.player.licenseIdentifier + '/ip'),
+                    data = response.data;
+
+                if (data && data.success) {
+                    this.isUsingVPN = data.is_vpn;
+                }
+            } catch(e) {}
         },
         async loadStatus() {
             this.statusLoading = true;
@@ -2997,6 +3014,7 @@ export default {
             this.loadGlobalBans();
             this.loadOPFWBan();
             this.loadEchoStatus();
+            this.loadIPInfo();
         }, 500);
 
         this.updatePlayerTime();

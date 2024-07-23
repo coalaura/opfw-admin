@@ -969,6 +969,7 @@
             "average_ping": "Average ping to the server in milliseconds.",
             "average_fps": "Average fps (tracked once a second).",
             "stretch_res": "Player is playing a {0} aspect ratio on a {1} resolution. (Stretched-Resolution)",
+            "using_vpn": "Player was using a VPN when they connected to the server.",
             "playtime": "{0} played in total, {1} of which was in the last 4 weeks.",
             "save_changes": "Save changes",
             "country_name": "Country",

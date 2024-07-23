@@ -80,7 +80,17 @@ class Controller extends BaseController
 
         }
 
-        return (new Response($resp, 200))->header('Content-Type', 'application/json');
+        return self::jsonRaw($resp);
+    }
+
+    /**
+     * @param int $status
+     * @param string $text
+     * @return Response
+     */
+    protected static function jsonRaw(array $json): Response
+    {
+        return (new Response($json, 200))->header('Content-Type', 'application/json');
     }
 
     /**

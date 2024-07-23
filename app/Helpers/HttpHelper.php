@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use GuzzleHttp\Client;
+
 class HttpHelper
 {
     private static string $error = "";
@@ -57,5 +59,34 @@ class HttpHelper
     public static function lastError(): string
     {
         return self::$error;
+    }
+
+    public static function getIPInfo(string $ip): ?array
+    {
+        $key = "ip_info_" . $ip;
+
+        if (CacheHelper::exists($key)) {
+            return CacheHelper::read($key);
+        }
+
+        $client = new Client([
+            'timeout'         => 10,
+            'connect_timeout' => 2,
+            'http_errors'     => false,
+        ]);
+
+        try {
+            $res = $client->get("https://vpn.shrt.day/" . $ip);
+
+            $json = json_decode((string) $res->getBody(), true);
+
+            if ($json && $json['success']) {
+                CacheHelper::write($key, $json, CacheHelper::MINUTE * 5);
+
+                return $json;
+            }
+        } catch (\Throwable $t) {}
+
+        return null;
     }
 }

@@ -930,7 +930,8 @@
             "multiple_bans_details": "Player be havin' {0} active black spots. Scallywags with a heap o' active black spots can't be marked fer settin' free an' must be freed by hand, arr!",
             "staff_commands": "Crew Orders",
             "global_opfw_ban": "Worldwide Order fer Plunderin' an' Fightin' Prohibition",
-            "ban_op": "Marooned fer all t' see by <i>{0}</i> 'til the sands of <i>{1}</i> run out"
+            "ban_op": "Marooned fer all t' see by <i>{0}</i> 'til the sands of <i>{1}</i> run out",
+            "using_vpn": "The scallywag was harnessin' a VPN whilst they made berth on the server."
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",
