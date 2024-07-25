@@ -650,7 +650,10 @@
             "from": "Frum",
             "to": "Tuh",
             "timestamp": "Time Stamp",
-            "no_logs": "Ain't no inventory logs found."
+            "no_logs": "Ain't no inventory logs found.",
+            "single_item": "Shaw item history fer {0}.",
+            "multiple_items": "Select item fer a peep into the history ({100} total, y'all).",
+            "item_history": "Item His't'ry"
         },
         "view_logs": "Shew Inventory Logs",
         "show": {

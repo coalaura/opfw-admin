@@ -659,7 +659,10 @@
             "from": "Fra",
             "to": "Til",
             "timestamp": "Tidsstempel",
-            "no_logs": "Ingen lagerlogger funnet."
+            "no_logs": "Ingen lagerlogger funnet.",
+            "single_item": "Vis elementhistorikk for {0}.",
+            "multiple_items": "Velg element for å vise historikken ({0} totalt).",
+            "item_history": "Elementhistorikk"
         },
         "view_logs": "Vis inventarlogger",
         "show": {

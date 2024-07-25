@@ -650,7 +650,10 @@
             "from": "Place before",
             "to": "Place after",
             "timestamp": "Sun count",
-            "no_logs": "No find things had before."
+            "no_logs": "No find things had before.",
+            "single_item": "Show old stuff for {0}.",
+            "multiple_items": "Pick thing see old times ({0} many).",
+            "item_history": "Stuff Old Times"
         },
         "view_logs": "Show What We Have List",
         "show": {

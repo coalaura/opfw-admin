@@ -650,7 +650,10 @@
             "from": "From the depths",
             "to": "To the crow's nest",
             "timestamp": "Time mark",
-            "no_logs": "No plunder logs to be spottin'."
+            "no_logs": "No plunder logs to be spottin'.",
+            "single_item": "Display th' historical log fer {0}.",
+            "multiple_items": "Choose a plunder to peek at its past recordin's ({0} in full).",
+            "item_history": "Chronicle o' Booty"
         },
         "view_logs": "Display Plunderin' Records",
         "show": {

@@ -650,7 +650,10 @@
             "from": "Fwom",
             "to": "Two",
             "timestamp": "Timestamp",
-            "no_logs": "No inventowy wogs found."
+            "no_logs": "No inventowy wogs found.",
+            "single_item": "Show item histowy fow {0} uwu.",
+            "multiple_items": "Sewect item to show the histowy ({0} totaw) uwu.",
+            "item_history": "Item Histowy uwu"
         },
         "view_logs": "Show Inventowy Wogs",
         "show": {

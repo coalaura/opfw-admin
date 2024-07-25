@@ -659,7 +659,10 @@
             "from": "Se",
             "to": "Ke Liye",
             "timestamp": "Samay Rekha",
-            "no_logs": "Koi inventory logs nahin mile."
+            "no_logs": "Koi inventory logs nahin mile.",
+            "single_item": "{0} ke itihas ko dikhao.",
+            "multiple_items": "Itihas dikhane ke liye item chunen ({0} kul).",
+            "item_history": "Item Itihas"
         },
         "view_logs": "Dikhao Inventory Logs",
         "show": {
