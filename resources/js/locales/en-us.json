@@ -697,7 +697,10 @@
             "from": "From",
             "to": "To",
             "timestamp": "Timestamp",
-            "no_logs": "No inventory logs found."
+            "no_logs": "No inventory logs found.",
+            "single_item": "Show item history for {0}.",
+            "multiple_items": "Select item to show the history ({0} total).",
+            "item_history": "Item History"
         },
         "show": {
             "description": "{0} items weighing {1}su in total.",

@@ -48,7 +48,17 @@
 								{{ t('global.status.offline') }}
 							</span>
 						</td>
-						<td class="p-3 mobile:block">{{ movedItems(log.details) }}</td>
+						<td class="p-3 mobile:block">
+							<span v-if="!log.metadata || !log.metadata.itemIds || log.metadata.itemIds.length === 0">{{ movedItems(log.details) }}</span>
+
+							<a class="text-lime-600 dark:text-lime-400 font-semibold" :href="'/inventory/item/' + log.metadata.itemIds[0]" :title="t('inventories.logs.single_item', log.metadata.itemIds[0])" v-else-if="log.metadata.itemIds.length === 1">
+								{{ movedItems(log.details) }}
+							</a>
+
+							<a class="text-teal-600 dark:text-teal-400 font-semibold" href="#" :title="t('inventories.logs.multiple_items', log.metadata.itemIds.length)" @click="selectItemForHistory($event, log.metadata.itemIds)" v-else>
+								{{ movedItems(log.details) }}
+							</a>
+						</td>
 						<td class="p-3 mobile:block" v-html="fromInventory(log.details)"></td>
 						<td class="p-3 mobile:block" v-html="toInventory(log.details)"></td>
 						<td class="p-3 pr-8 mobile:block whitespace-nowrap">
@@ -88,6 +98,28 @@
 			</template>
 		</v-section>
 
+        <modal :show.sync="isSelectingItem">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('inventories.logs.item_history') }}
+                </h1>
+            </template>
+
+            <template #default>
+				<div class="grid grid-cols-6 gap-3 justify-evenly">
+					<a class="px-2 py-0.5 cursor-pointer truncate shadow border-teal-300 bg-teal-200 dark:bg-teal-700 font-semibold" :href="'/inventory/item/' + itemId" :title="t('inventories.logs.single_item', itemId)" v-for="itemId in selectingItemIds" :key="itemId">
+						#{{ itemId }}
+					</a>
+				</div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isSelectingItem = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
+
 	</div>
 </template>
 
@@ -95,12 +127,14 @@
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
 import Pagination from './../../Components/Pagination';
+import Modal from './../../Components/Modal';
 
 export default {
 	layout: Layout,
 	components: {
 		Pagination,
-		VSection
+		VSection,
+		Modal
 	},
 	props: {
 		name: {
@@ -128,6 +162,9 @@ export default {
 		return {
 			isLoading: false,
 
+			isSelectingItem: false,
+			selectingItemIds: [],
+
 			statusLoading: false,
 			status: {}
 		};
@@ -135,6 +172,21 @@ export default {
 	methods: {
 		formatRawTimestamp(timestamp) {
 			return this.$moment(timestamp).unix();
+		},
+		itemHistoryTitle(metadata) {
+			const itemIds = metadata.itemIds;
+
+			if (itemIds.length === 1) {
+				return this.t('inventories.logs.single_item', itemIds[0]);
+			}
+
+			return this.t('inventories.logs.multiple_items', itemIds.length);
+		},
+		selectItemForHistory(event, itemIds) {
+			event.preventDefault();
+
+			this.isSelectingItem = true;
+			this.selectingItemIds = itemIds.toSorted();
 		},
 		async refresh() {
 			if (this.isLoading) {

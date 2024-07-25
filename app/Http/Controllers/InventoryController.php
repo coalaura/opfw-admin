@@ -195,6 +195,35 @@ class InventoryController extends Controller
     }
 
     /**
+     * Show inventory logs for a certain item.
+     *
+     * @param string $inventory
+     * @param Request $request
+     */
+    public function itemHistory(int $itemId, Request $request)
+    {
+        $query = Log::query()
+            ->select(['id', 'identifier', 'action', 'details', 'metadata', 'timestamp'])
+            ->where('action', '=', 'Item Moved')
+            ->where(DB::raw("JSON_CONTAINS(metadata, $itemId, '$.itemIds')"), '=', '1')
+            ->orderByDesc('timestamp');
+
+        $page = Paginator::resolveCurrentPage('page');
+
+        $query->limit(30)->offset(($page - 1) * 30);
+
+        $logs = LogResource::collection($query->get());
+
+        return Inertia::render('Inventories/Logs', [
+            'name'      => 'item ' . $itemId,
+            'logs'      => LogResource::collection($logs),
+            'links'     => $this->getPageUrls($page),
+            'playerMap' => Player::fetchLicensePlayerNameMap($logs->toArray($request), 'licenseIdentifier'),
+            'page'      => $page,
+        ]);
+    }
+
+    /**
      * Updates all items in a certain inventory slot.
      *
      * @param string $inventory
