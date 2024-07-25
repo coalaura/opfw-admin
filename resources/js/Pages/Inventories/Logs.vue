@@ -158,7 +158,7 @@ export default {
 			this.isLoading = false;
 		},
 		movedItems(details) {
-			const items = details.match(/(?<=moved )\d+x .+?(?= )/gi).pop();
+			const items = details.match(/(?<=moved )\d+x .+?(?= to)/gi).pop();
 
 			return items;
 		},
