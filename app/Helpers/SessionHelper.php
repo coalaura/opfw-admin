@@ -355,6 +355,12 @@ class SessionHelper
 
         $fh = fopen($file, 'w+');
 
+        if (!$fh) {
+            LoggingHelper::log('Failed to open session dump file.');
+
+            return;
+        }
+
         // Try to lock it for writing
         if (flock($fh, LOCK_EX)) {
             $sessions = Session::query()
