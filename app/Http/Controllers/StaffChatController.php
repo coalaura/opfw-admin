@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\OPFWHelper;
+use App\Helpers\SessionHelper;
 use App\Server;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,8 @@ class StaffChatController extends Controller
      */
     public function chat(Request $request): Response
     {
+        SessionHelper::dumpSessions();
+
         $emotes = OPFWHelper::getChatEmotesJSON(Server::getFirstServer());
 
         return Inertia::render('StaffChat', [

@@ -6,6 +6,7 @@ use App\Ban;
 use App\Character;
 use App\Helpers\GeneralHelper;
 use App\Helpers\PermissionHelper;
+use App\Helpers\SessionHelper;
 use App\Player;
 use App\Server;
 use Illuminate\Http\Request;
@@ -27,6 +28,8 @@ class MapController extends Controller
         if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LIVEMAP)) {
             abort(401);
         }
+
+        SessionHelper::dumpSessions();
 
         $servers = [];
 

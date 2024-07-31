@@ -19,8 +19,6 @@ namespace App\Http\Middleware {
             // Force initialization of the session
             sessionHelper();
 
-            SessionHelper::dumpSessions();
-
             return $next($request);
         }
     }

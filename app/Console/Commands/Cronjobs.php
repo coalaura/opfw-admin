@@ -55,6 +55,8 @@ class Cronjobs extends Command
         echo "Cleaning up sessions...";
         SessionHelper::cleanup();
 
+        SessionHelper::dumpSessions();
+
         echo $this->stopTime($start);
 
         $start = microtime(true);
