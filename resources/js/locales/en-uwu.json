@@ -854,7 +854,6 @@
             "warnings": "Pwayer Notices",
             "collapsed_warnings": "Show {0} pwayer notice(s)",
             "unload_do": "Unloady-woad",
-            "unload_default": "UwU, you've been AFK for quite a while, maybe considew going to the chawactew sewection scween next time.",
             "soft_ban_confirm": "Awe you suwe you want to change this usews soft ban status?",
             "remove_soft_ban": "Wemove this cute usews soft ban",
             "add_soft_ban": "S-S-S-Soft B-B-Ban",
@@ -1092,8 +1091,18 @@
                     "2": "Yewwow OwO Bwue",
                     "3": "Bwue OwO Wite 2",
                     "4": "Bwue OwO Wite 3",
-                    "5": "Yankton UwU"
-                }
+                    "5": "Yankton UwU",
+                    "6": "eCowwa",
+                    "7": "Waws Ventuwaws",
+                    "8": "Wibewty Citi",
+                    "9": "WS Caw Meet",
+                    "10": "WS Panic",
+                    "11": "WS Poundews",
+                    "12": "Spwunk"
+                },
+                "is_supporter": "Iws Suppowtew (EDM)",
+                "supporter_yes": "Yesh",
+                "supporter_no": "Nyo"
             },
             "license": {
                 "license": "Wicense",

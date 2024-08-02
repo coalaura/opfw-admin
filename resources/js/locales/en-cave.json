@@ -854,7 +854,6 @@
             "warnings": "Unga Unga Notes",
             "collapsed_warnings": "Gragh Gragh {0} player note(s)",
             "unload_do": "Gragh",
-            "unload_default": "Unga Unga Unga, you AFK for too long, go character selection next time.",
             "soft_ban_confirm": "Unga Unga Unga, want to change soft ban status?",
             "remove_soft_ban": "Unban caveman",
             "add_soft_ban": "Caveman ban",
@@ -1092,8 +1091,18 @@
                     "2": "Yella on Bluu",
                     "3": "Brruk on Whiita 2",
                     "4": "Brruk on Whiita 3",
-                    "5": "Yankton"
-                }
+                    "5": "Yankton",
+                    "6": "4. \"eCola (bubble drink)\"",
+                    "7": "5. \"Las Rock-Place\"",
+                    "8": "6. \"Liberty Place\"",
+                    "9": "7. \"Big Wheel Gather\"",
+                    "10": "8. \"Big Scare LS\"",
+                    "11": "9. \"Big Smash LS\"",
+                    "12": "10. \"Boingy Drink\""
+                },
+                "is_supporter": "1. \"Is Supporter (thumpy-thumpy music)\"",
+                "supporter_yes": "2. \"Uh-huh\"",
+                "supporter_no": "3. \"Nope\""
             },
             "license": {
                 "license": "Ugga Ugga",

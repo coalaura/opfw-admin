@@ -854,7 +854,6 @@
             "warnings": "Scallywag Scrolls",
             "collapsed_warnings": "Reveal {0} scallywag scroll(s)",
             "unload_do": "Abandon Ship",
-            "unload_default": "Ye have been idle fer quite some time, ye should be headin' to the character selection screen next time, savvy?",
             "soft_ban_confirm": "Be ye sure ye want to change this scallywag's soft ban status?",
             "remove_soft_ban": "Avast! Lift the curse on this scallywag!",
             "add_soft_ban": "Send this scurvy dog to the brig!",
@@ -1092,8 +1091,18 @@
                     "2": "Yellow on Blue",
                     "3": "Blue on White 2",
                     "4": "Blue on White 3",
-                    "5": "Yankton"
-                }
+                    "5": "Yankton",
+                    "6": "eGrog",
+                    "7": "Las Venturas, me hearties",
+                    "8": "Liberty City, arrr",
+                    "9": "LS Ship Meet",
+                    "10": "LS Panic, avast",
+                    "11": "LS Pounders, yo ho",
+                    "12": "Sprunk, shiver me timbers"
+                },
+                "is_supporter": "Be ye a Supporter (EDM)",
+                "supporter_yes": "Aye",
+                "supporter_no": "Nay"
             },
             "license": {
                 "license": "Letter of Marque",

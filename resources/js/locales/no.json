@@ -885,7 +885,6 @@
             "warnings": "Spillernotater",
             "collapsed_warnings": "Vis {0} spillernote(r)",
             "unload_do": "Skru av",
-            "unload_default": "Du har vært inaktiv i lang tid, vurder å gå til karaktervalgskjermen neste gang.",
             "soft_ban_confirm": "Er du sikker på at du vil endre denne brukerens myke ban-status?",
             "remove_soft_ban": "Fjern myk ban for denne spilleren",
             "add_soft_ban": "Myk Ban",
@@ -1104,8 +1103,18 @@
                     "2": "Gul på Blå",
                     "3": "Blå på Hvitt 2",
                     "4": "Blå på Hvitt 3",
-                    "5": "Yankton"
-                }
+                    "5": "Yankton",
+                    "6": "eCola",
+                    "7": "Las Venturas",
+                    "8": "Liberty City",
+                    "9": "LS Biltreff",
+                    "10": "LS Panikk",
+                    "11": "LS Pundere",
+                    "12": "Sprunk"
+                },
+                "is_supporter": "Er støttespiller (EDM)",
+                "supporter_yes": "Ja",
+                "supporter_no": "Nei"
             },
             "license": {
                 "license": "Førerkort",

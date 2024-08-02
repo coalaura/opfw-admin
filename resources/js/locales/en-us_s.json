@@ -854,7 +854,6 @@
             "warnings": "Player Scribbles",
             "collapsed_warnings": "Show reckon {0} player scribble(s)",
             "unload_do": "Unload",
-            "unload_default": "Ya've been AFK fer a good piece o' time, reckon ya oughta consider goin' t' the character selection screen next time.",
             "soft_ban_confirm": "Ya reckon ya wanna change this user's soft ban status?",
             "remove_soft_ban": "Git rid of this here player's soft ban",
             "add_soft_ban": "Soft Ban",
@@ -1092,8 +1091,18 @@
                     "2": "Yeller on Blue",
                     "3": "Blue on White 2",
                     "4": "Blue on White 3",
-                    "5": "Yankton"
-                }
+                    "5": "Yankton",
+                    "6": "- \"eColer\"",
+                    "7": "- \"Lass Venturahs\"",
+                    "8": "- \"Liberty City\"",
+                    "9": "- \"Ell Ess Car Meet\"",
+                    "10": "- \"Ell Ess Panic\"",
+                    "11": "- \"Ell Ess Pounders\"",
+                    "12": "- \"Sprunk\""
+                },
+                "is_supporter": "- \"Is Suppawtur (EDM)\"",
+                "supporter_yes": "- \"Yessuh\"",
+                "supporter_no": "- \"Naw\""
             },
             "license": {
                 "license": "'Licensh",

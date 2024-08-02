@@ -885,7 +885,6 @@
             "warnings": "Player Notes",
             "collapsed_warnings": "{0} player note dikhayen",
             "unload_do": "Unload karen",
-            "unload_default": "Aap kafi samay se AFK hain, next time character selection screen par jaane par vichaar karen.",
             "soft_ban_confirm": "Kya aapko yakeen hai ki aapko is user ke soft ban status mein parivartan karna hai?",
             "remove_soft_ban": "Is player ke soft ban ko hataen",
             "add_soft_ban": "Soft Ban",
@@ -1104,8 +1103,18 @@
                     "2": "Pila aur Neela",
                     "3": "Neela aur Safed 2",
                     "4": "Neela aur Safed 3",
-                    "5": "Yankton"
-                }
+                    "5": "Yankton",
+                    "6": "eCola",
+                    "7": "Las Venturas",
+                    "8": "Liberty City",
+                    "9": "LS Car Meet",
+                    "10": "LS Panic",
+                    "11": "LS Pounders",
+                    "12": "Sprunk"
+                },
+                "is_supporter": "Is Supporter (EDM)",
+                "supporter_yes": "Haan",
+                "supporter_no": "Nahi"
             },
             "license": {
                 "license": "License",
