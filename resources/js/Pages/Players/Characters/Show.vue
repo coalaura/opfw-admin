@@ -361,6 +361,19 @@
                             <input type="number" class="w-28 block outline-none shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" min="0" max="100" step="0.1" v-model="vehicleForm.fuel" />
                         </td>
                     </tr>
+                    <tr>
+                        <th class="p-2">
+                            <label class="block font-semibold">
+                                {{ t('players.characters.vehicle.is_supporter') }}
+                            </label>
+                        </th>
+                        <td class="p-2">
+                            <select class="w-28 block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent dark:bg-gray-600" v-model="vehicleForm.supporter">
+                                <option :value="1">{{ t('players.characters.vehicle.supporter_yes') }}</option>
+                                <option :value="0">{{ t('players.characters.vehicle.supporter_no') }}</option>
+                            </select>
+                        </td>
+                    </tr>
                 </table>
 
                 <div class="my-6 border-t-2 border-dashed border-gray-500"></div>
@@ -511,6 +524,13 @@
                                 <option :value="2">{{ t('players.characters.vehicle.plates.2') }}</option>
                                 <option :value="1">{{ t('players.characters.vehicle.plates.1') }}</option>
                                 <option :value="5">{{ t('players.characters.vehicle.plates.5') }}</option>
+                                <option :value="6">{{ t('players.characters.vehicle.plates.6') }}</option>
+                                <option :value="7">{{ t('players.characters.vehicle.plates.7') }}</option>
+                                <option :value="8">{{ t('players.characters.vehicle.plates.8') }}</option>
+                                <option :value="9">{{ t('players.characters.vehicle.plates.9') }}</option>
+                                <option :value="10">{{ t('players.characters.vehicle.plates.10') }}</option>
+                                <option :value="11">{{ t('players.characters.vehicle.plates.11') }}</option>
+                                <option :value="12">{{ t('players.characters.vehicle.plates.12') }}</option>
                             </select>
                         </td>
                     </tr>
@@ -1033,6 +1053,7 @@ export default {
                 id: 0,
                 owner_cid: 0,
                 fuel: 0.0,
+                supporter: 0,
                 plate: '',
                 modifications: {
                     xenon_headlights: false,

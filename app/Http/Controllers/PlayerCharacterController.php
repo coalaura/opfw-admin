@@ -607,6 +607,11 @@ class PlayerCharacterController extends Controller
             return self::json(false, null, 'Invalid character id.');
         }
 
+        $supporter = intval($request->post('supporter'));
+        if ($supporter !== 0 && $supporter !== 1) {
+            return self::json(false, null, 'Invalid supporter value.');
+        }
+
         $invalidMod = $vehicle->parseModifications($request->post('modifications', []));
         if ($invalidMod !== null) {
             return self::json(false, null, 'Invalid modifications ("' . $invalidMod . '") submitted, please try again.');
@@ -640,6 +645,7 @@ class PlayerCharacterController extends Controller
             'deprecated_modifications' => $vehicle->deprecated_modifications,
             'deprecated_damage'        => $damage,
             'deprecated_fuel'          => $fuel,
+            'deprecated_supporter'     => $supporter,
         ]);
 
         Session::flash('success', 'Vehicle was successfully edited');

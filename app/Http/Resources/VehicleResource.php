@@ -28,6 +28,7 @@ class VehicleResource extends JsonResource
             'emergency'     => intval($this->emergency_type) ?? 0,
             'oil'           => $this->oilChangeMiles(),
             'image'         => $this->image_url ?? null,
+            'supporter'     => intval($this->deprecated_supporter) ?? 0
         ];
     }
 
