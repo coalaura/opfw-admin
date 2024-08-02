@@ -1253,7 +1253,7 @@
                                     <!-- Top right -->
                                     <div class="flex gap-1.5 justify-end">
                                         <!-- Character loaded -->
-                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-lime-300 bg-lime-600 dark:bg-lime-400 border-2 block cursor-help" :title="t('players.show.unload')" v-if="status && status.character === character.id" @click="form.unload.character = character.id; isUnloading = true">
+                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-lime-300 bg-lime-600 dark:bg-lime-400 border-2 block cursor-pointer" :title="t('players.show.unload')" v-if="status && status.character === character.id" @click="form.unload.character = character.id; isUnloading = true">
                                             <i class="fas fa-plug"></i>
                                         </button>
 
@@ -1771,7 +1771,7 @@ export default {
                     warning_type: null,
                 },
                 unload: {
-                    message: this.t('players.show.unload_default'),
+                    message: null,
                     character: null
                 }
             },
