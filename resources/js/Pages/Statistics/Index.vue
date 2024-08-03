@@ -51,7 +51,7 @@
                                 </td>
                             </tr>
 
-                            <tr class="border-t border-gray-500" v-else-if="economy && economy.data.length === 0">
+                            <tr class="border-t border-gray-500" v-else-if="economy.data.length === 0">
                                 <td class="px-2 py-0.5 text-center" colspan="6">
                                     {{ t('statistics.no_economy_recorded') }}
                                 </td>
@@ -254,7 +254,9 @@ export default {
                 }
             } catch (e) {
                 // Signalize we failed to load the data
-                this.economy = {};
+                this.economy = {
+                    data: []
+                };
             }
 
             this.isLoading = false;
