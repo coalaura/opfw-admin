@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Helpers\CacheHelper;
 use App\Helpers\StatisticsHelper;
-use App\MoneyLog;
 use App\Player;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -40,7 +39,7 @@ class StatisticsController extends Controller
 
         if (!$result) {
             switch ($source) {
-                    // Currency statistics
+                // Currency statistics
                 case 'pdm':
                     $result = StatisticsHelper::collectPDMStatistics();
                     break;
@@ -99,7 +98,7 @@ class StatisticsController extends Controller
                     $result = StatisticsHelper::collectLSCustomsStatistics();
                     break;
 
-                    // Non currency statistics
+                // Non currency statistics
                 case 'robberies':
                     $result = StatisticsHelper::collectRobberiesStatistics();
                     break;
@@ -153,12 +152,12 @@ class StatisticsController extends Controller
         $points = [];
 
         foreach ($staff as $player) {
-            $license = $player->license_identifier;
+            $license     = $player->license_identifier;
             $staffPoints = $player->staff_points ?? [];
 
             $points[$license] = [
-                'name' => $player->getSafePlayerName(),
-                'points' => []
+                'name'   => $player->getSafePlayerName(),
+                'points' => [],
             ];
 
             for ($week = 7; $week >= 0; $week--) {
@@ -184,28 +183,34 @@ class StatisticsController extends Controller
             "graph" => [
                 "datasets" => [
                     [
-                        "label" => "Cash",
-                        "data"  => [],
-                        "backgroundColor" => $this->color(0, 4, 0.3),
-                        "borderColor" => $this->color(0, 4, 1),
+                        "label"           => "Cash",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(0, 5, 0.3),
+                        "borderColor"     => $this->color(0, 5, 1),
                     ],
                     [
-                        "label" => "Bank",
-                        "data"  => [],
-                        "backgroundColor" => $this->color(1, 4, 0.3),
-                        "borderColor" => $this->color(1, 4, 1),
+                        "label"           => "Bank",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(1, 5, 0.3),
+                        "borderColor"     => $this->color(1, 5, 1),
                     ],
                     [
-                        "label" => "Stocks",
-                        "data"  => [],
-                        "backgroundColor" => $this->color(2, 4, 0.3),
-                        "borderColor" => $this->color(2, 4, 1),
+                        "label"           => "Stocks",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(2, 5, 0.3),
+                        "borderColor"     => $this->color(2, 5, 1),
                     ],
                     [
-                        "label" => "Savings",
-                        "data"  => [],
-                        "backgroundColor" => $this->color(3, 4, 0.3),
-                        "borderColor" => $this->color(3, 4, 1),
+                        "label"           => "Savings",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(3, 5, 0.3),
+                        "borderColor"     => $this->color(3, 5, 1),
+                    ],
+                    [
+                        "label"           => "Total",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(4, 5, 0.3),
+                        "borderColor"     => $this->color(4, 5, 1),
                     ],
                 ],
                 "labels"   => [],
@@ -217,18 +222,16 @@ class StatisticsController extends Controller
         foreach ($data as $entry) {
             $date = $entry->date;
 
+            $total = $entry->cash + $entry->bank + $entry->stocks + $entry->savings;
+
             $statistics["data"][$date] = [
                 "date"    => $date,
                 "cash"    => $entry->cash,
                 "bank"    => $entry->bank,
                 "stocks"  => $entry->stocks,
                 "savings" => $entry->savings,
+                "total"   => $total,
             ];
-
-            $statistics["data"][$date]["cash"]    = $entry->cash;
-            $statistics["data"][$date]["bank"]    = $entry->bank;
-            $statistics["data"][$date]["stocks"]  = $entry->stocks;
-            $statistics["data"][$date]["savings"] = $entry->savings;
 
             $statistics["graph"]["labels"][] = $date;
 
@@ -236,6 +239,7 @@ class StatisticsController extends Controller
             $statistics["graph"]["datasets"][1]["data"][] = $entry->bank;
             $statistics["graph"]["datasets"][2]["data"][] = $entry->stocks;
             $statistics["graph"]["datasets"][3]["data"][] = $entry->savings;
+            $statistics["graph"]["datasets"][4]["data"][] = $total;
         }
 
         $statistics["data"] = array_values($statistics["data"]);
@@ -268,8 +272,8 @@ class StatisticsController extends Controller
             $date = strtotime($value->date);
 
             $details = $value->details;
-            $count = $value->count;
-            $amount = $value->amount;
+            $count   = $value->count;
+            $amount  = $value->amount;
 
             if (!isset($map[$date])) {
                 $map[$date] = [];
@@ -281,15 +285,15 @@ class StatisticsController extends Controller
         }
 
         $times = array_keys($map);
-        $min = min($times);
-        $max = max($times);
+        $min   = min($times);
+        $max   = max($times);
 
         rsort($times);
 
         $chart = [
-            'datasets'   => [],
-            'labels' => [],
-            'names'  => $types,
+            'datasets' => [],
+            'labels'   => [],
+            'names'    => $types,
         ];
 
         for ($t = $min; $t <= $max; $t += 86400) {
@@ -302,10 +306,10 @@ class StatisticsController extends Controller
             foreach ($types as $i => $type) {
                 if (sizeof($chart['datasets']) <= $i) {
                     $chart['datasets'][$i] = [
-                        'label' => $type,
-                        'data'  => [],
+                        'label'           => $type,
+                        'data'            => [],
                         'backgroundColor' => $this->color($i, sizeof($types), 0.3),
-                        'borderColor' => $this->color($i, sizeof($types), 1),
+                        'borderColor'     => $this->color($i, sizeof($types), 1),
                     ];
                 }
 

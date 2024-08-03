@@ -358,7 +358,8 @@
         "guns": "Handcrafted Boomsticks",
         "guns_details": "Number o' boomsticks crafted.",
         "economy_stats": "Wealth Tallyin'",
-        "economy_stats_details": "Spy at wealth tallyin' on a chart fer th' last 30 days."
+        "economy_stats_details": "Spy at wealth tallyin' on a chart fer th' last 30 days.",
+        "total": "Sum Total"
     },
     "map": {
         "title": "Sailin' Map",

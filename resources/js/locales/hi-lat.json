@@ -358,7 +358,8 @@
         "guns": "Dasta-kar Bandook",
         "guns_details": "Bandookon ki banayi gayi sankhya.",
         "economy_stats": "Arthvyavastha Aankade",
-        "economy_stats_details": "Pichhle 30 dino ke liye graph mein arthvyavastha aankade ka tulna karein."
+        "economy_stats_details": "Pichhle 30 dino ke liye graph mein arthvyavastha aankade ka tulna karein.",
+        "total": "Kul"
     },
     "map": {
         "title": "Live-Naksha",

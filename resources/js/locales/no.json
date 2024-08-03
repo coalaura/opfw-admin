@@ -358,7 +358,8 @@
         "guns": "Håndlagde våpen",
         "guns_details": "Antall håndlagde våpen.",
         "economy_stats": "Økonomisk statistikk",
-        "economy_stats_details": "Sammenlign økonomisk statistikk i et diagram for de siste 30 dagene."
+        "economy_stats_details": "Sammenlign økonomisk statistikk i et diagram for de siste 30 dagene.",
+        "total": "Totalt"
     },
     "map": {
         "title": "Levende-kart",

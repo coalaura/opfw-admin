@@ -358,7 +358,8 @@
         "guns": "Make Boom Sticks",
         "guns_details": "Many Boom Sticks Made.",
         "economy_stats": "Trade Rock Numbers",
-        "economy_stats_details": "Look Rock Numbers, Draw on Wall, Last Many Suns Thirty."
+        "economy_stats_details": "Look Rock Numbers, Draw on Wall, Last Many Suns Thirty.",
+        "total": "Sum all"
     },
     "map": {
         "title": "Ooga-Map",

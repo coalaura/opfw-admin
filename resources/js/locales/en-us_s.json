@@ -358,7 +358,8 @@
         "guns": "Crafted Guns",
         "guns_details": "Number o' guns crafted.",
         "economy_stats": "Econn'me Stats",
-        "economy_stats_details": "Compurr econn'me statistics in a graph fer the last 30 days."
+        "economy_stats_details": "Compurr econn'me statistics in a graph fer the last 30 days.",
+        "total": "Tohtuhl"
     },
     "map": {
         "title": "Active Map",

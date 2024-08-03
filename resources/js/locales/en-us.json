@@ -312,6 +312,7 @@
         "bank": "Bank",
         "stocks": "Stocks",
         "savings": "Savings",
+        "total": "Total",
 
         "tag_money": "Money",
         "tag_amount": "Amount",

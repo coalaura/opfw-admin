@@ -33,6 +33,7 @@
                                 <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.bank') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.stocks') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.savings') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.total') }}</th>
                             </tr>
 
                             <tr class="border-t border-gray-500" v-if="!economy">
@@ -41,10 +42,11 @@
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
                             </tr>
 
                             <tr class="border-t border-gray-500" v-else-if="economyLoading">
-                                <td class="px-2 py-0.5 text-center" colspan="5">
+                                <td class="px-2 py-0.5 text-center" colspan="6">
                                     <i class="fas fa-spinner animate-spin"></i>
                                 </td>
                             </tr>
@@ -56,6 +58,7 @@
                                 <td class="px-2 py-0.5">{{ numberFormat(entry.bank, false, true) }}</td>
                                 <td class="px-2 py-0.5">{{ numberFormat(entry.stocks, false, true) }}</td>
                                 <td class="px-2 py-0.5">{{ numberFormat(entry.savings, false, true) }}</td>
+                                <td class="px-2 py-0.5">{{ numberFormat(entry.total, false, true) }}</td>
                             </tr>
                         </table>
                     </div>
