@@ -141,6 +141,7 @@
             <StatisticsTable source="robbed_peds" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="robberies" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="scratch_tickets" tag="money" :currency="true" :search="search" />
+            <StatisticsTable source="shots_fired" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="special_imports" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="store" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="tuner" tag="money" :currency="true" :search="search" />

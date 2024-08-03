@@ -129,6 +129,9 @@ class StatisticsController extends Controller
                 case 'guns':
                     $result = StatisticsHelper::collectGunCraftingStatistics();
                     break;
+                case 'shots_fired':
+                    $result = StatisticsHelper::collectShotsFiredStatistics();
+                    break;
             }
 
             CacheHelper::write($key, $result, CacheHelper::HOUR);

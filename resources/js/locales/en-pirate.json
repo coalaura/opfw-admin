@@ -360,7 +360,9 @@
         "economy_stats": "Wealth Tallyin'",
         "economy_stats_details": "Spy at wealth tallyin' on a chart fer th' last 30 days.",
         "total": "Sum Total",
-        "no_economy_recorded": "No plunder nor booty tallies logged yet. (Logged once with ev'ry passin' hour)"
+        "no_economy_recorded": "No plunder nor booty tallies logged yet. (Logged once with ev'ry passin' hour)",
+        "shots_fired": "Broadside unleashed",
+        "shots_fired_details": "Number o' bullets that struck true (dealin' damage) from all iron flingers that spit lead (nay cutlasses, nor other close-quarters tools)."
     },
     "map": {
         "title": "Sailin' Map",

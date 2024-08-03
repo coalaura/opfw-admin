@@ -6,6 +6,12 @@ use Illuminate\Support\Facades\DB;
 
 class StatisticsHelper
 {
+    // not weaponData.isMelee and not weaponData.throwable and not weaponData.isMisc
+    // and its not weapon_addon_stungun, weapon_stungun or weapon_stungun_mp
+    const Guns = [
+        1752584910, -1660422300, 2100324592, -1045183535, 1627465347, 1119849093, 964555122, 1593441988, -924350237, -1355376991, 584646201, -771403250, 137902532, 1432025498, -340621788, 984333226, 100416529, 1198879012, 1305664598, -1746263880, -275439685, 687914362, 205991906, 453432689, -1238556825, -266763809, 727643628, -1716589765, 2138347493, -862975727, -947031628, 177293209, -1027401503, 1052850250, -1568386805, -1094502964, -86904375, -608341376, 62870901, -952879014, -810431678, 465894841, -1357824103, -270015777, -1466123874, -1923845809, -1312131151, 1834241177, 819155540, -618237638, 1198256469, 748372090, 1853742572, 731779237, -441697337, 1785463520, -1658906650, 826063196, -2084633992, -1840517646, 1460239560, 1045507099, -1021085081, -1121678507, -566293128, -18093114, 859191078, -977611140, -564480041, -496173278, -879347409, -624163738, 324215364, -1075685676, 1053051806, 1470379660, 125959754, -774507221, 2132975508, -1768145561, -1946516017, -598887786, 350597077, 317205821, 2144741730, -2066285827, -2009644972, 961495388, -1853920116, 487013001, 1649403952, -807467678, -619010992, 1924557585, -2115075845, 435594297, 171789620, 736523883, 94989220, -1122711209, -1654528753, 1672152130, 2017895192, -22923932, 2024373456, -1063057011, -494615257, -1076751822, -1074790547,
+    ];
+
     private static function number(string $query): string
     {
         return "REPLACE(REPLACE($query, ',', ''), '.', '')";
@@ -208,6 +214,14 @@ class StatisticsHelper
     public static function collectLSCustomsStatistics(): array
     {
         return self::collectStatistics("SELECT COUNT(id) as count, SUM(-amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from money_logs WHERE details = 'ls-customs-purchase' GROUP BY date ORDER BY timestamp DESC");
+    }
+
+    // Shots fired (by guns damage dealt)
+    public static function collectShotsFiredStatistics(): array
+    {
+        $whereIn = implode(', ', self::Guns);
+
+        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(FROM_UNIXTIME(ROUND(timestamp_ms / 1000)), '%c/%d/%Y') as date FROM weapon_damage_events WHERE timestamp_ms IS NOT NULL AND weapon_type IN ($whereIn) GROUP BY date ORDER BY timestamp_ms DESC");
     }
 
     // Found items revenue

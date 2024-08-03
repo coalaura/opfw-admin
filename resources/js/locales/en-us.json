@@ -379,6 +379,8 @@
         "ls_customs_details": "Combined revenue from all LS Customs purchases.",
         "guns": "Crafted Guns",
         "guns_details": "Amount of guns crafted.",
+        "shots_fired": "Shots Fired",
+        "shots_fired_details": "Amount of shots fired (that dealt damage) from all weapons that shoot bullets (no melee, etc.).",
 
         "money_logs": "Money Logs",
         "money_logs_details": "Compare different money logs in a graph for the last 30 days.",

@@ -360,7 +360,9 @@
         "economy_stats": "Arthvyavastha Aankade",
         "economy_stats_details": "Pichhle 30 dino ke liye graph mein arthvyavastha aankade ka tulna karein.",
         "total": "Kul",
-        "no_economy_recorded": "Abhi tak koi arthvyavastha ke aankade darj nahi kiye gaye hain. (Har ghante me ek baar darj kiya jata hai)"
+        "no_economy_recorded": "Abhi tak koi arthvyavastha ke aankade darj nahi kiye gaye hain. (Har ghante me ek baar darj kiya jata hai)",
+        "shots_fired": "Goliyan Chalayi Gayi",
+        "shots_fired_details": "Har us hathiyar se chalayi gayi goliyon ki sankhya jo goliyan chalata hai (yani ki koi melee hatiyar nahi, aadi)."
     },
     "map": {
         "title": "Live-Naksha",

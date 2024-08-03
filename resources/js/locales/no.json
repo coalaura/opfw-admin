@@ -360,7 +360,9 @@
         "economy_stats": "Økonomisk statistikk",
         "economy_stats_details": "Sammenlign økonomisk statistikk i et diagram for de siste 30 dagene.",
         "total": "Totalt",
-        "no_economy_recorded": "Ingen økonomistatistikk registrert ennå. (Registreres én gang hver time)"
+        "no_economy_recorded": "Ingen økonomistatistikk registrert ennå. (Registreres én gang hver time)",
+        "shots_fired": "Skudd Avfyrt",
+        "shots_fired_details": "Antall skudd avfyrt (som forårsaket skade) fra alle våpen som skyter kuler (ingen nærkampvåpen osv.)."
     },
     "map": {
         "title": "Levende-kart",

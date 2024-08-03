@@ -360,7 +360,9 @@
         "economy_stats": "Economy Statistwics",
         "economy_stats_details": "Compawe economy statistwics in a gwaph fow the wast 30 days.",
         "total": "Totaww",
-        "no_economy_recorded": "Nyo economy statistics wecowded yet. (Wecowded once evewy houw)"
+        "no_economy_recorded": "Nyo economy statistics wecowded yet. (Wecowded once evewy houw)",
+        "shots_fired": "Shots Fiwed",
+        "shots_fired_details": "Amount of shots fiwed (dat deawt damage) fwom aww weapons dat shoot buwwets (no melee, etc.)."
     },
     "map": {
         "title": "Wive-Map UwU",

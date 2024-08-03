@@ -360,7 +360,9 @@
         "economy_stats": "Trade Rock Numbers",
         "economy_stats_details": "Look Rock Numbers, Draw on Wall, Last Many Suns Thirty.",
         "total": "Sum all",
-        "no_economy_recorded": "No shiny rock counts in cave walls yet. (Cave wall gets new counts when sun moves little)"
+        "no_economy_recorded": "No shiny rock counts in cave walls yet. (Cave wall gets new counts when sun moves little)",
+        "shots_fired": "Bang Bang Go",
+        "shots_fired_details": "Many bang go hurt from all fire stick (no smash, etc.)."
     },
     "map": {
         "title": "Ooga-Map",
