@@ -52,7 +52,7 @@
                             </tr>
 
                             <tr class="border-t border-gray-500" v-else-if="economy.data.length === 0">
-                                <td class="px-2 py-0.5 text-center" colspan="6">
+                                <td class="px-2 py-0.5 text-center italic" colspan="6">
                                     {{ t('statistics.no_economy_recorded') }}
                                 </td>
                             </tr>
@@ -69,7 +69,7 @@
                         </table>
                     </div>
 
-                    <div v-if="!economyLoading && economy" class="w-full overflow-hidden">
+                    <div v-if="!economyLoading && economy && economy.graph" class="w-full overflow-hidden">
                         <LineChart :chartData="economy.graph"></LineChart>
                     </div>
                 </div>
