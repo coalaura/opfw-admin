@@ -127,6 +127,9 @@ class StatisticsController extends Controller
                 case 'dumpsters':
                     $result = StatisticsHelper::collectDumpsterStatistics();
                     break;
+                case 'guns':
+                    $result = StatisticsHelper::collectGunCraftingStatistics();
+                    break;
 
                     // Other statistics
                 case 'economy':

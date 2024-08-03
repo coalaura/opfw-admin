@@ -124,6 +124,7 @@
             <StatisticsTable source="edm" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="found_items" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="gem" tag="money" :currency="true" :search="search" />
+            <StatisticsTable source="guns" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="impounds" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="joins" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="ls_customs" tag="money" :currency="true" :search="search" />

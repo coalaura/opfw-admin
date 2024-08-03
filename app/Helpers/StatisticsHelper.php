@@ -150,6 +150,12 @@ class StatisticsHelper
         return self::collectUserLogsCountStatistics("Player Killed", "Player Died");
     }
 
+    // Crafted guns (count)
+    public static function collectGunCraftingStatistics(): array
+    {
+        return self::collectUserLogsCountStatistics("Crafted Gun");
+    }
+
     // Airlifts (count)
     public static function collectAirliftsStatistics(): array
     {

@@ -371,6 +371,8 @@
         "found_items_details": "Combined revenue from all items found with a magnifying glass.",
         "ls_customs": "LS Customs Purchases",
         "ls_customs_details": "Combined revenue from all LS Customs purchases.",
+        "guns": "Crafted Guns",
+        "guns_details": "Amount of guns crafted.",
 
         "economy": "Economy Movements",
         "economy_details": "Money movements grouped by type in the last 7 days.",

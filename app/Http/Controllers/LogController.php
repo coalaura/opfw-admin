@@ -28,6 +28,7 @@ class LogController extends Controller
         "Oxy Run Ended",
         "Oxy Run Failed",
         "Jim's Gun Shop",
+        "Crafted Gun"
     ];
 
     /**
