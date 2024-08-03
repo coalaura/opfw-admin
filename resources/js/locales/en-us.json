@@ -308,6 +308,10 @@
         "difference": "Difference",
         "average": "Average",
         "trend": "Trend",
+        "cash": "Cash",
+        "bank": "Bank",
+        "stocks": "Stocks",
+        "savings": "Savings",
 
         "tag_money": "Money",
         "tag_amount": "Amount",
@@ -374,10 +378,10 @@
         "guns": "Crafted Guns",
         "guns_details": "Amount of guns crafted.",
 
-        "economy": "Economy Movements",
-        "economy_details": "Money movements grouped by type in the last 7 days.",
         "money_logs": "Money Logs",
-        "money_logs_details": "Compare different money logs in a graph for the last 30 days."
+        "money_logs_details": "Compare different money logs in a graph for the last 30 days.",
+        "economy_stats": "Economy Statistics",
+        "economy_stats_details": "Compare economy statistics in a graph for the last 30 days."
     },
     "map": {
         "title": "Live-Map",

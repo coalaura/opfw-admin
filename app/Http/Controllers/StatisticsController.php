@@ -130,11 +130,6 @@ class StatisticsController extends Controller
                 case 'guns':
                     $result = StatisticsHelper::collectGunCraftingStatistics();
                     break;
-
-                    // Other statistics
-                case 'economy':
-                    $result = StatisticsHelper::collectGenericEconomyStatistics();
-                    break;
             }
 
             CacheHelper::write($key, $result, CacheHelper::HOUR);
@@ -178,6 +173,74 @@ class StatisticsController extends Controller
         return Inertia::render('Statistics/StaffPoints', [
             'points' => $points,
         ]);
+    }
+
+    public function economyStatistics()
+    {
+        $hours = 30 * 24;
+
+        $statistics = [
+            "data"  => [],
+            "graph" => [
+                "datasets" => [
+                    [
+                        "label" => "Cash",
+                        "data"  => [],
+                        "backgroundColor" => $this->color(0, 4, 0.3),
+                        "borderColor" => $this->color(0, 4, 1),
+                    ],
+                    [
+                        "label" => "Bank",
+                        "data"  => [],
+                        "backgroundColor" => $this->color(1, 4, 0.3),
+                        "borderColor" => $this->color(1, 4, 1),
+                    ],
+                    [
+                        "label" => "Stocks",
+                        "data"  => [],
+                        "backgroundColor" => $this->color(2, 4, 0.3),
+                        "borderColor" => $this->color(2, 4, 1),
+                    ],
+                    [
+                        "label" => "Savings",
+                        "data"  => [],
+                        "backgroundColor" => $this->color(3, 4, 0.3),
+                        "borderColor" => $this->color(3, 4, 1),
+                    ],
+                ],
+                "labels"   => [],
+            ],
+        ];
+
+        $data = StatisticsHelper::collectEconomyStatistics($hours);
+
+        foreach ($data as $entry) {
+            $date = $entry->date;
+
+            $statistics["data"][$date] = [
+                "date"    => $date,
+                "cash"    => $entry->cash,
+                "bank"    => $entry->bank,
+                "stocks"  => $entry->stocks,
+                "savings" => $entry->savings,
+            ];
+
+            $statistics["data"][$date]["cash"]    = $entry->cash;
+            $statistics["data"][$date]["bank"]    = $entry->bank;
+            $statistics["data"][$date]["stocks"]  = $entry->stocks;
+            $statistics["data"][$date]["savings"] = $entry->savings;
+
+            $statistics["graph"]["labels"][] = $date;
+
+            $statistics["graph"]["datasets"][0]["data"][] = $entry->cash;
+            $statistics["graph"]["datasets"][1]["data"][] = $entry->bank;
+            $statistics["graph"]["datasets"][2]["data"][] = $entry->stocks;
+            $statistics["graph"]["datasets"][3]["data"][] = $entry->savings;
+        }
+
+        $statistics["data"] = array_values($statistics["data"]);
+
+        return $this->json(true, $statistics);
     }
 
     public function moneyLogs(Request $request)
@@ -249,7 +312,6 @@ class StatisticsController extends Controller
                 $chart['datasets'][$i]['data'][] = $entry[$type] ?? 0;
             }
         }
-        sleep(5);
 
         return $this->json(true, [
             'chart' => $chart,

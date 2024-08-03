@@ -54,7 +54,7 @@ class StatisticsHelper
     // Pawnshop sales
     public static function collectPawnshopStatistics(): array
     {
-        $count = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'sold ', -1), ' `', 1)");
+        $count  = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'sold ', -1), ' `', 1)");
         $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'received $', -1), '.', 1)");
 
         return self::collectStatistics("SELECT SUM($count) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Used Pawn Shop' GROUP BY date ORDER BY timestamp DESC");
@@ -63,7 +63,7 @@ class StatisticsHelper
     // Material Vendor sales
     public static function collectMaterialVendorStatistics(): array
     {
-        $count = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'sold ', -1), 'x', 1)");
+        $count  = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'sold ', -1), 'x', 1)");
         $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), '.', 1)");
 
         return self::collectStatistics("SELECT SUM($count) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Sold Materials' GROUP BY date ORDER BY timestamp DESC");
@@ -86,7 +86,7 @@ class StatisticsHelper
     // Store sales
     public static function collectStoreSaleStatistics(): array
     {
-        $count = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'purchased ', -1), 'x', 1)");
+        $count  = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'purchased ', -1), 'x', 1)");
         $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'for $', -1), 'with', 1)");
 
         return self::collectStatistics("SELECT SUM($count) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Item(s) Purchased' GROUP BY date ORDER BY timestamp DESC");
@@ -213,9 +213,9 @@ class StatisticsHelper
     // Found items revenue
     public static function collectFoundItemsStatistics(): array
     {
-        $count = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'sold ', -1), ' `', 1)");
+        $count  = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'sold ', -1), ' `', 1)");
         $amount = self::number("SUBSTRING_INDEX(SUBSTRING_INDEX(details, 'received $', -1), '.', 1)");
-        $items = implode(' OR ', array_map(function($name) {
+        $items  = implode(' OR ', array_map(function ($name) {
             return "SUBSTRING_INDEX(SUBSTRING_INDEX(details, '`', -2), '`', 1) = '$name'";
         }, [
             'Small Frog',
@@ -223,29 +223,22 @@ class StatisticsHelper
             'Caterpillar',
             '4 Leaf Clover',
             'Small Frog MK2',
-            'Seashell'
+            'Seashell',
         ]));
 
         return self::collectStatistics("SELECT SUM($count) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Used Pawn Shop' AND ($items) GROUP BY date ORDER BY timestamp DESC");
     }
 
-    // Generic Economy Statistics
-    public static function collectGenericEconomyStatistics(): array
+    // General economy statistics
+    public static function collectEconomyStatistics(int $hours): array
     {
-        $start = microtime(true);
-
-        $data = DB::select("SELECT details, SUM(amount) as amount, COUNT(id) as count FROM money_logs WHERE timestamp > DATE_SUB(NOW(), INTERVAL 7 DAY) AND details IS NOT NULL GROUP BY details ORDER BY amount DESC");
-
-        return [
-            'data' => $data,
-            'time' => round((microtime(true) - $start) * 1000),
-        ];
+        return DB::select("SELECT date, cash, bank, stocks, savings FROM economy_statistics LIMIT " . $hours);
     }
 
     // Specific Money Statistics
     public static function collectSpecificMoneyStatistics(array $types): array
     {
-        $cleanTypes = implode(', ', array_filter(array_map(function($type) {
+        $cleanTypes = implode(', ', array_filter(array_map(function ($type) {
             return '"' . preg_replace('/[^\w-]/', '', $type) . '"';
         }, $types)));
 

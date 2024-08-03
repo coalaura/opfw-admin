@@ -12,73 +12,59 @@
 
         <template>
             <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
-                <h2 class="text-lg mb-1">
-                    {{ t("statistics.search") }}
-                </h2>
-
-                <input class="block w-full px-4 py-2 bg-gray-200 border rounded dark:bg-gray-600" v-model="search" type="text" placeholder="Casino Rev..." />
-            </div>
-
-            <div class="w-full border-t border-gray-500 mb-4"></div>
-
-            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
                 <div class="flex">
-                    <h2 class="text-lg flex gap-2" @click="loadEconomyStatistics()" :class="{ 'cursor-pointer': !isLoading && !economy }">
-                        {{ t('statistics.economy') }}
+                    <h2 class="text-lg flex gap-2" @click="loadEconomyStatistics()" :class="{ 'cursor-pointer': !economyLoading && !economy}">
+                        {{ t('statistics.economy_stats') }}
                     </h2>
                 </div>
 
-                <p class="text-sm italic mb-3">{{ t('statistics.economy_details') }}</p>
+                <p class="text-sm italic mb-3">{{ t('statistics.economy_stats_details') }}</p>
 
-                <span class="absolute bottom-1 right-2 text-xs" v-if="economy">{{ numberFormat(economy.time, false, false) }}ms</span>
-
-                <button @click="loadEconomyStatistics()" class="icon-button text-white bg-green-600" v-if="!isLoading && !economy">
+                <button @click="loadEconomyStatistics()" class="icon-button text-white bg-green-600" v-if="!economyLoading && !economy">
                     <i class="fas fa-plus"></i>
                 </button>
 
-                <div class="inline-block flex-shrink-0">
-                    <input class="block w-full px-2 py-0.5 border-0 border-b border-gray-500 bg-gray-300 dark:bg-gray-700 mb-2" v-model="economySearch" type="text" placeholder="hourly-sal..." v-if="economy" />
-
-                    <div class="overflow-y-auto max-h-statistics pr-2 -mr-2">
-                        <table class="whitespace-nowrap w-full">
+                <div class="flex gap-6">
+                    <div class="overflow-y-auto max-h-statistics inline-block pr-2 flex-shrink-0">
+                        <table class="whitespace-nowrap">
                             <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.type') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.count') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.amount') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.date') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.cash') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.bank') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.stocks') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.savings') }}</th>
                             </tr>
 
-                            <tr class="border-t border-gray-500" v-if="!isLoading && !economy">
+                            <tr class="border-t border-gray-500" v-if="!economy">
+                                <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
                             </tr>
 
-                            <tr class="border-t border-gray-500" v-else-if="isLoading">
-                                <td class="px-2 py-0.5 text-center" colspan="3">
+                            <tr class="border-t border-gray-500" v-else-if="economyLoading">
+                                <td class="px-2 py-0.5 text-center" colspan="5">
                                     <i class="fas fa-spinner animate-spin"></i>
                                 </td>
                             </tr>
 
-                            <tr class="border-t border-gray-500" v-else-if="!economy || !economy.data">
-                                <td class="px-2 py-0.5 text-center text-red-500 font-semibold" colspan="3">
-                                    {{ t("statistics.failed_load") }}
-                                </td>
-                            </tr>
+                            <tr v-for="(entry, index) in economy.data" :key="index" class="border-t border-gray-500" v-else>
+                                <td class="italic text-gray-700 dark:text-gray-300 px-2 py-0.5">{{ entry.date }}</td>
 
-                            <tr v-for="(entry, index) in economy.data" :key="index" class="border-t border-gray-500" :class="{ 'hidden': !entry.details || (economySearch && !entry.details.includes(economySearch.toLowerCase())) }">
-                                <td class="italic text-gray-700 dark:text-gray-300 px-2 py-0.5">{{ entry.details }}</td>
-                                <td class="px-2 py-0.5">{{ numberFormat(entry.count, false, false) }}x</td>
-                                <td class="px-2 py-0.5">
-                                    <span v-if="entry.amount > 0" class="text-green-700 dark:text-green-300">+{{ numberFormat(entry.amount, false, true) }}</span>
-                                    <span v-else class="text-red-700 dark:text-red-300">{{ numberFormat(entry.amount, false, true) }}</span>
-                                </td>
+                                <td class="px-2 py-0.5">{{ numberFormat(entry.cash, false, true) }}</td>
+                                <td class="px-2 py-0.5">{{ numberFormat(entry.bank, false, true) }}</td>
+                                <td class="px-2 py-0.5">{{ numberFormat(entry.stocks, false, true) }}</td>
+                                <td class="px-2 py-0.5">{{ numberFormat(entry.savings, false, true) }}</td>
                             </tr>
                         </table>
                     </div>
+
+                    <div v-if="!economyLoading && economy" class="w-full overflow-hidden">
+                        <LineChart :chartData="economy.graph"></LineChart>
+                    </div>
                 </div>
             </div>
-
-            <div class="w-full border-t border-gray-500 mb-4"></div>
 
             <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
                 <div class="flex">
@@ -110,7 +96,15 @@
                 </div>
             </div>
 
-            <div class="w-full border-t border-gray-500 mb-4"></div>
+            <div class="w-full border-t-2 border-dashed border-gray-500 my-6"></div>
+
+            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
+                <h2 class="text-lg mb-1">
+                    {{ t("statistics.search") }}
+                </h2>
+
+                <input class="block w-full px-4 py-2 bg-gray-200 border rounded dark:bg-gray-600" v-model="search" type="text" placeholder="Casino Rev..." />
+            </div>
 
             <StatisticsTable source="airlifts" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="bills" tag="money" :currency="true" :search="search" />
@@ -162,8 +156,8 @@ export default {
             isLoading: false,
             search: "",
 
+            economyLoading: false,
             economy: false,
-            economySearch: "",
 
             moneyLogType: "",
             moneyLogTypes: [],
