@@ -343,8 +343,6 @@
         "daily_refresh": "Paid Daily Capers Refresh",
         "daily_refresh_details": "Sum o' all the paid daily capers refreshes.",
         "type": "Type o' Plunderin'",
-        "economy": "Trade Winds o' Fortune",
-        "economy_details": "Coin shiftin' by sort 'n the past seven suns.",
         "bus_revenue": "Booty Collected by the Bus Cap'n",
         "bus_revenue_details": "Total plunder from all doubloons amassed through steerin' the bus.",
         "found_items": "Booty Spotted 'pon the Deck",
@@ -352,7 +350,15 @@
         "money_logs": "Booty Ledgers",
         "money_logs_details": "Contrast various booty ledgers on a chart fer th' last 30 days.",
         "ls_customs": "LS Customs Booty",
-        "ls_customs_details": "Combined doubloons from all LS Customs plunderin'."
+        "ls_customs_details": "Combined doubloons from all LS Customs plunderin'.",
+        "cash": "Booty",
+        "bank": "Treasure Chest",
+        "stocks": "Shares o' Loot",
+        "savings": "Buried Booty",
+        "guns": "Handcrafted Boomsticks",
+        "guns_details": "Number o' boomsticks crafted.",
+        "economy_stats": "Wealth Tallyin'",
+        "economy_stats_details": "Spy at wealth tallyin' on a chart fer th' last 30 days."
     },
     "map": {
         "title": "Sailin' Map",

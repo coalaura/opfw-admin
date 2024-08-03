@@ -343,8 +343,6 @@
         "daily_refresh": "Bhuktan Kiye Gaye Dainik Kriyakalapon Ka Navikaran",
         "daily_refresh_details": "Sabhi bhuktan kiye gaye dainik kriyakalapon ke navikaranon ka samyukt yog.",
         "type": "Prakaar",
-        "economy": "Arthavyavastha Gatividhiyan",
-        "economy_details": "Pichhle 7 dino mein prakaar ke anusaar samuhik dhan gatividhiyan.",
         "bus_revenue": "Bas Chalak Ke Aamdani",
         "bus_revenue_details": "Sabhi bas chalak ke kaam se arjit sabhi aamdani ka yog.",
         "found_items": "Zameen Par Payi Gayi Vastuen",
@@ -352,7 +350,15 @@
         "money_logs": "Paisa Log",
         "money_logs_details": "Pichhle 30 dino ke liye alag alag paisa log ko ek graph mein tulna kare.",
         "ls_customs": "LS Customs Kharidari",
-        "ls_customs_details": "Sabhi LS Customs kharidari se prapt aay ka sanyojan."
+        "ls_customs_details": "Sabhi LS Customs kharidari se prapt aay ka sanyojan.",
+        "cash": "Nakad",
+        "bank": "Bank",
+        "stocks": "Shares",
+        "savings": "Bachat",
+        "guns": "Dasta-kar Bandook",
+        "guns_details": "Bandookon ki banayi gayi sankhya.",
+        "economy_stats": "Arthvyavastha Aankade",
+        "economy_stats_details": "Pichhle 30 dino ke liye graph mein arthvyavastha aankade ka tulna karein."
     },
     "map": {
         "title": "Live-Naksha",

@@ -343,8 +343,6 @@
         "daily_refresh": "Pwaid Daiwy Activitwies Weffwesh",
         "daily_refresh_details": "Combwined amount of aww pwaid daiwy activitwies weffweshes.",
         "type": "Type",
-        "economy": "Econyomwy Movwements",
-        "economy_details": "Money mwovements gwouped by type in the wast 7 days.",
         "bus_revenue": "Bus Dwivew Wevenue",
         "bus_revenue_details": "Combwined wevenue fwom aww money eawned thwough the bus dwivew job.",
         "found_items": "Fouwnd Items on Gwound",
@@ -352,7 +350,15 @@
         "money_logs": "Muney Wogs",
         "money_logs_details": "Cumpawe diffewent muney wogs in a gwaph fow the wast 30 days.",
         "ls_customs": "WS Customsywu Pwu-chases",
-        "ls_customs_details": "Combined wevenue fwom aww WS Customsywu pwu-chases."
+        "ls_customs_details": "Combined wevenue fwom aww WS Customsywu pwu-chases.",
+        "cash": "Cashy-washy",
+        "bank": "Banky-wanky",
+        "stocks": "Stonksy-wonksy",
+        "savings": "Savingsy-wavingsy",
+        "guns": "Cwafted Gwuns",
+        "guns_details": "Amownt of gwuns cwafted.",
+        "economy_stats": "Economy Statistwics",
+        "economy_stats_details": "Compawe economy statistwics in a gwaph fow the wast 30 days."
     },
     "map": {
         "title": "Wive-Map UwU",

@@ -343,8 +343,6 @@
         "daily_refresh": "Paid Daily Activities Refresh",
         "daily_refresh_details": "Combined 'mount of all paid daily activities refreshes.",
         "type": "Type",
-        "economy": "Economy Movements",
-        "economy_details": "Money movements grouped up by type in the las' 7 days.",
         "bus_revenue": "Bus Driver Income",
         "bus_revenue_details": "Total income from all the cash made drivin' them buses.",
         "found_items": "Foun' Items on the Groun'",
@@ -352,7 +350,15 @@
         "money_logs": "Munny Logs",
         "money_logs_details": "Compare diff'rent munny logs in a graph fer the last 30 days.",
         "ls_customs": "LS Customs Purchases",
-        "ls_customs_details": "Combined revenue from all LS Customs purchases."
+        "ls_customs_details": "Combined revenue from all LS Customs purchases.",
+        "cash": "Cash",
+        "bank": "Bank",
+        "stocks": "Stocks",
+        "savings": "Save-ins",
+        "guns": "Crafted Guns",
+        "guns_details": "Number o' guns crafted.",
+        "economy_stats": "Econn'me Stats",
+        "economy_stats_details": "Compurr econn'me statistics in a graph fer the last 30 days."
     },
     "map": {
         "title": "Active Map",

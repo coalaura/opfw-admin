@@ -343,8 +343,6 @@
         "daily_refresh": "Betalte daglige aktiviteter nullstilles",
         "daily_refresh_details": "Samlet mengde for alle nullstillinger av betalte daglige aktiviteter.",
         "type": "Type",
-        "economy": "Økonomiske bevegelser",
-        "economy_details": "Pengebevegelser gruppert etter type de siste 7 dagene.",
         "bus_revenue": "Bussjåførinntekter",
         "bus_revenue_details": "Samlet inntekt fra alle penger tjent gjennom bussjåførjobben.",
         "found_items": "Funnet Gjenstander på Bakken",
@@ -352,7 +350,15 @@
         "money_logs": "Pengetransaksjonslogger",
         "money_logs_details": "Sammenlign ulike pengetransaksjonslogger i et graf for de siste 30 dagene.",
         "ls_customs": "LS Customs-kjøp",
-        "ls_customs_details": "Samlet omsetning fra alle LS Customs-kjøp."
+        "ls_customs_details": "Samlet omsetning fra alle LS Customs-kjøp.",
+        "cash": "Kontanter",
+        "bank": "Bank",
+        "stocks": "Aksjer",
+        "savings": "Sparepenger",
+        "guns": "Håndlagde våpen",
+        "guns_details": "Antall håndlagde våpen.",
+        "economy_stats": "Økonomisk statistikk",
+        "economy_stats_details": "Sammenlign økonomisk statistikk i et diagram for de siste 30 dagene."
     },
     "map": {
         "title": "Levende-kart",

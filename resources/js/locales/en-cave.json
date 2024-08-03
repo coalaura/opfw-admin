@@ -343,8 +343,6 @@
         "daily_refresh": "Get Rocks Every Sun Up Again",
         "daily_refresh_details": "All Rocks From Every Sun Up Again Together",
         "type": "Make Marks",
-        "economy": "Trade Things Move",
-        "economy_details": "Shiny Pebble move by make marks in past many suns.",
         "bus_revenue": "Wheel-Box Go Man Bring-Shiny",
         "bus_revenue_details": "All shine-stones from wheel-box go work.",
         "found_items": "Found Things on Dirt",
@@ -352,7 +350,15 @@
         "money_logs": "Shiny Pebble Stacks",
         "money_logs_details": "Look many shiny pebble stacks, draw hills on wall, last 30 suns.",
         "ls_customs": "LS Customs Buys",
-        "ls_customs_details": "Many shinies from all LS Customs buys."
+        "ls_customs_details": "Many shinies from all LS Customs buys.",
+        "cash": "Shiny Pebbles",
+        "bank": "Rock Heap Keep Money",
+        "stocks": "Tribe Share Rocks",
+        "savings": "Stashed Shiny Pebbles",
+        "guns": "Make Boom Sticks",
+        "guns_details": "Many Boom Sticks Made.",
+        "economy_stats": "Trade Rock Numbers",
+        "economy_stats_details": "Look Rock Numbers, Draw on Wall, Last Many Suns Thirty."
     },
     "map": {
         "title": "Ooga-Map",
