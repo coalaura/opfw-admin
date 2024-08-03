@@ -280,9 +280,6 @@ class StatisticsHelper
 
     public static function collectStatistics(string $query): array
     {
-        var_dump("EXPLAIN " . $query);
-        die();
-
         $start = microtime(true);
 
         $result = [];
