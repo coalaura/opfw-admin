@@ -219,7 +219,15 @@ class StatisticsHelper
     // Shots fired (by guns damage dealt)
     public static function collectShotsFiredStatistics(): array
     {
-        $whereIn = implode(', ', self::Guns);
+        $unsignedGuns = array_map(function($hash) {
+            if ($hash < 0) {
+                return $hash + 2 ** 32; // Convert negative to unsigned 32-bit equivalent
+            }
+
+            return $hash;
+        }, self::Guns);
+
+        $whereIn = implode(', ', $unsignedGuns);
 
         return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(FROM_UNIXTIME(ROUND(timestamp_ms / 1000)), '%c/%d/%Y') as date FROM weapon_damage_events WHERE timestamp_ms IS NOT NULL AND weapon_type IN ($whereIn) GROUP BY date ORDER BY timestamp_ms DESC");
     }
@@ -272,6 +280,9 @@ class StatisticsHelper
 
     public static function collectStatistics(string $query): array
     {
+        var_dump("EXPLAIN " . $query);
+        die();
+
         $start = microtime(true);
 
         $result = [];
