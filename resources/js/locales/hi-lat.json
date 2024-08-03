@@ -359,7 +359,8 @@
         "guns_details": "Bandookon ki banayi gayi sankhya.",
         "economy_stats": "Arthvyavastha Aankade",
         "economy_stats_details": "Pichhle 30 dino ke liye graph mein arthvyavastha aankade ka tulna karein.",
-        "total": "Kul"
+        "total": "Kul",
+        "no_economy_recorded": "Abhi tak koi arthvyavastha ke aankade darj nahi kiye gaye hain. (Har ghante me ek baar darj kiya jata hai)"
     },
     "map": {
         "title": "Live-Naksha",

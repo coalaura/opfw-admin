@@ -359,7 +359,8 @@
         "guns_details": "🔫🛠️🔢",
         "economy_stats": "📊📈🏦",
         "economy_stats_details": "📊🔍📈🏦🗓️🔙3️⃣0️⃣📅.",
-        "total": "📈"
+        "total": "📈",
+        "no_economy_recorded": "🚫 💹 📊 📝 📌 🕐. (📝 🕐 👉 🕒)"
     },
     "map": {
         "title": "🌍 Live-Map",

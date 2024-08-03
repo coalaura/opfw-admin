@@ -359,7 +359,8 @@
         "guns_details": "Many Boom Sticks Made.",
         "economy_stats": "Trade Rock Numbers",
         "economy_stats_details": "Look Rock Numbers, Draw on Wall, Last Many Suns Thirty.",
-        "total": "Sum all"
+        "total": "Sum all",
+        "no_economy_recorded": "No shiny rock counts in cave walls yet. (Cave wall gets new counts when sun moves little)"
     },
     "map": {
         "title": "Ooga-Map",

@@ -359,7 +359,8 @@
         "guns_details": "Number o' guns crafted.",
         "economy_stats": "Econn'me Stats",
         "economy_stats_details": "Compurr econn'me statistics in a graph fer the last 30 days.",
-        "total": "Tohtuhl"
+        "total": "Tohtuhl",
+        "no_economy_recorded": "Ain't no economy statistics jotted down jus' yet. (We jot 'em down once every hour)"
     },
     "map": {
         "title": "Active Map",

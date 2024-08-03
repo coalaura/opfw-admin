@@ -51,6 +51,12 @@
                                 </td>
                             </tr>
 
+                            <tr class="border-t border-gray-500" v-else-if="economy.data.length === 0">
+                                <td class="px-2 py-0.5 text-center" colspan="6">
+                                    {{ t('statistics.no_economy_recorded') }}
+                                </td>
+                            </tr>
+
                             <tr v-for="(entry, index) in economy.data" :key="index" class="border-t border-gray-500" v-else>
                                 <td class="italic text-gray-700 dark:text-gray-300 px-2 py-0.5">{{ entry.date }}</td>
 
