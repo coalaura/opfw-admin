@@ -94,7 +94,7 @@
                             <input class="text-sm bg-transparent py-1 px-2 bg-black bg-opacity-10 border-0 border-b-2" type="text" v-model="entry.key" />
                         </td>
                         <td class="px-2 py-1 w-full">
-                            <input class="w-full text-sm bg-transparent py-1 px-2 bg-black bg-opacity-10 border-0 border-b-2" type="text" v-model="entry.value" :class="{'border-red-500': !isFieldValid(entry.key, entry.value)}" />
+                            <input class="w-full text-sm bg-transparent py-1 px-2 bg-black bg-opacity-10 border-0 border-b-2" :class="{'!border-red-500': !isFieldValid(entry.key, entry.value)}" :title="!isFieldValid(entry.key, entry.value) ? t('inventories.show.field_invalid') : ''" type="text" v-model="entry.value" />
                         </td>
                     </tr>
                 </table>

@@ -726,6 +726,7 @@
             "item_name": "Item Name",
             "infos": "Item Infos",
             "metadata": "Item Metadata",
+            "field_invalid": "Field value is invalid for this key.",
 
             "key": "Key",
             "value": "Value",
