@@ -13,12 +13,16 @@
         <template>
             <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
                 <div class="flex">
-                    <h2 class="text-lg flex gap-2" @click="loadEconomyStatistics()" :class="{ 'cursor-pointer': !economyLoading && !economy}">
+                    <h2 class="text-lg flex gap-2" @click="loadEconomyStatistics()" :class="{ 'cursor-pointer': !economyLoading && !economy }">
                         {{ t('statistics.economy_stats') }}
                     </h2>
                 </div>
 
-                <p class="text-sm italic mb-3">{{ t('statistics.economy_stats_details') }}</p>
+                <p class="text-sm italic mb-3">
+                    {{ t('statistics.economy_stats_details') }}
+
+                    <span v-if="economy && economy.data.length" v-html="overallEconomyMovement()"></span>
+                </p>
 
                 <button @click="loadEconomyStatistics()" class="icon-button text-white bg-green-600" v-if="!economyLoading && !economy">
                     <i class="fas fa-plus"></i>
@@ -72,8 +76,8 @@
                                 <td class="px-2 py-0.5">{{ numberFormat(entry.savings, false, true) }}</td>
                                 <td class="px-2 py-0.5">{{ numberFormat(entry.total, false, true) }}</td>
                                 <td class="px-2 py-0.5">
-                                    <span class="text-red-700 dark:text-red-300" v-if="index < economy.data.length-1 && economy.data[index + 1].total > entry.total">-{{ ((economy.data[index + 1].total - entry.total) / economy.data[index + 1].total * 100).toFixed(3) }}%</span>
-                                    <span class="text-green-700 dark:text-green-300" v-else-if="index < economy.data.length-1">+{{ ((entry.total - economy.data[index + 1].total) / economy.data[index + 1].total * 100).toFixed(3) }}%</span>
+                                    <span class="text-red-700 dark:text-red-300" v-if="index < economy.data.length - 1 && economy.data[index + 1].total > entry.total">-{{ ((economy.data[index + 1].total - entry.total) / economy.data[index + 1].total * 100).toFixed(3) }}%</span>
+                                    <span class="text-green-700 dark:text-green-300" v-else-if="index < economy.data.length - 1">+{{ ((entry.total - economy.data[index + 1].total) / economy.data[index + 1].total * 100).toFixed(3) }}%</span>
                                 </td>
 
                                 <td class="px-2 py-0.5">{{ numberFormat(entry.richest, false, true) }}</td>
@@ -275,6 +279,18 @@ export default {
 
             this.isLoading = false;
         },
+        overallEconomyMovement() {
+            if (!this.economy || !this.economy.data.length) return;
+
+            const first = this.economy.data[this.economy.data.length - 1],
+                last = this.economy.data[0];
+
+            if (first.total > last.total) {
+                return `<span class="text-red-700 dark:text-red-300" title="Movement since ${first.date}">-${((first.total - last.total) / last.total * 100).toFixed(3)}%</span>`;
+            }
+
+            return `<span class="text-green-700 dark:text-green-300" title="Movement since ${first.date}">+${((last.total - first.total) / first.total * 100).toFixed(3)}%</span>`
+        }
     },
 }
 </script>
