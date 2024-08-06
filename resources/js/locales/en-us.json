@@ -74,7 +74,8 @@
         "restricted_to_super": "Restricted to super-admins only.",
         "restricted_to_root": "Restricted to root users only.",
         "not_restricted": "Not restricted.",
-        "support_markdown": "Most basic markdown syntax is supported. Click to learn more."
+        "support_markdown": "Most basic markdown syntax is supported. Click to learn more.",
+        "opfw_abbreviation": "What the OP-FW abbreviation really stands for."
     },
 	"steam": {
 		"title": "Steam",

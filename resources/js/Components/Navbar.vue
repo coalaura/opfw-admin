@@ -1,13 +1,15 @@
 <template>
     <div class="flex shadow bg-cover bg-gray-900 relative z-10 navbar">
         <!-- Branding / Logo -->
-        <div class="flex-shrink-0 px-8 py-3 text-center text-white mobile:hidden w-72 overflow-hidden">
-            <inertia-link href="/" class="flex gap-2">
+        <div class="flex-shrink-0 px-8 py-3 text-center text-white mobile:hidden w-72">
+            <inertia-link href="/" class="flex gap-2 relative">
                 <img :src="serverLogo ? serverLogo : '/images/op-logo.png'" class="block w-logo h-logo object-cover" :class="{ 'drop-shadow': banner }" />
 
-                <h1 class="text-lg px-4 flex flex-col text-left justify-center overflow-hidden">
+                <h1 class="text-lg px-4 flex flex-col text-left justify-center">
                     <span class="block leading-5 drop-shadow">OP-FW</span>
                     <span class="block text-xs leading-1 italic whitespace-nowrap overflow-ellipsis overflow-hidden drop-shadow">{{ serverName ? serverName : $page.auth.cluster }}</span>
+
+                    <span class="abbreviation" ref="opfw_abbr" :title="t('global.opfw_abbreviation')"></span>
                 </h1>
             </inertia-link>
         </div>
@@ -305,6 +307,8 @@ import moment from 'moment';
 import Convert from 'ansi-to-html';
 import Icon from './Icon';
 import Modal from './Modal';
+
+import Abbreviations from '../data/abbreviations.json';
 
 export default {
     components: {
@@ -616,6 +620,34 @@ export default {
                 this.updateStreamers();
             }, 20000);
         },
+        async renderAbbreviation() {
+            const title = this.$refs.opfw_abbr;
+
+            if (!title) return;
+
+            title.innerHTML = "";
+
+            const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+            const abbreviation = Abbreviations[Math.floor(Math.random() * Abbreviations.length)];
+
+            for (let i = 0; i < abbreviation.length; i++) {
+                await wait(Math.floor(Math.random() * 20) + 60);
+
+                let char = abbreviation[i];
+
+                if ((i === 0 || abbreviation[i - 1] === " " || abbreviation[i - 1] === "-") && char.match(/[opfw]/i)) {
+                    char = `<b>${char.toUpperCase()}</b>`;
+                }
+
+                title.innerHTML += char;
+            }
+
+            // Re-render a new one after like 2-3 minutes (*60*1000)
+            setTimeout(() => {
+                this.renderAbbreviation();
+            }, (Math.floor(Math.random() * 60) + 120) * 1000);
+        }
     },
     async mounted() {
         // Delay loading of extra data since it blocks other resources from loading
@@ -637,6 +669,10 @@ export default {
 
             this.now = Date.now();
         }, Math.floor(1000 / 12));
+
+        setTimeout(() => {
+            this.renderAbbreviation();
+        }, Math.floor(Math.random() * 2000) + 3000);
 
         this.banner = await this.refreshStyle();
 
