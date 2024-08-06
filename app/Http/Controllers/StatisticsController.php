@@ -181,6 +181,8 @@ class StatisticsController extends Controller
     {
         $hours = 30 * 24;
 
+        $datasets = 7;
+
         $statistics = [
             "data"  => [],
             "graph" => [
@@ -188,32 +190,44 @@ class StatisticsController extends Controller
                     [
                         "label"           => "Cash",
                         "data"            => [],
-                        "backgroundColor" => $this->color(0, 5, 0.3),
-                        "borderColor"     => $this->color(0, 5, 1),
+                        "backgroundColor" => $this->color(0, $datasets, 0.3),
+                        "borderColor"     => $this->color(0, $datasets, 1),
                     ],
                     [
                         "label"           => "Bank",
                         "data"            => [],
-                        "backgroundColor" => $this->color(1, 5, 0.3),
-                        "borderColor"     => $this->color(1, 5, 1),
+                        "backgroundColor" => $this->color(1, $datasets, 0.3),
+                        "borderColor"     => $this->color(1, $datasets, 1),
                     ],
                     [
                         "label"           => "Stocks",
                         "data"            => [],
-                        "backgroundColor" => $this->color(2, 5, 0.3),
-                        "borderColor"     => $this->color(2, 5, 1),
+                        "backgroundColor" => $this->color(2, $datasets, 0.3),
+                        "borderColor"     => $this->color(2, $datasets, 1),
                     ],
                     [
                         "label"           => "Savings",
                         "data"            => [],
-                        "backgroundColor" => $this->color(3, 5, 0.3),
-                        "borderColor"     => $this->color(3, 5, 1),
+                        "backgroundColor" => $this->color(3, $datasets, 0.3),
+                        "borderColor"     => $this->color(3, $datasets, 1),
+                    ],
+                    [
+                        "label"           => "Richest",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(4, $datasets, 0.3),
+                        "borderColor"     => $this->color(4, $datasets, 1),
+                    ],
+                    [
+                        "label"           => "Poorest",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(5, $datasets, 0.3),
+                        "borderColor"     => $this->color(5, $datasets, 1),
                     ],
                     [
                         "label"           => "Total",
                         "data"            => [],
-                        "backgroundColor" => $this->color(4, 5, 0.3),
-                        "borderColor"     => $this->color(4, 5, 1),
+                        "backgroundColor" => $this->color(6, $datasets, 0.3),
+                        "borderColor"     => $this->color(6, $datasets, 1),
                     ],
                 ],
                 "labels"   => [],
@@ -233,6 +247,8 @@ class StatisticsController extends Controller
                 "bank"    => $entry->bank,
                 "stocks"  => $entry->stocks,
                 "savings" => $entry->savings,
+                "poorest" => $entry->poorest,
+                "richest" => $entry->richest,
                 "total"   => $total,
             ];
 
@@ -242,7 +258,9 @@ class StatisticsController extends Controller
             $statistics["graph"]["datasets"][1]["data"][] = $entry->bank;
             $statistics["graph"]["datasets"][2]["data"][] = $entry->stocks;
             $statistics["graph"]["datasets"][3]["data"][] = $entry->savings;
-            $statistics["graph"]["datasets"][4]["data"][] = $total;
+            $statistics["graph"]["datasets"][4]["data"][] = $entry->poorest;
+            $statistics["graph"]["datasets"][5]["data"][] = $entry->richest;
+            $statistics["graph"]["datasets"][6]["data"][] = $total;
         }
 
         $statistics["data"] = array_values($statistics["data"]);

@@ -254,7 +254,7 @@ class StatisticsHelper
     // General economy statistics
     public static function collectEconomyStatistics(int $hours): array
     {
-        return DB::select("SELECT date, cash, bank, stocks, savings FROM economy_statistics LIMIT " . $hours);
+        return DB::select("SELECT date, cash, bank, stocks, savings, richest, poorest FROM economy_statistics LIMIT " . $hours);
     }
 
     // Specific Money Statistics
