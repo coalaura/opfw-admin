@@ -94,7 +94,7 @@
                             <input class="text-sm bg-transparent py-1 px-2 bg-black bg-opacity-10 border-0 border-b-2" type="text" v-model="entry.key" />
                         </td>
                         <td class="px-2 py-1 w-full">
-                            <input class="w-full text-sm bg-transparent py-1 px-2 bg-black bg-opacity-10 border-0 border-b-2" type="text" v-model="entry.value" />
+                            <input class="w-full text-sm bg-transparent py-1 px-2 bg-black bg-opacity-10 border-0 border-b-2" type="text" v-model="entry.value" :class="{'border-red-500': !isFieldValid(entry.key, entry.value)}" />
                         </td>
                     </tr>
                 </table>
@@ -234,6 +234,14 @@ export default {
                 let key = entry.key,
                     value = entry.value;
 
+                if (!this.isFieldValid(key, value)) {
+                    this.isLoading = false;
+
+                    alert("Invalid field: " + key);
+
+                    return;
+                }
+
                 if (typeof value === "string") {
                     value = value.trim();
                 } else if (value === "true" || value === "false") {
@@ -304,6 +312,75 @@ export default {
                 key: "",
                 value: ""
             });
+        },
+        isFieldValid(key, value) {
+            // Only common fields get validated
+            switch (key) {
+                // Needs to be an integer greater than 0
+                case "degradesAt":
+                case "characterId":
+                case "durabilityPercent":
+                case "ammoAmount":
+                case "tint":
+                case "remainingMessages":
+                case "purchaseDate":
+                case "unitId":
+                case "impactAmount":
+                case "casingAmount":
+                case "hitsTaken":
+                case "cigarettes":
+                case "issueId":
+                case "signedByCid":
+                case "redeemLocationId":
+                case "deviceId":
+                case "deviceActivationTimestamp":
+                case "kills":
+                case "ranOver":
+                case "packId":
+                case "pieceNumber":
+                case "deaths":
+                case "serialNumber":
+                case "firingMode":
+                    return value && value.match(/^\d+$/m) && parseInt(value) >= 0;
+
+                // Needs to be a float and greater than 0
+                case "stepsWalked":
+                    return value && value.match(/^\d+(\.\d+)?$/m) && parseFloat(value) >= 0;
+
+                // Needs to be a boolean
+                case "battleRoyaleOnly":
+                case "noSerialNumber":
+                case "gravityGun":
+                case "reviewed":
+                case "incomplete":
+                case "fromLuckyWheel":
+                    return value === "true" || value === "false";
+
+                // Needs to be a valid URL (starting with http://, https:// or nui://) or "pending"
+                case "iconUrl":
+                case "screenshotURL":
+                case "portraitURL":
+                case "pictureURL":
+                case "imageUrl":
+                    return value && ((value.startsWith("http://") || value.startsWith("https://") || value.startsWith("nui://")) || value === "pending");
+
+                // Needs to be an array
+                case "attachments":
+                case "numbers":
+                case "prizes":
+                    return value && value.startsWith("[") && value.endsWith("]");
+
+                // Needs to be an object
+                case "ingredients":
+                    return value && value.startsWith("{") && value.endsWith("}");
+
+                // Needs to be an array or object
+                case "contents":
+                    return value && (v(alue.startsWith("[") && value.endsWith("]")) || (value.startsWith("{") && value.endsWith("}")));
+            }
+
+            // Other fields are not validated
+            return true;
         }
     }
 };
