@@ -73,7 +73,8 @@
         "restricted_to_root": "Sirf root users ke liye prati-bandhit.",
         "not_restricted": "Prati-bandhit nahi.",
         "support_markdown": "Adhiktar moolbhoot markdown syntax ka samarthan kiya jaata hai. Jaankaari ke liye click karein.",
-        "connect": "Jodna"
+        "connect": "Jodna",
+        "opfw_abbreviation": "OP-FW sankshipth naam ka asli arth kya hai."
     },
     "steam": {
         "title": "Steam Lookup",
@@ -690,7 +691,8 @@
             "metadata": "Saman Ki Metadata",
             "key": "Chaabi",
             "value": "Moolya",
-            "save": "Parivartan Save Karein"
+            "save": "Parivartan Save Karein",
+            "field_invalid": "Is key ke liye field mulya avaidh hai."
         }
     },
     "twitter": {

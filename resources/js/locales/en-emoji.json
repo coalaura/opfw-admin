@@ -73,7 +73,8 @@
             "custom": "<b>*</b> By default returns all rows where the column <u>contains</u> your search. You can use operators such as: <b>=</b> (equals), <b>!=</b> (does not equal), <b>&gt;</b> (greater than), <b>&lt;</b> (less than) or <b>!</b> (doesn't contain) at the <u>beginning</u> of your search string. You can also search for <u>multiple values</u> by separating them with a comma."
         },
         "support_markdown": "🔝🧱 markdown ✍️ is 👍. 🔗 to 🎓 more.",
-        "connect": "🔗"
+        "connect": "🔗",
+        "opfw_abbreviation": "🤔 the OP-FW abbreviation 🏷️ really stands for."
     },
     "steam": {
         "title": "🚂🔎",
@@ -681,7 +682,8 @@
             "metadata": "📦🔢💾",
             "key": "🔑",
             "value": "🏷️",
-            "save": "💾🔄"
+            "save": "💾🔄",
+            "field_invalid": "🏞️ value is ❌ for this 🔑."
         }
     },
     "twitter": {

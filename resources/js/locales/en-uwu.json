@@ -73,7 +73,8 @@
             "custom": "<b>*</b> UwU By default returns all rows where the column <u>contains OwO</u> your search. UwU You can use operators such as: <b>=uwu</b> (equals), <b>!=owo</b> (does not equal), <b>&gt;w&lt;</b> (greater than), <b>&lt;w&gt;</b> (less than) or <b>!</b> (doesn't contain OwO) at the <u>beginning</u> of your search string. UwU You can also search for <u>multiple values</u> by separating them with a comma."
         },
         "support_markdown": "M-most basic mawkdown syntax is suppowted. Cwick to weawn mowe.",
-        "connect": "Connyect~ UwU"
+        "connect": "Connyect~ UwU",
+        "opfw_abbreviation": "W-What da OP-FW abbeviation weawwy stands fow."
     },
     "steam": {
         "title": "Steam Wookup uwu",
@@ -681,7 +682,8 @@
             "metadata": "Item Metadata",
             "key": "Key",
             "value": "Vawue",
-            "save": "Save Changes"
+            "save": "Save Changes",
+            "field_invalid": "Fiewd vawue ish inbawid fow dis key."
         }
     },
     "twitter": {

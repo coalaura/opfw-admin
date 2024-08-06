@@ -73,7 +73,8 @@
             "custom": "<b>*</b> Booty default returns all rows where the column <u>contains</u> yer treasure. Ye can use operators such as: <b>=</b> (equals), <b>!=</b> (does not equal), <b>&gt;</b> (greater than), <b>&lt;</b> (less than) or <b>!</b> (doesn't contain) at the <u>beginning</u> of yer treasure string. Ye can also search for <u>multiple treasures</u> by separating 'em with a doubloon."
         },
         "support_markdown": "Most barnacle-covered markdown speak be supported, mate. Click t' learn more.",
-        "connect": "Join forces"
+        "connect": "Join forces",
+        "opfw_abbreviation": "Wha' th' OP-FW abbreviation truly be meanin'."
     },
     "steam": {
         "title": "Steam Buccaneer",
@@ -681,7 +682,8 @@
             "metadata": "Treasure Marks",
             "key": "Key to the chest",
             "value": "Pieces o' Eight",
-            "save": "Keep ye changes"
+            "save": "Keep ye changes",
+            "field_invalid": "Field value be invalid fer this key."
         }
     },
     "twitter": {

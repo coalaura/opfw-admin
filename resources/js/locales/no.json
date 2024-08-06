@@ -73,7 +73,8 @@
         "restricted_to_root": "Begrenset til kun rotbrukere.",
         "not_restricted": "Ikke begrenset.",
         "support_markdown": "De fleste grunnleggende markdown-syntaksene støttes. Klikk for å lære mer.",
-        "connect": "Koble til"
+        "connect": "Koble til",
+        "opfw_abbreviation": "Hva forkortelsen OP-FW egentlig står for."
     },
     "steam": {
         "title": "Steam-søk",
@@ -690,7 +691,8 @@
             "metadata": "Gjenstands Metadata",
             "key": "Nøkkel",
             "value": "Verdi",
-            "save": "Lagre endringer"
+            "save": "Lagre endringer",
+            "field_invalid": "Feltverdien er ugyldig for denne nøkkelen."
         }
     },
     "twitter": {

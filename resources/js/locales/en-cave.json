@@ -73,7 +73,8 @@
             "custom": "<b>*</b> Grok-grok-grok returns all rows where the column <u>holds</u> your search. You can use grok-grok like: <b>=</b> (same), <b>!=</b> (opposite), <b>&gt;</b> (more), <b>&lt;</b> (less), or <b>!</b> (doesn't hold) at the <u>start</u>-grok of your search string. You can also grok-grok for <u>many things</u> by comma-grok them-grok."
         },
         "support_markdown": "Simple mark-many-dots things work. Press-press learn more.",
-        "connect": "Link-up"
+        "connect": "Link-up",
+        "opfw_abbreviation": "Thing OP-FW mean what."
     },
     "steam": {
         "title": "Steam Uggabugga",
@@ -681,7 +682,8 @@
             "metadata": "Thing secret",
             "key": "Thing stick",
             "value": "Thing worth",
-            "save": "Keep diferent"
+            "save": "Keep diferent",
+            "field_invalid": "Land thing no good for this bone."
         }
     },
     "twitter": {

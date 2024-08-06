@@ -73,7 +73,8 @@
             "custom": "<b>*</b> By default returns all rows where the column <u>haz</u> yer search. Y'all kin use operators such as: <b>=</b> (equals), <b>!=</b> (do nay equal), <b>&gt;</b> (greater thayun), <b>&lt;</b> (less thayun) or <b>!</b> (hain't got) at the <u>startin'</u> of yer search string. Y'all kin also search fer <u>multiple values</u> by separatin' 'em with a comma."
         },
         "support_markdown": "Most basic markdown syntax is supported, y'all. Click to learn more.",
-        "connect": "Connec'"
+        "connect": "Connec'",
+        "opfw_abbreviation": "What the OP-FW abbreviation really stands fer."
     },
     "steam": {
         "title": "Steam Looker Upper",
@@ -681,7 +682,8 @@
             "metadata": "Ite'm Metadata",
             "key": "Key",
             "value": "Value",
-            "save": "Save them Changes"
+            "save": "Save them Changes",
+            "field_invalid": "Field value ain't proper for this here key."
         }
     },
     "twitter": {
