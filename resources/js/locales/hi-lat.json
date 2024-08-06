@@ -362,7 +362,9 @@
         "total": "Kul",
         "no_economy_recorded": "Abhi tak koi arthvyavastha ke aankade darj nahi kiye gaye hain. (Har ghante me ek baar darj kiya jata hai)",
         "shots_fired": "Goliyan Chalayi Gayi",
-        "shots_fired_details": "Har us hathiyar se chalayi gayi goliyon ki sankhya jo goliyan chalata hai (yani ki koi melee hatiyar nahi, aadi)."
+        "shots_fired_details": "Har us hathiyar se chalayi gayi goliyon ki sankhya jo goliyan chalata hai (yani ki koi melee hatiyar nahi, aadi).",
+        "richest": "Sabse ameer",
+        "poorest": "Sabse gareeb"
     },
     "map": {
         "title": "Live-Naksha",

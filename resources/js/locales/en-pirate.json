@@ -362,7 +362,9 @@
         "total": "Sum Total",
         "no_economy_recorded": "No plunder nor booty tallies logged yet. (Logged once with ev'ry passin' hour)",
         "shots_fired": "Broadside unleashed",
-        "shots_fired_details": "Number o' bullets that struck true (dealin' damage) from all iron flingers that spit lead (nay cutlasses, nor other close-quarters tools)."
+        "shots_fired_details": "Number o' bullets that struck true (dealin' damage) from all iron flingers that spit lead (nay cutlasses, nor other close-quarters tools).",
+        "richest": "Wealthiest",
+        "poorest": "Destitutest"
     },
     "map": {
         "title": "Sailin' Map",

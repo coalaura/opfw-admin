@@ -247,8 +247,8 @@ class StatisticsController extends Controller
                 "bank"    => $entry->bank,
                 "stocks"  => $entry->stocks,
                 "savings" => $entry->savings,
-                "poorest" => $entry->poorest,
                 "richest" => $entry->richest,
+                "poorest" => $entry->poorest,
                 "total"   => $total,
             ];
 
@@ -258,8 +258,8 @@ class StatisticsController extends Controller
             $statistics["graph"]["datasets"][1]["data"][] = $entry->bank;
             $statistics["graph"]["datasets"][2]["data"][] = $entry->stocks;
             $statistics["graph"]["datasets"][3]["data"][] = $entry->savings;
-            $statistics["graph"]["datasets"][4]["data"][] = $entry->poorest;
-            $statistics["graph"]["datasets"][5]["data"][] = $entry->richest;
+            $statistics["graph"]["datasets"][4]["data"][] = $entry->richest;
+            $statistics["graph"]["datasets"][5]["data"][] = $entry->poorest;
             $statistics["graph"]["datasets"][6]["data"][] = $total;
         }
 

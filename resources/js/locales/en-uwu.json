@@ -362,7 +362,9 @@
         "total": "Totaww",
         "no_economy_recorded": "Nyo economy statistics wecowded yet. (Wecowded once evewy houw)",
         "shots_fired": "Shots Fiwed",
-        "shots_fired_details": "Amount of shots fiwed (dat deawt damage) fwom aww weapons dat shoot buwwets (no melee, etc.)."
+        "shots_fired_details": "Amount of shots fiwed (dat deawt damage) fwom aww weapons dat shoot buwwets (no melee, etc.).",
+        "richest": "Wichest",
+        "poorest": "Powoest"
     },
     "map": {
         "title": "Wive-Map UwU",

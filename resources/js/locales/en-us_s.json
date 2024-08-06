@@ -362,7 +362,9 @@
         "total": "Tohtuhl",
         "no_economy_recorded": "Ain't no economy statistics jotted down jus' yet. (We jot 'em down once every hour)",
         "shots_fired": "Shots Fired",
-        "shots_fired_details": "Number o' bullets that actually hit somethin' from all them firearms that shoot lead, 'cept for any of that hand-to-hand combat stuff, y'know."
+        "shots_fired_details": "Number o' bullets that actually hit somethin' from all them firearms that shoot lead, 'cept for any of that hand-to-hand combat stuff, y'know.",
+        "richest": "Riches'",
+        "poorest": "Po'ess"
     },
     "map": {
         "title": "Active Map",

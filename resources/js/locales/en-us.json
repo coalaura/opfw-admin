@@ -313,6 +313,8 @@
         "stocks": "Stocks",
         "savings": "Savings",
         "total": "Total",
+        "richest": "Richest",
+        "poorest": "Poorest",
 
         "tag_money": "Money",
         "tag_amount": "Amount",

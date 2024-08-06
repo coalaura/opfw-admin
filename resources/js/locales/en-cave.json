@@ -362,7 +362,9 @@
         "total": "Sum all",
         "no_economy_recorded": "No shiny rock counts in cave walls yet. (Cave wall gets new counts when sun moves little)",
         "shots_fired": "Bang Bang Go",
-        "shots_fired_details": "Many bang go hurt from all fire stick (no smash, etc.)."
+        "shots_fired_details": "Many bang go hurt from all fire stick (no smash, etc.).",
+        "richest": "Many-shiny-rock-keeper",
+        "poorest": "None-shiny-rock-keeper"
     },
     "map": {
         "title": "Ooga-Map",

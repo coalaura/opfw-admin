@@ -34,7 +34,9 @@
                                 <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.stocks') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.savings') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.total') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left"></th>
+                                <th class="font-semibold px-2 py-0.5 text-left">&nbsp;</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.richest') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.poorest') }}</th>
                             </tr>
 
                             <tr class="border-t border-gray-500" v-if="!economy">
@@ -45,16 +47,18 @@
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
                             </tr>
 
                             <tr class="border-t border-gray-500" v-else-if="economyLoading">
-                                <td class="px-2 py-0.5 text-center" colspan="7">
+                                <td class="px-2 py-0.5 text-center" colspan="9">
                                     <i class="fas fa-spinner animate-spin"></i>
                                 </td>
                             </tr>
 
                             <tr class="border-t border-gray-500" v-else-if="economy.data.length === 0">
-                                <td class="px-2 py-0.5 text-center italic" colspan="7">
+                                <td class="px-2 py-0.5 text-center italic" colspan="9">
                                     {{ t('statistics.no_economy_recorded') }}
                                 </td>
                             </tr>
@@ -71,6 +75,9 @@
                                     <span class="text-red-700 dark:text-red-300" v-if="index < economy.data.length-1 && economy.data[index + 1].total > entry.total">-{{ ((economy.data[index + 1].total - entry.total) / economy.data[index + 1].total * 100).toFixed(3) }}%</span>
                                     <span class="text-green-700 dark:text-green-300" v-else-if="index < economy.data.length-1">+{{ ((entry.total - economy.data[index + 1].total) / economy.data[index + 1].total * 100).toFixed(3) }}%</span>
                                 </td>
+
+                                <td class="px-2 py-0.5">{{ numberFormat(entry.richest, false, true) }}</td>
+                                <td class="px-2 py-0.5">{{ numberFormat(entry.poorest, false, true) }}</td>
                             </tr>
                         </table>
                     </div>
