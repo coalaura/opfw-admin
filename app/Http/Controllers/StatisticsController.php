@@ -263,7 +263,7 @@ class StatisticsController extends Controller
             $statistics["graph"]["datasets"][6]["data"][] = $total;
         }
 
-        $statistics["data"] = array_values($statistics["data"]);
+        $statistics["data"] = array_reverse(array_values($statistics["data"]));
 
         return $this->json(true, $statistics);
     }
