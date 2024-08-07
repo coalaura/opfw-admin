@@ -627,9 +627,11 @@ export default {
 
 			if (!this.setting('parseLogs')) return details;
 
-			details = details.replace(/(?<=to |from inventory )[\w-:]+/gmi, inventory => {
-				return `<a title="${this.t('inventories.show_inv')}" class="text-indigo-600 dark:text-indigo-400" href="/inventory/${inventory.replace(/:\d+/, '')}">${inventory}</a>`;
-			});
+			if (action === "Item Moved") {
+				details = details.replace(/(?<=to |from inventory )[\w-:]+/gmi, inventory => {
+					return `<a title="${this.t('inventories.show_inv')}" class="text-indigo-600 dark:text-indigo-400" href="/inventory/${inventory.replace(/:\d+/, '')}">${inventory}</a>`;
+				});
+			}
 
 			if (metadata && metadata.killerLicenseIdentifier) {
 				const killerLicense = metadata.killerLicenseIdentifier;
