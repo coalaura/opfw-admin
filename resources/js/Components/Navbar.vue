@@ -631,13 +631,17 @@ export default {
 
             const abbreviation = Abbreviations[Math.floor(Math.random() * Abbreviations.length)];
 
+            let highlight = ["o", "p", "f", "w"];
+
             for (let i = 0; i < abbreviation.length; i++) {
                 await wait(Math.floor(Math.random() * 20) + 60);
 
                 let char = abbreviation[i];
 
-                if ((i === 0 || abbreviation[i - 1] === " " || abbreviation[i - 1] === "-") && char.match(/[opfw]/i)) {
+                if ((i === 0 || abbreviation[i - 1] === " " || abbreviation[i - 1] === "-") && highlight.includes(char.toLowerCase())) {
                     char = `<b>${char.toUpperCase()}</b>`;
+
+                    highlight = highlight.filter(h => h !== char.toLowerCase());
                 }
 
                 title.innerHTML += char;
