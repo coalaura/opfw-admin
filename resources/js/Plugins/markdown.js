@@ -16,8 +16,8 @@ const Markdown = {
         function embed(url) {
             // Twitch Videos
             if (url.startsWith("https://www.twitch.tv/videos/")) {
-                const id = find(/videos\/(\d+)/gm, url),
-                    time = find(/[?&]t=(\w+)/gm, url) || '00h00m00s';
+                const id = find(/videos\/(\d+)/m, url),
+                    time = find(/[?&]t=(\w+)/m, url) || '00h00m00s';
 
                 if (!id) return false;
 
@@ -29,7 +29,7 @@ const Markdown = {
 
             // Twitch Clips
             if (url.startsWith("https://clips.twitch.tv/")) {
-                const id = find(/clips.twitch.tv\/(\w+)/gm, url);
+                const id = find(/clips.twitch.tv\/(\w+)/m, url);
 
                 if (!id) return false;
 
@@ -41,8 +41,8 @@ const Markdown = {
 
             // Plain YouTube Videos
             if (url.startsWith("https://www.youtube.com/watch?")) {
-                const id = find(/[?&]v=(\w+)/gm, url),
-                    time = find(/[?&]t=(\w+)/gm, url) || '0';
+                const id = find(/[?&]v=(\w+)/m, url),
+                    time = find(/[?&]t=(\w+)/m, url) || '0';
 
                 if (!id) return false;
 
@@ -54,8 +54,8 @@ const Markdown = {
 
             // YouTube shortened URLs
             if (url.startsWith("https://youtu.be/")) {
-                const id = find(/youtu.be\/(\w+)/gm, url),
-                    time = find(/[?&]t=(\w+)/gm, url) || '0';
+                const id = find(/youtu.be\/(\w+)/m, url),
+                    time = find(/[?&]t=(\w+)/m, url) || '0';
 
                 if (!id) return false;
 
@@ -67,8 +67,8 @@ const Markdown = {
 
             // YouTube Live
             if (url.startsWith("https://youtube.com/live/")) {
-                const id = find(/youtube.com\/live\/(\w+)/gm, url),
-                    time = find(/[?&]t=(\w+)/gm, url) || '0';
+                const id = find(/youtube.com\/live\/(\w+)/m, url),
+                    time = find(/[?&]t=(\w+)/m, url) || '0';
 
                 if (!id) return false;
 
@@ -80,7 +80,7 @@ const Markdown = {
 
             // ClipChamp
             if (url.startsWith("https://clipchamp.com/watch/")) {
-                const id = find(/clipchamp.com\/watch\/(\w+)/gm, url);
+                const id = find(/clipchamp.com\/watch\/(\w+)/m, url);
 
                 if (!id) return false;
 
@@ -92,7 +92,7 @@ const Markdown = {
 
             // TicketTool Transcripts
             if (url.startsWith("https://tickettool.xyz/direct?url=")) {
-                const ticket = find(/(transcript-.+?)\.html/gm, url);
+                const ticket = find(/(transcript-.+?)\.html/m, url);
 
                 if (!ticket) return false;
 
@@ -106,7 +106,7 @@ const Markdown = {
             const host = window.location.origin + "/_transcripts/";
 
             if (url.startsWith(host)) {
-                const ticket = find(/_transcripts\/(\d+(-[a-f0-9]+)?)\.html/gm, url);
+                const ticket = find(/_transcripts\/(\d+(-[a-f0-9]+)?)\.html/m, url);
 
                 if (!ticket) return false;
 
@@ -117,10 +117,10 @@ const Markdown = {
             }
 
             // Medal.TV clips
-            if (url.match(/^https:\/\/medal.tv\/games\/[\w-]+\/clips/gm)) {
+            if (url.match(/^https:\/\/medal.tv\/games\/[\w-]+\/clips/m)) {
                 url = url.split('?').shift();
 
-                const id = find(/clips\/(.+?)\/(.+?)$/gm, url);
+                const id = find(/clips\/(.+?)\/(.+?)$/m, url);
 
                 if (!id) return false;
 
@@ -131,28 +131,42 @@ const Markdown = {
             }
 
             // Discord attachments
-            if (url.match(/^https:\/\/cdn\.discordapp\.com\/attachments\/\d+\/\d+\/(.+?)(\?(.+?)?)?$/gm)) {
+            if (url.match(/^https:\/\/(cdn\.discordapp\.com|media\.discordapp\.net)\/attachments\/\d+\/\d+\/(.+?)(\?(.+?)?)?$/m)) {
+                const ex = find(/[?&]ex=([a-f0-9]+)/, url);
+
                 url = url.split('?').shift();
 
-                const filename = find(/\d+\/\d+\/(.+?)$/gm, url);
+                const filename = find(/\d+\/\d+\/(.+?)$/m, url);
 
                 if (!filename) return false;
 
-                const extension = find(/\.(\w+)$/gm, filename),
+                const host = find(/^https:\/\/([^\s/]+)/m, url),
+                    extension = find(/\.(\w+)$/gm, filename),
                     isVideo = extension && ['mp4', 'mov', 'avi', 'mkv', 'webm'].includes(extension);
 
+                let expired = true;
+
+                if (ex) {
+                    const ts = parseInt(ex, 16),
+                        now = Math.round(Date.now() / 1000);
+
+                    expired = ts < now;
+                }
+
                 return {
-                    text: `https://cdn.discordapp.com/${filename}`,
+                    text: `https://${host}/${filename}`,
                     url: url,
                     image: !isVideo,
-                    video: isVideo
+                    video: isVideo,
+                    classes: "!text-discord",
+                    icon: "fab fa-discord " + (expired ? "text-red-500" : "text-green-500")
                 };
             }
 
             // Generic Image URLs
-            if (url.match(/^https:\/\/[^\s?#]+?\.(jpg|jpeg|png|gif|webp)/gm)) {
-                const host = find(/^https:\/\/([^\s/]+)/gm, url),
-                    base = find(/\/([^/]+)(?=$|[\s#?])/gm, url);
+            if (url.match(/^https:\/\/[^\s?#]+?\.(jpg|jpeg|png|gif|webp)/m)) {
+                const host = find(/^https:\/\/([^\s/]+)/m, url),
+                    base = find(/\/([^/]+)(?=$|[\s#?])/m, url);
 
                 return {
                     text: host && base ? `${host}/${base}` : url,
@@ -162,9 +176,9 @@ const Markdown = {
             }
 
             // Generic Video URLs
-            if (url.match(/^https:\/\/[^\s?#]+?\.(mp4|mov|avi|mkv|webm)/gm)) {
-                const host = find(/^https:\/\/([^\s/]+)/gm, url),
-                    base = find(/\/([^/]+)(?=$|[\s#?])/gm, url);
+            if (url.match(/^https:\/\/[^\s?#]+?\.(mp4|mov|avi|mkv|webm)/m)) {
+                const host = find(/^https:\/\/([^\s/]+)/m, url),
+                    base = find(/\/([^/]+)(?=$|[\s#?])/m, url);
 
                 return {
                     text: host && base ? `${host}/${base}` : url,
@@ -176,11 +190,30 @@ const Markdown = {
             return false;
         }
 
+        function special(url) {
+            // Discord channel/message links
+            if (url.match(/^https:\/\/discord\.com\/channels\/\d+\/\d+(\/\d+)?$/m)) {
+                const channel = find(/channels\/\d+\/(\d+)$/m, url),
+                    message = find(/channels\/\d+\/\d+\/(\d+)$/m, url);
+
+                const text = message ? "discord.com/msg/" + message : "discord.com/chn/" + channel;
+
+                return {
+                    text: text,
+                    url: url,
+                    classes: "!text-discord",
+                    icon: "fab fa-discord"
+                };
+            }
+
+            return false;
+        }
+
         function link(url) {
-            const data = embed(url);
+            const data = embed(url) || special(url);
 
             if (data) {
-                return `<a href="${url}" target="_blank" class="text-indigo-600 dark:text-indigo-400 a-link"><i class="fas fa-window-restore"></i> ${data.text}</a>`;
+                return `<a href="${url}" target="_blank" class="text-indigo-600 dark:text-indigo-400 a-link ${data.classes || ""}"><i class="${data.icon || "fas fa-window-restore"}"></i> ${data.text}</a>`;
             }
 
             return `<a href="${url}" target="_blank" class="text-indigo-600 dark:text-indigo-400 a-link">${url}</a>`;
