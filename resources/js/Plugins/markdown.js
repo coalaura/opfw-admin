@@ -102,10 +102,10 @@ const Markdown = {
                 };
             }
 
-            // Stored Transcript URLs
-            const host = window.location.origin + "/_transcripts/";
+            // Stored Transcript URLs (deprecated)
+            const hostTr = window.location.origin + "/_transcripts/";
 
-            if (url.startsWith(host)) {
+            if (url.startsWith(hostTr)) {
                 const ticket = find(/_transcripts\/(\d+(-[a-f0-9]+)?)\.html/m, url);
 
                 if (!ticket) return false;
@@ -113,6 +113,26 @@ const Markdown = {
                 return {
                     text: `local/ticket-${ticket}`,
                     url: url
+                };
+            }
+
+            // Stored Attachments URLs (deprecated)
+            const host = window.location.origin + "/_discord_attachments/";
+
+            if (url.startsWith(host)) {
+                const name = find(/_discord_attachments\/\d+-([\w._-]+)/m, url);
+
+                if (!name) return false;
+
+                const image = name.match(/\.(jpg|jpeg|png|gif|webp)$/m),
+                    video = !image && name.match(/\.(mp4|mov|avi|mkv|webm)$/m);
+
+                return {
+                    text: `local/attachment/${name}`,
+                    url: url,
+                    image: image,
+                    video: video,
+                    noEmbed: !image && !video
                 };
             }
 
@@ -213,7 +233,9 @@ const Markdown = {
             const data = embed(url) || special(url);
 
             if (data) {
-                return `<a href="${url}" target="_blank" class="text-indigo-600 dark:text-indigo-400 a-link ${data.classes || ""}"><i class="${data.icon || "fas fa-window-restore"}"></i> ${data.text}</a>`;
+                const icon = data.image ? "fas fa-image" : data.video ? "fas fa-video" : "fas fa-window-restore";
+
+                return `<a href="${url}" target="_blank" class="text-indigo-600 dark:text-indigo-400 a-link ${data.classes || ""}"><i class="${data.icon || icon}"></i> ${data.text}</a>`;
             }
 
             return `<a href="${url}" target="_blank" class="text-indigo-600 dark:text-indigo-400 a-link">${url}</a>`;

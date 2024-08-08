@@ -7,6 +7,7 @@
 /public/images/vendor/
 /public/_uploads
 /public/_transcripts
+/public/_discord_attachments
 /*.exe
 
 # env

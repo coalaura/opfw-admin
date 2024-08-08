@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DiscordAttachmentHelper;
 use App\Http\Requests\WarningStoreRequest;
 use App\Player;
 use App\Warning;
@@ -41,7 +42,7 @@ class PlayerWarningController extends Controller
         ]));
 
         if ($warning) {
-            TranscriptHelper::ensureMessageTranscripts($warning);
+            DiscordAttachmentHelper::ensureMessageAttachments($warning);
         }
 
         return backWith('success', 'Warning/Note has been added successfully.');
@@ -72,8 +73,8 @@ class PlayerWarningController extends Controller
 
         $warning->update($request->validated());
 
-        TranscriptHelper::garbageCollectTranscripts($messageBefore, $warning->message);
-        TranscriptHelper::ensureMessageTranscripts($warning);
+        DiscordAttachmentHelper::garbageCollectAttachments($messageBefore, $warning->message);
+        DiscordAttachmentHelper::ensureMessageAttachments($warning);
 
         return backWith('success', 'Successfully updated warning/note');
     }
@@ -96,7 +97,7 @@ class PlayerWarningController extends Controller
 
         $warning->forceDelete();
 
-        TranscriptHelper::unlinkMessageTranscripts($warning);
+        DiscordAttachmentHelper::unlinkMessageAttachments($warning);
 
         return backWith('success', 'The warning/note has successfully been deleted from the player\'s record.');
     }
