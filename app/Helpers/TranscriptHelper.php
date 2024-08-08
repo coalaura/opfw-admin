@@ -11,7 +11,7 @@ class TranscriptHelper
         if (empty($warning->message)) return;
 
         // For some weird ass reason, tickettool now blocks bots using cloudflare, completely breaking this feature :(
-        if (true) return;
+        // if (true) return;
 
         /**
          * Old ticket-tool links
@@ -37,14 +37,22 @@ class TranscriptHelper
          * New ticket-tool links
          * https://tickettool.xyz/transcript/v1/...
          */
-        $re = '/https:\/\/tickettool\.xyz\/transcript\/v1\/\d+\/(\d+)\/transcript-\w+-(\d+)\.html[\/\w]+/m';
+        $re = '/https:\/\/tickettool\.xyz\/transcript\/v1\/(\d+)\/(\d+)\/transcript-\w+-(\d+)\.html\/(\w+)\/(\w+)\/(\w+)/m';
 
         $message = preg_replace_callback($re, function ($matches) {
             $url = $matches[0];
-            $msgId = $matches[1];
-            $id = $matches[2];
+            $msgId = $matches[2];
+            $id = $matches[3];
 
-            $path = TranscriptHelper::ensureTranscript($msgId, $id, $url);
+            $chnId = $matches[1];
+            $ex = $matches[4];
+            $is = $matches[5];
+            $hm = $matches[6];
+
+            // https://cdn.discordapp.com/attachments/661252628507787265/1271223318430617611/transcript-closed-25017.html?ex=66b68e79&is=66b53cf9&hm=cc1ed8a152cd42bbef480cb5510fc3a272d0d193bc0c1748b16aad7efc5150a0&
+            $cdn = "https://cdn.discordapp.com/attachments/$chnId/$msgId/transcript-closed-$id.html?ex=$ex&is=$is&hm=$hm&";
+
+            $path = TranscriptHelper::ensureTranscript($msgId, $id, $cdn);
             if (!$path) {
                 return $url;
             }
@@ -78,7 +86,7 @@ class TranscriptHelper
         }
 
         try {
-            $data = file_get_contents($cdn);
+            $data = HttpHelper::get($cdn);
 
             if (empty($data)) {
                 return null;
