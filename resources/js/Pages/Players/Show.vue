@@ -1398,8 +1398,6 @@
                 <form @submit.prevent="submitWarning">
                     <label for="message" class="italic text-gray-800 dark:text-gray-200 block text-sm" v-html="t('players.warning.remember')"></label>
 
-                    <div class="px-2 py-1 rounded italic bg-red-500 border border-red-700 text-white mt-2 text-sm inline-block shadow-sm" v-if="warningMessageNotice" v-html="warningMessageNotice"></div>
-
                     <div class="mt-3 mb-5 bg-gray-200 dark:bg-gray-600 shadow rounded px-5 py-4">
                         <div class="flex gap-3 items-center" v-if="!form.warning.warning_type">
                             <span class="font-semibold">{{ t('players.warning.create_new') }}</span>
@@ -1919,16 +1917,6 @@ export default {
         },
         deletedCharacterCount() {
             return this.characters.filter(c => c.characterDeleted).length;
-        },
-        warningMessageNotice() {
-            const text = this.form.warning.message || '';
-
-            // Discord attachments expire
-            if (text.includes('https://cdn.discordapp.com/attachments/')) {
-                return this.t('players.warning.discord_attachment');
-            }
-
-            return false;
         },
         playerTimezone() {
             if (!this.player.variables || !this.player.variables.timezone || typeof this.player.variables.timezoneOffset !== 'number') return false;
