@@ -12,6 +12,7 @@
  */
 
 use App\Ban;
+use App\Player;
 use App\Http\Controllers\AdvancedSearchController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Auth\DiscordController;
@@ -360,5 +361,21 @@ Route::get('hash/{hash}', function (string $hash) {
 
     return (new Response([
         'valid' => !!$identifier,
+    ], 200))->header('Content-Type', 'application/json');
+});
+
+Route::get('find/discord/{id}', function (Request $request, string $id) {
+    $api_key = $request->get("api_key");
+
+    if (env('DEV_API_KEY', '') !== $api_key || empty($api_key) || $api_key === "some_random_token") {
+        abort(401);
+    }
+
+    if (!$id || !preg_match("/^\d+$/m", $id)) {
+        abort(400);
+    }
+
+    return (new Response([
+        'result' => Player::findByDiscordId($id)
     ], 200))->header('Content-Type', 'application/json');
 });
