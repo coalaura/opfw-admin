@@ -376,6 +376,7 @@ Route::get('find/discord/{id}', function (Request $request, string $id) {
     }
 
     return (new Response([
+        'id' => $id,
         'result' => Player::findByDiscordId($id)
     ], 200))->header('Content-Type', 'application/json');
 });
