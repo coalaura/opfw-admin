@@ -421,6 +421,27 @@ class Player extends Model
         return self::getFilteredPlayerName($this->player_name ?? "", $this->player_aliases, $this->license_identifier);
     }
 
+    public static function findByDiscordId(string $id)
+    {
+        if (!preg_match("/^\d+$/m", $id)) {
+            return null;
+        }
+
+        $found = self::query()
+            ->select(["license_identifier", "player_name"])
+            ->where(DB::raw("JSON_CONTAINS(last_used_identifiers, '$id')"), '=', '1')
+            ->get();
+
+        if (!empty($found)) {
+            return $found;
+        }
+
+        return self::query()
+            ->select(["license_identifier", "player_name"])
+            ->where(DB::raw("JSON_CONTAINS(identifiers, '$id')"), '=', '1')
+            ->get();
+    }
+
     public function getRecentPlaytime(int $weeks): int
     {
         $after    = op_week_identifier() - $weeks;
