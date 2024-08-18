@@ -429,7 +429,7 @@ class Player extends Model
 
         $found = self::query()
             ->select(["license_identifier", "player_name"])
-            ->where(DB::raw("JSON_CONTAINS(last_used_identifiers, '$id')"), '=', '1')
+            ->where(DB::raw("JSON_CONTAINS(last_used_identifiers, 'discord:$id')"), '=', '1')
             ->get();
 
         if (!empty($found)) {
@@ -438,7 +438,7 @@ class Player extends Model
 
         return self::query()
             ->select(["license_identifier", "player_name"])
-            ->where(DB::raw("JSON_CONTAINS(identifiers, '$id')"), '=', '1')
+            ->where(DB::raw("JSON_CONTAINS(identifiers, 'discord:$id')"), '=', '1')
             ->get();
     }
 
