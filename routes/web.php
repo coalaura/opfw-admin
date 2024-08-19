@@ -375,8 +375,7 @@ Route::get('find/discord/{id}', function (Request $request, string $id) {
         abort(400);
     }
 
-    return (new Response([
-        'id' => $id,
-        'result' => Player::findByDiscordId($id)
-    ], 200))->header('Content-Type', 'application/json');
+    $players = Player::findByDiscordIdWithBans($id);
+
+    return (new Response($players)->header('Content-Type', 'application/json');
 });
