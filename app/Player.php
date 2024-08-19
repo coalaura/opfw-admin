@@ -428,7 +428,7 @@ class Player extends Model
         }
 
         $found = self::query()
-            ->select(["license_identifier", "player_name", "ban_hash", "reason", "timestamp", "expires"])
+            ->select(["license_identifier", "player_name", "ban_hash", "reason", "timestamp", "expire"])
             ->where(DB::raw("JSON_CONTAINS(last_used_identifiers, '\"discord:$id\"')"), '=', '1')
             ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
             ->orderByDesc("last_connection")
@@ -439,7 +439,7 @@ class Player extends Model
         }
 
         return self::query()
-            ->select(["license_identifier", "player_name", "ban_hash", "reason", "timestamp", "expires"])
+            ->select(["license_identifier", "player_name", "ban_hash", "reason", "timestamp", "expire"])
             ->where(DB::raw("JSON_CONTAINS(identifiers, '\"discord:$id\"')"), '=', '1')
             ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
             ->orderByDesc("last_connection")
