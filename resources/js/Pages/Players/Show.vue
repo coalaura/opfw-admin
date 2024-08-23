@@ -243,7 +243,7 @@
 
             <!-- Small icon buttons top left -->
             <div class="absolute top-2 left-2 flex gap-2" v-if="this.perm.check(this.perm.PERM_LINKED)">
-                <a class="p-1 text-sm font-bold leading-4 text-center rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/linked_print/' + playerFingerprint" :title="t('players.show.show_link_finger')" target="_blank" v-if="playerFingerprint">
+                <a class="p-1 text-sm font-bold leading-4 text-center rounded border-gray-300 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/linked_print/' + player.licenseIdentifier" :title="t('players.show.show_link_finger')" target="_blank" v-if="playerFingerprint">
                     <i class="fas fa-hand-middle-finger mr-1"></i>
                     Fng
                 </a>
