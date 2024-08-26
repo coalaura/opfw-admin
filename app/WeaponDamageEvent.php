@@ -37,8 +37,6 @@ class WeaponDamageEvent extends Model
         'hit_healths' => 'array',
     ];
 
-    private static $actionNames = null;
-
     const HitComponents = [
         // Confirmed (very sure):
         0  => "center-mass",

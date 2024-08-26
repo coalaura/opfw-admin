@@ -28,6 +28,7 @@ class CreateWeaponDamageEventsTable extends Migration
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement();
 			!in_array("license_identifier", $columns) && $table->string("license_identifier", 50)->nullable();
 			!in_array("timestamp_ms", $columns) && $table->bigInteger("timestamp_ms")->nullable();
+			!in_array("timestamp_calculated", $columns) && $table->bigInteger("timestamp_calculated")->nullable();
 			!in_array("hit_players", $columns) && $table->longText("hit_players")->nullable();
 			!in_array("hit_healths", $columns) && $table->longText("hit_healths")->nullable();
 			!in_array("distance", $columns) && $table->double("distance")->nullable();
@@ -71,6 +72,7 @@ class CreateWeaponDamageEventsTable extends Migration
 
 			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
 			!in_array("timestamp_ms", $indexes) && $table->index("timestamp_ms");
+			!in_array("timestamp_calculated", $indexes) && $table->index("timestamp_calculated");
 			!in_array("distance", $indexes) && $table->index("distance");
 			!in_array("is_parent_self", $indexes) && $table->index("is_parent_self");
 			!in_array("weapon_type", $indexes) && $table->index("weapon_type");

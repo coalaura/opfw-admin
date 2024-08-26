@@ -25,7 +25,7 @@ class WeaponDamageEventResource extends JsonResource
         return [
             'id'                => $this->id,
             'licenseIdentifier' => $this->license_identifier,
-            'timestamp'         => $this->timestamp_ms,
+            'timestamp'         => $this->timestamp,
             'hitLicense'        => $hitPlayer,
             'hitHealth'         => $hitHealth,
             'distance'          => $this->distance,
