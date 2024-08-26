@@ -963,7 +963,6 @@
             "give": "Log an Incident",
             "placeholder": "{0} made a blunder, arr.",
             "remember": "<b>Yo Ho Ho!</b> Make sure to select <u>Strike</u> or <u>Warning</u> when givin' 'em out. Notes should only be used for... well... notes, me hearties.",
-            "discord_attachment": "<b>Avast!</b> Discord attachment links be walkin' the plank soon! It be wise to hoist th' image/video to a more steadfast berth and link that instead, me hearty.",
             "new": "New {0}",
             "create_new": "Craft a new:",
             "strike": "Keelhaul",
@@ -1343,7 +1342,9 @@
         "silenced": "Muffled",
         "hit_tire": "Struck hoop with index {0}.",
         "players": "Mateys",
-        "victim_hint": "<b>Arrr:</b> Might be a letter o' marque or a signal fer joinin' networks, matey."
+        "victim_hint": "<b>Arrr:</b> Might be a letter o' marque or a signal fer joinin' networks, matey.",
+        "hit_suspension": "Strike tha riggin' with yer pointer {0}.",
+        "damage_flags": "Damage Colors: {0}"
     },
     "panel_logs": {
         "title": "Boardin' Logs",

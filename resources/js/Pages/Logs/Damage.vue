@@ -57,7 +57,7 @@
 							<label class="block mb-2" for="weapon">
 								{{ t('logs.weapon') }}
 							</label>
-							<input class="block w-full px-4 py-3 bg-lime-500 !bg-opacity-10 border focus:border-lime-500 border-lime-500 rounded outline-none" :class="{'!bg-red-500 !border-red-500': !isWeaponValid()}" id="weapon" placeholder="weapon_pistol" v-model="filters.weapon">
+							<input class="block w-full px-4 py-3 bg-lime-500 !bg-opacity-10 border focus:border-lime-500 border-lime-500 rounded outline-none" :class="{ '!bg-red-500 !border-red-500': !isWeaponValid() }" id="weapon" placeholder="weapon_pistol" v-model="filters.weapon">
 						</div>
 
 						<!-- Entity Type -->
@@ -173,13 +173,11 @@
 							<span class="italic" v-else-if="log.hitEntityType === 1">
 								{{ t('logs.npc') }} #{{ log.hitGlobalId }}
 							</span>
-							<span class="italic" v-else-if="log.hitEntityType === 2">
+							<span class="italic whitespace-nowrap" v-else-if="log.hitEntityType === 2">
 								{{ t('logs.vehicle') }} #{{ log.hitGlobalId }}
 
-								<span v-if="log.tireIndex" :title="t('logs.hit_tire', log.tireIndex)" class="ml-2 cursor-help">
-									<i class="fas fa-truck-monster"></i>
-									{{ log.tireIndex }}
-								</span>
+								<i v-if="Number.isInteger(log.tireIndex)" :title="t('logs.hit_tire', log.tireIndex)" class="fas fa-truck-monster ml-2 cursor-help"></i>
+								<i v-if="Number.isInteger(log.suspensionIndex)" :title="t('logs.hit_suspension', log.suspensionIndex)"  class="fas fa-car-crash ml-2 cursor-help"></i>
 							</span>
 							<span class="italic" v-else-if="log.hitEntityType === 3">
 								{{ t('logs.object') }} #{{ log.hitGlobalId }}
@@ -188,7 +186,7 @@
 						<td class="p-3 mobile:block">
 							{{ log.hitHealth ? log.hitHealth + "hp" : "N/A" }}
 						</td>
-						<td class="p-3 mobile:block">
+						<td class="p-3 mobile:block" :title="t('logs.damage_flags', getDamageFlags(log.flags))">
 							{{ log.damage }}hp
 
 							<i v-if="log.bonusDamage" :title="t('logs.bonus_damage')">+{{ log.bonusDamage }}hp</i>
@@ -380,6 +378,39 @@ export default {
 			}
 
 			return '';
+		},
+		getDamageFlags(bitmask) {
+			if (!bitmask || bitmask < 0) return 'None';
+
+			let flags = [];
+
+			bitmask & 2 ** 0 && flags.push('IsAccurate');
+			bitmask & 2 ** 1 && flags.push('MeleeDamage');
+			bitmask & 2 ** 2 && flags.push('SelfDamage');
+			bitmask & 2 ** 3 && flags.push('ForceMeleeDamage');
+			bitmask & 2 ** 4 && flags.push('IgnorePedFlags');
+			bitmask & 2 ** 5 && flags.push('ForceInstantKill');
+			bitmask & 2 ** 6 && flags.push('IgnoreArmor');
+			bitmask & 2 ** 7 && flags.push('IgnoreStatModifiers');
+			bitmask & 2 ** 8 && flags.push('FatalMeleeDamage');
+			bitmask & 2 ** 9 && flags.push('AllowHeadShot');
+			bitmask & 2 ** 10 && flags.push('AllowDriverKill');
+			bitmask & 2 ** 11 && flags.push('KillPriorToClearedWantedLevel');
+			bitmask & 2 ** 12 && flags.push('SuppressImpactAudio');
+			bitmask & 2 ** 13 && flags.push('ExpectedPlayerKill');
+			bitmask & 2 ** 14 && flags.push('DontReportCrimes');
+			bitmask & 2 ** 15 && flags.push('PtFxOnly');
+			bitmask & 2 ** 16 && flags.push('UsePlayerPendingDamage');
+			bitmask & 2 ** 17 && flags.push('AllowCloneMeleeDamage');
+			bitmask & 2 ** 18 && flags.push('NoAnimatedMeleeReaction');
+			bitmask & 2 ** 19 && flags.push('IgnoreRemoteDistCheck');
+			bitmask & 2 ** 20 && flags.push('VehicleMeleeHit');
+			bitmask & 2 ** 21 && flags.push('EnduranceDamageOnly');
+			bitmask & 2 ** 22 && flags.push('HealthDamageOnly');
+			bitmask & 2 ** 23 && flags.push('DamageFromBentBullet');
+			bitmask & 2 ** 24 && flags.push('DontAssertOnNullInflictor');
+
+			return flags.join(' | ');
 		}
 	},
 	mounted() {

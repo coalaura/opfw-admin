@@ -963,7 +963,6 @@
             "give": "Add oopsie/notice",
             "placeholder": "{0} did a big oopsie.",
             "remember": "<b>Wemembew!</b> Make suwe to sewect <u>Stwike</u> ow <u>Wawning</u> when handing them out. Nyotes shouwd onwy be used fow... weww... nyotes",
-            "discord_attachment": "<b>Wawning!</b> Discord attachment winks expiwe! It is wecommended to upwoad da image/video to a mowe pewmanent wocation and wink dat instead uwu.",
             "new": "Nyew {0} UwU",
             "create_new": "Cweate a nyew UwU:",
             "strike": "Stwike UwU",
@@ -1343,7 +1342,9 @@
         "silenced": "Siwenced",
         "hit_tire": "Hit tiw with index {0}.",
         "players": "Pwayews",
-        "victim_hint": "<b>Hint:</b> Can be a wicense identifiw or a netwowk id."
+        "victim_hint": "<b>Hint:</b> Can be a wicense identifiw or a netwowk id.",
+        "hit_suspension": "Hit suspenshun with index {0} uwu.",
+        "damage_flags": "Damawge Fwags: {0} uwu"
     },
     "panel_logs": {
         "title": "Pwanel Wogs",

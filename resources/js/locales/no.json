@@ -973,7 +973,6 @@
             "give": "Legg til advarsel/notat",
             "remember": "<b>Husk!</b> Pass på å velge <u>Strike</u> eller <u>Warning</u> når du gir dem ut. Notater bør bare brukes for... vel... notater",
             "placeholder": "{0} gjorde en feil.",
-            "discord_attachment": "<b>Advarsel!</b> Lenker for vedlegg i Discord utløper! Det anbefales å laste opp bildet/videoen til en mer permanent plassering og lenke til den i stedet.",
             "new": "Ny {0}",
             "create_new": "Opprett en ny:",
             "strike": "Streik",
@@ -1352,7 +1351,9 @@
         "silenced": "Lydløs",
         "hit_tire": "Truffet dekk med indeks {0}.",
         "players": "Spillere",
-        "victim_hint": "<b>Hint:</b> Kan være en lisensidentifikator eller et nettverks-ID."
+        "victim_hint": "<b>Hint:</b> Kan være en lisensidentifikator eller et nettverks-ID.",
+        "hit_suspension": "Truffet suspensjon med indeks {0}.",
+        "damage_flags": "Skadeflagg: {0}"
     },
     "panel_logs": {
         "title": "Panellagre",

@@ -37,6 +37,8 @@ class WeaponDamageEventResource extends JsonResource
             'bonusDamage'       => $this->bonus_damage,
             'silenced'          => $this->silenced,
             'tireIndex'         => $this->tyre_index,
+            'suspensionIndex'   => $this->suspension_index,
+            'flags'             => $this->damage_flags,
         ];
     }
 

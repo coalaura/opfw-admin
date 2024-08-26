@@ -963,7 +963,6 @@
             "give": "Stick a wrang/note",
             "placeholder": "{0} done goofed.",
             "remember": "<b>Y'all remember now!</b> Make sure to choose <u>Strike</u> or <u>Warning</u> when handin' them out. We only use notes for, well, notes.",
-            "discord_attachment": "<b>Warnin'!</b> Discord attachment links expire! It's recommended to upload that there image/video to a spot that'll hold on to it a bit longer and link to that instead, y'all.",
             "new": "New {0}",
             "create_new": "Create a new:",
             "strike": "Strahk",
@@ -1343,7 +1342,9 @@
         "silenced": "Quiet-like",
         "hit_tire": "Hit the tire with number {0}.",
         "players": "Playas",
-        "victim_hint": "<b>Hint:</b> Might be a license number or some kind o' network ID, y'all."
+        "victim_hint": "<b>Hint:</b> Might be a license number or some kind o' network ID, y'all.",
+        "hit_suspension": "Hit suspension with index {numbah zero}.",
+        "damage_flags": "Damage Flags: {numbah zero}"
     },
     "panel_logs": {
         "title": "Panel Lahgs",

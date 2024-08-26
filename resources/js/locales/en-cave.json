@@ -963,7 +963,6 @@
             "give": "Make mad",
             "placeholder": "{0} did somethin' dumb.",
             "remember": "<b>Grug remember!</b> Make sure to select <u>Club</u> or <u>Eat</u> when handing them out. Grug should only write grug-thoughts in notes.",
-            "discord_attachment": "<b>Ooga!</b> Discord thing-links go bye-bye soon! Better put picture/moving-thing in long-stay place, then use new link.",
             "new": "New {0} become",
             "create_new": "Make thing:",
             "strike": "Hit hard",
@@ -1343,7 +1342,9 @@
         "silenced": "Quiet",
         "hit_tire": "Smack wheel with count {0}.",
         "players": "Play-mates",
-        "victim_hint": "<b>Hint:</b> Maybe be thing for say who own, or thing for find tribe on magic net."
+        "victim_hint": "<b>Hint:</b> Maybe be thing for say who own, or thing for find tribe on magic net.",
+        "hit_suspension": "Bash hang-thing with pointy finger {0}.",
+        "damage_flags": "Hurt Signs: {0}"
     },
     "panel_logs": {
         "title": "Ugga Ugga Ugga",
