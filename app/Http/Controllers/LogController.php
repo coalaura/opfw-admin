@@ -495,7 +495,7 @@ class LogController extends Controller
         $start = round(microtime(true) * 1000);
 
         $query = WeaponDamageEvent::query()
-            ->orderByDesc(DB::raw("COALESCE(timestamp_calculated, timestamp_ms) DESC"))
+            ->orderByDesc(DB::raw("COALESCE(timestamp_calculated, timestamp_ms)"))
             ->where('is_parent_self', '=', '1');
 
         // Filtering by attacker identifier.
