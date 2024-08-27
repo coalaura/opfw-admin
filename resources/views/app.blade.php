@@ -24,6 +24,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Ubuntu+Mono&display=swap" rel="stylesheet">
 
+    <link href="/css/all.min.css" rel="stylesheet">
+
     <!-- Styling -->
     <link rel="stylesheet" type="text/css" href="{{ mix('css/app.css') }}">
 
@@ -33,8 +35,6 @@
     <script defer type="application/javascript" src="{{ mix('js/app.js') }}"></script>
     <script defer type="application/javascript" src="{{ mix('js/vendor.js') }}"></script>
     <script defer type="application/javascript" src="{{ mix('js/manifest.js') }}"></script>
-
-    <script defer type="application/javascript" src="https://kit.fontawesome.com/0074643143.js" crossorigin="anonymous"></script>
 
     <!-- Screen Reader styles so we don't have weird flickering -->
     <style>.sr-only{border:0;clip:rect(0,0,0,0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}</style>
