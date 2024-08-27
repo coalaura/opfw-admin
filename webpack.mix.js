@@ -31,6 +31,8 @@ mix.postCss('resources/css/app.pcss', 'public/css', [
     require('tailwindcss'),
 ]);
 
+mix.copy('resources/css/all.min.css', 'public/css/all.min.css');
+
 // Extract & cleanup.
 mix.extract();
 mix.clean({
