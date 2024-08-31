@@ -13,7 +13,7 @@
         <portal to="actions">
             <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
                 <span v-if="!isLoading">
-                    <i class="fa fa-refresh mr-1"></i>
+                    <i class="fa fa-redo-alt mr-1"></i>
                     {{ t('global.refresh') }}
                 </span>
                 <span v-else>

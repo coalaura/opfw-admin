@@ -19,7 +19,7 @@
 
             <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
                 <span v-if="!isLoading">
-                    <i class="mr-1 fa fa-refresh"></i>
+                    <i class="mr-1 fa fa-redo-alt"></i>
                     {{ t('logs.refresh') }}
                 </span>
                 <span v-else>

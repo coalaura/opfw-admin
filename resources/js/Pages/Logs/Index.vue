@@ -12,7 +12,7 @@
 
 		<portal to="actions">
 			<button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
-				<i class="mr-1 fa fa-refresh"></i>
+				<i class="mr-1 fa fa-redo-alt"></i>
 				{{ t('logs.refresh') }}
 			</button>
 		</portal>

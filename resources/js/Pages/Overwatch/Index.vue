@@ -38,12 +38,12 @@
                                 <i class="fa fa-magic mr-1"></i>
                                 <span v-if="autoRefreshEnabled" class="font-mono">{{ Math.floor(autoRefreshTime) }}s</span>
                             </template>
-                            <i class="fa fa-refresh animate-spin" v-else></i>
+                            <i class="fa fa-redo-alt animate-spin" v-else></i>
                         </button>
 
                         <button class="px-5 py-2 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" @click="refresh" :title="t('overwatch.refresh')" v-if="!autoRefreshEnabled">
                             <i class="fa fa-redo-alt" v-if="!isLoading"></i>
-                            <i class="fa fa-refresh animate-spin" v-else></i>
+                            <i class="fa fa-redo-alt animate-spin" v-else></i>
                         </button>
                     </div>
                 </div>

@@ -7,7 +7,7 @@
                 {{ t('tokens.title') }}
 
                 <sup>
-                    <i class="fa fa-refresh animate-spin text-lg" @click="addEmptyToken()" v-if="isLoading"></i>
+                    <i class="fa fa-redo-alt animate-spin text-lg" @click="addEmptyToken()" v-if="isLoading"></i>
                     <i class="fas fa-plus cursor-pointer text-lg" @click="addEmptyToken()" v-else></i>
                 </sup>
             </h1>
