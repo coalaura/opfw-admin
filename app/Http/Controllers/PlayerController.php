@@ -7,6 +7,7 @@ use App\BlacklistedIdentifier;
 use App\Character;
 use App\Helpers\GeneralHelper;
 use App\Helpers\StatisticsHelper;
+use App\Helpers\StatusHelper;
 use App\Http\Controllers\PlayerDataController;
 use App\Http\Resources\CharacterResource;
 use App\Http\Resources\PanelLogResource;
@@ -66,8 +67,8 @@ class PlayerController extends Controller
 
         // Filtering by serer-id.
         if ($server = $request->input('server')) {
-            $online = array_keys(array_filter(Player::getAllOnlinePlayers(true) ?? [], function ($player) use ($server) {
-                return $player['id'] === intval($server);
+            $online = array_keys(array_filter(StatusHelper::all(), function ($player) use ($server) {
+                return $player['source'] === intval($server);
             }));
 
             $query->whereIn('license_identifier', $online);
@@ -130,7 +131,7 @@ class PlayerController extends Controller
     {
         $query = Player::query();
 
-        $playerList = Player::getAllOnlinePlayers(false) ?? [];
+        $playerList = StatusHelper::all();
         $players    = array_keys($playerList);
 
         $query->whereIn('license_identifier', $players);

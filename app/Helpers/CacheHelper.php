@@ -4,7 +4,6 @@ namespace App\Helpers;
 
 use App\Log;
 use App\Player;
-use App\Server;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Psr\SimpleCache\InvalidArgumentException;
@@ -26,28 +25,38 @@ class CacheHelper
      */
     public static function loadLicensePlayerNameMap(array $identifiers): array
     {
-        $map = self::read('license_player_map', []);
-        $missingIdentifiers = array_values(array_filter($identifiers, function ($identifier) use ($map) {
-            return !isset($map[$identifier]);
-        }));
-
-        if (!empty($missingIdentifiers)) {
+        $cache = new CacheFile('license_map', function() use ($identifiers) {
             $players = Player::query()->whereIn('license_identifier', $identifiers)->select([
                 'license_identifier', 'player_name',
             ])->get();
+
+            $data = [];
+
             foreach ($players as $player) {
-                $map[$player->license_identifier] = $player->getSafePlayerName();
+                $data[$player->license_identifier] = $player->getSafePlayerName();
             }
 
-            self::write('license_player_map', $map, 12 * self::HOUR);
-        }
+            return $data;
+        }, 30 * self::MINUTE, function($data) use ($identifiers) {
+            foreach ($identifiers as $identifier) {
+                if (!isset($data[$identifier])) {
+                    return true;
+                }
+            }
+
+            return false;
+        });
+
+        $data = $cache->get();
 
         $filtered = [];
+
         foreach ($identifiers as $identifier) {
-            if (!isset($map[$identifier])) {
+            if (!isset($data[$identifier])) {
                 continue;
             }
-            $filtered[$identifier] = $map[$identifier];
+
+            $filtered[$identifier] = $data[$identifier];
         }
 
         return $filtered;

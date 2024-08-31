@@ -4,6 +4,7 @@ namespace App;
 
 use App\Helpers\CacheHelper;
 use App\Helpers\GeneralHelper;
+use App\Helpers\StatusHelper;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -993,109 +994,25 @@ class Player extends Model
     }
 
     /**
-     * Returns a map of licenseIdentifier->serverId,server for each online player
-     *
-     * @param bool $useCache
-     * @return array|null
-     */
-    public static function getAllOnlinePlayers(bool $useCache): ?array
-    {
-        $serverIps = explode(',', env('OP_FW_SERVERS', ''));
-
-        if (!$serverIps) {
-            return [];
-        }
-
-        $result = [];
-        foreach ($serverIps as $serverIp) {
-            if ($serverIp) {
-                $licenseIdentifiers = Server::fetchLicenseIdentifiers($serverIp, $useCache);
-
-                if ($licenseIdentifiers === null) {
-                    return null;
-                }
-
-                foreach ($licenseIdentifiers as $key => $player) {
-                    if (!isset($result[$key])) {
-                        // User flags
-                        $flags = $player['flags'];
-
-                        $fake     = !!($flags & 2);
-                        $minigame = !!($flags & 4);
-                        $camCords = !!($flags & 8);
-                        $queue    = !!($flags & 16);
-
-                        // Character flags
-                        $characterFlags = $player['characterFlags'] ?? 0;
-
-                        $characterData = [];
-
-                        !!($characterFlags & 1) && $characterData[]   = 'dead';
-                        !!($characterFlags & 2) && $characterData[]   = 'trunk';
-                        !!($characterFlags & 4) && $characterData[]   = 'in_shell';
-                        !!($characterFlags & 8) && $characterData[]   = 'invisible';
-                        !!($characterFlags & 16) && $characterData[]  = 'invincible';
-                        !!($characterFlags & 32) && $characterData[]  = 'frozen';
-                        !!($characterFlags & 64) && $characterData[]  = 'spawned';
-                        !!($characterFlags & 128) && $characterData[] = 'no_collisions';
-                        !!($characterFlags & 256) && $characterData[] = 'no_gameplay_cam';
-
-                        $result[$key] = [
-                            'id'               => intval($player['source']),
-                            'character'        => $player['character'],
-                            'license'          => $key,
-                            'server'           => $serverIp,
-                            'fakeDisconnected' => $fake,
-                            'fakeName'         => !!($flags & 1) ? $player['name'] : null,
-                            'minigame'         => $minigame,
-                            'camCords'         => $camCords,
-                            'queue'            => $queue,
-                            'characterData'    => $characterData,
-                        ];
-                    }
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    /**
      * Returns the online status of the player
      *
      * @param string $licenseIdentifier
-     * @param bool $useCache
+     * @param bool $trueStatus
      * @return PlayerStatus
      */
-    public static function getOnlineStatus(string $licenseIdentifier, bool $useCache, bool $trueStatus = false): PlayerStatus
+    public static function getOnlineStatus(string $licenseIdentifier, bool $trueStatus = false): PlayerStatus
     {
-        $serverIps = explode(',', env('OP_FW_SERVERS', ''));
+        $player = StatusHelper::get($licenseIdentifier);
 
-        if (!$serverIps) {
-            return new PlayerStatus(PlayerStatus::STATUS_UNAVAILABLE, '', 0);
+        if (!$player) {
+            return new PlayerStatus(PlayerStatus::STATUS_OFFLINE, '', 0);
         }
 
-        $players = self::getAllOnlinePlayers($useCache);
-
-        if ($players === null) {
-            return new PlayerStatus(PlayerStatus::STATUS_UNAVAILABLE, '', 0);
+        if (!$trueStatus && $player['fakeDisconnected']) {
+            return new PlayerStatus(PlayerStatus::STATUS_OFFLINE, '', 0);
         }
 
-        if (isset($players[$licenseIdentifier])) {
-            $player = $players[$licenseIdentifier];
-
-            if (!$trueStatus && ($player['fakeDisconnected'] || $player['fakeName'])) {
-                return new PlayerStatus(PlayerStatus::STATUS_OFFLINE, '', 0);
-            }
-
-            return new PlayerStatus(PlayerStatus::STATUS_ONLINE, $player['server'], $player['id'], $player['character'], $player['fakeName'], [
-                'minigame' => $player['minigame'],
-                'camCords' => $player['camCords'],
-                'queue'    => $player['queue'],
-            ], $player['characterData']);
-        }
-
-        return new PlayerStatus(PlayerStatus::STATUS_OFFLINE, '', 0);
+        return new PlayerStatus(PlayerStatus::STATUS_ONLINE, $player['server'], $player['source'], $player['character'] ? $player['character']['id'] : null, $player['characterData']);
     }
 
     /**

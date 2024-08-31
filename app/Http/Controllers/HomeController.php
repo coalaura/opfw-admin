@@ -6,6 +6,7 @@ use App\Ban;
 use App\Helpers\GeneralHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\OPFWHelper;
+use App\Helpers\StatusHelper;
 use App\Http\Resources\BanResource;
 use App\Http\Resources\PlayerIndexResource;
 use App\Server;
@@ -41,9 +42,9 @@ class HomeController extends Controller
             ->orderByDesc('timestamp')
             ->limit(8)->get())->toArray($request);
 
-        $playerList = Player::getAllOnlinePlayers(true) ?? [];
+        $playerList = StatusHelper::all();
         $playerList = array_filter($playerList, function($player) {
-            return !$player['fakeName'] && !$player['fakeDisconnected'];
+            return !$player['fakeDisconnected'];
         });
 
         $players = array_keys($playerList);

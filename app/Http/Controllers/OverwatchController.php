@@ -7,6 +7,7 @@ use App\Player;
 use App\Server;
 use App\Character;
 use App\Helpers\OPFWHelper;
+use App\Helpers\StatusHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -41,7 +42,7 @@ class OverwatchController extends Controller
             return self::json(false, null, 'You can not use the screenshot functionality');
         }
 
-        $players = Player::getAllOnlinePlayers(true) ?? [];
+        $players = StatusHelper::all();
 
         $players = array_filter($players, function($player) {
             return $player && $player['character'] && !GeneralHelper::isUserRoot($player['license']) && !in_array('in_shell', $player["characterData"]);
@@ -51,20 +52,18 @@ class OverwatchController extends Controller
             $license = array_rand($players);
             $player = $players[$license];
 
-			$character = Character::query()->where('character_id', '=', $player['character'])->first();
-
-			if ($character) {
-				$screenshotResponse = OPFWHelper::createScreenshot($player['server'], $player['id']);
+			if ($player['character']) {
+				$screenshotResponse = OPFWHelper::createScreenshot($player['server'], $player['source']);
 
 				if ($screenshotResponse->status) {
 					return self::json(true, [
 						"license"   => $license,
 						"url"       => $screenshotResponse->data['screenshotURL'],
-						"id"        => $player['id'],
+						"id"        => $player['source'],
 						"server"    => Server::getServerName($player['server']),
 						"character" => [
-							"name" => $character->first_name . ' ' . $character->last_name,
-							"id"   => $character->character_id
+							"name" => $player['character']['name'],
+							"id"   => $player['character']['id']
 						]
 					]);
 				} else {

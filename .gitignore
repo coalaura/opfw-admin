@@ -24,6 +24,8 @@
 /storage/*.key
 /storage/debugbar
 /storage/sessions
+/storage/locks
+/storage/cache
 /vendor
 envs/.env
 deploy.env

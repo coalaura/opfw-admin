@@ -2,22 +2,14 @@
 
 namespace App;
 
-use App\Helpers\CacheHelper;
 use App\Helpers\GeneralHelper;
 use App\Helpers\OPFWHelper;
+use App\Helpers\StatusHelper;
 use Illuminate\Support\Str;
-use Throwable;
 
 class Server
 {
 	public string $url;
-
-    /**
-     * A license_identifier->serverId map
-     *
-     * @var array
-     */
-    private static array $onlineMap = [];
 
     /**
      * Gets the API data.
@@ -73,74 +65,15 @@ class Server
      */
     public static function isServerIDValid(int $id)
     {
-        $players = Player::getAllOnlinePlayers(false);
+        $players = StatusHelper::all();
 
         foreach ($players as $license => $player) {
-            if (intval($player['id']) === $id) {
+            if ($player['source'] === $id) {
                 return $license;
             }
         }
 
         return false;
-    }
-
-    /**
-     * Returns an associative array (licenseIdentifier -> serverId)
-     *
-     * @param string $serverIp
-     * @param bool $useCache
-     * @return array|null
-     */
-    public static function fetchLicenseIdentifiers(string $serverIp, bool $useCache): ?array
-    {
-        if (!$serverIp) {
-            return [];
-        }
-        $cacheKey = 'server_data_' . md5($serverIp);
-
-        if ($useCache) {
-            if (CacheHelper::exists($cacheKey)) {
-                return CacheHelper::read($cacheKey, []);
-            }
-        }
-
-        if (!isset(self::$onlineMap[$cacheKey]) || empty(self::$onlineMap[$cacheKey])) {
-            $serverIp = self::fixApiUrl($serverIp);
-
-            try {
-                $json = OPFWHelper::getUsersJSON($serverIp);
-
-                if ($json === null || !is_array($json)) {
-                    return null;
-                }
-            } catch (Throwable $t) {
-                return [];
-            }
-
-            if (!empty($json)) {
-                $assoc = [];
-
-                foreach ($json as $player) {
-                    $character = $player['character'] ?? [];
-
-                    $assoc[$player['license']] = [
-                        'source'    => $player['source'],
-                        'character' => $character['id'] ?? null,
-                        'characterFlags' => $character['flags'] ?? 0,
-                        'flags'     => $player['flags'] ?? 0,
-                        'name'      => $player['name'] ?? null
-                    ];
-                }
-
-                self::$onlineMap[$cacheKey] = $assoc;
-            } else {
-                return [];
-            }
-        }
-
-        CacheHelper::write($cacheKey, self::$onlineMap[$cacheKey], 10);
-
-        return self::$onlineMap[$cacheKey];
     }
 
     /**
