@@ -50,7 +50,7 @@ class HomeController extends Controller
         $players = array_keys($playerList);
 
         usort($players, function ($a, $b) use ($playerList) {
-            return $playerList[$a]['id'] <=> $playerList[$b]['id'];
+            return $playerList[$a]['source'] <=> $playerList[$b]['source'];
         });
 
         $staff = Player::query()->where(function ($q) {
