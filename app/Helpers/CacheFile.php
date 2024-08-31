@@ -74,11 +74,15 @@ class CacheFile
         }
 
         // Fetch fresh data
-        $fetcher = $this->fetcher;
+        try {
+            $fetcher = $this->fetcher;
 
-        $this->cache = $fetcher();
+            $this->cache = $fetcher() ?? [];
 
-        file_put_contents($this->path, json_encode($this->cache));
+            file_put_contents($this->path, json_encode($this->cache));
+        } catch(\Exception $e) {
+            // do nothing :)
+        }
 
         $this->mutex->unlock();
     }
@@ -87,6 +91,6 @@ class CacheFile
     {
         $this->populate();
 
-        return $this->cache;
+        return $this->cache ?? [];
     }
 }
