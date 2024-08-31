@@ -45,7 +45,7 @@ class OverwatchController extends Controller
         $players = StatusHelper::all();
 
         $players = array_filter($players, function($player) {
-            return $player && $player['character'] && !GeneralHelper::isUserRoot($player['license']) && !in_array('in_shell', $player["characterData"]);
+            return $player && $player['character'] && !GeneralHelper::isUserRoot($player['license']) && !in_array('in_shell', $player["characterData"]) && !$player['fakeDisconnected'] && !$player['inQueue'];
         });
 
         if (!empty($players)) {

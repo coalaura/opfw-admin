@@ -71,8 +71,10 @@ class StatusHelper
                 $license = $user['license'];
 
                 $user['server'] = $serverIp;
-                $user['fakeDisconnected'] = !!(($user['flags'] ?? 0) & 2);
                 $user['characterData'] = self::parseCharacterFlags($user['characterFlags'] ?? 0);
+
+                $user['fakeDisconnected'] = !!(($user['flags'] ?? 0) & 2);
+                $user['inQueue'] = !!(($user['flags'] ?? 0) & 16);
 
                 $result[$license] = $user;
             }
