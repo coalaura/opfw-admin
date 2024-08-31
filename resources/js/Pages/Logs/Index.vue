@@ -188,11 +188,8 @@
 							<div class="block px-4 py-2 truncate font-semibold text-center text-white bg-teal-600 rounded" v-else>{{ t('global.system') }}</div>
 						</td>
 						<td class="p-3 mobile:block whitespace-nowrap">
-							<span class="font-semibold" v-if="statusLoading">
-								{{ t('global.loading') }}
-							</span>
-							<span class="font-semibold" v-else-if="status[log.licenseIdentifier]">
-								{{ status[log.licenseIdentifier].source }}
+							<span class="font-semibold" v-if="log.status && log.status.status === 'online'">
+								{{ log.status.serverId }}
 							</span>
 							<span class="font-semibold" v-else>
 								{{ t('global.status.offline') }}
@@ -381,10 +378,7 @@ export default {
 			showLogMetadata: false,
 			logMetadata: null,
 
-			searchTimeout: false,
-
-			statusLoading: false,
-			status: {}
+			searchTimeout: false
 		};
 	},
 	methods: {
@@ -550,8 +544,6 @@ export default {
 					preserveScroll: true,
 					only: ['logs', 'playerMap', 'time', 'links', 'page'],
 				});
-
-				await this.updateStatus();
 			} catch (e) {
 			}
 
@@ -675,24 +667,9 @@ export default {
 		},
 		playerName(licenseIdentifier) {
 			return licenseIdentifier in this.playerMap ? this.playerMap[licenseIdentifier] : licenseIdentifier;
-		},
-		async updateStatus() {
-			this.statusLoading = true;
-
-			const identifiers = this.logs.map(player => player.licenseIdentifier).filter((value, index, self) => self.indexOf(value) === index).join(",");
-
-			if (identifiers) {
-				this.status = (await this.requestData("/online/" + identifiers)) || {};
-			} else {
-				this.status = {};
-			}
-
-			this.statusLoading = false;
 		}
 	},
 	mounted() {
-		this.updateStatus();
-
 		const _this = this;
 
 		$('body').on('click', 'a.exit-log', function (e) {
