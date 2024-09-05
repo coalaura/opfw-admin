@@ -1241,7 +1241,7 @@ export default {
                 form.position_name = this.character.positionName;
             }
 
-            this.$inertia.put('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + query, form)
+            this.$inertia.put('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + query, form, { preserveScroll: true })
         },
         async deleteVehicle(e, vehicleId) {
             e.preventDefault();
@@ -1251,7 +1251,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post('/vehicles/delete/' + vehicleId);
+            await this.$inertia.post('/vehicles/delete/' + vehicleId, {}, { preserveScroll: true });
         },
         async resetLastGarage(vehicleId, fullReset) {
             if (!confirm(this.t('players.characters.vehicle.' + (fullReset ? 'full_reset_confirm' : 'reset_last_garage_confirm')))) {
@@ -1259,7 +1259,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post('/vehicles/resetGarage/' + vehicleId + '/' + (fullReset ? 'true' : 'false'));
+            await this.$inertia.post('/vehicles/resetGarage/' + vehicleId + '/' + (fullReset ? 'true' : 'false'), {}, { preserveScroll: true });
         },
         sortJobs(array, type) {
             switch (type) {
@@ -1292,7 +1292,7 @@ export default {
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + '/removeTattoos', {
                 zone: $('#zone').val(),
-            });
+            }, { preserveScroll: true });
 
             // Reset.
             this.isTattooRemoval = false;
@@ -1301,7 +1301,7 @@ export default {
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + '/resetSpawn', {
                 spawn: $('#spawn').val(),
-            });
+            }, { preserveScroll: true });
 
             // Reset.
             this.isResetSpawn = false;
@@ -1336,7 +1336,7 @@ export default {
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + '/addVehicle', {
                 model: this.vehicleAddModel
-            });
+            }, { preserveScroll: true });
 
             // Reset.
             this.vehicleAddModel = '';
@@ -1346,7 +1346,7 @@ export default {
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + '/updateLicenses', {
                 licenses: this.licenseForm.licenses
-            });
+            }, { preserveScroll: true });
 
             // Reset.
             this.isLicenseEdit = false;
@@ -1355,7 +1355,7 @@ export default {
         },
         async editBalance() {
             // Send request.
-            await this.$inertia.put('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + '/editBalance', this.balanceForm);
+            await this.$inertia.put('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + '/editBalance', this.balanceForm, { preserveScroll: true });
 
             const money = this.getMoneyLocals();
 

@@ -2666,7 +2666,7 @@ export default {
         },
         async pmPlayer() {
             // Send request.
-            await this.$inertia.post('/players/' + (this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier) + '/staffPM', this.form.pm);
+            await this.$inertia.post('/players/' + (this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier) + '/staffPM', this.form.pm, { preserveScroll: true });
 
             // Reset.
             this.isStaffPM = false;
@@ -2680,7 +2680,7 @@ export default {
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateBanExceptionStatus', {
                 twitch: false
-            });
+            }, { preserveScroll: true });
         },
         async updateWhitelistStatus(status) {
             if (!confirm(this.t('players.show.' + (status ? 'whitelist_confirm' : 'unwhitelist_confirm')))) {
@@ -2690,7 +2690,7 @@ export default {
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateWhitelistStatus', {
                 status: status
-            });
+            }, { preserveScroll: true });
         },
         async unmutePlayer() {
             if (!confirm(this.t('players.show.unmute_confirm'))) {
@@ -2700,7 +2700,7 @@ export default {
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateMuteStatus', {
                 status: false
-            });
+            }, { preserveScroll: true });
         },
         async removeSoftBan() {
             if (!confirm(this.t('players.show.soft_ban_confirm'))) {
@@ -2710,7 +2710,7 @@ export default {
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateSoftBanStatus', {
                 status: true
-            });
+            }, { preserveScroll: true });
         },
         async addSoftBan() {
             if (!confirm(this.t('players.show.soft_ban_confirm'))) {
@@ -2720,7 +2720,7 @@ export default {
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateSoftBanStatus', {
                 status: false
-            });
+            }, { preserveScroll: true });
         },
         async removeTag() {
             this.isTagging = false;
@@ -2729,7 +2729,7 @@ export default {
 
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateTag', {
                 tag: false
-            });
+            }, { preserveScroll: true });
         },
         async updateRole() {
             this.isRoleEdit = false;
@@ -2737,7 +2737,7 @@ export default {
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateRole', {
                 role: this.selectedRole ? this.selectedRole : 'player'
-            });
+            }, { preserveScroll: true });
         },
         async addTag() {
             const tag = this.tagCategory === 'custom' ? this.tagCustom.trim() : this.tagCategory;
@@ -2752,7 +2752,7 @@ export default {
 
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateTag', {
                 tag: tag
-            });
+            }, { preserveScroll: true });
         },
         async kickPlayer() {
             if (!confirm(this.t('players.show.kick_confirm'))) {
@@ -2761,7 +2761,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post('/players/' + (this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier) + '/kick', this.form.kick);
+            await this.$inertia.post('/players/' + (this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier) + '/kick', this.form.kick, { preserveScroll: true });
 
             // Reset.
             this.isKicking = false;
@@ -2773,7 +2773,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post('/players/' + (this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier) + '/revivePlayer');
+            await this.$inertia.post('/players/' + (this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier) + '/revivePlayer', { preserveScroll: true });
         },
         async unloadCharacter() {
             if (!confirm(this.t('players.show.unload_confirm'))) {
@@ -2781,7 +2781,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post('/players/' + (this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier) + '/unloadCharacter', this.form.unload);
+            await this.$inertia.post('/players/' + (this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier) + '/unloadCharacter', this.form.unload, { preserveScroll: true });
 
             this.form.unload.message = this.t('players.show.unload_default');
             this.form.unload.character = null;
@@ -2841,7 +2841,7 @@ export default {
             this.isBanLoading = true;
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/bans', { ...this.form.ban, expire });
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/bans', { ...this.form.ban, expire }, { preserveScroll: true });
 
             this.local.ban = this.localizeBan();
 
@@ -2857,7 +2857,7 @@ export default {
         },
         async submitWarning() {
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/warnings', this.form.warning);
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/warnings', this.form.warning, { preserveScroll: true });
 
             // Reset.
             this.form.warning.message = null;
@@ -2870,7 +2870,7 @@ export default {
             await this.$inertia.put('/players/' + this.player.licenseIdentifier + '/warnings/' + id, {
                 message: $('#warning_' + id).val(),
                 warning_type: warningType,
-            });
+            }, { preserveScroll: true });
 
             // Reset.
             this.warningEditId = 0;
@@ -2881,7 +2881,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/warnings/' + id);
+            await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/warnings/' + id, { preserveScroll: true });
         },
         hideDeleted(e) {
             e.preventDefault();
