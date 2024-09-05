@@ -31,8 +31,10 @@ class Warning extends Model
         'confused_pika',
         'cool_cat',
         'grrr',
+        'hmmm',
         'kekw',
-        'shocked'
+        'shocked',
+        'what'
     ];
 
     /**
