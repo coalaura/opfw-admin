@@ -1385,7 +1385,7 @@
 
                             <div class="absolute -bottom-2 left-2 flex gap-1.5">
                                 <div class="group flex gap-1.5 items-center rounded-md bg-gray-800 border border-gray-700 overflow-hidden p-1 cursor-pointer transition-colors hover:bg-gray-700 hover:border-gray-700" @mouseenter="randomizeReaction(warning)" v-if="Object.values(warning.reactions.all) !== reactions.length">
-                                    <img :src="'/images/reactions/' + (warning.random ? warning.random : randomizeReaction(warning)) + '.png'" class="w-4 h-4 object-cover group-hover:hidden" :class="{'!block': isReacting[warning.id]}" />
+                                    <i class="fas fa-ellipsis-h text-gray-400 w-4 h-4 block group-hover:hidden" :class="{'!block': isReacting[warning.id]}"></i>
 
                                     <div class="gap-2 hidden group-hover:flex">
                                         <img v-for="emoji in reactions" v-if="!warning.reactions.all[emoji]" :src="'/images/reactions/' + emoji + '.png'" class="w-4 h-4 object-cover cursor-pointer saturate-0 hover:saturate-100 hover:brightness-105" :class="{'!hidden': isReacting[warning.id]}" @click="toggleReaction(warning, emoji)" />
