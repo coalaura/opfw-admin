@@ -2881,7 +2881,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/warnings/' + id, { preserveScroll: true });
+            await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/warnings/' + id, {}, { preserveScroll: true });
         },
         hideDeleted(e) {
             e.preventDefault();
