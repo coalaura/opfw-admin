@@ -97,7 +97,7 @@ class Player extends Model
         'player_aliases'        => 'array',
         'enabled_commands'      => 'array',
         'user_data'             => 'array',
-        'staff_points'             => 'array',
+        'staff_points'          => 'array',
         'last_connection'       => 'datetime',
         'is_trusted'            => 'boolean',
         'is_staff'              => 'boolean',
@@ -153,7 +153,7 @@ class Player extends Model
             "type"    => "boolean",
             "default" => false,
         ],
-        "relativeTime" => [
+        "relativeTime"    => [
             "type"    => "boolean",
             "default" => false,
         ],
@@ -215,7 +215,7 @@ class Player extends Model
         "~bold~",
     ];
 
-    public function setPanelSetting(string $key, $value, ?callable $progress = null)
+    public function setPanelSetting(string $key, $value,  ? callable $progress = null)
     {
         $info = self::PlayerSettings[$key] ?? null;
 
@@ -331,7 +331,7 @@ class Player extends Model
         return $value;
     }
 
-    public function getPanelSettings(): array
+    public function getPanelSettings() : array
     {
         $list = [];
 
@@ -915,7 +915,7 @@ class Player extends Model
     public function fasterWarnings(bool $includeHidden = false): array
     {
         $warnings = Warning::query()
-            ->select(['id', 'message', 'warning_type', 'created_at', 'updated_at', 'player_name', 'license_identifier', 'can_be_deleted'])
+            ->select(['id', 'message', 'warning_type', 'created_at', 'updated_at', 'player_name', 'license_identifier', 'can_be_deleted', 'reactions'])
             ->where('player_id', '=', $this->user_id)
             ->leftJoin('users', 'issuer_id', '=', 'user_id');
 
@@ -924,6 +924,8 @@ class Player extends Model
         }
 
         $warnings = $warnings->get();
+
+        $loggedInLicense = license();
 
         $plainWarnings = [];
         foreach ($warnings as $warning) {
@@ -934,6 +936,7 @@ class Player extends Model
                 'createdAt'   => $warning->created_at,
                 'updatedAt'   => $warning->updated_at,
                 'canDelete'   => $warning->can_be_deleted,
+                'reactions'   => $warning->getReactions($loggedInLicense),
                 'issuer'      => [
                     'playerName'        => $warning->player_name,
                     'licenseIdentifier' => $warning->license_identifier,

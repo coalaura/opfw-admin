@@ -1382,6 +1382,21 @@
                             </p>
 
                             <textarea class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-700" rows="8" :id="'warning_' + warning.id" v-else-if="warningEditId === warning.id">{{ warning.message }}</textarea>
+
+                            <div class="absolute -bottom-2 left-2 flex gap-1.5">
+                                <div class="group flex gap-1.5 items-center rounded-md bg-gray-800 border border-gray-700 overflow-hidden p-1 cursor-pointer transition-colors hover:bg-gray-700 hover:border-gray-700" @mouseenter="randomizeReaction(warning)" v-if="Object.values(warning.reactions.all) !== reactions.length">
+                                    <img :src="'/images/reactions/' + (warning.random ? warning.random : randomizeReaction(warning)) + '.png'" class="w-4 h-4 object-cover group-hover:hidden" :class="{'!block': isReacting[warning.id]}" />
+
+                                    <div class="gap-2 hidden group-hover:flex">
+                                        <img v-for="emoji in reactions" v-if="!warning.reactions.all[emoji]" :src="'/images/reactions/' + emoji + '.png'" class="w-4 h-4 object-cover cursor-pointer saturate-0 hover:saturate-100 hover:brightness-105" :class="{'!hidden': isReacting[warning.id]}" @click="toggleReaction(warning, emoji)" />
+                                    </div>
+                                </div>
+
+                                <div class="flex gap-1.5 items-center rounded-md bg-gray-800 border border-gray-700 overflow-hidden p-1 cursor-pointer transition-colors hover:!bg-gray-700 hover:!border-gray-600" :class="{ '!bg-gray-500 !border-gray-400': warning.reactions.mine.includes(emoji) }" v-for="emoji in reactions" @click="toggleReaction(warning, emoji)" v-if="warning.reactions.all[emoji]">
+                                    <img :src="'/images/reactions/' + emoji + '.png'" class="w-4 h-4 object-cover" />
+                                    <span class="text-xs font-semibold text-gray-400" :class="{ '!text-gray-200': warning.reactions.mine.includes(emoji) }">{{ warning.reactions.all[emoji] }}</span>
+                                </div>
+                            </div>
                         </template>
                     </card>
                 </template>
@@ -1700,6 +1715,10 @@ export default {
             type: Array,
             required: true,
         },
+        reactions: {
+            type: Array,
+            required: true,
+        },
         tags: {
             type: Array,
             required: true,
@@ -1874,6 +1893,8 @@ export default {
             showingMoreInfo: false,
 
             showingUserVariables: false,
+
+            isReacting: {},
 
             isShowingStaffStatistics: false,
             statisticsSearch: '',
@@ -2360,7 +2381,7 @@ export default {
                 if (data && data.success) {
                     this.isUsingVPN = data.is_vpn;
                 }
-            } catch(e) {}
+            } catch (e) { }
         },
         async loadStatus() {
             this.statusLoading = true;
@@ -2970,6 +2991,38 @@ export default {
 
                 img.src = url;
             });
+        },
+        async toggleReaction(warning, emoji) {
+            if (this.isReacting[warning.id]) return;
+
+            this.isReacting[warning.id] = true;
+
+            try {
+                const response = await axios.post('/players/' + this.player.licenseIdentifier + '/warnings/' + warning.id + '/react', {
+                    emoji: emoji
+                });
+
+                const data = response.data;
+
+                if (data && data.status) {
+                    warning.reactions = data.data;
+
+                    console.log(data.data, warning.reactions)
+                }
+            } catch (e) { }
+
+            this.$nextTick(() => {
+                delete this.isReacting[warning.id];
+            });
+        },
+        randomizeReaction(warning) {
+            let available = this.reactions.filter(reaction => !warning.reactions.all[reaction]);
+
+            if (available.length > 1 && available.includes(warning.random)) {
+                available = available.filter(reaction => reaction !== warning.random);
+            }
+
+            return warning.random = available[Math.floor(Math.random() * available.length)];
         }
     },
     mounted() {

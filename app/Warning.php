@@ -26,6 +26,15 @@ class Warning extends Model
     const TypeSystem  = 'system';
     const TypeHidden  = 'hidden';
 
+    const Reactions = [
+        'chair_stare',
+        'confused_pika',
+        'cool_cat',
+        'grrr',
+        'kekw',
+        'shocked'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -37,6 +46,16 @@ class Warning extends Model
         'message',
         'warning_type',
         'can_be_deleted',
+        'reactions',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'reactions' => 'array',
     ];
 
     /**
@@ -57,6 +76,32 @@ class Warning extends Model
     public function issuer(): BelongsTo
     {
         return $this->belongsTo(Player::class, 'issuer_id', 'user_id');
+    }
+
+    public function getReactions(?string $forLicense = null): array
+    {
+        $raw = $this->reactions ?? [];
+
+        $reactions = [
+            'mine' => [],
+            'all' => []
+        ];
+
+        foreach (self::Reactions as $emoji) {
+            $reacted = $raw[$emoji] ?? [];
+
+            if (empty($reacted)) {
+                continue;
+            }
+
+            if ($forLicense && in_array($forLicense, $reacted)) {
+                $reactions['mine'][] = $emoji;
+            }
+
+            $reactions['all'][$emoji] = sizeof($reacted);
+        }
+
+        return $reactions;
     }
 
 }

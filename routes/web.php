@@ -94,7 +94,10 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/players/{player}', [PlayerController::class, 'show']);
     Route::resource('players.characters', PlayerCharacterController::class);
     Route::resource('players.bans', PlayerBanController::class);
+
+    // Player warnings.
     Route::resource('players.warnings', PlayerWarningController::class);
+    Route::post('/players/{player}/warnings/{warning}/react', [PlayerWarningController::class, 'react']);
 
     // Player information.
     Route::get('/players/{player}/statistics/{source}', [PlayerController::class, 'statistics']);

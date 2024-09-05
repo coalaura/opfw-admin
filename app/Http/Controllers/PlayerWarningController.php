@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\DiscordAttachmentHelper;
+use App\Helpers\Mutex;
 use App\Http\Requests\WarningStoreRequest;
 use App\Player;
 use App\Warning;
-use App\Helpers\TranscriptHelper;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -100,6 +100,51 @@ class PlayerWarningController extends Controller
         DiscordAttachmentHelper::unlinkMessageAttachments($warning);
 
         return backWith('success', 'The warning/note has successfully been deleted from the player\'s record.');
+    }
+
+    /**
+     * Toggle your reaction to the warning.
+     *
+     * @param Request $request
+     * @param Player $player
+     * @param Warning $warning
+     */
+    public function react(Request $request, Player $player, Warning $warning)
+    {
+        $emoji = $request->input('emoji');
+
+        if (!$emoji || !in_array($emoji, Warning::Reactions)) {
+            return $this->json(false, null, 'Invalid emoji');
+        }
+
+        $mutex = new Mutex('warning_reactions_' . $warning->id);
+
+        $mutex->lockSync();
+
+        $license = license();
+        $reactions = $warning->reactions ?? [];
+
+        $emojiReactions = $reactions[$emoji] ?? [];
+
+        if (in_array($license, $emojiReactions)) {
+            $emojiReactions = array_values(array_diff($emojiReactions, [$license]));
+        } else {
+            $emojiReactions[] = $license;
+        }
+
+        if (empty($emojiReactions)) {
+            if (isset($reactions[$emoji])) {
+                unset($reactions[$emoji]);
+            }
+        } else {
+            $reactions[$emoji] = $emojiReactions;
+        }
+
+        $warning->update(['reactions' => $reactions]);
+
+        $mutex->unlock();
+
+        return $this->json(true, $warning->getReactions($license));
     }
 
 }
