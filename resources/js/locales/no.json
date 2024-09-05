@@ -957,7 +957,8 @@
             "staff_commands": "Ansatte Kommandoer",
             "global_opfw_ban": "Global OP-FW-utestengelse",
             "ban_op": "Globalt utestengt av <i>{0}</i> til <i>{1}</i>",
-            "using_vpn": "Spilleren brukte en VPN da de koblet seg til serveren."
+            "using_vpn": "Spilleren brukte en VPN da de koblet seg til serveren.",
+            "reacted_by": "reaksjon fra {0}"
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",

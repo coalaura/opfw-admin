@@ -957,7 +957,8 @@
             "staff_commands": "Staff Aadesh",
             "global_opfw_ban": "Vishwa OP-FW Pratibandh",
             "ban_op": "<i>{0}</i> dwara duniya bhar mein <i>{1}</i> tak ke liye ban kiya gaya hai",
-            "using_vpn": "Player ne server se connect karte waqt VPN ka upyog kiya tha."
+            "using_vpn": "Player ne server se connect karte waqt VPN ka upyog kiya tha.",
+            "reacted_by": "{0} ke dwara pratikriya di gayi"
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",

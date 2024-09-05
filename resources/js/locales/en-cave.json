@@ -947,7 +947,8 @@
             "staff_commands": "Stick Orders",
             "global_opfw_ban": "\\\"World No-Allow OP-FW\\\"",
             "ban_op": "Whole earth say no by <i>{0}</i> till <i>{1}</i>",
-            "using_vpn": "Player hide behind magic net mask when join tribe rock-talk place."
+            "using_vpn": "Player hide behind magic net mask when join tribe rock-talk place.",
+            "reacted_by": "{0} do reaction"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

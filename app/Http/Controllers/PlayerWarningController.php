@@ -147,4 +147,17 @@ class PlayerWarningController extends Controller
         return $this->json(true, $warning->getReactions($license));
     }
 
+    /**
+     * Get the resolved reactions for the specified warning.
+     *
+     * @param Request $request
+     * @param Player $player
+     * @param Warning $warning
+     */
+    public function reactions(Request $request, Player $player, Warning $warning)
+    {
+        $license = license();
+
+        return $this->json(true, $warning->getReactionsResolved($license));
+    }
 }

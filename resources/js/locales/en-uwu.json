@@ -947,7 +947,8 @@
             "staff_commands": "Stawf Commands",
             "global_opfw_ban": "Gwobaw OP-FW Bawn UwU",
             "ban_op": "Gwobawwy bannwed by <i>{0}</i> untiw <i>{1}</i>",
-            "using_vpn": "Pwayew was using a VPN when dey connected to the sewvew uwu."
+            "using_vpn": "Pwayew was using a VPN when dey connected to the sewvew uwu.",
+            "reacted_by": "weacted by {0}"
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

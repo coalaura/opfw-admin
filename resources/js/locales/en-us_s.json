@@ -947,7 +947,8 @@
             "staff_commands": "Staff Commans",
             "global_opfw_ban": "Global OP-FW Ban",
             "ban_op": "Banned all 'round the world by <i>{0}</i> 'til <i>{1}</i>",
-            "using_vpn": "Playa was usin' a VPN when they hitched up to the server."
+            "using_vpn": "Playa was usin' a VPN when they hitched up to the server.",
+            "reacted_by": "reacted by {0}, y'all"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

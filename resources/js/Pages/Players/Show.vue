@@ -1392,9 +1392,14 @@
                                     </div>
                                 </div>
 
-                                <div class="flex gap-1.5 items-center rounded-md bg-gray-800 border border-gray-800 overflow-hidden p-1 cursor-pointer transition-colors hover:!bg-gray-700 hover:!border-gray-600" :class="{ '!bg-gray-500 !border-gray-400': warning.reactions.mine.includes(emoji) }" :title="emoji" v-for="emoji in reactions" @click="toggleReaction(warning, emoji)" v-if="warning.reactions.all[emoji]">
+                                <div class="relative group flex gap-1.5 items-center rounded-md bg-gray-800 border border-gray-800 p-1 cursor-pointer transition-colors hover:!bg-gray-700 hover:!border-gray-600" :class="{ '!bg-gray-500 !border-gray-400': warning.reactions.mine.includes(emoji) }" v-for="emoji in reactions" @mouseenter="hoveringReaction(warning, emoji)" @click="toggleReaction(warning, emoji)" v-if="warning.reactions.all[emoji]">
                                     <img :src="'/images/reactions/' + emoji + '.png'" class="w-4 h-4 object-cover" />
                                     <span class="text-xs font-semibold text-gray-400" :class="{ '!text-gray-200': warning.reactions.mine.includes(emoji) }">{{ warning.reactions.all[emoji] }}</span>
+
+                                    <div class="absolute bottom-full -left-4 -translate-y-2 hidden group-hover:flex gap-3 text-sm items-center w-max text-gray-800 bg-gray-200 dark:text-gray-200 dark:bg-gray-800 p-2 rounded whitespace-nowrap" v-if="'hover' in warning && warning.hover && warning.hover[emoji]">
+                                        <img :src="'/images/reactions/' + emoji + '.png'" class="w-12 h-12 object-cover" />
+                                        <div>:{{ emoji }}: {{ t('players.show.reacted_by', smartJoin(warning.hover[emoji])) }}</div>
+                                    </div>
                                 </div>
                             </div>
                         </template>
@@ -3006,8 +3011,7 @@ export default {
 
                 if (data && data.status) {
                     warning.reactions = data.data;
-
-                    console.log(data.data, warning.reactions)
+                    warning.hover = false;
                 }
             } catch (e) { }
 
@@ -3023,6 +3027,25 @@ export default {
             }
 
             return warning.random = available[Math.floor(Math.random() * available.length)];
+        },
+        hoveringReaction(warning) {
+            if (this.isReacting[warning.id] || warning.hover || warning.hoverLoading) return;
+
+            warning.hoverLoading = true;
+            warning.hover = warning.hover || null;
+
+            axios.get('/players/' + this.player.licenseIdentifier + '/warnings/' + warning.id + '/react').then(response => {
+                const data = response.data;
+
+                if (!data.status || warning.hover === false) return;
+
+                warning.hover = data.data;
+            }).finally(() => {
+                warning.hoverLoading = false;
+            });
+        },
+        smartJoin(array) {
+            return array.join(', ').replace(/, ([^,]*)$/, ' and $1');
         }
     },
     mounted() {

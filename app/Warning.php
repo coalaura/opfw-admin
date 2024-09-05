@@ -104,4 +104,39 @@ class Warning extends Model
         return $reactions;
     }
 
+    public function getReactionsResolved(?string $forLicense = null): array
+    {
+        $raw = $this->reactions ?? [];
+
+        $licenses = [];
+
+        foreach (self::Reactions as $emoji) {
+            $reacted = $raw[$emoji] ?? [];
+
+            if (empty($reacted)) {
+                continue;
+            }
+
+            $licenses = array_merge($licenses, $reacted);
+        }
+
+        $players = Player::fetchLicensePlayerNameMap($licenses, null);
+
+        $reactions = [];
+
+        foreach (self::Reactions as $emoji) {
+            $reacted = $raw[$emoji] ?? [];
+
+            if (empty($reacted)) {
+                continue;
+            }
+
+            $reactions[$emoji] = array_map(function ($license) use ($players) {
+                return $players[$license] ?? $license;
+            }, $reacted);
+        }
+
+        return $reactions;
+    }
+
 }

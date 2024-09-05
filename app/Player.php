@@ -1028,19 +1028,24 @@ class Player extends Model
      */
     public static function fetchLicensePlayerNameMap(array $source, $sourceKey): array
     {
-        if (!is_array($sourceKey)) {
-            $sourceKey = [$sourceKey];
-        }
+        if ($sourceKey) {
+            if (!is_array($sourceKey)) {
+                $sourceKey = [$sourceKey];
+            }
 
-        $identifiers = [];
-        foreach ($source as $entry) {
-            foreach ($sourceKey as $key) {
-                $d = is_array($entry) ? $entry[$key] : $entry->$key;
+            $identifiers = [];
 
-                if ($d && !in_array($d, $identifiers)) {
-                    $identifiers[] = $d;
+            foreach ($source as $entry) {
+                foreach ($sourceKey as $key) {
+                    $d = is_array($entry) ? $entry[$key] : $entry->$key;
+
+                    if ($d && !in_array($d, $identifiers)) {
+                        $identifiers[] = $d;
+                    }
                 }
             }
+        } else {
+            $identifiers = $source;
         }
 
         $identifiers = array_values(array_unique($identifiers));
