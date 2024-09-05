@@ -1384,15 +1384,15 @@
                             <textarea class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-700" rows="8" :id="'warning_' + warning.id" v-else-if="warningEditId === warning.id">{{ warning.message }}</textarea>
 
                             <div class="absolute -bottom-2 left-2 flex gap-1.5">
-                                <div class="group flex gap-1.5 items-center rounded-md bg-gray-800 border border-gray-700 overflow-hidden p-1 cursor-pointer transition-colors hover:bg-gray-700 hover:border-gray-700" @mouseenter="randomizeReaction(warning)" v-if="Object.values(warning.reactions.all) !== reactions.length">
+                                <div class="group flex gap-1.5 items-center rounded-md bg-gray-800 border border-gray-800 overflow-hidden p-1 cursor-pointer" @mouseenter="randomizeReaction(warning)" v-if="Object.values(warning.reactions.all) !== reactions.length">
                                     <i class="fas fa-ellipsis-h text-gray-400 w-4 h-4 block group-hover:hidden" :class="{'!block': isReacting[warning.id]}"></i>
 
                                     <div class="gap-2 hidden group-hover:flex">
-                                        <img v-for="emoji in reactions" v-if="!warning.reactions.all[emoji]" :src="'/images/reactions/' + emoji + '.png'" class="w-4 h-4 object-cover cursor-pointer saturate-0 hover:saturate-100 hover:brightness-105" :class="{'!hidden': isReacting[warning.id]}" @click="toggleReaction(warning, emoji)" />
+                                        <img v-for="emoji in reactions" v-if="!warning.reactions.all[emoji]" :src="'/images/reactions/' + emoji + '.png'" :title="emoji" class="w-4 h-4 object-cover cursor-pointer saturate-0 hover:saturate-100 hover:brightness-105" :class="{'!hidden': isReacting[warning.id]}" @click="toggleReaction(warning, emoji)" />
                                     </div>
                                 </div>
 
-                                <div class="flex gap-1.5 items-center rounded-md bg-gray-800 border border-gray-700 overflow-hidden p-1 cursor-pointer transition-colors hover:!bg-gray-700 hover:!border-gray-600" :class="{ '!bg-gray-500 !border-gray-400': warning.reactions.mine.includes(emoji) }" v-for="emoji in reactions" @click="toggleReaction(warning, emoji)" v-if="warning.reactions.all[emoji]">
+                                <div class="flex gap-1.5 items-center rounded-md bg-gray-800 border border-gray-800 overflow-hidden p-1 cursor-pointer transition-colors hover:!bg-gray-700 hover:!border-gray-600" :class="{ '!bg-gray-500 !border-gray-400': warning.reactions.mine.includes(emoji) }" :title="emoji" v-for="emoji in reactions" @click="toggleReaction(warning, emoji)" v-if="warning.reactions.all[emoji]">
                                     <img :src="'/images/reactions/' + emoji + '.png'" class="w-4 h-4 object-cover" />
                                     <span class="text-xs font-semibold text-gray-400" :class="{ '!text-gray-200': warning.reactions.mine.includes(emoji) }">{{ warning.reactions.all[emoji] }}</span>
                                 </div>
