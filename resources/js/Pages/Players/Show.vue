@@ -1384,7 +1384,7 @@
                             <textarea class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-700" rows="8" :id="'warning_' + warning.id" v-else-if="warningEditId === warning.id">{{ warning.message }}</textarea>
 
                             <div class="absolute -bottom-2 left-2 flex gap-1.5">
-                                <div class="group flex gap-1.5 items-center rounded-md bg-gray-800 border border-gray-800 overflow-hidden p-1 cursor-pointer" @mouseenter="randomizeReaction(warning)" v-if="Object.values(warning.reactions.all) !== reactions.length">
+                                <div class="group flex gap-1.5 items-center rounded-md bg-gray-800 border border-gray-800 overflow-hidden p-1 cursor-pointer" @mouseenter="randomizeReaction(warning)" v-if="Object.values(warning.reactions.all).length !== reactions.length">
                                     <i class="fas fa-ellipsis-h text-gray-400 w-4 h-4 block group-hover:hidden" :class="{'!block': isReacting[warning.id]}"></i>
 
                                     <div class="gap-2 hidden group-hover:flex">
