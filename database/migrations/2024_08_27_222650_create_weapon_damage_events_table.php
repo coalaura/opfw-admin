@@ -71,8 +71,6 @@ class CreateWeaponDamageEventsTable extends Migration
 			!in_array("damage_modifier", $columns) && $table->double("damage_modifier")->nullable();
 			!in_array("timestamp_calculated", $columns) && $table->bigInteger("timestamp_calculated")->nullable();
 
-			!in_array("timestamp_coalesced", $columns) && DB::statement("ALTER TABLE weapon_damage_events ADD COLUMN timestamp_coalesced BIGINT GENERATED ALWAYS AS (COALESCE(timestamp_calculated, timestamp_ms)) STORED");
-
 			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
 			!in_array("timestamp_ms", $indexes) && $table->index("timestamp_ms");
 			!in_array("distance", $indexes) && $table->index("distance");
@@ -82,8 +80,10 @@ class CreateWeaponDamageEventsTable extends Migration
 			!in_array("hit_players", $indexes) && $table->index("hit_players");
 			!in_array("hit_entity_types", $indexes) && $table->index("hit_entity_types");
 			!in_array("hit_global_ids", $indexes) && $table->index("hit_global_ids");
-			!in_array("timestamp_coalesced", $indexes) && $table->index("timestamp_coalesced");
 		});
+
+		!in_array("timestamp_coalesced", $columns) && DB::statement("ALTER TABLE weapon_damage_events ADD COLUMN timestamp_coalesced BIGINT GENERATED ALWAYS AS (COALESCE(timestamp_calculated, timestamp_ms)) STORED");
+		!in_array("timestamp_coalesced", $indexes) && DB::statement("CREATE INDEX timestamp_coalesced ON weapon_damage_events (timestamp_coalesced)");
 	}
 
 	/**

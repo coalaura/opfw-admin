@@ -351,6 +351,8 @@ EOT;
 
             preg_match_all('/^\s+`(\w+)` (.+? GENERATED .+?)$/m', $create, $matches, PREG_SET_ORDER, 0);
 
+            $generatedColumns = [];
+
             foreach ($matches as $match) {
                 if (sizeof($match) < 2) {
                     continue;
