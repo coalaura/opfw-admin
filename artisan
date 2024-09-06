@@ -27,6 +27,8 @@ if (sizeof($argv) > 2 && php_sapi_name() === 'cli') {
             define('CLUSTER', str_replace('--cluster=', '', $arg));
 
 			define('HAS_CLUSTER_ARG', true);
+
+            echo "Using cluster " . CLUSTER . "\n";
         } else {
             $cleanedArgv[] = $arg;
         }

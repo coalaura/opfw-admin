@@ -26,10 +26,6 @@ $app = new Illuminate\Foundation\Application(
 
 if (!defined('CLUSTER')) {
     define('CLUSTER', GeneralHelper::getCluster());
-
-    if (php_sapi_name() === 'cli') {
-        echo "Cluster: " . CLUSTER . PHP_EOL;
-    }
 }
 
 $envDir = realpath(__DIR__ . '/../envs/' . CLUSTER);
