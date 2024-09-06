@@ -64,11 +64,11 @@ class BuildMigrations extends Command
     {
         $name = Str::studly($table);
 
-		$extraImports = "";
+        $extraImports = "";
 
-		if ($hasRaw) {
-			$extraImports = "\nuse Illuminate\Support\Facades\DB;";
-		}
+        if ($hasRaw) {
+            $extraImports = "\nuse Illuminate\Support\Facades\DB;";
+        }
 
         $content = <<<EOT
 <?php
@@ -99,7 +99,7 @@ class Create{$name}Table extends Migration
 
 		Schema::\$func("$table", function (Blueprint \$table) use (\$columns, \$indexes) {
 {{up}}
-		});
+		});{{up2}}
 	}
 
 	/**
@@ -142,8 +142,10 @@ class Create{$name}Table extends Migration
 }
 EOT;
 
-        $columnsUp = [];
-        $indexesUp = [];
+        $columnsUp  = [];
+        $indexesUp  = [];
+        $columnsUp2 = [];
+        $indexesUp2 = [];
 
         foreach ($columns as $column) {
             $columnName = $column['name'];
@@ -154,18 +156,43 @@ EOT;
                 continue;
             }
 
-            $columnsUp[] = implode("\n", [
-                sprintf("\t\t\t!in_array(\"%s\", \$columns) && %s", $columnName, $create),
-            ]);
+            if (isset($column['raw'])) {
+                $columnsUp2[] = sprintf("\t\t!in_array(\"%s\", \$columns) && %s", $columnName, $create);
+            } else {
+                $columnsUp[] = implode("\n", [
+                    sprintf("\t\t\t!in_array(\"%s\", \$columns) && %s", $columnName, $create),
+                ]);
+            }
         }
 
         foreach ($indexes as $index) {
-            $indexesUp[] = sprintf("\t\t\t!in_array(\"%s\", \$indexes) && \$table->index(\"%s\");", $index, $index);
+            $column    = $index['column'];
+            $generated = $index['generated'];
+
+            if ($generated) {
+                $indexesUp2[] = sprintf("\t\t!in_array(\"%s\", \$indexes) && DB::statement(\"CREATE INDEX %s ON $table (%s)\");", $column, $column, $column);
+            } else {
+                $indexesUp[] = sprintf("\t\t\t!in_array(\"%s\", \$indexes) && \$table->index(\"%s\");", $column, $column);
+            }
         }
 
         $up = trim(implode("\n", $columnsUp) . "\n\n" . implode("\n", $indexesUp), "\n");
 
         $content = str_replace('{{up}}', $up, $content);
+
+        if (!empty($indexesUp2) || !empty($columnsUp2)) {
+            $up2 = "";
+
+            if (!empty($columnsUp2)) {
+                $up2 .= "\n\n" . implode("\n", $columnsUp2);
+            }
+
+            if (!empty($indexesUp2)) {
+                $up2 .= "\n\n" . implode("\n", $indexesUp2);
+            }
+
+            $content = str_replace('{{up2}}', $up2, $content);
+        }
 
         return $content;
     }
@@ -177,7 +204,7 @@ EOT;
         $raw = $column['raw'] ?? null;
 
         if ($raw) {
-            return "DB::statement(\"ALTER TABLE $table ADD $name $raw\");";
+            return "DB::statement(\"ALTER TABLE $table ADD COLUMN $name $raw\");";
         }
 
         $type          = $column['type'];
@@ -361,22 +388,26 @@ EOT;
                 $column     = $match[1];
                 $definition = $match[2];
 
-				if (Str::endsWith($definition, ',')) {
-					$definition = Str::beforeLast($definition, ',');
-				}
+                if (Str::endsWith($definition, ',')) {
+                    $definition = Str::beforeLast($definition, ',');
+                }
 
                 $schema[$name]['columns'][] = [
                     'name' => $column,
                     'raw'  => $definition,
                 ];
 
-				$schema[$name]['hasRaw'] = true;
+                $schema[$name]['hasRaw'] = true;
+
+                $generatedColumns[] = $column;
             }
 
             $indexes = DB::select("SHOW INDEXES FROM $name");
 
             if (!empty($indexes)) {
-                $schema[$name]['indexes'] = array_unique(array_filter(array_map(function ($index) {
+                $added = [];
+
+                $schema[$name]['indexes'] = array_values(array_filter(array_map(function ($index) use ($generatedColumns) {
                     $column = $index->Column_name;
 
                     // We've already got the primary key from the columns
@@ -384,8 +415,19 @@ EOT;
                         return false;
                     }
 
-                    return $column;
-                }, $indexes)));
+                    return [
+                        'column'    => $column,
+                        'generated' => in_array($column, $generatedColumns),
+                    ];
+                }, $indexes), function ($index) use (&$added) {
+                    if (!$index || in_array($index['column'], $added)) {
+                        return false;
+                    }
+
+                    $added[] = $index['column'];
+
+                    return true;
+                }));
             }
         }
 
