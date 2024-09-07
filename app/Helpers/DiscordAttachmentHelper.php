@@ -17,6 +17,17 @@ class DiscordAttachmentHelper
         'css',
     ];
 
+    const ImageExtensions = [
+        'jpg',     // JPEG
+        'jpeg',    // JPEG
+        'png',     // PNG
+        'gif',     // GIF
+        'bmp',     // BMP (since PHP 7.2)
+        'webp',    // WebP (since PHP 7.0 with GD version 2.1.0+)
+        'wbmp',    // WBMP (Wireless Bitmap)
+        'xbm',     // XBM (X BitMap)
+    ];
+
     public static function ensureMessageAttachments(Warning &$warning)
     {
         $message = $warning->message;
@@ -91,6 +102,21 @@ class DiscordAttachmentHelper
 
             if (empty($data)) {
                 return null;
+            }
+
+            $ext = pathinfo($name, PATHINFO_EXTENSION);
+
+            if (in_array($ext, self::ImageExtensions)) {
+                $relative = str_replace($ext, 'webp', $relative);
+                $path = public_path($relative);
+
+                $data = ImageHelper::convertToWebP($data);
+
+                if (!$data) {
+                    LoggingHelper::log('Failed to convert attachment ' . $url . ' to webp');
+
+                    return null;
+                }
             }
 
             file_put_contents($path, $data);
