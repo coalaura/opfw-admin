@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Helpers\CacheHelper;
+use App\Helpers\LoggingHelper;
 
 class DiscordUser
 {
@@ -80,7 +81,7 @@ class DiscordUser
                 return $user;
             }
         } catch (\Throwable $e) {
-            var_dump($e->getMessage());
+            LoggingHelper::log(sprintf('Failed to load discord user: %s', $e->getMessage()));
         }
 
         return null;

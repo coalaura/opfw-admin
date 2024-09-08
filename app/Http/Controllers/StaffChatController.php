@@ -21,8 +21,6 @@ class StaffChatController extends Controller
      */
     public function chat(Request $request): Response
     {
-        SessionHelper::dumpSessions();
-
         $emotes = OPFWHelper::getChatEmotesJSON(Server::getFirstServer());
 
         return Inertia::render('StaffChat', [

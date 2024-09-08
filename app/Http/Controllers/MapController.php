@@ -29,8 +29,6 @@ class MapController extends Controller
             abort(401);
         }
 
-        SessionHelper::dumpSessions();
-
         $servers = [];
 
         $rawServerIps = explode(',', env('OP_FW_SERVERS', ''));

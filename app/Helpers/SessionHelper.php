@@ -240,8 +240,6 @@ class SessionHelper
         $lifetime = time() - self::Lifetime;
 
         Session::query()->where('last_accessed', '<', $lifetime)->delete();
-
-        self::dumpSessions(true);
     }
 
     /**
@@ -332,59 +330,5 @@ class SessionHelper
         }
 
         return $player->license_identifier;
-    }
-
-    public static function sessionDumpFile(): string
-    {
-        $dir = storage_path('sessions');
-
-        if (!is_dir($dir)) {
-            mkdir($dir, 0777, true);
-        }
-
-        return $dir . '/' . CLUSTER . '.json';
-    }
-
-    public static function dumpSessions(bool $force = false)
-    {
-        $file = self::sessionDumpFile();
-
-        $shouldRegenerate = $force || !file_exists($file) || time() - filemtime($file) > 10*60;
-
-        if (!$shouldRegenerate) return;
-
-        $fh = fopen($file, 'w+');
-
-        if (!$fh) {
-            LoggingHelper::log('Failed to open session dump file.');
-
-            return;
-        }
-
-        // Try to lock it for writing
-        if (flock($fh, LOCK_EX)) {
-            $sessions = Session::query()
-                ->select(DB::raw("`key`, JSON_EXTRACT(data, '$.name') as name, JSON_EXTRACT(data, '$.discord.id') as discord_id"))
-                ->whereNotNull(DB::raw("JSON_EXTRACT(data, '$.user')"))
-                ->get();
-
-            $data = [];
-
-            foreach ($sessions as $session) {
-                $key     = $session->key;
-                $name    = json_decode($session->name);
-                $discord = json_decode($session->discord_id);
-
-                $data[$key] = [
-                    'name'    => $name,
-                    'discord' => $discord,
-                ];
-            }
-
-            fwrite($fh, json_encode($data));
-            flock($fh, LOCK_UN);
-        }
-
-        fclose($fh);
     }
 }
