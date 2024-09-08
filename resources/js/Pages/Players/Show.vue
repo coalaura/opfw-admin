@@ -72,11 +72,6 @@
                         <span class="font-semibold">{{ player.tag.length > 20 ? player.tag.substring(0, 18) + '...' : player.tag }}</span>
                     </badge>
 
-                    <badge :class="`border-${echo.color}-300 bg-${echo.color}-200 dark:bg-${echo.color}-700 ${echo.raw ? 'cursor-pointer' : ''}`" v-if="echo" :click="showEchoInfo" :title="echo.title">
-                        <i :class="echo.icon" class="mr-1"></i>
-                        <span class="font-semibold">{{ t('players.show.echo_info') }}</span>
-                    </badge>
-
                     <badge class="border-red-300 bg-red-200 dark:bg-red-700 cursor-pointer" v-if="globalBans.length > 0 || opfwBanned" :title="opfwBanned ? t('players.show.opfw_banned') : t('players.show.global_title', globalBans.length)" :click="showGlobalBans">
                         <i class="fas fa-skull-crossbones mr-1"></i>
                         <span class="font-semibold">{{ t('players.show.global_info') }}</span>
@@ -512,63 +507,6 @@
 
             <template #actions>
                 <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showingGlobalBans = false">
-                    {{ t('global.close') }}
-                </button>
-            </template>
-        </modal>
-
-        <!-- Echo Info -->
-        <modal :show.sync="showingEchoInfo">
-            <template #header>
-                <h1 class="dark:text-white">
-                    {{ t('players.show.echo_info') }}
-                </h1>
-            </template>
-
-            <template #default>
-                <div class="flex flex-col gap-3 text-left font-mono">
-                    <div v-for="info in echo.raw" :key="info.identifier" class="py-4 px-6 rounded-lg shadow-lg border-2" :class="`border-${info.color}-500 bg-${info.color}-100 dark:bg-${info.color}-950`">
-                        <h1 class="text-lg border-b mb-1 border-gray-700 dark:border-gray-200">
-                            <a class="hover:underline" :href="'https://steamcommunity.com/profiles/' + info.steam" target="_blank">{{ info.identifier }}</a>
-                        </h1>
-
-                        <template v-if="info.lastScanned">
-                            <p class="text-xs italic text-gray-600 dark:text-gray-400 mb-3">
-                                <span class="font-semibold">{{ t('players.show.echo_last') }}:</span>
-                                {{ info.lastScanned.local().format('dddd, Mo MMMM YYYY, HH:mm:ss') }}
-                            </p>
-
-                            <div class="flex gap-3">
-                                <div class="py-1 px-2 bg-black dark:bg-white !bg-opacity-10 rounded font-semibold" v-if="info.clean > 0">
-                                    <i class="fas fa-check mr-1"></i> {{ info.clean }} {{ t('players.show.echo_clean') }}
-                                </div>
-
-                                <div class="py-1 px-2 bg-black dark:bg-white !bg-opacity-10 rounded font-semibold" v-if="info.unusual > 0">
-                                    <i class="fas fa-exclamation-triangle mr-1"></i> {{ info.unusual }} {{ t('players.show.echo_unusual') }}
-                                </div>
-
-                                <div class="py-1 px-2 bg-black dark:bg-white !bg-opacity-10 rounded font-semibold" v-if="info.detected">
-                                    <i class="fas fa-skull-crossbones mr-1"></i> {{ info.detected }} {{ t('players.show.echo_detected') }}
-                                </div>
-                            </div>
-                        </template>
-
-                        <template v-else-if="info.failed">
-                            <p class="italic text-gray-600 dark:text-gray-400 mt-3">
-                                <span class="font-semibold">{{ t('players.show.echo_no_data') }}:</span>
-                                <span class="italic">{{ info.failed }}</span>
-                            </p>
-                        </template>
-
-                        <template v-else>
-                            <p class="italic text-gray-600 dark:text-gray-400 mt-3">{{ t('players.show.echo_not_scanned') }}</p>
-                        </template>
-                    </div>
-                </div>
-            </template>
-
-            <template #actions>
-                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showingEchoInfo = false">
                     {{ t('global.close') }}
                 </button>
             </template>
@@ -1871,9 +1809,6 @@ export default {
             statusLoading: true,
             status: false,
 
-            echo: false,
-            showingEchoInfo: false,
-
             globalBans: [],
             showingGlobalBans: false,
 
@@ -2173,162 +2108,6 @@ export default {
             }
 
             this.loadingExtraData = false;
-        },
-        showEchoInfo() {
-            if (!this.echo || !this.echo.raw) return;
-
-            this.showingEchoInfo = true;
-
-            // Usernames:
-            // https://steamcommunity.com/actions/ajaxresolveusers?steamids=76561198306882980
-        },
-        getEchoColor(info) {
-            // Modal colors
-            // border-gray-500 bg-gray-100 dark:bg-gray-950
-            // border-teal-500 bg-teal-100 dark:bg-teal-950
-            // border-green-500 bg-green-100 dark:bg-green-950
-            // border-yellow-500 bg-yellow-100 dark:bg-yellow-950
-            // border-red-500 bg-red-100 dark:bg-red-950
-
-            // Badge colors
-            // border-gray-300 bg-gray-200 dark:bg-gray-700
-            // border-teal-300 bg-teal-200 dark:bg-teal-700
-            // border-green-300 bg-green-200 dark:bg-green-700
-            // border-yellow-300 bg-yellow-200 dark:bg-yellow-700
-            // border-red-300 bg-gray-200 dark:bg-red-700
-
-            const total = info.detected + info.unusual + info.clean;
-
-            if (total > 0 && info.lastScanned !== false) {
-                if (info.detected > 0) {
-                    return "red";
-                } else if (info.unusual > 0) {
-                    return "yellow";
-                } else if (info.clean > 0) {
-                    return "green";
-                }
-            }
-
-            return "teal";
-        },
-        getEchoIcon(info) {
-            const total = info.detected + info.unusual + info.clean;
-
-            if (total > 0 && info.lastScanned !== false) {
-                if (info.detected > 0) {
-                    return "fas fa-skull-crossbones";
-                } else if (info.unusual > 0) {
-                    return "fas fa-exclamation-triangle";
-                } else if (info.clean > 0) {
-                    return "fas fa-check";
-                }
-            }
-
-            return "fas fa-user-slash";
-        },
-        async loadEchoStatus() {
-            if (!this.$page.auth.player.isSeniorStaff) return;
-
-            const echo = this.$page.echo;
-
-            if (!echo) return;
-
-            const steam = this.player.steam.map(s => {
-                return {
-                    raw: s,
-                    int: BigInt(`0x${s.split(':').pop()}`)
-                };
-            });
-
-            if (steam.length === 0) {
-                this.echo = {
-                    color: "gray",
-                    icon: "fas fa-heart-broken",
-                    title: this.t('players.show.echo_failed_steam')
-                };
-
-                return;
-            }
-
-            this.echo = {
-                color: "gray",
-                icon: "fas fa-spinner animate-spin",
-                title: this.t('global.loading')
-            };
-
-            const resolve = async steam => {
-                let error;
-
-                try {
-                    const url = echo.replace(/\/?$/, '/') + steam.int;
-
-                    const response = await axios.get(url);
-
-                    if (response.data && response.data.game === "fivem") {
-                        const data = response.data;
-
-                        data.identifier = steam.raw;
-                        data.steam = steam.int;
-
-                        data.lastScanned = this.$moment(data.lastScanned);
-
-                        if (data.lastScanned.unix() <= 0) {
-                            data.lastScanned = false;
-                        }
-
-                        data.color = this.getEchoColor(data);
-                        data.icon = this.getEchoIcon(data);
-
-                        return data;
-                    }
-                } catch (e) {
-                    error = e.message;
-                }
-
-                return {
-                    identifier: steam.raw,
-                    steam: steam.int,
-                    color: "gray",
-                    icon: "fas fa-question",
-                    failed: error || "Unknown error"
-                };
-            };
-
-            const data = (await Promise.all(steam.map(resolve))),
-                joined = data
-                    .filter(d => !d.failed)
-                    .reduce((a, b) => {
-                        a.detected += b.detected;
-                        a.unusual += b.unusual;
-                        a.clean += b.clean;
-
-                        a.total++;
-
-                        return a;
-                    }, {
-                        detected: 0,
-                        unusual: 0,
-                        clean: 0,
-                        total: 0
-                    });
-
-            if (joined && joined.total > 0) {
-                joined.title = this.t('players.show.echo_title');
-
-                joined.raw = data;
-
-                joined.color = this.getEchoColor(joined);
-                joined.icon = this.getEchoIcon(joined);
-
-                this.echo = joined;
-            } else {
-                this.echo = {
-                    color: "gray",
-                    icon: "fas fa-question",
-                    title: this.t('players.show.echo_failed'),
-                    raw: data
-                };
-            }
         },
         async loadGlobalBans() {
             const global = this.$page.global;
@@ -3077,7 +2856,6 @@ export default {
             this.loadStatus();
             this.loadGlobalBans();
             this.loadOPFWBan();
-            this.loadEchoStatus();
             this.loadIPInfo();
         }, 500);
 

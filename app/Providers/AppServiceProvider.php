@@ -135,7 +135,6 @@ class AppServiceProvider extends ServiceProvider
                 return $session->get('discord') ?: null;
             },
 
-            'echo'       => env('ECHO_SERVER', null),
             'global'     => env('GLOBAL_SERVER', 'https://global.op-framework.com/'),
             'api'        => env('API_SERVER', 'https://op-framework.com/api'),
 
