@@ -730,7 +730,6 @@
         "discord_description": "Hewo, hewo! How do i get someones Discord ID? OwO",
         "new": {
             "title": "Nyew Pwayews UwU",
-            "description": "Wists all nyew pwayews with a pwaytime wess than 12 houws who awe cuwwentwy onwine.",
             "character": "Woaded Chawactew òwó",
             "no_character": "Nye/A UwU",
             "creation_time": "Time spent cweating chawactew. >w<",
@@ -750,7 +749,8 @@
                 "spawned": "Has Spwawned In",
                 "no_collisions": "No Cowwisions",
                 "no_gameplay_cam": "No Gameplay Camewa"
-            }
+            },
+            "description": "Wists aww nyew pwayews with a pwaytime wess than 36 houws who awe cuwwentwy onwine."
         },
         "ban": {
             "issuing": "Issuing bawn",

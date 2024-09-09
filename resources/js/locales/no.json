@@ -740,7 +740,6 @@
         "discord_description": "Hvordan får jeg noen sin Discord-ID",
         "new": {
             "title": "Nye Spillere",
-            "description": "Lister opp alle nye spillere med en spilletid på mindre enn 12 timer som er online for øyeblikket.",
             "character": "Lastet Inn Karakter",
             "no_character": "N/A",
             "creation_time": "Tid brukt på å lage karakteren.",
@@ -760,7 +759,8 @@
                 "spawned": "Er Spawnet In",
                 "no_collisions": "Ingen Kollisjoner",
                 "no_gameplay_cam": "Ingen Spillkamera"
-            }
+            },
+            "description": "Lister opp alle nye spillere med en spilletid på mindre enn 36 timer som er pålogget akkurat nå."
         },
         "ban": {
             "issuing": "Utsteder forbud",

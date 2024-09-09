@@ -730,7 +730,6 @@
         "discord_description": "How be I get someone's Discord ID",
         "new": {
             "title": "New Landlubbers",
-            "description": "Lists all greenhorn landlubbers with a sailin' time less than 12 hours who be currently online.",
             "character": "Sailed Character",
             "no_character": "N/A",
             "creation_time": "Time spent creatin' character.",
@@ -750,7 +749,8 @@
                 "spawned": "Is Coming Ashore",
                 "no_collisions": "No Clashes",
                 "no_gameplay_cam": "No Ship's Eye"
-            }
+            },
+            "description": "List all fresh buccaneers with a playtime less than 36 hours who be sailin' the digital seas right this moment."
         },
         "ban": {
             "issuing": "Leading to a Keelhauling",

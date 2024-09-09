@@ -740,7 +740,6 @@
         "discord_description": "Main kisi ka Discord ID kaise prapt karun",
         "new": {
             "title": "Naye Khiladi",
-            "description": "Sabhi naye khiladiyon ki suchi, jinki playtime 12 ghante se kam hai aur jo vartaman mein online hain.",
             "character": "Loaded Character",
             "no_character": "N/A",
             "creation_time": "Charitra nirman mein bitaya gaya samay.",
@@ -760,7 +759,8 @@
                 "spawned": "Spawn ho chuka hai",
                 "no_collisions": "Koi takkar nahi",
                 "no_gameplay_cam": "Gameplay camera nahi hai"
-            }
+            },
+            "description": "Un sabhi naye khiladiyon ki suchi jo abhi online hain aur jinki khelne ka samay 36 ghante se kam hai."
         },
         "ban": {
             "issuing": "Pratibandh jari kar rahe hain",

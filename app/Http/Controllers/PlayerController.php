@@ -135,7 +135,7 @@ class PlayerController extends Controller
         $players    = array_keys($playerList);
 
         $query->whereIn('license_identifier', $players);
-        $query->where('playtime', '<=', 60 * 60 * 12);
+        $query->where('playtime', '<=', 60 * 60 * 36);
 
         $query->orderBy('playtime');
 

@@ -730,7 +730,6 @@
         "discord_description": "How d'ya find someone's Discord ID",
         "new": {
             "title": "Brand spankin' new players",
-            "description": "Lists all them fresh-faced players with less than 12 hours of playtime who's currently online.",
             "character": "Done loaded up a character",
             "no_character": "N/A",
             "creation_time": "Time spent fixin' up that character.",
@@ -750,7 +749,8 @@
                 "spawned": "Done Got Born In",
                 "no_collisions": "Ain't No Collisions",
                 "no_gameplay_cam": "Ain't No Gameplay Camera"
-            }
+            },
+            "description": "Lists all them new players with a playtime under 36 hours who're currently online, y'all."
         },
         "ban": {
             "issuing": "Fixin' to ban",

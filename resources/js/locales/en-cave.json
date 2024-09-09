@@ -730,7 +730,6 @@
         "discord_description": "How do i get someones Discord ID",
         "new": {
             "title": "New Players",
-            "description": "Lists all new players with a playtime less than 12 hours who are currently online.",
             "character": "Loaded Character",
             "no_character": "N/A",
             "creation_time": "Time spent creating character.",
@@ -750,7 +749,8 @@
                 "spawned": "Is Spawned In",
                 "no_collisions": "No Crunchies",
                 "no_gameplay_cam": "No See-See"
-            }
+            },
+            "description": "Show all fresh tribe members with suns up time less than 36 who now see sun."
         },
         "ban": {
             "issuing": "Issuing ban",
