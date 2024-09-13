@@ -220,7 +220,7 @@ export default {
         },
         formatMessage(message) {
             // Slightly scuffed html encoding by the server
-            const text = message.trim()
+            message = message.trim()
                 .replace(/&lt(?!;)/g, "<")
                 .replace(/&gt(?!;)/g, ">")
                 .replace(/&quot(?!;)/g, '"');
@@ -258,7 +258,7 @@ export default {
                     break;
             }
 
-            return `${type} ${message.user.playerName} (${message.user.source})`;
+            return `${type} ${message.user.playerName} ${message.user.source ? `(${message.user.source})` : ''})`;
         },
         formatColor(message) {
             switch (message.type) {
