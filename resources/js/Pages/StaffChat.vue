@@ -258,7 +258,7 @@ export default {
                     break;
             }
 
-            return `${type} ${message.user.playerName} ${message.user.source ? `(${message.user.source})` : ''})`;
+            return `${type} ${message.user.playerName} ${message.user.source ? `(${message.user.source})` : ''}`;
         },
         formatColor(message) {
             switch (message.type) {
