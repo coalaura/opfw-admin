@@ -126,7 +126,7 @@ export default {
                             label: 'map.title',
                             icon: 'map',
                             url: '/map',
-                            hidden: !this.perm.check(this.perm.PERM_LIVEMAP) && this.$page.auth.player.isDebugger,
+                            hidden: !this.perm.check(this.perm.PERM_LIVEMAP) && !this.$page.auth.player.isDebugger,
                         }
                     ]
                 },
