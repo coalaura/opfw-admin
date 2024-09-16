@@ -6,7 +6,6 @@ use App\Ban;
 use App\Character;
 use App\Helpers\GeneralHelper;
 use App\Helpers\PermissionHelper;
-use App\Helpers\SessionHelper;
 use App\Player;
 use App\Server;
 use Illuminate\Http\Request;
@@ -26,7 +25,11 @@ class MapController extends Controller
     public function index(Request $request, string $server = ''): Response
     {
         if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LIVEMAP)) {
-            abort(401);
+            return Inertia::render('Map/Fake', [
+                'activeServer' => $server,
+            ]);
+
+            // abort(401);
         }
 
         $servers = [];
@@ -102,10 +105,10 @@ class MapController extends Controller
 
         $licenses = array_unique($licenses);
 
-        $data = Player::query()->select(['player_name', 'license_identifier'])->whereIn('license_identifier', $licenses)->get()->toArray();
+        $data       = Player::query()->select(['player_name', 'license_identifier'])->whereIn('license_identifier', $licenses)->get()->toArray();
         $characters = Character::query()->select(['character_id', 'first_name', 'last_name'])->whereIn('license_identifier', $licenses)->get()->toArray();
 
-        $map = [];
+        $map          = [];
         $characterMap = [];
 
         foreach ($data as $player) {

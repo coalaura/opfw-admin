@@ -1215,7 +1215,7 @@ export default {
                 rotate: true
             });
 
-            this.map.attributionControl.addAttribution('map by <a href="https://github.com/twooot" target="_blank">Laura</a> <i>accurate to about 1-2m</i>');
+            this.map.attributionControl.addAttribution('map by <a href="https://github.com/coalaura" target="_blank">Laura</a> <i>accurate to about 1-2m</i>');
 
             L.tileLayer("https://worryfree.host/tiles/tiles_" + Bounds.version + "/{z}/{x}/{y}.png", {
                 noWrap: true,
