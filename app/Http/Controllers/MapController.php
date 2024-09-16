@@ -24,8 +24,11 @@ class MapController extends Controller
      */
     public function index(Request $request, string $server = ''): Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LIVEMAP)) {
-            if (user()->isDebugger()) {
+        $perms = PermissionHelper::hasPermission($request, PermissionHelper::PERM_LIVEMAP);
+        $fake = $perms && $request->query('meow') === '420';
+
+        if (!$perms || $fake) {
+            if (user()->isDebugger() || $fake) {
                 return Inertia::render('Map/Fake', [
                     'activeServer' => $server,
                 ]);
