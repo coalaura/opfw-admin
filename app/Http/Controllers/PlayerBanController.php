@@ -705,7 +705,7 @@ class PlayerBanController extends Controller
             return 'JSON_CONTAINS(ips, \'"' . $ip . '"\', \'$\')';
         }, $ips));
 
-        return $this->drawLinked($player, $where);
+        return $this->drawLinked("IPs", $player, $where);
     }
 
     public function linkedTokens(Request $request, string $license): \Illuminate\Http\Response
@@ -724,7 +724,7 @@ class PlayerBanController extends Controller
 
         $where = "JSON_OVERLAPS(player_tokens, '" . json_encode($player->getTokens()) . "') = 1";
 
-        return $this->drawLinked($player, $where);
+        return $this->drawLinked("Tokens", $player, $where);
     }
 
     public function linkedIdentifiers(Request $request, string $license): \Illuminate\Http\Response
@@ -743,7 +743,7 @@ class PlayerBanController extends Controller
 
         $where = "JSON_OVERLAPS(identifiers, '" . json_encode($player->getBannableIdentifiers()) . "') = 1";
 
-        return $this->drawLinked($player, $where);
+        return $this->drawLinked("Identifiers", $player, $where);
     }
 
     public function linkedPrint(Request $request, string $license): \Illuminate\Http\Response
@@ -762,10 +762,10 @@ class PlayerBanController extends Controller
 
         $where = "JSON_EXTRACT(user_variables, '$.ofFingerprint') = '" . $fingerprint . "'";
 
-        return $this->drawLinked($player, $where);
+        return $this->drawLinked("Fingerprint", $player, $where);
     }
 
-    protected function drawLinked(Player $player, string $where)
+    protected function drawLinked(string $type, Player $player, string $where)
     {
         $license = $player->license_identifier;
 
@@ -838,6 +838,6 @@ class PlayerBanController extends Controller
 
         $print = $fingerprint ? " <span style='color:#a0bcff'>{<i>" . $fingerprint . "</i>}</span>" : "";
 
-        return $this->fakeText(200, "Found: <b>" . sizeof($raw) . "</b> Accounts for <a href='/players/" . $license . "' target='_blank'>" . $player->player_name . "</a>" . $print . "\n\n<i style='color:#c68dbf'>[" . $counts . "] - Last Connection - Player Name</i>\n\n<i style='color:#a3ff9b'>- Not Banned</i>\n" . implode("\n", $linked) . "\n\n<i style='color:#ff8e8e'>- Banned</i>\n" . implode("\n", $banned));
+        return $this->fakeText(200, "Found: <b>" . sizeof($raw) . "</b> Accounts for <a href='/players/" . $license . "' target='_blank'>" . $player->player_name . "</a> using " . $type . $print . "\n\n<i style='color:#c68dbf'>[" . $counts . "] - Last Connection - Player Name</i>\n\n<i style='color:#a3ff9b'>- Not Banned</i>\n" . implode("\n", $linked) . "\n\n<i style='color:#ff8e8e'>- Banned</i>\n" . implode("\n", $banned));
     }
 }
