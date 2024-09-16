@@ -137,7 +137,7 @@
                 </badge>
 
                 <!-- Debugger -->
-                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('global.debugger_title')" v-if="player.isDebugger && !player.isRoot" sqare>
+                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('global.debugger_title')" v-if="player.isDebugger && !player.isRoot" square>
                     <i class="fas fa-toolbox"></i>
                 </badge>
 
