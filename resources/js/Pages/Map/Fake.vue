@@ -193,21 +193,33 @@ export default {
 
             const count = Math.round(Math.random() * 10) + 10,
                 icons = ['circle', 'circle_green', 'skull_red', 'circle_red', 'skull', 'circle_police', 'circle_ems'],
-                names = ["Zelda Zippertoes", "Flapjack McWiggles", "Noodle McSprinkles", "Snorkel Buttercrust", "Topsy Turvypants", "Waldo Wibblewobble", "Blippy Fizzlenose", "Sprout McJellybeans", "Cranky Doodlefluff", "Fungus Puddlejumper"];
+                names = ["Zelda Zippertoes", "Flapjack McWiggles", "Noodle McSprinkles", "Snorkel Buttercrust", "Topsy Turvypants", "Waldo Wibblewobble", "Blippy Fizzlenose", "Sprout McJellybeans", "Cranky Doodlefluff", "Fungus Puddlejumper", "Jellybean Thunderpants", "Waffles McFluffy", "Pickle VonSprout", "Gizmo Tinkerton", "Bingo Fuzzlenut", "Doodle Whiskerbottom", "Zippy Puddingfoot", "Wiggle Wormwood", "Boogie VonDoodle", "Peanut Butterbuns", "Flipper Doodlehop", "Twinkles McSnuffles", "Skippy Bumblebutt", "Zippy McWigglesnort", "Spunky Dipperdoodle", "Frodo Bananabread", "Grumpy Fluffernoodle", "Slinky Tiddlewinks", "Bubbles McGiggles", "Fizzles McJibbles", "Pogo VonTwist", "Scooter McBreezy", "Squishy Whiskersnort", "Wobble McPudding", "Snickers Doodlewhip", "Squeezy Fuzzbottom", "Jumbo Jigglenoodle", "Muffin Waffleboot", "Gizmo Fiddlesticks", "Gloop McSplatter", "Fluffy Wobblepants", "Whiskers VonSnort", "Pippin Tinkertot", "Blimpy Squiggleton", "Nibbles McPuff", "Blinky Snorklewobble", "Jiggly Tumbleweed", "Twiddle Fizzlebop", "Waffle Snuggletop", "Scooby VonTwizzle"],
+                activities = ["Robbing a bank", "Flying a stolen helicopter", "Running from the cops", "Selling tacos", "Racing a lawnmower", "Hosting a car meet", "Breaking into a mansion", "Delivering pizza", "Starting a protest", "Stealing a boat", "Buying illegal fireworks", "Performing a stunt jump", "Fighting with a local", "Trying to sell a broken bike", "Starting a nightclub", "Escaping from jail", "Doing yoga on the beach", "Stealing a cop car", "Spray-painting graffiti", "Driving an ambulance off-road", "Playing guitar at a park", "Starting a street race", "Hacking an ATM", "Selling stolen goods", "Scuba diving for treasure", "Arguing over parking", "Playing poker in a backroom", "Fleeing from a drug deal", "Fixing a broken car", "Riding a horse in the city", "Organizing a protest", "Running an illegal casino", "Stealing a firetruck", "Hijacking a train", "Selling hot dogs", "Breaking into a plane", "Shooting fireworks downtown", "Evading a police blockade", "Flying a drone", "Rescuing a hostage", "Holding up a store", "Winning a street race", "Robbing a jewelry store", "Buying a fake ID", "Escaping a speeding ticket", "Running a taxi service", "Jumping off a building", "Starting a food truck business", "Setting off alarms downtown", "Trying to outdrive a tank"];
 
-            for (let i = 0; i < count; i++) {
-                const x = Math.round(Math.random() * -256),
-                    y = Math.round(Math.random() * 256),
-                    r = Math.round(Math.random() * 360);
+            const bounce = () => Math.random() * 0.5 + 0.75;
 
-                // Random velocity between 0.5 and 10.0 (negative or positive)
-                const velX = (Math.random() * 9.5 + 0.5) * (Math.random() > 0.5 ? 1 : -1),
-                    velY = (Math.random() * 9.5 + 0.5) * (Math.random() > 0.5 ? 1 : -1),
+            const randomIcon = () => L.icon({
+                iconUrl: `/images/icons/${icons[Math.floor(Math.random() * icons.length)]}.png`,
+                iconSize: [18, 18],
+            });
+
+            const popup = marker => `<span class="font-bold block border-b border-gray-700 mb-1">${marker.name} <sup>${marker.id}</sup></span>`
+                + `<span class="block border-b border-gray-700 pb-1 mb-1"><b>Speed:</b> ${(Math.sqrt(Math.pow(Math.abs(marker.velX), 2) + Math.pow(Math.abs(marker.velY), 2)) * 2.237).toFixed(1)}mph</span>`
+                + `<span class="block italic">${marker.activity}</span>`;
+
+            const addRandom = () => {
+                const x = Math.random() * -256,
+                    y = Math.random() * 256,
+                    r = Math.random() * 360;
+
+                const velX = (Math.random() * 11.75 + 0.25) * (Math.random() > 0.5 ? 1 : -1),
+                    velY = (Math.random() * 11.75 + 0.25) * (Math.random() > 0.5 ? 1 : -1),
                     velR = (Math.random() * 18.0 + 2.0) * (Math.random() > 0.5 ? 1 : -1);
 
                 const marker = {
                     id: Math.floor(Math.random() * 2500) + 1,
                     name: names[Math.floor(Math.random() * names.length)],
+                    activity: activities[Math.floor(Math.random() * activities.length)],
 
                     x: x,
                     y: y,
@@ -218,33 +230,49 @@ export default {
                     velR: velR,
 
                     blip: L.marker([x, y], {
-                        icon: L.icon({
-                            iconUrl: `/images/icons/${icons[Math.floor(Math.random() * icons.length)]}.png`,
-                            iconSize: [18, 18],
-                        }),
+                        icon: randomIcon(),
                     })
                 };
 
                 marker.blip.setRotationAngle(r);
 
-                const popup = `<span class="font-bold block border-b border-gray-700 mb-1">${marker.name} <sup>${marker.id}</sup></span>`
-                    + `<span class="block"><b>Altitude:</b> ${(Math.random() * 100).toFixed(1)}m</span>`
-                    + `<span class="block"><b>Speed:</b> ${(Math.random() * 100).toFixed(1)}mph</span>`;
-
-                marker.blip.bindPopup(popup, {
+                marker.blip.bindPopup(popup(marker), {
                     autoPan: false
                 });
 
                 this.markers.push(marker);
 
                 marker.blip.addTo(this.map);
+
+                // lifetime of 30 seconds to 10 minutes
+                const lifetime = Math.floor(Math.random() * 570) + 30;
+
+                setTimeout(() => {
+                    this.markers.splice(this.markers.indexOf(marker), 1);
+
+                    marker.blip.remove();
+                }, lifetime * 1000);
+
+                // Ensure a replacement occurs sometime around the lifetime
+                const replacement = lifetime * ((Math.random() * 0.5) + 0.25);
+
+                setTimeout(addRandom, replacement * 1000);
+
+                // Small chance to add a new marker
+                if (Math.random() < 0.02) {
+                    addRandom();
+                }
+            };
+
+            for (let i = 0; i < count; i++) {
+                addRandom();
             }
 
             let lastTime = Date.now();
 
             const animate = () => {
                 const now = Date.now(),
-                    deltaTime = (now - lastTime) / 1000.0;
+                    deltaTime = Math.min((now - lastTime) / 1000.0, 0.2);
 
                 lastTime = now;
 
@@ -257,19 +285,61 @@ export default {
                     return;
                 }
 
+                const minX = -256, maxX = 0, minY = 0, maxY = 256,
+                    collisionDistance = 0.4;
+
                 for (let i = 0; i < this.markers.length; i++) {
                     const marker = this.markers[i];
 
                     marker.x += marker.velX * deltaTime;
                     marker.y += marker.velY * deltaTime;
-                    marker.r += (marker.velR * deltaTime) % 360.0;
 
-                    if (marker.x < -256 || marker.x > 0) {
-                        marker.velX *= -1;
+                    if (marker.x <= minX || marker.x >= maxX) {
+                        marker.velX *= -1 * bounce();
+                        marker.x = Math.max(minX, Math.min(marker.x, maxX));
+
+                        Math.random() < 0.05 && marker.blip.setIcon(randomIcon());
                     }
 
-                    if (marker.y < 0 || marker.y > 256) {
-                        marker.velY *= -1;
+                    if (marker.y <= minY || marker.y >= maxY) {
+                        marker.velY *= -1 * bounce();
+                        marker.y = Math.max(minY, Math.min(marker.y, maxY));
+
+                        Math.random() < 0.05 && marker.blip.setIcon(randomIcon());
+                    }
+
+                    // Small chance to change activity
+                    if (Math.random() < 0.0005) {
+                        marker.activity = activities[Math.floor(Math.random() * activities.length)];
+                    }
+
+                    for (let j = i + 1; j < this.markers.length; j++) {
+                        const otherMarker = this.markers[j];
+
+                        const dx = otherMarker.x - marker.x,
+                            dy = otherMarker.y - marker.y;
+
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < collisionDistance) {
+                            const tempVelX = marker.velX,
+                                tempVelY = marker.velY;
+
+                            marker.velX = otherMarker.velX;
+                            marker.velY = otherMarker.velY;
+
+                            otherMarker.velX = tempVelX;
+                            otherMarker.velY = tempVelY;
+
+                            const overlap = (collisionDistance - distance) / 2,
+                                separationFactor = overlap / distance;
+
+                            marker.x -= separationFactor * dx;
+                            marker.y -= separationFactor * dy;
+
+                            otherMarker.x += separationFactor * dx;
+                            otherMarker.y += separationFactor * dy;
+                        }
                     }
 
                     marker.blip.setLatLng([marker.x, marker.y]);
@@ -277,10 +347,10 @@ export default {
                     marker.blip.setRotationAngle(marker.r);
 
                     if (this.trackId === marker.id && this.trackingValid) {
-                        this.map.setView([marker.x, marker.y], this.map.getZoom(), {
-                            duration: 0.1
-                        });
+                        this.map.setView([marker.x, marker.y], this.map.getZoom());
                     }
+
+                    marker.blip._popup.setContent(popup(marker));
                 }
             };
 

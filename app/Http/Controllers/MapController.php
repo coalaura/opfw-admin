@@ -25,11 +25,13 @@ class MapController extends Controller
     public function index(Request $request, string $server = ''): Response
     {
         if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LIVEMAP)) {
-            return Inertia::render('Map/Fake', [
-                'activeServer' => $server,
-            ]);
+            if (user()->isDebugger()) {
+                return Inertia::render('Map/Fake', [
+                    'activeServer' => $server,
+                ]);
+            }
 
-            // abort(401);
+            abort(401);
         }
 
         $servers = [];
