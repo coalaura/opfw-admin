@@ -128,8 +128,7 @@
         <div class="flex flex-wrap justify-between mb-6">
             <div class="mb-3 flex flex-wrap gap-3">
                 <!-- Wide Screen -->
-                <badge class="border-gray-200 overflow-hidden bg-center bg-cover w-32 cursor-help" style="background-image: url('/images/wide_putin.webp')" v-if="player.stretchedRes" :title="t('players.show.stretch_res', estimateRatio(player.stretchedRes.aspectRatio), estimateRatio(player.stretchedRes.pixelRatio))">
-                </badge>
+                <badge class="border-gray-200 overflow-hidden bg-center bg-cover w-32 cursor-help" style="background-image: url('/images/wide_putin.webp')" v-if="player.stretchedRes" :title="t('players.show.stretch_res', estimateRatio(player.stretchedRes.aspectRatio), estimateRatio(player.stretchedRes.pixelRatio))"></badge>
 
                 <!-- VPN -->
                 <badge class="border-gray-200 overflow-hidden bg-center bg-cover w-16 cursor-help relative" style="background-image: url('/images/vpn.webp')" v-if="isUsingVPN" :title="t('players.show.using_vpn')">
@@ -1247,7 +1246,7 @@
             <template>
                 <template v-for="(warning, index) in warnings">
                     <template v-if="isAutomatedWarning(warning)">
-                        <div v-if="showSystemWarnings" class="flex flex-col px-8 mb-5 bg-white dark:bg-gray-600 rounded-lg shadow-sm relative opacity-50 hover:opacity-100" :class="{ 'mb-3': index + 1 < warnings.length && isAutomatedWarning(warnings[index + 1]) }">
+                        <div v-if="showSystemWarnings" class="flex flex-col px-8 mb-5 bg-white dark:bg-gray-600 rounded-lg shadow-sm relative opacity-50 hover:opacity-100" :class="{ '!opacity-100': selectedWarnings.includes(warning.id), 'mb-3': index + 1 < warnings.length && isAutomatedWarning(warnings[index + 1]) }">
                             <header class="text-center">
                                 <div class="flex justify-between gap-4">
                                     <div class="flex justify-between gap-4">
@@ -1267,6 +1266,10 @@
                                         <span class="italic text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap block w-36 text-right">
                                             {{ warning.createdAt | formatTime }}
                                         </span>
+
+                                        <button class="block px-2 py-1 text-sm font-semibold text-white bg-gray-500 border-2 border-gray-500 rounded" :class="{ '!bg-red-500 hover:!bg-red-600 !border-red-900': selectedWarnings.includes(warning.id) }" @click="selectWarning(warning.id)" v-if="warning.canDelete || $page.auth.player.isSeniorStaff">
+                                            <i class="fas fa-recycle"></i>
+                                        </button>
 
                                         <button class="block px-2 py-1 text-sm font-semibold text-white bg-red-500 rounded hover:bg-red-600" @click="deleteWarning(warning.id)" v-bind:href="'/players/' + player.licenseIdentifier + '/warnings/' + warning.id" v-if="warning.canDelete || $page.auth.player.isSeniorStaff">
                                             <i class="fas fa-trash-alt"></i>
@@ -1306,6 +1309,9 @@
                                         <button class="px-2 py-1 text-sm font-semibold text-white bg-muted dark:bg-dark-muted rounded" @click="warningEditId = 0" v-if="warningEditId === warning.id">
                                             <i class="fas fa-ban"></i>
                                         </button>
+                                        <button class="block px-2 py-1 text-sm font-semibold text-white bg-gray-500 border-2 border-gray-500 rounded" :class="{ '!bg-red-500 hover:!bg-red-600 !border-red-900': selectedWarnings.includes(warning.id) }" @click="selectWarning(warning.id)" v-if="warning.canDelete || $page.auth.player.isSeniorStaff">
+                                            <i class="fas fa-recycle"></i>
+                                        </button>
                                         <inertia-link class="px-2 py-1 text-sm font-semibold text-white bg-red-500 rounded hover:bg-red-600" method="DELETE" v-bind:href="'/players/' + player.licenseIdentifier + '/warnings/' + warning.id" v-if="warning.canDelete || $page.auth.player.isSeniorStaff">
                                             <i class="fas fa-trash-alt"></i>
                                         </inertia-link>
@@ -1323,10 +1329,10 @@
 
                             <div class="absolute -bottom-2 left-2 flex gap-1.5">
                                 <div class="group flex gap-1.5 items-center rounded-md bg-gray-800 border border-gray-800 overflow-hidden p-1 cursor-pointer" @mouseenter="randomizeReaction(warning)" v-if="Object.values(warning.reactions.all).length !== reactions.length">
-                                    <i class="fas fa-ellipsis-h text-gray-400 w-4 h-4 block group-hover:hidden" :class="{'!block': isReacting[warning.id]}"></i>
+                                    <i class="fas fa-ellipsis-h text-gray-400 w-4 h-4 block group-hover:hidden" :class="{ '!block': isReacting[warning.id] }"></i>
 
                                     <div class="gap-2 hidden group-hover:flex">
-                                        <img v-for="emoji in reactions" v-if="!warning.reactions.all[emoji]" :src="'/images/reactions/' + emoji + '.png'" :title="emoji" class="w-4 h-4 object-cover cursor-pointer saturate-0 hover:saturate-100 hover:brightness-105" :class="{'!hidden': isReacting[warning.id]}" @click="toggleReaction(warning, emoji)" />
+                                        <img v-for="emoji in reactions" v-if="!warning.reactions.all[emoji]" :src="'/images/reactions/' + emoji + '.png'" :title="emoji" class="w-4 h-4 object-cover cursor-pointer saturate-0 hover:saturate-100 hover:brightness-105" :class="{ '!hidden': isReacting[warning.id] }" @click="toggleReaction(warning, emoji)" />
                                     </div>
                                 </div>
 
@@ -1347,6 +1353,10 @@
                 <p class="text-muted dark:text-dark-muted" v-if="warnings.length === 0">
                     {{ t('players.show.no_warnings') }}
                 </p>
+
+                <button class="px-5 py-2 rounded font-semibold text-white bg-red-500 hover:bg-red-600 border-2 border-red-900 w-full" v-if="selectedWarnings.length > 0" @click="deleteSelectedWarnings()">
+                    {{ t('players.show.delete_selected', selectedWarnings.length) }}
+                </button>
             </template>
 
             <template #footer>
@@ -1799,6 +1809,9 @@ export default {
             isAttachingScreenshot: false,
 
             screenCaptureLogs: null,
+
+            deletingWarnings: false,
+            selectedWarnings: [],
 
             loadingExtraData: false,
             loadingHWIDLink: false,
@@ -2671,6 +2684,8 @@ export default {
             sessionStorage.removeItem(`warning_${this.player.licenseIdentifier}`);
         },
         async editWarning(id, warningType) {
+            if (this.deletingWarnings) return;
+
             // Send request.
             await this.$inertia.put('/players/' + this.player.licenseIdentifier + '/warnings/' + id, {
                 message: $('#warning_' + id).val(),
@@ -2681,12 +2696,36 @@ export default {
             this.warningEditId = 0;
         },
         async deleteWarning(id) {
-            if (!confirm(this.t('players.show.delete_warning'))) {
+            if (this.deletingWarnings || !confirm(this.t('players.show.delete_warning'))) {
                 return;
             }
 
             // Send request.
             await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/warnings/' + id, {}, { preserveScroll: true });
+        },
+        async deleteSelectedWarnings() {
+            if (this.deletingWarnings || this.selectedWarnings.length === 0) return;
+
+            this.deletingWarnings = true;
+
+            // Send request.
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/warnings/bulk', {
+                ids: this.selectedWarnings
+            }, { preserveScroll: true });
+
+            this.deletingWarnings = false;
+            this.selectedWarnings = [];
+        },
+        selectWarning(id) {
+            if (this.deletingWarnings) return;
+
+            const index = this.selectedWarnings.indexOf(id);
+
+            if (index === -1) {
+                this.selectedWarnings.push(id);
+            } else if (this.selectedWarnings.length < 10) {
+                this.selectedWarnings.splice(index, 1);
+            }
         },
         hideDeleted(e) {
             e.preventDefault();

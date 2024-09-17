@@ -530,7 +530,8 @@
             "ban_exception": "Fjern unntak fra utestengelse",
             "whitelist": "Administrer spillers hviteliste",
             "api_tokens": "Administrer API-nøkler",
-            "realty_edit": "Rediger eiendom"
+            "realty_edit": "Rediger eiendom",
+            "bulk_delete": "Masseslett (Advarsler)"
         },
         "world_time": "Verdenstid",
         "world_time_desc": "Tiden i de {0} mest brukte tidssonene.",
@@ -948,7 +949,8 @@
             "global_opfw_ban": "Global OP-FW-utestengelse",
             "ban_op": "Globalt utestengt av <i>{0}</i> til <i>{1}</i>",
             "using_vpn": "Spilleren brukte en VPN da de koblet seg til serveren.",
-            "reacted_by": "reaksjon fra {0}"
+            "reacted_by": "reaksjon fra {0}",
+            "delete_selected": "Slett {0} valgte advarsel(er)"
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",

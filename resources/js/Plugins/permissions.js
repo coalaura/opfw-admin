@@ -48,6 +48,7 @@ const Permissions = {
             PERM_API_TOKENS: 'api_tokens',
             PERM_REALTY_EDIT: 'realty_edit',
             PERM_SAVINGS_LOGS: 'savings_logs',
+            PERM_BULK_DELETE: 'bulk_delete',
 
             level(permission) {
                 if (!(permission in permissions)) {

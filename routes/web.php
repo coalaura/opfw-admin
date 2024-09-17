@@ -97,6 +97,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Player warnings.
     Route::resource('players.warnings', PlayerWarningController::class);
+    Route::post('/players/{player}/warnings/bulk', [PlayerWarningController::class, 'bulkDeleteWarnings']);
     Route::post('/players/{player}/warnings/{warning}/react', [PlayerWarningController::class, 'react']);
     Route::get('/players/{player}/warnings/{warning}/react', [PlayerWarningController::class, 'reactions']);
 

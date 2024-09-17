@@ -521,7 +521,8 @@
             "ban_exception": "🚫🚫❌",
             "whitelist": "🎮🧑‍⚖️✅📃",
             "api_tokens": "🔧 🔑🔑",
-            "realty_edit": "✏️ 🏠💼"
+            "realty_edit": "✏️ 🏠💼",
+            "bulk_delete": "📦🗑️ (⚠️)"
         },
         "world_time": "🌍⏰",
         "world_time_desc": "⌚🌍{0}",
@@ -938,7 +939,8 @@
             "global_opfw_ban": "🌐 🚫 OP-FW",
             "ban_op": "🌐🚫✍️🚶‍♂️📅",
             "using_vpn": "🎮🧑🔛🔒🌐🔄🔗🖥️.",
-            "reacted_by": "🔁 by {0}"
+            "reacted_by": "🔁 by {0}",
+            "delete_selected": "🗑️ {0} ✅ ⚠️(s)"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

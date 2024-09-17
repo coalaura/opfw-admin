@@ -565,7 +565,8 @@
             "ban_exception": "Remove Ban Exceptions",
             "whitelist": "Manage Player Whitelist",
             "api_tokens": "Manage API Tokens",
-            "realty_edit": "Edit Real Estate"
+            "realty_edit": "Edit Real Estate",
+            "bulk_delete": "Bulk Delete (Warnings)"
         },
 
         "world_time": "World Time",
@@ -898,6 +899,7 @@
             "no_link": "No linked accounts for this identifier",
             "no_warnings": "This player has not received any warnings or notes.",
             "reacted_by": "reacted by {0}",
+            "delete_selected": "Delete {0} selected warning(s)",
             "no_panel_logs": "This player has no panel logs.",
             "edit_ban": "Edit Ban",
             "kick": "Kick Player",

@@ -521,7 +521,8 @@
             "ban_exception": "Remove Ban 'Ceptions",
             "whitelist": "Manage Player Whitelist",
             "api_tokens": "Manage them there API Tokens",
-            "realty_edit": "Edit Real Estate"
+            "realty_edit": "Edit Real Estate",
+            "bulk_delete": "Bulk Delete (Warnings)"
         },
         "world_time": "World Time",
         "world_time_desc": "The time in the {0} most used timezones.",
@@ -938,7 +939,8 @@
             "global_opfw_ban": "Global OP-FW Ban",
             "ban_op": "Banned all 'round the world by <i>{0}</i> 'til <i>{1}</i>",
             "using_vpn": "Playa was usin' a VPN when they hitched up to the server.",
-            "reacted_by": "reacted by {0}, y'all"
+            "reacted_by": "reacted by {0}, y'all",
+            "delete_selected": "Delete {0} selected warnin'(s)"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

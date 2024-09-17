@@ -521,7 +521,8 @@
             "ban_exception": "Keelhaul Ban Exceptions",
             "whitelist": "Handle Bucko Whitelist",
             "api_tokens": "Manage API Planks o' Permissions",
-            "realty_edit": "Amend Yer Property Holdings"
+            "realty_edit": "Amend Yer Property Holdings",
+            "bulk_delete": "Scuttle 'em All (Warnings)"
         },
         "world_time": "World O' Time",
         "world_time_desc": "The time in the {0} most used doubloon zones.",
@@ -938,7 +939,8 @@
             "global_opfw_ban": "Worldwide Order fer Plunderin' an' Fightin' Prohibition",
             "ban_op": "Marooned fer all t' see by <i>{0}</i> 'til the sands of <i>{1}</i> run out",
             "using_vpn": "The scallywag was harnessin' a VPN whilst they made berth on the server.",
-            "reacted_by": "keelhauled by {0}"
+            "reacted_by": "keelhauled by {0}",
+            "delete_selected": "Scuttle {0} chosen warnin'(s)"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

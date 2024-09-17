@@ -521,7 +521,8 @@
             "ban_exception": "Wemove Ban Exceptions",
             "whitelist": "Manage Pwayew Whitewist",
             "api_tokens": "Manwage API Tokens",
-            "realty_edit": "Edit Weal Estate"
+            "realty_edit": "Edit Weal Estate",
+            "bulk_delete": "Buwk Dewete (Wawnings)"
         },
         "world_time": "Wowld Timeowo",
         "world_time_desc": "The time in the {0} most used timezonesowo.",
@@ -938,7 +939,8 @@
             "global_opfw_ban": "Gwobaw OP-FW Bawn UwU",
             "ban_op": "Gwobawwy bannwed by <i>{0}</i> untiw <i>{1}</i>",
             "using_vpn": "Pwayew was using a VPN when dey connected to the sewvew uwu.",
-            "reacted_by": "weacted by {0}"
+            "reacted_by": "weacted by {0}",
+            "delete_selected": "Dewete {0} sewected wawning(s)"
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

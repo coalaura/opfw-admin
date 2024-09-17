@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\DiscordAttachmentHelper;
 use App\Helpers\Mutex;
+use App\Helpers\PermissionHelper;
 use App\Http\Requests\WarningStoreRequest;
 use App\Player;
 use App\Warning;
@@ -100,6 +101,29 @@ class PlayerWarningController extends Controller
         DiscordAttachmentHelper::unlinkMessageAttachments($warning);
 
         return backWith('success', 'The warning/note has successfully been deleted from the player\'s record.');
+    }
+
+    public function bulkDeleteWarnings(Request $request, Player $player)
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_BULK_DELETE)) {
+            abort(401);
+        }
+
+        $ids = $request->input('ids');
+
+        if (!is_array($ids) || empty($ids) || sizeof($ids) > 10) {
+            return backWith('error', 'Invalid request.');
+        }
+
+        $warnings = Warning::query()->where('player_id', $player->user_id)->whereIn('id', $ids)->get();
+
+        foreach ($warnings as $warning) {
+            $warning->forceDelete();
+
+            DiscordAttachmentHelper::unlinkMessageAttachments($warning);
+        }
+
+        return backWith('success', 'The warnings have successfully been deleted from the player\'s record.');
     }
 
     /**

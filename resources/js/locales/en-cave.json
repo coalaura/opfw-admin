@@ -521,7 +521,8 @@
             "ban_exception": "Take out Not Banned Ones",
             "whitelist": "Handle List Okay Players",
             "api_tokens": "Handle API Rocks",
-            "realty_edit": "Change Land Place"
+            "realty_edit": "Change Land Place",
+            "bulk_delete": "Remove Many (Warns)"
         },
         "world_time": "World Time-Big",
         "world_time_desc": "The time in the {0} most used timezones. Listen, sun go up, sun go down.",
@@ -938,7 +939,8 @@
             "global_opfw_ban": "\\\"World No-Allow OP-FW\\\"",
             "ban_op": "Whole earth say no by <i>{0}</i> till <i>{1}</i>",
             "using_vpn": "Player hide behind magic net mask when join tribe rock-talk place.",
-            "reacted_by": "{0} do reaction"
+            "reacted_by": "{0} do reaction",
+            "delete_selected": "Take away {0} pick warn(s)"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

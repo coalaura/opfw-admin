@@ -530,7 +530,8 @@
             "ban_exception": "Hataayein Pratibandh Apavaad",
             "whitelist": "Khilaadi Safelist Sambhalen",
             "api_tokens": "API Tokens Prabandhit Karen",
-            "realty_edit": "Real Estate Sampadan Karein"
+            "realty_edit": "Real Estate Sampadan Karein",
+            "bulk_delete": "Bulk Delete (Chetavaniyan)"
         },
         "world_time": "Vishwa Samay",
         "world_time_desc": "{0} sabse adhik upayog kiye jaane waale samay kshetron ka samay.",
@@ -948,7 +949,8 @@
             "global_opfw_ban": "Vishwa OP-FW Pratibandh",
             "ban_op": "<i>{0}</i> dwara duniya bhar mein <i>{1}</i> tak ke liye ban kiya gaya hai",
             "using_vpn": "Player ne server se connect karte waqt VPN ka upyog kiya tha.",
-            "reacted_by": "{0} ke dwara pratikriya di gayi"
+            "reacted_by": "{0} ke dwara pratikriya di gayi",
+            "delete_selected": "{0} chune gaye chetavani(ion) ko delete kare"
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",
