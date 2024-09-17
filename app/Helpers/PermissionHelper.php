@@ -32,7 +32,7 @@ class PermissionHelper
         self::PERM_API_TOKENS     => ['api_tokens', self::LEVEL_SUPERADMIN],
         self::PERM_REALTY_EDIT    => ['realty_edit', self::LEVEL_SUPERADMIN],
         self::PERM_SAVINGS_LOGS   => ['savings_logs', self::LEVEL_SENIOR],
-        self::PERM_BULK_DELETE    => ['bulk_delete', self::LEVEL_SUPERADMIN],
+        self::PERM_BULK_DELETE    => ['bulk_delete', self::LEVEL_ROOT],
     ];
 
     const PERM_SCREENSHOT     = 'P_SCREENSHOT';
