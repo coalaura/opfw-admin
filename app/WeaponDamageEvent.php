@@ -112,4 +112,12 @@ class WeaponDamageEvent extends Model
 
         return null;
     }
+
+    public static function getWeaponType(string $weapon): ?string
+    {
+        // Until we can use the new weapons.json route
+        include_once __DIR__ . '/../helpers/weapon_types.php';
+
+        return weapon_type($weapon);
+    }
 }

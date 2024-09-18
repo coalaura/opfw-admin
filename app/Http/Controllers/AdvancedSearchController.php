@@ -483,22 +483,54 @@ class AdvancedSearchController extends Controller
                 ->groupBy('item_name')
                 ->get();
 
-            $usageData = [];
-            $usageLabels = [];
+            $usage = [];
 
             foreach ($data as $item) {
                 $weapon = $item->item_name;
+                $count  = $item->count;
 
-                $usageData[] = $item->count;
-                $usageLabels[] = $weapon;
+                $type = WeaponDamageEvent::getWeaponType($weapon);
+
+                $usage[] = [
+                    'weapon' => $weapon,
+                    'count'  => $count,
+                    'type'   => $type,
+                ];
+            }
+
+            // Sort by type asc, then by count desc then by name asc
+            usort($usage, function ($a, $b) {
+                if ($a['type'] == $b['type']) {
+                    if ($a['count'] == $b['count']) {
+                        return strcmp($a['weapon'], $b['weapon']);
+                    }
+
+                    return $b['count'] - $a['count'];
+                }
+
+                return strcmp($a['type'], $b['type']);
+            });
+
+            $categories  = [];
+            $usageLabels = [];
+            $usageData   = [];
+
+            foreach ($usage as $item) {
+                $name = $item['weapon'];
+                $type = $item['type'];
+
+                $categories[$name] = $type;
+                $usageLabels[]     = sprintf('%s (%s)', $name, $type);
+                $usageData[]       = $item['count'];
             }
 
             $usages = [
-                'data' => [
-                    $usageData
+                'data'       => [
+                    $usageData,
                 ],
-                'labels' => $usageLabels,
-                'names' => ['weapons.items_in_use']
+                'labels'     => $usageLabels,
+                'names'      => ['weapons.items_in_use'],
+                'categories' => $categories,
             ];
 
             CacheHelper::write('weapon_usages', $usages, CacheHelper::HOUR * 2);

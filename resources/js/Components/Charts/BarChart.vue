@@ -83,7 +83,22 @@ export default {
 
             let bg, fg;
 
-            if (x >= this.colors.length || !this.colors[x]) {
+            if (typeof this.colors === 'function') {
+                const color = context => {
+                    const entry = context.dataset.data[context.dataIndex],
+                        label = context.chart.data.labels[context.dataIndex];
+
+                    return this.colors(label, entry);
+                };
+
+                bg = context => {
+                    return `rgba(${color(context)}, 0.3)`;
+                };
+
+                fg = context => {
+                    return `rgba(${color(context)}, 1)`;
+                };
+            } else if (x >= this.colors.length || !this.colors[x]) {
                 bg = 'rgba(0, 0, 0, 0)';
                 fg = 'rgba(0, 0, 0, 0)';
             } else {
@@ -113,7 +128,7 @@ export default {
             required: true,
         },
         colors: {
-            type: Array,
+            type: [Array, Function],
             required: true,
         },
         data: {

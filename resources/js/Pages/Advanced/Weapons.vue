@@ -68,7 +68,7 @@
             </template>
 
             <template>
-                <BarChart :data="usages" :colors="['55, 235, 185']" :title="t('weapons.usage')" class="w-full"></BarChart>
+                <BarChart :data="usages" :colors="getWeaponColor" :title="t('weapons.usage')" class="w-full"></BarChart>
             </template>
         </v-section>
 
@@ -132,6 +132,25 @@ export default {
             const weapon = this.weaponList.find(weapon => weapon.name === this.weaponName);
 
             return weapon ? weapon.hash : null;
+        },
+        getWeaponColor(label) {
+            label = label.split(' ').shift();
+
+            const type = this.usages.categories[label];
+
+            if (!type) return '145, 145, 145';
+
+            return {
+                'melee': '235, 205, 55',
+                'pistol': '55, 235, 55',
+                'smg': '55, 235, 175',
+                'rifle': '55, 160, 235',
+                'shotgun': '55, 55, 235',
+                'sniper': '130, 55, 235',
+                'heavy': '235, 55, 220',
+                'throwable': '235, 55, 55',
+                'misc': '235, 115, 55',
+            }[type] || '145, 145, 145';
         },
         async loadWeaponData() {
             const hash = this.getWeaponHash();
