@@ -494,6 +494,8 @@ class AdvancedSearchController extends Controller
 
                 $type = WeaponDamageEvent::getWeaponType($weapon);
 
+                if ($type === "throwable" || $type === "misc") continue;
+
                 $usage[] = [
                     'weapon' => $weapon,
                     'count'  => $count,
