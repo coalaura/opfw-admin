@@ -57,12 +57,14 @@ export default {
             }
         };
 
-        if (this.data.tooltips) {
+        if (this.tooltip) {
             options.tooltips.callbacks = {
                 label: (tooltipItem, data) => {
-                    const label = this.data.tooltips[tooltipItem.index];
+                    const datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '',
+                        label = data.labels[tooltipItem.index],
+                        value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
 
-                    return label[tooltipItem.datasetIndex] || "";
+                    return this.tooltip(datasetLabel, label, value);
                 }
             };
         }
@@ -134,6 +136,10 @@ export default {
         data: {
             type: Object,
             required: true,
+        },
+        tooltip: {
+            type: Function,
+            required: false
         }
     }
 }

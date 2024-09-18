@@ -68,7 +68,7 @@
             </template>
 
             <template>
-                <BarChart :data="usages" :colors="getWeaponColor" :title="t('weapons.usage')" class="w-full"></BarChart>
+                <BarChart :data="usages" :colors="getWeaponColor" :tooltip="getUsageTooltip" :title="t('weapons.usage')" class="w-full"></BarChart>
             </template>
         </v-section>
 
@@ -138,8 +138,6 @@ export default {
 
             const type = this.usages.categories[label];
 
-            if (!type) return '145, 145, 145';
-
             return {
                 'melee': '235, 205, 55',
                 'pistol': '55, 235, 55',
@@ -151,6 +149,22 @@ export default {
                 'throwable': '235, 55, 55',
                 'misc': '235, 115, 55',
             }[type] || '145, 145, 145';
+        },
+        getUsageTooltip(datasetLabel, label, value) {
+            label = label.split(' ').shift();
+
+            const type = this.usages.categories[label],
+                total = this.usages.labels.map((l, index) => {
+                    l = l.split(' ').shift();
+
+                    if (this.usages.categories[l] !== type) {
+                        return null;
+                    }
+
+                    return this.usages.data[0][index];
+                }).filter(Boolean).reduce((a, b) => a + b, 0);
+
+            return `${datasetLabel}: ${value} of ${total} (${Math.round((value / total) * 100).toFixed(2)}%)`;
         },
         async loadWeaponData() {
             const hash = this.getWeaponHash();
