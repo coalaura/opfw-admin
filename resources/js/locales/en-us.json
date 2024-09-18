@@ -625,6 +625,8 @@
         "title": "Weapon Info",
         "description": "Lookup weapons and their stats.",
         "search": "Search",
+        "usage": "Weapon Usage",
+        "items_in_use": "Items in use",
 
         "damages": "Damage Distribution",
         "damage_description": "<i>{0}</i> usually does about {1} and not more than about {2} damage.",

@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Character;
+use App\Helpers\CacheHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
 use App\Player;
 use App\Property;
+use App\Server;
 use App\Vehicle;
 use App\WeaponDamageEvent;
-use App\Server;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -470,8 +471,42 @@ class AdvancedSearchController extends Controller
 
         $weapons = WeaponDamageEvent::getWeaponList();
 
+        // Collect usages
+        $usages = CacheHelper::read('weapon_usages');
+
+        if (!$usages) {
+            $data = DB::table('inventories')
+                ->select(DB::raw('COUNT(item_name) as count'), 'item_name')
+                ->where('inventory_name', 'like', 'character-%')
+                ->where('item_name', 'like', 'weapon_%')
+                ->whereRaw("JSON_EXTRACT(item_metadata, '$.degradesAt') > ?", [time()])
+                ->groupBy('item_name')
+                ->get();
+
+            $usageData = [];
+            $usageLabels = [];
+
+            foreach ($data as $item) {
+                $weapon = $item->item_name;
+
+                $usageData[] = $item->count;
+                $usageLabels[] = $weapon;
+            }
+
+            $usages = [
+                'data' => [
+                    $usageData
+                ],
+                'labels' => $usageLabels,
+                'names' => ['weapons.items_in_use']
+            ];
+
+            CacheHelper::write('weapon_usages', $usages, CacheHelper::HOUR * 2);
+        }
+
         return Inertia::render('Advanced/Weapons', [
             'weapons' => $weapons,
+            'usages'  => $usages,
         ]);
     }
 

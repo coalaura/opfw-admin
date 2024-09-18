@@ -592,7 +592,9 @@
         "damages": "Skadedistribusjon",
         "damage_description": "<i>{0}</i> gjør vanligvis ca. {1} skade og ikke mer enn ca. {2} skade.",
         "damage_normal": "Vanlig",
-        "damage_banned": "Forbudt"
+        "damage_banned": "Forbudt",
+        "usage": "Våpenbruk",
+        "items_in_use": "Gjenstander i bruk"
     },
     "advanced": {
         "title": "Avansert Søk",

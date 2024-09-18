@@ -1366,7 +1366,9 @@
         "damages": "Boom Distribution",
         "damage_description": "<i>{0}</i> usually be dishin' out 'bout {1} 'n' nothin' more than 'bout {2} damage.",
         "damage_normal": "Regular",
-        "damage_banned": "Doomed"
+        "damage_banned": "Doomed",
+        "usage": "Arms Handlin'",
+        "items_in_use": "Trinkets in Employ"
     },
     "discord": {
         "title": "Parley Channel",

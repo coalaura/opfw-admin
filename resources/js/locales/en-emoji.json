@@ -1366,7 +1366,9 @@
         "damages": "💥📊",
         "damage_description": "<i>{0}</i> 💥 usually does about {1} and not more than about {2} 💥 damage.",
         "damage_normal": "🆗",
-        "damage_banned": "🚫"
+        "damage_banned": "🚫",
+        "usage": "🗡️📜",
+        "items_in_use": "🔨🔄"
     },
     "discord": {
         "title": "1. 💬",

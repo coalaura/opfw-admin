@@ -1366,7 +1366,9 @@
         "damages": "Ass-Kickin' Distribution",
         "damage_description": "<i>{0}</i> us'ally do 'bout {1} 'n no more 'n 'bout {2} damage.",
         "damage_normal": "Regular",
-        "damage_banned": "Forbidden"
+        "damage_banned": "Forbidden",
+        "usage": "Weapon Yoo-sage",
+        "items_in_use": "Aytems in yewz"
     },
     "discord": {
         "title": "Discawd",

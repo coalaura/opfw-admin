@@ -58,6 +58,20 @@
             </template>
         </v-section>
 
+        <hr class="border-gray-200 dark:border-gray-600">
+
+        <v-section class="overflow-x-auto" :noFooter="true">
+            <template #header>
+                <h2>
+                    {{ t('weapons.usage') }}
+                </h2>
+            </template>
+
+            <template>
+                <BarChart :data="usages" :colors="['55, 235, 185']" :title="t('weapons.usage')" class="w-full"></BarChart>
+            </template>
+        </v-section>
+
     </div>
 </template>
 
@@ -74,6 +88,10 @@ export default {
     },
     props: {
         weapons: {
+            type: [Object, Array],
+            required: true,
+        },
+        usages: {
             type: [Object, Array],
             required: true,
         }

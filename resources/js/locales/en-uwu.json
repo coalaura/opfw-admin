@@ -1366,7 +1366,9 @@
         "damages": "Damage Distwibution",
         "damage_description": "<i>{0}</i> usuawwy does abouwt {1} and not mowe than abouwt {2} damage.",
         "damage_normal": "Nyowmal",
-        "damage_banned": "Bwanned"
+        "damage_banned": "Bwanned",
+        "usage": "Weapwon Usage",
+        "items_in_use": "Items in use"
     },
     "discord": {
         "title": "Discowd",

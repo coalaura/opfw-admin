@@ -1366,7 +1366,9 @@
         "damages": "Thunk Distribution",
         "damage_description": "<i>{0}</i> usual ooga booga around {1} thunk thunk, no more than {2} thunk.",
         "damage_normal": "Ooga",
-        "damage_banned": "No thunk thunk"
+        "damage_banned": "No thunk thunk",
+        "usage": "Use Stick Hit",
+        "items_in_use": "Thing Use Now"
     },
     "discord": {
         "title": "Talky-speak-y thing",

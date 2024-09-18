@@ -592,7 +592,9 @@
         "damages": "Kshati Vikharaav",
         "damage_description": "<i>{0}</i> kaafi samay {1} aur jyaada se jyaada lagbhag {2} nuksan karta hai.",
         "damage_normal": "Samaanya",
-        "damage_banned": "Pratibandhit"
+        "damage_banned": "Pratibandhit",
+        "usage": "Haathiyar Ka Istemaal",
+        "items_in_use": "Istemaal Mein Items"
     },
     "advanced": {
         "title": "Unnat Khoj",
