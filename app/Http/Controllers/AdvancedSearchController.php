@@ -480,8 +480,8 @@ class AdvancedSearchController extends Controller
                 ->where('inventory_name', 'like', 'character-%')
                 ->where('item_name', 'like', 'weapon_%')
                 ->where(function ($query) {
-                    $query->whereNull('item_metadata')
-                        ->orWhere(DB::raw("JSON_EXTRACT(item_metadata, '$.degradesAt')"), ">", time());
+                    $query->whereNull(DB::raw("JSON_EXTRACT(item_metadata, '$.degradesAt')"))
+                        ->orWhere(DB::raw("JSON_EXTRACT(item_metadata, '$.degradesAt')"), '>', time());
                 })
                 ->groupBy('item_name')
                 ->get();
