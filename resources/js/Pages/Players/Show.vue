@@ -1332,16 +1332,16 @@
                                     <i class="fas fa-ellipsis-h text-gray-400 w-4 h-4 block group-hover:hidden" :class="{ '!block': isReacting[warning.id] }"></i>
 
                                     <div class="gap-2 hidden group-hover:flex">
-                                        <img v-for="emoji in reactions" v-if="!warning.reactions.all[emoji]" :src="'/images/reactions/' + emoji + '.png'" :title="emoji" class="w-4 h-4 object-cover cursor-pointer saturate-0 hover:saturate-100 hover:brightness-105" :class="{ '!hidden': isReacting[warning.id] }" @click="toggleReaction(warning, emoji)" />
+                                        <img v-for="emoji in reactions" v-if="!warning.reactions.all[emoji]" :src="'/images/reactions/' + emoji + '.' + (animated.includes(emoji) ? 'gif' : 'png')" :title="emoji" class="w-4 h-4 object-cover cursor-pointer saturate-0 hover:saturate-100 hover:brightness-105" :class="{ '!hidden': isReacting[warning.id] }" @click="toggleReaction(warning, emoji)" />
                                     </div>
                                 </div>
 
                                 <div class="relative group flex gap-1.5 items-center rounded-md bg-gray-800 border border-gray-800 p-1 cursor-pointer transition-colors hover:!bg-gray-700 hover:!border-gray-600" :class="{ '!bg-gray-500 !border-gray-400': warning.reactions.mine.includes(emoji) }" v-for="emoji in reactions" @mouseenter="hoveringReaction(warning, emoji)" @click="toggleReaction(warning, emoji)" v-if="warning.reactions.all[emoji]">
-                                    <img :src="'/images/reactions/' + emoji + '.png'" class="w-4 h-4 object-cover" />
+                                    <img :src="'/images/reactions/' + emoji + '.' + (animated.includes(emoji) ? 'gif' : 'png')" class="w-4 h-4 object-cover" />
                                     <span class="text-xs font-semibold text-gray-400" :class="{ '!text-gray-200': warning.reactions.mine.includes(emoji) }">{{ warning.reactions.all[emoji] }}</span>
 
                                     <div class="absolute bottom-full -left-4 -translate-y-2 hidden group-hover:flex gap-3 text-sm items-center w-max text-gray-800 bg-gray-200 dark:text-gray-200 dark:bg-gray-800 p-2 rounded whitespace-nowrap" v-if="'hover' in warning && warning.hover && warning.hover[emoji]">
-                                        <img :src="'/images/reactions/' + emoji + '.png'" class="w-12 h-12 object-cover" />
+                                        <img :src="'/images/reactions/' + emoji + '.' + (animated.includes(emoji) ? 'gif' : 'png')" class="w-12 h-12 object-cover" />
                                         <div>:{{ emoji }}: {{ t('players.show.reacted_by', smartJoin(warning.hover[emoji])) }}</div>
                                     </div>
                                 </div>
@@ -1669,6 +1669,10 @@ export default {
             required: true,
         },
         reactions: {
+            type: Array,
+            required: true,
+        },
+        animated: {
             type: Array,
             required: true,
         },

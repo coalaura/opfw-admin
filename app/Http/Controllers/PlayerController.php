@@ -226,6 +226,7 @@ class PlayerController extends Controller
             'characters'        => CharacterResource::collection($player->characters),
             'warnings'          => $player->fasterWarnings($isSenior),
             'reactions'         => Warning::Reactions,
+            'animated'          => Warning::AnimatedReactions,
             'kickReason'        => trim($request->query('kick')) ?? '',
             'whitelisted'       => !!$whitelisted,
             'blacklisted'       => !!$blacklisted,

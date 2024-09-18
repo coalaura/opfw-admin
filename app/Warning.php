@@ -27,14 +27,23 @@ class Warning extends Model
     const TypeHidden  = 'hidden';
 
     const Reactions = [
+        'blinks',
         'chair_stare',
         'confused_pika',
         'cool_cat',
         'grrr',
         'hmmm',
         'kekw',
+        'pepoo_clap',
         'shocked',
+        'touch_grass',
         'what'
+    ];
+
+    const AnimatedReactions = [
+        'blinks',
+        'pepoo_clap',
+        'touch_grass'
     ];
 
     /**
