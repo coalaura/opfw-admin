@@ -86,7 +86,7 @@ if (!function_exists('weapon_type')) {
         "weapon_heavypistol"             => "pistol",
         "weapon_knife"                   => "melee",
         "weapon_addon_stungun"           => "pistol",
-        "weapon_addon_vfcombatpistol"    => "rifle",
+        "weapon_addon_vfcombatpistol"    => "pistol",
         "weapon_bullpuprifle_mk2"        => "rifle",
         "weapon_doubleaction"            => "pistol",
         "weapon_dbshotgun"               => "shotgun",
