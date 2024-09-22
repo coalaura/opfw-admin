@@ -354,7 +354,11 @@ export default {
 
                     return `${metadata.textEntry} - ${metadata.textEntryValue}` + (metadata.keyboardValue ? `: "*${metadata.keyboardValue}*"` : '');
                 case 'fast_movement':
-                    if (metadata.data === undefined || metadata.data.maxDistance === undefined || metadata.data.totalTravelled === undefined) return false;
+                    if (metadata.data === undefined || metadata.data.maxDistance === undefined || metadata.data.totalTravelled === undefined) {
+                        if (metadata.distance === undefined) return false;
+
+                        return `**${metadata.distance.toFixed(2)}m**`;
+                    }
 
                     const diff = metadata.data.totalTravelled - metadata.data.maxDistance;
 
