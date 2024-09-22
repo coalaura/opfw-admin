@@ -362,7 +362,7 @@ export default {
 
                     const diff = metadata.data.totalTravelled - metadata.data.maxDistance;
 
-                    return `**${metadata.data.totalTravelled.toFixed(2)}m / ${metadata.data.maxDistance.toFixed(2)}m** (${diff < 0 ? '-' : '+'}${Math.abs(diff).toFixed(2)}m)`;
+                    return `**${metadata.data.totalTravelled.toFixed(2)}m > ${metadata.data.maxDistance.toFixed(2)}m** (${diff < 0 ? '-' : '+'}${Math.abs(diff).toFixed(2)}m)`;
                 case 'distance_taze':
                     if (metadata.distance === undefined) return false;
 
