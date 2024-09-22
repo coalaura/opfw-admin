@@ -74,7 +74,8 @@
         "not_restricted": "Ikke begrenset.",
         "support_markdown": "De fleste grunnleggende markdown-syntaksene støttes. Klikk for å lære mer.",
         "connect": "Koble til",
-        "opfw_abbreviation": "Hva forkortelsen OP-FW egentlig står for."
+        "opfw_abbreviation": "Hva forkortelsen OP-FW egentlig står for.",
+        "search_placeholder": "Søk..."
     },
     "steam": {
         "title": "Steam-søk",

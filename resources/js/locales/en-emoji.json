@@ -74,7 +74,8 @@
         },
         "support_markdown": "🔝🧱 markdown ✍️ is 👍. 🔗 to 🎓 more.",
         "connect": "🔗",
-        "opfw_abbreviation": "🤔 the OP-FW abbreviation 🏷️ really stands for."
+        "opfw_abbreviation": "🤔 the OP-FW abbreviation 🏷️ really stands for.",
+        "search_placeholder": "🔍..."
     },
     "steam": {
         "title": "🚂🔎",

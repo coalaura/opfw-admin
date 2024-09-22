@@ -74,7 +74,8 @@
         },
         "support_markdown": "Most barnacle-covered markdown speak be supported, mate. Click t' learn more.",
         "connect": "Join forces",
-        "opfw_abbreviation": "Wha' th' OP-FW abbreviation truly be meanin'."
+        "opfw_abbreviation": "Wha' th' OP-FW abbreviation truly be meanin'.",
+        "search_placeholder": "Scour fer treasure..."
     },
     "steam": {
         "title": "Steam Buccaneer",

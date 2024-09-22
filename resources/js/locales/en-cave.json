@@ -74,7 +74,8 @@
         },
         "support_markdown": "Simple mark-many-dots things work. Press-press learn more.",
         "connect": "Link-up",
-        "opfw_abbreviation": "Thing OP-FW mean what."
+        "opfw_abbreviation": "Thing OP-FW mean what.",
+        "search_placeholder": "Look for..."
     },
     "steam": {
         "title": "Steam Uggabugga",

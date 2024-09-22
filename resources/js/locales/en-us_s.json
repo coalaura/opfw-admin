@@ -74,7 +74,8 @@
         },
         "support_markdown": "Most basic markdown syntax is supported, y'all. Click to learn more.",
         "connect": "Connec'",
-        "opfw_abbreviation": "What the OP-FW abbreviation really stands fer."
+        "opfw_abbreviation": "What the OP-FW abbreviation really stands fer.",
+        "search_placeholder": "Search..."
     },
     "steam": {
         "title": "Steam Looker Upper",

@@ -3,7 +3,7 @@
         <!-- General stuff -->
         <div class="pb-3 flex justify-between items-center gap-3" :class="{ '!justify-center': collapsed }">
             <div class="relative w-full" v-if="!collapsed">
-                <input v-model="search" type="text" placeholder="Search..." class="px-3 py-1 w-full mr-2 bg-gray-900 border-none rounded" :class="{ 'pr-7': search }" />
+                <input v-model="search" type="text" :placeholder="t('global.search_placeholder')" class="px-3 py-1 w-full mr-2 bg-gray-900 border-none rounded" :class="{ 'pr-7': search }" />
 
                 <i class="fas fa-times absolute text-gray-300 top-1/2 right-2.5 transform -translate-y-1/2 cursor-pointer" v-if="search" @click="search = ''"></i>
             </div>

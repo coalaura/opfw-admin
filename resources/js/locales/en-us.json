@@ -41,6 +41,7 @@
         "enabled": "Enabled",
         "disabled": "Disabled",
         "filter": "Filter",
+        "search_placeholder": "Search...",
         "root": "Root",
         "connect": "Connect",
         "copied_ip": "Copied!",

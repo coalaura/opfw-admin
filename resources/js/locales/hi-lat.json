@@ -74,7 +74,8 @@
         "not_restricted": "Prati-bandhit nahi.",
         "support_markdown": "Adhiktar moolbhoot markdown syntax ka samarthan kiya jaata hai. Jaankaari ke liye click karein.",
         "connect": "Jodna",
-        "opfw_abbreviation": "OP-FW sankshipth naam ka asli arth kya hai."
+        "opfw_abbreviation": "OP-FW sankshipth naam ka asli arth kya hai.",
+        "search_placeholder": "Khoj..."
     },
     "steam": {
         "title": "Steam Lookup",
