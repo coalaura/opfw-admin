@@ -354,11 +354,11 @@ export default {
 
                     return `${metadata.textEntry} - ${metadata.textEntryValue}` + (metadata.keyboardValue ? `: "*${metadata.keyboardValue}*"` : '');
                 case 'fast_movement':
-                    if (metadata.maxDistance === undefined || metadata.totalTravelled === undefined) return false;
+                    if (metadata.data === undefined || metadata.data.maxDistance === undefined || metadata.data.totalTravelled === undefined) return false;
 
-                    const diff = metadata.totalTravelled - metadata.maxDistance;
+                    const diff = metadata.data.totalTravelled - metadata.data.maxDistance;
 
-                    return `**${metadata.totalTravelled.toFixed(2)}m / ${metadata.totalTravelled.toFixed(2)}m** (${diff < 0 ? '-' : '+'}${Math.abs(diff).toFixed(2)}m)`;
+                    return `**${metadata.data.totalTravelled.toFixed(2)}m / ${metadata.data.totalTravelled.toFixed(2)}m** (${diff < 0 ? '-' : '+'}${Math.abs(diff).toFixed(2)}m)`;
                 case 'distance_taze':
                     if (metadata.distance === undefined) return false;
 
