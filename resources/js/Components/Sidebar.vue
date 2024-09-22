@@ -1,42 +1,50 @@
 <template>
     <div class="flex flex-col w-72 px-3 py-10 pt-2 overflow-y-auto font-semibold text-white bg-gray-900v mobile:w-full mobile:py-4 sidebar" :class="{ 'w-10': collapsed }">
         <!-- General stuff -->
-        <div class="pb-3 text-right" :class="{ '!text-center': collapsed }">
+        <div class="pb-3 flex justify-between items-center gap-3" :class="{ '!justify-center': collapsed }">
+            <div class="relative w-full" v-if="!collapsed">
+                <input v-model="search" type="text" placeholder="Search..." class="px-3 py-1 w-full mr-2 bg-gray-900 border-none rounded" :class="{ 'pr-7': search }" />
+
+                <i class="fas fa-times absolute text-gray-300 top-1/2 right-2.5 transform -translate-y-1/2 cursor-pointer" v-if="search" @click="search = ''"></i>
+            </div>
+
             <a href="#" @click="collapse">
                 <i class="fas fa-compress-alt" v-if="collapsed"></i>
                 <i class="fas fa-expand-alt" v-else></i>
             </a>
         </div>
+
         <nav v-if="!collapsed">
             <ul v-if="!isMobile()">
                 <li v-for="link in links" :key="link.label" v-if="(!link.private || $page.auth.player.isSuperAdmin) && !link.hidden">
-                    <inertia-link class="flex items-center px-5 py-2 mb-2 rounded hover:bg-gray-900 hover:text-white whitespace-nowrap drop-shadow" :class="isUrl(link.url) ? ['bg-gray-900', 'text-white'] : ''" :href="link.url" v-if="!('sub' in link)">
+                    <inertia-link class="flex items-center px-5 py-2 mb-2 rounded hover:bg-gray-900 hover:text-white whitespace-nowrap drop-shadow" :class="isUrl(link.url) ? ['bg-gray-900', 'text-white'] : ''" :href="link.url" v-if="!('sub' in link) && matchesSearch(link)">
                         <icon class="w-4 h-4 mr-3 fill-current" :name="link.icon"></icon>
-                        {{ link.raw ? link.raw : t(link.label) }}
+                        {{ getLinkLabel(link) }}
                     </inertia-link>
                     <a href="#" class="flex flex-wrap items-center px-5 py-2 mb-2 -mt-1 rounded hover:bg-gray-700v hover:text-white overflow-hidden" :class="height(link.sub, $page.auth.player.isSuperAdmin)" v-if="link.sub && height(link.sub, $page.auth.player.isSuperAdmin)" @click="$event.preventDefault()">
                         <span class="block w-full mb-2 whitespace-nowrap drop-shadow">
                             <icon class="w-4 h-4 mr-3 fill-current" :name="link.icon"></icon>
-                            {{ link.raw ? link.raw : t(link.label) }}
+                            {{ getLinkLabel(link) }}
                         </span>
                         <ul class="w-full">
-                            <li v-for="sub in link.sub" :key="sub.label" v-if="(!sub.private || $page.auth.player.isSuperAdmin) && !sub.hidden && !link.hidden">
+                            <li v-for="sub in link.sub" :key="sub.label" v-if="(!sub.private || $page.auth.player.isSuperAdmin) && !sub.hidden && !link.hidden && matchesSearch(sub)">
                                 <inertia-link class="flex items-center px-5 py-2 mt-1 rounded hover:bg-gray-900 hover:text-white whitespace-nowrap drop-shadow" :class="isUrl(sub.url) ? ['bg-gray-900', 'text-white'] : ''" :href="sub.url">
                                     <icon class="w-4 h-4 mr-3 fill-current" :name="sub.icon"></icon>
-                                    {{ sub.raw ? sub.raw : t(sub.label) }}
+                                    {{ getLinkLabel(sub) }}
                                 </inertia-link>
                             </li>
                         </ul>
                     </a>
                 </li>
             </ul>
+
             <ul v-else class="mobile:flex mobile:flex-wrap mobile:justify-between">
                 <template v-for="link in links">
-                    <inertia-link class="flex items-center px-5 py-2 mb-2 rounded hover:bg-gray-900 hover:text-white text-sm drop-shadow" :class="isUrl(link.url) ? ['bg-gray-900', 'text-white'] : ''" :href="link.url" v-if="!('sub' in link) && (!link.private || $page.auth.player.isSuperAdmin) && !link.hidden">
-                        {{ link.raw ? link.raw : t(link.label) }}
+                    <inertia-link class="flex items-center px-5 py-2 mb-2 rounded hover:bg-gray-900 hover:text-white text-sm drop-shadow" :class="isUrl(link.url) ? ['bg-gray-900', 'text-white'] : ''" :href="link.url" v-if="!('sub' in link) && (!link.private || $page.auth.player.isSuperAdmin) && !link.hidden && matchesSearch(link)">
+                        {{ getLinkLabel(link) }}
                     </inertia-link>
-                    <inertia-link v-for="sub in link.sub" class="flex items-center px-5 py-2 mb-2 rounded hover:bg-gray-900 hover:text-white text-sm drop-shadow" :class="isUrl(sub.url) ? ['bg-gray-900', 'text-white'] : ''" :href="sub.url" :key="sub.label" v-if="'sub' in link && (!(sub.private || link.private) || $page.auth.player.isSuperAdmin) && !(sub.hidden || link.hidden)">
-                        {{ sub.raw ? sub.raw : t(sub.label) }}
+                    <inertia-link v-for="sub in link.sub" class="flex items-center px-5 py-2 mb-2 rounded hover:bg-gray-900 hover:text-white text-sm drop-shadow" :class="isUrl(sub.url) ? ['bg-gray-900', 'text-white'] : ''" :href="sub.url" :key="sub.label" v-if="'sub' in link && (!(sub.private || link.private) || $page.auth.player.isSuperAdmin) && !(sub.hidden || link.hidden) && matchesSearch(sub)">
+                        {{ getLinkLabel(sub) }}
                     </inertia-link>
                 </template>
             </ul>
@@ -357,6 +365,7 @@ export default {
         }
 
         data.collapsed = false;
+        data.search = "";
 
         data.heights = {};
 
@@ -371,10 +380,11 @@ export default {
         isUrl(url) {
             if (this.url === url) return true;
             if (this.url.substring(1) === '' || url.substring(1) === '') return false;
+
             return this.url.startsWith(url);
         },
         height(sub, isSuperAdmin) {
-            const length = sub.filter(l => (!l.private || isSuperAdmin) && !l.hidden).length;
+            const length = sub.filter(l => (!l.private || isSuperAdmin) && !l.hidden && this.matchesSearch(l)).length;
 
             if (length === 0) return 'hidden';
 
@@ -387,6 +397,16 @@ export default {
             $event.preventDefault();
 
             this.collapsed = !this.collapsed;
+        },
+        getLinkLabel(link) {
+            return link.raw ? link.raw : this.t(link.label);
+        },
+        matchesSearch(link) {
+            const query = this.search.trim().toLowerCase();
+
+            if (!query) return true;
+
+            return this.getLinkLabel(link).toLowerCase().includes(query);
         }
     },
     beforeMount() {
