@@ -354,14 +354,15 @@ export default {
 
                     return `${metadata.textEntry} - ${metadata.textEntryValue}` + (metadata.keyboardValue ? `: "*${metadata.keyboardValue}*"` : '');
                 case 'fast_movement':
-                case 'underground':
+                    if (metadata.maxDistance === undefined || metadata.totalTravelled === undefined) return false;
+
+                    const diff = metadata.totalTravelled - metadata.maxDistance;
+
+                    return `**${metadata.totalTravelled.toFixed(2)}m / ${metadata.totalTravelled.toFixed(2)}m** (${diff < 0 ? '-' : '+'}${Math.abs(diff).toFixed(2)}m)`;
                 case 'distance_taze':
                     if (metadata.distance === undefined) return false;
 
-                    const closestBlip = metadata.data?.closestBlip,
-                        suffix = closestBlip ? ` - *${closestBlip.distance.toFixed(1)}m from ${closestBlip.label}*` : '';
-
-                    return `**${metadata.distance.toFixed(2)}m**${suffix}`;
+                    return `**${metadata.distance.toFixed(2)}m**`;
                 case 'bad_screen_word':
                     if (metadata.words === undefined) return false;
 
