@@ -9,8 +9,8 @@
             </div>
 
             <a href="#" @click="collapse">
-                <i class="fas fa-compress-alt" v-if="collapsed"></i>
-                <i class="fas fa-expand-alt" v-else></i>
+                <i class="fas fa-expand-alt" v-if="collapsed"></i>
+                <i class="fas fa-compress-alt" v-else></i>
             </a>
         </div>
 
