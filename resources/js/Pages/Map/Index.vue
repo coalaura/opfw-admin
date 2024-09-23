@@ -1023,7 +1023,7 @@ export default {
                     this.data = this.t('map.closed_expected', this.activeServer);
 
                     window.removeEventListener("blur", pause);
-                    window.removeEventListener("focus", unpause);
+                    window.removeEventListener("focus", pause);
                 });
 
                 connection.on("connect", () => {
