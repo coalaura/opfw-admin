@@ -528,6 +528,32 @@ class OPFWHelper
     }
 
     /**
+     * Gets the weapons.json
+     *
+     * @param string $serverIp
+     * @return array|null
+     */
+    public static function getWeaponsJSON(string $serverIp): ?array
+    {
+        $serverIp = Server::fixApiUrl($serverIp);
+        $cache    = 'weapons_' . md5($serverIp);
+
+        if (CacheHelper::exists($cache)) {
+            return CacheHelper::read($cache, []);
+        } else {
+            $data = self::executeRoute($serverIp . 'weapons.json', [], 'GET', 3);
+
+            if ($data->data) {
+                CacheHelper::write($cache, $data->data, 12 * CacheHelper::HOUR);
+            } else if (!$data->status) {
+                CacheHelper::write($cache, [], 10);
+            }
+
+            return $data->data;
+        }
+    }
+
+    /**
      * Gets the variables.json
      *
      * @param string $serverIp

@@ -63,13 +63,14 @@ class WeaponDamageEvent extends Model
 
     public static function getWeaponList(): array
     {
-        $models = OPFWHelper::getModelsJSON(Server::getFirstServer() ?? '');
+        return OPFWHelper::getWeaponsJSON(Server::getFirstServer() ?? '') ?? [];
+    }
 
-        if (!$models || !isset($models['weapons'])) {
-            return [];
-        }
-
-        return $models['weapons'];
+    public static function getWeaponListFlat(): array
+    {
+        return array_map(function ($weapon) {
+            return $weapon['name'];
+        }, self::getWeaponList());
     }
 
     public static function getHitComponent($component)
@@ -88,24 +89,24 @@ class WeaponDamageEvent extends Model
         $list = self::getWeaponList();
 
         if (isset($list[$hash])) {
-            return $list[$hash];
+            return $list[$hash]['name'];
         }
 
         $signed = $hash - 4294967296;
 
         if (isset($list[$signed])) {
-            return $list[$signed];
+            return $list[$signed]['name'];
         }
 
         return "$hash/$signed";
     }
 
-    public static function getWeaponHash($name)
+    public static function getWeaponHash(string $name)
     {
         $list = self::getWeaponList();
 
         foreach ($list as $hash => $weapon) {
-            if ($weapon === $name) {
+            if ($weapon['name'] === $name) {
                 return $hash;
             }
         }
@@ -113,11 +114,16 @@ class WeaponDamageEvent extends Model
         return null;
     }
 
-    public static function getWeaponType(string $weapon): ?string
+    public static function getWeaponType(string $name): ?string
     {
-        // Until we can use the new weapons.json route
-        include_once __DIR__ . '/../helpers/weapon_types.php';
+        $list = self::getWeaponList();
 
-        return weapon_type($weapon);
+        foreach ($list as $weapon) {
+            if ($weapon['name'] === $name) {
+                return $weapon['type'];
+            }
+        }
+
+        return null;
     }
 }

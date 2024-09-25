@@ -17,20 +17,15 @@ class WeaponDamageEventResource extends JsonResource
      */
     public function toArray($request): array
     {
-        $hitPlayer     = first($this->hit_players) ?? false;
-        $hitHealth     = first($this->hit_healths) ?? false;
-        $hitGlobalId   = first($this->hit_global_ids) ?? false;
-        $hitEntityType = first($this->hit_entity_types) ?? false;
-
         return [
             'id'                => $this->id,
             'licenseIdentifier' => $this->license_identifier,
             'timestamp'         => $this->timestamp,
-            'hitLicense'        => $hitPlayer,
-            'hitHealth'         => $hitHealth,
+            'hitLicense'        => $this->hit_player ?? false,
+            'hitHealth'         => $this->hit_health,
             'distance'          => $this->distance,
-            'hitGlobalId'       => $hitGlobalId,
-            'hitEntityType'     => $hitEntityType,
+            'hitGlobalId'       => $this->hit_global_id,
+            'hitEntityType'     => $this->hit_entity_type,
             'hitComponent'      => WeaponDamageEvent::getHitComponent($this->hit_component),
             'damage'            => $this->weapon_damage,
             'weapon'            => WeaponDamageEvent::getDamageWeapon($this->weapon_type),

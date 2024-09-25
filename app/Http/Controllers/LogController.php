@@ -502,14 +502,7 @@ class LogController extends Controller
         $this->searchQuery($request, $query, 'attacker', 'license_identifier');
 
         // Filtering by victim identifier.
-        $this->searchQuery($request, $query, 'victim', function($value) {
-            // Is it a network id?
-            if (preg_match('/^\d+$/m', $value)) {
-                return DB::raw("JSON_UNQUOTE(JSON_EXTRACT(hit_global_ids, '$[0]'))");
-            }
-
-            return DB::raw("JSON_UNQUOTE(JSON_EXTRACT(hit_players, '$[0]'))");
-        });
+        $this->searchQuery($request, $query, 'victim', 'hit_player');
 
         // Filtering by weapon.
         if ($weapon = $request->input('weapon')) {
@@ -528,16 +521,16 @@ class LogController extends Controller
         if ($entityType = $request->input('entity')) {
             switch ($entityType) {
                 case "ped":
-                    $query->where('hit_entity_types', '=', '[1]');
+                    $query->where('hit_entity_type', '=', '1');
                     break;
                 case "vehicle":
-                    $query->where('hit_entity_types', '=', '[2]');
+                    $query->where('hit_entity_type', '=', '2');
                     break;
                 case "object":
-                    $query->where('hit_entity_types', '=', '[3]');
+                    $query->where('hit_entity_type', '=', '3');
                     break;
                 case "player":
-                    $query->where('hit_players', '!=', '[]');
+                    $query->whereNotNull('hit_player')->where('hit_player', '!=', '');
                     break;
             }
         }
@@ -555,7 +548,7 @@ class LogController extends Controller
         $page = Paginator::resolveCurrentPage('page');
         $query->limit(30)->offset(($page - 1) * 30);
 
-        $query->select(['id', 'license_identifier', 'timestamp', 'hit_players', 'hit_healths', 'distance', 'hit_global_ids', 'hit_entity_types', 'hit_component', 'damage_flags', 'silenced', 'tyre_index', 'suspension_index', 'weapon_damage', 'weapon_type', 'bonus_damage']);
+        $query->select(['id', 'license_identifier', 'timestamp', 'hit_player', 'hit_health', 'distance', 'hit_global_id', 'hit_entity_type', 'hit_component', 'damage_flags', 'silenced', 'tyre_index', 'suspension_index', 'weapon_damage', 'weapon_type', 'bonus_damage']);
 
         $logs = WeaponDamageEventResource::collection($query->get());
 
@@ -575,7 +568,7 @@ class LogController extends Controller
             'time'      => $end - $start,
             'playerMap' => Player::fetchLicensePlayerNameMap($logs->toArray($request), ['licenseIdentifier', 'hitLicense']),
             'page'      => $page,
-            'weapons'   => array_values(WeaponDamageEvent::getWeaponList()),
+            'weapons'   => array_values(WeaponDamageEvent::getWeaponListFlat()),
         ]);
     }
 

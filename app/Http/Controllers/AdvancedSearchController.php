@@ -469,7 +469,7 @@ class AdvancedSearchController extends Controller
             abort(401);
         }
 
-        $weapons = WeaponDamageEvent::getWeaponList();
+        $weapons = WeaponDamageEvent::getWeaponListFlat();
 
         // Collect usages
         $usages = CacheHelper::read('weapon_usages');
@@ -559,7 +559,7 @@ class AdvancedSearchController extends Controller
             abort(401);
         }
 
-        $weapons = WeaponDamageEvent::getWeaponList();
+        $weapons = WeaponDamageEvent::getWeaponListFlat();
 
         if (!isset($weapons[$hash])) {
             abort(404);
@@ -573,7 +573,8 @@ class AdvancedSearchController extends Controller
             ->where('timestamp', '>', time() - 60 * 60 * 24 * 120 * 1000)
             ->where('is_parent_self', '=', '1')
             ->whereIn('weapon_type', [$hash, $unsigned])
-            ->where('hit_players', '!=', '[]')
+            ->whereNotNull('hit_player')
+            ->where('hit_player', '!=', '')
             ->whereNotIn('hit_component', [19, 20]) // Neck and head shots
             ->groupBy(['weapon_damage', 'ban_hash'])
             ->get()->toArray();
