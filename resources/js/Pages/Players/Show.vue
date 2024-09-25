@@ -204,7 +204,7 @@
                     {{ t('players.show.unmute') }}
                 </button>
                 <!-- Unbanning -->
-                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="unbanPlayer()" v-if="player.isBanned && !(loadingOpfwBan || opfwBanned) && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="unbanPlayer()" v-if="player.isBanned && (loadingOpfwBan || !opfwBanned) && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
                     <i class="fas fa-lock-open"></i>
                     {{ t('players.show.unban') }}
                 </button>
@@ -2134,7 +2134,9 @@ export default {
             try {
                 const url = global.replace(/\/?$/, '/') + `bans/${this.player.licenseIdentifier}`;
 
-                const response = await axios.get(url);
+                const response = await axios.get(url, {
+                    signal: AbortSignal.timeout(3000),
+                });
 
                 if (response.data && Array.isArray(response.data)) {
                     this.globalBans = response.data.filter(ban => !ban.serverId || !ban.serverId.startsWith(this.$page.auth.cluster));
@@ -2154,8 +2156,8 @@ export default {
             try {
                 const url = api.replace(/\/?$/, '/') + `global/ban/${this.player.licenseIdentifier}`;
 
-                const response = await axios.get(url, null, {
-                    signal: AbortSignal.timeout(3000)
+                const response = await axios.get(url, {
+                    signal: AbortSignal.timeout(3000),
                 });
 
                 if (response.data && response.data.banned) {
