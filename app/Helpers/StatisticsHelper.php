@@ -229,7 +229,7 @@ class StatisticsHelper
 
         $whereIn = implode(', ', $unsignedGuns);
 
-        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(FROM_UNIXTIME(ROUND(timestamp_coalesced / 1000)), '%c/%d/%Y') as date FROM weapon_damage_events WHERE timestamp_coalesced IS NOT NULL AND weapon_type IN ($whereIn) GROUP BY date ORDER BY timestamp_coalesced DESC");
+        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(FROM_UNIXTIME(ROUND(`timestamp` / 1000)), '%c/%d/%Y') as date FROM weapon_damage_events WHERE weapon_type IN ($whereIn) GROUP BY date ORDER BY `timestamp` DESC");
     }
 
     // Found items revenue

@@ -4,7 +4,6 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
 
 class CreateWeaponDamageEventsTable extends Migration
 {
@@ -28,62 +27,58 @@ class CreateWeaponDamageEventsTable extends Migration
 		Schema::$func("weapon_damage_events", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement();
 			!in_array("license_identifier", $columns) && $table->string("license_identifier", 50)->nullable();
-			!in_array("hit_players", $columns) && $table->longText("hit_players")->nullable();
-			!in_array("hit_healths", $columns) && $table->longText("hit_healths")->nullable();
+			!in_array("timestamp", $columns) && $table->bigInteger("timestamp")->nullable();
+			!in_array("hit_player", $columns) && $table->longText("hit_player")->nullable();
+			!in_array("hit_health", $columns) && $table->integer("hit_health")->nullable();
+			!in_array("hit_entity_type", $columns) && $table->integer("hit_entity_type")->nullable();
 			!in_array("distance", $columns) && $table->double("distance")->nullable();
 			!in_array("is_parent_self", $columns) && $table->tinyInteger("is_parent_self")->nullable();
-			!in_array("action_result_id", $columns) && $table->integer("action_result_id")->nullable();
-			!in_array("action_result_name", $columns) && $table->bigInteger("action_result_name")->nullable();
-			!in_array("damage_flags", $columns) && $table->integer("damage_flags")->nullable();
-			!in_array("damage_time", $columns) && $table->integer("damage_time")->nullable();
+			!in_array("bonus_damage", $columns) && $table->integer("bonus_damage")->nullable();
+			!in_array("world_pos_x", $columns) && $table->double("world_pos_x")->nullable();
+			!in_array("world_pos_y", $columns) && $table->double("world_pos_y")->nullable();
+			!in_array("world_pos_z", $columns) && $table->double("world_pos_z")->nullable();
 			!in_array("damage_type", $columns) && $table->integer("damage_type")->nullable();
-			!in_array("f104", $columns) && $table->bigInteger("f104")->nullable();
-			!in_array("f112", $columns) && $table->tinyInteger("f112")->nullable();
-			!in_array("f112_1", $columns) && $table->integer("f112_1")->nullable();
-			!in_array("f120", $columns) && $table->integer("f120")->nullable();
-			!in_array("f133", $columns) && $table->tinyInteger("f133")->nullable();
-			!in_array("has_action_result", $columns) && $table->tinyInteger("has_action_result")->nullable();
-			!in_array("has_impact_dir", $columns) && $table->tinyInteger("has_impact_dir")->nullable();
-			!in_array("has_vehicle_data", $columns) && $table->tinyInteger("has_vehicle_data")->nullable();
-			!in_array("hit_component", $columns) && $table->integer("hit_component")->nullable();
+			!in_array("weapon_type", $columns) && $table->bigInteger("weapon_type")->nullable();
+			!in_array("override_default_damage", $columns) && $table->tinyInteger("override_default_damage")->nullable();
 			!in_array("hit_entity_weapon", $columns) && $table->tinyInteger("hit_entity_weapon")->nullable();
-			!in_array("hit_global_id", $columns) && $table->integer("hit_global_id")->nullable();
-			!in_array("hit_global_ids", $columns) && $table->longText("hit_global_ids")->nullable();
-			!in_array("hit_entity_types", $columns) && $table->longText("hit_entity_types")->nullable();
 			!in_array("hit_weapon_ammo_attachment", $columns) && $table->tinyInteger("hit_weapon_ammo_attachment")->nullable();
-			!in_array("impact_dir_x", $columns) && $table->double("impact_dir_x")->nullable();
-			!in_array("impact_dir_y", $columns) && $table->double("impact_dir_y")->nullable();
-			!in_array("impact_dir_z", $columns) && $table->double("impact_dir_z")->nullable();
-			!in_array("is_net_target_pos", $columns) && $table->tinyInteger("is_net_target_pos")->nullable();
+			!in_array("silenced", $columns) && $table->tinyInteger("silenced")->nullable();
+			!in_array("damage_flags", $columns) && $table->bigInteger("damage_flags")->nullable();
+			!in_array("has_action_result", $columns) && $table->tinyInteger("has_action_result")->nullable();
+			!in_array("action_result_name", $columns) && $table->bigInteger("action_result_name")->nullable();
+			!in_array("action_result_id", $columns) && $table->integer("action_result_id")->nullable();
+			!in_array("force_reaction_id", $columns) && $table->bigInteger("force_reaction_id")->nullable();
+			!in_array("weapon_damage", $columns) && $table->bigInteger("weapon_damage")->nullable();
+			!in_array("victim_player", $columns) && $table->tinyInteger("victim_player")->nullable();
 			!in_array("local_pos_x", $columns) && $table->double("local_pos_x")->nullable();
 			!in_array("local_pos_y", $columns) && $table->double("local_pos_y")->nullable();
 			!in_array("local_pos_z", $columns) && $table->double("local_pos_z")->nullable();
-			!in_array("override_default_damage", $columns) && $table->tinyInteger("override_default_damage")->nullable();
-			!in_array("parent_global_id", $columns) && $table->integer("parent_global_id")->nullable();
-			!in_array("silenced", $columns) && $table->tinyInteger("silenced")->nullable();
-			!in_array("suspension_index", $columns) && $table->integer("suspension_index")->nullable();
-			!in_array("tyre_index", $columns) && $table->integer("tyre_index")->nullable();
-			!in_array("weapon_damage", $columns) && $table->integer("weapon_damage")->nullable();
-			!in_array("weapon_type", $columns) && $table->bigInteger("weapon_type")->nullable();
+			!in_array("damage_time", $columns) && $table->bigInteger("damage_time")->nullable();
 			!in_array("will_kill", $columns) && $table->tinyInteger("will_kill")->nullable();
-			!in_array("timestamp_ms", $columns) && $table->bigInteger("timestamp_ms")->nullable();
-			!in_array("bonus_damage", $columns) && $table->integer("bonus_damage")->nullable();
-			!in_array("damage_modifier", $columns) && $table->double("damage_modifier")->nullable();
-			!in_array("timestamp_calculated", $columns) && $table->bigInteger("timestamp_calculated")->nullable();
+			!in_array("parent_global_id", $columns) && $table->integer("parent_global_id")->nullable();
+			!in_array("hit_global_id", $columns) && $table->integer("hit_global_id")->nullable();
+			!in_array("use_large_distance", $columns) && $table->tinyInteger("use_large_distance")->nullable();
+			!in_array("player_distance", $columns) && $table->integer("player_distance")->nullable();
+			!in_array("has_vehicle_data", $columns) && $table->tinyInteger("has_vehicle_data")->nullable();
+			!in_array("tyre_index", $columns) && $table->integer("tyre_index")->nullable();
+			!in_array("suspension_index", $columns) && $table->integer("suspension_index")->nullable();
+			!in_array("hit_component", $columns) && $table->integer("hit_component")->nullable();
+			!in_array("first_bullet", $columns) && $table->tinyInteger("first_bullet")->nullable();
+			!in_array("has_impact_dir", $columns) && $table->tinyInteger("has_impact_dir")->nullable();
+			!in_array("impact_dir_x", $columns) && $table->double("impact_dir_x")->nullable();
+			!in_array("impact_dir_y", $columns) && $table->double("impact_dir_y")->nullable();
+			!in_array("impact_dir_z", $columns) && $table->double("impact_dir_z")->nullable();
+			!in_array("unk_f120", $columns) && $table->integer("unk_f120")->nullable();
 
 			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
-			!in_array("timestamp_ms", $indexes) && $table->index("timestamp_ms");
+			!in_array("timestamp", $indexes) && $table->index("timestamp");
+			!in_array("hit_player", $indexes) && $table->index("hit_player");
 			!in_array("distance", $indexes) && $table->index("distance");
 			!in_array("is_parent_self", $indexes) && $table->index("is_parent_self");
+			!in_array("hit_global_id", $indexes) && $table->index("hit_global_id");
+			!in_array("hit_entity_type", $indexes) && $table->index("hit_entity_type");
 			!in_array("weapon_type", $indexes) && $table->index("weapon_type");
-			!in_array("timestamp_calculated", $indexes) && $table->index("timestamp_calculated");
-			!in_array("hit_players", $indexes) && $table->index("hit_players");
-			!in_array("hit_entity_types", $indexes) && $table->index("hit_entity_types");
-			!in_array("hit_global_ids", $indexes) && $table->index("hit_global_ids");
 		});
-
-		!in_array("timestamp_coalesced", $columns) && DB::statement("ALTER TABLE weapon_damage_events ADD COLUMN timestamp_coalesced BIGINT GENERATED ALWAYS AS (COALESCE(timestamp_calculated, timestamp_ms)) STORED");
-		!in_array("timestamp_coalesced", $indexes) && DB::statement("CREATE INDEX timestamp_coalesced ON weapon_damage_events (timestamp_coalesced)");
 	}
 
 	/**

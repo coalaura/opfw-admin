@@ -180,9 +180,9 @@ EOT;
 
         $content = str_replace('{{up}}', $up, $content);
 
-        if (!empty($indexesUp2) || !empty($columnsUp2)) {
-            $up2 = "";
+        $up2 = "";
 
+        if (!empty($indexesUp2) || !empty($columnsUp2)) {
             if (!empty($columnsUp2)) {
                 $up2 .= "\n\n" . implode("\n", $columnsUp2);
             }
@@ -190,9 +190,9 @@ EOT;
             if (!empty($indexesUp2)) {
                 $up2 .= "\n\n" . implode("\n", $indexesUp2);
             }
-
-            $content = str_replace('{{up2}}', $up2, $content);
         }
+
+        $content = str_replace('{{up2}}', $up2, $content);
 
         return $content;
     }

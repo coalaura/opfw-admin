@@ -495,7 +495,7 @@ class LogController extends Controller
         $start = round(microtime(true) * 1000);
 
         $query = WeaponDamageEvent::query()
-            ->orderByDesc('timestamp_coalesced')
+            ->orderByDesc('timestamp')
             ->where('is_parent_self', '=', '1');
 
         // Filtering by attacker identifier.
@@ -544,18 +544,18 @@ class LogController extends Controller
 
         // Filtering by before.
         if ($before = intval($request->input('before'))) {
-            $query->where('timestamp_coalesced', '<', $before * 1000);
+            $query->where('timestamp', '<', $before * 1000);
         }
 
         // Filtering by after.
         if ($after = intval($request->input('after'))) {
-            $query->where('timestamp_coalesced', '>', $after * 1000);
+            $query->where('timestamp', '>', $after * 1000);
         }
 
         $page = Paginator::resolveCurrentPage('page');
         $query->limit(30)->offset(($page - 1) * 30);
 
-        $query->select(['id', 'license_identifier', DB::raw('timestamp_coalesced as timestamp'), 'hit_players', 'hit_healths', 'distance', 'hit_global_ids', 'hit_entity_types', 'hit_component', 'damage_flags', 'silenced', 'tyre_index', 'suspension_index', 'weapon_damage', 'weapon_type', 'bonus_damage']);
+        $query->select(['id', 'license_identifier', 'timestamp', 'hit_players', 'hit_healths', 'distance', 'hit_global_ids', 'hit_entity_types', 'hit_component', 'damage_flags', 'silenced', 'tyre_index', 'suspension_index', 'weapon_damage', 'weapon_type', 'bonus_damage']);
 
         $logs = WeaponDamageEventResource::collection($query->get());
 
