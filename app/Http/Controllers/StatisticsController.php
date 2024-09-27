@@ -270,8 +270,6 @@ class StatisticsController extends Controller
 
     public function playerStatistics()
     {
-        $hours = 30 * 24;
-
         $datasets = 4;
 
         $statistics = [
@@ -307,18 +305,25 @@ class StatisticsController extends Controller
             ],
         ];
 
-        $data = StatisticsHelper::collectUserStatistics($hours);
+        $data = StatisticsHelper::collectUserStatistics();
+
+        $min = strtotime("-30 days");
+        $max = strtotime("+1 day");
 
         foreach ($data as $entry) {
             $date = $entry->date;
 
-            $statistics["data"][$date] = [
-                "date"        => $date,
-                "total_joins" => $entry->total_joins,
-                "max_users"   => $entry->max_joined,
-                "max_queue"   => $entry->max_queue,
-                "unique"      => $entry->joined_users,
-            ];
+            $time = strtotime($entry->date);
+
+            if ($time >= $min && $time <= $max) {
+                $statistics["data"][$date] = [
+                    "date"        => $date,
+                    "total_joins" => $entry->total_joins,
+                    "max_users"   => $entry->max_joined,
+                    "max_queue"   => $entry->max_queue,
+                    "unique"      => $entry->joined_users,
+                ];
+            }
 
             $statistics["graph"]["labels"][] = $date;
 

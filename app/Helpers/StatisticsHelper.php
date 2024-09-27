@@ -258,9 +258,9 @@ class StatisticsHelper
     }
 
     // General user statistics
-    public static function collectUserStatistics(int $hours): array
+    public static function collectUserStatistics(): array
     {
-        return DB::select("SELECT date, total_joins, max_joined, max_queue, JSON_LENGTH(joined_users) as joined_users FROM user_statistics LIMIT " . $hours);
+        return DB::select("SELECT date, total_joins, max_joined, max_queue, JSON_LENGTH(joined_users) as joined_users FROM user_statistics");
     }
 
     // Specific Money Statistics
