@@ -179,8 +179,6 @@ class StatisticsController extends Controller
 
     public function economyStatistics()
     {
-        $hours = 30 * 24;
-
         $datasets = 7;
 
         $statistics = [
@@ -192,65 +190,78 @@ class StatisticsController extends Controller
                         "data"            => [],
                         "backgroundColor" => $this->color(0, $datasets, 0.3),
                         "borderColor"     => $this->color(0, $datasets, 1),
+                        "pointRadius"     => 0,
                     ],
                     [
                         "label"           => "Bank",
                         "data"            => [],
                         "backgroundColor" => $this->color(1, $datasets, 0.3),
                         "borderColor"     => $this->color(1, $datasets, 1),
+                        "pointRadius"     => 0,
                     ],
                     [
                         "label"           => "Stocks",
                         "data"            => [],
                         "backgroundColor" => $this->color(2, $datasets, 0.3),
                         "borderColor"     => $this->color(2, $datasets, 1),
+                        "pointRadius"     => 0,
                     ],
                     [
                         "label"           => "Savings",
                         "data"            => [],
                         "backgroundColor" => $this->color(3, $datasets, 0.3),
                         "borderColor"     => $this->color(3, $datasets, 1),
+                        "pointRadius"     => 0,
                     ],
                     [
                         "label"           => "Richest",
                         "data"            => [],
                         "backgroundColor" => $this->color(4, $datasets, 0.3),
                         "borderColor"     => $this->color(4, $datasets, 1),
+                        "pointRadius"     => 0,
                     ],
                     [
                         "label"           => "Poorest",
                         "data"            => [],
                         "backgroundColor" => $this->color(5, $datasets, 0.3),
                         "borderColor"     => $this->color(5, $datasets, 1),
+                        "pointRadius"     => 0,
                     ],
                     [
                         "label"           => "Total",
                         "data"            => [],
                         "backgroundColor" => $this->color(6, $datasets, 0.3),
                         "borderColor"     => $this->color(6, $datasets, 1),
+                        "pointRadius"     => 0,
                     ],
                 ],
                 "labels"   => [],
             ],
         ];
 
-        $data = StatisticsHelper::collectEconomyStatistics($hours);
+        $data = StatisticsHelper::collectEconomyStatistics();
+
+        $min = strtotime("-30 days");
 
         foreach ($data as $entry) {
             $date = $entry->date;
 
-            $total = $entry->cash + $entry->bank + $entry->stocks + $entry->savings;
+            $time = strtotime($date);
 
-            $statistics["data"][$date] = [
-                "date"    => $date,
-                "cash"    => $entry->cash,
-                "bank"    => $entry->bank,
-                "stocks"  => $entry->stocks,
-                "savings" => $entry->savings,
-                "richest" => $entry->richest,
-                "poorest" => $entry->poorest,
-                "total"   => $total,
-            ];
+            if ($time >= $min) {
+                $total = $entry->cash + $entry->bank + $entry->stocks + $entry->savings;
+
+                $statistics["data"][$date] = [
+                    "date"    => $date,
+                    "cash"    => $entry->cash,
+                    "bank"    => $entry->bank,
+                    "stocks"  => $entry->stocks,
+                    "savings" => $entry->savings,
+                    "richest" => $entry->richest,
+                    "poorest" => $entry->poorest,
+                    "total"   => $total,
+                ];
+            }
 
             $statistics["graph"]["labels"][] = $date;
 
@@ -281,24 +292,28 @@ class StatisticsController extends Controller
                         "data"            => [],
                         "backgroundColor" => $this->color(0, $datasets, 0.3),
                         "borderColor"     => $this->color(0, $datasets, 1),
+                        "pointRadius"     => 0,
                     ],
                     [
                         "label"           => "Max Users",
                         "data"            => [],
                         "backgroundColor" => $this->color(1, $datasets, 0.3),
                         "borderColor"     => $this->color(1, $datasets, 1),
+                        "pointRadius"     => 0,
                     ],
                     [
                         "label"           => "Max Queue",
                         "data"            => [],
                         "backgroundColor" => $this->color(2, $datasets, 0.3),
                         "borderColor"     => $this->color(2, $datasets, 1),
+                        "pointRadius"     => 0,
                     ],
                     [
                         "label"           => "Unique Users",
                         "data"            => [],
                         "backgroundColor" => $this->color(3, $datasets, 0.3),
                         "borderColor"     => $this->color(3, $datasets, 1),
+                        "pointRadius"     => 0,
                     ],
                 ],
                 "labels"   => [],
@@ -308,14 +323,13 @@ class StatisticsController extends Controller
         $data = StatisticsHelper::collectUserStatistics();
 
         $min = strtotime("-30 days");
-        $max = strtotime("+1 day");
 
         foreach ($data as $entry) {
             $date = $entry->date;
 
             $time = strtotime($entry->date);
 
-            if ($time >= $min && $time <= $max) {
+            if ($time >= $min) {
                 $statistics["data"][$date] = [
                     "date"        => $date,
                     "total_joins" => $entry->total_joins,

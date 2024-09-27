@@ -252,15 +252,15 @@ class StatisticsHelper
     }
 
     // General economy statistics
-    public static function collectEconomyStatistics(int $hours): array
+    public static function collectEconomyStatistics(): array
     {
-        return DB::select("SELECT date, cash, bank, stocks, savings, richest, poorest FROM economy_statistics LIMIT " . $hours);
+        return DB::select("SELECT date, cash, bank, stocks, savings, richest, poorest FROM economy_statistics ORDER BY STR_TO_DATE(date, '%d.%m.%Y %H:%i') ASC");
     }
 
     // General user statistics
     public static function collectUserStatistics(): array
     {
-        return DB::select("SELECT date, total_joins, max_joined, max_queue, JSON_LENGTH(joined_users) as joined_users FROM user_statistics");
+        return DB::select("SELECT date, total_joins, max_joined, max_queue, JSON_LENGTH(joined_users) as joined_users FROM user_statistics ORDER BY STR_TO_DATE(date, '%d.%m.%Y') ASC");
     }
 
     // Specific Money Statistics

@@ -8,6 +8,10 @@ export default {
             type: Object,
             required: true
         },
+        minimal: {
+            type: Boolean,
+            default: false
+        }
     },
     data() {
         return {
