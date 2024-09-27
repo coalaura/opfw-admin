@@ -33,14 +33,14 @@
                         <table class="whitespace-nowrap">
                             <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
                                 <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.date') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.cash') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.bank') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.stocks') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.savings') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.total') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 0)">{{ t('statistics.cash') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 1)">{{ t('statistics.bank') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 2)">{{ t('statistics.stocks') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 3)">{{ t('statistics.savings') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 4)">{{ t('statistics.total') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left">&nbsp;</th>
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.richest') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.poorest') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 5)">{{ t('statistics.richest') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 6)">{{ t('statistics.poorest') }}</th>
                             </tr>
 
                             <tr class="border-t border-gray-500" v-if="!economy">
@@ -70,18 +70,18 @@
                             <tr v-for="(entry, index) in economy.data" :key="index" class="border-t border-gray-500" v-else>
                                 <td class="italic text-gray-700 dark:text-gray-300 px-2 py-0.5">{{ entry.date }}</td>
 
-                                <td class="px-2 py-0.5">{{ numberFormat(entry.cash, false, true) }}</td>
-                                <td class="px-2 py-0.5">{{ numberFormat(entry.bank, false, true) }}</td>
-                                <td class="px-2 py-0.5">{{ numberFormat(entry.stocks, false, true) }}</td>
-                                <td class="px-2 py-0.5">{{ numberFormat(entry.savings, false, true) }}</td>
-                                <td class="px-2 py-0.5">{{ numberFormat(entry.total, false, true) }}</td>
+                                <td class="px-2 py-0.5"  :style="datasetColor(economy, 0)">{{ numberFormat(entry.cash, false, true) }}</td>
+                                <td class="px-2 py-0.5"  :style="datasetColor(economy, 1)">{{ numberFormat(entry.bank, false, true) }}</td>
+                                <td class="px-2 py-0.5"  :style="datasetColor(economy, 2)">{{ numberFormat(entry.stocks, false, true) }}</td>
+                                <td class="px-2 py-0.5"  :style="datasetColor(economy, 3)">{{ numberFormat(entry.savings, false, true) }}</td>
+                                <td class="px-2 py-0.5"  :style="datasetColor(economy, 4)">{{ numberFormat(entry.total, false, true) }}</td>
                                 <td class="px-2 py-0.5">
                                     <span class="text-red-700 dark:text-red-300" v-if="index < economy.data.length - 1 && economy.data[index + 1].total > entry.total">-{{ ((economy.data[index + 1].total - entry.total) / economy.data[index + 1].total * 100).toFixed(3) }}%</span>
                                     <span class="text-green-700 dark:text-green-300" v-else-if="index < economy.data.length - 1">+{{ ((entry.total - economy.data[index + 1].total) / economy.data[index + 1].total * 100).toFixed(3) }}%</span>
                                 </td>
 
-                                <td class="px-2 py-0.5">{{ numberFormat(entry.richest, false, true) }}</td>
-                                <td class="px-2 py-0.5">{{ numberFormat(entry.poorest, false, true) }}</td>
+                                <td class="px-2 py-0.5"  :style="datasetColor(economy, 5)">{{ numberFormat(entry.richest, false, true) }}</td>
+                                <td class="px-2 py-0.5"  :style="datasetColor(economy, 6)">{{ numberFormat(entry.poorest, false, true) }}</td>
                             </tr>
                         </table>
                     </div>
@@ -112,10 +112,10 @@
                         <table class="whitespace-nowrap">
                             <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
                                 <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.date') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.total_joins') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.max_users') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.max_queue') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.unique') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(players, 0)">{{ t('statistics.total_joins') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(players, 1)">{{ t('statistics.max_users') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(players, 2)">{{ t('statistics.max_queue') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(players, 3)">{{ t('statistics.unique') }}</th>
                             </tr>
 
                             <tr class="border-t border-gray-500" v-if="!players">
@@ -141,10 +141,10 @@
                             <tr v-for="(entry, index) in players.data" :key="index" class="border-t border-gray-500" v-else>
                                 <td class="italic text-gray-700 dark:text-gray-300 px-2 py-0.5">{{ entry.date }}</td>
 
-                                <td class="px-2 py-0.5">{{ numberFormat(entry.total_joins, false, false) }}</td>
-                                <td class="px-2 py-0.5">{{ numberFormat(entry.max_users, false, false) }}</td>
-                                <td class="px-2 py-0.5">{{ numberFormat(entry.max_queue, false, false) }}</td>
-                                <td class="px-2 py-0.5">{{ numberFormat(entry.unique, false, false) }}</td>
+                                <td class="px-2 py-0.5" :style="datasetColor(players, 0)">{{ numberFormat(entry.total_joins, false, false) }}</td>
+                                <td class="px-2 py-0.5" :style="datasetColor(players, 1)">{{ numberFormat(entry.max_users, false, false) }}</td>
+                                <td class="px-2 py-0.5" :style="datasetColor(players, 2)">{{ numberFormat(entry.max_queue, false, false) }}</td>
+                                <td class="px-2 py-0.5" :style="datasetColor(players, 3)">{{ numberFormat(entry.unique, false, false) }}</td>
                             </tr>
                         </table>
                     </div>
@@ -377,6 +377,17 @@ export default {
             }
 
             return `<span class="text-green-700 dark:text-green-300" title="Movement since ${first.date}">+${((last.total - first.total) / first.total * 100).toFixed(3)}%</span>`
+        },
+        datasetColor(data, index) {
+            if (!data || !data.data || !data.data.length) return false;
+
+            const datasets = data.graph.datasets || [];
+
+            if (!datasets || index >= datasets.length) return false;
+
+            return {
+                backgroundColor: datasets[index].backgroundColor
+            };
         }
     },
 }
