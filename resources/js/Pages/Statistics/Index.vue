@@ -29,7 +29,7 @@
                 </button>
 
                 <div class="flex gap-6">
-                    <div class="overflow-y-auto max-h-statistics inline-block pr-2 flex-shrink-0">
+                    <div class="overflow-y-auto max-h-statistics-long inline-block pr-2 flex-shrink-0">
                         <table class="whitespace-nowrap">
                             <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
                                 <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.date') }}</th>
@@ -86,8 +86,8 @@
                         </table>
                     </div>
 
-                    <div v-if="!economyLoading && economy && economy.graph" class="w-full overflow-hidden">
-                        <LineChart :chartData="economy.graph"></LineChart>
+                    <div v-if="!economyLoading && economy && economy.graph" class="w-full max-h-statistics-long overflow-hidden">
+                        <LineChart :chartData="economy.graph" class="h-full"></LineChart>
                     </div>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                 </button>
 
                 <div class="flex gap-6">
-                    <div class="overflow-y-auto max-h-statistics inline-block pr-2 flex-shrink-0">
+                    <div class="overflow-y-auto max-h-statistics-long inline-block pr-2 flex-shrink-0">
                         <table class="whitespace-nowrap">
                             <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
                                 <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.date') }}</th>
@@ -149,8 +149,8 @@
                         </table>
                     </div>
 
-                    <div v-if="!playersLoading && players && players.graph" class="w-full overflow-hidden">
-                        <LineChart :chartData="players.graph"></LineChart>
+                    <div v-if="!playersLoading && players && players.graph" class="w-full max-h-statistics-long overflow-hidden">
+                        <LineChart :chartData="players.graph" class="h-full"></LineChart>
                     </div>
                 </div>
             </div>

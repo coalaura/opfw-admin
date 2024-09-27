@@ -97,12 +97,13 @@ module.exports = {
                 'large': 'min(90%, 1220px)'
             },
             maxHeight: {
-                'max':        'calc(100% - 60px)',
-                'img':        '500px',
-                'modal-max':  'calc(100% - 10rem)',
-                'lg':         '40rem',
-                'statistics': '15.5rem',
-                'section':    '46rem',
+                'max':             'calc(100% - 60px)',
+                'img':             '500px',
+                'modal-max':       'calc(100% - 10rem)',
+                'lg':              '40rem',
+                'statistics':      '15.5rem',
+                'statistics-long': '20rem',
+                'section':         '46rem',
             },
             listStyleType: {
                 'dash': "'–'"
