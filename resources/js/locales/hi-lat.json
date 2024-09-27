@@ -878,7 +878,6 @@
             "kick_reason": "Karan",
             "pm_message": "Sandesh",
             "pm_confirm": "StaffPM bhejen",
-            "logs_and_screenshots": "Panel Logs aur Screenshots",
             "delete_character": "Kya aapko yakeen hai ki aapko yeh character hataana hai?",
             "delete_warning": "Kya aapko yakeen hai ki aapko yeh strike/warning/note hataana hai?",
             "unload": "Unload karen",
@@ -960,7 +959,8 @@
             "ban_op": "<i>{0}</i> dwara duniya bhar mein <i>{1}</i> tak ke liye ban kiya gaya hai",
             "using_vpn": "Player ne server se connect karte waqt VPN ka upyog kiya tha.",
             "reacted_by": "{0} ke dwara pratikriya di gayi",
-            "delete_selected": "{0} chune gaye chetavani(ion) ko delete kare"
+            "delete_selected": "{0} chune gaye chetavani(ion) ko delete kare",
+            "panel_logs": "Panel Log"
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",

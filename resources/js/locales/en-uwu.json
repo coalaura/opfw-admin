@@ -856,7 +856,6 @@
             "kick_reason": "OwO what's the weweason?",
             "pm_message": "Hai, hewwo!",
             "pm_confirm": "UwU, send StaffPM pwease!",
-            "logs_and_screenshots": "Panel Logs & Scweenshots (*≧ω≦)",
             "delete_character": "A-Are you suwe you want to dewete this chawactew? (´；ω；`)",
             "unload": "OwO Unwoad",
             "unload_msg": "Unwoad Message (*^ω^)",
@@ -948,7 +947,8 @@
             "ban_op": "Gwobawwy bannwed by <i>{0}</i> untiw <i>{1}</i>",
             "using_vpn": "Pwayew was using a VPN when dey connected to the sewvew uwu.",
             "reacted_by": "weacted by {0}",
-            "delete_selected": "Dewete {0} sewected wawning(s)"
+            "delete_selected": "Dewete {0} sewected wawning(s)",
+            "panel_logs": "Panyew Wogs"
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

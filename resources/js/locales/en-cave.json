@@ -856,7 +856,6 @@
             "kick_reason": "Reason",
             "pm_message": "Caveman message",
             "pm_confirm": "Send StaffPM",
-            "logs_and_screenshots": "Panel Logs & Screenshots",
             "delete_character": "Ungabunga, deleting this character? Are you sure?",
             "unload": "Unload",
             "unload_msg": "Unload Message",
@@ -948,7 +947,8 @@
             "ban_op": "Whole earth say no by <i>{0}</i> till <i>{1}</i>",
             "using_vpn": "Player hide behind magic net mask when join tribe rock-talk place.",
             "reacted_by": "{0} do reaction",
-            "delete_selected": "Take away {0} pick warn(s)"
+            "delete_selected": "Take away {0} pick warn(s)",
+            "panel_logs": "Panel Markings"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

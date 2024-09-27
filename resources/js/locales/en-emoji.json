@@ -848,7 +848,6 @@
             "kick_reason": "🤔",
             "pm_message": "🔔",
             "pm_confirm": "📤✉️➡️🕶️👥",
-            "logs_and_screenshots": "📋📸",
             "delete_character": "❓➡️🕶️🔡🚫👥❓",
             "unload": "🔁",
             "unload_msg": "🔁🔡",
@@ -948,7 +947,8 @@
             "ban_op": "🌐🚫✍️🚶‍♂️📅",
             "using_vpn": "🎮🧑🔛🔒🌐🔄🔗🖥️.",
             "reacted_by": "🔁 by {0}",
-            "delete_selected": "🗑️ {0} ✅ ⚠️(s)"
+            "delete_selected": "🗑️ {0} ✅ ⚠️(s)",
+            "panel_logs": "📋🌲"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

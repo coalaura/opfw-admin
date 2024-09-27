@@ -1428,7 +1428,7 @@
                     </div>
 
                     <h2>
-                        {{ t('players.show.logs_and_screenshots') }}
+                        {{ t('players.show.panel_logs') }}
                     </h2>
                 </div>
             </template>
@@ -1443,36 +1443,6 @@
             </template>
 
             <template v-else>
-                <table class="w-full">
-                    <tr class="font-semibold text-left mobile:hidden">
-                        <th class="py-2 px-4">{{ t('screenshot.screenshot') }}</th>
-                        <th class="py-2 px-4">{{ t('screenshot.note') }}</th>
-                        <th class="py-2 px-4">{{ t('screenshot.created_at') }}</th>
-                    </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="(screenshot, index) in sortedScreenshots" :key="index">
-                        <td class="py-2 px-4 border-t mobile:block" v-if="screenshot.system">
-                            <a :href="screenshot.url" target="_blank" class="text-indigo-600 dark:text-indigo-400">{{ t('screenshot.view', screenshot.url.split(".").pop()) }}</a>
-                        </td>
-                        <td class="py-2 px-4 border-t mobile:block" v-else>
-                            <a :href="'/export/screenshot/' + screenshot.filename" target="_blank" class="text-indigo-600 dark:text-indigo-400">{{ t('screenshot.view', screenshot.filename.split(".").pop()) }}</a>
-                        </td>
-                        <td class="py-2 px-4 border-t mobile:block">
-                            <i class="fas fa-cogs mr-1" v-if="screenshot.system"></i>
-                            {{ screenshot.note || 'N/A' }}
-                            <a :href="cheatDocs(screenshot.note)" target="_blank" v-if="cheatDocs(screenshot.note)" class="text-yellow-600 dark:text-yellow-400 font-semibold" :title="t('screenshot.documentation')">?</a>
-                        </td>
-                        <td class="py-2 px-4 border-t w-60 mobile:block" v-if="screenshot.created_at">
-                            {{ screenshot.created_at * 1000 | formatTime(true) }}
-                        </td>
-                        <td class="py-2 px-4 border-t mobile:block" v-else>{{ t('global.unknown') }}</td>
-                    </tr>
-                    <tr v-if="sortedScreenshots.length === 0">
-                        <td class="py-2 px-4 text-center border-t" colspan="100%">
-                            {{ t('screenshot.no_screenshots') }}
-                        </td>
-                    </tr>
-                </table>
-
                 <table class="w-full mt-6">
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="py-2 px-4">{{ t('logs.action') }}</th>
@@ -1620,8 +1590,6 @@
                 </div>
             </div>
         </div>
-
-        <ScreenshotAttacher :close="screenshotAttached" :license="screenshotLicense" :url="screenshotImage" v-if="isAttachingScreenshot" />
     </div>
 </template>
 
@@ -1634,7 +1602,6 @@ import Badge from './../../Components/Badge';
 import Alert from './../../Components/Alert';
 import Card from './../../Components/Card';
 import Avatar from './../../Components/Avatar';
-import ScreenshotAttacher from './../../Components/ScreenshotAttacher';
 import Modal from './../../Components/Modal';
 import MetadataViewer from './../../Components/MetadataViewer';
 import StatisticsTable from './../../Components/StatisticsTable';
@@ -1648,7 +1615,6 @@ export default {
         Alert,
         Card,
         Avatar,
-        ScreenshotAttacher,
         Modal,
         MetadataViewer,
         StatisticsTable,
@@ -1810,7 +1776,6 @@ export default {
             screenshotLicense: null,
             screenshotFlags: null,
             screenshotError: null,
-            isAttachingScreenshot: false,
 
             screenCaptureLogs: null,
 
@@ -1820,7 +1785,6 @@ export default {
             loadingExtraData: false,
             loadingHWIDLink: false,
 
-            sortedScreenshots: [],
             panelLogs: [],
 
             statusLoading: true,
@@ -2117,9 +2081,6 @@ export default {
                     const data = response.data.data;
 
                     this.panelLogs = data.panelLogs;
-                    this.sortedScreenshots = data.screenshots;
-
-                    this.sortedScreenshots.sort((a, b) => b.created_at - a.created_at);
                 }
             } catch (e) {
             }
@@ -2369,21 +2330,6 @@ export default {
                 this.isScreenshotLoading = false;
 
                 cb && cb(false);
-            }
-        },
-        screenshotAttached(status, message) {
-            this.isAttachingScreenshot = false;
-
-            if (message) {
-                alert(message);
-            }
-
-            if (status) {
-                this.isScreenshot = false;
-                this.screenshotImage = null;
-                this.screenshotTimings = null;
-                this.screenshotError = null;
-                this.screenshotLicense = null;
             }
         },
         async showDiscord(e) {

@@ -945,7 +945,7 @@
             "kick_reason": "Reason",
             "pm_message": "Message",
             "pm_confirm": "Send StaffPM",
-            "logs_and_screenshots": "Panel Logs & Screenshots",
+            "panel_logs": "Panel Logs",
             "delete_character": "Are you sure you want to delete this character?",
             "delete_warning": "Are you sure you want to delete this strike/warning/note?",
             "unload": "Unload",

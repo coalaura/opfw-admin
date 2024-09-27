@@ -856,7 +856,6 @@
             "kick_reason": "Reason why",
             "pm_message": "Message from you",
             "pm_confirm": "Send Staff PM",
-            "logs_and_screenshots": "Fancy Panel Logs & Screenshots",
             "delete_character": "Y'all sure ya wanna delete this fine character?",
             "unload": "Unload",
             "unload_msg": "Unload Message",
@@ -948,7 +947,8 @@
             "ban_op": "Banned all 'round the world by <i>{0}</i> 'til <i>{1}</i>",
             "using_vpn": "Playa was usin' a VPN when they hitched up to the server.",
             "reacted_by": "reacted by {0}, y'all",
-            "delete_selected": "Delete {0} selected warnin'(s)"
+            "delete_selected": "Delete {0} selected warnin'(s)",
+            "panel_logs": "Panel Logs"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

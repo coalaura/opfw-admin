@@ -12,8 +12,6 @@
             </p>
         </portal>
 
-        <ScreenshotAttacher :close="screenshotAttached" :license="screenshot.license" :url="screenshot.url" v-if="isAttaching" />
-
         <v-section class="-mt-2 max-w-screen-lg" :noFooter="true" :noHeader="true">
             <div>
                 <div class="flex justify-between">
@@ -29,10 +27,6 @@
                     </div>
 
                     <div class="flex gap-3">
-                        <button class="px-5 py-2 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" @click="isAttaching = true" v-if="screenshot" :title="t('overwatch.attach')">
-                            <i class="fas fa-paperclip"></i>
-                        </button>
-
                         <button class="px-5 py-2 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" :class="{ 'bg-green-600 rounded dark:bg-green-400': autoRefreshEnabled }" @click="autoRefresh" :title="t('overwatch.auto_refresh')">
                             <template v-if="!isLoading || !autoRefreshEnabled">
                                 <i class="fa fa-magic mr-1"></i>
@@ -63,21 +57,18 @@
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
 import Badge from './../../Components/Badge';
-import ScreenshotAttacher from './../../Components/ScreenshotAttacher';
 
 export default {
     layout: Layout,
     components: {
         VSection,
         Badge,
-        ScreenshotAttacher
     },
     data() {
         return {
             screenshot: null,
             screenshotError: null,
             isLoading: false,
-            isAttaching: false,
 
             autoRefreshEnabled: false,
             autoRefreshTime: 0
@@ -128,13 +119,6 @@ export default {
             if (!this.autoRefreshEnabled) return;
 
             this.refresh();
-        },
-        screenshotAttached(status, message) {
-            this.isAttaching = false;
-
-            if (message) {
-                alert(message);
-            }
         }
     },
     mounted() {

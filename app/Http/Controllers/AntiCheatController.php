@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class ScreenshotController extends Controller
+class AntiCheatController extends Controller
 {
     const IgnoreAntiCheatTypes = [
         'modified_fov',
@@ -21,37 +21,12 @@ class ScreenshotController extends Controller
     ];
 
     /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function render(Request $request): Response
-    {
-        $query = Screenshot::query()->orderByDesc('created_at');
-
-        $page = Paginator::resolveCurrentPage('page');
-
-        $query->select(['id', 'license_identifier', 'filename', 'note', 'created_at']);
-        $query->limit(20)->offset(($page - 1) * 20);
-
-        $screenshots = $query->get()->toArray();
-
-        return Inertia::render('Screenshots/Index', [
-            'screenshots' => $screenshots,
-            'links'       => $this->getPageUrls($page),
-            'playerMap'   => Player::fetchLicensePlayerNameMap($screenshots, ['license_identifier']),
-            'page'        => $page,
-        ]);
-    }
-
-    /**
      * All Anti-Cheat screenshots.
      *
      * @param Request $request
      * @return Response
      */
-    public function antiCheat(Request $request): Response
+    public function render(Request $request): Response
     {
         if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_ANTI_CHEAT)) {
             abort(401);
@@ -92,7 +67,7 @@ class ScreenshotController extends Controller
 
         $reasons = Ban::getAutomatedReasons();
 
-        return Inertia::render('Screenshots/AntiCheat', [
+        return Inertia::render('AntiCheat/Index', [
             'screenshots' => $system,
             'links'       => $this->getPageUrls($page),
             'banMap'      => Ban::getAllBans(false, $identifiers, true),

@@ -247,7 +247,6 @@ class PlayerController extends Controller
     {
         $data = [
             'panelLogs'   => PanelLogResource::collection($player->panelLogs()->orderByDesc('timestamp')->limit(10)->get()),
-            'screenshots' => Screenshot::getAllScreenshotsForPlayer($player->license_identifier, 10),
         ];
 
         return $this->json(true, $data);

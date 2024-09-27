@@ -38,7 +38,7 @@ use App\Http\Controllers\PlayerRouteController;
 use App\Http\Controllers\PlayerDataController;
 use App\Http\Controllers\PlayerWarningController;
 use App\Http\Controllers\QueueController;
-use App\Http\Controllers\ScreenshotController;
+use App\Http\Controllers\AntiCheatController;
 use App\Http\Controllers\StocksController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StaffChatController;
@@ -117,7 +117,6 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::post('/players/{player}/staffPM', [PlayerRouteController::class, 'staffPM']);
     Route::post('/players/{player}/unloadCharacter', [PlayerRouteController::class, 'unloadCharacter']);
     Route::post('/players/{player}/revivePlayer', [PlayerRouteController::class, 'revivePlayer']);
-    Route::post('/players/{player}/attachScreenshot', [PlayerRouteController::class, 'attachScreenshot']);
 
     // Update player data.
     Route::post('/players/{player}/updateEnabledCommands', [PlayerDataController::class, 'updateEnabledCommands']);
@@ -255,8 +254,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/overwatch', [OverwatchController::class, 'index']);
 
     // Screenshots.
-    Route::get('/screenshots', [ScreenshotController::class, 'render']);
-    Route::get('/anti_cheat', [ScreenshotController::class, 'antiCheat']);
+    Route::get('/anti_cheat', [AntiCheatController::class, 'render']);
 
     // Documentations.
     Route::get('/docs/{type}', [DocumentationController::class, 'docs']);
@@ -280,7 +278,6 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Exports.
     Route::get('/export/character/{character}', [PlayerCharacterController::class, 'export']);
-    Route::get('/export/screenshot/{screenshot}', [PlayerRouteController::class, 'exportScreenshot']);
 
     // Queue.
     Route::get('/queue/{server}', [QueueController::class, 'render']);

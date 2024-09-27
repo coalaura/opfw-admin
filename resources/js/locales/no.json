@@ -878,7 +878,6 @@
             "kick_reason": "Årsak",
             "pm_message": "Melding",
             "pm_confirm": "Send ansatte-melding",
-            "logs_and_screenshots": "Panellogger og skjermbilder",
             "delete_character": "Er du sikker på at du vil slette denne karakteren?",
             "delete_warning": "Er du sikker på at du ønsker å slette denne advarselen/noten?",
             "unload": "Avlast",
@@ -960,7 +959,8 @@
             "ban_op": "Globalt utestengt av <i>{0}</i> til <i>{1}</i>",
             "using_vpn": "Spilleren brukte en VPN da de koblet seg til serveren.",
             "reacted_by": "reaksjon fra {0}",
-            "delete_selected": "Slett {0} valgte advarsel(er)"
+            "delete_selected": "Slett {0} valgte advarsel(er)",
+            "panel_logs": "Panellogger"
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",
