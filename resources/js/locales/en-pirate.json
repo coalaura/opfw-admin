@@ -366,7 +366,14 @@
         "shots_fired": "Broadside unleashed",
         "shots_fired_details": "Number o' bullets that struck true (dealin' damage) from all iron flingers that spit lead (nay cutlasses, nor other close-quarters tools).",
         "richest": "Wealthiest",
-        "poorest": "Destitutest"
+        "poorest": "Destitutest",
+        "total_joins": "Total Boardin's",
+        "max_users": "Max Buccaneers",
+        "max_queue": "Max Waitin' Line",
+        "unique": "Peculiar Buccaneers",
+        "no_players_recorded": "No hands on deck statistics logged yet.",
+        "player_stats": "Buccaneer Tallies",
+        "player_stats_details": "Parley 'bout buccaneer tallies on a chart fer th' last 30 days."
     },
     "map": {
         "title": "Sailin' Map",

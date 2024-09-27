@@ -366,7 +366,14 @@
         "shots_fired": "Skudd Avfyrt",
         "shots_fired_details": "Antall skudd avfyrt (som forårsaket skade) fra alle våpen som skyter kuler (ingen nærkampvåpen osv.).",
         "richest": "Rikeste",
-        "poorest": "Fattigste"
+        "poorest": "Fattigste",
+        "total_joins": "Totale Tilslutninger",
+        "max_users": "Maks Brukere",
+        "max_queue": "Maks Kø",
+        "unique": "Unike Brukere",
+        "no_players_recorded": "Ingen spillstatistikk registrert ennå.",
+        "player_stats": "Spillerstatistikk",
+        "player_stats_details": "Sammenlign spillerstatistikk i et diagram for de siste 30 dagene."
     },
     "map": {
         "title": "Levende-kart",

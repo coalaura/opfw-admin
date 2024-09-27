@@ -317,6 +317,10 @@
         "total": "Total",
         "richest": "Richest",
         "poorest": "Poorest",
+        "total_joins": "Total Joins",
+        "max_users": "Max Users",
+        "max_queue": "Max Queue",
+        "unique": "Unique Users",
 
         "tag_money": "Money",
         "tag_amount": "Amount",
@@ -324,6 +328,7 @@
         "search": "Search",
         "failed_load": "Failed to load statistics.",
         "no_economy_recorded": "No economy statistics recorded yet. (Recorded once every hour)",
+        "no_players_recorded": "No players statistics recorded yet.",
 
         "casino": "Casino Revenue",
         "casino_details": "Combined revenue from all available games in the casino.",
@@ -389,7 +394,9 @@
         "money_logs": "Money Logs",
         "money_logs_details": "Compare different money logs in a graph for the last 30 days.",
         "economy_stats": "Economy Statistics",
-        "economy_stats_details": "Compare economy statistics in a graph for the last 30 days."
+        "economy_stats_details": "Compare economy statistics in a graph for the last 30 days.",
+        "player_stats": "Player Statistics",
+        "player_stats_details": "Compare player statistics in a graph for the last 30 days."
     },
     "map": {
         "title": "Live-Map",

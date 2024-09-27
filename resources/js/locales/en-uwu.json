@@ -366,7 +366,14 @@
         "shots_fired": "Shots Fiwed",
         "shots_fired_details": "Amount of shots fiwed (dat deawt damage) fwom aww weapons dat shoot buwwets (no melee, etc.).",
         "richest": "Wichest",
-        "poorest": "Powoest"
+        "poorest": "Powoest",
+        "total_joins": "Towtaw Joins",
+        "max_users": "Max UwUsers",
+        "max_queue": "Max Queuewu",
+        "unique": "Unique UwUsers",
+        "no_players_recorded": "No pwayews statistics wecowded yet.",
+        "player_stats": "Pwayew Statistics",
+        "player_stats_details": "Compawe pwayew statistics in a gwaph fow the wast 30 days."
     },
     "map": {
         "title": "Wive-Map UwU",

@@ -366,7 +366,14 @@
         "shots_fired": "Shots Fired",
         "shots_fired_details": "Number o' bullets that actually hit somethin' from all them firearms that shoot lead, 'cept for any of that hand-to-hand combat stuff, y'know.",
         "richest": "Riches'",
-        "poorest": "Po'ess"
+        "poorest": "Po'ess",
+        "total_joins": "Tuh-tuhl Joins",
+        "max_users": "Max Uhsers",
+        "max_queue": "Max Queue",
+        "unique": "Yewneek Uhsers",
+        "no_players_recorded": "Ain't no player statistics recorded yet.",
+        "player_stats": "Player Statistics",
+        "player_stats_details": "Compare player statistics in a graph fer the last thurty days."
     },
     "map": {
         "title": "Active Map",

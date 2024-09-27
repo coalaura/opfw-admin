@@ -268,6 +268,71 @@ class StatisticsController extends Controller
         return $this->json(true, $statistics);
     }
 
+    public function playerStatistics()
+    {
+        $hours = 30 * 24;
+
+        $datasets = 4;
+
+        $statistics = [
+            "data"  => [],
+            "graph" => [
+                "datasets" => [
+                    [
+                        "label"           => "Total Joins",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(0, $datasets, 0.3),
+                        "borderColor"     => $this->color(0, $datasets, 1),
+                    ],
+                    [
+                        "label"           => "Max Users",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(1, $datasets, 0.3),
+                        "borderColor"     => $this->color(1, $datasets, 1),
+                    ],
+                    [
+                        "label"           => "Max Queue",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(2, $datasets, 0.3),
+                        "borderColor"     => $this->color(2, $datasets, 1),
+                    ],
+                    [
+                        "label"           => "Unique Users",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(3, $datasets, 0.3),
+                        "borderColor"     => $this->color(3, $datasets, 1),
+                    ],
+                ],
+                "labels"   => [],
+            ],
+        ];
+
+        $data = StatisticsHelper::collectUserStatistics($hours);
+
+        foreach ($data as $entry) {
+            $date = $entry->date;
+
+            $statistics["data"][$date] = [
+                "date"        => $date,
+                "total_joins" => $entry->total_joins,
+                "max_users"   => $entry->max_joined,
+                "max_queue"   => $entry->max_queue,
+                "unique"      => $entry->joined_users,
+            ];
+
+            $statistics["graph"]["labels"][] = $date;
+
+            $statistics["graph"]["datasets"][0]["data"][] = $entry->total_joins;
+            $statistics["graph"]["datasets"][1]["data"][] = $entry->max_joined;
+            $statistics["graph"]["datasets"][2]["data"][] = $entry->max_queue;
+            $statistics["graph"]["datasets"][3]["data"][] = $entry->joined_users;
+        }
+
+        $statistics["data"] = array_reverse(array_values($statistics["data"]));
+
+        return $this->json(true, $statistics);
+    }
+
     public function moneyLogs(Request $request)
     {
         $types = $request->input('types', []);

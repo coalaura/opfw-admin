@@ -366,7 +366,14 @@
         "shots_fired": "Goliyan Chalayi Gayi",
         "shots_fired_details": "Har us hathiyar se chalayi gayi goliyon ki sankhya jo goliyan chalata hai (yani ki koi melee hatiyar nahi, aadi).",
         "richest": "Sabse ameer",
-        "poorest": "Sabse gareeb"
+        "poorest": "Sabse gareeb",
+        "total_joins": "Kul Judne Wale",
+        "max_users": "Adhiktam Upayogakarta",
+        "max_queue": "Adhikatam Queue",
+        "unique": "Anootha Upayogakarta",
+        "no_players_recorded": "Abhi tak koi khiladi aankada darj nahi kiya gaya hai.",
+        "player_stats": "Khiladi Aankada",
+        "player_stats_details": "Pichhle 30 dino ke liye graph mein khiladi ke aankade ka tulna kare."
     },
     "map": {
         "title": "Live-Naksha",

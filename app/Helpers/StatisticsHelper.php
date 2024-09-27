@@ -257,6 +257,12 @@ class StatisticsHelper
         return DB::select("SELECT date, cash, bank, stocks, savings, richest, poorest FROM economy_statistics LIMIT " . $hours);
     }
 
+    // General user statistics
+    public static function collectUserStatistics(int $hours): array
+    {
+        return DB::select("SELECT date, total_joins, max_joined, max_queue, JSON_LENGTH(joined_users) as joined_users FROM user_statistics LIMIT " . $hours);
+    }
+
     // Specific Money Statistics
     public static function collectSpecificMoneyStatistics(array $types): array
     {

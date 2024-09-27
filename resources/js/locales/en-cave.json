@@ -366,7 +366,14 @@
         "shots_fired": "Bang Bang Go",
         "shots_fired_details": "Many bang go hurt from all fire stick (no smash, etc.).",
         "richest": "Many-shiny-rock-keeper",
-        "poorest": "None-shiny-rock-keeper"
+        "poorest": "None-shiny-rock-keeper",
+        "total_joins": "Many Join",
+        "max_users": "Max Tribemates",
+        "max_queue": "Max Wait Line",
+        "unique": "Different Tribemates",
+        "no_players_recorded": "No players counts make yet.",
+        "player_stats": "Tribemate Counts",
+        "player_stats_details": "Look at tribemate counts in draw-line for last 30 suns."
     },
     "map": {
         "title": "Ooga-Map",

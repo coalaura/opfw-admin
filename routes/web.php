@@ -246,6 +246,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     // Statistics.
     Route::get('/statistics', [StatisticsController::class, 'render']);
     Route::get('/statistics/economy', [StatisticsController::class, 'economyStatistics']);
+    Route::get('/statistics/players', [StatisticsController::class, 'playerStatistics']);
     Route::post('/statistics/money', [StatisticsController::class, 'moneyLogs']);
     Route::get('/statistics/{source}', [StatisticsController::class, 'source']);
     Route::get('/points', [StatisticsController::class, 'points']);

@@ -366,7 +366,14 @@
         "shots_fired": "🔫💥",
         "shots_fired_details": "🔢🔫💥 (🤕💔) 🗂️🔫🚫🔪.",
         "richest": "💰👑",
-        "poorest": "👛🕳️"
+        "poorest": "👛🕳️",
+        "total_joins": "📈 Joins",
+        "max_users": "🙋‍♂️🔝 Users",
+        "max_queue": "🔝 Queue",
+        "unique": "👥 Users",
+        "no_players_recorded": "No 🎮📊 recorded yet.",
+        "player_stats": "🎮📊",
+        "player_stats_details": "📊🎮📊 in a graph for the last 3️⃣0️⃣ days."
     },
     "map": {
         "title": "🌍 Live-Map",
