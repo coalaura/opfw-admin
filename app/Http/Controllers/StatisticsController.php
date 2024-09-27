@@ -248,9 +248,9 @@ class StatisticsController extends Controller
 
             $time = strtotime($date);
 
-            if ($time >= $min) {
-                $total = $entry->cash + $entry->bank + $entry->stocks + $entry->savings;
+            $total = $entry->cash + $entry->bank + $entry->stocks + $entry->savings;
 
+            if ($time >= $min) {
                 $statistics["data"][$date] = [
                     "date"    => $date,
                     "cash"    => $entry->cash,
