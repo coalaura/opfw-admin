@@ -87,7 +87,7 @@
                     </div>
 
                     <div v-if="!economyLoading && economy && economy.graph" class="w-full max-h-statistics-long overflow-hidden">
-                        <LineChart :chartData="economy.graph" class="h-full"></LineChart>
+                        <LineChart :chartData="economy.graph" class="h-full" :currency="true"></LineChart>
                     </div>
                 </div>
             </div>
@@ -175,7 +175,7 @@
                 </div>
 
                 <div class="relative min-h-base" v-if="moneyLogData || moneyLogLoading">
-                    <LineChart :chartData="moneyLogData" v-if="moneyLogData"></LineChart>
+                    <LineChart :chartData="moneyLogData" :currency="true" v-if="moneyLogData"></LineChart>
 
                     <div class="absolute top-0 left-0 right-0 bottom-0 backdrop-blur-md" v-if="moneyLogLoading">
                         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">

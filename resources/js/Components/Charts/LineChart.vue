@@ -8,7 +8,7 @@ export default {
             type: Object,
             required: true
         },
-        minimal: {
+        currency: {
             type: Boolean,
             default: false
         }
@@ -20,9 +20,11 @@ export default {
     },
     methods: {
         resolveOptions() {
-            const formatter = new Intl.NumberFormat('en-US', {
+            const formatter = new Intl.NumberFormat('en-US', this.currency ? {
                 style: 'currency',
                 currency: 'USD',
+                maximumFractionDigits: 0
+            } : {
                 maximumFractionDigits: 0
             }),
                 _this = this;
