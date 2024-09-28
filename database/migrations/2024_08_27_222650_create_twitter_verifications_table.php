@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIpChecksTable extends Migration
+class CreateTwitterVerificationsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,22 +17,18 @@ class CreateIpChecksTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("ip_checks");
+		$tableExists = Schema::hasTable("twitter_verifications");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("ip_checks", function (Blueprint $table) use ($columns, $indexes) {
-			!in_array("id", $columns) && $table->integer("id")->autoIncrement();
-			!in_array("ip_identifier", $columns) && $table->string("ip_identifier", 50)->nullable();
-			!in_array("country_name", $columns) && $table->string("country_name", 50)->nullable();
-			!in_array("ip", $columns) && $table->string("ip", 50)->nullable();
-			!in_array("timestamp", $columns) && $table->integer("timestamp")->nullable();
+		Schema::$func("twitter_verifications", function (Blueprint $table) use ($columns, $indexes) {
+			!in_array("verification_id", $columns) && $table->integer("verification_id")->autoIncrement();
+			!in_array("character_id", $columns) && $table->integer("character_id")->nullable();
 
-			!in_array("ip_identifier", $indexes) && $table->index("ip_identifier");
-			!in_array("ip", $indexes) && $table->index("ip");
+			!in_array("character_id", $indexes) && $table->index("character_id");
 		});
 	}
 
@@ -43,7 +39,7 @@ class CreateIpChecksTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("ip_checks");
+		Schema::dropIfExists("twitter_verifications");
 	}
 
 	/**
@@ -53,7 +49,7 @@ class CreateIpChecksTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `ip_checks`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `twitter_verifications`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -67,7 +63,7 @@ class CreateIpChecksTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `ip_checks` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `twitter_verifications` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

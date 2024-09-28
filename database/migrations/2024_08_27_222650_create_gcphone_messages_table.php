@@ -33,8 +33,8 @@ class CreateGcphoneMessagesTable extends Migration
 			!in_array("isRead", $columns) && $table->integer("isRead")->nullable()->default("0");
 			!in_array("owner", $columns) && $table->integer("owner")->nullable()->default("0");
 
-			!in_array("receiver", $indexes) && $table->index("receiver");
 			!in_array("transmitter", $indexes) && $table->index("transmitter");
+			!in_array("receiver", $indexes) && $table->index("receiver");
 		});
 	}
 

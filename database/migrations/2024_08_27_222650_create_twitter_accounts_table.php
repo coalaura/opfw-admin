@@ -32,8 +32,8 @@ class CreateTwitterAccountsTable extends Migration
 			!in_array("avatar_url", $columns) && $table->string("avatar_url", 255)->nullable();
 			!in_array("is_verified", $columns) && $table->tinyInteger("is_verified")->nullable()->default("0");
 
-			!in_array("username", $indexes) && $table->index("username");
 			!in_array("creator_cid", $indexes) && $table->index("creator_cid");
+			!in_array("username", $indexes) && $table->index("username");
 		});
 	}
 

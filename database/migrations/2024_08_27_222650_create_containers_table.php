@@ -27,12 +27,12 @@ class CreateContainersTable extends Migration
 		Schema::$func("containers", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("container_id", $columns) && $table->integer("container_id")->primary();
 			!in_array("character_id", $columns) && $table->integer("character_id");
-			!in_array("paid_until", $columns) && $table->integer("paid_until")->nullable();
 			!in_array("access", $columns) && $table->longText("access")->nullable();
+			!in_array("paid_until", $columns) && $table->integer("paid_until")->nullable();
 
+			!in_array("container_id", $indexes) && $table->index("container_id");
 			!in_array("character_id", $indexes) && $table->index("character_id");
 			!in_array("paid_until", $indexes) && $table->index("paid_until");
-			!in_array("container_id", $indexes) && $table->index("container_id");
 		});
 	}
 

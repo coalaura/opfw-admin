@@ -26,10 +26,10 @@ class CreateTradingCardsTable extends Migration
 
 		Schema::$func("trading_cards", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("card_id", $columns) && $table->integer("card_id")->autoIncrement();
+			!in_array("pack_id", $columns) && $table->integer("pack_id")->nullable()->default("0");
 			!in_array("title", $columns) && $table->longText("title")->nullable();
 			!in_array("image_url", $columns) && $table->longText("image_url")->nullable();
 			!in_array("drop_category", $columns) && $table->string("drop_category", 50)->nullable()->default("bronze");
-			!in_array("pack_id", $columns) && $table->integer("pack_id")->nullable()->default("0");
 		});
 	}
 

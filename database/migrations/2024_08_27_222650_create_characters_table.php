@@ -40,10 +40,12 @@ class CreateCharactersTable extends Migration
 			!in_array("cash", $columns) && $table->integer("cash")->nullable()->default("0");
 			!in_array("bank", $columns) && $table->integer("bank")->nullable()->default("0");
 			!in_array("blood_type", $columns) && $table->integer("blood_type")->nullable();
+			!in_array("married_to", $columns) && $table->integer("married_to")->nullable();
 			!in_array("coords", $columns) && $table->longText("coords")->nullable();
 			!in_array("status_data", $columns) && $table->longText("status_data")->nullable();
 			!in_array("character_data", $columns) && $table->longText("character_data")->nullable();
 			!in_array("is_hardcore_dead", $columns) && $table->tinyInteger("is_hardcore_dead")->nullable()->default("0");
+			!in_array("is_one_life", $columns) && $table->tinyInteger("is_one_life")->nullable()->default("0");
 			!in_array("has_ever_been_loaded", $columns) && $table->tinyInteger("has_ever_been_loaded")->nullable()->default("0");
 			!in_array("on_duty_time", $columns) && $table->longText("on_duty_time")->nullable();
 			!in_array("last_loaded", $columns) && $table->integer("last_loaded")->nullable();
@@ -66,8 +68,6 @@ class CreateCharactersTable extends Migration
 			!in_array("jail", $columns) && $table->integer("jail")->nullable();
 			!in_array("gcphone_config", $columns) && $table->longText("gcphone_config")->nullable();
 			!in_array("apartment", $columns) && $table->longText("apartment")->nullable();
-			!in_array("is_one_life", $columns) && $table->tinyInteger("is_one_life")->nullable()->default("0");
-			!in_array("married_to", $columns) && $table->integer("married_to")->nullable();
 
 			!in_array("character_id", $indexes) && $table->index("character_id");
 			!in_array("license_identifier", $indexes) && $table->index("license_identifier");

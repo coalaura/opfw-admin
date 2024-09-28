@@ -35,8 +35,8 @@ class CreateTwitterTweetsTable extends Migration
 
 			!in_array("id", $indexes) && $table->index("id");
 			!in_array("time", $indexes) && $table->index("time");
-			!in_array("message", $indexes) && $table->index("message");
 			!in_array("authorId", $indexes) && $table->index("authorId");
+			!in_array("message", $indexes) && $table->index("message");
 			!in_array("is_deleted", $indexes) && $table->index("is_deleted");
 		});
 	}

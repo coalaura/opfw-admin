@@ -29,9 +29,9 @@ class CreateOutfitsTable extends Migration
 			!in_array("character_id", $columns) && $table->integer("character_id")->nullable();
 			!in_array("name", $columns) && $table->longText("name")->nullable();
 			!in_array("ped_data", $columns) && $table->longText("ped_data")->nullable();
-			!in_array("updated_at", $columns) && $table->integer("updated_at")->nullable();
 			!in_array("showcase_url", $columns) && $table->longText("showcase_url")->nullable();
 			!in_array("showcase_updated_at", $columns) && $table->integer("showcase_updated_at")->nullable();
+			!in_array("updated_at", $columns) && $table->integer("updated_at")->nullable();
 
 			!in_array("character_id", $indexes) && $table->index("character_id");
 			!in_array("name", $indexes) && $table->index("name");

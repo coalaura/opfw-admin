@@ -26,17 +26,17 @@ class CreateApiLogsTable extends Migration
 
 		Schema::$func("api_logs", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement();
+			!in_array("token_id", $columns) && $table->integer("token_id")->nullable();
 			!in_array("ip_address", $columns) && $table->string("ip_address", 21)->nullable();
 			!in_array("method", $columns) && $table->string("method", 6)->nullable();
 			!in_array("path", $columns) && $table->longText("path")->nullable();
 			!in_array("status_code", $columns) && $table->integer("status_code")->nullable();
 			!in_array("had_valid_token", $columns) && $table->tinyInteger("had_valid_token")->nullable();
 			!in_array("timestamp", $columns) && $table->integer("timestamp")->nullable();
-			!in_array("token_id", $columns) && $table->integer("token_id")->nullable();
 
+			!in_array("token_id", $indexes) && $table->index("token_id");
 			!in_array("ip_address", $indexes) && $table->index("ip_address");
 			!in_array("timestamp", $indexes) && $table->index("timestamp");
-			!in_array("token_id", $indexes) && $table->index("token_id");
 		});
 	}
 

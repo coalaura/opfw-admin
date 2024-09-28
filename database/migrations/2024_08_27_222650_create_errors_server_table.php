@@ -29,9 +29,8 @@ class CreateErrorsServerTable extends Migration
 			!in_array("error_location", $columns) && $table->longText("error_location")->nullable();
 			!in_array("error_trace", $columns) && $table->longText("error_trace")->nullable();
 			!in_array("server_id", $columns) && $table->integer("server_id")->nullable();
-			!in_array("timestamp", $columns) && $table->integer("timestamp")->nullable();
-			!in_array("cycle_number", $columns) && $table->integer("cycle_number")->default("0");
 			!in_array("server_version", $columns) && $table->string("server_version", 50)->nullable();
+			!in_array("timestamp", $columns) && $table->integer("timestamp")->nullable();
 		});
 	}
 

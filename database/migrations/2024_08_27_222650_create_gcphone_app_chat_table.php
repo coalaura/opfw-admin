@@ -26,16 +26,16 @@ class CreateGcphoneAppChatTable extends Migration
 
 		Schema::$func("gcphone_app_chat", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement();
+			!in_array("license_identifier", $columns) && $table->string("license_identifier", 50)->nullable();
+			!in_array("character_id", $columns) && $table->integer("character_id")->nullable();
 			!in_array("channel", $columns) && $table->string("channel", 20)->nullable();
 			!in_array("message", $columns) && $table->string("message", 255)->nullable();
 			!in_array("time", $columns) && $table->timestamp("time")->useCurrent();
-			!in_array("license_identifier", $columns) && $table->string("license_identifier", 50)->nullable();
-			!in_array("character_id", $columns) && $table->integer("character_id")->nullable();
 
-			!in_array("channel", $indexes) && $table->index("channel");
-			!in_array("time", $indexes) && $table->index("time");
 			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
 			!in_array("character_id", $indexes) && $table->index("character_id");
+			!in_array("channel", $indexes) && $table->index("channel");
+			!in_array("time", $indexes) && $table->index("time");
 		});
 	}
 

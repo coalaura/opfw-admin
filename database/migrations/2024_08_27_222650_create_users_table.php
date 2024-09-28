@@ -42,36 +42,34 @@ class CreateUsersTable extends Migration
 			!in_array("enabled_commands", $columns) && $table->longText("enabled_commands")->nullable();
 			!in_array("playtime", $columns) && $table->integer("playtime")->nullable()->default("0");
 			!in_array("last_connection", $columns) && $table->integer("last_connection")->nullable();
+			!in_array("last_seen", $columns) && $table->integer("last_seen")->nullable();
 			!in_array("total_joins", $columns) && $table->integer("total_joins")->nullable()->default("0");
 			!in_array("priority_level", $columns) && $table->integer("priority_level")->nullable();
 			!in_array("instant_join", $columns) && $table->tinyInteger("instant_join")->nullable()->default("0");
-			!in_array("is_deprioritized", $columns) && $table->tinyInteger("is_deprioritized")->nullable()->default("0");
 			!in_array("average_ping", $columns) && $table->integer("average_ping")->nullable();
 			!in_array("average_fps", $columns) && $table->integer("average_fps")->nullable();
+			!in_array("country_name", $columns) && $table->string("country_name", 255)->nullable();
 			!in_array("user_settings", $columns) && $table->longText("user_settings")->nullable();
 			!in_array("user_data", $columns) && $table->longText("user_data")->nullable();
 			!in_array("user_variables", $columns) && $table->longText("user_variables")->nullable();
+			!in_array("admin_features", $columns) && $table->longText("admin_features")->nullable();
 			!in_array("staff_points", $columns) && $table->longText("staff_points")->nullable();
 			!in_array("weekly_playtime", $columns) && $table->longText("weekly_playtime")->nullable();
 			!in_array("last_ip_identifier", $columns) && $table->longText("last_ip_identifier")->nullable();
 			!in_array("activity_points", $columns) && $table->longText("activity_points")->nullable();
-			!in_array("is_panel_trusted", $columns) && $table->tinyInteger("is_panel_trusted")->default("0");
 			!in_array("panel_drug_department", $columns) && $table->tinyInteger("panel_drug_department")->default("0");
 			!in_array("panel_tag", $columns) && $table->string("panel_tag", 255)->nullable();
 			!in_array("panel_settings", $columns) && $table->string("panel_settings", 255)->nullable();
-			!in_array("last_seen", $columns) && $table->integer("last_seen")->nullable();
-			!in_array("country_name", $columns) && $table->string("country_name", 255)->nullable();
 			!in_array("last_cached_assets", $columns) && $table->integer("last_cached_assets")->nullable();
-			!in_array("admin_features", $columns) && $table->longText("admin_features")->nullable();
 
 			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
+			!in_array("player_name", $indexes) && $table->index("player_name");
 			!in_array("identifiers", $indexes) && $table->index("identifiers");
 			!in_array("is_staff", $indexes) && $table->index("is_staff");
 			!in_array("is_senior_staff", $indexes) && $table->index("is_senior_staff");
 			!in_array("is_super_admin", $indexes) && $table->index("is_super_admin");
 			!in_array("playtime", $indexes) && $table->index("playtime");
 			!in_array("user_data", $indexes) && $table->index("user_data");
-			!in_array("player_name", $indexes) && $table->index("player_name");
 		});
 	}
 

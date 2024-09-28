@@ -27,11 +27,11 @@ class CreatePlantsTable extends Migration
 		Schema::$func("plants", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement();
 			!in_array("license_identifier", $columns) && $table->string("license_identifier", 50)->nullable();
+			!in_array("character_id", $columns) && $table->integer("character_id")->nullable();
 			!in_array("seed", $columns) && $table->string("seed", 50)->nullable();
+			!in_array("coords", $columns) && $table->longText("coords")->nullable();
 			!in_array("timestamp", $columns) && $table->integer("timestamp")->nullable();
 			!in_array("stage", $columns) && $table->integer("stage")->nullable();
-			!in_array("coords", $columns) && $table->longText("coords")->nullable();
-			!in_array("character_id", $columns) && $table->integer("character_id")->nullable();
 			!in_array("fertilized", $columns) && $table->tinyInteger("fertilized")->nullable()->default("0");
 		});
 	}

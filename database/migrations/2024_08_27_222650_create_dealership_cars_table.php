@@ -30,7 +30,6 @@ class CreateDealershipCarsTable extends Migration
 			!in_array("commission", $columns) && $table->integer("commission")->nullable()->default("0");
 			!in_array("commission_cid", $columns) && $table->integer("commission_cid")->nullable();
 			!in_array("category", $columns) && $table->longText("category")->nullable();
-			!in_array("category_id", $columns) && $table->integer("category_id")->nullable()->default("0");
 
 			!in_array("slot", $indexes) && $table->index("slot");
 		});

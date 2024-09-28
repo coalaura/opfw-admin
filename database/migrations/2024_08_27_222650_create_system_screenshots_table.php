@@ -30,7 +30,6 @@ class CreateSystemScreenshotsTable extends Migration
 			!in_array("url", $columns) && $table->string("url", 500)->nullable();
 			!in_array("details", $columns) && $table->string("details", 500)->nullable();
 			!in_array("created_at", $columns) && $table->integer("created_at")->nullable();
-			!in_array("metadata", $columns) && $table->longText("metadata")->nullable();
 
 			!in_array("character_id", $indexes) && $table->index("character_id");
 		});

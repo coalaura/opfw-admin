@@ -26,14 +26,14 @@ class CreateTradingCardPacksTable extends Migration
 
 		Schema::$func("trading_card_packs", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("pack_id", $columns) && $table->integer("pack_id")->autoIncrement();
+			!in_array("parent_pack_id", $columns) && $table->integer("parent_pack_id")->nullable();
 			!in_array("title", $columns) && $table->longText("title")->nullable();
 			!in_array("pack_icon_url", $columns) && $table->longText("pack_icon_url")->nullable();
 			!in_array("card_icon_url", $columns) && $table->longText("card_icon_url")->nullable();
 			!in_array("price", $columns) && $table->integer("price")->nullable()->default("1250");
 			!in_array("drop_amount", $columns) && $table->integer("drop_amount")->nullable()->default("3");
-			!in_array("parent_pack_id", $columns) && $table->integer("parent_pack_id")->nullable();
-			!in_array("disabled", $columns) && $table->tinyInteger("disabled")->nullable()->default("0");
 			!in_array("additional_drops", $columns) && $table->longText("additional_drops")->nullable();
+			!in_array("disabled", $columns) && $table->tinyInteger("disabled")->nullable()->default("0");
 		});
 	}
 

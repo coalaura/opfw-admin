@@ -30,8 +30,8 @@ class CreateSavingsAccountsLogsTable extends Migration
 			!in_array("character_id", $columns) && $table->integer("character_id");
 			!in_array("action", $columns) && $table->string("action", 255)->nullable();
 			!in_array("amount", $columns) && $table->integer("amount")->nullable();
-			!in_array("timestamp", $columns) && $table->integer("timestamp")->nullable();
 			!in_array("reason", $columns) && $table->string("reason", 255)->nullable();
+			!in_array("timestamp", $columns) && $table->integer("timestamp")->nullable();
 
 			!in_array("id", $indexes) && $table->index("id");
 			!in_array("account_id", $indexes) && $table->index("account_id");

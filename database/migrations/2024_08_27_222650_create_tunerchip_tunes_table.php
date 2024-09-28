@@ -28,15 +28,15 @@ class CreateTunerchipTunesTable extends Migration
 			!in_array("tune_id", $columns) && $table->integer("tune_id")->autoIncrement();
 			!in_array("character_id", $columns) && $table->integer("character_id")->nullable();
 			!in_array("name", $columns) && $table->string("name", 255)->nullable();
+			!in_array("model_name", $columns) && $table->string("model_name", 255)->nullable();
 			!in_array("offsets", $columns) && $table->longText("offsets")->nullable();
 			!in_array("timestamp", $columns) && $table->integer("timestamp")->nullable();
-			!in_array("model_name", $columns) && $table->string("model_name", 255)->nullable();
 
+			!in_array("tune_id", $indexes) && $table->index("tune_id");
 			!in_array("character_id", $indexes) && $table->index("character_id");
 			!in_array("name", $indexes) && $table->index("name");
-			!in_array("timestamp", $indexes) && $table->index("timestamp");
-			!in_array("tune_id", $indexes) && $table->index("tune_id");
 			!in_array("model_name", $indexes) && $table->index("model_name");
+			!in_array("timestamp", $indexes) && $table->index("timestamp");
 		});
 	}
 

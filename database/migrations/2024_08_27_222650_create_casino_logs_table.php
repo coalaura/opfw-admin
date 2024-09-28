@@ -33,8 +33,6 @@ class CreateCasinoLogsTable extends Migration
 			!in_array("money_won", $columns) && $table->integer("money_won")->nullable()->default("0");
 			!in_array("details", $columns) && $table->longText("details")->nullable();
 			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->useCurrent();
-			!in_array("money_spent", $columns) && $table->integer("money_spent")->nullable()->default("0");
-			!in_array("money_earned", $columns) && $table->integer("money_earned")->nullable()->default("0");
 
 			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
 		});

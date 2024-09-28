@@ -31,8 +31,6 @@ class CreateCharacterVehiclesTable extends Migration
 			!in_array("plate", $columns) && $table->char("plate", 8)->nullable();
 			!in_array("mileage", $columns) && $table->double("mileage")->nullable()->default("0");
 			!in_array("oil_mileage_after", $columns) && $table->integer("oil_mileage_after")->nullable();
-			!in_array("modifications", $columns) && $table->longText("modifications")->nullable();
-			!in_array("data", $columns) && $table->longText("data")->nullable();
 			!in_array("garage_identifier", $columns) && $table->longText("garage_identifier")->nullable();
 			!in_array("last_garage_identifier", $columns) && $table->longText("last_garage_identifier")->nullable();
 			!in_array("garage_state", $columns) && $table->integer("garage_state")->nullable()->default("0");
@@ -40,14 +38,14 @@ class CreateCharacterVehiclesTable extends Migration
 			!in_array("vehicle_deleted", $columns) && $table->tinyInteger("vehicle_deleted")->nullable()->default("0");
 			!in_array("garage_state_updated", $columns) && $table->integer("garage_state_updated")->nullable()->default("0");
 			!in_array("was_boosted", $columns) && $table->tinyInteger("was_boosted")->nullable()->default("0");
+			!in_array("created_at", $columns) && $table->integer("created_at")->nullable();
 			!in_array("police_impound_expire", $columns) && $table->integer("police_impound_expire")->nullable();
+			!in_array("image_url", $columns) && $table->longText("image_url")->nullable();
 			!in_array("emergency_type", $columns) && $table->tinyInteger("emergency_type")->nullable()->default("0");
 			!in_array("deprecated_damage", $columns) && $table->longText("deprecated_damage")->nullable();
 			!in_array("deprecated_modifications", $columns) && $table->longText("deprecated_modifications")->nullable();
 			!in_array("deprecated_fuel", $columns) && $table->double("deprecated_fuel")->nullable()->default("100");
 			!in_array("deprecated_supporter", $columns) && $table->tinyInteger("deprecated_supporter")->nullable()->default("0");
-			!in_array("created_at", $columns) && $table->integer("created_at")->nullable();
-			!in_array("image_url", $columns) && $table->longText("image_url")->nullable();
 
 			!in_array("vehicle_id", $indexes) && $table->index("vehicle_id");
 			!in_array("owner_cid", $indexes) && $table->index("owner_cid");

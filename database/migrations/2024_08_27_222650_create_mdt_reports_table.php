@@ -32,11 +32,6 @@ class CreateMdtReportsTable extends Migration
 			!in_array("body", $columns) && $table->longText("body")->nullable();
 			!in_array("created_at", $columns) && $table->integer("created_at")->nullable()->default("0");
 			!in_array("modified_at", $columns) && $table->integer("modified_at")->nullable()->default("0");
-			!in_array("character_id", $columns) && $table->integer("character_id")->nullable();
-			!in_array("character_name", $columns) && $table->longText("character_name")->nullable();
-			!in_array("timestamp", $columns) && $table->integer("timestamp")->nullable();
-
-			!in_array("character_id", $indexes) && $table->index("character_id");
 		});
 	}
 

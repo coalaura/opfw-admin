@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMdtWarrantsTable extends Migration
+class CreateStocksCompaniesTransactionsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,20 +17,24 @@ class CreateMdtWarrantsTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("mdt_warrants");
+		$tableExists = Schema::hasTable("stocks_companies_transactions");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("mdt_warrants", function (Blueprint $table) use ($columns, $indexes) {
-			!in_array("id", $columns) && $table->integer("id")->autoIncrement();
+		Schema::$func("stocks_companies_transactions", function (Blueprint $table) use ($columns, $indexes) {
+			!in_array("transaction_id", $columns) && $table->integer("transaction_id")->autoIncrement();
+			!in_array("company_id", $columns) && $table->integer("company_id");
 			!in_array("character_id", $columns) && $table->integer("character_id")->nullable();
-			!in_array("character_name", $columns) && $table->longText("character_name")->nullable();
-			!in_array("timestamp", $columns) && $table->integer("timestamp")->nullable();
+			!in_array("amount", $columns) && $table->integer("amount")->nullable();
+			!in_array("reason", $columns) && $table->string("reason", 255)->nullable();
+			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->useCurrent();
 
+			!in_array("company_id", $indexes) && $table->index("company_id");
 			!in_array("character_id", $indexes) && $table->index("character_id");
+			!in_array("timestamp", $indexes) && $table->index("timestamp");
 		});
 	}
 
@@ -41,7 +45,7 @@ class CreateMdtWarrantsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("mdt_warrants");
+		Schema::dropIfExists("stocks_companies_transactions");
 	}
 
 	/**
@@ -51,7 +55,7 @@ class CreateMdtWarrantsTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `mdt_warrants`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `stocks_companies_transactions`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -65,7 +69,7 @@ class CreateMdtWarrantsTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `mdt_warrants` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `stocks_companies_transactions` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;
