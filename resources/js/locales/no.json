@@ -224,7 +224,8 @@
         "player": "Spiller",
         "flags": "Karakterflagg",
         "anti_cheat_reason": "Årsak",
-        "anti_cheat_info": "Påvisningsinformasjon"
+        "anti_cheat_info": "Påvisningsinformasjon",
+        "statistics": "Statistikk"
     },
     "changelog": {
         "title": "Nyeste oppdateringer",

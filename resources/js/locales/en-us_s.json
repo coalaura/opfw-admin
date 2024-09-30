@@ -224,7 +224,8 @@
         "playtime": "Playtime, y'all",
         "flags": "Charactuh Flags",
         "anti_cheat_reason": "Reason",
-        "anti_cheat_info": "Detection Info"
+        "anti_cheat_info": "Detection Info",
+        "statistics": "Statistiks"
     },
     "changelog": {
         "title": "Latest Happ'nins",

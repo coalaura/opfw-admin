@@ -224,7 +224,8 @@
         "playtime": "Grugtime",
         "flags": "Character Banners",
         "anti_cheat_reason": "Reason why",
-        "anti_cheat_info": "Find out thing"
+        "anti_cheat_info": "Find out thing",
+        "statistics": "Number counting"
     },
     "changelog": {
         "title": "Big Uggz",
