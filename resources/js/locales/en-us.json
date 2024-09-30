@@ -235,7 +235,8 @@
         "metadata": "Metadata",
         "no_screenshots": "No screenshots attached",
         "view": "View .{0}",
-        "player": "Player"
+        "player": "Player",
+        "statistics": "Statistics"
     },
     "changelog": {
         "title": "Recent Updates",

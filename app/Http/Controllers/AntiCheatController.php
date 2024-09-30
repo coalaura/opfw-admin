@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Ban;
 use App\Helpers\PermissionHelper;
+use App\Helpers\StatisticsHelper;
 use App\Player;
 use App\Screenshot;
 use Illuminate\Http\Request;
@@ -77,5 +78,21 @@ class AntiCheatController extends Controller
                 'INJECTION' => $reasons['INJECTION'],
             ],
         ]);
+    }
+
+    /**
+     * Anti-Cheat statistics.
+     *
+     * @param Request $request
+     */
+    public function statistics(Request $request)
+    {
+        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_ANTI_CHEAT)) {
+            abort(401);
+        }
+
+        $result = StatisticsHelper::collectAntiCheatStatistics(self::IgnoreAntiCheatTypes);
+
+        return $this->json(true, $result);
     }
 }

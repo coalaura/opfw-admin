@@ -31,7 +31,7 @@ class StatisticsController extends Controller
     {
         $result = false;
 
-        $key = "statistics_i3.{$source}";
+        $key = "statistics.{$source}";
 
         if (CacheHelper::exists($key)) {
             $result = CacheHelper::read($key) ?? false;

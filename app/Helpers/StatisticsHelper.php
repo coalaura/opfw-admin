@@ -263,6 +263,16 @@ class StatisticsHelper
         return DB::select("SELECT date, total_joins, max_joined, max_queue, JSON_LENGTH(joined_users) as joined_users FROM user_statistics ORDER BY STR_TO_DATE(date, '%d.%m.%Y') ASC");
     }
 
+    // Anti-cheat statistics
+    public static function collectAntiCheatStatistics(array $ignoreTypes): array
+    {
+        $whereNot = implode(' AND ', array_map(function ($type) {
+            return "type != '$type'";
+        }, $ignoreTypes));
+
+        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(FROM_UNIXTIME(timestamp), '%c/%d/%Y') as date, timestamp FROM anti_cheat_events WHERE {$whereNot} GROUP BY date", true);
+    }
+
     // Specific Money Statistics
     public static function collectSpecificMoneyStatistics(array $types): array
     {
@@ -284,7 +294,7 @@ class StatisticsHelper
         return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action IN ('{$action}') GROUP BY date ORDER BY timestamp DESC");
     }
 
-    public static function collectStatistics(string $query): array
+    public static function collectStatistics(string $query, bool $showAll = false): array
     {
         $start = microtime(true);
 
@@ -292,7 +302,17 @@ class StatisticsHelper
 
         $data = DB::select($query);
 
-        for ($i = 0; $i <= 30; $i++) {
+        $days = 30;
+
+        if ($showAll && !empty($data)) {
+            $time = min(array_map(function ($entry) {
+                return $entry->timestamp;
+            }, $data));
+
+            $days = ceil((time() - $time) / 86400);
+        }
+
+        for ($i = 0; $i <= $days; $i++) {
             $time = strtotime("-$i days");
             $date = date('n/d/Y', $time);
 

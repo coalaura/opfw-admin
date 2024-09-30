@@ -18,6 +18,11 @@
                 {{ t('screenshot.anti_cheat_reasons') }}
             </button>
 
+            <button class="px-4 py-2 text-sm font-semibold text-white bg-teal-600 rounded dark:bg-teal-400 mr-3" type="button" @click="loadChartData">
+                <i class="mr-1 fas fa-chart-area"></i>
+                {{ t('screenshot.statistics') }}
+            </button>
+
             <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
                 <span v-if="!isLoading">
                     <i class="fa fa-redo-alt mr-1"></i>
@@ -31,6 +36,14 @@
         </portal>
 
         <!-- Table -->
+        <v-section class="overflow-x-auto" :noHeader="true" :noFooter="true" v-if="showChart">
+            <div class="h-64 w-full flex items-center justify-center text-2xl" v-if="!chartData">
+                <i class="fas fa-spinner animate-spin"></i>
+            </div>
+
+            <SimpleChart :data="chartData" :lines="false" height="h-48" v-else />
+        </v-section>
+
         <v-section class="overflow-x-auto" :noHeader="true">
             <template>
                 <HashResolver>
@@ -178,6 +191,7 @@ import Pagination from './../../Components/Pagination';
 import Modal from './../../Components/Modal';
 import HashResolver from './../../Components/HashResolver';
 import MetadataViewer from './../../Components/MetadataViewer';
+import SimpleChart from '../../Components/Charts/SimpleChart.vue';
 
 export default {
     layout: Layout,
@@ -187,6 +201,7 @@ export default {
         Modal,
         HashResolver,
         MetadataViewer,
+        SimpleChart,
     },
     props: {
         screenshots: {
@@ -220,7 +235,10 @@ export default {
             showingMetadata: null,
             showingMetadataImage: null,
 
-            previousIds: false
+            previousIds: false,
+
+            showChart: false,
+            chartData: false
         };
     },
     computed: {
@@ -254,6 +272,19 @@ export default {
             } catch (e) { }
 
             this.isLoading = false;
+        },
+        async loadChartData() {
+            this.showChart = true;
+            this.chartData = false;
+
+            try {
+                const response = await axios.get('/anti_cheat/statistics'),
+                    data = response.data;
+
+                if (data && data.status) {
+                    this.chartData = data.data.data;
+                }
+            } catch (e) { }
         },
         getDetectionStars(category, ban) {
             if (category === 'INJECTION') {

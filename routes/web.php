@@ -255,6 +255,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Screenshots.
     Route::get('/anti_cheat', [AntiCheatController::class, 'render']);
+    Route::get('/anti_cheat/statistics', [AntiCheatController::class, 'statistics']);
 
     // Documentations.
     Route::get('/docs/{type}', [DocumentationController::class, 'docs']);
