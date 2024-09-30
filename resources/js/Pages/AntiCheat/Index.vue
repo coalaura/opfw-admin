@@ -37,7 +37,7 @@
 
         <!-- Table -->
         <v-section class="overflow-x-auto" :noHeader="true" :noFooter="true" v-if="showChart">
-            <div class="h-64 w-full flex items-center justify-center text-2xl" v-if="!chartData">
+            <div class="h-48 w-full flex items-center justify-center text-3xl" v-if="!chartData">
                 <i class="fas fa-spinner animate-spin"></i>
             </div>
 
