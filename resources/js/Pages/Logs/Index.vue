@@ -74,10 +74,10 @@
 							<label class="block mb-2" for="minigames">
 								{{ t('logs.minigames') }}
 							</label>
-                            <select class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="minigames" v-model="filters.minigames">
-                                <option :value="null">{{ t('global.all') }}</option>
-                                <option value="none">{{ t('logs.minigame_none') }}</option>
-                            </select>
+							<select class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="minigames" v-model="filters.minigames">
+								<option :value="null">{{ t('global.all') }}</option>
+								<option value="none">{{ t('logs.minigame_none') }}</option>
+							</select>
 						</div>
 						<!-- After Date -->
 						<div class="w-1/6 px-3 pr-1 mobile:w-full mobile:mb-3 mt-3">
@@ -171,10 +171,22 @@
 						<th class="p-3">{{ t('logs.action') }}</th>
 						<th class="p-3">{{ t('logs.details') }}</th>
 						<th class="p-3 pr-8 whitespace-nowrap">
-							{{ t('logs.timestamp') }}
-							<a href="#" :title="t('logs.toggle_diff')" @click="$event.preventDefault(); showLogTimeDifference = !showLogTimeDifference">
-								<i class="fas fa-stopwatch"></i>
-							</a>
+							<div class="flex gap-3 items-center">
+								{{ t('logs.timestamp') }}
+
+								<select class="block px-2 py-0.5 bg-gray-200 dark:bg-gray-600 border rounded w-28" v-model="logTimezone">
+									<option :value="false" selected>Default</option>
+									<option value="UTC">UTC (Universal)</option>
+									<option value="Europe/London">GMT/BST (British)</option>
+									<option value="America/New_York">EST/EDT (Eastern)</option>
+									<option value="America/Chicago">CST/CDT (Central)</option>
+									<option value="America/Denver">MST/MDT (Mountain)</option>
+									<option value="America/Los_Angeles">PST/PDT (Pacific)</option>
+									<option value="Europe/Paris">CET/CEST (Central European)</option>
+									<option value="Asia/Tokyo">JST (Japan Standard Time)</option>
+									<option value="Australia/Sydney">AEST/AEDT (Australian Eastern)</option>
+								</select>
+							</div>
 						</th>
 					</tr>
 					<tr class="border-t border-gray-300 dark:border-gray-500 relative" :class="getLogColor(log.action, log.metadata)" v-for="(log, index) in logs" :key="log.id">
@@ -202,16 +214,13 @@
 							</a>
 						</td>
 						<td class="p-3 mobile:block" v-html="parseLog(log.details, log.action, log.metadata)"></td>
-						<td class="p-3 mobile:block whitespace-nowrap" v-if="showLogTimeDifference" :title="t('logs.diff_label')">
-							<span v-if="index + 1 < logs.length">
-								{{ formatSecondDiff(stamp(log.timestamp) - stamp(logs[index + 1].timestamp)) }}
-								<i class="fas fa-arrow-down"></i>
-							</span>
-							<span v-else>Start</span>
-						</td>
-						<td class="p-3 pr-8 mobile:block whitespace-nowrap" v-else>
-							{{ log.timestamp | formatTime(true) }}
-							<i class="block text-xs leading-1 whitespace-nowrap text-yellow-600 dark:text-yellow-400">{{ formatRawTimestamp(log.timestamp) }}</i>
+						<td class="p-3 pr-8 mobile:block whitespace-nowrap">
+							{{ formatTimestampWithTimezone(log.timestamp) }}
+							<div class="block text-xs leading-1 whitespace-nowrap">
+								<i class="text-yellow-600 dark:text-yellow-400">{{ formatRawTimestamp(log.timestamp) }}</i>
+								-
+								<i class="text-gray-700 dark:text-gray-300">{{ selectedTimezone }}</i>
+							</div>
 						</td>
 					</tr>
 					<tr v-if="logs.length === 0" class="border-t border-gray-300 dark:border-gray-500">
@@ -288,6 +297,8 @@ import VSection from './../../Components/Section';
 import Pagination from './../../Components/Pagination';
 import Modal from './../../Components/Modal';
 import MetadataViewer from './../../Components/MetadataViewer';
+
+import moment from "moment-timezone";
 
 const MoneyTransferActions = [
 	'Bank Transfer',
@@ -371,9 +382,10 @@ export default {
 				reason: '',
 				description: ''
 			},
-			showLogTimeDifference: false,
 			searchingActions: false,
 			searchableActions: [],
+
+			logTimezone: false,
 
 			showLogMetadata: false,
 			logMetadata: null,
@@ -381,7 +393,25 @@ export default {
 			searchTimeout: false
 		};
 	},
+	computed: {
+		selectedTimezone() {
+			if (this.logTimezone) {
+				return moment.tz(this.logTimezone).zoneName();
+			}
+
+			return moment.tz.guess();
+		}
+	},
 	methods: {
+		formatTimestampWithTimezone(timestamp) {
+			const date = moment(timestamp);
+
+			if (this.logTimezone) {
+				return date.tz(this.logTimezone).format('MMM D, YYYY h:mm:ss A');
+			}
+
+			return date.format('MMM D, YYYY h:mm:ss A');
+		},
 		selectAction(action) {
 			clearTimeout(this.searchTimeout);
 

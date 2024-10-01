@@ -59,6 +59,7 @@
         "leaflet.markercluster": "^1.5.3",
         "mini-svg-data-uri": "^1.4.4",
         "moment-duration-format": "^2.3.2",
+        "moment-timezone": "^0.5.45",
         "msgpackr": "^1.9.9",
         "pako": "^2.0.4",
         "rainbowvis.js": "^1.0.1",
