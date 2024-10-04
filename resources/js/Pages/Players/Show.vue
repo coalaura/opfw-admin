@@ -1504,10 +1504,6 @@
 
                 <!-- Buttons -->
                 <div class="flex justify-end mt-2">
-                    <button class="px-5 py-2 rounded bg-warning dark:bg-dark-warning mr-2" @click="isAttachingScreenshot = true" v-if="screenshotImage && screenshotLicense">
-                        {{ t('screenshot.attach') }}
-                    </button>
-
                     <button class="px-5 py-2 rounded bg-primary dark:bg-dark-primary mr-2" @click="startContinuousScreenshot()" v-if="!continuouslyScreenshotting && !isScreenshotLoading">
                         {{ t('screenshot.continuous') }}
                     </button>
