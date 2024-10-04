@@ -415,9 +415,9 @@ export default {
     },
     computed: {
         currentFPM() {
-            if (!this.receivedFrames.length) return false;
+            if (this.receivedFrames.length < 2) return false;
 
-            let last = this.receivedFrames.length[0],
+            let last = this.receivedFrames[0],
                 total = 0,
                 count = 0;
 
@@ -437,7 +437,7 @@ export default {
         receivedFrame() {
             this.receivedFrames.push(Date.now());
 
-            if (this.receivedFrames.length > 30) this.receivedFrames.shift();
+            if (this.receivedFrames.length > 60) this.receivedFrames.shift();
         },
         checkHistoricLicense() {
             const license = this.form.historic_license;
