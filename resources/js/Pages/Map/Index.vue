@@ -410,25 +410,34 @@ export default {
 
             viewingUnloadedPlayerList: false,
 
-            receivedFrames: [],
-            firstFrame: false,
-            lastFrame: 0
+            receivedFrames: []
         };
     },
     computed: {
         currentFPM() {
-            if (!this.firstFrame || this.firstFrame > this.lastFrame) return false;
+            if (!this.receivedFrames.length) return false;
 
-            return this.receivedFrames.filter(frame => frame > this.lastFrame).length;
+            let last = this.receivedFrames.length[0],
+                total = 0,
+                count = 0;
+
+            for (let i = 1; i < this.receivedFrames.length; i++) {
+                const frame = this.receivedFrames[i];
+
+                total += frame - last;
+                count++;
+
+                last = frame;
+            }
+
+            return (60 * (1000 / (total / count))).toFixed(1).replace(/\.0$/, '');
         }
     },
     methods: {
         receivedFrame() {
-            this.firstFrame = this.firstFrame || Date.now();
-
             this.receivedFrames.push(Date.now());
 
-            this.receivedFrames = this.receivedFrames.filter(frame => frame > this.lastFrame);
+            if (this.receivedFrames.length > 30) this.receivedFrames.shift();
         },
         checkHistoricLicense() {
             const license = this.form.historic_license;
