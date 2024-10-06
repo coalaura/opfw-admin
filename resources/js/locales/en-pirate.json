@@ -943,7 +943,8 @@
             "using_vpn": "The scallywag was harnessin' a VPN whilst they made berth on the server.",
             "reacted_by": "keelhauled by {0}",
             "delete_selected": "Scuttle {0} chosen warnin'(s)",
-            "panel_logs": "Deck Logs"
+            "panel_logs": "Deck Logs",
+            "copy_warning": "Copy warnin' to yer clipboard, arr!"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

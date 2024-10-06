@@ -955,7 +955,8 @@
             "using_vpn": "Player ne server se connect karte waqt VPN ka upyog kiya tha.",
             "reacted_by": "{0} ke dwara pratikriya di gayi",
             "delete_selected": "{0} chune gaye chetavani(ion) ko delete kare",
-            "panel_logs": "Panel Log"
+            "panel_logs": "Panel Log",
+            "copy_warning": "Chetaavani ko clipboard par copy karein"
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",

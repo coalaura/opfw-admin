@@ -943,7 +943,8 @@
             "using_vpn": "Pwayew was using a VPN when dey connected to the sewvew uwu.",
             "reacted_by": "weacted by {0}",
             "delete_selected": "Dewete {0} sewected wawning(s)",
-            "panel_logs": "Panyew Wogs"
+            "panel_logs": "Panyew Wogs",
+            "copy_warning": "Copy wawning to cwipboawd"
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

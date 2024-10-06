@@ -904,6 +904,7 @@
             "no_link": "No linked accounts for this identifier",
             "no_warnings": "This player has not received any warnings or notes.",
             "reacted_by": "reacted by {0}",
+            "copy_warning": "Copy warning to clipboard",
             "delete_selected": "Delete {0} selected warning(s)",
             "no_panel_logs": "This player has no panel logs.",
             "edit_ban": "Edit Ban",

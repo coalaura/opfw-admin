@@ -1346,6 +1346,12 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="absolute -bottom-2 right-2 flex gap-1.5">
+                                <div class="group flex gap-1.5 items-center justify-center rounded-md bg-gray-800 border border-gray-800 overflow-hidden p-1 cursor-pointer" @click="copyWarning(warning)" :title="t('players.show.copy_warning')">
+                                    <i class="fas fa-copy text-gray-400 w-4 block text-center group-hover:text-gray-200 transition"></i>
+                                </div>
+                            </div>
                         </template>
                     </card>
                 </template>
@@ -2744,6 +2750,9 @@ export default {
                 return this.t('global.system');
             }
             return creator;
+        },
+        copyWarning(warning) {
+            this.copyToClipboard(warning.message);
         },
         asyncLoadImage(url) {
             return new Promise((resolve, reject) => {

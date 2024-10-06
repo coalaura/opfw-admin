@@ -943,7 +943,8 @@
             "using_vpn": "Player hide behind magic net mask when join tribe rock-talk place.",
             "reacted_by": "{0} do reaction",
             "delete_selected": "Take away {0} pick warn(s)",
-            "panel_logs": "Panel Markings"
+            "panel_logs": "Panel Markings",
+            "copy_warning": "Make same words of careful on rock-scratch-pad"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

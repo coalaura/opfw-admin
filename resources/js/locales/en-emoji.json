@@ -943,7 +943,8 @@
             "using_vpn": "🎮🧑🔛🔒🌐🔄🔗🖥️.",
             "reacted_by": "🔁 by {0}",
             "delete_selected": "🗑️ {0} ✅ ⚠️(s)",
-            "panel_logs": "📋🌲"
+            "panel_logs": "📋🌲",
+            "copy_warning": "📋⚠️📋"
         },
         "ban_reason": "🔹",
         "ban_time": "⏱️",

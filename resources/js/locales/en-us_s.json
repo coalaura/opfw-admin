@@ -943,7 +943,8 @@
             "using_vpn": "Playa was usin' a VPN when they hitched up to the server.",
             "reacted_by": "reacted by {0}, y'all",
             "delete_selected": "Delete {0} selected warnin'(s)",
-            "panel_logs": "Panel Logs"
+            "panel_logs": "Panel Logs",
+            "copy_warning": "Copy warnin' to clipboard"
         },
         "ban_reason": "Reeson",
         "ban_time": "Expires",

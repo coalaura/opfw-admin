@@ -955,7 +955,8 @@
             "using_vpn": "Spilleren brukte en VPN da de koblet seg til serveren.",
             "reacted_by": "reaksjon fra {0}",
             "delete_selected": "Slett {0} valgte advarsel(er)",
-            "panel_logs": "Panellogger"
+            "panel_logs": "Panellogger",
+            "copy_warning": "Kopier advarsel til utklippstavlen"
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",
