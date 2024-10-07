@@ -601,6 +601,7 @@ export default {
 				const descriptions = [
 					[/^Exiting/gmi, this.t('logs.detail.reasons.exited')],
 					[/^Disconnected|^You have disconnected from the server/gmi, this.t('logs.detail.reasons.disconnected')],
+					[/^Reloading game./gmi, this.t('logs.detail.reasons.reloading_game')],
 					[/Game crashed: /gmi, this.t('logs.detail.reasons.crash')],
 					[/(?<=connection|You) timed out[!.]|^Timed out after/gmi, this.t('logs.detail.reasons.timeout')],
 					[/^You have been banned/gmi, this.t('logs.detail.reasons.banned')],

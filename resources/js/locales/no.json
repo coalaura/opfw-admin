@@ -1315,7 +1315,8 @@
                 "overflow": "Sikkerhetstiltak av FiveM for å beskytte serveren din mot juksere som spammer med hendelser.",
                 "another": "Brukeren koblet direkte til en annen server uten å koble fra denne først.",
                 "config": "Under tilkobling kunne ikke konfigurasjonen til serveren lastes, noe som medførte at brukeren ble avvist.",
-                "unknown": "Ingen detaljert beskrivelse tilgjengelig. Du kan be en utvikler om mer hjelp."
+                "unknown": "Ingen detaljert beskrivelse tilgjengelig. Du kan be en utvikler om mer hjelp.",
+                "reloading_game": "Brukeren lastet inn et enkeltspiller-spill ved å bruke 'localGame'-kommandoen i F8-konsollen eller lignende."
             }
         },
         "dark_chat": "Mørk prat",

@@ -1291,7 +1291,8 @@
                 "overflow": "FiveM scared of cheaters, put protections against event spamming.",
                 "another": "Ugga user go to other server without leaving this one first.",
                 "config": "Ugga unable to load server config, so user got rejected.",
-                "unknown": "Ugga no description, ask big brain for help."
+                "unknown": "Ugga no description, ask big brain for help.",
+                "reloading_game": "User make one-player play with \"localGame\" word in F8 talk-box or like."
             }
         },
         "money_title": "Logs of Green Papers",

@@ -1291,7 +1291,8 @@
                 "overflow": "Avast ye! FiveM be settin' sails to keep the server safe from cheaters who be tryin' to bombard yer waters with their foul tricks.",
                 "another": "The scallywag be connectin' straight to another server without settin' foot on dry land from this one.",
                 "config": "Whilst tryin' to hoist the sails and connect the servers, the configuration be failin' to load, makin' the user walk the plank.",
-                "unknown": "Yarr! No treasure map be present to give ye details. Ye be askin' a developer for a hand, matey."
+                "unknown": "Yarr! No treasure map be present to give ye details. Ye be askin' a developer for a hand, matey.",
+                "reloading_game": "Th' crewmate loaded a lone buccaneer's game by usin' th' 'localGame' command in th' F8 console or somethin' akin."
             }
         },
         "money_title": "Booty Logs",

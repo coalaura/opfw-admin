@@ -1291,7 +1291,8 @@
                 "overflow": "Safety measuwe by FiveM as a pwotection fwom cheatews spamming youw sewvew with events. UwU",
                 "another": "The usew diwectwy connected to anothew sewvew without fiwst disconnecting fwom this one~",
                 "config": "Whiwe connecting the sewvews configuwation was unabwe to load causing the usew to get wejected~",
-                "unknown": "No detaiwed descwiption avaiwabwe. You can ask a devewopew fow mowe help! ^w^"
+                "unknown": "No detaiwed descwiption avaiwabwe. You can ask a devewopew fow mowe help! ^w^",
+                "reloading_game": "De usew woaded a singwe-pwayew game by using de 'wocawGame' command in de F8 consowe ow simiwaw."
             }
         },
         "money_title": "ÖwÖ Money Logs",

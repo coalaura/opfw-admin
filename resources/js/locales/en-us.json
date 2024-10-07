@@ -1356,6 +1356,7 @@
             "reasons": {
                 "exited": "The user exited the game by typing 'quit' in the F8 console or pressing ALT and F4 or similar.",
                 "disconnected": "The user disconnected from the server by typing 'disconnect' in the F8 console or similar.",
+                "reloading_game": "The user loaded a single-player game by using the 'localGame' command in the F8 console or similar.",
                 "crash": "The users game crashed with the given error message.",
                 "timeout": "The users connection to the server timed out. This is usually the case when internet connectivity drops out.",
                 "banned": "The user was banned by a staff member with the give reason.",

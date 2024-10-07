@@ -1315,7 +1315,8 @@
                 "overflow": "Cheaters dwara aapke server par events ki spamming se bachne ke liye FiveM dwara suraksha upay.",
                 "another": "Upayogakarta ne bina iss ek se disconnect kiye sidhe dusre server se connect kar liya.",
                 "config": "Jodte samay server ki vinyas load nahi ho pa rahi thi jis wajah se upayogakarta ko aswikar kar diya gaya.",
-                "unknown": "Vistarit varnan uplabdh nahi hai. Aap vikasak se adhik madad ke liye puch sakte hain."
+                "unknown": "Vistarit varnan uplabdh nahi hai. Aap vikasak se adhik madad ke liye puch sakte hain.",
+                "reloading_game": "Upayogakarta ne F8 console ya uske saman kisi anya madhyam se 'localGame' command ka upayog karke ek single-player khel load kiya."
             }
         },
         "dark_chat": "Dark Chat",

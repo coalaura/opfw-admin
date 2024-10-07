@@ -1291,7 +1291,8 @@
                 "overflow": "Safety measure by FiveM to prevent them cheaters from floodin' yer server with all them events.",
                 "another": "This here user went directly connectin' to another server without first disconnectin' from this here one.",
                 "config": "While connectin', the servers configuration couldn't load, so the user got turned away.",
-                "unknown": "Sorry y'all, but I cain't provide no fancy details 'bout this one! Y'all can ask a developer for some more help if ya need it."
+                "unknown": "Sorry y'all, but I cain't provide no fancy details 'bout this one! Y'all can ask a developer for some more help if ya need it.",
+                "reloading_game": "The user went on ahead and fired up a one-player game by typin' in that there 'localGame' command in the F8 console or somethin' similar, y'all."
             }
         },
         "money_title": "Money Logs, y'all",
