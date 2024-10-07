@@ -45,6 +45,18 @@
 
                 <div class="w-full h-px bg-gray-700 dark:bg-gray-300 my-4"></div>
 
+                <img src="/images/docs/reason_reloading.png" class="w-full shadow-md mb-3 border border-gray-500" />
+
+                <p class="mb-1">
+                    This disconnect reason is triggered...
+                </p>
+
+                <ul class="w-full pl-8 list-disc">
+                    <li>...by pressing <i>F8</i> and typing <i>localGame</i>. This loads up single-player and disconnects from the server using the "Reloading game." reason.</li>
+                </ul>
+
+                <div class="w-full h-px bg-gray-700 dark:bg-gray-300 my-4"></div>
+
                 <img src="/images/docs/reason_timeout.png" class="w-full shadow-md mb-3 border border-gray-500" />
 
                 <p class="mb-1">
