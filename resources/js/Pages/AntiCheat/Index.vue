@@ -80,7 +80,8 @@
                                     {{ screenshot.playtime | humanizeSeconds }}
                                 </td>
                                 <td class="p-3 mobile:block w-40">
-                                    <a :href="screenshot.url" target="_blank" class="text-indigo-600 dark:text-indigo-400">{{ t('screenshot.view', screenshot.url.split(".").pop()) }}</a>
+                                    <a :href="screenshot.url" target="_blank" class="text-indigo-600 dark:text-indigo-400" v-if="screenshot.url">{{ t('screenshot.view', screenshot.url.split(".").pop()) }}</a>
+                                    <span class="text-teal-600 dark:text-teal-400" v-else>N/A</span>
                                 </td>
                                 <td class="p-3 mobile:block">
                                     <span class="cursor-help" @click="showMetadata(screenshot.metadata, screenshot.url)">{{ screenshot.details || 'N/A' }}</span>
