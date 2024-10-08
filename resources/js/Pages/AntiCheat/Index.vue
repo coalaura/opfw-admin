@@ -56,7 +56,7 @@
                             <th class="p-3 w-32">{{ t('screenshot.ban_status') }}</th>
                             <th class="p-3 pr-8 w-60">{{ t('screenshot.created_at') }}</th>
                         </tr>
-                        <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" :class="{ 'new-entry': screenshot.new, '!bg-red-500 !bg-opacity-10 opacity-50 hover:opacity-100': screenshot.isBan }" v-for="screenshot in list" :key="screenshot.url">
+                        <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" :class="{ 'new-entry': screenshot.new, '!bg-red-500 !bg-opacity-10 opacity-50 hover:opacity-100': screenshot.isBan }" v-for="screenshot in list" :key="screenshot.id">
                             <template v-if="screenshot.isBan">
                                 <td class="p-3 py-2 pl-8 text-center mobile:block max-w-56">
                                     <inertia-link class="block px-2 py-1 truncate font-semibold text-center text-sm text-white bg-red-600 rounded dark:bg-red-400" :href="'/players/' + screenshot.license_identifier">
@@ -246,7 +246,7 @@ export default {
         list() {
             return this.screenshots.map(screenshot => {
                 screenshot.ban = this.getBanInfo(screenshot.license_identifier);
-                screenshot.isBan = !screenshot.url.startsWith("http");
+                screenshot.isBan = !screenshot.id.startsWith("s_");
 
                 screenshot.new = this.previousIds && !this.previousIds.includes(screenshot.id);
 
