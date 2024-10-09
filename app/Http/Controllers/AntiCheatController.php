@@ -18,7 +18,9 @@ class AntiCheatController extends Controller
     const IgnoreAntiCheatTypes = [
         'modified_fov',
         'using_macro',
-        'bad_creation'
+        'bad_creation',
+        'illegal_event',
+        'illegal_server_event',
     ];
 
     /**
