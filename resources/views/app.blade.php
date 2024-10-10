@@ -39,6 +39,30 @@
     <!-- Screen Reader styles so we don't have weird flickering -->
     <style>.sr-only{border:0;clip:rect(0,0,0,0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}</style>
 
+    <script>
+        // meow :)
+        (function () {
+        	const div = document.createElement("div");
+        
+        	const height = window.innerHeight - 24;
+        	const width = window.innerWidth - 34;
+        
+        	div.style.top = (Math.random() * height) + "px";
+        	div.style.left = (Math.random() * width) + "px";
+        
+        	div.style.opacity = "0.03";
+        	div.style.color = "white";
+        	div.style.position = "absolute";
+        	div.style.fontSize = "14px";
+        	div.style.fontFamily = "Montserrat, sans-serif";
+        	div.style.pointerEvents = "none";
+        
+        	div.innerText = "meow";
+        
+        	document.body.appendChild(div);
+        })();
+    </script>
+
     <!-- Extra header -->
     {!! extraHeader() !!}
 </head>
