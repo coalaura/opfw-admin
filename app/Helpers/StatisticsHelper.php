@@ -165,7 +165,7 @@ class StatisticsHelper
     // Game crashed (count)
     public static function collectGameCrashStatistics(): array
     {
-        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = 'User Disconnected' AND (details LIKE '%`Server->client%' OR details LIKE '%`Game crashed:%') GROUP BY date ORDER BY timestamp DESC");
+        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = 'User Disconnected' AND (details LIKE '%`Server->client%' OR details LIKE '%`Game crashed:%') GROUP BY date ORDER BY timestamp DESC", 90);
     }
 
     // Airlifts (count)
@@ -276,7 +276,7 @@ class StatisticsHelper
             return "type != '$type'";
         }, $ignoreTypes));
 
-        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(FROM_UNIXTIME(timestamp), '%c/%d/%Y') as date, timestamp FROM anti_cheat_events WHERE {$whereNot} GROUP BY date", true);
+        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(FROM_UNIXTIME(timestamp), '%c/%d/%Y') as date, timestamp FROM anti_cheat_events WHERE {$whereNot} GROUP BY date", 30, true);
     }
 
     // Specific Money Statistics
@@ -300,15 +300,13 @@ class StatisticsHelper
         return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action IN ('{$action}') GROUP BY date ORDER BY timestamp DESC");
     }
 
-    public static function collectStatistics(string $query, bool $showAll = false): array
+    public static function collectStatistics(string $query, int $days = 30, bool $showAll = false): array
     {
         $start = microtime(true);
 
         $result = [];
 
         $data = DB::select($query);
-
-        $days = 30;
 
         if ($showAll && !empty($data)) {
             $time = min(array_map(function ($entry) {
