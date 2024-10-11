@@ -129,6 +129,9 @@ class StatisticsController extends Controller
                 case 'guns':
                     $result = StatisticsHelper::collectGunCraftingStatistics();
                     break;
+                case 'crashes':
+                    $result = StatisticsHelper::collectGameCrashStatistics();
+                    break;
                 case 'shots_fired':
                     $result = StatisticsHelper::collectShotsFiredStatistics();
                     break;

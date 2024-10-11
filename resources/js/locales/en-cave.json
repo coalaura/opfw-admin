@@ -368,7 +368,9 @@
         "unique": "Different Tribemates",
         "no_players_recorded": "No players counts make yet.",
         "player_stats": "Tribemate Counts",
-        "player_stats_details": "Look at tribemate counts in draw-line for last 30 suns."
+        "player_stats_details": "Look at tribemate counts in draw-line for last 30 suns.",
+        "crashes": "Game go boom",
+        "crashes_details": "Many game go boom or stop-time."
     },
     "map": {
         "title": "Ooga-Map",

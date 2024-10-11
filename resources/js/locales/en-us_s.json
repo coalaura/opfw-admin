@@ -368,7 +368,9 @@
         "unique": "Yewneek Uhsers",
         "no_players_recorded": "Ain't no player statistics recorded yet.",
         "player_stats": "Player Statistics",
-        "player_stats_details": "Compare player statistics in a graph fer the last thurty days."
+        "player_stats_details": "Compare player statistics in a graph fer the last thurty days.",
+        "crashes": "Game done crashed",
+        "crashes_details": "Number of times the whole dadgum game crashes or just plum times out."
     },
     "map": {
         "title": "Active Map",

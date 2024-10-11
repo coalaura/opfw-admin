@@ -368,7 +368,9 @@
         "unique": "Unike Brukere",
         "no_players_recorded": "Ingen spillstatistikk registrert ennå.",
         "player_stats": "Spillerstatistikk",
-        "player_stats_details": "Sammenlign spillerstatistikk i et diagram for de siste 30 dagene."
+        "player_stats_details": "Sammenlign spillerstatistikk i et diagram for de siste 30 dagene.",
+        "crashes": "Spillkrasjer",
+        "crashes_details": "Antall fullstendige spillkrasjer eller tidsavbrudd."
     },
     "map": {
         "title": "Levende-kart",

@@ -368,7 +368,9 @@
         "unique": "Peculiar Buccaneers",
         "no_players_recorded": "No hands on deck statistics logged yet.",
         "player_stats": "Buccaneer Tallies",
-        "player_stats_details": "Parley 'bout buccaneer tallies on a chart fer th' last 30 days."
+        "player_stats_details": "Parley 'bout buccaneer tallies on a chart fer th' last 30 days.",
+        "crashes": "Game be caput",
+        "crashes_details": "Number o' full game caput or be maroon'd."
     },
     "map": {
         "title": "Sailin' Map",

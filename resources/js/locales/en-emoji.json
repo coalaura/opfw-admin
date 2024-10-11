@@ -368,7 +368,9 @@
         "unique": "👥 Users",
         "no_players_recorded": "No 🎮📊 recorded yet.",
         "player_stats": "🎮📊",
-        "player_stats_details": "📊🎮📊 in a graph for the last 3️⃣0️⃣ days."
+        "player_stats_details": "📊🎮📊 in a graph for the last 3️⃣0️⃣ days.",
+        "crashes": "🎮💥",
+        "crashes_details": "📊🎮💥⏱️."
     },
     "map": {
         "title": "🌍 Live-Map",

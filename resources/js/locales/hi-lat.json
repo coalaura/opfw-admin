@@ -368,7 +368,9 @@
         "unique": "Anootha Upayogakarta",
         "no_players_recorded": "Abhi tak koi khiladi aankada darj nahi kiya gaya hai.",
         "player_stats": "Khiladi Aankada",
-        "player_stats_details": "Pichhle 30 dino ke liye graph mein khiladi ke aankade ka tulna kare."
+        "player_stats_details": "Pichhle 30 dino ke liye graph mein khiladi ke aankade ka tulna kare.",
+        "crashes": "Khel gir gaya",
+        "crashes_details": "Poori game girne ya timeout hone ki sankhya."
     },
     "map": {
         "title": "Live-Naksha",

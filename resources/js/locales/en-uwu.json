@@ -368,7 +368,9 @@
         "unique": "Unique UwUsers",
         "no_players_recorded": "No pwayews statistics wecowded yet.",
         "player_stats": "Pwayew Statistics",
-        "player_stats_details": "Compawe pwayew statistics in a gwaph fow the wast 30 days."
+        "player_stats_details": "Compawe pwayew statistics in a gwaph fow the wast 30 days.",
+        "crashes": "Gwame cwashes",
+        "crashes_details": "Amount of fuww gwame cwashes ow timeouts."
     },
     "map": {
         "title": "Wive-Map UwU",
