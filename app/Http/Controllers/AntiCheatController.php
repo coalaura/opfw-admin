@@ -21,6 +21,7 @@ class AntiCheatController extends Controller
         'bad_creation',
         'illegal_event',
         'illegal_server_event',
+        'suspicious_transfer'
     ];
 
     /**
