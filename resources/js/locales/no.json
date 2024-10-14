@@ -700,7 +700,8 @@
             "key": "Nøkkel",
             "value": "Verdi",
             "save": "Lagre endringer",
-            "field_invalid": "Feltverdien er ugyldig for denne nøkkelen."
+            "field_invalid": "Feltverdien er ugyldig for denne nøkkelen.",
+            "attach_identity": "Fest til identitet"
         }
     },
     "twitter": {

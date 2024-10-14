@@ -689,7 +689,8 @@
             "key": "🔑",
             "value": "🏷️",
             "save": "💾🔄",
-            "field_invalid": "🏞️ value is ❌ for this 🔑."
+            "field_invalid": "🏞️ value is ❌ for this 🔑.",
+            "attach_identity": "📎🆔"
         }
     },
     "twitter": {

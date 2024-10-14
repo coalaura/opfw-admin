@@ -689,7 +689,8 @@
             "key": "Key",
             "value": "Value",
             "save": "Save them Changes",
-            "field_invalid": "Field value ain't proper for this here key."
+            "field_invalid": "Field value ain't proper for this here key.",
+            "attach_identity": "“Attach Identiteh”"
         }
     },
     "twitter": {

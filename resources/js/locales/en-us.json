@@ -735,6 +735,7 @@
             "infos": "Item Infos",
             "metadata": "Item Metadata",
             "field_invalid": "Field value is invalid for this key.",
+            "attach_identity": "Attach Identity",
 
             "key": "Key",
             "value": "Value",

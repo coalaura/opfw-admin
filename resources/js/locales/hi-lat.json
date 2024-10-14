@@ -700,7 +700,8 @@
             "key": "Chaabi",
             "value": "Moolya",
             "save": "Parivartan Save Karein",
-            "field_invalid": "Is key ke liye field mulya avaidh hai."
+            "field_invalid": "Is key ke liye field mulya avaidh hai.",
+            "attach_identity": "Pehchaan Sambandh Karein"
         }
     },
     "twitter": {

@@ -71,6 +71,16 @@
                     </div>
                 </div>
 
+                <div class="pt-6 mt-6 border-t border-gray-500">
+                    <div class="w-full bg-gray-300 dark:bg-gray-600 text-sm flex">
+                        <input type="number" class="w-full text-sm bg-transparent py-1 px-2 border-0" placeholder="12345" v-model="attachCharacterId" />
+                        <button class="py-1 px-2 bg-lime-600 hover:bg-lime-500 whitespace-nowrap" @click="loadAttachedCharacter" :class="{ 'opacity-50 !bg-rose-600': attachCharacterLoading || !parseInt(attachCharacterId) }">
+                            <i class="fas fa-spinner animate-spin mr-1" v-if="attachCharacterLoading"></i>
+                            {{ t('inventories.show.attach_identity') }}
+                        </button>
+                    </div>
+                </div>
+
                 <h3 class="pt-6 mt-6 mb-3 text-lg border-t border-gray-500">{{ t('inventories.show.metadata') }}</h3>
 
                 <table class="w-full bg-gray-300 dark:bg-gray-600 text-sm">
@@ -91,10 +101,10 @@
                             </button>
                         </td>
                         <td class="px-2 py-1">
-                            <input class="text-sm bg-transparent py-1 px-2 bg-black bg-opacity-10 border-0 border-b-2" type="text" v-model="entry.key" />
+                            <input class="text-sm bg-transparent py-1 px-2 border-0 border-b-2" type="text" v-model="entry.key" />
                         </td>
                         <td class="px-2 py-1 w-full">
-                            <input class="w-full text-sm bg-transparent py-1 px-2 bg-black bg-opacity-10 border-0 border-b-2" :class="{'!border-red-500': !isFieldValid(entry.key, entry.value)}" :title="!isFieldValid(entry.key, entry.value) ? t('inventories.show.field_invalid') : ''" type="text" v-model="entry.value" />
+                            <input class="w-full text-sm bg-transparent py-1 px-2 border-0 border-b-2" :class="{ '!border-red-500': !isFieldValid(entry.key, entry.value) }" :title="!isFieldValid(entry.key, entry.value) ? t('inventories.show.field_invalid') : ''" type="text" v-model="entry.value" />
                         </td>
                     </tr>
                 </table>
@@ -134,7 +144,7 @@ export default {
             required: true,
         },
         items: {
-            type: Object,
+            type: Object | Array,
             required: true,
         },
     },
@@ -185,7 +195,10 @@ export default {
             editingSlot: false,
             editingItem: false,
             editingAmount: 1,
-            editingMetadata: []
+            editingMetadata: [],
+
+            attachCharacterId: '',
+            attachCharacterLoading: false
         };
     },
     methods: {
@@ -283,6 +296,8 @@ export default {
             this.newMetadataKey = '';
             this.newMetadataValue = '';
 
+            this.attachCharacterId = '';
+
             if (items.length) {
                 this.editingItem = items[0].name;
                 this.editingAmount = items.length;
@@ -312,6 +327,32 @@ export default {
                 key: "",
                 value: ""
             });
+        },
+        async loadAttachedCharacter() {
+            const id = parseInt(this.attachCharacterId);
+
+            if (!id || id <= 0 || this.attachCharacterLoading) return;
+
+            this.attachCharacterLoading = true;
+
+            const slot = this.editingSlot;
+
+            try {
+                const response = await axios.get('/inventory/attach_identity/' + id),
+                    data = response.data;
+
+                if (data && data.status && this.isEditing && slot === this.editingSlot) {
+                    for (const [key, value] of Object.entries(data.data)) {
+                        this.editingMetadata.push({
+                            key: key,
+                            value: value + ""
+                        });
+                    }
+                }
+            } catch { }
+
+            this.attachCharacterLoading = false;
+            this.attachCharacterId = "";
         },
         isFieldValid(key, value) {
             // Only common fields get validated

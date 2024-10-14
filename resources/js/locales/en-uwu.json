@@ -689,7 +689,8 @@
             "key": "Key",
             "value": "Vawue",
             "save": "Save Changes",
-            "field_invalid": "Fiewd vawue ish inbawid fow dis key."
+            "field_invalid": "Fiewd vawue ish inbawid fow dis key.",
+            "attach_identity": "Attach Identitty"
         }
     },
     "twitter": {

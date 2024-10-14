@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Character;
 use App\Helpers\LoggingHelper;
 use App\Helpers\OPFWHelper;
-use App\Http\Resources\InventoryLogResource;
 use App\Http\Resources\LogResource;
 use App\Log;
 use App\Player;
@@ -32,13 +32,19 @@ class InventoryController extends Controller
         "ped"         => 5,
         "letterbox"   => 4,
         "backpack"    => 15,
-        "wallet"      => 10,
+        "wallet"      => 15,
         "folder"      => 80,
         "archive"     => 300,
         "container"   => 2000,
         "ender_chest" => 500,
         "shared"      => 100,
         "trunk"       => 10,
+    ];
+
+    const AttachableJobs = [
+        "Law Enforcement",
+        "Medical",
+        "Government"
     ];
 
     /**
@@ -241,9 +247,23 @@ class InventoryController extends Controller
         $amount   = intval($request->input('amount'));
         $metadata = $request->input('metadata');
 
-        if (!$this->isValidItem($name) || !$amount || $amount <= 0 || $amount > 255 || !json_decode($metadata)) {
+        if (!$this->isValidItem($name) || !$amount || $amount <= 0 || $amount > 255) {
             abort(400);
         }
+
+        $decoded = json_decode($metadata, true);
+
+        if (!$decoded || !is_array($decoded)) {
+            abort(400);
+        }
+
+        foreach($decoded as $key => $value) {
+            if (!$value) {
+                unset($decoded[$key]);
+            }
+        }
+
+        $metadata = json_encode($decoded);
 
         $items = DB::table('inventories')
             ->select('id')
@@ -276,7 +296,7 @@ class InventoryController extends Controller
             DB::table('inventories')->whereIn('id', $delete)->delete();
         }
 
-        LoggingHelper::log(consoleName() . ' changed all items in '. $inventory .' (slot ' . $slot . ') to ' . $amount . 'x ' . $name . ' (' . $metadata . ').');
+        LoggingHelper::log(consoleName() . ' changed all items in ' . $inventory . ' (slot ' . $slot . ') to ' . $amount . 'x ' . $name . ' (' . $metadata . ').');
 
         DB::table('inventories')->where('inventory_name', '=', $inventory)->where('inventory_slot', '=', $slot)->update([
             'item_name'     => $name,
@@ -302,13 +322,36 @@ class InventoryController extends Controller
             abort(403);
         }
 
-        LoggingHelper::log(consoleName() . ' deleted all items in '. $inventory .' (slot ' . $slot . ').');
+        LoggingHelper::log(consoleName() . ' deleted all items in ' . $inventory . ' (slot ' . $slot . ').');
 
         DB::table('inventories')->where('inventory_name', '=', $inventory)->where('inventory_slot', '=', $slot)->delete();
 
         $this->refresh($inventory);
 
         return redirect('/inventory/' . $inventory);
+    }
+
+    public function attachIdentity(Request $request, Character $character)
+    {
+        if (!$this->isSuperAdmin($request)) {
+            abort(403);
+        }
+
+        $metadata = [
+            'characterId' => $character->character_id,
+            'firstName'   => $character->first_name,
+            'lastName'    => $character->last_name,
+            'gender'      => $character->gender,
+            'dateOfBirth' => $character->date_of_birth,
+        ];
+
+        $jobName = $character->job_name;
+
+        if ($jobName && in_array($jobName, self::AttachableJobs)) {
+            $metadata['jobName'] = $jobName;
+        }
+
+        return $this->json(true, $metadata);
     }
 
     private function refresh(string $inventory)

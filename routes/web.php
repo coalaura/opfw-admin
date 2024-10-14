@@ -164,6 +164,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     // Inventories.
     Route::get('/inventory/{inventory}', [InventoryController::class, 'show']);
     Route::get('/inventory/resolve/{inventory}', [InventoryController::class, 'resolve']);
+    Route::get('/inventory/attach_identity/{character}', [InventoryController::class, 'attachIdentity']);
     Route::put('/inventory/{inventory}/items/{slot}', [InventoryController::class, 'update']);
     Route::delete('/inventory/{inventory}/items/{slot}', [InventoryController::class, 'delete']);
 

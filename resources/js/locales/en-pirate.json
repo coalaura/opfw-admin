@@ -689,7 +689,8 @@
             "key": "Key to the chest",
             "value": "Pieces o' Eight",
             "save": "Keep ye changes",
-            "field_invalid": "Field value be invalid fer this key."
+            "field_invalid": "Field value be invalid fer this key.",
+            "attach_identity": "Fasten Yer Colors"
         }
     },
     "twitter": {

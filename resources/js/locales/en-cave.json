@@ -689,7 +689,8 @@
             "key": "Thing stick",
             "value": "Thing worth",
             "save": "Keep diferent",
-            "field_invalid": "Land thing no good for this bone."
+            "field_invalid": "Land thing no good for this bone.",
+            "attach_identity": "Stick thing you be"
         }
     },
     "twitter": {
