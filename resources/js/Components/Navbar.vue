@@ -1,5 +1,5 @@
 <template>
-    <div class="flex shadow bg-cover bg-gray-900 relative z-10 navbar">
+    <div class="flex shadow bg-cover bg-gray-900 relative z-2k navbar">
         <!-- Branding / Logo -->
         <div class="flex-shrink-0 px-8 py-3 text-center text-white mobile:hidden w-72">
             <inertia-link href="/" class="flex gap-2 relative">
@@ -64,8 +64,8 @@
                         <img :src="getDiscordAvatar('webp')" class="rounded shadow border-2 border-gray-300" @error="failedDiscordAvatar" />
                     </inertia-link>
 
-                    <div v-if="showingContext" class="absolute top-full right-0 bg-gray-700 rounded border-2 border-gray-500 min-w-context mt-1 shadow-md z-10 text-sm text-white">
-                        <a class="px-2 py-1 text-left block w-full hover:bg-gray-600" v-if="$page.serverIp" :href="serverIpUrl" target="_blank">
+                    <div v-if="showingContext" class="absolute top-full right-0 bg-gray-700 rounded border-2 border-gray-500 min-w-context mt-1 shadow-md text-sm text-white">
+                        <a class="px-2 py-1 text-left block w-full hover:bg-gray-600" v-if="$page.serverIp" :href="serverIpUrl" target="_blank" @click="hideContext">
                             <i class="fas fa-server mr-1"></i>
                             {{ t('global.connect') }}
                         </a>
@@ -90,17 +90,17 @@
                             {{ t('nav.socket_info') }}
                         </button>
 
-                        <a href="/settings" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500">
+                        <a href="/settings" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" @click="hideContext">
                             <i class="fas fa-cogs mr-1"></i>
                             {{ t('settings.title') }}
                         </a>
 
-                        <a href="/auth/refresh" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500">
+                        <a href="/auth/refresh" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" @click="hideContext">
                             <i class="fas fa-sync mr-1"></i>
                             {{ t('nav.refresh_discord') }}
                         </a>
 
-                        <inertia-link class="px-2 py-1 block w-full hover:bg-gray-600 border-t border-gray-500" method="POST" href="/logout">
+                        <inertia-link class="px-2 py-1 block w-full hover:bg-gray-600 border-t border-gray-500" method="POST" href="/logout" @click="hideContext">
                             <i class="fas fa-sign-out-alt mr-1"></i>
                             {{ t("nav.logout") }}
                         </inertia-link>
