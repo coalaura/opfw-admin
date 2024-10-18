@@ -364,14 +364,14 @@ const Markdown = {
         }
 
         function handleImage(el, url) {
-            $(el).replaceWith(`<div class="relative whitespace-normal inline-block">
+            $(el).replaceWith(`<div class="relative whitespace-normal block w-max max-w-full">
                 <a href="#" class="a-close" data-url="${url}">&#10006;</a>
                 <img class="block max-h-96 max-w-full" src="${url}" />
             </div>`);
         }
 
         function handleVideo(el, url) {
-            $(el).replaceWith(`<div class="relative whitespace-normal inline-block">
+            $(el).replaceWith(`<div class="relative whitespace-normal block w-max max-w-full">
                 <a href="#" class="p-2 a-close" data-url="${url}">&#10006;</a>
                 <video class="block max-h-96 max-w-full" controls>
                     <source src="${url}" type="video/mp4">
@@ -380,7 +380,7 @@ const Markdown = {
         }
 
         function handleIframe(el, url, iframe) {
-            $(el).replaceWith(`<div class="relative whitespace-normal inline-block">
+            $(el).replaceWith(`<div class="relative whitespace-normal block w-max max-w-full">
                 <a href="#" class="p-2 a-close" data-url="${url}">&#10006;</a>
                 <iframe class="block h-96 w-iframe max-w-full" src="${iframe}" frameborder="0" allow="autoplay" allowfullscreen></iframe>
             </div>`);
