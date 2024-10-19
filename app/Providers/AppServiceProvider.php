@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Helpers\GeneralHelper;
+use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\SessionHelper;
 use App\Http\Resources\PlayerResource;
@@ -128,6 +129,9 @@ class AppServiceProvider extends ServiceProvider
 
             'serverIp'   => $ip,
             'serverName' => Server::getServerName($ip),
+            'connect'    => function () {
+                return OPFWHelper::getConnectUrl();
+            },
 
             'discord'    => function () {
                 $session = sessionHelper();

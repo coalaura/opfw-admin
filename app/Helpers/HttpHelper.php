@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\TransferStats;
 
 class HttpHelper
 {
@@ -97,9 +98,9 @@ class HttpHelper
             'connect_timeout' => 10,
             'http_errors'     => false,
             'headers'         => [
-                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0',
-                'Accept-Language' => 'en-US,en;q=0.7,de;q=0.3'
-            ]
+                'User-Agent'      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0',
+                'Accept-Language' => 'en-US,en;q=0.7,de;q=0.3',
+            ],
         ]);
 
         try {
@@ -109,5 +110,28 @@ class HttpHelper
         } catch (\Throwable $t) {}
 
         return null;
+    }
+
+    public static function getRedirect(string $url): string
+    {
+        $client = new Client([
+            'timeout'         => 10,
+            'connect_timeout' => 10,
+            'http_errors'     => false,
+            'allow_redirects' => true,
+            'headers'         => [
+                'User-Agent'      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0',
+                'Accept-Language' => 'en-US,en;q=0.7,de;q=0.3',
+            ],
+            'on_stats'        => function (TransferStats $stats) use (&$url) {
+                $url = (string) $stats->getEffectiveUri();
+            },
+        ]);
+
+        try {
+            $client->get($url);
+        } catch (\Throwable $t) {}
+
+        return $url;
     }
 }

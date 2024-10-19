@@ -599,6 +599,34 @@ class OPFWHelper
     }
 
     /**
+     * Resolves the fivem:// url from the connect url
+     */
+    public static function getConnectUrl(?string $url = null): string
+    {
+        if (!$url) {
+            $url = Server::getFirstServerIP();
+
+            if (!$url) {
+                return '#';
+            }
+        }
+
+        $cache = 'connect_' . md5($url);
+
+        if (CacheHelper::exists($cache)) {
+            return CacheHelper::read($cache, '');
+        } else {
+            $redirect = HttpHelper::getRedirect($url);
+
+            if (Str::startsWith($redirect, 'https://cfx.re/join/')) {
+                $redirect = str_replace('https://', 'fivem://connect/', $redirect);
+            }
+
+            return $redirect;
+        }
+    }
+
+    /**
      * Creates a screenshot
      *
      * @param string $serverIp
