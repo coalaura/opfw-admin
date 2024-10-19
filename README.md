@@ -10,21 +10,22 @@
 
 <strong>100% FREE + OPEN SOURCE.</strong>
 
-> A web interface to help with administrative duties at the FiveM server: Legacy Roleplay. Written in PHP using [Laravel Framework](https://laravel.com/) and
+> An admin panel for OP-Framework servers. Written in PHP using [Laravel Framework](https://laravel.com/) and
 > [Tailwindcss](https://tailwindcss.com) for the frontend.
 
-See [#contributing](#Contributing) for more details on how you can help shape **opfw-admin**. We're always down to improve and receive feedback.
+See [#contributing](#Contributing) for more details on how you can help shape the **opfw-admin** panel. We're always down to improve and receive feedback.
 
 ## Note
-
-It is recommended that you use Firefox, Chrome or Edge as your web browser for the best experience.
+This admin panel **requires** an OP-Framework powered FiveM server. It will **NOT** work with any other server or framework (like ESX, QB-Core, etc.).
 
 ## Features
 * See and search server logs.
 * See and search players.
 * Warn and ban players, also temporarily.
 * See and edit characters.
-* And many more detailed features...
+* Watch players on the live-map.
+* Check all kinds of server statistics.
+* And many, many more highly detailed features...
 * [*... open issue to request a feature.*](https://github.com/coalaura/opfw-admin/issues/new/choose)
 
 ## License
@@ -32,49 +33,36 @@ Please refer to [LICENSE.md](https://github.com/coalaura/opfw-admin/blob/master/
 
 ## Contributors
 This list only contains some of the most notable contributors. For the full list, refer to [GitHub's contributors graph](https://github.com/coalaura/opfw-admin/graphs/contributors).
-* [ExpDev07](https://github.com/ExpDev07) (Marius) - Original creator.
+* [ExpDev07](https://github.com/ExpDev07) (Marius) - Original creator. *No longer works on this project.*
 * [coalaura](https://github.com/coalaura) (Laura) - Maintainer of both frontend and backend.
 
 ## Pictures
 
 ### Logging in
-![Logging in](.github/screenshots/logging_in.PNG)
+![Logging in](.github/screenshots/login.png)
 
 ### Dashboard
-![Dashboard](.github/screenshots/dashboard.PNG)
-
-### Players
-![Players](.github/screenshots/players.PNG)
+![Dashboard](.github/screenshots/dashboard.png)
 
 ### Viewing player
-![View Player](.github/screenshots/player.PNG)
-
-### Characters
-![Characters](.github/screenshots/characters.PNG)
+![View Player](.github/screenshots/player.png)
 
 ### Viewing character
-![View Character](.github/screenshots/character.PNG)
-
-### Server Logs
-![Logs](.github/screenshots/logs.PNG)
-
-### Panel Logs
-![Panel Logs](.github/screenshots/panel_logs.PNG)
-
-### Server List
-![Server List](.github/screenshots/servers.PNG)
+![View Character](.github/screenshots/character.png)
 
 ### Live-Map
-![Live-Map](.github/screenshots/livemap.png)
+![Live-Map](.github/screenshots/map.png)
 
-### New Players
-![New Players](.github/screenshots/new_players.png)
+### Statistics
+![Statistics](.github/screenshots/statistics.png)
+
+### And much more...
 
 ## Contributing
 This section describes how you can help contribute.
 
 ### Prerequisites
-* An OPFW-Server.
+* An OP-Framework server.
 * PHP 8.0+.
 * Composer.
 * Node (and npm).
