@@ -19,13 +19,13 @@ See [#contributing](#Contributing) for more details on how you can help shape th
 This admin panel **requires** an OP-Framework powered FiveM server. It will **NOT** work with any other server or framework (like ESX, QB-Core, etc.).
 
 ## Features
-* See and search server logs.
-* See and search players.
+* See and search various detailed server logs.
+* See, search, manage and edit players and characters.
 * Warn and ban players, also temporarily.
-* See and edit characters.
 * Watch players on the live-map.
+* Keep up-to-date with, edit and delete twitter posts.
 * Check all kinds of server statistics.
-* And many, many more highly detailed features...
+* And many, many more features...
 * [*... open issue to request a feature.*](https://github.com/coalaura/opfw-admin/issues/new/choose)
 
 ## License
