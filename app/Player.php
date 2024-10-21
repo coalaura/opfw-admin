@@ -393,21 +393,25 @@ class Player extends Model
         return trim($name);
     }
 
-    public static function getFilteredPlayerName(string $name, $alias, string $license): string
+    public static function getFilteredPlayerName(string $name, $aliases, string $license): string
     {
         $name  = self::filterPlayerName($name);
-        $alias = $alias ?? [];
+        $aliases = $aliases ?? [];
 
-        if (is_string($alias)) {
-            $alias = json_decode($alias, true) ?? [];
+        if (is_string($aliases)) {
+            $aliases = json_decode($aliases, true) ?? [];
         }
 
         if ($name) {
             return $name;
         }
 
-        for ($i = sizeof($alias) - 1; $i >= 0; $i--) {
-            $name = self::filterPlayerName($alias[$i]);
+        foreach ($aliases as $alias) {
+            if (!preg_match('/[a-z0-9]/i', $alias)) {
+                continue;
+            }
+
+            $name = self::filterPlayerName($alias);
 
             if ($name) {
                 return $name;
