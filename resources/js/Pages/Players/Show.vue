@@ -80,8 +80,8 @@
             </div>
             <div class="text-sm italic mt-4">
                 <span class="block" v-if="player.playerName !== player.safePlayerName">
-                    <span class="font-bold">{{ t('players.show.original_name') }}:</span>
-                    <span class="bg-gray-200 dark:bg-gray-700 px-1 whitespace-pre">{{ player.playerName }}</span>
+                    <span class="font-bold">{{ t('players.show.original_name') }}: </span>
+                    <span class="bg-gray-200 dark:bg-gray-700 px-1 whitespace-pre">{{ highlightUnicode(player.playerName) }}</span>
                 </span>
                 <span class="block" v-if="player.playerAliases && player.playerAliases.length > 0">
                     <span class="font-bold">{{ t('players.show.aliases') }}:</span>
@@ -1608,6 +1608,7 @@ import Modal from './../../Components/Modal';
 import MetadataViewer from './../../Components/MetadataViewer';
 import StatisticsTable from './../../Components/StatisticsTable';
 import MultiSelector from './../../Components/MultiSelector';
+import { escape } from 'lodash';
 
 export default {
     layout: Layout,
@@ -2821,6 +2822,13 @@ export default {
         },
         smartJoin(array) {
             return array.join(', ').replace(/, ([^,]*)$/, ' and $1');
+        },
+        highlightUnicode(text) {
+            return text.split('').map(char => {
+                if (char.match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]/)) return char;
+
+                return '\\u' + ('0000' + char.charCodeAt(0).toString(16)).slice(-4);
+            }).join('');
         }
     },
     mounted() {
