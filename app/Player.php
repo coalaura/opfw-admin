@@ -388,7 +388,7 @@ class Player extends Model
             $name = str_ireplace($filter, '', $name);
         }
 
-        $name = preg_replace('/[\x00-\x1F\x7F\xA0]/u', '', $name);
+        $name = preg_replace('/[\p{Cc}\p{Cf}]/u', '', $name);
 
         return trim($name);
     }
