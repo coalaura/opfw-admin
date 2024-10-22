@@ -37,7 +37,7 @@ const Socket = {
                 console.log(`Error fetching data from ${url}: ${e.message}`);
 
                 if (e.message === 'Network Error') {
-                    originUnavailable = true;
+                    originUnavailable = isDev;
 
                     console.info('Origin server is unavailable, aborting future requests.');
 
