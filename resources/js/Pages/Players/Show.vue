@@ -157,7 +157,8 @@
 
                 <!-- Streamer Ban exception -->
                 <a class="font-semibold border-2 px-2 py-1 rounded bg-yellow-100 dark:bg-yellow-700 border-yellow-200 flex items-center gap-1" :href="'https://twitch.tv/' + player.streamerException" target="_blank" v-if="player.streamerException" :title="t('players.show.streamer_exception_title', player.streamerException)">
-                    <i class="fab fa-twitch mr-1"></i>
+                    <i class="fas fa-spinner animate-spin mr-1" v-if="updatingBanException"></i>
+                    <i class="fab fa-twitch mr-1" v-else></i>
                     {{ t('players.show.streamer_exception') }}
 
                     <a href="#" @click="removeBanException()" class="ml-1 text-white" :title="t('players.show.remove_ban_exception')" v-if="this.perm.check(this.perm.PERM_BAN_EXCEPTION)">
@@ -299,6 +300,12 @@
                     Role
                 </button>
 
+                <!-- Edit Streamer exception -->
+                <button class="p-1 text-sm font-bold leading-4 text-center rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" @click="editBanException()" :title="t('players.show.edit_streamer_exception')" v-if="this.perm.check(this.perm.PERM_BAN_EXCEPTION)">
+                    <i class="fab fa-twitch mr-1"></i>
+                    SEx
+                </button>
+
                 <!-- Add Tag -->
                 <button class="p-1 text-sm font-bold leading-4 text-center rounded border-green-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" @click="isTagging = true" :title="t('players.show.edit_tag')" v-if="this.perm.check(this.perm.PERM_EDIT_TAG)">
                     <i class="fas fa-tag mr-1"></i>
@@ -311,7 +318,7 @@
                     WL
                 </button>
 
-                <!-- Add to Whitelist -->
+                <!-- Remove from Whitelist -->
                 <button class="p-1 text-sm font-bold leading-4 text-center rounded border-red-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" @click="updateWhitelistStatus(false)" :title="t('players.show.unwhitelist')" v-if="whitelisted && this.perm.check(this.perm.PERM_WHITELIST)">
                     <i class="fas fa-calendar-times mr-1"></i>
                     WL
@@ -744,6 +751,42 @@
                 </button>
 
                 <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isEnablingCommands = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
+
+        <!-- Streamer Exception -->
+        <modal :show.sync="editingBanException">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.show.edit_streamer_exception') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="flex gap-3 items-center">
+                    <label class="block whitespace-nowrap" for="banExceptionTwitch">
+                        {{ t('players.show.twitch_url') }}
+                    </label>
+
+                    <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="banExceptionTwitch" placeholder="https://twitch.tv/..." type="text" v-model="banExceptionTwitch" />
+                </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" @click="setBanException">
+                    <template v-if="updatingBanException">
+                        <i class="fas fa-spinner animate-spin mr-1"></i>
+                        {{ t("players.show.saving") }}
+                    </template>
+
+                    <template v-else>
+                        {{ t('players.show.save_changes') }}
+                    </template>
+                </button>
+
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="editingBanException = false">
                     {{ t('global.close') }}
                 </button>
             </template>
@@ -1790,6 +1833,10 @@ export default {
 
             panelLogs: [],
 
+            updatingBanException: false,
+            editingBanException: false,
+            banExceptionTwitch: "",
+
             statusLoading: true,
             status: false,
 
@@ -2446,14 +2493,60 @@ export default {
             this.form.pm.message = null;
         },
         async removeBanException() {
+            if (this.updatingBanException) return;
+
             if (!confirm(this.t('players.show.remove_ban_exception_confirm'))) {
                 return;
             }
+
+            this.updatingBanException = true;
 
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateBanExceptionStatus', {
                 twitch: false
             }, { preserveScroll: true });
+
+            this.updatingBanException = false;
+        },
+        async setBanException() {
+            if (this.updatingBanException) return;
+
+            this.banExceptionTwitch = this.banExceptionTwitch.trim();
+
+            if (!this.banExceptionTwitch) {
+                this.removeBanException();
+
+                this.editingBanException = false;
+
+                return;
+            }
+
+            const twitch = this.banExceptionTwitch.match(/(?<=^https:\/\/(?:www\.)?twitch\.tv\/)\w+$/mi)?.shift();
+
+            if (!twitch) {
+                alert(this.t('players.show.invalid_twitch_id'));
+
+                return;
+            }
+
+            this.updatingBanException = true;
+
+            // Send request.
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateBanExceptionStatus', {
+                twitch: twitch
+            }, { preserveScroll: true });
+
+            this.updatingBanException = false;
+            this.editingBanException = false;
+        },
+        editBanException() {
+            if (this.player.streamerException) {
+                this.banExceptionTwitch = "https://twitch.tv/" + this.player.streamerException;
+            } else {
+                this.banExceptionTwitch = "";
+            }
+
+            this.editingBanException = true;
         },
         async updateWhitelistStatus(status) {
             if (!confirm(this.t('players.show.' + (status ? 'whitelist_confirm' : 'unwhitelist_confirm')))) {

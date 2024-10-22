@@ -918,7 +918,7 @@
             "stretch_res": "Player be sailin' a {0} aspect ratio on a {1} resolution. (Stretched-Resolution)",
             "schedule_info": "On th' chosen day, th' ban will vanish like a ghost at the stroke o' midnight, under th' Universal Time Coordinated.",
             "remove_ban_exception": "Pluck away the scallywag's Twitch ban pardon, eh?",
-            "remove_ban_exception_confirm": "Ye be certain ye wish to pluck away this scurvy dog's Twitch ban pardon? Once ye drop it off the plank, it can't be hoisted back aboard from the panel.",
+            "remove_ban_exception_confirm": "Ye be certain ye wish to pluck away this scurvy dog's Twitch ban pardon?",
             "whitelist_confirm": "Be ye certain ye wish to mark this hearty as trusty?",
             "unwhitelist_confirm": "Be ye certain ye wish to revoke this bucko's trusty status?",
             "whitelist": "Mark this hearty as trusty, arr?",
@@ -947,7 +947,11 @@
             "reacted_by": "keelhauled by {0}",
             "delete_selected": "Scuttle {0} chosen warnin'(s)",
             "panel_logs": "Deck Logs",
-            "copy_warning": "Copy warnin' to yer clipboard, arr!"
+            "copy_warning": "Copy warnin' to yer clipboard, arr!",
+            "invalid_twitch_profile": "Arr! That be an improper Twitch bilge rat link, matey. Scrawl a proper Twitch scuttle link, like so: https://twitch.tv/myprofile.",
+            "edit_streamer_exception": "Amend the Streamer's Black Spot",
+            "twitch_url": "Twitch Profile Course",
+            "saving": "Stowin' Booty"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

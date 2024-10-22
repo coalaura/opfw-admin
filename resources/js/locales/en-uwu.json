@@ -918,7 +918,7 @@
             "stretch_res": "Pwayew is pwaying a {0} aspect watio on a {1} wesowution. (Stwetched-Wesowution)",
             "schedule_info": "Aw da sewected date, de ban wiww automaticawwy be wemoved at 12 AM UTC.",
             "remove_ban_exception": "Wemove pwayews twitch ban exception?",
-            "remove_ban_exception_confirm": "Awe you suwe you want to wemove dis pwayews twitch ban exception? Dis cannot be undone fwom the panew.",
+            "remove_ban_exception_confirm": "Awe you suwe you want to wemove dis pwayews twitch ban exception?",
             "whitelist_confirm": "Awwe you suwe you want to whitewist dis pwayew?",
             "unwhitelist_confirm": "Awwe you suwe you want to un-whitewist dis pwayew?",
             "whitelist": "Whitewist dis pwayew?",
@@ -947,7 +947,11 @@
             "reacted_by": "weacted by {0}",
             "delete_selected": "Dewete {0} sewected wawning(s)",
             "panel_logs": "Panyew Wogs",
-            "copy_warning": "Copy wawning to cwipboawd"
+            "copy_warning": "Copy wawning to cwipboawd",
+            "invalid_twitch_profile": "Inyawid twitch p-pwofiwe wink. Pwease entew a vadid twitch pwofiwe wink (e.g.: https://twitch.tv/my-pwo-fiwe).",
+            "edit_streamer_exception": "Edit Stweamew Exception",
+            "twitch_url": "Twitch Pwofiwe UwU",
+            "saving": "Saving"
         },
         "ban_reason": "Waison",
         "ban_time": "Expwires",

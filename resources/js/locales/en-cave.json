@@ -918,7 +918,7 @@
             "stretch_res": "Player play {0} shape lots side on {1} many dots. (Big-Stretchy-Resolution)",
             "schedule_info": "On chosen sun time, no more stop thing at first night moon time UTC.",
             "remove_ban_exception": "Take out player twitch no-ban oops?",
-            "remove_ban_exception_confirm": "You sure want take out player twitch no-ban oops? No go back in magic screen box.",
+            "remove_ban_exception_confirm": "You sure want take out player twitch no-ban oops?",
             "whitelist_confirm": "Grunk sure you want make player safe in tribe?",
             "unwhitelist_confirm": "Grunk sure you want make player not safe in tribe anymore?",
             "whitelist": "Make player safe in tribe?",
@@ -947,7 +947,11 @@
             "reacted_by": "{0} do reaction",
             "delete_selected": "Take away {0} pick warn(s)",
             "panel_logs": "Panel Markings",
-            "copy_warning": "Make same words of careful on rock-scratch-pad"
+            "copy_warning": "Make same words of careful on rock-scratch-pad",
+            "invalid_twitch_profile": "Bad twitch link. Give good twitch link (like: https://twitch.tv/yourname).",
+            "edit_streamer_exception": "Change Streamer No-Go",
+            "twitch_url": "Twitch Link Where Watch",
+            "saving": "Keeping Safe"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",

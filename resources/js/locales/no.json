@@ -930,7 +930,7 @@
             "stretch_res": "Spilleren spiller med et {0} sideforhold på en {1} oppløsning. (Strukket oppløsning)",
             "schedule_info": "På den valgte datoen vil forbudet automatisk bli fjernet kl. 12 AM UTC.",
             "remove_ban_exception": "Fjern spillers unntak fra Twitch-utestengelse?",
-            "remove_ban_exception_confirm": "Er du sikker på at du vil fjerne dette spillers unntak fra Twitch-utestengelsen? Dette kan ikke angres fra panelet.",
+            "remove_ban_exception_confirm": "Er du sikker på at du vil fjerne dette spillers unntak fra Twitch-utestengelsen?",
             "whitelist_confirm": "Er du sikker på at du vil sette denne spilleren på hvitelisten?",
             "unwhitelist_confirm": "Er du sikker på at du vil fjerne denne spilleren fra hvitelisten?",
             "whitelist": "Sett denne spilleren på hvitelisten?",
@@ -959,7 +959,11 @@
             "reacted_by": "reaksjon fra {0}",
             "delete_selected": "Slett {0} valgte advarsel(er)",
             "panel_logs": "Panellogger",
-            "copy_warning": "Kopier advarsel til utklippstavlen"
+            "copy_warning": "Kopier advarsel til utklippstavlen",
+            "invalid_twitch_profile": "Ugyldig Twitch-profillenke. Vennligst oppgi en gyldig Twitch-profillenke (f.eks.: https://twitch.tv/minprofil).",
+            "edit_streamer_exception": "Rediger unntak for strømmer",
+            "twitch_url": "Twitch-profil-URL",
+            "saving": "Lagrer"
         },
         "ban_reason": "Årsak",
         "ban_time": "Utløper",

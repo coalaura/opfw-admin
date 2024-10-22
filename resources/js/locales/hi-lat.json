@@ -930,7 +930,7 @@
             "stretch_res": "Player ek {0} aspect ratio {1} resolution par chala raha hai. (Stretched-Resolution)",
             "schedule_info": "Chune gaye din par, pratibandh swatah hi raat ke 12 AM UTC par hat jayega.",
             "remove_ban_exception": "Players ka twitch ban exception hataaye?",
-            "remove_ban_exception_confirm": "Kya aap sure hain ki aap is player ka twitch ban exception hataana chahte hain? Panel se isey undo nahi kiya ja sakta.",
+            "remove_ban_exception_confirm": "Kya aap sure hain ki aap is player ka twitch ban exception hataana chahte hain?",
             "whitelist_confirm": "Kya aap vaakai mein is khiladi ko whitelist mein shaamil karna chahte hain?",
             "unwhitelist_confirm": "Kya aap vaakai mein is khiladi ko whitelist se hatana chahte hain?",
             "whitelist": "Is khiladi ko whitelist mein shaamil karen?",
@@ -959,7 +959,11 @@
             "reacted_by": "{0} ke dwara pratikriya di gayi",
             "delete_selected": "{0} chune gaye chetavani(ion) ko delete kare",
             "panel_logs": "Panel Log",
-            "copy_warning": "Chetaavani ko clipboard par copy karein"
+            "copy_warning": "Chetaavani ko clipboard par copy karein",
+            "invalid_twitch_profile": "Anmaany twitch profile link hai. Kripya ek maany twitch profile link daalein (udaaharan ke liye: https://twitch.tv/myprofile).",
+            "edit_streamer_exception": "Streamer Apvaad Sampaadit Karein",
+            "twitch_url": "Twitch Profile URL",
+            "saving": "Sajha Kar Raha Hai"
         },
         "ban_reason": "Karan",
         "ban_time": "Sammaapti",
