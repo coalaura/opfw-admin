@@ -167,7 +167,6 @@ class Player extends Model
 
                 "en-cave"   => "Caveman Speak",
                 "en-uwu"    => "UwU Language",
-                "en-pirate" => "Pirate Speak",
                 "en-us_s"   => "Southern Accent",
             ],
         ],
