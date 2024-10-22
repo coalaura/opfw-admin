@@ -14,7 +14,6 @@ use App\Http\Resources\PanelLogResource;
 use App\Http\Resources\PlayerIndexResource;
 use App\Http\Resources\PlayerResource;
 use App\Player;
-use App\Screenshot;
 use App\Warning;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
@@ -42,24 +41,16 @@ class PlayerController extends Controller
         // Filtering by license_identifier.
         $this->searchQuery($request, $query, 'license', 'license_identifier');
 
-        // Filtering by identifier & type.
+        // Filtering by identifier.
         $identifier = $request->input('identifier');
-        $identifier = $identifier ? preg_replace('/[^a-z0-9:~]/i', '', $identifier) : null;
-
-        $type = $request->input('identifier_type');
-        $type = $type && !Str::contains($identifier, ':') ? preg_replace('/[^a-z0-9]/i', '', $type) : null;
 
         if ($identifier) {
-            if (Str::startsWith($identifier, '~') or !$type) {
+            if (Str::startsWith($identifier, '~') or !Str::contains($identifier, ':')) {
                 $identifier = substr($identifier, 1);
 
                 $query->where('identifiers', 'LIKE', '%' . $identifier . '%');
             } else {
                 $id = '"' . $identifier . '"';
-
-                if ($type) {
-                    $id = '"' . $type . ':' . $identifier . '"';
-                }
 
                 $query->where(DB::raw("JSON_CONTAINS(identifiers, '$id')"), '=', '1');
             }
@@ -80,12 +71,21 @@ class PlayerController extends Controller
             $query->where(DB::raw('JSON_CONTAINS(enabled_commands, \'"' . $enablable . '"\')'), '=', '1');
         }
 
+        // Filtering by ban exception
+        $exception = $request->input('streamer_exception');
+
+        if ($exception) {
+            $query->where(DB::raw("JSON_EXISTS(user_data, '$.twitchBanException')"), '=', '1');
+        }
+
+        // Get ban info
+        $query->leftJoin('user_bans', 'identifier', '=', 'license_identifier');
+
         $query->orderBy("player_name");
 
         $query->select([
-            'license_identifier', 'player_name', 'playtime', 'identifiers', 'player_aliases',
+            'license_identifier', 'player_name', 'playtime', 'identifiers', 'player_aliases', 'ban_hash',
         ]);
-        $query->selectSub('SELECT COUNT(`id`) FROM `warnings` WHERE `player_id` = `user_id` AND `warning_type` IN (\'' . Warning::TypeWarning . '\', \'' . Warning::TypeStrike . '\')', 'warning_count');
 
         $page = Paginator::resolveCurrentPage('page');
         $query->limit(20)->offset(($page - 1) * 20);
@@ -108,12 +108,12 @@ class PlayerController extends Controller
             'players'   => PlayerIndexResource::collection($players),
             'banMap'    => Ban::getAllBans(false, $identifiers, true),
             'filters'   => [
-                'name'            => $request->input('name'),
-                'license'         => $request->input('license'),
-                'server'          => $request->input('server'),
-                'identifier'      => $request->input('identifier'),
-                'identifier_type' => $request->input('identifier_type') ?? '',
-                'enablable'       => $request->input('enablable') ?? '',
+                'name'               => $request->input('name'),
+                'license'            => $request->input('license'),
+                'server'             => $request->input('server'),
+                'identifier'         => $request->input('identifier'),
+                'streamer_exception' => $request->input('streamer_exception') ?? '',
+                'enablable'          => $request->input('enablable') ?? '',
             ],
             'links'     => $this->getPageUrls($page),
             'page'      => $page,
@@ -246,7 +246,7 @@ class PlayerController extends Controller
     public function extraData(Player $player)
     {
         $data = [
-            'panelLogs'   => PanelLogResource::collection($player->panelLogs()->orderByDesc('timestamp')->limit(10)->get()),
+            'panelLogs' => PanelLogResource::collection($player->panelLogs()->orderByDesc('timestamp')->limit(10)->get()),
         ];
 
         return $this->json(true, $data);

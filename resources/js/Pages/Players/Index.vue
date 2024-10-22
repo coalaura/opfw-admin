@@ -42,16 +42,17 @@
                         <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2 mt-3" for="identifier">
                                 {{ t('players.identifier') }}
+                                <sup v-if="detectIdentifierType(filters.identifier)">{{ detectIdentifierType(filters.identifier) }}</sup>
                             </label>
-                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="identifier" name="identifier" placeholder="669523636423622686" v-model="filters.identifier" @input="guessIdentifierType">
+                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="identifier" name="identifier" placeholder="669523636423622686" v-model="filters.identifier">
                         </div>
                         <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
-                            <label class="block mb-2 mt-3" for="identifier_type">
-                                {{ t('players.identifier_type') }}
+                            <label class="block mb-2 mt-3" for="streamer_exception">
+                                {{ t('players.streamer_exception') }}
                             </label>
-                            <select class="block w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="identifier_type" name="identifier_type" v-model="filters.identifier_type">
+                            <select class="block w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="streamer_exception" name="streamer_exception" v-model="filters.streamer_exception">
                                 <option value="">{{ t('global.any') }}</option>
-                                <option :value="typ" v-for="typ in getIdentifierTypes()" :key="typ" v-if="isIdentifierOfType(filters.identifier, typ)">{{ typ.substr(0, 1).toUpperCase() + typ.substr(1) }}</option>
+                                <option :value="true">{{ t('global.yes') }}</option>
                             </select>
                         </div>
                         <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
@@ -104,7 +105,6 @@
                         <th class="p-3">{{ t('players.form.identifier') }}</th>
                         <th class="p-3">{{ t('players.form.name') }}</th>
                         <th class="p-3">{{ t('players.form.playtime') }}</th>
-                        <th class="p-3">{{ t('players.form.warnings') }}</th>
                         <th class="w-64 p-3">{{ t('players.form.banned') }}?</th>
                         <th class="w-24 p-3 pr-8"></th>
                     </tr>
@@ -123,7 +123,6 @@
                         <td class="p-3 mobile:block">{{ player.licenseIdentifier }}</td>
                         <td class="p-3 mobile:block">{{ player.playerName }}</td>
                         <td class="p-3 mobile:block">{{ player.playTime | humanizeSeconds }}</td>
-                        <td class="p-3 mobile:block">{{ player.warnings }}</td>
                         <td class="p-3 text-center mobile:block">
                             <span class="block px-4 py-2 text-white rounded" :class="getBanInfo(player.licenseIdentifier, 'reason') ? 'bg-red-600 dark:bg-red-700' : 'bg-red-500 dark:bg-red-600'" :title="getBanInfo(player.licenseIdentifier, 'reason') ? getBanInfo(player.licenseIdentifier, 'reason') : t('players.ban.no_reason')" v-if="player.isBanned">
                                 {{ t('global.banned') }}
@@ -203,7 +202,7 @@ export default {
             discord: String,
             server: Number,
             identifier: String,
-            identifier_type: String,
+            streamer_exception: String,
             enablable: String,
         },
         time: {
@@ -234,14 +233,9 @@ export default {
     mounted() {
         this.updateStatus();
 
-        this.guessIdentifierType();
+        this.filters.streamer_exception = this.filters.streamer_exception ?? "";
     },
     methods: {
-        guessIdentifierType() {
-            const identifier = this.filters.identifier;
-
-            this.filters.identifier_type = this.detectIdentifierType(identifier) || '';
-        },
         refresh: async function () {
             if (this.isLoading) {
                 return;

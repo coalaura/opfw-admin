@@ -738,7 +738,6 @@
         "search": "Søk",
         "name": "Spillernavn",
         "license": "Lisensidentifikator",
-        "identifier_type": "Identifikator Type",
         "identifier": "Annen Identifikator",
         "server_id": "Gjeldende Server-ID",
         "enablable": "Aktivert Kommando",
@@ -1195,7 +1194,8 @@
             "action": "Aksjon",
             "amount": "Beløp",
             "timestamp": "Tid"
-        }
+        },
+        "streamer_exception": "Unntak for streamer"
     },
     "casino": {
         "title": "Kasino Logger",

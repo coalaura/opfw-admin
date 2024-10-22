@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Ban;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,8 +20,7 @@ class PlayerIndexResource extends JsonResource
             'licenseIdentifier' => $this->license_identifier,
             'playerName'        => $this->getSafePlayerName(),
             'playTime'          => $this->playtime,
-            'warnings'          => $this->warning_count,
-            'isBanned'          => !!Ban::getBanForUser($this->license_identifier),
+            'isBanned'          => !!$this->ban_hash,
             'playtime'          => $this->playtime,
 			'staffToggled'      => $this->isStaffToggled(),
 			'staffHidden'       => $this->isStaffHidden(),

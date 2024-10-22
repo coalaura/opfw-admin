@@ -738,7 +738,6 @@
         "search": "Khoj",
         "name": "Khiladi ka Naam",
         "license": "License Pehchanankarta",
-        "identifier_type": "Pehchanankarta Prakaar",
         "identifier": "Anya Pehchanankarta",
         "server_id": "Vartamaan Server ID",
         "enablable": "Sakriya Command",
@@ -1195,7 +1194,8 @@
             "action": "Kriya",
             "amount": "Raashi",
             "timestamp": "Samaay"
-        }
+        },
+        "streamer_exception": "Streamer Aparivartan"
     },
     "casino": {
         "title": "Casino Logs",
