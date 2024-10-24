@@ -202,7 +202,7 @@
 						</td>
 						<td class="p-3 mobile:block whitespace-nowrap" v-if="showLogTimeDifference" :title="t('logs.diff_label')">
 							<span v-if="index + 1 < logs.length">
-								{{ formatMilliSecondDiff(stamp(log.timestamp) - stamp(logs[index + 1].timestamp)) }}
+								{{ formatMilliSecondDiff(log.timestamp - logs[index + 1].timestamp) }}
 								<i class="fas fa-arrow-down"></i>
 							</span>
 							<span v-else>Start</span>
@@ -315,9 +315,6 @@ export default {
 			}
 
 			return this.$moment.duration(Math.round(ms / 1000), 'seconds').format('d[d] h[h] m[m] s[s]');
-		},
-		stamp(time) {
-			return this.$moment.utc(time).unix();
 		},
 		async refresh() {
 			if (this.isLoading) {
