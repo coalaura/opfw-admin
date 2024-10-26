@@ -193,6 +193,11 @@ export default {
             socket: false
         };
     },
+    mounted() {
+        document.fonts.ready.then(() => {
+            this.scroll();
+        });
+    },
     watch: {
         localStaff() {
             localStorage.setItem("localStaff", this.localStaff ? "true" : "false");
