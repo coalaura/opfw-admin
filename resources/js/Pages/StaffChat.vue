@@ -360,20 +360,21 @@ export default {
         },
         scroll(secondary = false) {
             const scrollTo = this.$refs.scrollTo,
-                messages = this.$refs.messages,
-                top = messages.scrollTopMax - messages.scrollTop;
+                messages = this.$refs.messages;
 
-            if (top > 20) return;
+            if (messages.scrollHeight - messages.scrollTop - messages.clientHeight <= 5) return;
 
             this.$nextTick(() => {
                 scrollTo.scrollIntoView({
-                    behavior: "smooth"
+                    behavior: "smooth",
+                    block: "end"
                 });
 
                 if (!secondary) {
-                    this.wait(500).then(() => {
+                    this.wait(1000).then(() => {
                         scrollTo.scrollIntoView({
-                            behavior: "smooth"
+                            behavior: "smooth",
+                            block: "end"
                         });
                     });
                 }
