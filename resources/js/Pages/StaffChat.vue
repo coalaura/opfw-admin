@@ -187,15 +187,11 @@ export default {
             isLoading: false,
             error: false,
 
-            localStaff: false,
-            soundEffects: true,
+            localStaff: localStorage.getItem("localStaff") === "true",
+            soundEffects: localStorage.getItem("soundEffects") !== "false",
 
             socket: false
         };
-    },
-    mounted() {
-        this.localStaff = localStorage.getItem("localStaff") === "true";
-        this.soundEffects = localStorage.getItem("soundEffects") !== "false";
     },
     watch: {
         localStaff() {
