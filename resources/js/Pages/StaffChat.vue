@@ -306,6 +306,7 @@ export default {
             if (this.socket) return;
 
             this.isLoading = true;
+            this.initialScroll = false;
 
             const isDev = window.location.hostname === 'localhost',
                 token = this.$page.auth.token,
