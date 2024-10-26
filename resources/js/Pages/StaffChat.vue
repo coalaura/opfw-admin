@@ -1,7 +1,7 @@
 <template>
     <div class="w-full h-full relative" id="chat">
         <div class="absolute top-1 right-1 text-white text-xs font-medium flex gap-2">
-            <div class="py-0.5 px-1.5 cursor-pointer rounded transition shadow-sm" :class="{ 'bg-lime-600': autoScroll, 'bg-gray-600 line-through !text-gray-200 opacity-90': !autoScroll }" @click="autoScroll = !autoScroll; this.scroll()">
+            <div class="py-0.5 px-1.5 cursor-pointer rounded transition shadow-sm" :class="{ 'bg-lime-600': autoScroll, 'bg-gray-600 line-through !text-gray-200 opacity-90': !autoScroll }" @click="autoScroll = !autoScroll">
                 {{ t("staff_chat.auto_scroll") }}
             </div>
 
@@ -208,6 +208,8 @@ export default {
 
         autoScroll() {
             localStorage.setItem("autoScroll", this.autoScroll ? "true" : "false");
+
+            if (this.initialScroll) this.scroll();
         }
     },
     methods: {
