@@ -365,15 +365,17 @@ export default {
 
             if (top > 20) return;
 
-            scrollTo.scrollIntoView({
-                behavior: "smooth"
-            });
-
-            if (!secondary) {
-                this.wait(250).then(() => {
-                    this.scroll(true);
+            this.$nextTick(() => {
+                scrollTo.scrollIntoView({
+                    behavior: "smooth"
                 });
-            }
+
+                if (!secondary) {
+                    this.wait(250).then(() => {
+                        this.scroll(true);
+                    });
+                }
+            });
         },
         notify() {
             if (!this.soundEffects) return;
