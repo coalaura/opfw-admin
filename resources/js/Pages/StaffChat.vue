@@ -200,10 +200,14 @@ export default {
     watch: {
         localStaff() {
             localStorage.setItem("localStaff", this.localStaff ? "true" : "false");
+
+            this.scroll();
         },
 
         soundEffects() {
             localStorage.setItem("soundEffects", this.soundEffects ? "true" : "false");
+
+            if (this.soundEffects) this.notify();
         },
 
         autoScroll() {
