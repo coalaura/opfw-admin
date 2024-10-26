@@ -11,7 +11,7 @@
         </div>
 
         <div class="messages" ref="messages">
-            <div class="message" v-for="message in messages" :class="message.color" v-if="canSeeMessage(message)">
+            <div class="message" v-for="message in messages" :class="message.color" v-if="!message.local || localStaff">
                 <a class="title" :href="'/players/' + message.license" target="_blank">{{ message.title }}:</a>
                 <span class="text" v-html="message.text"></span>
                 <span class="time">{{ message.time }}</span>
@@ -198,11 +198,6 @@ export default {
             if (e.key !== "Enter") return;
 
             this.sendChat();
-        },
-        canSeeMessage(message) {
-            if (this.localStaff) return true;
-
-            return !message.local;
         },
         async sendChat() {
             if (this.isSendingChat) return;
