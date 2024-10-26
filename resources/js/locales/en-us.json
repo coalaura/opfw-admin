@@ -172,6 +172,7 @@
         "title": "Staff Chat",
         "voice_chat": "Voice Chat",
         "local_staff": "Local Staff",
+        "sound": "Sound",
         "connecting": "Connecting to the voice server. Sending voice data to relevant players.",
         "disconnected": "Disconnected from the voice server. Waiting for connection.",
         "notice": "<b>Note:</b> Staff chat may be delayed by up to 3 seconds."

@@ -1,7 +1,13 @@
 <template>
     <div class="w-full h-full relative" id="chat">
-        <div class="py-0.5 px-1.5 absolute top-1 right-1 cursor-pointer text-white text-xs rounded transition shadow-sm font-medium" :class="{ 'bg-lime-600': localStaff, 'bg-gray-600 line-through !text-gray-200 opacity-90': !localStaff }" @click="localStaff = !localStaff">
-            {{ t("staff_chat.local_staff") }}
+        <div class="absolute top-1 right-1 text-white text-xs font-medium flex gap-3">
+            <div class="py-0.5 px-1.5 cursor-pointer rounded transition shadow-sm" :class="{ 'bg-lime-600': localStaff, 'bg-gray-600 line-through !text-gray-200 opacity-90': !localStaff }" @click="localStaff = !localStaff">
+                {{ t("staff_chat.sound") }}
+            </div>
+
+            <div class="py-0.5 px-1.5 cursor-pointer rounded transition shadow-sm" :class="{ 'bg-lime-600': localStaff, 'bg-gray-600 line-through !text-gray-200 opacity-90': !localStaff }" @click="localStaff = !localStaff">
+                {{ t("staff_chat.local_staff") }}
+            </div>
         </div>
 
         <div class="messages" ref="messages">
@@ -182,6 +188,7 @@ export default {
             error: false,
 
             localStaff: false,
+            soundEffects: true,
 
             socket: false
         };
@@ -360,6 +367,8 @@ export default {
             });
         },
         notify() {
+            if (!this.soundEffects) return;
+
             const audio = new Audio("/images/notification_pop.ogg");
 
             audio.volume = 0.55;
