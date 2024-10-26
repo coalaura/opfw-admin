@@ -1,7 +1,7 @@
 <template>
     <div class="w-full h-full relative" id="chat">
         <div class="absolute top-1 right-1 text-white text-xs font-medium flex gap-3">
-            <div class="py-0.5 px-1.5 cursor-pointer rounded transition shadow-sm" :class="{ 'bg-lime-600': localStaff, 'bg-gray-600 line-through !text-gray-200 opacity-90': !localStaff }" @click="localStaff = !localStaff">
+            <div class="py-0.5 px-1.5 cursor-pointer rounded transition shadow-sm" :class="{ 'bg-lime-600': soundEffects, 'bg-gray-600 line-through !text-gray-200 opacity-90': !soundEffects }" @click="soundEffects = !soundEffects">
                 {{ t("staff_chat.sound") }}
             </div>
 
@@ -192,6 +192,19 @@ export default {
 
             socket: false
         };
+    },
+    mounted() {
+        this.localStaff = localStorage.getItem("localStaff") === "true";
+        this.soundEffects = localStorage.getItem("soundEffects") !== "false";
+    },
+    watch: {
+        localStaff() {
+            localStorage.setItem("localStaff", this.localStaff ? "true" : "false");
+        },
+
+        soundEffects() {
+            localStorage.setItem("soundEffects", this.soundEffects ? "true" : "false");
+        }
     },
     methods: {
         keydown(e) {
