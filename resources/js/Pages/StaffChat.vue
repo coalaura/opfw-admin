@@ -330,7 +330,8 @@ export default {
                             text: this.formatMessage(message.message),
                             color: this.formatColor(message),
                             createdAt: message.createdAt,
-                            time: this.$moment.utc(message.createdAt * 1000).local().fromNow()
+                            time: this.$moment.utc(message.createdAt * 1000).local().fromNow(),
+                            local: !!message.local
                         };
                     });
 
