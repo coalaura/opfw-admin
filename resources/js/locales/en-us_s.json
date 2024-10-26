@@ -1223,6 +1223,7 @@
         "tools": "Tools"
     },
     "staff_chat": {
+        "auto_scroll": "Auto-Scroll, y'all",
         "connecting": "Hookin' up to the voice server. Sendin' voice data to the folks that need it.",
         "disconnected": "Got disconnected from the voice server. Just holdin' on for connection.",
         "local_staff": "Local Folks",

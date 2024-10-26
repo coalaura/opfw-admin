@@ -1223,6 +1223,7 @@
         "tools": "Tools"
     },
     "staff_chat": {
+        "auto_scroll": "Auto-Scroll",
         "connecting": "Voice server se jud rahe hain. Sambandhit players ko voice data bhej rahe hain.",
         "disconnected": "Voice server se disconnect ho gaya. Connection ka intezaar kar rahe hain.",
         "local_staff": "Sthaniya Karmchari",

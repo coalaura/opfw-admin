@@ -1223,6 +1223,7 @@
         "tools": "Verktøy"
     },
     "staff_chat": {
+        "auto_scroll": "Automatisk rulling",
         "connecting": "Kobler til stemmeserveren. Sender stemmedata til relevante spillere.",
         "disconnected": "Frakoblet fra stemmeserveren. Venter på tilkobling.",
         "local_staff": "Lokalt personale",

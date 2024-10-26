@@ -1223,6 +1223,7 @@
         "tools": "Tools"
     },
     "staff_chat": {
+        "auto_scroll": "Scroll move",
         "connecting": "Talk server connect. Talk sound to right people.",
         "disconnected": "Talk server no connect. Wait for connect.",
         "local_staff": "Local Staff",

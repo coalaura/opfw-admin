@@ -1,6 +1,10 @@
 <template>
     <div class="w-full h-full relative" id="chat">
-        <div class="absolute top-1 right-1 text-white text-xs font-medium flex gap-3">
+        <div class="absolute top-1 right-1 text-white text-xs font-medium flex gap-2">
+            <div class="py-0.5 px-1.5 cursor-pointer rounded transition shadow-sm" :class="{ 'bg-lime-600': autoScroll, 'bg-gray-600 line-through !text-gray-200 opacity-90': !autoScroll }" @click="autoScroll = !autoScroll; this.scroll()">
+                {{ t("staff_chat.auto_scroll") }}
+            </div>
+
             <div class="py-0.5 px-1.5 cursor-pointer rounded transition shadow-sm" :class="{ 'bg-lime-600': soundEffects, 'bg-gray-600 line-through !text-gray-200 opacity-90': !soundEffects }" @click="soundEffects = !soundEffects">
                 {{ t("staff_chat.sound") }}
             </div>
@@ -183,10 +187,12 @@ export default {
 
             isSendingChat: false,
             isLoading: false,
+            initialScroll: false,
             error: false,
 
             localStaff: localStorage.getItem("localStaff") === "true",
             soundEffects: localStorage.getItem("soundEffects") !== "false",
+            autoScroll: localStorage.getItem("autoScroll") !== "false",
 
             socket: false
         };
@@ -198,6 +204,10 @@ export default {
 
         soundEffects() {
             localStorage.setItem("soundEffects", this.soundEffects ? "true" : "false");
+        },
+
+        autoScroll() {
+            localStorage.setItem("autoScroll", this.autoScroll ? "true" : "false");
         }
     },
     methods: {
@@ -356,25 +366,25 @@ export default {
                 }, 5000);
             });
         },
-        scroll(secondary = false) {
+        scroll() {
+            if (this.initialScroll && !this.autoScroll) return;
+
+            this.initialScroll = true;
+
             const messages = this.$refs.messages;
 
-            if (messages.scrollHeight - messages.scrollTop - messages.clientHeight <= 5) return;
-
-            this.$nextTick(() => {
+            this.$nextTick(async () => {
                 messages.scrollTo({
                     top: messages.scrollHeight,
                     behavior: "smooth"
                 });
 
-                if (!secondary) {
-                    this.wait(1000).then(() => {
-                        messages.scrollTo({
-                            top: messages.scrollHeight,
-                            behavior: "smooth"
-                        });
-                    });
-                }
+                await this.wait(500);
+
+                messages.scrollTo({
+                    top: messages.scrollHeight,
+                    behavior: "smooth"
+                });
             });
         },
         notify() {
