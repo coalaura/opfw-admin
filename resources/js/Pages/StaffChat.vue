@@ -371,14 +371,6 @@ export default {
                 behavior: "smooth"
             });
         },
-        async waitTicks(ticks) {
-            for (let i = 0; i < ticks; i++) {
-                await this.waitTick();
-            }
-        },
-        waitTick() {
-            return new Promise(resolve => this.$nextTick(resolve));
-        },
         notify() {
             if (!this.soundEffects) return;
 
