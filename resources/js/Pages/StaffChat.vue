@@ -1,7 +1,11 @@
 <template>
     <div class="w-full h-full relative" id="chat">
+        <div class="py-0.5 px-1.5 absolute top-1 right-1 cursor-pointer text-white text-xs rounded transition shadow-sm font-medium" :class="{ 'bg-lime-600': localStaff, 'bg-gray-600 line-through !text-gray-200 opacity-90': !localStaff }" @click="localStaff = !localStaff">
+            {{ t("staff_chat.local_staff") }}
+        </div>
+
         <div class="messages" ref="messages">
-            <div class="message" v-for="message in messages" :class="message.color">
+            <div class="message" v-for="message in messages" :class="message.color" v-if="!message.local || localStaff">
                 <a class="title" :href="'/players/' + message.license" target="_blank">{{ message.title }}:</a>
                 <span class="text" v-html="message.text"></span>
                 <span class="time">{{ message.time }}</span>
@@ -176,6 +180,8 @@ export default {
             isSendingChat: false,
             isLoading: false,
             error: false,
+
+            localStaff: false,
 
             socket: false
         };

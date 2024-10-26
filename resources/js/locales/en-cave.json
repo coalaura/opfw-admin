@@ -1225,6 +1225,7 @@
     "staff_chat": {
         "connecting": "Talk server connect. Talk sound to right people.",
         "disconnected": "Talk server no connect. Wait for connect.",
+        "local_staff": "Local Staff",
         "notice": "<b>Note:</b> Staff talk slow, maybe 3 sunbeats.",
         "title": "Staff Talk",
         "voice_chat": "Talk Sound"

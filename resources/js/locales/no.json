@@ -1225,6 +1225,7 @@
     "staff_chat": {
         "connecting": "Kobler til stemmeserveren. Sender stemmedata til relevante spillere.",
         "disconnected": "Frakoblet fra stemmeserveren. Venter på tilkobling.",
+        "local_staff": "Lokalt personale",
         "notice": "<b>Merk:</b> Ansattchat kan bli forsinket med opptil 3 sekunder.",
         "title": "Ansattchat",
         "voice_chat": "Stemmechat"

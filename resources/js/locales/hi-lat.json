@@ -1225,6 +1225,7 @@
     "staff_chat": {
         "connecting": "Voice server se jud rahe hain. Sambandhit players ko voice data bhej rahe hain.",
         "disconnected": "Voice server se disconnect ho gaya. Connection ka intezaar kar rahe hain.",
+        "local_staff": "Sthaniya Karmchari",
         "notice": "<b>Note:</b> Staff chat mein 3 seconds tak ki deri ho sakti hai.",
         "title": "Staff Chat",
         "voice_chat": "Voice Chat"

@@ -1225,6 +1225,7 @@
     "staff_chat": {
         "connecting": "Hookin' up to the voice server. Sendin' voice data to the folks that need it.",
         "disconnected": "Got disconnected from the voice server. Just holdin' on for connection.",
+        "local_staff": "Local Folks",
         "notice": "<b>Note:</b> Staff chat might lag a bit, up to 3 seconds.",
         "title": "Staff Chat",
         "voice_chat": "Voice Chat"

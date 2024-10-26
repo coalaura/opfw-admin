@@ -1225,6 +1225,7 @@
     "staff_chat": {
         "connecting": "Connecting to the voice sewvew. Sending voice data to wewevant pwayews.",
         "disconnected": "Disconnected fwom the voice sewvew. Waiting fow connection.",
+        "local_staff": "Wocaw Staff",
         "notice": "<b>Nyote:</b> Staff chat may be dewayed by up to 3 seconds.",
         "title": "Staff Chat",
         "voice_chat": "Voice Chat"
