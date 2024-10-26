@@ -358,18 +358,22 @@ export default {
                 }, 5000);
             });
         },
-        async scroll() {
+        scroll(secondary = false) {
             const scrollTo = this.$refs.scrollTo,
                 messages = this.$refs.messages,
                 top = messages.scrollTopMax - messages.scrollTop;
 
             if (top > 20) return;
 
-            await this.waitTicks(4);
-
             scrollTo.scrollIntoView({
                 behavior: "smooth"
             });
+
+            if (!secondary) {
+                this.wait(250).then(() => {
+                    this.scroll(true);
+                });
+            }
         },
         notify() {
             if (!this.soundEffects) return;
