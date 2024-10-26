@@ -193,11 +193,6 @@ export default {
             socket: false
         };
     },
-    mounted() {
-        document.fonts.ready.then(() => {
-            this.scroll();
-        });
-    },
     watch: {
         localStaff() {
             localStorage.setItem("localStaff", this.localStaff ? "true" : "false");
@@ -363,18 +358,26 @@ export default {
                 }, 5000);
             });
         },
-        scroll() {
+        async scroll() {
             const scrollTo = this.$refs.scrollTo,
                 messages = this.$refs.messages,
                 top = messages.scrollTopMax - messages.scrollTop;
 
             if (top > 20) return;
 
-            this.$nextTick(() => {
-                scrollTo.scrollIntoView({
-                    behavior: "smooth"
-                });
+            this.waitTicks(4);
+
+            scrollTo.scrollIntoView({
+                behavior: "smooth"
             });
+        },
+        async waitTicks(ticks) {
+            for (let i = 0; i < ticks; i++) {
+                await this.waitTick();
+            }
+        },
+        waitTick() {
+            return new Promise(resolve => this.$nextTick(resolve));
         },
         notify() {
             if (!this.soundEffects) return;
