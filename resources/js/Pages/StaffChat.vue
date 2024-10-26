@@ -365,7 +365,7 @@ export default {
 
             if (top > 20) return;
 
-            this.waitTicks(4);
+            await this.waitTicks(4);
 
             scrollTo.scrollIntoView({
                 behavior: "smooth"
