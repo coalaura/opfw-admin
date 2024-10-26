@@ -372,7 +372,9 @@ export default {
 
                 if (!secondary) {
                     this.wait(500).then(() => {
-                        this.scroll(true);
+                        scrollTo.scrollIntoView({
+                            behavior: "smooth"
+                        });
                     });
                 }
             });
