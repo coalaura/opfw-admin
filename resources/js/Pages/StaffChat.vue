@@ -26,8 +26,6 @@
                 <span class="title">{{ t("staff_chat.voice_chat") }}:</span>
                 <span class="text">{{ t("staff_chat.connecting") }}</span>
             </div>
-
-            <div ref="scrollTo"></div>
         </div>
 
         <div v-if="!isLoading && socket">
@@ -359,22 +357,21 @@ export default {
             });
         },
         scroll(secondary = false) {
-            const scrollTo = this.$refs.scrollTo,
-                messages = this.$refs.messages;
+            const messages = this.$refs.messages;
 
             if (messages.scrollHeight - messages.scrollTop - messages.clientHeight <= 5) return;
 
             this.$nextTick(() => {
-                scrollTo.scrollIntoView({
-                    behavior: "smooth",
-                    block: "end"
+                messages.scrollTo({
+                    top: messages.scrollHeight,
+                    behavior: "smooth"
                 });
 
                 if (!secondary) {
                     this.wait(1000).then(() => {
-                        scrollTo.scrollIntoView({
-                            behavior: "smooth",
-                            block: "end"
+                        messages.scrollTo({
+                            top: messages.scrollHeight,
+                            behavior: "smooth"
                         });
                     });
                 }
