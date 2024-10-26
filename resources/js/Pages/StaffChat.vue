@@ -371,7 +371,7 @@ export default {
                 });
 
                 if (!secondary) {
-                    this.wait(250).then(() => {
+                    this.wait(500).then(() => {
                         this.scroll(true);
                     });
                 }
