@@ -223,7 +223,7 @@ export default {
         autoScroll() {
             localStorage.setItem("autoScroll", this.autoScroll ? "true" : "false");
 
-            if (this.initialScroll) this.scroll();
+            if (this.autoScroll) this.scroll();
         }
     },
     methods: {
@@ -359,6 +359,10 @@ export default {
                     if (hasHeports) {
                         this.notify();
                     }
+
+                    const hasNew = messages.find(message => !this.messages.find(current => current.createdAt === message.createdAt && current.license === message.user.licenseIdentifier));
+
+                    if (!hasNew) return;
 
                     this.messages = messages.map(message => {
                         return {
