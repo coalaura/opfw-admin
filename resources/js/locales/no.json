@@ -741,6 +741,7 @@
             "no_mugshot": "Ingen mugshot tilgjengelig",
             "none": "Denne spilleren har ikke opprettet noen karakterer ennå.",
             "playtime_label": "Spilletid",
+            "playtime_recent": "{0} spilte i løpet av de siste 2 ukene.",
             "remove_tattoo": "Fjern tatoveringer",
             "reset_spawn": "Tilbakestill startpunkt",
             "save_changes": "Lagre endringer",

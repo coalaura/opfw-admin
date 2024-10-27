@@ -741,6 +741,7 @@
             "no_mugshot": "Ain't no mugshot available",
             "none": "This player ain't made any characters yet.",
             "playtime_label": "Playtime",
+            "playtime_recent": "{0} done played in the last couple weeks.",
             "remove_tattoo": "Take off Tattoos",
             "reset_spawn": "Reset Start",
             "save_changes": "Save them changes",

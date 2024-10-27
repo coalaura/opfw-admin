@@ -741,6 +741,7 @@
             "no_mugshot": "No picture here",
             "none": "Player no make character yet.",
             "playtime_label": "Play time",
+            "playtime_recent": "{0} play last 2 week.",
             "remove_tattoo": "Remove skin mark",
             "reset_spawn": "Start place new",
             "save_changes": "Keep changes",

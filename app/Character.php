@@ -56,12 +56,12 @@ class Character extends Model
         'character_creation_timestamp',
         'character_deleted',
         'character_deletion_timestamp',
-		'character_creation_time',
+        'character_creation_time',
         'last_loaded',
         'ped_model_hash',
         'tattoos_data',
         'coords',
-        'character_data'
+        'character_data',
     ];
 
     /**
@@ -80,6 +80,7 @@ class Character extends Model
         'character_creation_timestamp' => 'datetime',
         'character_deleted'            => 'boolean',
         'character_deletion_timestamp' => 'datetime',
+        'weekly_playtime'              => 'array',
     ];
 
     /**
@@ -181,6 +182,24 @@ class Character extends Model
         return $json['licenses'];
     }
 
+    public function getRecentPlaytime(int $weeks): int
+    {
+        $after    = op_week_identifier() - $weeks;
+        $playtime = 0;
+
+        $weeklyPlaytime = $this->weekly_playtime ?? [];
+
+        foreach ($weeklyPlaytime as $week => $time) {
+            $week = intval($week);
+
+            if ($week >= $after) {
+                $playtime += $time;
+            }
+        }
+
+        return $playtime;
+    }
+
     /**
      * Returns a map of character_id->[character_name,licenseIdentifier]
      * This is used instead of a left join as it appears to be a lot faster
@@ -205,7 +224,7 @@ class Character extends Model
         foreach ($characters as $character) {
             $characterMap[$character->character_id] = [
                 'license_identifier' => $character->license_identifier,
-                'name'             => $character->first_name . ' ' . $character->last_name,
+                'name'               => $character->first_name . ' ' . $character->last_name,
             ];
         }
 

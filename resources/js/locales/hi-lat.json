@@ -741,6 +741,7 @@
             "no_mugshot": "Koi mugshot uplabdh nahi",
             "none": "Is player ne ab tak koi character nahi banaya hai.",
             "playtime_label": "Playtime",
+            "playtime_recent": "{0} ne pichle 2 hafton mein khela.",
             "remove_tattoo": "Tattoos hatao",
             "reset_spawn": "Spawn reset karo",
             "save_changes": "Parivartan sanrakshit karein",
