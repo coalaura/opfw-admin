@@ -1,15 +1,24 @@
 <template>
     <div class="w-full h-full relative" id="chat">
-        <div class="absolute top-1 right-1 text-white text-xs font-medium flex gap-2">
+        <div class="absolute top-1 right-1 text-white text-xs font-medium flex gap-2 select-none">
             <div class="py-0.5 px-1.5 cursor-pointer rounded transition shadow-sm" :class="{ 'bg-lime-600': autoScroll, 'bg-gray-600 line-through !text-gray-200 opacity-90': !autoScroll }" @click="autoScroll = !autoScroll">
+                <i class="fas fa-scroll mr-1" v-if="autoScroll"></i>
+                <i class="fas fa-hand-paper mr-1" v-else></i>
+
                 {{ t("staff_chat.auto_scroll") }}
             </div>
 
             <div class="py-0.5 px-1.5 cursor-pointer rounded transition shadow-sm" :class="{ 'bg-lime-600': soundEffects, 'bg-gray-600 line-through !text-gray-200 opacity-90': !soundEffects }" @click="soundEffects = !soundEffects">
+                <i class="fas fa-bell mr-1" v-if="soundEffects"></i>
+                <i class="fas fa-bell-slash mr-1" v-else></i>
+
                 {{ t("staff_chat.sound") }}
             </div>
 
             <div class="py-0.5 px-1.5 cursor-pointer rounded transition shadow-sm" :class="{ 'bg-lime-600': localStaff, 'bg-gray-600 line-through !text-gray-200 opacity-90': !localStaff }" @click="localStaff = !localStaff">
+                <i class="fas fa-comments mr-1" v-if="localStaff"></i>
+                <i class="fas fa-comment-slash mr-1" v-else></i>
+
                 {{ t("staff_chat.local_staff") }}
             </div>
         </div>
@@ -187,11 +196,12 @@ export default {
 
             isSendingChat: false,
             isLoading: false,
-            initialScroll: false,
+            initialScroll: true,
             error: false,
 
             localStaff: localStorage.getItem("localStaff") === "true",
             soundEffects: localStorage.getItem("soundEffects") !== "false",
+            notifications: localStorage.getItem("notifications") === "true",
             autoScroll: localStorage.getItem("autoScroll") !== "false",
 
             socket: false
@@ -310,7 +320,7 @@ export default {
             if (this.socket) return;
 
             this.isLoading = true;
-            this.initialScroll = false;
+            this.initialScroll = true;
 
             const isDev = window.location.hostname === 'localhost',
                 token = this.$page.auth.token,
@@ -327,26 +337,34 @@ export default {
                 }
             });
 
+            this.socket.on("welcome", () => {
+                this.isLoading = false;
+            });
+
             this.socket.on("message", async (buffer) => {
                 this.isLoading = false;
 
                 try {
-                    const messages = await DataCompressor.GUnZIP(buffer);
+                    const messages = (await DataCompressor.GUnZIP(buffer)).map(message => {
+                        message.title = this.formatTitle(message);
+                        message.text = this.formatMessage(message.message);
 
-                    if (messages.length > 0) {
-                        const latest = messages[messages.length - 1],
-                            last = this.messages.length > 0 ? this.messages[this.messages.length - 1] : null;
+                        return message;
+                    });
 
-                        if (latest.type === "report" && (!last || last.createdAt !== latest.createdAt)) {
-                            this.notify();
-                        }
+                    if (!messages.length) return;
+
+                    const hasHeports = messages.find(message => message.type === "report");
+
+                    if (hasHeports) {
+                        this.notify();
                     }
 
                     this.messages = messages.map(message => {
                         return {
                             license: message.user.licenseIdentifier,
-                            title: this.formatTitle(message),
-                            text: this.formatMessage(message.message),
+                            title: message.title,
+                            text: message.text,
                             color: this.formatColor(message),
                             createdAt: message.createdAt,
                             time: this.$moment.utc(message.createdAt * 1000).local().fromNow(),
@@ -374,7 +392,7 @@ export default {
             });
         },
         scroll() {
-            if (this.initialScroll && !this.autoScroll) return;
+            if (!this.initialScroll && !this.autoScroll) return;
 
             this.initialScroll = true;
 
@@ -402,7 +420,7 @@ export default {
             audio.volume = 0.55;
 
             audio.play();
-        }
+        },
     },
     beforeCreate() {
         const lang = this.setting("locale") || "en-US";
