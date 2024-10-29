@@ -35,7 +35,7 @@ export default {
             hash = hash || joaat;
 
             if (name) {
-                target.innerHTML = `<i class="font-mono cursor-help" title="Hash: ${hash}">${name}</i>`;
+                target.innerHTML = `<a class="font-mono cursor-help italic" target="_blank" href="https://forge.plebmasters.de/objects?search=${name}" title="Hash: ${hash}">${name}</a>`;
             } else {
                 target.innerHTML = `<i class="font-mono cursor-help" title="Unknown hash">${hash}</i>`;
             }
