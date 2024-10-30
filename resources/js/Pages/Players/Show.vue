@@ -1367,7 +1367,7 @@
                         </template>
 
                         <template>
-                            <p class="text-muted dark:text-dark-muted" v-if="warningEditId !== warning.id">
+                            <p class="text-muted dark:text-dark-muted max-h-96 overflow-auto" v-if="warningEditId !== warning.id">
                                 <span class="whitespace-pre-wrap" v-html="markdown(formatWarning(warning.message), false)"></span>
                             </p>
 
