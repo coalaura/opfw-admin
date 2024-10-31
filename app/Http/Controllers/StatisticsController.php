@@ -355,6 +355,70 @@ class StatisticsController extends Controller
         return $this->json(true, $statistics);
     }
 
+    public function fpsStatistics()
+    {
+        $datasets = 3;
+
+        $statistics = [
+            "data"  => [],
+            "graph" => [
+                "datasets" => [
+                    [
+                        "label"           => "Minimum FPS",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(0, $datasets, 0.3),
+                        "borderColor"     => $this->color(0, $datasets, 1),
+                        "pointRadius"     => 0,
+                    ],
+                    [
+                        "label"           => "Maximum FPS",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(1, $datasets, 0.3),
+                        "borderColor"     => $this->color(1, $datasets, 1),
+                        "pointRadius"     => 0,
+                    ],
+                    [
+                        "label"           => "Average FPS",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(2, $datasets, 0.3),
+                        "borderColor"     => $this->color(2, $datasets, 1),
+                        "pointRadius"     => 0,
+                    ],
+                ],
+                "labels"   => [],
+            ],
+        ];
+
+        $data = StatisticsHelper::collectFPSStatistics();
+
+        $min = strtotime("-30 days");
+
+        foreach ($data as $entry) {
+            $date = $entry->date;
+
+            $time = strtotime($entry->date);
+
+            if ($time >= $min) {
+                $statistics["data"][$date] = [
+                    "date"        => $date,
+                    "minimum" => $entry->minimum,
+                    "maximum" => $entry->maximum,
+                    "average" => $entry->average
+                ];
+            }
+
+            $statistics["graph"]["labels"][] = $date;
+
+            $statistics["graph"]["datasets"][0]["data"][] = $entry->minimum;
+            $statistics["graph"]["datasets"][1]["data"][] = $entry->maximum;
+            $statistics["graph"]["datasets"][2]["data"][] = $entry->average;
+        }
+
+        $statistics["data"] = array_reverse(array_values($statistics["data"]));
+
+        return $this->json(true, $statistics);
+    }
+
     public function moneyLogs(Request $request)
     {
         $types = $request->input('types', []);

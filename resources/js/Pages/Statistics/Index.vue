@@ -157,6 +157,66 @@
 
             <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
                 <div class="flex">
+                    <h2 class="text-lg flex gap-2" @click="loadFPSStatistics()" :class="{ 'cursor-pointer': !fpsLoading && !fps }">
+                        {{ t('statistics.fps_stats') }}
+                    </h2>
+                </div>
+
+                <p class="text-sm italic mb-3">
+                    {{ t('statistics.fps_stats_details') }}
+                </p>
+
+                <button @click="loadFPSStatistics()" class="icon-button text-white bg-green-600" v-if="!fpsLoading && !fps">
+                    <i class="fas fa-plus"></i>
+                </button>
+
+                <div class="flex gap-6">
+                    <div class="overflow-y-auto max-h-statistics-long inline-block pr-2 flex-shrink-0">
+                        <table class="whitespace-nowrap">
+                            <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.date') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(players, 0)">{{ t('statistics.minimum_fps') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(players, 1)">{{ t('statistics.maximum_fps') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(players, 2)">{{ t('statistics.average_fps') }}</th>
+                            </tr>
+
+                            <tr class="border-t border-gray-500" v-if="!fps">
+                                <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
+                            </tr>
+
+                            <tr class="border-t border-gray-500" v-else-if="fpsLoading">
+                                <td class="px-2 py-0.5 text-center" colspan="4">
+                                    <i class="fas fa-spinner animate-spin"></i>
+                                </td>
+                            </tr>
+
+                            <tr class="border-t border-gray-500" v-else-if="fps.data.length === 0">
+                                <td class="px-2 py-0.5 text-center italic" colspan="4">
+                                    {{ t('statistics.no_players_recorded') }}
+                                </td>
+                            </tr>
+
+                            <tr v-for="(entry, index) in fps.data" :key="index" class="border-t border-gray-500" v-else>
+                                <td class="italic text-gray-700 dark:text-gray-300 px-2 py-0.5">{{ entry.date }}</td>
+
+                                <td class="px-2 py-0.5" :style="datasetColor(fps, 0)">{{ numberFormat(entry.minimum, false, false) }}</td>
+                                <td class="px-2 py-0.5" :style="datasetColor(fps, 1)">{{ numberFormat(entry.maximum, false, false) }}</td>
+                                <td class="px-2 py-0.5" :style="datasetColor(fps, 2)">{{ numberFormat(entry.average, false, false) }}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div v-if="!fpsLoading && fps && fps.graph" class="w-full max-h-statistics-long overflow-hidden">
+                        <LineChart :chartData="fps.graph" class="h-full"></LineChart>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
+                <div class="flex">
                     <h2 class="text-lg flex gap-2">
                         {{ t('statistics.money_logs') }}
                     </h2>
@@ -252,6 +312,9 @@ export default {
 
             playersLoading: false,
             players: false,
+
+            fpsLoading: false,
+            fps: false,
 
             moneyLogType: "",
             moneyLogTypes: [],
@@ -366,6 +429,27 @@ export default {
             }
 
             this.playersLoading = false;
+        },
+        async loadFPSStatistics() {
+            if (this.fpsLoading || this.fps) return;
+
+            this.fpsLoading = true;
+
+            try {
+                const response = await axios.get('/statistics/fps'),
+                    data = response.data;
+
+                if (data.status) {
+                    this.fps = data.data;
+                }
+            } catch (e) {
+                // Signalize we failed to load the data
+                this.fps = {
+                    data: []
+                };
+            }
+
+            this.fpsLoading = false;
         },
         overallEconomyMovement() {
             if (!this.economy || !this.economy.data.length) return;

@@ -37,6 +37,7 @@ npm-debug.log
 yarn-error.log
 tiles
 npm.log
+php.log
 cron.sh
 /storage/screenshots/
 /storage/bans/

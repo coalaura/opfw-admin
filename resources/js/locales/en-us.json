@@ -319,6 +319,9 @@
         "max_users": "Max Users",
         "max_queue": "Max Queue",
         "unique": "Unique Users",
+        "minimum_fps": "Minimum FPS",
+        "maximum_fps": "Maximum FPS",
+        "average_fps": "Average FPS",
 
         "tag_money": "Money",
         "tag_amount": "Amount",
@@ -396,7 +399,9 @@
         "economy_stats": "Economy Statistics",
         "economy_stats_details": "Compare economy statistics in a graph for the last 30 days.",
         "player_stats": "Player Statistics",
-        "player_stats_details": "Compare player statistics in a graph for the last 30 days."
+        "player_stats_details": "Compare player statistics in a graph.",
+        "fps_stats": "FPS Statistics",
+        "fps_stats_details": "Compare FPS statistics in a graph."
     },
     "map": {
         "title": "Live-Map",

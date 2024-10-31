@@ -269,6 +269,12 @@ class StatisticsHelper
         return DB::select("SELECT date, total_joins, max_joined, max_queue, JSON_LENGTH(joined_users) as joined_users FROM user_statistics ORDER BY STR_TO_DATE(date, '%d.%m.%Y') ASC");
     }
 
+    // General fps statistics
+    public static function collectFPSStatistics(): array
+    {
+        return DB::select("SELECT date, minimum, maximum, average FROM fps_statistics WHERE STR_TO_DATE(date, '%d.%m.%Y %H:%i') >= DATE_SUB(NOW(), INTERVAL 30 DAY) ORDER BY STR_TO_DATE(date, '%d.%m.%Y %H:%i') ASC");
+    }
+
     // Anti-cheat statistics
     public static function collectAntiCheatStatistics(array $ignoreTypes): array
     {
