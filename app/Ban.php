@@ -95,6 +95,7 @@ class Ban extends Model
             "DAMAGE_MODIFIER"          => "Impossible to be scuff. The framework uses damage modifiers to adjust the damage of weapons. Every single usable weapon in the framework has a modifier associated to it. If you are found using a different modifier (for example a higher one), you had to have injected some script or used a menu to do so, since they can only be changed through script.",
             "FREECAM"                  => "Impossible to be scuff. By default your game renders the so called gameplay camera. Through script you can create different cameras to for example freecam around. We keep track of every time the framework creates a camera. If you are found with a camera created outside of those times, you had to have injected some script or used a menu to do so. Very rarely the game creates a different camera natively, but we have exceptions for those. This detection has been literally 100% accurate so far and even caught a closet cheater.",
             "BLACKLISTED_COMMAND"      => "Impossible to be scuff. We have a list of commands that are commonly used by mod menus. Things like /killmenu, etc. for example. If your client registers one of those commands, this detection will trigger. Since we look for the command being registered and not being used, this detection is basically impossible to be scuff, since commands can only be registered through script.",
+            "HONEYPOT_NATIVE"          => "Impossible to be scuff. The server-builder automatically replaces commonly used functions with slightly altered names. All of our scripts are automatically updated to use the new function name, however any injected scripts would still use the old functions. If you are found calling one of those functions, you had to have injected some script or used a menu to do so.",
 
             "ILLEGAL_VEHICLE_MODIFIER" => "Highly unlikely to be scuff. Vehicle modifiers are used to for example increase your vehicles gravity, top speed, acceleration, etc. We keep track of every time the framework uses any of those modifiers. If you are found using one of those modifiers outside of those times, you had to have injected some script or used a menu to do so. Very rarely those modifiers differ natively but we reset them every time you switch vehicles.",
             "WEAPON_SPAWN"             => "Highly unlikely to be scuff. The framework gives and removes weapons from your ped depending on what weapon you are trying to or have currently equipped. If you are trying to give yourself a weapon different to the one you currently have equipped, you had to have done so through script or a menu. When an armed ped dies it sometimes drops its weapon and when you pick it up you are theoretically giving yourself a weapon. However we have exceptions for those cases and usually remove all dropped weapons almost instantly.",
@@ -116,6 +117,7 @@ class Ban extends Model
             "DISTANCE_TAZE"            => "Very unlikely to be scuff. All tasers used in-game have a very limited range. A lot of mod menus give modders the ability to tase someone much further away. If you are found tasing someone from a distance that is impossible to do normally, you most likely did so through script or a menu. Since the server can lag, there is a very small chance for this to be a false positive but we allow for quite a bit of leeway, so it is incredibly unlikely.",
             "SEMI_GODMODE"             => "Very unlikely to be scuff. To avoid detection, a lot of mod menus offer so called semi-godmode. Compared to straight up invincibility, this works by continuously resetting your health and/or armor to full. So every time you receive damage, you would be healed almost instantly. We track if your health does not decrease when taking damage. If you are continuously not taking damage, you are most likely using semi-godmode.",
             "INFINITE_AMMO"            => "Very unlikely to be scuff. We track how much ammo should be in your weapons magazine. Every time you shoot we subtract from that value. If you shoot a lot more bullets than are in your magazine without reloading in between, you are most likely using some kind of menu to give yourself infinite ammo.",
+            "TELEPORTED"               => "Very unlikely to be scuff. We keep track of your current position and the last position. If your current position is all the sudden very far away from your last position, you are most likely teleporting. We keep track of most cases where this would happen legitimately to avoid false positives, but there is a small chance for this to be a false positive. If you are unsure about this ban, check the historic live-map, metadata and attached screen recording.",
 
             "BAD_SCREEN_WORD"          => "Unlikely to be scuff. Every 5 or so seconds, we take a screenshot of your game. If you have a menu on your screen for example, it would be visible in that screenshot. Those screenshots are then analyzed by AI to extract any visible text. We have a huge wordlist of common words and phrases used in mod menus (Things like \"Godmode\", \"Give Money\", etc.). If any of those words are found in the screenshot, you are most likely using a menu. Since the game is open world and supposed to mimic real life, there are things like traffic signs, billboards, etc. that could potentially contain those words. However, we have a bunch of checks and exceptions to avoid triggering false positives. The attached screenshot should be pretty clear if it is or isn't a mod menu.",
         ],
@@ -153,6 +155,8 @@ class Ban extends Model
         "BAD_ENTITY_SPAWN"         => "spawned_object",
         "PED_SPAWN"                => "illegal_ped_spawn",
         "VEHICLE_SPAWN"            => "illegal_vehicle_spawn",
+        "TELEPORTED"               => "teleported",
+        "HONEYPOT_NATIVE"          => "honeypot_native",
     ];
 
     public static function getAutomatedReasons()
@@ -160,13 +164,13 @@ class Ban extends Model
         if (self::$automatedReasons === null) {
             self::$automatedReasons = json_decode(file_get_contents(__DIR__ . '/../helpers/automated-bans.json'), true);
 
-            foreach(self::$automatedReasons as $category => $bans) {
-                foreach($bans as $key => $reason) {
+            foreach (self::$automatedReasons as $category => $bans) {
+                foreach ($bans as $key => $reason) {
                     $info = isset(self::SYSTEM_INFO[$category]) && isset(self::SYSTEM_INFO[$category][$key]) ? self::SYSTEM_INFO[$category][$key] : false;
 
                     self::$automatedReasons[$category][$key] = [
                         'reason' => $reason,
-                        'info'   => $info
+                        'info'   => $info,
                     ];
                 }
             }
