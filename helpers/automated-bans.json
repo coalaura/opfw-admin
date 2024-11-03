@@ -56,11 +56,13 @@
 		"INFINITE_AMMO": "Despite popular belief, the laws of conservation do apply here. The magic ammunition pouch has been confiscated.",
 		"PED_SPAWN": "Ah, hoping to beckon the legendary figure of `${DATA}`, were you? This isn't a Hollywood casting, and that star is staying off-stage.",
 		"HONEYPOT": "You attempted to toggle your creative mode, but didn't have the permissions to do so.",
-		"CLEAR_TASKS": "This is not a Jedi mind trick training center. Your efforts to influence the free will of others has been noted... and rejected."
+		"CLEAR_TASKS": "This is not a Jedi mind trick training center. Your efforts to influence the free will of others has been noted... and rejected.",
+		"TELEPORTED": "Blink and you’re gone? Not in this dimension, traveler."
 	},
 	"INJECTION": {
 		"CLIENT_EVENT": "Ah, trying to tune into the hidden frequency of `${DATA}`, were you? This isn't a secret radio station, and that song's not on our playlist.",
-		"SERVER_EVENT": "Wished to dance to the unheard rhythm of `${DATA}`, did we? This isn't a secret ballroom, and those dance moves? Strictly not allowed."
+		"SERVER_EVENT": "Wished to dance to the unheard rhythm of `${DATA}`, did we? This isn't a secret ballroom, and those dance moves? Strictly not allowed.",
+		"HONEYPOT_NATIVE": "Oh, bother! It seems you've stumbled into a place where honey wasn’t meant to be found. Some pots are best left alone, no matter how tempting they may seem."
 	},
 	"FRAUD": {
 		"CHARGEBACK": "Fraud / Chargeback"
