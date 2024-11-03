@@ -19,6 +19,7 @@ class AntiCheatController extends Controller
         'modified_fov',
         'using_macro',
         'bad_creation',
+        'bad_ped_message',
         'illegal_event',
         'illegal_server_event',
         'suspicious_transfer'
