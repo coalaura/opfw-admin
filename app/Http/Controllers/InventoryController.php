@@ -259,8 +259,12 @@ class InventoryController extends Controller
 
         $decoded = json_decode($metadata, true);
 
-        if (!$decoded || !is_array($decoded)) {
+        if (!is_array($decoded)) {
             abort(400);
+        }
+
+        if (!$decoded) {
+            $decoded = [];
         }
 
         foreach($decoded as $key => $value) {
