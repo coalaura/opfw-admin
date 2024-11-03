@@ -369,19 +369,3 @@ Route::get('hash/{hash}', function (string $hash) {
         'valid' => !!$identifier,
     ], 200))->header('Content-Type', 'application/json');
 });
-
-Route::get('find/discord/{id}', function (Request $request, string $id) {
-    $api_key = $request->get("api_key");
-
-    if (env('DEV_API_KEY', '') !== $api_key || empty($api_key) || $api_key === "some_random_token") {
-        abort(401);
-    }
-
-    if (!$id || !preg_match("/^\d+$/m", $id)) {
-        abort(400);
-    }
-
-    $players = Player::findByDiscordIdWithBans($id);
-
-    return (new Response($players))->header('Content-Type', 'application/json');
-});

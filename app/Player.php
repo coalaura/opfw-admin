@@ -424,31 +424,6 @@ class Player extends Model
         return self::getFilteredPlayerName($this->player_name ?? "", $this->player_aliases, $this->license_identifier);
     }
 
-    public static function findByDiscordIdWithBans(string $id)
-    {
-        if (!preg_match("/^\d+$/m", $id)) {
-            return null;
-        }
-
-        $found = self::query()
-            ->select(["license_identifier", "player_name", "ban_hash", "reason", "timestamp", "expire"])
-            ->where(DB::raw("JSON_CONTAINS(last_used_identifiers, '\"discord:$id\"')"), '=', '1')
-            ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
-            ->orderByDesc("last_connection")
-            ->get()->toArray();
-
-        if (!empty($found)) {
-            return $found;
-        }
-
-        return self::query()
-            ->select(["license_identifier", "player_name", "ban_hash", "reason", "timestamp", "expire"])
-            ->where(DB::raw("JSON_CONTAINS(identifiers, '\"discord:$id\"')"), '=', '1')
-            ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
-            ->orderByDesc("last_connection")
-            ->get()->toArray();
-    }
-
     public function getRecentPlaytime(int $weeks): int
     {
         $after    = op_week_identifier() - $weeks;
