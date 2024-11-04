@@ -683,6 +683,7 @@
             "locked": "Låst",
             "month": "Måned(er)",
             "no_reason": "Denne utestengingen mangler en grunn",
+            "note": "Notat (valgfritt)",
             "reason": "Grunn",
             "search_btn": "Søk i utestenginger",
             "temp-select": "Veksle dato/tid input",

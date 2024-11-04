@@ -683,6 +683,7 @@
             "locked": "Wocked",
             "month": "Month(s)",
             "no_reason": "This ban is missing a ban weason",
+            "note": "Nyote (optionyaw)",
             "reason": "Weason",
             "search_btn": "Seawch Bans",
             "temp-select": "Toggwe date/time input",

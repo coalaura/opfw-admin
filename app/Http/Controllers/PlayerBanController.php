@@ -185,16 +185,20 @@ class PlayerBanController extends Controller
             return backWith('error', 'Player is already banned');
         }
 
+        $data = $request->validated();
+
         // Create a unique hash to go with this player's batch of bans.
         $user = user();
         $hash = Ban::generateHash();
 
         // Create ban.
-        $ban = array_merge([
+        $ban = [
+            'reason'             => $data['reason'],
+            'expire'             => $data['expire'],
             'ban_hash'           => $hash,
             'creator_name'       => $user->player_name,
             'creator_identifier' => $user->license_identifier,
-        ], $request->validated());
+        ];
 
         // Get identifiers to ban.
         $identifiers = $player->getBannableIdentifiers();
@@ -220,6 +224,15 @@ class PlayerBanController extends Controller
             'message'        => $reason . ' This warning was generated automatically as a result of banning someone.',
             'can_be_deleted' => 0,
         ]);
+
+        $note = trim($data['note'] ?? '');
+
+        if (!empty($note)) {
+            $player->warnings()->create([
+                'issuer_id'      => $user->user_id,
+                'message'        => $note,
+            ]);
+        }
 
         $staffName = $user->player_name;
 

@@ -683,6 +683,7 @@
             "locked": "Locked up",
             "month": "Month(s)",
             "no_reason": "This ban ain't got no reason",
+            "note": "Note (optional, y'all)",
             "reason": "Why",
             "search_btn": "Look up Bans",
             "temp-select": "Switch date/time input",

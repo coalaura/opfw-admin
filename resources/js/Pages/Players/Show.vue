@@ -1055,7 +1055,15 @@
                             <label class="italic font-semibold block mb-1" for="reason">
                                 {{ t('players.ban.reason') }}
                             </label>
-                            <textarea class="block w-full p-5 bg-gray-200 dark:bg-gray-600 rounded shadow" id="reason" name="reason" rows="5" :placeholder="player.playerName + ' did a big oopsie.'" v-model="form.ban.reason"></textarea>
+                            <input class="block w-full p-3 px-4 bg-gray-200 dark:bg-gray-600 rounded shadow" id="reason" name="reason" placeholder="1.1, 1.2 | create a ticket" v-model="form.ban.reason" />
+                        </div>
+
+                        <!-- Ban Note -->
+                        <div>
+                            <label class="italic font-semibold block mb-1" for="note">
+                                {{ t('players.ban.note') }}
+                            </label>
+                            <textarea class="block w-full p-3 px-4 bg-gray-200 dark:bg-gray-600 rounded shadow" id="note" name="note" rows="3" :placeholder="player.playerName + ' did a big oopsie.'" v-model="form.ban.note"></textarea>
                         </div>
 
                         <!-- Buttons -->
@@ -1744,6 +1752,7 @@ export default {
             warningEditId: 0,
             form: {
                 ban: {
+                    note: null,
                     reason: null,
                     expire: null,
                     expireDate: null,

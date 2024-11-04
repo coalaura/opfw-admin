@@ -824,6 +824,7 @@
             "temporary": "This is a temporary ban",
             "expiration": "Expiration",
             "reason": "Reason",
+            "note": "Note (optional)",
             "creator": "Creator",
             "locked": "Locked",
             "do_ban": "Ban player",
