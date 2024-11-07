@@ -1431,6 +1431,24 @@
         "save": "Savee",
         "title": "API Tokies"
     },
+    "tools": {
+        "config": {
+            "add_override": "Add Owvewwide",
+            "department_name": "Depawtment Nyame",
+            "description": "Genewate a config vawue.",
+            "export_config": "Copy Config",
+            "import": "Impowt",
+            "import_jobs": "Impowt Jobs",
+            "job_name": "Job Nyame",
+            "job_override": "Job Owvewwides",
+            "position_exists": "Job with same nyame, depawtment, position and sawawy awweady exists.",
+            "positions": "Positions",
+            "read_config": "Wead Config",
+            "remove_override": "Wemove Owvewwide",
+            "title": "Config Genewatow",
+            "type": "Type"
+        }
+    },
     "twitter": {
         "account": "Account",
         "delete_confirm": "Awe you suwe you want to dewete this tweet? This cannot be undwone.",

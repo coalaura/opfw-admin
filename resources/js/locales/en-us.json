@@ -1504,17 +1504,17 @@
             "type": "Type",
             "add_override": "Add Override",
             "import_jobs": "Import Jobs",
-            "read_config": "Read existing Config",
-            "export_config": "Export and Copy Config",
+            "read_config": "Read Config",
+            "export_config": "Copy Config",
             "remove_override": "Remove Override",
             "import": "Import",
+            "position_exists": "Job with same name, department, position and salary already exists.",
 
             "job_override": "Job Overrides",
 
             "job_name": "Job Name",
             "department_name": "Department Name",
-            "position_name": "Position Name",
-            "salary_name": "Salary Name"
+            "positions": "Positions"
         }
     },
     "login": {

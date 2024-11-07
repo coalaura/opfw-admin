@@ -273,6 +273,11 @@ export default {
                             hidden: !this.perm.check(this.perm.PERM_SCREENSHOT),
                         },
                         {
+                            label: 'backstories.title',
+                            icon: 'box-open',
+                            url: '/backstories',
+                        },
+                        {
                             label: 'weapons.title',
                             icon: 'damage',
                             url: '/weapons',
@@ -284,9 +289,9 @@ export default {
                             url: '/vehicles',
                         },
                         {
-                            label: 'backstories.title',
-                            icon: 'box-open',
-                            url: '/backstories',
+                            label: 'tools.config.title',
+                            icon: 'cogs',
+                            url: '/tools/config'
                         }
                     ]
                 },

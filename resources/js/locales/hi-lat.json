@@ -1431,6 +1431,24 @@
         "save": "Bachaao",
         "title": "API Tokens"
     },
+    "tools": {
+        "config": {
+            "add_override": "Override jodo",
+            "department_name": "Vibhag ka naam",
+            "description": "Ek config moolya utpan karo.",
+            "export_config": "Config nakal karo",
+            "import": "Aayaath karo",
+            "import_jobs": "Aayaath karyakram",
+            "job_name": "Karyakram ka naam",
+            "job_override": "Karyakram overrides",
+            "position_exists": "Wahi naam, vibhag, pad aur vetan wala karyakram pehle se maujood hai.",
+            "positions": "Pad",
+            "read_config": "Config padho",
+            "remove_override": "Override hatao",
+            "title": "Config utpadak",
+            "type": "Prakar"
+        }
+    },
     "twitter": {
         "account": "Khata",
         "delete_confirm": "Kya aap pakka is tweet ko mitaana chahte hain? Ye firse wapas nahi aa sakta.",

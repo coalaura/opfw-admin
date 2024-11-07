@@ -1431,6 +1431,24 @@
         "save": "Lagre",
         "title": "API-token"
     },
+    "tools": {
+        "config": {
+            "add_override": "Legg til overstyring",
+            "department_name": "Avdelingsnavn",
+            "description": "Generer en konfigurasjonsverdi.",
+            "export_config": "Kopier konfigurasjon",
+            "import": "Importer",
+            "import_jobs": "Importer jobber",
+            "job_name": "Jobbnavn",
+            "job_override": "Jobboverstyringer",
+            "position_exists": "Jobb med samme navn, avdeling, stilling og lønn finnes allerede.",
+            "positions": "Stillinger",
+            "read_config": "Les konfigurasjon",
+            "remove_override": "Fjern overstyring",
+            "title": "Konfigurasjonsgenerator",
+            "type": "Type"
+        }
+    },
     "twitter": {
         "account": "Konto",
         "delete_confirm": "Er du sikker på at du vil slette denne tweeten? Dette kan ikke angres.",

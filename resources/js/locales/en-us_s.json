@@ -1431,6 +1431,24 @@
         "save": "Save",
         "title": "API Tokens"
     },
+    "tools": {
+        "config": {
+            "add_override": "Add Override",
+            "department_name": "Department Name",
+            "description": "Generate a config value.",
+            "export_config": "Copy Config",
+            "import": "Import",
+            "import_jobs": "Import Jobs",
+            "job_name": "Job Name",
+            "job_override": "Job Overrides",
+            "position_exists": "Job with the same name, department, position and salary already exists.",
+            "positions": "Positions",
+            "read_config": "Read Config",
+            "remove_override": "Remove Override",
+            "title": "Config Generator",
+            "type": "Type"
+        }
+    },
     "twitter": {
         "account": "Account",
         "delete_confirm": "Y'all sure ya wanna delete this tweet? Ain't no goin' back.",
