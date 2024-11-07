@@ -45,7 +45,6 @@ class PlayerResource extends JsonResource
             'isSuperAdmin'        => $this->isSuperAdmin(),
             'isRoot'              => $this->isRoot(),
             'isBanned'            => !!$ban,
-            'isSoftBanned'        => $this->is_soft_banned,
             'warnings'            => $plain ? 0 : $this->warnings()->whereIn('warning_type', [Warning::TypeStrike, Warning::TypeWarning])->count(),
             'ban'                 => new BanResource($ban),
             'playerAliases'       => $identifiers ? array_values(array_unique(array_filter($identifiers, function ($e) {

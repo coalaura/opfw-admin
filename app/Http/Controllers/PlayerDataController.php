@@ -119,28 +119,6 @@ class PlayerDataController extends Controller
     }
 
     /**
-     * Sets the soft ban status
-     *
-     * @param Player $player
-     * @param Request $request
-     * @return RedirectResponse
-     */
-    public function updateSoftBanStatus(Player $player, Request $request): RedirectResponse
-    {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_SOFT_BAN)) {
-            return backWith('error', 'You dont have permissions to do this.');
-        }
-
-        $status = $request->input('status') ? 1 : 0;
-
-        $player->update([
-            'is_soft_banned' => $status,
-        ]);
-
-        return backWith('success', 'Soft ban status has been updated successfully.');
-    }
-
-    /**
      * Sets the tag
      *
      * @param Player $player

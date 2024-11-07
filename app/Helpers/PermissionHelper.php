@@ -12,7 +12,6 @@ class PermissionHelper
         self::PERM_ADVANCED       => ['advanced', self::LEVEL_SENIOR],
         self::PERM_LIVEMAP        => ['livemap', self::LEVEL_STAFF],
         self::PERM_LOCK_BAN       => ['lock_ban', self::LEVEL_SENIOR],
-        self::PERM_SOFT_BAN       => ['soft_ban', self::LEVEL_ROOT],
         self::PERM_EDIT_TAG       => ['edit_tag', self::LEVEL_ROOT],
         self::PERM_LOADING_SCREEN => ['loading_screen', self::LEVEL_SUPERADMIN],
         self::PERM_VIEW_QUEUE     => ['view_queue', self::LEVEL_SENIOR],
@@ -40,7 +39,6 @@ class PermissionHelper
     const PERM_ADVANCED       = 'P_ADVANCED';
     const PERM_LIVEMAP        = 'P_LIVEMAP';
     const PERM_LOCK_BAN       = 'P_LOCK_BAN';
-    const PERM_SOFT_BAN       = 'P_SOFT_BAN';
     const PERM_EDIT_TAG       = 'P_EDIT_TAG';
     const PERM_LOADING_SCREEN = 'P_LOADING_SCREEN';
     const PERM_VIEW_QUEUE     = 'P_VIEW_QUEUE';

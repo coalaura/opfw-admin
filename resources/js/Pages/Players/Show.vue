@@ -165,25 +165,9 @@
                         <i class="fas fa-times"></i>
                     </a>
                 </a>
-
-                <!-- Soft Ban -->
-                <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && player.isSoftBanned">
-                    <i class="fas fa-feather-alt mr-1"></i>
-
-                    <span class="font-semibold">{{ t('global.soft_banned') }}</span>
-
-                    <a href="#" @click="removeSoftBan()" class="ml-1 text-white" :title="t('players.show.remove_soft_ban')">
-                        <i class="fas fa-times"></i>
-                    </a>
-                </badge>
             </div>
 
             <div class="mb-3 flex flex-wrap justify-end gap-3">
-                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="addSoftBan()" v-if="this.perm.check(this.perm.PERM_SOFT_BAN) && !player.isSoftBanned">
-                    <i class="fas fa-smoking-ban"></i>
-                    {{ t('players.show.add_soft_ban') }}
-                </button>
-
                 <!-- StaffPM -->
                 <button class="px-5 py-2 font-semibold text-white rounded bg-blue-600 dark:bg-blue-500 flex items-center gap-1" @click="isStaffPM = true" v-if="status">
                     <i class="fas fa-envelope-open-text"></i>
@@ -2577,26 +2561,6 @@ export default {
 
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateMuteStatus', {
-                status: false
-            }, { preserveScroll: true });
-        },
-        async removeSoftBan() {
-            if (!confirm(this.t('players.show.soft_ban_confirm'))) {
-                return;
-            }
-
-            // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateSoftBanStatus', {
-                status: true
-            }, { preserveScroll: true });
-        },
-        async addSoftBan() {
-            if (!confirm(this.t('players.show.soft_ban_confirm'))) {
-                return;
-            }
-
-            // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateSoftBanStatus', {
                 status: false
             }, { preserveScroll: true });
         },

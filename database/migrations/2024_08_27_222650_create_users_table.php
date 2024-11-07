@@ -38,7 +38,6 @@ class CreateUsersTable extends Migration
 			!in_array("is_senior_staff", $columns) && $table->tinyInteger("is_senior_staff")->nullable()->default("0");
 			!in_array("is_super_admin", $columns) && $table->tinyInteger("is_super_admin")->nullable()->default("0");
 			!in_array("is_debugger", $columns) && $table->tinyInteger("is_debugger")->nullable()->default("0");
-			!in_array("is_soft_banned", $columns) && $table->tinyInteger("is_soft_banned")->nullable()->default("0");
 			!in_array("enabled_commands", $columns) && $table->longText("enabled_commands")->nullable();
 			!in_array("playtime", $columns) && $table->integer("playtime")->nullable()->default("0");
 			!in_array("last_connection", $columns) && $table->integer("last_connection")->nullable();

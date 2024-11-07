@@ -19,7 +19,6 @@
         "super_title": "Super-Admins have access to all commands, excluding developer commands.",
         "developer": "Developer",
         "developer_title": "Developers have unrestricted access to all available commands.",
-        "soft_banned": "Soft Banned",
         "system": "System",
         "cancel": "Cancel",
         "download": "Download",
@@ -555,7 +554,6 @@
         "level_4": "Root",
 
         "perms": {
-            "soft_ban": "Edit Soft Bans",
             "livemap": "View Livemap",
             "screenshot": "Take Screenshots",
             "suspicious": "View Suspicious Things",
@@ -977,9 +975,6 @@
             "warnings": "Player Notes",
             "collapsed_warnings": "Show {0} player note(s)",
             "unload_do": "Unload",
-            "soft_ban_confirm": "Are you sure you want to change this users soft ban status?",
-            "remove_soft_ban": "Remove this players soft ban",
-            "add_soft_ban": "Soft Ban",
             "remove_ban_exception": "Remove players twitch ban exception?",
             "remove_ban_exception_confirm": "Are you sure you want to remove this players twitch ban exception?",
             "invalid_twitch_profile": "Invalid twitch profile link. Please enter a valid twitch profile link (e.g.: https://twitch.tv/myprofile).",
