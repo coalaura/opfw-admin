@@ -1509,6 +1509,8 @@
             "remove_override": "Remove Override",
             "import": "Import",
             "position_exists": "Job with same name, department, position and salary already exists.",
+            "read_from_cluster": "Import current job overrides for cluster:",
+            "or_read_text": "Or read job overrides from text:",
 
             "job_override": "Job Overrides",
 

@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Character;
 use App\Helpers\GeneralHelper;
+use App\Helpers\HttpHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
 use App\Server;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 
 class ApiController extends Controller
 {
@@ -81,5 +84,34 @@ class ApiController extends Controller
             'time' => microtime(true) - $debugStart,
             'info' => $data,
         ]);
+    }
+
+    public function config(int $cluster, string $key)
+    {
+        if (!$cluster || $cluster < 1 || $cluster > 100) {
+            abort(404);
+        }
+
+        $data = HttpHelper::get("https://raw.githubusercontent.com/InZidiuZ/op-framework-public/refs/heads/master/configs/cluster$cluster.cfg");
+
+        if (!$data) {
+            abort(404);
+        }
+
+        $value = "";
+        $lines = explode("\n", $data);
+
+        foreach($lines as $line) {
+            if (!$line || !Str::startsWith($line, $key)) {
+                continue;
+            }
+
+            $value = trim(preg_replace('/^' . $key . '\s*=\s*/', '', $line));
+            $value = trim($value, '"');
+
+            break;
+        }
+
+        return $this->json(true, $value);
     }
 }

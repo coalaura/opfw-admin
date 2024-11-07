@@ -1,5 +1,9 @@
 <template>
-    <div>
+    <div class="relative">
+        <div class="absolute top-0 right-0 left-0 bottom-0 backdrop-blur-md flex justify-center items-center" v-if="isLoading">
+            <i class="fas fa-spinner animate-spin text-xl"></i>
+        </div>
+
         <div class="flex gap-3 mb-3">
             <button class="font-semibold cursor-pointer text-sm" @click="addBlankOverride()">
                 <i class="fas fa-plus mr-1"></i>
@@ -115,14 +119,18 @@
             </template>
 
             <template #default>
-                <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" v-model="reading" placeholder="Law Enforcement:SASP:Cadet=70;Probationary Officer=80;Officer=90..." />
+                <label class="block mb-1 font-semibold" for="cluster">{{ t('tools.config.read_from_cluster') }}</label>
+                <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" v-model="cluster" id="cluster" type="number" min="1" max="100" placeholder="3" />
+
+                <label class="block mb-1 font-semibold mt-5 pt-5 border-t-2 border-dashed border-gray-500" for="cluster">{{ t('tools.config.or_read_text') }}</label>
+                <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" v-model="reading" id="reading" placeholder="Law Enforcement:SASP:Cadet=70;Probationary Officer=80;Officer=90..." />
             </template>
 
             <template #actions>
                 <button type="button" class="px-5 py-2 rounded bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500" @click="isReadingConfig = false">
                     {{ t('global.close') }}
                 </button>
-                <button type="button" class="px-5 py-2 rounded bg-lime-200 hover:bg-lime-300 dark:bg-lime-600 dark:hover:bg-lime-500" @click="readConfig()" v-if="reading">
+                <button type="button" class="px-5 py-2 rounded bg-lime-200 hover:bg-lime-300 dark:bg-lime-600 dark:hover:bg-lime-500" @click="readConfig()" v-if="reading || cluster">
                     {{ t('tools.config.import') }}
                 </button>
             </template>
@@ -146,6 +154,8 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
+
             isImportingJob: false,
             isReadingConfig: false,
 
@@ -155,6 +165,7 @@ export default {
                 position: ""
             },
 
+            cluster: "",
             reading: "",
 
             overrides: []
@@ -302,20 +313,49 @@ export default {
                 }
             }
         },
-        readConfig() {
-            this.isReadingConfig = false;
-            this.overrides = [];
+        async readConfig() {
+            if (this.isLoading) return;
 
-            if (this.reading.startsWith("job_overrides")) {
-                this.reading = this.reading.replace(/job_overrides ?= ?/, "").trim().substring(1);
-                this.reading = this.reading.substring(0, this.reading.length - 1);
+            this.isReadingConfig = false;
+
+            const cluster = parseInt(this.cluster);
+
+            let reading = this.reading.trim();
+
+            this.cluster = "";
+            this.reading = "";
+
+            if (cluster) {
+                this.isLoading = true;
+
+                try {
+                    const response = await axios.get(`/api/config/${cluster}/job_overrides`),
+                        data = response.data;
+
+                    if (!data || !data.status) {
+                        throw new Error("Config not found");
+                    }
+
+                    reading = data.data;
+                } catch (e) {
+                    console.error(e);
+                }
+
+                this.isLoading = false;
             }
 
-            const overrides = this.reading.trim().split(",");
+            if (reading.startsWith("job_overrides")) {
+                reading = reading.replace(/job_overrides ?= ?/, "").trim().substring(1);
+                reading = reading.substring(0, reading.length - 1);
+            }
+
+            const overrides = reading.trim().split(",");
 
             if (!overrides.length) {
                 return;
             }
+
+            this.overrides = [];
 
             for (const override of overrides) {
                 const parts = override.split(":");

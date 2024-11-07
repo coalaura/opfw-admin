@@ -1441,9 +1441,11 @@
             "import_jobs": "Aayaath karyakram",
             "job_name": "Karyakram ka naam",
             "job_override": "Karyakram overrides",
+            "or_read_text": "Ya phir text se job overrides padhein:",
             "position_exists": "Wahi naam, vibhag, pad aur vetan wala karyakram pehle se maujood hai.",
             "positions": "Pad",
             "read_config": "Config padho",
+            "read_from_cluster": "Cluster ke liye vartamaan job overrides import karein:",
             "remove_override": "Override hatao",
             "title": "Config utpadak",
             "type": "Prakar"

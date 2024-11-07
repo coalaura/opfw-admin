@@ -1441,9 +1441,11 @@
             "import_jobs": "Impowt Jobs",
             "job_name": "Job Nyame",
             "job_override": "Job Owvewwides",
+            "or_read_text": "Ow wead job ovewwides fwom text:",
             "position_exists": "Job with same nyame, depawtment, position and sawawy awweady exists.",
             "positions": "Positions",
             "read_config": "Wead Config",
+            "read_from_cluster": "Impowt cuwwent job ovewwides fow cwustew:",
             "remove_override": "Wemove Owvewwide",
             "title": "Config Genewatow",
             "type": "Type"

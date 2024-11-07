@@ -1441,9 +1441,11 @@
             "import_jobs": "Importer jobber",
             "job_name": "Jobbnavn",
             "job_override": "Jobboverstyringer",
+            "or_read_text": "Eller les jobboverstyringer fra tekst:",
             "position_exists": "Jobb med samme navn, avdeling, stilling og lønn finnes allerede.",
             "positions": "Stillinger",
             "read_config": "Les konfigurasjon",
+            "read_from_cluster": "Importer gjeldende jobboverstyringer for klynge:",
             "remove_override": "Fjern overstyring",
             "title": "Konfigurasjonsgenerator",
             "type": "Type"

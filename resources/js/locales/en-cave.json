@@ -1441,9 +1441,11 @@
             "import_jobs": "Import Jobs",
             "job_name": "Job Name",
             "job_override": "Job Overrides",
+            "or_read_text": "Read job from text:",
             "position_exists": "Job same name, department, position, salary already here.",
             "positions": "Positions",
             "read_config": "Read Config",
+            "read_from_cluster": "Import job for group:",
             "remove_override": "Remove Override",
             "title": "Config Maker",
             "type": "Type"
