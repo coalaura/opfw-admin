@@ -49,6 +49,7 @@ use App\Http\Controllers\SuspiciousController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TwitterController;
 use App\Http\Controllers\TokenController;
+use App\Http\Controllers\ToolController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
@@ -284,6 +285,9 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     // Queue.
     Route::get('/queue/{server}', [QueueController::class, 'render']);
     Route::get('/api/queue/{server}', [QueueController::class, 'api']);
+
+    // Tools
+    Route::get('/tools/config', [ToolController::class, 'config']);
 
     // Test.
     Route::get('/test/logs/{action}', [TestController::class, 'logs']);

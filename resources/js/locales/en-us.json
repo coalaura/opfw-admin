@@ -1497,6 +1497,26 @@
         "loading_logs": "Loading logs...",
         "per_second": "{0} requests per second. {1} in the last 5 minutes."
     },
+    "tools": {
+        "config": {
+            "title": "Config Generator",
+            "description": "Generate a config value.",
+            "type": "Type",
+            "add_override": "Add Override",
+            "import_jobs": "Import Jobs",
+            "read_config": "Read existing Config",
+            "export_config": "Export and Copy Config",
+            "remove_override": "Remove Override",
+            "import": "Import",
+
+            "job_override": "Job Overrides",
+
+            "job_name": "Job Name",
+            "department_name": "Department Name",
+            "position_name": "Position Name",
+            "salary_name": "Salary Name"
+        }
+    },
     "login": {
         "title": "Login with your Discord account.",
         "description": "Please login with the same Discord account that is linked to the user you have your staff permissions on. Using a different one will result in you not being able to access the server panel.",
