@@ -53,7 +53,7 @@
 
                     <td class="px-2 py-1">
                         <table class="w-full bg-gray-300 dark:bg-gray-600 text-sm border-collapse">
-                            <tr v-for="(position, indexP) in override.positions" :key="indexP" class="border border-gray-500" :class="{ 'opacity-70': position.exists }" :title="position.exists ? t('tools.config.position_exists') : ''">
+                            <tr v-for="(position, indexP) in override.positions" :key="indexP" class="border border-gray-500" :title="position.exists ? t('tools.config.position_exists') : ''">
                                 <td class="px-2 py-1">
                                     <button class="font-semibold cursor-pointer text-sm" @click="override.positions.splice(indexP, 1)" :title="t('tools.config.remove_override')">
                                         <i class="fas fa-minus"></i>
@@ -393,7 +393,7 @@ export default {
                     continue;
                 }
 
-                const positionStr = positions.filter(position => !position.exists).map(position => `${position.name}=${position.salary}`).join(";");
+                const positionStr = positions.map(position => `${position.name}=${position.salary}`).join(";");
 
                 entries.push(`${jobName}:${departmentName}:${positionStr}`);
             }

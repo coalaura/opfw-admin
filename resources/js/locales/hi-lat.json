@@ -1442,7 +1442,7 @@
             "job_name": "Karyakram ka naam",
             "job_override": "Karyakram overrides",
             "or_read_text": "Ya phir text se job overrides padhein:",
-            "position_exists": "Wahi naam, vibhag, pad aur vetan wala karyakram pehle se maujood hai.",
+            "position_exists": "Default naukri ke jaise.",
             "positions": "Pad",
             "read_config": "Config padho",
             "read_from_cluster": "Cluster ke liye vartamaan job overrides import karein:",

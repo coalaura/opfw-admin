@@ -1508,7 +1508,7 @@
             "export_config": "Copy Config",
             "remove_override": "Remove Override",
             "import": "Import",
-            "position_exists": "Job with same name, department, position and salary already exists.",
+            "position_exists": "Same as the default job.",
             "read_from_cluster": "Import current job overrides for cluster:",
             "or_read_text": "Or read job overrides from text:",
 
