@@ -355,8 +355,6 @@ export default {
                 return;
             }
 
-            this.overrides = [];
-
             for (const override of overrides) {
                 const parts = override.split(":");
 
