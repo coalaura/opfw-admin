@@ -11,9 +11,11 @@ class ToolController extends Controller
     public function config()
     {
         $jobs = OPFWHelper::getDefaultJobsJSON(Server::getFirstServer() ?? '');
+        $items = OPFWHelper::getItemsJSON(Server::getFirstServer() ?? '');
 
         return Inertia::render('Tools/Config', [
             'jobs' => $jobs['jobs'] ?? [],
+            'items' => $items ?? [],
         ]);
     }
 }

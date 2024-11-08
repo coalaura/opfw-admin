@@ -1434,11 +1434,13 @@
     "tools": {
         "config": {
             "add_override": "Legg til overstyring",
+            "clear_overrides": "Fjern overstyringer",
             "department_name": "Avdelingsnavn",
             "description": "Generer en konfigurasjonsverdi.",
             "export_config": "Kopier konfigurasjon",
             "import": "Importer",
             "import_jobs": "Importer jobber",
+            "items": "Elementer",
             "job_name": "Jobbnavn",
             "job_override": "Jobboverstyringer",
             "or_read_text": "Eller les jobboverstyringer fra tekst:",
@@ -1447,6 +1449,8 @@
             "read_config": "Les konfigurasjon",
             "read_from_cluster": "Importer gjeldende jobboverstyringer for klynge:",
             "remove_override": "Fjern overstyring",
+            "store_name": "Butikknavn",
+            "store_override": "Butikkoverstyringer",
             "title": "Konfigurasjonsgenerator",
             "type": "Type"
         }

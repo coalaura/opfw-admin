@@ -1511,12 +1511,16 @@
             "position_exists": "Same as the default job.",
             "read_from_cluster": "Import current job overrides for cluster:",
             "or_read_text": "Or read job overrides from text:",
+            "clear_overrides": "Clear Overrides",
 
             "job_override": "Job Overrides",
+            "store_override": "Store Overrides",
 
             "job_name": "Job Name",
             "department_name": "Department Name",
-            "positions": "Positions"
+            "positions": "Positions",
+            "store_name": "Store Name",
+            "items": "Items"
         }
     },
     "login": {

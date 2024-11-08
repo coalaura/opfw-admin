@@ -1434,11 +1434,13 @@
     "tools": {
         "config": {
             "add_override": "Override jodo",
+            "clear_overrides": "Overrides saaf karein",
             "department_name": "Vibhag ka naam",
             "description": "Ek config moolya utpan karo.",
             "export_config": "Config nakal karo",
             "import": "Aayaath karo",
             "import_jobs": "Aayaath karyakram",
+            "items": "Items",
             "job_name": "Karyakram ka naam",
             "job_override": "Karyakram overrides",
             "or_read_text": "Ya phir text se job overrides padhein:",
@@ -1447,6 +1449,8 @@
             "read_config": "Config padho",
             "read_from_cluster": "Cluster ke liye vartamaan job overrides import karein:",
             "remove_override": "Override hatao",
+            "store_name": "Store Naam",
+            "store_override": "Store Overrides",
             "title": "Config utpadak",
             "type": "Prakar"
         }

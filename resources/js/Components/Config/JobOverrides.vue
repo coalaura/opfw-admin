@@ -4,23 +4,32 @@
             <i class="fas fa-spinner animate-spin text-xl"></i>
         </div>
 
-        <div class="flex gap-3 mb-3">
-            <button class="font-semibold cursor-pointer text-sm" @click="addBlankOverride()">
-                <i class="fas fa-plus mr-1"></i>
-                {{ t('tools.config.add_override') }}
-            </button>
-            <button class="font-semibold cursor-pointer text-sm ml-2" @click="isImportingJob = true">
-                <i class="fas fa-address-card mr-1"></i>
-                {{ t('tools.config.import_jobs') }}
-            </button>
-            <button class="font-semibold cursor-pointer text-sm ml-2" @click="isReadingConfig = true">
-                <i class="fab fa-readme mr-1"></i>
-                {{ t('tools.config.read_config') }}
-            </button>
-            <button class="font-semibold cursor-pointer text-sm ml-2" @click="exportConfig()">
-                <i class="fas fa-cloud-download-alt mr-1"></i>
-                {{ t('tools.config.export_config') }}
-            </button>
+        <div class="flex justify-between items-center mb-3">
+            <div class="flex gap-3">
+                <button class="font-semibold cursor-pointer text-sm" @click="addBlankOverride()">
+                    <i class="fas fa-plus mr-1"></i>
+                    {{ t('tools.config.add_override') }}
+                </button>
+                <button class="font-semibold cursor-pointer text-sm ml-2" @click="isImportingJob = true">
+                    <i class="fas fa-address-card mr-1"></i>
+                    {{ t('tools.config.import_jobs') }}
+                </button>
+                <button class="font-semibold cursor-pointer text-sm ml-2" @click="isReadingConfig = true">
+                    <i class="fab fa-readme mr-1"></i>
+                    {{ t('tools.config.read_config') }}
+                </button>
+                <button class="font-semibold cursor-pointer text-sm ml-2" @click="exportConfig()">
+                    <i class="fas fa-cloud-download-alt mr-1"></i>
+                    {{ t('tools.config.export_config') }}
+                </button>
+            </div>
+
+            <div class="flex gap-3">
+                <button class="font-semibold cursor-pointer text-sm text-red-600 dark:text-red-400" @click="overrides = []">
+                    <i class="fas fa-trash-alt mr-1"></i>
+                    {{ t('tools.config.clear_overrides') }}
+                </button>
+            </div>
         </div>
 
         <div class="flex flex-col gap-3">
@@ -44,11 +53,11 @@
 
                 <tr class="border-t border-gray-500">
                     <td class="px-2 py-1" colspan="2">
-                        <input class="text-sm bg-transparent py-1 px-2 border-0 border-b-2 border-red-600 dark:border-red-400" :class="{ '!border-lime-600 !dark:border-lime-400': override.jobName }" v-model="override.jobName" placeholder="Law Enforcement" />
+                        <input class="block w-full text-sm bg-transparent py-1 px-2 border-0 border-b-2 border-red-600 dark:border-red-400" :class="{ '!border-lime-600 !dark:border-lime-400': override.jobName }" v-model="override.jobName" placeholder="Law Enforcement" />
                     </td>
 
                     <td class="px-2 py-1">
-                        <input class="text-sm bg-transparent py-1 px-2 border-0 border-b-2 border-red-600 dark:border-red-400" :class="{ '!border-lime-600 !dark:border-lime-400': override.departmentName }" v-model="override.departmentName" placeholder="SASP" />
+                        <input class="block w-full text-sm bg-transparent py-1 px-2 border-0 border-b-2 border-red-600 dark:border-red-400" :class="{ '!border-lime-600 !dark:border-lime-400': override.departmentName }" v-model="override.departmentName" placeholder="SASP" />
                     </td>
 
                     <td class="px-2 py-1">
@@ -60,10 +69,13 @@
                                     </button>
                                 </td>
                                 <td class="px-2 py-1">
-                                    <input class="text-sm bg-transparent py-1 px-2 border-0 border-b-2 border-red-600 dark:border-red-400" :class="position.exists ? '!border-teal-600 !dark:border-teal-400' : (position.name ? '!border-lime-600 !dark:border-lime-400' : '')" v-model="position.name" placeholder="Corporal" @input="updatePosition(override, position)" />
+                                    <input class="block w-full text-sm bg-transparent py-1 px-2 border-0 border-b-2 border-red-600 dark:border-red-400" :class="position.exists ? '!border-teal-600 !dark:border-teal-400' : (position.name ? '!border-lime-600 !dark:border-lime-400' : '')" v-model="position.name" placeholder="Corporal" @input="updatePosition(override, position)" />
                                 </td>
                                 <td class="px-2 py-1">
-                                    <input class="text-sm bg-transparent py-1 px-2 border-0 border-b-2 border-red-600 dark:border-red-400" :class="position.exists ? '!border-teal-600 !dark:border-teal-400' : (position.salary ? '!border-lime-600 !dark:border-lime-400' : '')" v-model="position.salary" type="number" placeholder="12" @input="updatePosition(override, position)" @change="sortPositions(index)" />
+                                    <div class="flex items-center py-1 px-2 border-b-2 border-red-600 dark:border-red-400 gap-1.5" :class="position.exists ? '!border-teal-600 !dark:border-teal-400' : (position.salary ? '!border-lime-600 !dark:border-lime-400' : '')">
+                                        <i class="fas fa-dollar-sign"></i>
+                                        <input class="block w-full text-sm bg-transparent border-0 p-0" v-model="position.salary" type="number" placeholder="12" @input="updatePosition(override, position)" @change="sortPositions(index)" />
+                                    </div>
                                 </td>
                             </tr>
                         </table>
@@ -382,7 +394,7 @@ export default {
             }
         },
         exportConfig() {
-            let entries = []
+            let entries = [];
 
             for (const override of this.overrides) {
                 const { jobName, departmentName, positions } = override;

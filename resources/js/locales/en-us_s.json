@@ -1434,11 +1434,13 @@
     "tools": {
         "config": {
             "add_override": "Add Override",
+            "clear_overrides": "Clear Them Overrides",
             "department_name": "Department Name",
             "description": "Generate a config value.",
             "export_config": "Copy Config",
             "import": "Import",
             "import_jobs": "Import Jobs",
+            "items": "Thangs",
             "job_name": "Job Name",
             "job_override": "Job Overrides",
             "or_read_text": "Or read job overrides from the text, y'all:",
@@ -1447,6 +1449,8 @@
             "read_config": "Read Config",
             "read_from_cluster": "Import them current job overrides for the cluster:",
             "remove_override": "Remove Override",
+            "store_name": "Store Name",
+            "store_override": "Store Overrides",
             "title": "Config Generator",
             "type": "Type"
         }

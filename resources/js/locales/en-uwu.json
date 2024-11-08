@@ -1434,11 +1434,13 @@
     "tools": {
         "config": {
             "add_override": "Add Owvewwide",
+            "clear_overrides": "Cweaw Ovewwides",
             "department_name": "Depawtment Nyame",
             "description": "Genewate a config vawue.",
             "export_config": "Copy Config",
             "import": "Impowt",
             "import_jobs": "Impowt Jobs",
+            "items": "Itemz",
             "job_name": "Job Nyame",
             "job_override": "Job Owvewwides",
             "or_read_text": "Ow wead job ovewwides fwom text:",
@@ -1447,6 +1449,8 @@
             "read_config": "Wead Config",
             "read_from_cluster": "Impowt cuwwent job ovewwides fow cwustew:",
             "remove_override": "Wemove Owvewwide",
+            "store_name": "Stowe Nyame",
+            "store_override": "Stowe Ovewwides",
             "title": "Config Genewatow",
             "type": "Type"
         }

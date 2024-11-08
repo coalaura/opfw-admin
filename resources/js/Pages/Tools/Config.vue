@@ -16,10 +16,14 @@
                     <option value="job_override">
                         {{ t('tools.config.job_override') }}
                     </option>
+                    <option value="store_override">
+                        {{ t('tools.config.store_override') }}
+                    </option>
                 </select>
             </div>
 
             <JobOverrides :jobs="jobs" v-if="type === 'job_override'" />
+            <StoreOverrides :items="items" v-if="type === 'store_override'" />
         </div>
 
     </div>
@@ -28,14 +32,20 @@
 <script>
 import Layout from './../../Layouts/App';
 import JobOverrides from './../../Components/Config/JobOverrides';
+import StoreOverrides from './../../Components/Config/StoreOverrides';
 
 export default {
     layout: Layout,
     components: {
-        JobOverrides
+        JobOverrides,
+        StoreOverrides
     },
     props: {
         jobs: {
+            type: Object,
+            required: true
+        },
+        items: {
             type: Object,
             required: true
         }
