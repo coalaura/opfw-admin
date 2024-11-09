@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Character;
 use App\Helpers\LoggingHelper;
 use App\Helpers\OPFWHelper;
+use App\Helpers\PermissionHelper;
 use App\Http\Resources\LogResource;
 use App\Log;
 use App\Player;
@@ -77,7 +78,7 @@ class InventoryController extends Controller
         $slots    = self::MinInventorySlots[$inventoryParams[0]] ?? 5;
         $contents = [];
 
-        if ($this->isSuperAdmin($request)) {
+        if (PermissionHelper::hasPermission($request, PermissionHelper::PERM_VIEW_INVENTORY)) {
             $items = DB::table('inventories')->where('inventory_name', '=', $inventory)->get();
 
             foreach ($items as $item) {

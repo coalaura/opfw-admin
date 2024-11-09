@@ -603,6 +603,7 @@
             "twitter": "Edit Twitter",
             "twitter_edit": "Edit Twitter posts",
             "twitter_verify": "Verify Twitter users",
+            "view_inventory": "See stuff (Inside)",
             "view_queue": "See queue",
             "whitelist": "Manage player whitelist"
         },

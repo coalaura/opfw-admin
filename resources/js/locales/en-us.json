@@ -577,7 +577,8 @@
             "whitelist": "Manage Player Whitelist",
             "api_tokens": "Manage API Tokens",
             "realty_edit": "Edit Real Estate",
-            "bulk_delete": "Bulk Delete (Warnings)"
+            "bulk_delete": "Bulk Delete (Warnings)",
+            "view_inventory": "View Inventory (Contents)"
         },
 
         "world_time": "World Time",

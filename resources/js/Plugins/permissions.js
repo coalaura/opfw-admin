@@ -48,6 +48,7 @@ const Permissions = {
             PERM_REALTY_EDIT: 'realty_edit',
             PERM_SAVINGS_LOGS: 'savings_logs',
             PERM_BULK_DELETE: 'bulk_delete',
+            PERM_VIEW_INVENTORY: 'view_inventory',
 
             level(permission) {
                 if (!(permission in permissions)) {

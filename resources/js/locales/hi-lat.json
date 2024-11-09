@@ -603,6 +603,7 @@
             "twitter": "Twitter edit karein",
             "twitter_edit": "Twitter Posts edit karein",
             "twitter_verify": "Twitter Users verify karein",
+            "view_inventory": "Inventory dekhein (Samagri)",
             "view_queue": "Queue dekhein",
             "whitelist": "Player Whitelist manage karein"
         },
