@@ -42,9 +42,16 @@
                             </label>
                             <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="vehicle_plate" placeholder="23FTW355" v-model="filters.vehicle_plate">
                         </div>
+                        <!-- Vehicle ID -->
+                        <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
+                            <label class="block mb-2" for="vehicle_id">
+                                {{ t('characters.form.vehicle_id') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+                            </label>
+                            <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="vehicle_id" placeholder="69420" v-model="filters.vehicle_id">
+                        </div>
                         <!-- Date of Birth -->
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
-                            <label class="block mb-2" for="vehicle_plate">
+                            <label class="block mb-2" for="dob">
                                 {{ t('characters.form.dob') }}
                             </label>
                             <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="dob" placeholder="1998-03-04" v-model="filters.dob">
@@ -57,7 +64,7 @@
                             <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="phone" placeholder="723-4797" v-model="filters.phone">
                         </div>
                         <!-- Job -->
-                        <div class="w-1/2 px-3 mobile:w-full mobile:mb-3">
+                        <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="job">
                                 {{ t('characters.form.job') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
@@ -196,6 +203,7 @@ export default {
             character_id: Number,
             name: String,
             vehicle_plate: String,
+            vehicle_id: Number,
             dob: String,
             phone: String,
             job: String,

@@ -68,7 +68,6 @@
         "results": "Search took {0} milliseconds.",
         "entries": "Showing {0} total entries on {1} page(s).",
         "loading": "Loading...",
-
         "restricted_to_staff": "Restricted to staff members only.",
         "restricted_to_senior_staff": "Restricted to senior-staff members only.",
         "restricted_to_super": "Restricted to super-admins only.",
@@ -77,34 +76,33 @@
         "support_markdown": "Most basic markdown syntax is supported. Click to learn more.",
         "opfw_abbreviation": "What the OP-FW abbreviation really stands for."
     },
-	"steam": {
-		"title": "Steam",
-		"description": "Lookup players using their steam account.",
-		"search": "Search",
-		"result": "Lookup Result",
-		"no_result": "Failed to resolve steam account.",
-		"steam_id": "Steam ID",
-		"steam2": "Steam2",
-		"steam3": "Steam3",
-		"steam_hex": "Steam Hex",
-		"steam_url": "Profile URL"
-	},
-	"discord": {
-		"title": "Discord",
-		"description": "Lookup players using their discord account.",
-		"search": "Search",
-		"result": "Lookup Result",
-		"no_result": "Failed to resolve discord account.",
+    "steam": {
+        "title": "Steam",
+        "description": "Lookup players using their steam account.",
+        "search": "Search",
+        "result": "Lookup Result",
+        "no_result": "Failed to resolve steam account.",
+        "steam_id": "Steam ID",
+        "steam2": "Steam2",
+        "steam3": "Steam3",
+        "steam_hex": "Steam Hex",
+        "steam_url": "Profile URL"
+    },
+    "discord": {
+        "title": "Discord",
+        "description": "Lookup players using their discord account.",
+        "search": "Search",
+        "result": "Lookup Result",
+        "no_result": "Failed to resolve discord account.",
         "no_players": "No linked players found.",
         "linked_players": "Linked Players"
-	},
+    },
     "settings": {
         "title": "User Settings",
         "description": "Change and view your user settings.",
         "sessions": "Active Sessions",
         "delete_session": "Kill Session",
         "settings": "Settings",
-
         "banner": "Page Theme Image",
         "bannerAlpha": "Page Theme use Alpha (opacity)",
         "parseLogs": "Parse Logs (Highlighting, etc.)",
@@ -120,10 +118,10 @@
         "description": "Add and remove pictures for the loading screen. The pictures will be shown randomly.",
         "pictures": "Pictures",
         "picture": "Picture URL",
-		"image_description": "Image description",
+        "image_description": "Image description",
         "add": "Add Picture",
         "remove": "Remove",
-		"edit": "Edit picture",
+        "edit": "Edit picture",
         "do_add": "Add",
         "failed_count": "{0} of {1} images failed to load.",
         "small_size_count": "{0} of {1} images are too small. Recommended size is at least 1920x1080.",
@@ -180,7 +178,7 @@
     "overwatch": {
         "title": "Overwatch",
         "description": "Look through random players' game renders to see if you can find anything out of the ordinary",
-		"attach": "Attach screenshot to players panel.",
+        "attach": "Attach screenshot to players panel.",
         "refresh": "Get a new screenshot.",
         "auto_refresh": "Toggle the auto-refresh.",
         "profile": "{0} - {1} (#{2})",
@@ -212,8 +210,8 @@
         "confirm_cycle": "Are you sure you want to create a new error cycle? This cannot be undone!"
     },
     "screenshot": {
-		"continuous": "Continuous",
-		"continuous_stop": "Stop",
+        "continuous": "Continuous",
+        "continuous_stop": "Stop",
         "logs": "Logs",
         "note": "Note",
         "screenshot": "Screenshot",
@@ -250,12 +248,12 @@
         "title": "Dashboard",
         "welcome": "Hello, {0}. Welcome to the dashboard!",
         "player_count": "Currently <b>{0}</b> players in the server.",
-		"server_announcement": "Server Announcement",
+        "server_announcement": "Server Announcement",
         "view_crafting": "Show crafting recipes",
         "crafting": "Crafting Recipes",
-		"announcement_message": "Message",
-		"send_announcement": "Send",
-		"confirm_announcement": "Are you sure you want to post this server announcement?",
+        "announcement_message": "Message",
+        "send_announcement": "Send",
+        "confirm_announcement": "Are you sure you want to post this server announcement?",
         "bans": "Last 8 bans issued by you",
         "ban": {
             "license": "License ID",
@@ -292,14 +290,12 @@
     "points": {
         "title": "Staff Points",
         "description": "Staff points are stored in the balls!",
-
         "player": "Player",
         "week_0": "This Week"
     },
     "statistics": {
         "title": "Statistics",
         "description": "Some general statistics",
-
         "type": "Type",
         "date": "Date",
         "count": "Count",
@@ -321,15 +317,12 @@
         "minimum_fps": "Minimum FPS",
         "maximum_fps": "Maximum FPS",
         "average_fps": "Average FPS",
-
         "tag_money": "Money",
         "tag_amount": "Amount",
-
         "search": "Search",
         "failed_load": "Failed to load statistics.",
         "no_economy_recorded": "No economy statistics recorded yet. (Recorded once every hour)",
         "no_players_recorded": "No players statistics recorded yet.",
-
         "casino": "Casino Revenue",
         "casino_details": "Combined revenue from all available games in the casino.",
         "pdm": "PDM Sales",
@@ -392,7 +385,6 @@
         "shots_fired_details": "Amount of shots fired (that dealt damage) from all weapons that shoot bullets (no melee, etc.).",
         "crashes": "Game crashes",
         "crashes_details": "Amount of full game crashes or timeouts.",
-
         "money_logs": "Money Logs",
         "money_logs_details": "Compare different money logs in a graph for the last 30 days.",
         "economy_stats": "Economy Statistics",
@@ -412,7 +404,7 @@
         "closed_unexpected": "Data connection for {0} was closed unexpectedly after {1}.",
         "data": "Currently <b>{0}/{1}</b> online players.",
         "data_stats": "Police: {0}, EMS: {1}, Staff: {2}",
-		"data_unloaded": "Unloaded: {0}",
+        "data_unloaded": "Unloaded: {0}",
         "play": "Play",
         "fpm_title": "Frames per minute",
         "toggle_duty_list": "Toggle On-Duty",
@@ -432,8 +424,8 @@
         "notify_invisible": "Notify on Invisible",
         "notify_load": "Notify on Load",
         "notify_unload": "Notify on Unload",
-		"unloaded_players": "Unloaded Players",
-		"no_unloaded_players": "No unloaded players",
+        "unloaded_players": "Unloaded Players",
+        "no_unloaded_players": "No unloaded players",
         "notify_add": "Add Notify",
         "notify_license": "License Identifier",
         "notify_type": "Notification type",
@@ -458,7 +450,7 @@
         "do_highlight": "Highlight",
         "highlighted_title": "Highlighted People",
         "timestamp_fetch": "Fetching Timestamp Data...",
-		"timestamp_load_names": "Loading Player Names...",
+        "timestamp_load_names": "Loading Player Names...",
         "timestamp_parse": "Parsing Timestamp Data...",
         "timestamp_render": "Rendering Timestamp Data...",
         "bans_fetch": "Fetching Ban Data...",
@@ -533,7 +525,6 @@
         "streamer": "Bored? Check out this streamer!",
         "streamer_many": "Bored? Check out these {0} streamers!",
         "streamer_title": "Active Streamers",
-
         "debug_ping": "Ping Ping",
         "debug_system": "System Info",
         "debug_system_uptime": "System Uptime",
@@ -542,17 +533,14 @@
         "debug_api_variables": "API Time",
         "debug_request_ip": "Request IP",
         "debug_user_agent": "User-Agent",
-
         "permissions": "Permissions",
         "perm": "Permission",
         "perm_level": "Level",
-
         "level_0": "Guest",
         "level_1": "Staff",
         "level_2": "Senior Staff",
         "level_3": "Super Admin",
         "level_4": "Root",
-
         "perms": {
             "livemap": "View Livemap",
             "screenshot": "Take Screenshots",
@@ -580,7 +568,6 @@
             "bulk_delete": "Bulk Delete (Warnings)",
             "view_inventory": "View Inventory (Contents)"
         },
-
         "world_time": "World Time",
         "world_time_desc": "The time in the {0} most used timezones.",
         "world_time_use": "Used by {0} player(s)",
@@ -621,7 +608,7 @@
             "cash": "Cash",
             "bank": "Bank",
             "stocks_balance": "Stocks",
-			"amount": "Value"
+            "amount": "Value"
         },
         "no_logs": "No entries found"
     },
@@ -639,7 +626,6 @@
         "search": "Search",
         "usage": "Weapon Usage",
         "items_in_use": "Items in use",
-
         "damages": "Damage Distribution",
         "damage_description": "<i>{0}</i> usually does about {1} and not more than about {2} damage.",
         "damage_normal": "Normal",
@@ -699,6 +685,7 @@
             "character_id": "Character ID",
             "name": "Full Name",
             "plate": "Vehicle Plate",
+            "vehicle_id": "Vehicle ID",
             "job": "Job",
             "phone": "Phone Number",
             "license": "Has License",
@@ -743,7 +730,6 @@
             "metadata": "Item Metadata",
             "field_invalid": "Field value is invalid for this key.",
             "attach_identity": "Attach Identity",
-
             "key": "Key",
             "value": "Value",
             "save": "Save Changes"
@@ -784,7 +770,7 @@
         "name": "Player Name",
         "license": "License Identifier",
         "streamer_exception": "On Streamer Exception",
-		"identifier": "Other Identifier",
+        "identifier": "Other Identifier",
         "server_id": "Current Server ID",
         "enablable": "Enabled Command",
         "none": "No players were found.",
@@ -801,10 +787,9 @@
             "danny_percentage": "Danny Percentage",
             "prediction": "Prediction",
             "prediction_loading": "Loading prediction...",
-			"prediction_label": "Prediction: {0}",
+            "prediction_label": "Prediction: {0}",
             "prediction_info": "* Prediction is based of a dictionary and word list. Bad words may not necessarily be bad, but sometimes used in a bad context. These are not 100% accurate predictions.",
             "loading": "Loading: {0}%",
-
             "data": {
                 "dead": "Dead",
                 "trunk": "In Trunk",
@@ -843,9 +828,8 @@
             "week": "Week(s)",
             "month": "Month(s)",
             "no_reason": "This ban is missing a ban reason",
-			"hash": "Ban Hash",
-			"search_btn": "Search Bans",
-
+            "hash": "Ban Hash",
+            "search_btn": "Search Bans",
             "title": "Bans",
             "description": "List of all banned players."
         },
@@ -862,7 +846,7 @@
             "issue": "Issue Ban",
             "lock_ban": "Lock Ban",
             "unlock_ban": "Unlock Ban",
-			"original_ban": "This is a smurf ban, click here to show the original ban.",
+            "original_ban": "This is a smurf ban, click here to show the original ban.",
             "accuracy": "Accuracy",
             "accuracy_title": "{0} of {1} detections were banned in the last 14 days.",
             "confirmed_accuracy": "Confirmed Accuracy",
@@ -909,8 +893,8 @@
             "anti_cheat_metadata": "Metadata",
             "no_anti_cheat_events": "No Anti-Cheat events found.",
             "anti_cheat_has_screenshot": "Anti-Cheat event has a screenshot attached.",
-			"unban_system_title": "Removing System Ban",
-			"unban_system_confirm": "This player was automatically banned by the system. Are you sure you want to remove this ban? Type \"confirm\" to confirm.",
+            "unban_system_title": "Removing System Ban",
+            "unban_system_confirm": "This player was automatically banned by the system. Are you sure you want to remove this ban? Type \"confirm\" to confirm.",
             "linked_title": "Linked accounts",
             "no_link": "No linked accounts for this identifier",
             "no_warnings": "This player has not received any warnings or notes.",
@@ -924,8 +908,8 @@
             "revive": "Revive Player",
             "edit_role": "Edit Role",
             "edit_tag": "Edit Tag",
-			"damage_logs_by": "Show who was damaged by this player",
-			"damage_logs": "Show who this player was damaged by",
+            "damage_logs_by": "Show who was damaged by this player",
+            "damage_logs": "Show who this player was damaged by",
             "system_info": "System Ban Info",
             "no_system_info": "Failed to load system ban info.",
             "system_details": "The <b>{0}</b> detection was triggered <b>{1}</b> times in the last 6 months, affecting <b>{2}</b> players (about <b>{3}</b>x per player). <b>{4}</b> of which are still banned and <b>{5}</b> of which are not. This results an estimated accuracy of about <b>{6}%</b>.",
@@ -1001,15 +985,14 @@
             "save_changes": "Save changes",
             "country_name": "Country",
             "country_detail": "May not be entirely accurate",
-			"timezone": "Timezone",
+            "timezone": "Timezone",
             "resolution": "Resolution",
             "specs": "Specs",
             "specs_title": "Computer specifications and metrics",
-
             "show_link_finger": "Show accounts linked via fingerprint",
-			"show_link_token": "Show accounts linked via tokens",
-			"show_link_ip": "Show accounts linked via ips",
-			"show_link_identifier": "Show accounts linked via identifiers"
+            "show_link_token": "Show accounts linked via tokens",
+            "show_link_ip": "Show accounts linked via ips",
+            "show_link_identifier": "Show accounts linked via identifiers"
         },
         "ban_reason": "Reason",
         "ban_time": "Expires",
@@ -1027,7 +1010,6 @@
             "placeholder": "{0} did an oopsie.",
             "new": "New {0}",
             "create_new": "Create a new:",
-
             "strike": "Strike",
             "warning": "Warning",
             "note": "Note",
@@ -1051,19 +1033,19 @@
             "impounded": "Vehicle is impounded.",
             "none": "This character does not own any vehicles.",
             "delete_vehicle": "Are you sure you want to delete this vehicle?",
-			"vehicle_value": "Total value of owned vehicles",
+            "vehicle_value": "Total value of owned vehicles",
             "oil_change": "Oil change is due in <b>{0}</b> miles.",
             "oil_change_needed": "Oil change is needed."
         },
         "properties": {
             "properties": "Properties",
-			"properties_shared": "Shared Properties",
+            "properties_shared": "Shared Properties",
             "none": "This character does not have access to any properties.",
-			"none_access": "This character does not have shared access to any properties.",
+            "none_access": "This character does not have shared access to any properties.",
             "cost": "Maintenance Cost",
             "rent": "Rent",
             "paid_till": "Rent paid till",
-			"access_level": "Access Level"
+            "access_level": "Access Level"
         },
         "motels": {
             "motels": "Motels",
@@ -1077,7 +1059,6 @@
             "access": "Has Access",
             "logs": "Transaction Logs",
             "logs_none": "No transaction logs found.",
-
             "character": "Character",
             "action": "Action",
             "amount": "Amount",
@@ -1135,11 +1116,11 @@
                 "vinewood": "Vinewood Boulevard",
                 "pier": "Pier",
                 "observatory": "Observatory",
-                "grapeseed":  "Grapeseed",
+                "grapeseed": "Grapeseed",
                 "chiliad": "Mount Chiliad",
-                "south_side":  "South Side",
+                "south_side": "South Side",
                 "burger_shot": "Burger Shot",
-                "cayo_north":  "Cayo Perico North",
+                "cayo_north": "Cayo Perico North",
                 "cayo_central": "Cayo Perico Central",
                 "cayo_south": "Cayo Perico South"
             },
@@ -1150,10 +1131,10 @@
                 "owner": "Owner CID",
                 "plate": "Plate",
                 "confirm": "Edit",
-				"reset_last_garage": "Move vehicle to garage C (also moves it out of the impound lot).",
-				"reset_garage_state": "Reset vehicle last garage and garage state (Makes it withdrawable from anywhere for free).",
-				"full_reset_confirm": "Are you sure you want to reset this vehicles last garage and garage state?",
-				"reset_last_garage_confirm": "Are you sure you want to reset this vehicles last garage?",
+                "reset_last_garage": "Move vehicle to garage C (also moves it out of the impound lot).",
+                "reset_garage_state": "Reset vehicle last garage and garage state (Makes it withdrawable from anywhere for free).",
+                "full_reset_confirm": "Are you sure you want to reset this vehicles last garage and garage state?",
+                "reset_last_garage_confirm": "Are you sure you want to reset this vehicles last garage?",
                 "pd_emergency": "PD Vehicle",
                 "ems_emergency": "EMS Vehicle",
                 "add": "Add",
@@ -1313,7 +1294,7 @@
         "details": "Details",
         "player": "Player",
         "timestamp": "Timestamp",
-		"page": "Page",
+        "page": "Page",
         "toggle_diff": "Toggle time difference view",
         "diff_label": "Passed time since log entry below",
         "before-date": "Before Date",
@@ -1365,7 +1346,7 @@
         "detail": {
             "title": "Detailed disconnect reason",
             "description": "This will explain in more detail how user '{0}' left the game.",
-			"read_more": "Read more about disconnect reasons...",
+            "read_more": "Read more about disconnect reasons...",
             "reasons": {
                 "exited": "The user exited the game by typing 'quit' in the F8 console or pressing ALT and F4 or similar.",
                 "disconnected": "The user disconnected from the server by typing 'disconnect' in the F8 console or similar.",
@@ -1382,7 +1363,6 @@
                 "overflow": "Safety measure by FiveM as a protection from cheaters spamming your server with events.",
                 "another": "The user directly connected to another server without first disconnecting from this one.",
                 "config": "While connecting the servers configuration was unable to load causing the user to get rejected.",
-
                 "unknown": "No detailed description available. You can ask a developer for more help."
             }
         },
@@ -1456,11 +1436,9 @@
         "last_pay": "Last Paid",
         "bankrupt": "Bankrupt",
         "interior": "Interior",
-
         "permission_0": "Employee",
         "permission_1": "Realtor",
         "permission_2": "Owner",
-
         "type_1": "Motel",
         "type_2": "Trevor's Trailer",
         "type_3": "Janitor Apartment",
@@ -1472,7 +1450,6 @@
         "type_9": "Michael's Mansion",
         "type_10": "Franklin's Mansion",
         "type_11": "High-End Apartment",
-
         "property_edit": "Property Edit",
         "update_property": "Update Property",
         "shared_keys": "Shared Keys",
@@ -1513,10 +1490,8 @@
             "read_from_cluster": "Import current job overrides for cluster:",
             "or_read_text": "Or read job overrides from text:",
             "clear_overrides": "Clear Overrides",
-
             "job_override": "Job Overrides",
             "store_override": "Store Overrides",
-
             "job_name": "Job Name",
             "department_name": "Department Name",
             "positions": "Positions",

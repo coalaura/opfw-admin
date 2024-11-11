@@ -108,7 +108,8 @@
             "license": "Has Wicense",
             "name": "Fuww Nyame",
             "phone": "Phone Nyumbew",
-            "plate": "Vehicwe Pwate"
+            "plate": "Vehicwe Pwate",
+            "vehicle_id": "Vehicwe ID"
         },
         "none": "No Chawactews found",
         "result": {

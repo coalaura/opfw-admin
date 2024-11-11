@@ -62,10 +62,19 @@ class PlayerCharacterController extends Controller
         // Filtering by Job.
         $this->searchQuery($request, $query, 'job', DB::raw("CONCAT(job_name, ' ', department_name, ' ', position_name)"));
 
-        // Filtering by Vehicle Plate.
-        if ($plate = $request->input('vehicle_plate')) {
-            $query->whereHas('vehicles', function ($subQuery) use ($plate) {
-                $subQuery->where('plate', $plate);
+        // Filtering by Vehicle Plate or ID.
+        $vehicleID = $request->input('vehicle_id');
+        $vehiclePlate = $request->input('vehicle_plate');
+
+        if ($vehiclePlate || $vehicleID) {
+            $query->whereHas('vehicles', function ($subQuery) use ($vehicleID, $vehiclePlate) {
+                if ($vehicleID) {
+                    $subQuery->where('vehicle_id', $vehicleID);
+                }
+
+                if ($vehiclePlate) {
+                    $subQuery->where('plate', $vehiclePlate);
+                }
             });
         }
 
@@ -99,6 +108,7 @@ class PlayerCharacterController extends Controller
                 'character_id'  => $request->input('character_id'),
                 'name'          => $request->input('name'),
                 'vehicle_plate' => $request->input('vehicle_plate'),
+                'vehicle_id'    => $request->input('vehicle_id'),
                 'phone'         => $request->input('phone'),
                 'dob'           => $request->input('dob'),
                 'job'           => $request->input('job'),

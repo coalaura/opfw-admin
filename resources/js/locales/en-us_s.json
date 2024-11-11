@@ -108,7 +108,8 @@
             "license": "Has License",
             "name": "Full Name",
             "phone": "Phone Number",
-            "plate": "Vehicle Plate"
+            "plate": "Vehicle Plate",
+            "vehicle_id": "Veh'cle ID"
         },
         "none": "Ain't no Characters found",
         "result": {

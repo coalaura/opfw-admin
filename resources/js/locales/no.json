@@ -108,7 +108,8 @@
             "license": "Har lisens",
             "name": "Fullt navn",
             "phone": "Telefonnummer",
-            "plate": "Kjøretøyregistreringsnummer"
+            "plate": "Kjøretøyregistreringsnummer",
+            "vehicle_id": "Kjøretøy-ID"
         },
         "none": "Ingen tegn funnet",
         "result": {
