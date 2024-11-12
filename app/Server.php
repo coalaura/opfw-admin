@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Helpers\CacheHelper;
 use App\Helpers\GeneralHelper;
+use App\Helpers\HttpHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\StatusHelper;
 use Illuminate\Support\Str;
@@ -161,6 +163,32 @@ class Server
         $rawServerIps = explode(',', env('OP_FW_SERVERS', ''));
 
         return empty($rawServerIps) ? null : $rawServerIps[0];
+    }
+
+    /**
+     * Resolves the fivem:// url from the connect url
+     */
+    public static function getConnectUrl(bool $refresh = false): string
+    {
+        $url = Server::getFirstServerIP();
+
+        $cache = 'connect_' . md5($url);
+
+        if ($refresh) {
+            $redirect = HttpHelper::getRedirect($url);
+
+            if (Str::startsWith($redirect, 'https://cfx.re/join/')) {
+                $redirect = str_replace('https://', 'fivem://connect/', $redirect);
+            }
+
+            CacheHelper::write($cache, $redirect, 4 * CacheHelper::HOUR);
+        }
+
+        if (CacheHelper::exists($cache)) {
+            return CacheHelper::read($cache, '');
+        }
+
+        return '';
     }
 
 }

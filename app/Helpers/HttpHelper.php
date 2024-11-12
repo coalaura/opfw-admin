@@ -128,7 +128,7 @@ class HttpHelper
             },
         ]);
 
-        Timer::start("HTTPHelper::getRedirect");
+        Timer::start("HTTPHelper::getRedirect $url");
 
         try {
             $client->get($url);
