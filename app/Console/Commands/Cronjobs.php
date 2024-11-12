@@ -5,14 +5,25 @@ namespace App\Console\Commands;
 use App\Ban;
 use App\Helpers\CacheHelper;
 use App\Helpers\LoggingHelper;
-use App\Helpers\SessionHelper;
 use App\Helpers\ServerAPI;
+use App\Helpers\SessionHelper;
 use App\Warning;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
 class Cronjobs extends Command
 {
+    const StaticJsonAPIs = [
+        [ServerAPI::class, 'getItems'],
+        [ServerAPI::class, 'getVehicles'],
+        [ServerAPI::class, 'getWeapons'],
+        [ServerAPI::class, 'getJobs'],
+        [ServerAPI::class, 'getDefaultJobs'],
+        [ServerAPI::class, 'getChatEmotes'],
+        [ServerAPI::class, 'getRoutes'],
+        [ServerAPI::class, 'getCrafting'],
+    ];
+
     /**
      * The name and signature of the console command.
      *
@@ -148,18 +159,11 @@ class Cronjobs extends Command
 
         // Refresh static json APIs
         $start = microtime(true);
-        echo "Refreshing static json APIs...";
+        echo "Refreshing static json APIs:";
 
-        ServerAPI::getItems(true);
-        ServerAPI::getVehicles(true);
-        ServerAPI::getWeapons(true);
-        ServerAPI::getJobs(true);
-        ServerAPI::getDefaultJobs(true);
-        ServerAPI::getChatEmotes(true);
-        ServerAPI::getRoutes(true);
-        ServerAPI::getCrafting(true);
-
-        echo $this->stopTime($start);
+        foreach (self::StaticJsonAPIs as $api) {
+            call_user_func($api);
+        }
 
         return 0;
     }
