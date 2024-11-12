@@ -62,7 +62,7 @@ class Cronjobs extends Command
         try {
             DB::select("SELECT 1");
         } catch (QueryException $e) {
-            $this->error(sprintf("Failed to connect to database: %s", $e->getMessage()));
+            $this->warn(sprintf("Failed to connect to database: %s", $e->getMessage()));
 
             return;
         }
