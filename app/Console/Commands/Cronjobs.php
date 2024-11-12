@@ -173,6 +173,8 @@ class Cronjobs extends Command
         $start = microtime(true);
         echo " - Refreshing static json APIs:" . PHP_EOL;
 
+        ServerAPI::forceRefresh();
+
         foreach (self::StaticJsonAPIs as $api) {
             call_user_func($api);
         }

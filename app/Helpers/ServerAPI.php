@@ -12,6 +12,16 @@ class ServerAPI
     const MediumCacheTime = 12 * CacheHelper::HOUR;
     const LongCacheTime   = 2 * CacheHelper::DAY;
 
+    private static bool $forceRefresh = false;
+
+    /**
+     * Forces all requests to be refreshed.
+     */
+    public static function forceRefresh(): void
+    {
+        self::$forceRefresh = true;
+    }
+
     /**
      * /items.json
      */
@@ -128,10 +138,14 @@ class ServerAPI
      */
     private static function cached(string $route, bool $refresh = false, int $ttl = self::ShortCacheTime)
     {
-        $key = sprintf('opfw_%s', ltrim($route, '/'));
+        if (!self::$forceRefresh) {
+            $key = sprintf('opfw_%s', ltrim($route, '/'));
 
-        if (CacheHelper::exists($key)) {
-            return CacheHelper::read($key, null);
+            if (CacheHelper::exists($key)) {
+                return CacheHelper::read($key, null);
+            }
+        } else {
+            $refresh = true;
         }
 
         if ($refresh) {
