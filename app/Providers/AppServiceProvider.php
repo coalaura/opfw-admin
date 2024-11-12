@@ -6,6 +6,7 @@ use App\Helpers\GeneralHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\SessionHelper;
+use App\Http\Resources\LoggedInPlayerResource;
 use App\Http\Resources\PlayerResource;
 use App\Server;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -147,7 +148,7 @@ class AppServiceProvider extends ServiceProvider
                 $player = user();
 
                 return [
-                    'player'      => $player ? new PlayerResource($player) : null,
+                    'player'      => $player ? new LoggedInPlayerResource($player) : null,
                     'settings'    => $player ? $player->getPanelSettings() : null,
                     'permissions' => PermissionHelper::getFrontendPermissions(),
                     'token'       => sessionKey(),

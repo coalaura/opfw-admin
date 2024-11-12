@@ -6,6 +6,7 @@ use App\Ban;
 use App\Helpers\CacheHelper;
 use App\Helpers\LoggingHelper;
 use App\Helpers\SessionHelper;
+use App\Helpers\ServerAPI;
 use App\Warning;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
@@ -144,6 +145,21 @@ class Cronjobs extends Command
 
             echo $this->stopTime($start);
         }
+
+        // Refresh static json APIs
+        $start = microtime(true);
+        echo "Refreshing static json APIs...";
+
+        ServerAPI::getItems(true);
+        ServerAPI::getVehicles(true);
+        ServerAPI::getWeapons(true);
+        ServerAPI::getJobs(true);
+        ServerAPI::getDefaultJobs(true);
+        ServerAPI::getChatEmotes(true);
+        ServerAPI::getRoutes(true);
+        ServerAPI::getCrafting(true);
+
+        echo $this->stopTime($start);
 
         return 0;
     }

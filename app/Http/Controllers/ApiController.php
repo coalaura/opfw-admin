@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Character;
 use App\Helpers\GeneralHelper;
 use App\Helpers\HttpHelper;
-use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
-use App\Server;
+use App\Helpers\ServerAPI;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +21,7 @@ class ApiController extends Controller
             abort(401);
         }
 
-        $data = OPFWHelper::getCraftingTxt(Server::getFirstServer() ?? '');
+        $data = ServerAPI::getCrafting();
 
         return (new Response($data, 200))
             ->header('Content-Type', 'text/plain');
@@ -57,7 +56,7 @@ class ApiController extends Controller
 
         // Server API test
         $start      = microtime(true);
-        $api        = OPFWHelper::getVariablesJSON(Server::getFirstServer());
+        $api        = ServerAPI::getVariables();
         $serverTime = GeneralHelper::formatMilliseconds(round((microtime(true) - $start) * 1000));
 
         if (!$api) {

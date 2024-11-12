@@ -333,28 +333,6 @@ export default {
             ],
         };
 
-        const servers = this.$page.auth.servers;
-
-        if (servers) {
-            let queue = {
-                label: 'queue.title',
-                icon: 'subway',
-                hidden: !this.perm.check(this.perm.PERM_VIEW_QUEUE),
-                sub: []
-            };
-
-            $.each(servers, (key, name) => {
-                queue.sub.push({
-                    raw: name.toUpperCase(),
-                    icon: 'subway',
-                    hidden: !this.perm.check(this.perm.PERM_VIEW_QUEUE),
-                    url: '/queue/' + name
-                });
-            });
-
-            data.links.push(queue);
-        }
-
         if (this.setting('expandSidenav')) {
             const flattened = data.links.reduce((acc, val) => acc.concat(val.sub ? val.sub : val).map(v => ({
                 hidden: val.hidden,

@@ -116,7 +116,7 @@ class HttpHelper
     {
         $client = new Client([
             'timeout'         => 10,
-            'connect_timeout' => 10,
+            'connect_timeout' => 1,
             'http_errors'     => false,
             'allow_redirects' => true,
             'headers'         => [
@@ -128,9 +128,13 @@ class HttpHelper
             },
         ]);
 
+        Timer::start("HTTPHelper::getRedirect");
+
         try {
             $client->get($url);
         } catch (\Throwable $t) {}
+
+        Timer::stop();
 
         return $url;
     }

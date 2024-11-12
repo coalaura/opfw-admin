@@ -67,7 +67,7 @@
         },
         "results": "Search took {0} milliseconds.",
         "entries": "Showing {0} total entries on {1} page(s).",
-        "loading": "Loading...",
+        "loading": "Loading",
         "restricted_to_staff": "Restricted to staff members only.",
         "restricted_to_senior_staff": "Restricted to senior-staff members only.",
         "restricted_to_super": "Restricted to super-admins only.",
@@ -150,20 +150,6 @@
         "all_bans": "Staff bans",
         "my_bans": "My bans",
         "system_bans": "System bans"
-    },
-    "queue": {
-        "title": "Queue",
-        "description": "List all players currently in the queue.",
-        "queuePosition": "Pos",
-        "licenseIdentifier": "Player",
-        "consoleName": "Console name",
-        "priorityName": "Priority type",
-        "queueTime": "Time passed",
-        "skipQueue": "Skip",
-        "none": "Nobody in queue.",
-        "skip": "Make player skip queue",
-        "skip_confirm": "Are you sure you want to make this player skip the queue?",
-        "no_prio": "No priority"
     },
     "staff_chat": {
         "title": "Staff Chat",

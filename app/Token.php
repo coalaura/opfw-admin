@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Helpers\OPFWHelper;
+use App\Helpers\ServerAPI;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -182,7 +182,7 @@ class Token extends Model
             $available[$method] = [];
         }
 
-        $routes = OPFWHelper::getRoutesJSON(Server::getFirstServerIP()) ?: [];
+        $routes = ServerAPI::getRoutes();
 
         foreach ($routes as $route) {
             $method = strtoupper($route['method']);

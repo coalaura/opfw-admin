@@ -6,6 +6,7 @@ use App\Character;
 use App\Helpers\LoggingHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
+use App\Helpers\ServerAPI;
 use App\Http\Resources\LogResource;
 use App\Log;
 use App\Player;
@@ -74,7 +75,7 @@ class InventoryController extends Controller
             abort(400);
         }
 
-        $itemList = $this->itemList();
+        $itemList = ServerAPI::getItems();
         $slots    = self::MinInventorySlots[$inventoryParams[0]] ?? 5;
         $contents = [];
 
@@ -382,19 +383,8 @@ class InventoryController extends Controller
 
     private function isValidItem(string $name)
     {
-        $list = $this->itemList();
+        $list = ServerAPI::getItems();
 
         return isset($list[$name]);
-    }
-
-    private function itemList()
-    {
-        $serverIp = Server::getFirstServer();
-
-        if (!$serverIp) {
-            return [];
-        }
-
-        return OPFWHelper::getItemsJSON($serverIp) ?? [];
     }
 }

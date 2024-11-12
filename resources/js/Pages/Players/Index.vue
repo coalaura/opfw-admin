@@ -124,11 +124,8 @@
                         <td class="p-3 mobile:block">{{ player.playerName }}</td>
                         <td class="p-3 mobile:block">{{ player.playTime | humanizeSeconds }}</td>
                         <td class="p-3 text-center mobile:block">
-                            <span class="block px-4 py-2 text-white rounded" :class="getBanInfo(player.licenseIdentifier, 'reason') ? 'bg-red-600 dark:bg-red-700' : 'bg-red-500 dark:bg-red-600'" :title="getBanInfo(player.licenseIdentifier, 'reason') ? getBanInfo(player.licenseIdentifier, 'reason') : t('players.ban.no_reason')" v-if="player.isBanned">
+                            <span class="block px-4 py-2 text-white rounded" v-if="player.isBanned">
                                 {{ t('global.banned') }}
-                                <span class="block text-xxs">
-                                    {{ t('global.by', formatBanCreator(getBanInfo(player.licenseIdentifier, 'creator_name'))) }}
-                                </span>
                             </span>
                             <span class="block px-4 py-2 text-white bg-green-500 rounded dark:bg-green-600" v-else>
                                 {{ t('global.not_banned') }}
@@ -192,10 +189,6 @@ export default {
             type: Array,
             required: true,
         },
-        banMap: {
-            type: Object,
-            required: true,
-        },
         filters: {
             name: String,
             license: String,
@@ -248,7 +241,7 @@ export default {
                     data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
-                    only: ['players', 'time', 'banMap', 'links', 'page', 'filters'],
+                    only: ['players', 'time', 'links', 'page', 'filters'],
                 });
 
                 await this.updateStatus();
@@ -268,20 +261,6 @@ export default {
             }
 
             this.statusLoading = false;
-        },
-        getBanInfo(licenseIdentifier, key) {
-            const ban = licenseIdentifier in this.banMap ? this.banMap[licenseIdentifier] : null;
-
-            if (key) {
-                return ban && key in ban ? ban[key] : null;
-            }
-            return ban;
-        },
-        formatBanCreator(creator) {
-            if (!creator) {
-                return this.t('global.system');
-            }
-            return creator;
         }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Character;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
+use App\Helpers\ServerAPI;
 use App\Http\Requests\CharacterUpdateRequest;
 use App\Http\Resources\CharacterIndexResource;
 use App\Http\Resources\CharacterResource;
@@ -12,7 +13,6 @@ use App\Http\Resources\PlayerResource;
 use App\Motel;
 use App\PanelLog;
 use App\Player;
-use App\Server;
 use App\Vehicle;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -142,8 +142,8 @@ class PlayerCharacterController extends Controller
 
         $horns = Vehicle::getHornMap(false);
 
-        $jobs     = OPFWHelper::getJobsJSON(Server::getFirstServer() ?? '');
-        $vehicles = OPFWHelper::getVehiclesJSON(Server::getFirstServer() ?? '');
+        $jobs     = ServerAPI::getJobs();
+        $vehicles = ServerAPI::getVehicles();
 
         return Inertia::render('Players/Characters/Show', [
             'player'          => new PlayerResource($player),

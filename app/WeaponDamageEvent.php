@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Helpers\OPFWHelper;
+use App\Helpers\ServerAPI;
 use Illuminate\Database\Eloquent\Model;
 
 class WeaponDamageEvent extends Model
@@ -63,7 +64,7 @@ class WeaponDamageEvent extends Model
 
     public static function getWeaponList(): array
     {
-        return OPFWHelper::getWeaponsJSON(Server::getFirstServer() ?? '') ?? [];
+        return ServerAPI::getWeapons();
     }
 
     public static function getWeaponListFlat(): array

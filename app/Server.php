@@ -43,6 +43,10 @@ class Server
             $serverIp = 'https://' . $serverIp;
         }
 
+        if (Str::contains($serverIp, 'localhost')) {
+            $serverIp = preg_replace('/^https?:\/\//m', 'http://', $serverIp);
+        }
+
         return $serverIp;
     }
 

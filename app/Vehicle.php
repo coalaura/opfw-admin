@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Helpers\OPFWHelper;
+use App\Helpers\ServerAPI;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -102,7 +102,7 @@ class Vehicle extends Model
 
     public function getDisplayName(): ?string
     {
-        $vehicles = OPFWHelper::getVehiclesJSON(Server::getFirstServer() ?? '');
+        $vehicles = ServerAPI::getVehicles();
 
         if (!$vehicles) {
             return null;
@@ -296,7 +296,7 @@ class Vehicle extends Model
 
     public static function getVehiclePrices(): array
     {
-        $vehicles = OPFWHelper::getVehiclesJSON(Server::getFirstServer() ?? '');
+        $vehicles = ServerAPI::getVehicles();
 
         $prices = [];
 

@@ -12,7 +12,6 @@
  */
 
 use App\Ban;
-use App\Player;
 use App\Http\Controllers\AdvancedSearchController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Auth\DiscordController;
@@ -37,7 +36,6 @@ use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\PlayerRouteController;
 use App\Http\Controllers\PlayerDataController;
 use App\Http\Controllers\PlayerWarningController;
-use App\Http\Controllers\QueueController;
 use App\Http\Controllers\AntiCheatController;
 use App\Http\Controllers\StocksController;
 use App\Http\Controllers\SettingsController;
@@ -281,10 +279,6 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Exports.
     Route::get('/export/character/{character}', [PlayerCharacterController::class, 'export']);
-
-    // Queue.
-    Route::get('/queue/{server}', [QueueController::class, 'render']);
-    Route::get('/api/queue/{server}', [QueueController::class, 'api']);
 
     // Tools
     Route::get('/tools/config', [ToolController::class, 'config']);

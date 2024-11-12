@@ -98,15 +98,10 @@ class PlayerController extends Controller
             return redirect('/players/' . $player->license_identifier);
         }
 
-        $identifiers = array_values(array_map(function ($player) {
-            return $player['license_identifier'];
-        }, $players->toArray()));
-
         $end = round(microtime(true) * 1000);
 
         return Inertia::render('Players/Index', [
             'players'   => PlayerIndexResource::collection($players),
-            'banMap'    => Ban::getAllBans(false, $identifiers, true),
             'filters'   => [
                 'name'               => $request->input('name'),
                 'license'            => $request->input('license'),

@@ -278,15 +278,4 @@ class GraphController extends Controller
 
         return $existingData;
     }
-
-    public function exclusiveDealership(): Response
-    {
-        $data = OPFWHelper::getEDMJSON(Server::getFirstServer() ?? '');
-
-        if (!$data) {
-            return $this->json(false, null, "Failed to load data");
-        }
-
-		return $this->json(true, $data);
-    }
 }
