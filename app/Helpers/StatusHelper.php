@@ -61,11 +61,7 @@ class StatusHelper
                 continue;
             }
 
-            $users = OPFWHelper::getUsersJSON($serverIp);
-
-            if (!$users) {
-                continue;
-            }
+            $users = SocketAPI::getPlayers($serverIp);
 
             foreach ($users as $user) {
                 $license = $user['license'];

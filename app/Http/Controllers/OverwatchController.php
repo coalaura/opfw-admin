@@ -7,6 +7,7 @@ use App\Player;
 use App\Server;
 use App\Character;
 use App\Helpers\OPFWHelper;
+use App\Helpers\ServerAPI;
 use App\Helpers\StatusHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -52,26 +53,26 @@ class OverwatchController extends Controller
             $license = array_rand($players);
             $player = $players[$license];
 
-			if ($player['character']) {
-				$screenshotResponse = OPFWHelper::createScreenshot($player['server'], $player['source']);
+			if (!$player['character']) {
+                return self::json(false, null, "Failed to get character info of the player.");
+            }
 
-				if ($screenshotResponse->status) {
-					return self::json(true, [
-						"license"   => $license,
-						"url"       => $screenshotResponse->data['screenshotURL'],
-						"id"        => $player['source'],
-						"server"    => Server::getServerName($player['server']),
-						"character" => [
-							"name" => $player['character']['name'],
-							"id"   => $player['character']['id']
-						]
-					]);
-				} else {
-					return self::json(false, null, "Failed to obtain a screenshot of the player.");
-				}
-			} else {
-				return self::json(false, null, "Failed to get character info of the player.");
-			}
+            $screenshot = ServerAPI::createScreenshot($player['server'], $player['source']);
+
+            if (!$screenshot) {
+                return self::json(false, null, "Failed to obtain a screenshot of the player.");
+            }
+
+            return self::json(true, [
+                "license"   => $license,
+                "url"       => $screenshot['screenshotURL'],
+                "id"        => $player['source'],
+                "server"    => Server::getServerName($player['server']),
+                "character" => [
+                    "name" => $player['character']['name'],
+                    "id"   => $player['character']['id']
+                ]
+            ]);
         } else {
             return self::json(false, null, "There are no players available.");
         }

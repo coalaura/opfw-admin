@@ -7,6 +7,7 @@ use App\Helpers\HttpHelper;
 use App\Helpers\LoggingHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
+use App\Helpers\ServerAPI;
 use App\Player;
 use App\Screenshot;
 use App\Server;
@@ -254,31 +255,31 @@ class PlayerRouteController extends Controller
 
         $lifespan = $request->query('short') ? 3 * 60 : 60 * 60;
 
-        $data = OPFWHelper::createScreenshot($api, $id, true, $lifespan);
+        $screenshot = ServerAPI::createScreenshot($api, $id, true, $lifespan);
 
-        if ($data->status) {
-            DB::table('panel_screenshot_logs')->insert([
-                'source_license'   => license(),
-                'target_license'   => $license,
-                'target_character' => $status->character,
-                'type'             => $request->query('short') ? 'screenshot_short' : 'screenshot',
-                'url'              => $data->data['screenshotURL'],
-                'timestamp'        => time(),
-            ]);
-
-            DB::table('panel_screenshot_logs')
-                ->where('timestamp', '<', time() - CacheHelper::YEAR)
-                ->delete();
-
-            return self::json(true, [
-                'url'     => $data->data['screenshotURL'],
-                'logs'    => $data->data['logs'] ?? false,
-                'license' => $license,
-                'flags'   => $status->characterMetadata,
-            ]);
-        } else {
+        if (!$screenshot) {
             return self::json(false, null, 'Failed to create screenshot');
         }
+
+        DB::table('panel_screenshot_logs')->insert([
+            'source_license'   => license(),
+            'target_license'   => $license,
+            'target_character' => $status->character,
+            'type'             => $request->query('short') ? 'screenshot_short' : 'screenshot',
+            'url'              => $screenshot['screenshotURL'],
+            'timestamp'        => time(),
+        ]);
+
+        DB::table('panel_screenshot_logs')
+            ->where('timestamp', '<', time() - CacheHelper::YEAR)
+            ->delete();
+
+        return self::json(true, [
+            'url'     => $screenshot['screenshotURL'],
+            'logs'    => $screenshot['logs'] ?? false,
+            'license' => $license,
+            'flags'   => $status->characterMetadata,
+        ]);
     }
 
     /**
@@ -316,30 +317,30 @@ class PlayerRouteController extends Controller
             return self::json(false, null, 'Player is inside a house');
         }
 
-        $data = OPFWHelper::createScreenCapture($api, $id, $duration);
+        $screencapture = ServerAPI::createScreenCapture($api, $id, $duration, 30);
 
-        if ($data->status) {
-            DB::table('panel_screenshot_logs')->insert([
-                'source_license'   => license(),
-                'target_license'   => $license,
-                'target_character' => $status->character,
-                'type'             => 'screencapture',
-                'url'              => $data->data['screenshotURL'],
-                'timestamp'        => time(),
-            ]);
-
-            DB::table('panel_screenshot_logs')
-                ->where('timestamp', '<', time() - CacheHelper::YEAR)
-                ->delete();
-
-            return self::json(true, [
-                'url'     => $data->data['screenshotURL'],
-                'logs'    => $data->data['logs'] ?? false,
-                'license' => $license,
-            ]);
-        } else {
+        if (!$screencapture) {
             return self::json(false, null, 'Failed to create screen capture');
         }
+
+        DB::table('panel_screenshot_logs')->insert([
+            'source_license'   => license(),
+            'target_license'   => $license,
+            'target_character' => $status->character,
+            'type'             => 'screencapture',
+            'url'              => $screencapture['screenshotURL'],
+            'timestamp'        => time(),
+        ]);
+
+        DB::table('panel_screenshot_logs')
+            ->where('timestamp', '<', time() - CacheHelper::YEAR)
+            ->delete();
+
+        return self::json(true, [
+            'url'     => $screencapture['screenshotURL'],
+            'logs'    => $screencapture['logs'] ?? false,
+            'license' => $license,
+        ]);
     }
 
     /**
