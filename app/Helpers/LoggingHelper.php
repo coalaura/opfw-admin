@@ -60,6 +60,12 @@ class LoggingHelper
      */
     public static function log(string $msg, ?string $sessionKey = null)
     {
+        if (php_sapi_name() === 'cli') {
+            echo $msg . PHP_EOL;
+
+            return;
+        }
+
         if (!$sessionKey) {
             $sessionKey = sessionKey();
         }
