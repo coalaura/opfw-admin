@@ -206,8 +206,8 @@ class DiscordAttachmentHelper
 
         $ext = pathinfo($subject, PATHINFO_EXTENSION);
 
-        if (strlen($subject) - strlen($ext) > 20) {
-            $subject = substr($subject, 0, 20) . '.' . $ext;
+        if (strlen($subject) - strlen($ext) > 28) {
+            $subject = substr($subject, 0, 28) . '.' . $ext;
         }
 
         return $subject;
