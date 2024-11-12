@@ -4,9 +4,11 @@ namespace App\Console\Commands;
 
 use App\Ban;
 use App\Helpers\CacheHelper;
+use App\Helpers\HttpHelper;
 use App\Helpers\LoggingHelper;
 use App\Helpers\ServerAPI;
 use App\Helpers\SessionHelper;
+use App\Server;
 use App\Warning;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
@@ -171,15 +173,21 @@ class Cronjobs extends Command
 
         // Refresh static json APIs
         $start = microtime(true);
-        echo " - Refreshing static json APIs:" . PHP_EOL;
+        echo " - Checking if FiveM server is reachable...";
 
-        ServerAPI::forceRefresh();
+        $reachable = HttpHelper::ping(Server::getFirstServer(), 2000);
 
-        foreach (self::StaticJsonAPIs as $api) {
-            call_user_func($api);
+        echo $this->stopTime($start);
+
+        if ($reachable) {
+            echo " - Refreshing static json APIs:" . PHP_EOL;
+
+            ServerAPI::forceRefresh();
+
+            foreach (self::StaticJsonAPIs as $api) {
+                call_user_func($api);
+            }
         }
-
-        return 0;
     }
 
     private function stopTime($time): string
