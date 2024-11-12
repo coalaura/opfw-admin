@@ -70,25 +70,25 @@ class Cronjobs extends Command
         $this->info(CLUSTER . " Running cronjobs...");
 
         $start = microtime(true);
-        echo "Getting log actions...";
+        echo " - Getting log actions...";
         CacheHelper::getLogActions(true);
 
         echo $this->stopTime($start);
 
         $start = microtime(true);
-        echo "Cleaning up sessions...";
+        echo " - Cleaning up sessions...";
         SessionHelper::cleanup();
 
         echo $this->stopTime($start);
 
         $start = microtime(true);
-        echo "Cleaning up log files...";
+        echo " - Cleaning up log files...";
         LoggingHelper::cleanup();
 
         echo $this->stopTime($start);
 
         $start = microtime(true);
-        echo "Removing scheduled bans...";
+        echo " - Removing scheduled bans...";
         $time = time();
 
         $bans = Ban::query()
@@ -124,7 +124,7 @@ class Cronjobs extends Command
         // Auto-delete non-locked bans after 2+ years
         if (env('AUTO_EXPIRE_BANS')) {
             $start = microtime(true);
-            echo "Auto-removing old bans...";
+            echo " - Auto-removing old bans...";
 
             $bans = Ban::query()
                 ->where('locked', '=', 0)
@@ -171,7 +171,7 @@ class Cronjobs extends Command
 
         // Refresh static json APIs
         $start = microtime(true);
-        echo "Refreshing static json APIs:";
+        echo " - Refreshing static json APIs:" . PHP_EOL;
 
         foreach (self::StaticJsonAPIs as $api) {
             call_user_func($api);
