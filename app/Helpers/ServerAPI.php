@@ -168,7 +168,7 @@ class ServerAPI
     {
         $server = Server::getFirstServer();
 
-        $url = sprintf('%s/%s', $server, ltrim($route, '/'));
+        $url = sprintf('%s/%s', rtrim($server, '/'), ltrim($route, '/'));
 
         $timeout = $method === 'GET' ? 2 : 6;
 
