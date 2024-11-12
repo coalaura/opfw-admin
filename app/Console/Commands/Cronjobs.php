@@ -57,7 +57,7 @@ class Cronjobs extends Command
      */
     public function handle()
     {
-        $this->info(CLUSTER . " Running cronjobs...");
+        $this->info(CLUSTER . " Testing database connection...");
 
         try {
             DB::select("SELECT 1");
@@ -66,6 +66,8 @@ class Cronjobs extends Command
 
             return;
         }
+
+        $this->info(CLUSTER . " Running cronjobs...");
 
         $start = microtime(true);
         echo "Getting log actions...";
