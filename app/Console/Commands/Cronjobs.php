@@ -10,6 +10,8 @@ use App\Helpers\SessionHelper;
 use App\Warning;
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
 
 class Cronjobs extends Command
 {
@@ -56,6 +58,14 @@ class Cronjobs extends Command
     public function handle()
     {
         $this->info(CLUSTER . " Running cronjobs...");
+
+        try {
+            DB::select("SELECT 1");
+        } catch (QueryException $e) {
+            $this->error(sprintf("Failed to connect to database: %s", $e->getMessage()));
+
+            return;
+        }
 
         $start = microtime(true);
         echo "Getting log actions...";
