@@ -187,6 +187,8 @@ class Cronjobs extends Command
             foreach (self::StaticJsonAPIs as $api) {
                 call_user_func($api);
             }
+        } else {
+            echo " - FiveM server is not reachable, skipping static json API refresh." . PHP_EOL;
         }
     }
 
