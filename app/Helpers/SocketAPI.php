@@ -38,6 +38,12 @@ class SocketAPI
             return null;
         }
 
+        $token = sessionKey();
+
+        if (!$token) {
+            return false;
+        }
+
         $url = sprintf('http://localhost:9999/socket/%s/%s', $server, ltrim($route, '/'));
 
         $client = new Client(
@@ -52,7 +58,11 @@ class SocketAPI
         try {
             Timer::start(sprintf('SocketAPI::fresh %s %s', $method, $route));
 
-            $response = $client->request($method, $url);
+            $response = $client->request($method, $url, [
+                'query' => [
+                    'token' => $token,
+                ],
+            ]);
 
             $body = $response->getBody()->getContents();
 
@@ -66,13 +76,7 @@ class SocketAPI
 
             $json = json_decode($body, true);
 
-            if (!$json || !isset($json['statusCode'])) {
-                return null;
-            }
-
-            $status = intval($json['statusCode']) ?? $status;
-
-            if ($status % 2 !== 0) {
+            if (!$json || empty($json['status']) || !$json['status']) {
                 return null;
             }
 

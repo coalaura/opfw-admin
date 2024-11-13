@@ -107,7 +107,7 @@ class ServerAPI
             'serverId' => $source,
             'lifespan' => $lifespan,
             'drawHTML' => $drawHTML,
-        ], 10);
+        ], 10, true);
     }
 
     /**
@@ -117,14 +117,14 @@ class ServerAPI
     {
         $url = Server::fixApiUrl($ip);
 
-        $url .= 'execute/createScreenCapture';
+        $url .= 'execute/createScreenshot';
 
         return self::do('POST', $url, [
             'serverId' => $source,
             'lifespan' => $lifespan,
             'fps'      => $fps,
             'duration' => $duration * 1000,
-        ], $duration + 15);
+        ], $duration + 15, true);
     }
 
     /**
@@ -193,7 +193,7 @@ class ServerAPI
      *
      * @return null|array|bool|string
      */
-    private static function do(string $method, string $url, ?array $data = null, int $timeout)
+    private static function do(string $method, string $url, ?array $data = null, int $timeout = 2, bool $forceJson = false)
     {
         $token = env('OP_FW_TOKEN');
 
@@ -227,11 +227,11 @@ class ServerAPI
             $status = $response->getStatusCode();
             $result = null;
 
-            if ($status % 2 !== 0) {
+            if ($status < 200 || $status > 299) {
                 return null;
             }
 
-            if (Str::endsWith($url, '.json')) {
+            if (Str::endsWith($url, '.json') || $forceJson) {
                 // Sometimes the server sends stupid json responses with invalid characters
                 $body = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $body);
 
@@ -243,7 +243,7 @@ class ServerAPI
 
                 $status = intval($json['statusCode']) ?? $status;
 
-                if ($status % 2 !== 0) {
+                if ($status < 200 || $status > 299) {
                     return null;
                 }
 
