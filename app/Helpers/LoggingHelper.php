@@ -5,6 +5,13 @@ namespace App\Helpers;
 class LoggingHelper
 {
     /**
+     * If logging is disabled
+     *
+     * @var bool
+     */
+    private static bool $disabled = false;
+
+    /**
      * Where the logfile resides
      *
      * @var string|null
@@ -24,13 +31,6 @@ class LoggingHelper
      * @var bool
      */
     private static bool $shutdownRegistered = false;
-
-    /**
-     * The last used session key
-     *
-     * @var string
-     */
-    private static string $lastSessionKey = 'undefined';
 
     /**
      * The log entries that get saved to the log file on shutdown
@@ -54,12 +54,24 @@ class LoggingHelper
     private static bool $isAccessLog = true;
 
     /**
+     * Disables logging
+     */
+    public static function disable(): void
+    {
+        self::$disabled = true;
+    }
+
+    /**
      * Creates a log entry
      *
      * @param string $msg
      */
     public static function log(string $msg, ?string $sessionKey = null)
     {
+        if (self::$disabled) {
+            return;
+        }
+
         if (php_sapi_name() === 'cli') {
             echo $msg . PHP_EOL;
 
@@ -76,7 +88,6 @@ class LoggingHelper
             self::$isAccessLog = false;
         }
 
-        self::$lastSessionKey = $sessionKey;
         self::registerShutdown();
 
         $trace     = debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 4);

@@ -59,6 +59,8 @@ class Cronjobs extends Command
      */
     public function handle()
     {
+        LoggingHelper::disable();
+
         $this->info(CLUSTER . " Testing database connection...");
 
         try {
@@ -185,7 +187,13 @@ class Cronjobs extends Command
             ServerAPI::forceRefresh();
 
             foreach (self::StaticJsonAPIs as $api) {
-                call_user_func($api);
+                $result = call_user_func($api);
+
+                if (!$result || empty($result)) {
+                    $this->warn(sprintf(" - Failed to refresh %s (empty)", $api[1]));
+                } else {
+                    $this->info(sprintf(" - Refreshed %s (%d)", $api[1], sizeof($result)));
+                }
             }
 
             Server::getConnectUrl(true);
