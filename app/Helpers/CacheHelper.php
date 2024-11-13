@@ -139,6 +139,10 @@ class CacheHelper
         }
 
         try {
+            if (!Cache::store('file')->has($key)) {
+                return $default;
+            }
+
             return Cache::store('file')->get($key, $default);
         } catch (InvalidArgumentException $e) {
         }
