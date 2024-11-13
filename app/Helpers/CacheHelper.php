@@ -100,6 +100,10 @@ class CacheHelper
             $key = CLUSTER . $key;
         }
 
+        if (!Cache::store('file')->has($key)) {
+            return;
+        }
+
         try {
             Cache::store('file')->forget($key);
         } catch (InvalidArgumentException $e) {
