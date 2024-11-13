@@ -187,12 +187,16 @@ class Cronjobs extends Command
             ServerAPI::forceRefresh();
 
             foreach (self::StaticJsonAPIs as $api) {
+                $start = microtime(true) * 1000;
+
                 $result = call_user_func($api);
 
                 if (!$result || empty($result)) {
                     $this->warn(sprintf(" - Failed to refresh %s (empty)", $api[1]));
                 } else {
-                    $this->info(sprintf(" - Refreshed %s: %s", $api[1], self::string($result)));
+                    $taken = round(microtime(true) * 1000 - $start);
+
+                    $this->info(sprintf(" - Refreshed %s in %dms: %s", $api[1], $taken, self::string($result)));
                 }
             }
 
