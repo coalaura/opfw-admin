@@ -189,10 +189,10 @@ class Cronjobs extends Command
             foreach (self::StaticJsonAPIs as $api) {
                 $result = call_user_func($api);
 
-                if (!$result || empty($result) || !is_array($result)) {
+                if (!$result || empty($result)) {
                     $this->warn(sprintf(" - Failed to refresh %s (empty)", $api[1]));
                 } else {
-                    $this->info(sprintf(" - Refreshed %s (%d)", $api[1], sizeof($result)));
+                    $this->info(sprintf(" - Refreshed %s: %s", $api[1], self::string($result)));
                 }
             }
 
@@ -205,5 +205,25 @@ class Cronjobs extends Command
     private function stopTime($time): string
     {
         return round(microtime(true) - $time, 2) . "s" . PHP_EOL;
+    }
+
+    private function string($value): string
+    {
+        switch (gettype($value)) {
+            case 'boolean':
+                return sprintf('bool(%s)', $value ? 'true' : 'false');
+            case 'integer':
+                return sprintf('int(%s)', $value);
+            case 'double':
+                return sprintf('float(%s)', $value);
+            case 'string':
+                return sprintf('string(%s)', strlen($value));
+            case 'array':
+                return sprintf('array(%s)', count($value));
+            case 'object':
+                return sprintf('object(%s)', get_class($value));
+            default:
+                return sprintf('unknown(%s)', gettype($value));
+        }
     }
 }
