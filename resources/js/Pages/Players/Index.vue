@@ -124,7 +124,7 @@
                         <td class="p-3 mobile:block">{{ player.playerName }}</td>
                         <td class="p-3 mobile:block">{{ player.playTime | humanizeSeconds }}</td>
                         <td class="p-3 text-center mobile:block">
-                            <span class="block px-4 py-2 text-white rounded" v-if="player.isBanned">
+                            <span class="block px-4 py-2 text-white rounded bg-red-500 dark:bg-red-600" v-if="player.isBanned">
                                 {{ t('global.banned') }}
                             </span>
                             <span class="block px-4 py-2 text-white bg-green-500 rounded dark:bg-green-600" v-else>
