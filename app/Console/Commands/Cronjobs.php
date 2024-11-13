@@ -189,7 +189,7 @@ class Cronjobs extends Command
             foreach (self::StaticJsonAPIs as $api) {
                 $result = call_user_func($api);
 
-                if (!$result || empty($result)) {
+                if (!$result || empty($result) || !is_array($result)) {
                     $this->warn(sprintf(" - Failed to refresh %s (empty)", $api[1]));
                 } else {
                     $this->info(sprintf(" - Refreshed %s (%d)", $api[1], sizeof($result)));
