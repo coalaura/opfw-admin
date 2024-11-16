@@ -4,9 +4,7 @@ class DataCompressor {
     #data = {};
 
     decompressData(data) {
-        data = unpack(data);
-
-        data = this.#update(data);
+        data = this.#update(unpack(data));
 
         if ('v' in data && Array.isArray(data.v) && 'p' in data && typeof data.p === "object" && 'i' in data && typeof data.i === "number") {
             return {
@@ -72,8 +70,14 @@ class DataCompressor {
         return copy(object);
     }
 
-    reset() {
-        this.#data = {};
+    reset(data) {
+        let unpacked = {};
+
+        if (data) {
+            unpacked = unpack(data);
+        }
+
+        this.#data = unpacked;
     }
 
     decompressPlayers(players) {

@@ -994,10 +994,10 @@ export default {
                     }
                 });
 
-                connection.on("reset", () => {
+                connection.on("reset", data => {
                     console.log(`Received socket "reset" event.`);
 
-                    this.compressor.reset();
+                    this.compressor.reset(data);
                 });
 
                 connection.on("no_data", () => {
