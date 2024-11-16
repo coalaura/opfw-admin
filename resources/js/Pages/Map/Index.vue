@@ -994,9 +994,13 @@ export default {
                     }
                 });
 
-                connection.on("disconnect", async () => {
-                    this.firstFrame = false;
+                connection.on("reset", () => {
+                    console.log(`Received reset event.`);
 
+                    this.compressor.reset();
+                });
+
+                connection.on("disconnect", async () => {
                     this.compressor.reset();
 
                     this.data = this.t('map.closed_expected', this.activeServer);
