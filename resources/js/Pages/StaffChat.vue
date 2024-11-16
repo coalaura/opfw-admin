@@ -338,7 +338,7 @@ export default {
                 }
             });
 
-            this.socket.on("welcome", () => {
+            this.socket.on("reset", () => {
                 this.isLoading = false;
             });
 
