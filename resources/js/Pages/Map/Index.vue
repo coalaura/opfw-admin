@@ -995,16 +995,20 @@ export default {
                 });
 
                 connection.on("reset", () => {
-                    console.log(`Received reset event.`);
+                    console.log(`Received socket "reset" event.`);
 
                     this.compressor.reset();
                 });
 
                 connection.on("no_data", () => {
+                    console.log(`Received socket "no_data" event.`);
+
                     this.data = this.t('map.waiting_startup', this.activeServer);
                 });
 
                 connection.on("disconnect", async () => {
+                    console.log(`Received socket "disconnect" event.`);
+
                     this.compressor.reset();
 
                     this.data = this.t('map.closed_expected', this.activeServer);
@@ -1014,6 +1018,8 @@ export default {
                 });
 
                 connection.on("connect", () => {
+                    console.log(`Received socket "connect" event.`);
+
                     if (document.visibilityState === "visible") return;
 
                     pause();
