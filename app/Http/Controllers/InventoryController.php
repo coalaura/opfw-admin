@@ -370,13 +370,13 @@ class InventoryController extends Controller
 
     private function refresh(string $inventory)
     {
-        $serverIp = Server::getFirstServer();
+        $serverUrl = Server::getFirstServer("url");
 
-        if (!$serverIp) {
+        if (!$serverUrl) {
             return;
         }
 
-        $response = OPFWHelper::refreshInventory($serverIp, $inventory);
+        $response = OPFWHelper::refreshInventory($serverUrl, $inventory);
 
         return $response->status;
     }

@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use App\Server;
+
 class StatusHelper
 {
     private static CacheFile $cache;
@@ -48,25 +50,21 @@ class StatusHelper
 
     private static function fetch()
     {
-        $serverIps = explode(',', env('OP_FW_SERVERS', ''));
+        $servers = Server::getOPFWServers();
 
-        if (!$serverIps) {
+        if (!$servers) {
             return [];
         }
 
         $result = [];
 
-        foreach ($serverIps as $serverIp) {
-            if (!$serverIp) {
-                continue;
-            }
-
-            $users = SocketAPI::getPlayers($serverIp);
+        foreach ($servers as $server) {
+            $users = SocketAPI::getPlayers($server['ip']);
 
             foreach ($users as $user) {
                 $license = $user['license'];
 
-                $user['server'] = $serverIp;
+                $user['server'] = $server['name'];
                 $user['characterData'] = self::parseCharacterFlags($user['character'] ? $user['character']['flags'] : 0);
 
                 $user['fakeDisconnected'] = !!(($user['flags'] ?? 0) & 2);

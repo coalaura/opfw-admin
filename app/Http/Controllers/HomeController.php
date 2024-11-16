@@ -100,7 +100,7 @@ class HomeController extends Controller
             return backWith('error', 'Message cannot be empty');
         }
 
-		$response = OPFWHelper::serverAnnouncement(Server::getFirstServer() ?? '', $message);
+		$response = OPFWHelper::serverAnnouncement(Server::getFirstServer('url') ?? '', $message);
 
         return $response->redirect();
 	}

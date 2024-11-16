@@ -10,7 +10,7 @@ const Socket = {
             const isDev = window.location.hostname === 'localhost';
 
             const token = vue.$page.auth.token,
-                server = vue.$page.auth.server,
+                server = vue.$page.serverName,
                 host = isDev ? 'http://localhost:9999' : 'https://' + window.location.host,
                 query = type === "data" ? `?token=${token}`: '';
 

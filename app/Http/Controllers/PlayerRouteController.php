@@ -237,8 +237,7 @@ class PlayerRouteController extends Controller
             return self::json(false, null, 'You can not use the screenshot functionality');
         }
 
-        $api = Server::getServerApiURLFromName($server);
-        if (!$api) {
+        if (!Server::getServerURL($server)) {
             return self::json(false, null, 'Invalid server');
         }
 
@@ -255,7 +254,7 @@ class PlayerRouteController extends Controller
 
         $lifespan = $request->query('short') ? 3 * 60 : 60 * 60;
 
-        $screenshot = ServerAPI::createScreenshot($api, $id, true, $lifespan);
+        $screenshot = ServerAPI::createScreenshot($server, $id, true, $lifespan);
 
         if (!$screenshot) {
             return self::json(false, null, 'Failed to create screenshot');
@@ -297,7 +296,7 @@ class PlayerRouteController extends Controller
             return self::json(false, null, 'Only trusted Panel users can use screenshot functionality');
         }
 
-        $api = Server::getServerApiURLFromName($server);
+        $api = Server::getServerURL($server);
         if (!$api) {
             return self::json(false, null, 'Invalid server');
         }

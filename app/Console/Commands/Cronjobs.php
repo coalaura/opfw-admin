@@ -177,7 +177,7 @@ class Cronjobs extends Command
         $start = microtime(true);
         echo " - Checking if FiveM server is reachable...";
 
-        $reachable = HttpHelper::ping(Server::getFirstServer(), 2000);
+        $reachable = !empty(Server::fetchApi());
 
         echo $this->stopTime($start);
 

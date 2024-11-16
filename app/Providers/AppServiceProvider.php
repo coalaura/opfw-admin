@@ -102,7 +102,7 @@ class AppServiceProvider extends ServiceProvider
      */
     protected function registerInertia()
     {
-        $ip = Server::getFirstServerIP();
+        $server = Server::getFirstServer();
 
         // Shared inertia data.
         Inertia::share([
@@ -126,8 +126,8 @@ class AppServiceProvider extends ServiceProvider
                 ];
             },
 
-            'serverIp'   => $ip,
-            'serverName' => Server::getServerName($ip),
+            'serverIp'   => $server ? $server['ip'] : null,
+            'serverName' => $server ? $server['name'] : null,
             'connect'    => function () {
                 return Server::getConnectUrl();
             },
@@ -151,8 +151,7 @@ class AppServiceProvider extends ServiceProvider
                     'permissions' => PermissionHelper::getFrontendPermissions(),
                     'token'       => sessionKey(),
                     'cluster'     => CLUSTER,
-                    'server'      => Server::getServerName(Server::getFirstServer()),
-                    'servers'     => Server::getAllServerNames(),
+                    'servers'     => Server::getOPFWServers("name"),
                 ];
             },
 

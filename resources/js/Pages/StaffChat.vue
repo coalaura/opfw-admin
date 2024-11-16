@@ -324,7 +324,7 @@ export default {
 
             const isDev = window.location.hostname === 'localhost',
                 token = this.$page.auth.token,
-                server = this.$page.auth.server,
+                server = this.$page.serverName,
                 socketUrl = isDev ? 'ws://localhost:9999' : 'wss://' + window.location.host;
 
             this.socket = io(socketUrl, {

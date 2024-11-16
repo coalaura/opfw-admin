@@ -8,7 +8,7 @@
                     <span id="map_title">{{ t('map.title') }}</span>
 
                     <select class="inline-block w-20 h-8 ml-4 px-2 py-1 text-sm bg-gray-200 dark:bg-gray-600 border rounded" id="server">
-                        <option v-for="server in servers" :key="server.name" :value="server.name">{{ server.name }}</option>
+                        <option v-for="server in servers" :key="server" :value="server">{{ server }}</option>
                     </select>
                     <select class="inline-block w-36 h-8 ml-2 px-2 py-1 text-sm bg-gray-200 dark:bg-gray-600 border rounded" v-model="selectedInstance" v-if="Object.values(container.instances).length > 0">
                         <option v-for="instance in container.instances" :key="instance.id" :value="instance.id">
@@ -1295,16 +1295,12 @@ export default {
     mounted() {
         this.buildMap();
 
-        $(document).ready(() => {
-            $('#server').val(this.activeServer);
+        $('#server').val(this.activeServer);
 
-            this.initializeMap();
-        });
+        this.initializeMap();
 
         if (Math.round(Math.random() * 100) === 1) { // 1% chance it says fib spy satellite map
-            $(document).ready(() => {
-                $('#map_title').text(this.t('map.spy_satellite'));
-            });
+            $('#map_title').text(this.t('map.spy_satellite'));
         }
 
         $("body").on("click", ".view-unloaded", e => {

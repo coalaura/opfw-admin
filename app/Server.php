@@ -11,16 +11,20 @@ use Illuminate\Support\Str;
 
 class Server
 {
-	public string $url;
-
     /**
      * Gets the API data.
      *
      * @return array
      */
-    public function fetchApi(): array
+    public static function fetchApi(): array
     {
-        $data = GeneralHelper::get(self::fixApiUrl($this->url) . 'variables.json') ?? null;
+        $url = self::getFirstServer('url');
+
+        if (!$url) {
+            return [];
+        }
+
+        $data = GeneralHelper::get($url . 'variables.json') ?? null;
 
         $response = OPFWHelper::parseResponse($data);
 
@@ -33,7 +37,7 @@ class Server
      * @param string $serverIp
      * @return string
      */
-    public static function fixApiUrl(string $serverIp): string
+    private static function resolveUrlAndDomain(string $serverIp): array
     {
         $serverIp = Str::finish(trim($serverIp), '/');
 
@@ -49,53 +53,66 @@ class Server
             $serverIp = preg_replace('/^https?:\/\//m', 'http://', $serverIp);
         }
 
-        return $serverIp;
+        $port = parse_url($serverIp, PHP_URL_PORT);
+
+        return [
+            $serverIp,
+            parse_url($serverIp, PHP_URL_HOST) . ($port ? ':' . $port : '')
+        ];
     }
 
-    public static function getServerName(string $serverIp): string
+    public static function getOPFWServers(?string $key = null): array
     {
-        $serverIp = self::fixApiUrl($serverIp);
+        $servers = explode(';', env('OP_FW_SERVERS', ''));
 
-        $host = str_replace('https://', '', $serverIp);
-        $host = str_replace('http://', '', $host);
-        $host = explode('/', $host)[0];
+        $list = [];
 
-        $name = env('NAME_' . str_replace(['.', ':'], '_', $host), CLUSTER . "s1");
+        foreach ($servers as $server) {
+            if (Str::contains($server, ',')) {
+                $parts = explode(',', $server);
 
-        return preg_match('/^\d+\.\d+\.\d+\.\d+(:\d+)?$/m', $host) ? $name : explode('.', $host)[0];
+                $name = $parts[0];
+                $server = $parts[1];
+            }
+
+            [$url, $domain] = self::resolveUrlAndDomain($server);
+
+            $list[] = [
+                'name' => $name ?? $domain,
+                'url' => $url,
+                'ip' => $domain
+            ];
+        }
+
+        if ($key) {
+            return array_map(function ($server) use ($key) {
+                return $server[$key];
+            }, $list);
+        }
+
+        return $list;
     }
 
-    /**
-     * @param int $id
-     * @return bool|string
-     */
-    public static function isServerIDValid(int $id)
+    public static function getServerName(string $serverIp): ?string
     {
-        $players = StatusHelper::all();
+        $servers = self::getOPFWServers();
 
-        foreach ($players as $license => $player) {
-            if ($player['source'] === $id) {
-                return $license;
+        foreach ($servers as $server) {
+            if ($server['ip'] === $serverIp || $server['url'] === $serverIp) {
+                return $server['name'];
             }
         }
 
-        return false;
+        return null;
     }
 
-    /**
-     * Resolves the server api url from its name
-     *
-     * @param string $name
-     * @return string|null
-     */
-    public static function getServerApiURLFromName(string $name): ?string
+    public static function getServerURL(string $serverName): ?string
     {
-        $rawServerIps = explode(',', env('OP_FW_SERVERS', ''));
+        $servers = self::getOPFWServers();
 
-        foreach ($rawServerIps as $rawServerIp) {
-            $n = Server::getServerName($rawServerIp);
-            if ($n === $name) {
-                return self::fixApiUrl($rawServerIp);
+        foreach ($servers as $server) {
+            if ($server['name'] === $serverName) {
+                return $server['url'];
             }
         }
 
@@ -103,66 +120,20 @@ class Server
     }
 
     /**
-     * Returns all servers
-     *
-     * @return array
-     */
-    public static function getAllServers(): array
-	{
-		$rawServerIps = explode(',', env('OP_FW_SERVERS', ''));
-
-		$servers = [];
-
-		foreach ($rawServerIps as $rawServerIp) {
-			$server = new Server();
-
-			$server->url = $rawServerIp;
-
-			$servers[] = $server;
-		}
-
-		return $servers;
-	}
-
-    /**
-     * Returns all server names
-     *
-     * @return array
-     */
-    public static function getAllServerNames(): array
-    {
-        $rawServerIps = explode(',', env('OP_FW_SERVERS', ''));
-
-        $serverNames = [];
-        foreach ($rawServerIps as $rawServerIp) {
-            $serverNames[] = Server::getServerName($rawServerIp);
-        }
-
-        return $serverNames;
-    }
-
-    /**
      * Returns the first server found
      *
-     * @return string|null
+     * @return string|array|null
      */
-    public static function getFirstServer(): ?string
+    public static function getFirstServer(?string $key = null)
     {
-        $rawServerIps = explode(',', env('OP_FW_SERVERS', ''));
+        $servers = self::getOPFWServers();
+        $first = first($servers);
 
-        return empty($rawServerIps) ? null : self::fixApiUrl($rawServerIps[0]);
-    }
+        if (!$first) {
+            return null;
+        }
 
-    /**
-     * Returns the first server ip found
-     *
-     * @return string|null
-     */
-    public static function getFirstServerIP(): ?string
-    {
-        $rawServerIps = explode(',', env('OP_FW_SERVERS', ''));
-
-        return empty($rawServerIps) ? null : $rawServerIps[0];
+        return $key ? $first[$key] : $first;
     }
 
     /**
@@ -170,7 +141,7 @@ class Server
      */
     public static function getConnectUrl(bool $refresh = false): string
     {
-        $url = Server::getFirstServerIP();
+        $url = Server::getFirstServer("ip");
 
         $cache = 'connect_' . md5($url);
 
@@ -189,6 +160,23 @@ class Server
         }
 
         return '';
+    }
+
+    /**
+     * @param int $id
+     * @return bool|string
+     */
+    public static function isServerIDValid(int $id)
+    {
+        $players = StatusHelper::all();
+
+        foreach ($players as $license => $player) {
+            if ($player['source'] === $id) {
+                return $license;
+            }
+        }
+
+        return false;
     }
 
 }

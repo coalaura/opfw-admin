@@ -41,7 +41,7 @@
                     <i class="fas fa-server" v-else></i>
 
                     <span v-if="serverUptime">{{ serverUptime }}</span>
-                    <span v-else>{{ $page.auth.server }}</span>
+                    <span v-else>{{ $page.serverName }}</span>
                 </span>
 
                 <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-green-700 bg-success rounded dark:bg-dark-success cursor-pointer" :class="{ 'shadow': banner }" :title="t('nav.world_time_desc', timezones.length)" @click="showingWorldTime = true" v-if="timezones.length > 0">

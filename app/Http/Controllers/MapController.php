@@ -27,6 +27,10 @@ class MapController extends Controller
         $perms = PermissionHelper::hasPermission($request, PermissionHelper::PERM_LIVEMAP);
         $fake = $perms && $request->query('meow') === '420';
 
+        if (!$server) {
+            $server = Server::getFirstServer('name');
+        }
+
         if (!$perms || $fake) {
             if (user()->isDebugger() || $fake) {
                 return Inertia::render('Map/Fake', [
@@ -37,26 +41,7 @@ class MapController extends Controller
             abort(401);
         }
 
-        $servers = [];
-
-        $rawServerIps = explode(',', env('OP_FW_SERVERS', ''));
-
-        $serverIps = [];
-        foreach ($rawServerIps as $index => $rawServerIp) {
-            $name = Server::getServerName($rawServerIp);
-
-            if (!$server) {
-                $server = $name;
-            }
-
-            $serverIps[] = [
-                'name' => $name,
-            ];
-
-            $servers[$name] = $rawServerIp;
-        }
-
-        if (!isset($servers[$server])) {
+        if (!Server::getServerURL($server)) {
             abort(404);
         }
 
@@ -82,7 +67,7 @@ class MapController extends Controller
         }
 
         return Inertia::render('Map/Index', [
-            'servers'      => $serverIps,
+            'servers'      => Server::getOPFWServers('name'),
             'activeServer' => $server,
             'staff'        => $staff ? array_map(function ($player) {
                 return $player['license_identifier'];

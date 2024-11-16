@@ -41,9 +41,9 @@ class StaffChatController extends Controller
             return $this->json(false, null, 'Invalid message length');
         }
 
-        $serverIp = Server::getFirstServer();
+        $serverUrl = Server::getFirstServer("url");
 
-        $status = OPFWHelper::staffChat($serverIp, license(), $message);
+        $status = OPFWHelper::staffChat($serverUrl, license(), $message);
 
         if (!$status->status) {
             return $this->json(false, null, $status->message);

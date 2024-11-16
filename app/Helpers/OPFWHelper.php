@@ -83,13 +83,13 @@ class OPFWHelper
      * @param string $message
      * @return OPFWResponse
      */
-    public static function serverAnnouncement(string $serverIp, string $message): OPFWResponse
+    public static function serverAnnouncement(string $serverUrl, string $message): OPFWResponse
     {
         if (!$message) {
             return new OPFWResponse(false, 'Your message cannot be empty.');
         }
 
-        $response = self::executeRoute($serverIp . 'execute/announcementMessage', [
+        $response = self::executeRoute($serverUrl . 'execute/announcementMessage', [
             'announcementMessage' => $message,
         ]);
 

@@ -97,9 +97,9 @@ class ServerAPI
     /**
      * /execute/createScreenshot
      */
-    public static function createScreenshot(string $ip, int $source, bool $drawHTML = true, int $lifespan = 3600)
+    public static function createScreenshot(string $server, int $source, bool $drawHTML = true, int $lifespan = 3600)
     {
-        $url = Server::fixApiUrl($ip);
+        $url = Server::getServerURL($server);
 
         $url .= 'execute/createScreenshot';
 
@@ -113,9 +113,9 @@ class ServerAPI
     /**
      * /execute/createScreenCapture
      */
-    public static function createScreenCapture(string $ip, int $source, int $duration, int $fps, int $lifespan = 3600)
+    public static function createScreenCapture(string $server, int $source, int $duration, int $fps, int $lifespan = 3600)
     {
-        $url = Server::fixApiUrl($ip);
+        $url = Server::getServerURL($server);
 
         $url .= 'execute/createScreenshot';
 
@@ -166,9 +166,13 @@ class ServerAPI
      */
     private static function fresh(string $method, string $route, ?array $data = null, int $ttl = 0)
     {
-        $server = Server::getFirstServer();
+        $serverUrl = Server::getFirstServer('url');
 
-        $url = sprintf('%s/%s', rtrim($server, '/'), ltrim($route, '/'));
+        if (!$serverUrl) {
+            return null;
+        }
+
+        $url = sprintf('%s/%s', rtrim($serverUrl, '/'), ltrim($route, '/'));
 
         $timeout = $method === 'GET' ? 2 : 6;
 
