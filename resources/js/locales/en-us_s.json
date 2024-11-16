@@ -553,7 +553,8 @@
         "try_reconnect": "Reckonin' in 3 seconds...",
         "unloaded_players": "Unloaded Players",
         "viewer_in_server": "Viewer's currently hitched up to the server.",
-        "viewer_not_server": "Viewer ain't hitched up to the server."
+        "viewer_not_server": "Viewer ain't hitched up to the server.",
+        "waiting_startup": "Waitin' on {0} socket to get goin'..."
     },
     "nav": {
         "dark": "Dark",

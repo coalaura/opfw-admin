@@ -553,7 +553,8 @@
         "try_reconnect": "Weconnecting in 3 seconds...",
         "unloaded_players": "Unwoaded Pwayews",
         "viewer_in_server": "Viewew is cuwwentwy connected to the sewvew.",
-        "viewer_not_server": "Viewew is nyot connected to the sewvew."
+        "viewer_not_server": "Viewew is nyot connected to the sewvew.",
+        "waiting_startup": "Waiting fow {0} socket stawtup..."
     },
     "nav": {
         "dark": "Dawk",

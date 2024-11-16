@@ -553,7 +553,8 @@
         "try_reconnect": "3 second mein reconnect ho raha hai...",
         "unloaded_players": "Unloaded Players",
         "viewer_in_server": "Viewer filhal server se juda hua hai.",
-        "viewer_not_server": "Viewer server se juda nahi hai."
+        "viewer_not_server": "Viewer server se juda nahi hai.",
+        "waiting_startup": "Pratiksha kar rahe hain {0} socket startup ka..."
     },
     "nav": {
         "dark": "Dark",

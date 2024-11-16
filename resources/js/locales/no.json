@@ -553,7 +553,8 @@
         "try_reconnect": "Kobler til igjen om 3 sekunder...",
         "unloaded_players": "Ulastede spillere",
         "viewer_in_server": "Seeren er for øyeblikket tilkoblet serveren.",
-        "viewer_not_server": "Seeren er ikke tilkoblet serveren."
+        "viewer_not_server": "Seeren er ikke tilkoblet serveren.",
+        "waiting_startup": "Venter på at {0} sokkel skal starte opp..."
     },
     "nav": {
         "dark": "Mørk",

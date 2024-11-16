@@ -553,7 +553,8 @@
         "try_reconnect": "Reconnect in 3 seconds...",
         "unloaded_players": "Unload players",
         "viewer_in_server": "Viewer on server.",
-        "viewer_not_server": "Viewer not on server."
+        "viewer_not_server": "Viewer not on server.",
+        "waiting_startup": "Wait for {0} socket start..."
     },
     "nav": {
         "dark": "Dark",
