@@ -90,7 +90,7 @@ const Localization = {
             return formatter.format(number);
         };
 
-        Vue.prototype.bytesFormat = function(bytes) {
+        Vue.prototype.bytesFormat = function(bytes, decimals = 2) {
             if (!+bytes) return '0 bytes'
 
             const k = 1000,
