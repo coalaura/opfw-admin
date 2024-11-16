@@ -256,7 +256,7 @@ class Player {
         if (vehicle && vehicle in vehicles) {
             const formatInfo = info => '<a href="/players/' + info.license + '" target="_blank">' + info.name + '</a>';
 
-            vehicleInfo = '<span class="block mt-1 text-xxs leading-3"><b>Driver:</b> ' + (vehicles[vehicle].driver ? formatInfo(vehicles[vehicle].driver) : 'N/A') + '</span>' +
+            vehicleInfo = '<span class="block mt-1 text-xxs leading-3 border-t border-gray-700 pt-1"><b>Driver:</b> ' + (vehicles[vehicle].driver ? formatInfo(vehicles[vehicle].driver) : 'N/A') + '</span>' +
                 '<span class="block text-xxs leading-3"><b>Passengers:</b> ' + (
                     vehicles[vehicle].passengers.length > 0 ?
                         vehicles[vehicle].passengers.map(i => formatInfo(i)).join(', ') :
