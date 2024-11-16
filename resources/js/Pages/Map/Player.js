@@ -267,7 +267,7 @@ class Player {
         const popup = [
             '<a href="/players/' + this.player.license + '" target="_blank" class="font-bold block border-b border-gray-700 mb-1">' + this.getTitle(true) + '</a>',
             '<span class="block"><b>Altitude:</b> ' + this.location.z + 'm</span>',
-            '<span class="block mb-1"><b>Speed:</b> ' + this.speed + 'mph</span>',
+            '<span class="block mb-1 border-b border-gray-700 pb-1"><b>Speed:</b> ' + this.speed + 'mph</span>',
             attributes.join(''),
             vehicleInfo
         ].join('');
