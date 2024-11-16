@@ -30,7 +30,14 @@
             "seasparrow3",
             "thruster",
             "newsmav",
-            "swathel"
+            "swathel",
+            "ka52a",
+            "buzzard4",
+            "buzzard5",
+            "buzzard6",
+            "pavelow",
+            "as332",
+            "foxch47"
         ]
     },
     "cargobob": {
@@ -95,7 +102,11 @@
             "velum2",
             "vestra",
             "spitfire",
-            "mq9"
+            "rq4",
+            "citationii",
+            "sf50vision",
+            "foxc90",
+            "spitfire"
         ]
     },
     "medium_plane": {
@@ -112,7 +123,13 @@
             "shamal",
             "tula",
             "avenger",
-            "avenger2"
+            "avenger2",
+            "b17e",
+            "sshuttle",
+            "a321",
+            "b737800",
+            "do228",
+            "hs748"
         ]
     },
     "big_plane": {
@@ -122,7 +139,9 @@
             "cargoplane",
             "jet",
             "titan",
-            "afo"
+            "afo",
+            "b52",
+            "globe"
         ]
     },
     "small_jet": {
@@ -138,17 +157,21 @@
             "f22a",
             "fa18e",
             "f14a2",
-            "mig29a"
+            "mig29a",
+            "a10c",
+            "f117a",
+            "f15j2",
+            "su27"
         ]
     },
     "big_jet": {
         "size": 36,
         "models": [
             "volatol",
-            "alkonost"
+            "alkonost",
+            "spirit"
         ]
     },
-
     "dumptruck": {
         "size": 28,
         "models": [
@@ -156,7 +179,6 @@
             "trash2"
         ]
     },
-
     "truck": {
         "size": 28,
         "models": [
@@ -201,7 +223,8 @@
             "utillitruck",
             "utillitruck2",
             "scrap",
-            "journey2"
+            "journey2",
+            "m983"
         ]
     },
     "bearcat": {
@@ -228,14 +251,28 @@
             "firetruk",
             "lguard",
             "romero",
-            "1200RTA",
+            "1200rta",
             "16exp_ems",
-            "ambulance6"
+            "ambulance6",
+            "arrowladder",
+            "fpump",
+            "brushram"
         ]
     },
     "police_car": {
         "size": 23,
         "models": [
+            "police",
+            "police2",
+            "police3",
+            "policeb",
+            "policeold1",
+            "policeold2",
+            "policet",
+            "pranger",
+            "sheriff",
+            "sheriff2",
+            "peel50police",
             "21tr14charg",
             "21tr16fpiu",
             "valor18ch",
@@ -247,39 +284,20 @@
             "valor18ta",
             "pdblazer",
             "gurkha",
-            "kawasaki",
             "challenger18",
             "sspres",
             "polnspeedo",
             "zr1rb",
             "mustang",
             "govburb",
-            "pbike",
-            "newvic",
-            "13capricenf",
-            "14chargernf",
-            "16ramnf",
-            "16explorernf",
-            "16f150nf",
-            "18tahoenf",
-            "18chargernf",
-            "18taurusnf",
-            "challenger18",
+            "ranger2pd",
+            "gcptvan",
+            "06srt",
+            "pdtaycan",
+            "ramflatbed",
             "kawasaki",
-            "sspres",
-            "polnspeedo",
-            "zr1RB",
-            "police",
-            "police2",
-            "police3",
-            "policeb",
-            "policeold1",
-            "policeold2",
-            "policet",
-            "pranger",
-            "sheriff",
-            "sheriff2",
-            "peel50police"
+            "pdenduro",
+            "pbike"
         ]
     },
     "unmarked_pd": {
@@ -298,7 +316,6 @@
             "fibs"
         ]
     },
-
     "bus": {
         "size": 28,
         "models": [
@@ -311,7 +328,6 @@
             "tourbus"
         ]
     },
-
     "jetsky": {
         "size": 28,
         "models": [
@@ -320,7 +336,6 @@
             "seashark3"
         ]
     },
-
     "go-kart": {
         "size": 24,
         "models": [
@@ -328,7 +343,6 @@
             "veto2"
         ]
     },
-
     "open_wheel": {
         "size": 26,
         "models": [
@@ -338,7 +352,6 @@
             "openwheel2"
         ]
     },
-
     "tank": {
         "size": 27,
         "models": [
@@ -352,7 +365,6 @@
             "trailersmall2"
         ]
     },
-
     "big_boat": {
         "size": 45,
         "models": [
@@ -360,49 +372,42 @@
             "titanic2"
         ]
     },
-
     "falcon": {
         "size": 35,
         "models": [
             "falcon"
         ]
     },
-
     "star_destroyer": {
         "size": 45,
         "models": [
             "stardestroy"
         ]
     },
-
     "death_star": {
         "size": 40,
         "models": [
             "deathstar"
         ]
     },
-
     "pod_racer": {
         "size": 35,
         "models": [
             "podracer"
         ]
     },
-
     "royal_naboo": {
         "size": 40,
         "models": [
             "royalnaboo"
         ]
     },
-
     "x_wing": {
         "size": 40,
         "models": [
             "xwing2"
         ]
     },
-
     "tie_fighter": {
         "size": 40,
         "models": [
