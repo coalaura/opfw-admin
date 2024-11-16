@@ -218,6 +218,14 @@ export default {
 
             this.metadataJSON = metadataJSON;
             this.mainImageURL = this.image || screenshotURL;
+
+            // Sort "before", "after", then alphabetically
+            this.images.sort((a, b) => {
+                if (a.key === "before" && b.key !== "before") return -1;
+                if (b.key === "before" && a.key !== "before") return 1;
+
+                return a.key.localeCompare(b.key);
+            });
         },
         cleanupObject(value) {
             if (typeof value === "object") {
