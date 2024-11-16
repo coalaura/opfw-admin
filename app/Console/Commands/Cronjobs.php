@@ -61,6 +61,12 @@ class Cronjobs extends Command
     {
         LoggingHelper::disable();
 
+        if (env('INACTIVE', false)) {
+            $this->warn(CLUSTER . " cluster is marked as inactive.");
+
+            return;
+        }
+
         $this->info(CLUSTER . " Testing database connection...");
 
         try {
