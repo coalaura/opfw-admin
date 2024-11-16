@@ -995,7 +995,7 @@ export default {
                 });
 
                 connection.on("reset", data => {
-                    console.log(`Received socket "reset" event (${data.length} bytes).`);
+                    console.log(`Received socket "reset" event (${data.byteLength} bytes).`);
 
                     this.compressor.reset(data);
                 });
