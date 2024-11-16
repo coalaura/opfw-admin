@@ -2,10 +2,8 @@
     "helicopter": {
         "size": 28,
         "models": [
-            "mh6",
             "as350",
             "990116733",
-            "polmav",
             "akula",
             "annihilator",
             "buzzard",
@@ -30,14 +28,26 @@
             "seasparrow3",
             "thruster",
             "newsmav",
-            "swathel",
             "ka52a",
-            "buzzard4",
-            "buzzard5",
-            "buzzard6",
             "pavelow",
-            "as332",
             "foxch47"
+        ]
+    },
+    "ems_helicopter": {
+        "size": 28,
+        "models": [
+            "as332",
+            "buzzard6"
+        ]
+    },
+    "police_helicopter": {
+        "size": 28,
+        "models": [
+            "mh6",
+            "polmav",
+            "swathel",
+            "buzzard4",
+            "buzzard5"
         ]
     },
     "cargobob": {
@@ -73,10 +83,20 @@
             "dinghy5",
             "kosatka",
             "longfin",
-            "patrolboat",
-            "predator",
-            "predator1",
+            "patrolboat"
+        ]
+    },
+    "ems_boat": {
+        "size": 28,
+        "models": [
             "predator2"
+        ]
+    },
+    "police_boat": {
+        "size": 28,
+        "models": [
+            "predator",
+            "predator1"
         ]
     },
     "float_plane": {
@@ -231,7 +251,8 @@
         "size": 28,
         "models": [
             "riot",
-            "riot2"
+            "riot2",
+            "gurkha"
         ]
     },
     "tow_truck": {
@@ -241,7 +262,8 @@
             "towtruck",
             "towtruck2",
             "towcustom",
-            "20ramrbc"
+            "20ramrbc",
+            "ramflatbed"
         ]
     },
     "ems_car": {
@@ -283,7 +305,6 @@
             "21trfpis",
             "valor18ta",
             "pdblazer",
-            "gurkha",
             "challenger18",
             "sspres",
             "polnspeedo",
@@ -294,7 +315,6 @@
             "gcptvan",
             "06srt",
             "pdtaycan",
-            "ramflatbed",
             "kawasaki",
             "pdenduro",
             "pbike"
