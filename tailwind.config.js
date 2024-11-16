@@ -131,12 +131,6 @@ module.exports = {
                 'map-ems':       '#FF5959',
                 'map-highlight': '#FF6400',
 
-                'discord': '#6C82CE',
-                'steam': '#171A21',
-
-                'twitch': '#A970FF',
-                'twitch-dark': '#8533ff',
-
                 // Rose
                 'rose-100': 'rgb(255, 228, 230)',
                 'rose-200': 'rgb(254, 205, 211)',
@@ -187,6 +181,12 @@ module.exports = {
                 'green-950': 'rgb(5, 46, 22)',
                 'teal-950': 'rgb(4, 47, 46)',
                 'gray-950': 'rgb(18, 22, 33)',
+
+                // Specialty colors
+                'discord': '#6C82CE',
+                'steam': '#171A21',
+                'twitch': '#A970FF',
+                'twitch-dark': '#8533ff',
 
                 // Input border color
                 'input': '#6b7280',

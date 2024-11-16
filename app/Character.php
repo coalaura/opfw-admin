@@ -17,6 +17,20 @@ class Character extends Model
 {
     use HasFactory;
 
+    const BloodTypes = [
+        "O+"     => "The most common blood type. O+ individuals can donate red blood cells to any Rh-positive blood type.",
+        "A+"     => "The second most common blood type. A+ individuals can donate red blood cells to A+ and AB+ recipients.",
+        "B+"     => "A fairly common blood type. B+ individuals can donate red blood cells to B+ and AB+ recipients.",
+        "AB+"    => "The rarest of the 'common' blood types. Known as the universal plasma donor, but AB+ individuals can only donate red blood cells to other AB+ recipients.",
+        "O-"     => "A universal donor of red blood cells, O- can be given to any blood type. It is often used in emergency situations.",
+        "A-"     => "A relatively rare blood type. A- individuals can donate red blood cells to A-, A+, AB-, and AB+ recipients.",
+        "B-"     => "A rare blood type. B- individuals can donate red blood cells to B-, B+, AB-, and AB+ recipients.",
+        "AB-"    => "The rarest standard blood type. AB- individuals can donate red blood cells to AB- and AB+ recipients.",
+        "Rhnull" => "Known as 'Golden Blood,' it lacks all Rh antigens. Extremely rare and highly valuable for transfusion in compatible individuals.",
+        "Bombay" => "Lacks the H antigen found in all other blood types. Bombay individuals can only receive blood from other Bombay donors.",
+        "Cis-AB" => "A rare genetic mutation where A and B antigens are inherited on a single allele. Compatible with some A, B, AB, and O types, but requires careful matching.",
+    ];
+
     /**
      * Whether to use timestamps.
      *
@@ -106,6 +120,20 @@ class Character extends Model
     protected function getMoneyAttribute(): int
     {
         return $this->cash + $this->bank;
+    }
+
+    protected function getBloodTypeAttribute(): ?array
+    {
+        $type = $this->attributes['blood_type'];
+
+        if (!isset(self::BloodTypes[$type])) {
+            return null;
+        }
+
+        return [
+            'name' => $type,
+            'info' => self::BloodTypes[$type],
+        ];
     }
 
     public static function getOutfits(int $characterId): int

@@ -1137,6 +1137,9 @@
                                     </h3>
 
                                     <div class="absolute bottom-1 left-1.5 text-sm font-semibold">#{{ character.id }}</div>
+                                    <div class="absolute bottom-1 right-1.5 text-sm font-semibold" v-if="character.bloodType" :title="character.bloodType.info">
+                                        {{ character.bloodType.name }}
+                                    </div>
 
                                     <table class="whitespace-nowrap text-sm text-left w-full">
                                         <tr class="border-t border-gray-500">
