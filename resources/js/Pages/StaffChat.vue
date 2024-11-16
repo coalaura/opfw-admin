@@ -204,7 +204,8 @@ export default {
             notifications: localStorage.getItem("notifications") === "true",
             autoScroll: localStorage.getItem("autoScroll") !== "false",
 
-            socket: false
+            socket: false,
+            compressor: new DataCompressor()
         };
     },
     watch: {
@@ -345,7 +346,7 @@ export default {
                 this.isLoading = false;
 
                 try {
-                    const messages = (await DataCompressor.GUnZIP(buffer)).map(message => {
+                    const messages = this.compressor.decompressData("staff", buffer).map(message => {
                         message.title = this.formatTitle(message);
                         message.text = this.formatMessage(message.message);
 

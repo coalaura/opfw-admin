@@ -3,20 +3,37 @@ import { unpack } from "msgpackr";
 class DataCompressor {
     #data = {};
 
-    decompressData(data) {
+    decompressData(type, data) {
         data = this.#update(unpack(data));
 
-        if ('v' in data && Array.isArray(data.v) && 'p' in data && typeof data.p === "object" && 'i' in data && typeof data.i === "number") {
-            return {
-                players: this.decompressPlayers(data.p),
-                viewers: data.v,
-                instance: data.i
-            };
-        } else {
+        let isValid, result;
+
+        switch (type) {
+            case "world":
+                isValid = 'v' in data && Array.isArray(data.v) && 'p' in data && typeof data.p === "object" && 'i' in data && typeof data.i === "number";
+
+                if (isValid) {
+                    result = {
+                        players: this.decompressPlayers(data.p),
+                        viewers: data.v,
+                        instance: data.i
+                    };
+                }
+            case "staff":
+                isValid = data && Array.isArray(data);
+
+                if (isValid) {
+                    result = data;
+                }
+        }
+
+        if (!isValid || !result) {
             console.debug("Failed decompress", data);
 
             return data;
         }
+
+        return result;
     }
 
     #update(data) {

@@ -1063,7 +1063,7 @@ export default {
             let isActivelyTracking = false,
                 trackingInfo = false;
 
-            data = this.compressor.decompressData(data);
+            data = this.compressor.decompressData("world", data);
 
             if (data && typeof data.players === "object") {
                 if (this.map) {
