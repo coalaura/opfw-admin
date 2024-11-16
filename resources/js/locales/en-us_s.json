@@ -492,7 +492,6 @@
         "duty_list_pd": "PD On-Duty",
         "error": "Failed to load data for {0}!",
         "filter_none": "No filters",
-        "fpm_title": "Frames per minute",
         "highlighted": "is highlighted",
         "highlighted_title": "Highlighted Folks",
         "historic_fetch": "Fetchin' Historic Data...",
@@ -1131,20 +1130,6 @@
         "player": "Player",
         "title": "Staff Points",
         "week_0": "This Week"
-    },
-    "queue": {
-        "consoleName": "Console name",
-        "description": "List all the folks currently in the queue.",
-        "licenseIdentifier": "Player",
-        "no_prio": "No priority",
-        "none": "Ain't nobody in queue.",
-        "priorityName": "Priority type",
-        "queuePosition": "Pos",
-        "queueTime": "Time passed",
-        "skip": "Make player skip the queue",
-        "skipQueue": "Skip",
-        "skip_confirm": "Y'all sure ya wanna make this player skip the queue?",
-        "title": "Queue"
     },
     "screenshot": {
         "anti_cheat": "Anti-Cheat Screenshots",

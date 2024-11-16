@@ -492,7 +492,6 @@
         "duty_list_pd": "PD Duty par",
         "error": "Data {0} ke liye load karne mein asafal!",
         "filter_none": "Koi chhanna nahi",
-        "fpm_title": "Frames per minute",
         "highlighted": "Ujjwal kiya gaya hai",
         "highlighted_title": "Ujjwal log",
         "historic_fetch": "Itihasik Data prapt kar rahe hain...",
@@ -1131,20 +1130,6 @@
         "player": "Player",
         "title": "Staff Points",
         "week_0": "Is Hafte"
-    },
-    "queue": {
-        "consoleName": "Console naam",
-        "description": "Queue me abhi sabhi players ki list.",
-        "licenseIdentifier": "Player",
-        "no_prio": "Koi prathamikta nahi",
-        "none": "Queue me koi nahi hai.",
-        "priorityName": "Prathamikta prakaar",
-        "queuePosition": "Sthaan",
-        "queueTime": "Samay beet gaya",
-        "skip": "Player ko queue skip karna",
-        "skipQueue": "Skip",
-        "skip_confirm": "Kya aap is player ko queue skip karwana chahte hain?",
-        "title": "Queue"
     },
     "screenshot": {
         "anti_cheat": "Anti-Cheat Screenshots",

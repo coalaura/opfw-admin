@@ -492,7 +492,6 @@
         "duty_list_pd": "PD På vakt",
         "error": "Kunne ikke laste data for {0}!",
         "filter_none": "Ingen filtre",
-        "fpm_title": "Bilder per minutt",
         "highlighted": "er fremhevet",
         "highlighted_title": "Fremhevede personer",
         "historic_fetch": "Henter historiske data...",
@@ -1131,20 +1130,6 @@
         "player": "Spiller",
         "title": "Ansattpoeng",
         "week_0": "Denne uken"
-    },
-    "queue": {
-        "consoleName": "Konsollnavn",
-        "description": "List alle spillere som for øyeblikket er i køen.",
-        "licenseIdentifier": "Spiller",
-        "no_prio": "Ingen prioritet",
-        "none": "Ingen i køen.",
-        "priorityName": "Prioritetstype",
-        "queuePosition": "Pos",
-        "queueTime": "Tid gått",
-        "skip": "Få spiller til å hoppe over køen",
-        "skipQueue": "Hopp over",
-        "skip_confirm": "Er du sikker på at du vil få denne spilleren til å hoppe over køen?",
-        "title": "Kø"
     },
     "screenshot": {
         "anti_cheat": "Anti-juks Skjermbilder",

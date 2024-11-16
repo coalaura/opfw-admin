@@ -54,17 +54,15 @@ class PlayerContainer {
             [mainInstance]: 0
         };
 
-        for (let x = 0; x < rawData.length; x++) {
-            rawData[x] = Player.fixData(rawData[x]);
+        for (const source in rawData) {
+            rawData[source] = Player.fixData(rawData[source]);
 
-            this.updatePlayer(rawData[x], selectedInstance);
+            this.updatePlayer(source, rawData[source], selectedInstance);
         }
 
-        for (const id in this.players) {
-            const exists = rawData.find(player => player.licenseIdentifier === id);
-
-            if (!exists) {
-                this.remove(id);
+        for (const source in this.players) {
+            if (!rawData[source]) {
+                this.remove(source);
             }
         }
 
@@ -97,9 +95,8 @@ class PlayerContainer {
         });
     }
 
-    updatePlayer(rawPlayer, selectedInstance) {
-        const id = Player.getPlayerID(rawPlayer),
-            flags = Player.getPlayerFlags(rawPlayer);
+    updatePlayer(source, rawPlayer, selectedInstance) {
+        const flags = Player.getPlayerFlags(rawPlayer);
 
         if (flags.fakeDisconnected) {
             return;
@@ -129,15 +126,16 @@ class PlayerContainer {
             return;
         }
 
-        if (id in this.players) {
-            this.players[id].update(rawPlayer, this.staffMembers);
+        if (source in this.players) {
+            this.players[source].update(rawPlayer, this.staffMembers);
         } else {
-            this.players[id] = new Player(rawPlayer, this.staffMembers);
+            this.players[source] = new Player(rawPlayer, this.staffMembers);
         }
 
-        const player = this.players[id];
+        const player = this.players[source];
 
         const vehicle = player.getVehicleID();
+
         if (vehicle) {
             if (!(vehicle in this.vehicles)) {
                 this.vehicles[vehicle] = {
@@ -181,12 +179,12 @@ class PlayerContainer {
         }
     }
 
-    isActive(id) {
-        return !!this.get(id);
+    isActive(source) {
+        return !!this.get(source);
     }
 
-    shouldDrawPlayerMarker(id, instance) {
-        const player = this.get(id);
+    shouldDrawPlayerMarker(source, instance) {
+        const player = this.get(source);
 
         if (!player || !player.character) return false;
 
@@ -195,19 +193,19 @@ class PlayerContainer {
         return true;
     }
 
-    get(id) {
-        return id in this.players ? this.players[id] : null;
+    get(source) {
+        return source in this.players ? this.players[source] : null;
     }
 
-    remove(id) {
-        delete this.players[id];
+    remove(source) {
+        delete this.players[source];
     }
 
     eachPlayer(callback) {
-        for (const id in this.players) {
-            if (!this.players.hasOwnProperty(id)) continue;
+        for (const source in this.players) {
+            if (!this.players.hasOwnProperty(source)) continue;
 
-            callback(id, this.players[id]);
+            callback(source, this.players[source]);
         }
     }
 
@@ -218,7 +216,7 @@ class PlayerContainer {
             playerName: player.player.name,
             license: player.player.license,
             invisible: player.invisible.time,
-            cid: player.character ? player.character.id : 0,
+            csource: player.character ? player.character.source : 0,
             source: player.player.source,
             onDuty: player.onDuty
         };

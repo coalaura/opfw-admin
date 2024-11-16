@@ -392,7 +392,6 @@
         "data_stats": "Police: {0}, EMS: {1}, Staff: {2}",
         "data_unloaded": "Unloaded: {0}",
         "play": "Play",
-        "fpm_title": "Frames per minute",
         "toggle_duty_list": "Toggle On-Duty",
         "duty_list_pd": "PD On-Duty",
         "duty_list_ems": "EMS On-Duty",

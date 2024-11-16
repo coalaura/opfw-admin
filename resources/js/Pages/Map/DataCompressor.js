@@ -1,19 +1,16 @@
-import { ungzip } from "pako";
 import { unpack } from "msgpackr";
 
 class DataCompressor {
-    static async GUnZIP(data) {
-        const zip = ungzip(data);
+    #data = {};
 
-        return unpack(zip);
-    }
+    decompressData(data) {
+        data = unpack(data);
 
-    static decompressData(data) {
-        if ('v' in data && Array.isArray(data.v) && 'p' in data && Array.isArray(data.p) && 'i' in data) {
-            const decompressor = new DataCompressor();
+        data = this.#update(data);
 
+        if ('v' in data && Array.isArray(data.v) && 'p' in data && typeof data.p === "object" && 'i' in data && typeof data.i === "number") {
             return {
-                players: decompressor.decompressPlayers(data.p),
+                players: this.decompressPlayers(data.p),
                 viewers: data.v,
                 instance: data.i
             };
@@ -22,13 +19,66 @@ class DataCompressor {
 
             return data;
         }
+    }
 
-        return false;
+    #update(data) {
+        // dt = data, nw = new
+        const update = (dt, nw) => {
+            for (const key in nw) {
+                const oldValue = dt[key],
+                    newValue = nw[key];
+
+                const oldType = typeof oldValue,
+                    newType = typeof newValue;
+
+                if (newValue === null) {
+                    delete dt[key];
+                } else if (newType === "object") {
+                    if (Array.isArray(newValue)) {
+                        dt[key] = newValue;
+                    } else {
+                        dt[key] = update(dt[key] || {}, newValue);
+                    }
+                } else if (oldType !== newType) {
+                    dt[key] = newValue;
+                } else {
+                    dt[key] = newValue;
+                }
+            }
+
+            return dt;
+        };
+
+        this.#data = update(this.#data, data);
+
+        return this.#copy(this.#data);
+    }
+
+    #copy(object) {
+        const copy = obj => {
+            if (Array.isArray(obj)) {
+                return obj.map(copy);
+            } else if (typeof obj === "object") {
+                return Object.entries(obj).reduce((obj, [key, value]) => {
+                    obj[key] = copy(value);
+
+                    return obj;
+                }, {});
+            } else {
+                return obj;
+            }
+        };
+
+        return copy(object);
+    }
+
+    reset() {
+        this.#data = {};
     }
 
     decompressPlayers(players) {
-        for (let x = 0; x < players.length; x++) {
-            players[x] = this.decompress(players[x]);
+        for (const source in players) {
+            players[source] = this.decompress(players[source]);
         }
 
         return players;

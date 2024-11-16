@@ -163,8 +163,6 @@
                     <div class="relative w-full">
                         <div id="map" class="w-full relative h-max"></div>
 
-                        <div class="map-lowerleft" v-if="currentFPM" :title="t('map.fpm_title')">{{ currentFPM }} fpm</div>
-
                         <input v-if="!isTimestampShowing && !isHistoricShowing" type="number" class="placeholder absolute z-1k leaflet-tl ml-12 w-16 block px-2 font-base font-semibold" @input="updateTrackingInfo" :placeholder="t('map.track_placeholder')" min="0" max="65536" v-model="trackServerId" :class="trackingValid ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-200'" />
 
                         <button class="absolute z-1k leaflet-tl ml-29 text-white bg-rose-700 hover:bg-rose-800 px-2 font-base" v-if="trackServerId" @click="track('')">
@@ -373,6 +371,8 @@ export default {
                 "Blips": L.layerGroup(),
             },
 
+            compressor: new DataCompressor(),
+
             trackServerId: "",
             trackingValid: false,
 
@@ -408,37 +408,10 @@ export default {
 
             selectedInstance: false,
 
-            viewingUnloadedPlayerList: false,
-
-            receivedFrames: []
+            viewingUnloadedPlayerList: false
         };
     },
-    computed: {
-        currentFPM() {
-            if (this.receivedFrames.length < 2) return false;
-
-            let last = this.receivedFrames[0],
-                total = 0,
-                count = 0;
-
-            for (let i = 1; i < this.receivedFrames.length; i++) {
-                const frame = this.receivedFrames[i];
-
-                total += frame - last;
-                count++;
-
-                last = frame;
-            }
-
-            return (60 * (1000 / (total / count))).toFixed(1).replace(/\.0$/, '');
-        }
-    },
     methods: {
-        receivedFrame() {
-            this.receivedFrames.push(Date.now());
-
-            if (this.receivedFrames.length > 60) this.receivedFrames.shift();
-        },
         checkHistoricLicense() {
             const license = this.form.historic_license;
 
@@ -1011,12 +984,8 @@ export default {
 
                 let lastTrackedId = "";
 
-                connection.on("message", async (buffer) => {
-                    this.receivedFrame();
-
+                connection.on("message", async (data) => {
                     try {
-                        const data = await DataCompressor.GUnZIP(buffer);
-
                         await this.renderMapData(data, this.trackServerId !== lastTrackedId);
 
                         lastTrackedId = this.trackServerId;
@@ -1026,8 +995,9 @@ export default {
                 });
 
                 connection.on("disconnect", async () => {
-                    this.receivedFrames = [];
                     this.firstFrame = false;
+
+                    this.compressor.reset();
 
                     this.data = this.t('map.closed_expected', this.activeServer);
 
@@ -1079,9 +1049,9 @@ export default {
             let isActivelyTracking = false,
                 trackingInfo = false;
 
-            data = DataCompressor.decompressData(data);
+            data = this.compressor.decompressData(data);
 
-            if (data && Array.isArray(data.players)) {
+            if (data && typeof data.players === "object") {
                 if (this.map) {
                     if (!this.selectedInstance) {
                         this.selectedInstance = data.instance;
@@ -1095,6 +1065,7 @@ export default {
 
                     this.container.eachPlayer((id, player) => {
                         if (!player.character) {
+                            console.log("Player has no character", player);
                             return;
                         }
 
@@ -1138,6 +1109,7 @@ export default {
                         }
 
                         this.map.removeLayer(this.markers[id]);
+
                         delete this.markers[id];
                     }
 

@@ -492,7 +492,6 @@
         "duty_list_pd": "PD On-Duty",
         "error": "Faiwed to woad data fow {0}!",
         "filter_none": "Nyoo fiwtews",
-        "fpm_title": "Fwames pew minute",
         "highlighted": "is highwighted",
         "highlighted_title": "Highwighted Peopwe",
         "historic_fetch": "Fetching Histowic Data...",
@@ -1131,20 +1130,6 @@
         "player": "Pwayew",
         "title": "Staff Points",
         "week_0": "This Week"
-    },
-    "queue": {
-        "consoleName": "Consowe nyame",
-        "description": "Wist aww pwayews cuwwentwy in the queue.",
-        "licenseIdentifier": "Pwayew",
-        "no_prio": "No pwiority",
-        "none": "Nobody in queue.",
-        "priorityName": "Pwiority type",
-        "queuePosition": "Pos",
-        "queueTime": "Time passed",
-        "skip": "Make pwayew skip queue",
-        "skipQueue": "Skip",
-        "skip_confirm": "Awe you suwe you want to make this pwayew skip the queue?",
-        "title": "Queue"
     },
     "screenshot": {
         "anti_cheat": "Anti-Cheat Scweenshots",
