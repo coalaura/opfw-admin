@@ -388,6 +388,7 @@
         "try_reconnect": "Reconnecting in 3 seconds...",
         "closed_expected": "Data connection for {0} was closed.",
         "closed_unexpected": "Data connection for {0} was closed unexpectedly after {1}.",
+        "waiting_startup": "Waiting for {0} socket startup...",
         "data": "Currently <b>{0}/{1}</b> online players.",
         "data_stats": "Police: {0}, EMS: {1}, Staff: {2}",
         "data_unloaded": "Unloaded: {0}",

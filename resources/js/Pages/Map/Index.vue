@@ -1000,6 +1000,10 @@ export default {
                     this.compressor.reset();
                 });
 
+                connection.on("no_data", () => {
+                    this.data = this.t('map.waiting_startup', this.activeServer);
+                });
+
                 connection.on("disconnect", async () => {
                     this.compressor.reset();
 
