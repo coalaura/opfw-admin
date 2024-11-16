@@ -50,6 +50,7 @@ const Localization = {
                 console.error('Failed to load moment locale "' + locale + '"', e);
             }
         };
+
         Vue.prototype.t = function (key, ...params) {
             let val = lang ? searchObject(lang, key) : null;
 
@@ -73,6 +74,7 @@ const Localization = {
 
             return val;
         };
+
         Vue.prototype.numberFormat = function (number, decimals, asCurrency) {
             let options = {
                 minimumFractionDigits: 0,
@@ -86,6 +88,18 @@ const Localization = {
             const formatter = new Intl.NumberFormat("en-US", options);
 
             return formatter.format(number);
+        };
+
+        Vue.prototype.bytesFormat = function(bytes) {
+            if (!+bytes) return '0 bytes'
+
+            const k = 1000,
+                dm = decimals < 0 ? 0 : decimals,
+                sizes = ['bytes', 'kb', 'mb', 'gb', 'tb', 'pb', 'eb', 'zb', 'yb'];
+
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+            return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
         };
     },
 }
