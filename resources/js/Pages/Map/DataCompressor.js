@@ -3,8 +3,8 @@ import { unpack } from "msgpackr";
 class DataCompressor {
     #data = {};
 
-    decompressData(type, data) {
-        data = this.#update(unpack(data));
+    decompressData(type, compressed) {
+        const data = this.#update(unpack(compressed));
 
         let isValid, result;
 
@@ -19,12 +19,16 @@ class DataCompressor {
                         instance: data.i
                     };
                 }
+
+                break;
             case "staff":
                 isValid = data && Array.isArray(data);
 
                 if (isValid) {
                     result = data;
                 }
+
+                break;
         }
 
         if (!isValid || !result) {
@@ -39,44 +43,42 @@ class DataCompressor {
     #update(data) {
         // dt = data, nw = new
         const update = (dt, nw) => {
-            if (typeof nw === "object" && Array.isArray(nw)) {
-                dt = [];
+            if (Array.isArray(nw)) {
+                dt = nw;
 
-                for (const item of nw) {
-                    dt.push(update({}, item));
+                return dt;
+            } else if (typeof nw === "object") {
+                if (!dt || typeof dt !== "object") {
+                    dt = {};
+                }
+
+                for (const key in nw) {
+                    const oldValue = dt[key],
+                        newValue = nw[key];
+
+                    const oldType = typeof oldValue,
+                        newType = typeof newValue;
+
+                    if (newValue === null) {
+                        delete dt[key];
+                    } else if (newType === "object") {
+                        dt[key] = update(dt[key] || {}, newValue);
+                    } else if (oldType !== newType) {
+                        dt[key] = newValue;
+                    } else {
+                        dt[key] = newValue;
+                    }
                 }
 
                 return dt;
             }
 
-            for (const key in nw) {
-                const oldValue = dt[key],
-                    newValue = nw[key];
-
-                const oldType = typeof oldValue,
-                    newType = typeof newValue;
-
-                if (newValue === null) {
-                    delete dt[key];
-                } else if (newType === "object") {
-                    if (Array.isArray(newValue)) {
-                        dt[key] = newValue;
-                    } else {
-                        dt[key] = update(dt[key] || {}, newValue);
-                    }
-                } else if (oldType !== newType) {
-                    dt[key] = newValue;
-                } else {
-                    dt[key] = newValue;
-                }
-            }
-
-            return dt;
+            return nw;
         };
 
         this.#data = update(this.#data, data);
 
-        return this.#copy(this.#data);
+        return this.data();
     }
 
     #copy(object) {
@@ -97,14 +99,12 @@ class DataCompressor {
         return copy(object);
     }
 
-    reset(data) {
-        let unpacked = {};
+    data() {
+        return this.#copy(this.#data);
+    }
 
-        if (data) {
-            unpacked = unpack(data);
-        }
-
-        this.#data = unpacked;
+    reset() {
+        this.#data = {};
     }
 
     decompressPlayers(players) {

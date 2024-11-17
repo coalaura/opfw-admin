@@ -338,15 +338,13 @@ export default {
                 }
             });
 
-            this.socket.on("reset", () => {
+            const process = async (data) => {
                 this.isLoading = false;
-            });
 
-            this.socket.on("message", async (buffer) => {
-                this.isLoading = false;
+                data = this.compressor.decompressData("staff", data);
 
                 try {
-                    const messages = this.compressor.decompressData("staff", buffer).map(message => {
+                    const messages = data.map(message => {
                         message.title = this.formatTitle(message);
                         message.text = this.formatMessage(message.message);
 
@@ -355,9 +353,9 @@ export default {
 
                     if (!messages.length) return;
 
-                    const hasHeports = messages.find(message => message.type === "report");
+                    const hasReports = messages.find(message => message.type === "report");
 
-                    if (hasHeports) {
+                    if (hasReports) {
                         this.notify();
                     }
 
@@ -385,9 +383,37 @@ export default {
                 } catch (e) {
                     console.error('Failed to parse socket message', e);
                 }
+            };
+
+            this.socket.on("reset", data => {
+                console.log(`Received socket "reset" event (${this.bytesFormat(data.byteLength)}).`);
+
+                this.isLoading = false;
+
+                this.compressor.reset();
+
+                process(data);
+            });
+
+            this.socket.on("no_data", () => {
+                console.log(`Received socket "no_data" event.`);
+
+                this.isLoading = false;
+            });
+
+            this.socket.on("message", data => {
+                process(data);
+            });
+
+            this.socket.on("connect", () => {
+                console.log(`Received socket "connect" event.`);
             });
 
             this.socket.on("disconnect", () => {
+                console.log(`Received socket "disconnect" event.`);
+
+                this.compressor.reset();
+
                 this.socket.close();
                 this.socket = false;
 

@@ -984,7 +984,7 @@ export default {
 
                 let lastTrackedId = "";
 
-                connection.on("message", async (data) => {
+                const process = async (data) => {
                     try {
                         await this.renderMapData(data, this.trackServerId !== lastTrackedId);
 
@@ -992,12 +992,18 @@ export default {
                     } catch (e) {
                         console.error('Failed to parse socket message ', e);
                     }
+                };
+
+                connection.on("message", async (data) => {
+                    process(data);
                 });
 
                 connection.on("reset", data => {
                     console.log(`Received socket "reset" event (${this.bytesFormat(data.byteLength)}).`);
 
-                    this.compressor.reset(data);
+                    this.compressor.reset();
+
+                    process(data);
                 });
 
                 connection.on("no_data", () => {
@@ -1060,10 +1066,10 @@ export default {
                 return;
             }
 
+            data = this.compressor.decompressData("world", data);
+
             let isActivelyTracking = false,
                 trackingInfo = false;
-
-            data = this.compressor.decompressData("world", data);
 
             if (data && typeof data.players === "object") {
                 if (this.map) {
