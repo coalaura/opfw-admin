@@ -312,12 +312,14 @@ class OPFWHelper
             $route = str_replace('https://', 'http://', $route);
         }
 
+        /*
         if (!HttpHelper::ping($route, 800)) {
             LoggingHelper::log(HttpHelper::lastError());
             LoggingHelper::log("Cancelled $requestType request to $route");
 
             return new OPFWResponse(false, 'Failed to connect to OP-FW server.');
         }
+        */
 
         $result = null;
 
