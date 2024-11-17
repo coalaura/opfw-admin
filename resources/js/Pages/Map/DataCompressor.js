@@ -39,6 +39,16 @@ class DataCompressor {
     #update(data) {
         // dt = data, nw = new
         const update = (dt, nw) => {
+            if (typeof nw === "object" && Array.isArray(nw)) {
+                dt = [];
+
+                for (const item of nw) {
+                    dt.push(update({}, item));
+                }
+
+                return dt;
+            }
+
             for (const key in nw) {
                 const oldValue = dt[key],
                     newValue = nw[key];
