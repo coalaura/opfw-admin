@@ -33,13 +33,6 @@ class PlayerStatus
     public ?int $character = 0;
 
     /**
-     * The ip of the server the player is in
-     *
-     * @var string
-     */
-    public string $serverIp;
-
-    /**
      * The subdomain of the server (c3s1)
      *
      * @var string
@@ -53,16 +46,14 @@ class PlayerStatus
      */
     public array $characterMetadata = [];
 
-    public function __construct(string $status, string $serverIp, int $serverId, ?int $character = null, ?array $characterMetadata = null)
+    public function __construct(string $status, string $serverName, int $serverId, ?int $character = null, ?array $characterMetadata = null)
     {
         $this->status = $status;
-        $this->serverIp = $serverIp ? Server::fixApiUrl($serverIp) : "";
+        $this->serverName = $serverName;
         $this->serverId = $serverId;
         $this->character = $character;
 
         $this->characterMetadata = $characterMetadata ?? [];
-
-        $this->serverName = Server::getServerName($serverIp);
     }
 
     public function isOnline(): bool

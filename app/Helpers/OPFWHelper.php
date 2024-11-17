@@ -36,7 +36,7 @@ class OPFWHelper
             return new OPFWResponse(false, 'Player is offline.');
         }
 
-        $response = self::executeRoute($status->serverIp . 'execute/staffPrivateMessage', [
+        $response = self::executeRoute(Server::getServerURL($status->serverName) . 'execute/staffPrivateMessage', [
             'licenseIdentifier' => $staffLicenseIdentifier,
             'targetSource'      => $status->serverId,
             'message'           => $message,
@@ -124,7 +124,7 @@ class OPFWHelper
             $staffPlayerName = "a staff member";
         }
 
-        $response = self::executeRoute($status->serverIp . 'execute/kickPlayer', [
+        $response = self::executeRoute(Server::getServerURL($status->serverName) . 'execute/kickPlayer', [
             'licenseIdentifier'       => $license,
             'reason'                  => 'You have been kicked by ' . $staffPlayerName . ' for reason `' . $reason . '`',
             'removeReconnectPriority' => false,
@@ -153,7 +153,7 @@ class OPFWHelper
             return new OPFWResponse(false, 'Player is offline.');
         }
 
-        $response = self::executeRoute($status->serverIp . 'execute/revivePlayer', [
+        $response = self::executeRoute(Server::getServerURL($status->serverName) . 'execute/revivePlayer', [
             'targetSource' => $status->serverId,
         ]);
 
@@ -182,7 +182,7 @@ class OPFWHelper
             return new OPFWResponse(true, 'Player is offline, no refresh needed.');
         }
 
-        $response = self::executeRoute($status->serverIp . 'execute/refreshTattoos', [
+        $response = self::executeRoute(Server::getServerURL($status->serverName) . 'execute/refreshTattoos', [
             'licenseIdentifier' => $license,
             'characterId'       => $character_id,
         ]);
@@ -210,7 +210,7 @@ class OPFWHelper
             return OPFWResponse::didNotExecute();
         }
 
-        $response = self::executeRoute($status->serverIp . 'execute/refreshCharacter', [
+        $response = self::executeRoute(Server::getServerURL($status->serverName) . 'execute/refreshCharacter', [
             'licenseIdentifier' => $license,
             'characterId'       => $character_id,
         ]);
@@ -260,7 +260,7 @@ class OPFWHelper
             return new OPFWResponse(true, 'Player is offline, no unload needede.');
         }
 
-        $response = self::executeRoute($status->serverIp . 'execute/unloadCharacter', [
+        $response = self::executeRoute(Server::getServerURL($status->serverName) . 'execute/unloadCharacter', [
             'licenseIdentifier' => $license,
             'characterId'       => $character_id,
             'message'           => $message,
