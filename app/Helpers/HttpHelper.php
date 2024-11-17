@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\TransferStats;
+use Illuminate\Support\Str;
 
 class HttpHelper
 {
@@ -114,6 +115,14 @@ class HttpHelper
 
     public static function getRedirect(string $url): string
     {
+        if (!Str::startsWith($url, 'http')) {
+            if (Str::contains($url, ':')) {
+                $url = 'http://' . $url;
+            } else {
+                $url = 'https://' . $url;
+            }
+        }
+
         $client = new Client([
             'timeout'         => 10,
             'connect_timeout' => 1,
