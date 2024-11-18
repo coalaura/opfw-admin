@@ -19,7 +19,7 @@
                         <th class="font-bold px-4 py-1.5 text-left" v-if="!readonly">&nbsp;</th>
                     </tr>
 
-                    <tr v-for="player in playerList" :key="player.license" class="odd:bg-gray-200 dark:odd:bg-gray-500">
+                    <tr v-for="player in playerList" :key="player.license" class="odd:bg-gray-200 dark:odd:bg-gray-500 hover:bg-gray-300 dark:hover:bg-gray-700">
                         <td class="italic px-4 py-1.5">
                             <a :href="`/players/${player.license}`" target="_blank">
                                 {{ player.name }}
