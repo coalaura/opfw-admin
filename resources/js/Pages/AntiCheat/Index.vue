@@ -414,25 +414,9 @@ export default {
                 case 'honeypot_native':
                     if (!metadata.resource || !metadata.native) return false;
 
-                    const args = (metadata.arguments || []).map(arg => {
-                        if (typeof arg === 'number') {
-                            arg = arg.toFixed(2);
-                        } else if (arg && typeof arg === 'object') {
-                            if ('x' in arg && 'y' in arg && 'z' in arg && 'w' in arg) {
-                                arg = `vector4(${arg.x.toFixed(1)}, ${arg.y.toFixed(1)}, ${arg.z.toFixed(1)}, ${arg.w.toFixed(1)})`;
-                            } else if ('x' in arg && 'y' in arg && 'z' in arg) {
-                                arg = `vector3(${arg.x.toFixed(1)}, ${arg.y.toFixed(1)}, ${arg.z.toFixed(1)})`;
-                            } else if ('x' in arg && 'y' in arg) {
-                                arg = `vector2(${arg.x.toFixed(1)}, ${arg.y.toFixed(1)})`;
-                            }
-                        }
-
-                        return `--${arg}--`;
-                    }).join(', ');
-
                     const native = metadata.native.startsWith('0x') ? `[${metadata.native}](https://docs.fivem.net/natives/?_0x${metadata.native.substr(2).toUpperCase()})` : metadata.native;
 
-                    return `${trace(metadata)} - **${native}** (${args})`;
+                    return `${trace(metadata)} - **${metadata.resource}** / **${native}**`;
                 case 'illegal_global':
                     if (!metadata.resource || !metadata.variable) return false;
 
