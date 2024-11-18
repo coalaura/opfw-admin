@@ -226,7 +226,6 @@ class PlayerController extends Controller
             'whitelisted'       => !!$whitelisted,
             'blacklisted'       => !!$blacklisted,
             'tags'              => Player::resolveTags(),
-            'allowRoleEdit'     => env('ALLOW_ROLE_EDITING', false) && $this->isSuperAdmin($request),
             'enablableCommands' => PlayerDataController::EnablableCommands,
             'uniqueBans'        => $player->getActiveBan() ? sizeof($player->uniqueBans()) : 0,
         ]);

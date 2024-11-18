@@ -227,6 +227,11 @@ export default {
                             url: '/tokens',
                         },
                         {
+                            label: 'roles.title',
+                            icon: 'user-md',
+                            url: '/roles',
+                        },
+                        {
                             label: 'blacklist.title',
                             icon: 'shield',
                             private: true,

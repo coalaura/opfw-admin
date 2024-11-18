@@ -1028,11 +1028,6 @@
             "resolution": "Wesowution",
             "revive": "Wevive Pwayew nya~",
             "revive_confirm": "Awe you suwe you want to wevive this pwayew nya?",
-            "role": "Wowe",
-            "role_player": "Pwayew nya~",
-            "role_seniorStaff": "Senioh Staff",
-            "role_staff": "Staff nya~",
-            "role_trusted": "Twusted",
             "save_changes": "Save changes nya~",
             "saving": "Saving nya~",
             "schedule_info": "At the sewected date, the ban wiww automaticawwy be wemoved at 12 AM UTC nya~",
@@ -1131,6 +1126,20 @@
         "player": "Pwayew",
         "title": "Staff Points",
         "week_0": "This Week"
+    },
+    "roles": {
+        "description": "Pwayew wowe management.",
+        "is_debugger": "Is Debuggew",
+        "is_developer": "Is Devewopew",
+        "is_senior_staff": "Is Senyow Staff",
+        "is_staff": "Is Staff",
+        "is_super_admin": "Is Supew Admin",
+        "is_trusted": "Is Twusted",
+        "player": "Pwayew",
+        "readonly": "Wead Onwy Mode",
+        "reset": "Weset",
+        "save": "Save Changes",
+        "title": "Wowes"
     },
     "screenshot": {
         "anti_cheat": "Anti-Cheat Scweenshots",

@@ -1,0 +1,181 @@
+<template>
+    <div>
+        <portal to="title">
+            <h1 class="dark:text-white">
+                {{ t('roles.title') }}
+            </h1>
+            <p>
+                {{ t('roles.description') }}
+                <span v-if="readonly">({{ t('roles.readonly') }})</span>
+            </p>
+        </portal>
+
+        <template>
+            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600">
+                <table class="whitespace-nowrap w-full">
+                    <tr class="bg-gray-400 dark:bg-gray-800 no-alpha">
+                        <th class="font-bold px-4 py-1.5 text-left">{{ t('roles.player') }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left" v-for="role in roleList" :key="role">{{ t('roles.' + role) }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left" v-if="!readonly">&nbsp;</th>
+                    </tr>
+
+                    <tr v-for="(player, license) in playerList" :key="license" class="odd:bg-gray-200 dark:odd:bg-gray-500">
+                        <td class="italic px-4 py-1.5">
+                            <a :href="`/players/${license}`" target="_blank">
+                                {{ player.playerName }}
+                                <sup v-if="player.hasOverrides">*</sup>
+                            </a>
+                        </td>
+
+                        <td class="italic px-4 py-1.5 text-xl relative" v-for="role in roleList" :key="role" :class="{'opacity-50': !canEditRole(role)}">
+                            <i class="fas fa-toggle-on cursor-pointer text-lime-600 dark:text-lime-400" :class="{'cursor-not-allowed': !canEditRole(role)}" @click="toggleOverride(player, role)" v-if="player.overrides[role]"></i>
+                            <i class="fas fa-toggle-off cursor-pointer text-red-600 dark:text-red-400" :class="{'cursor-not-allowed': !canEditRole(role)}" v-else @click="toggleOverride(player, role)"></i>
+                        </td>
+
+                        <td class="italic px-4 py-1.5 w-24" v-if="!readonly">
+                            <button class="px-2 py-0.5 rounded bg-danger dark:bg-dark-danger" @click="resetOverrides(player)" :title="t('roles.reset')" :disabled="!player.hasOverrides">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+
+                            <button class="px-2 py-0.5 rounded bg-success dark:bg-dark-success" @click="saveOverrides(player)" :title="t('roles.save')" :disabled="!player.hasOverrides">
+                                <i class="fas fa-save"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </template>
+
+    </div>
+</template>
+
+<script>
+import axios from 'axios';
+import Layout from './../../Layouts/App';
+
+export default {
+    layout: Layout,
+    props: {
+        players: {
+            type: Array,
+            required: true
+        },
+        roles: {
+            type: Object,
+            required: true
+        },
+        readonly: {
+            type: Boolean,
+            required: true
+        }
+    },
+    data() {
+        const roles = Object.keys(this.roles).toSorted((a, b) => {
+            return this.getRolePriority(a) - this.getRolePriority(b);
+        });
+
+        const players = {};
+
+        for (const player of this.players) {
+            const overrides = {};
+
+            for (const role of roles) {
+                overrides[role] = !!player[role];
+            }
+
+            players[player.licenseIdentifier] = {
+                overrides: overrides,
+                ...player,
+
+                hasOverrides: false,
+                isLoading: false
+            }
+        }
+
+        return {
+            roleList: roles,
+            playerList: players
+        };
+    },
+    methods: {
+        canEditRole(role) {
+            if (this.readonly) return false;
+
+            if (!this.roles[role]) return true;
+
+            return this.$page.auth.player.isRoot;
+        },
+        getRolePriority(role) {
+            switch (role) {
+                case "is_super_admin":
+                    return 0;
+                case "is_senior_staff":
+                    return 1;
+                case "is_staff":
+                    return 2;
+                case "is_trusted":
+                    return 3;
+                case "is_debugger":
+                    return 4;
+            }
+
+            return 9;
+        },
+        toggleOverride(player, role) {
+            if (player.isLoading || !this.canEditRole(role)) return;
+
+            player.overrides[role] = !player.overrides[role];
+
+            player.hasOverrides = !!Object.entries(player.overrides).find(([key, value]) => !!player[key] !== value);
+        },
+        resetOverrides(player) {
+            if (player.isLoading || !player.hasOverrides) return;
+
+            for (const license in this.playerList) {
+                const player = this.playerList[license];
+
+                for (const role in player.overrides) {
+                    player.overrides[role] = !!player[role];
+                }
+
+                player.hasOverrides = false;
+            }
+
+            this.hasOverrides = false;
+        },
+        async saveOverrides(player) {
+            if (player.isLoading || !player.hasOverrides) return;
+
+            player.isLoading = true;
+
+            const overrides = {};
+
+            for (const role in player.overrides) {
+                const original = !!player[role],
+                    value = player.overrides[role];
+
+                if (original !== value) {
+                    overrides[role] = value;
+                }
+            }
+
+            try {
+                const response = await axios.post('/roles/' + player.licenseIdentifier, overrides),
+                    data = response.data;
+
+                if (data.status) {
+                    for (const role in player.overrides) {
+                        player[role] = player.overrides[role];
+                    }
+
+                    player.hasOverrides = false;
+                }
+            } catch (error) {
+                console.error(error);
+            }
+
+            player.isLoading = false;
+        }
+    }
+}
+</script>

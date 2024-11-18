@@ -1028,11 +1028,6 @@
             "resolution": "Resolution",
             "revive": "Revive",
             "revive_confirm": "Sure revive player?",
-            "role": "Role",
-            "role_player": "Player",
-            "role_seniorStaff": "Senior Staff",
-            "role_staff": "Staff",
-            "role_trusted": "Trusted",
             "save_changes": "Save",
             "saving": "Saving",
             "schedule_info": "Ban gone at 12 AM UTC on date.",
@@ -1131,6 +1126,20 @@
         "player": "Player",
         "title": "Staff Points",
         "week_0": "This Week"
+    },
+    "roles": {
+        "description": "Player role manage.",
+        "is_debugger": "Be Debugger",
+        "is_developer": "Be Developer",
+        "is_senior_staff": "Be Senior Staff",
+        "is_staff": "Be Staff",
+        "is_super_admin": "Be Super Admin",
+        "is_trusted": "Be Trusted",
+        "player": "Player",
+        "readonly": "Read Only Mode",
+        "reset": "Reset",
+        "save": "Save Changes",
+        "title": "Roles"
     },
     "screenshot": {
         "anti_cheat": "No-Cheat Pictures",

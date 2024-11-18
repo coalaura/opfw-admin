@@ -913,11 +913,6 @@
             "edit": "Edit",
             "remove_tag": "Remove Tag",
             "tag_custom": "Custom Tag",
-            "role": "Role",
-            "role_player": "Player",
-            "role_trusted": "Trusted",
-            "role_staff": "Staff",
-            "role_seniorStaff": "Senior Staff",
             "kick_confirm": "Are you sure you want to kick this player from the server?",
             "kick_reason": "Reason",
             "pm_message": "Message",
@@ -1460,6 +1455,22 @@
         "no_more_logs": "No more logs to load.",
         "loading_logs": "Loading logs...",
         "per_second": "{0} requests per second. {1} in the last 5 minutes."
+    },
+    "roles": {
+        "title": "Roles",
+        "description": "Player role management.",
+        "readonly": "Read Only Mode",
+
+        "player": "Player",
+        "save": "Save Changes",
+        "reset": "Reset",
+
+        "is_super_admin": "Is Super Admin",
+        "is_senior_staff": "Is Senior Staff",
+        "is_staff": "Is Staff",
+        "is_trusted": "Is Trusted",
+        "is_developer": "Is Developer",
+        "is_debugger": "Is Debugger"
     },
     "tools": {
         "config": {

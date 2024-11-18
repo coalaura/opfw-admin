@@ -43,6 +43,7 @@ use App\Http\Controllers\StaffChatController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\DataController;
 use App\Http\Controllers\LookupController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SuspiciousController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TwitterController;
@@ -123,7 +124,6 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::post('/players/{player}/updateWhitelistStatus', [PlayerDataController::class, 'updateWhitelistStatus']);
     Route::post('/players/{player}/updateMuteStatus', [PlayerDataController::class, 'updateMuteStatus']);
     Route::post('/players/{player}/updateTag', [PlayerDataController::class, 'updateTag']);
-    Route::post('/players/{player}/updateRole', [PlayerDataController::class, 'updateRole']);
 
     // Ban actions.
     Route::get('/smurf/{hash}', [PlayerBanController::class, 'smurfBan']);
@@ -271,6 +271,10 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::post('/tokens', [TokenController::class, 'create']);
     Route::put('/tokens/{token}', [TokenController::class, 'update']);
     Route::delete('/tokens/{token}', [TokenController::class, 'delete']);
+
+    // Roles.
+    Route::get('/roles', [RoleController::class, 'index']);
+    Route::post('/roles/{player}', [RoleController::class, 'update']);
 
     // Settings.
     Route::get('/settings', [SettingsController::class, 'index']);

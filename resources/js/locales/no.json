@@ -1028,11 +1028,6 @@
             "resolution": "Oppløsning",
             "revive": "Gjenoppliv spiller",
             "revive_confirm": "Er du sikker på at du vil gjenopplive denne spilleren?",
-            "role": "Rolle",
-            "role_player": "Spiller",
-            "role_seniorStaff": "Senior stab",
-            "role_staff": "Stab",
-            "role_trusted": "Betrodd",
             "save_changes": "Lagre endringer",
             "saving": "Lagrer",
             "schedule_info": "På den valgte datoen vil forbudet automatisk bli fjernet klokken 12 AM UTC.",
@@ -1131,6 +1126,20 @@
         "player": "Spiller",
         "title": "Ansattpoeng",
         "week_0": "Denne uken"
+    },
+    "roles": {
+        "description": "Spillerrollehåndtering.",
+        "is_debugger": "Er debugger",
+        "is_developer": "Er utvikler",
+        "is_senior_staff": "Er seniorstab",
+        "is_staff": "Er stab",
+        "is_super_admin": "Er superadministrator",
+        "is_trusted": "Er betrodd",
+        "player": "Spiller",
+        "readonly": "Kun lese-modus",
+        "reset": "Tilbakestill",
+        "save": "Lagre endringer",
+        "title": "Roller"
     },
     "screenshot": {
         "anti_cheat": "Anti-juks Skjermbilder",

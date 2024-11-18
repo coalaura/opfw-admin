@@ -1028,11 +1028,6 @@
             "resolution": "Resolution",
             "revive": "Khiladi ko punarjeevit karein",
             "revive_confirm": "Kya aap sach mein is khiladi ko punarjeevit karna chahte hain?",
-            "role": "Bhoomika",
-            "role_player": "Khiladi",
-            "role_seniorStaff": "Varishth Karmachari",
-            "role_staff": "Karmachari",
-            "role_trusted": "Vishwasniya",
             "save_changes": "Parivartan ko bachayein",
             "saving": "Bachaya ja raha hai",
             "schedule_info": "Chuni gayi tareekh par, ban apne aap 12 baje raat UTC par hat jayega.",
@@ -1131,6 +1126,20 @@
         "player": "Player",
         "title": "Staff Points",
         "week_0": "Is Hafte"
+    },
+    "roles": {
+        "description": "Khiladi ka bhoomika prabandhan.",
+        "is_debugger": "Hai Debugger",
+        "is_developer": "Hai Vikasak",
+        "is_senior_staff": "Hai Varishtha Karmachari",
+        "is_staff": "Hai Karmachari",
+        "is_super_admin": "Hai Super Prashasak",
+        "is_trusted": "Hai Vishwasniya",
+        "player": "Khiladi",
+        "readonly": "Keval Pathan Mode",
+        "reset": "Reset",
+        "save": "Parivartan Sanrakshit Karein",
+        "title": "Bhoomikaen"
     },
     "screenshot": {
         "anti_cheat": "Anti-Cheat Screenshots",

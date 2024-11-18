@@ -90,6 +90,7 @@
     <i class="fas fa-key" v-else-if="name === 'key'"></i>
     <i class="fas fa-home" v-else-if="name === 'home'"></i>
     <i class="fas fa-warehouse" v-else-if="name === 'warehouse'"></i>
+    <i class="fas fa-user-md" v-else-if="name === 'user-md'"></i>
 </template>
 
 <script>
