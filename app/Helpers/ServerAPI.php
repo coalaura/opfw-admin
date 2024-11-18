@@ -169,6 +169,8 @@ class ServerAPI
         $serverUrl = Server::getFirstServer('url');
 
         if (!$serverUrl) {
+            LoggingHelper::log('No OP-FW server found.');
+
             return null;
         }
 
@@ -202,6 +204,8 @@ class ServerAPI
         $token = env('OP_FW_TOKEN');
 
         if (!$token) {
+            LoggingHelper::log('No OP-FW token found.');
+
             return null;
         }
 
