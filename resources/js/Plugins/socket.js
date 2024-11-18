@@ -1,9 +1,13 @@
 const Socket = {
     async install(Vue, options) {
-        let originUnavailable = false;
-
         async function executeRequest(vue, type, route, throwError) {
-            if (originUnavailable) return null;
+            if (!vue.$page.auth.socket) {
+                if (throwError) {
+                    throw new Error('Socket unavailable');
+                }
+
+                return false;
+            }
 
             route = route.replace(/^\/|\/$/, '');
 
@@ -29,22 +33,18 @@ const Socket = {
                 if (data.data && data.data.status) {
                     return data.data.data;
                 } else {
-                    if (throwError) throw new Error(data?.data?.error || 'Unknown error');
+                    if (throwError) {
+                        throw new Error(data?.data?.error || 'Unknown error');
+                    }
 
                     return false;
                 }
-            } catch (e) {
+            } catch (err) {
                 console.log(`Error fetching data from ${url}: ${e.message}`);
 
-                if (e.message === 'Network Error') {
-                    originUnavailable = isDev;
-
-                    console.info('Origin server is unavailable, aborting future requests.');
-
-                    return null;
+                if (throwError) {
+                    throw err;
                 }
-
-                if (throwError) throw e;
 
                 return false;
             }

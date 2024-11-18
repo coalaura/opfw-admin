@@ -7,6 +7,16 @@ use GuzzleHttp\Client;
 
 class SocketAPI
 {
+    public static function isUp(): bool
+    {
+        if (strtoupper(substr(PHP_OS, 0, 3)) !== "WIN") {
+            return file_exists("/tmp/op-fw.sock");
+        }
+
+        $output = shell_exec("netstat -aon | findstr :9999");
+
+        return strpos($output, "LISTENING") !== false;
+    }
     /**
      * /data/players
      */
@@ -26,8 +36,8 @@ class SocketAPI
      */
     private static function fresh(string $ip, string $method, string $route): ?array
     {
-        if (!HttpHelper::isLocalPortOpen(9999)) {
-            LoggingHelper::log('Socket server is not running (local port 9999 is not open).');
+        if (!self::isUp()) {
+            LoggingHelper::log('Socket server is not running (op-fw.sock not found).');
 
             return null;
         }

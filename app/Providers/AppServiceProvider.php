@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Helpers\GeneralHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\SessionHelper;
+use App\Helpers\SocketAPI;
 use App\Http\Resources\LoggedInPlayerResource;
 use App\Server;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -152,6 +153,7 @@ class AppServiceProvider extends ServiceProvider
                     'token'       => sessionKey(),
                     'cluster'     => CLUSTER,
                     'servers'     => Server::getOPFWServers("name"),
+                    'socket'      => SocketAPI::isUp(),
                 ];
             },
 

@@ -37,39 +37,6 @@ class HttpHelper
     }
 
     /**
-     * Returns true if the given port is open on the current machine
-     *
-     * @param int $port The port to check
-     * @return bool
-     */
-    public static function isLocalPortOpen(int $port): bool
-    {
-        // Check if netstat is installed
-        if (strtoupper(substr(PHP_OS, 0, 3)) === "WIN") {
-            $output = shell_exec("where netstat");
-        } else {
-            $output = shell_exec("command -v netstat");
-        }
-
-        if (empty($output)) {
-            LoggingHelper::log('Unable to check port, "netstat" is not installed.');
-
-            return false;
-        }
-
-        // Check if port is open
-        if (strtoupper(substr(PHP_OS, 0, 3)) === "WIN") {
-            $output = shell_exec("netstat -aon | findstr :$port");
-
-            return strpos($output, "LISTENING") !== false;
-        } else {
-            $output = shell_exec("netstat -atlpn | grep :" . $port);
-
-            return strpos($output, "LISTEN") !== false;
-        }
-    }
-
-    /**
      * Returns the last error message
      */
     public static function lastError(): string
