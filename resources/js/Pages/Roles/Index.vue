@@ -193,7 +193,7 @@ export default {
             }
 
             try {
-                const response = await axios.post('/roles/' + player.licenseIdentifier, overrides),
+                const response = await axios.post('/roles/' + player.license, overrides),
                     data = response.data;
 
                 if (data.status) {
