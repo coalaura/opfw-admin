@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 class CacheFile
 {
+    private string $name;
     private int $ttl;
     private string $path;
 
@@ -23,6 +24,7 @@ class CacheFile
 
     public function __construct(string $name, callable $fetcher, int $ttl = 10, callable $invalidator = null)
     {
+        $this->name = $name;
         $this->ttl = $ttl;
         $this->path = storage_path('cache/' . $name . '.json');
 
@@ -62,6 +64,8 @@ class CacheFile
         if (!$invalid && $exists && time() - filemtime($this->path) < $this->ttl) {
             $this->readFromCache();
 
+            LoggingHelper::log(sprintf('Using cached data for cache-file "%s".', $this->name));
+
             return;
         }
 
@@ -69,6 +73,8 @@ class CacheFile
         if (!$this->mutex->lock()) {
             // RIP, guess we're getting stale data
             $this->readFromCache();
+
+            LoggingHelper::log(sprintf('Unable to lock cache-file "%s" mutex, using stale data.', $this->name));
 
             return;
         }
@@ -80,8 +86,10 @@ class CacheFile
             $this->cache = $fetcher() ?? [];
 
             file_put_contents($this->path, json_encode($this->cache));
+
+            LoggingHelper::log(sprintf('Fetched data for cache-file "%s" (%d).', $this->name, count($this->cache)));
         } catch(\Exception $e) {
-            // do nothing :)
+            LoggingHelper::log(sprintf('Failed to fetch data for cache-file "%s": %s', $this->name, $e->getMessage()));
         }
 
         $this->mutex->unlock();

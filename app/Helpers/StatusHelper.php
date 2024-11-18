@@ -63,6 +63,8 @@ class StatusHelper
         foreach ($servers as $server) {
             $users = SocketAPI::getPlayers($server['ip']);
 
+            LoggingHelper::log(sprintf('Got %d players from %s.', count($users), $server['name']));
+
             foreach ($users as $user) {
                 $license = $user['license'];
 
