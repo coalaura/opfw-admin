@@ -27,6 +27,8 @@ class SocketAPI
     private static function fresh(string $ip, string $method, string $route): ?array
     {
         if (!HttpHelper::isLocalPortOpen(9999)) {
+            LoggingHelper::log('Socket server is not running (local port 9999 is not open).');
+
             return null;
         }
 
@@ -41,6 +43,8 @@ class SocketAPI
         $token = sessionKey();
 
         if (!$token) {
+            LoggingHelper::log('No session key found.');
+
             return false;
         }
 
@@ -71,13 +75,13 @@ class SocketAPI
             $status = $response->getStatusCode();
 
             if ($status % 2 !== 0) {
-                return null;
+                throw new \Exception(sprintf('HTTP %s: %s', $status, substr($body, 0, 100)));
             }
 
             $json = json_decode($body, true);
 
             if (!$json || empty($json['status']) || !$json['status']) {
-                return null;
+                throw new \Exception(sprintf('Invalid JSON response %s: %s', $status, substr($body, 0, 100)));
             }
 
             return $json['data'] ?? null;
