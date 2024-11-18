@@ -10,7 +10,7 @@ class SocketAPI
     public static function isUp(): bool
     {
         if (strtoupper(substr(PHP_OS, 0, 3)) !== "WIN") {
-            return file_exists("/tmp/op-fw.sock");
+            return file_exists("/tmp/op-fw.lock");
         }
 
         $output = shell_exec("netstat -aon | findstr :9999");
