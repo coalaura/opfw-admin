@@ -64,8 +64,6 @@ class CacheFile
         if (!$invalid && $exists && time() - filemtime($this->path) < $this->ttl) {
             $this->readFromCache();
 
-            LoggingHelper::log(sprintf('Using cached data for cache-file "%s".', $this->name));
-
             return;
         }
 
