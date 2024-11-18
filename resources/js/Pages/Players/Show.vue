@@ -128,7 +128,7 @@
         <div class="flex flex-wrap justify-between mb-6">
             <div class="mb-3 flex flex-wrap gap-3">
                 <!-- Wide Screen -->
-                <badge class="border-gray-200 overflow-hidden bg-center bg-cover w-32 cursor-help" style="background-image: url('/images/wide_putin.webp')" v-if="player.stretchedRes" :title="t('players.show.stretch_res', estimateRatio(player.stretchedRes.aspectRatio), estimateRatio(player.stretchedRes.pixelRatio))"></badge>
+                <badge class="border-gray-200 overflow-hidden bg-center bg-cover w-32 cursor-help" style="background-image: url('/images/wide_putin.webp')" v-if="player.stretchedRes && player.stretchedRes.pixelRatio" :title="t('players.show.stretch_res', estimateRatio(player.stretchedRes.aspectRatio), estimateRatio(player.stretchedRes.pixelRatio))"></badge>
 
                 <!-- VPN -->
                 <badge class="border-gray-200 overflow-hidden bg-center bg-cover w-16 cursor-help relative" style="background-image: url('/images/vpn.webp')" v-if="isUsingVPN" :title="t('players.show.using_vpn')">
