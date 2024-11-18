@@ -14,15 +14,15 @@
             <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600">
                 <table class="whitespace-nowrap w-full">
                     <tr class="bg-gray-400 dark:bg-gray-800 no-alpha">
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('roles.player') }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left" v-for="role in roleList" :key="role">{{ t('roles.' + role) }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left cursor-pointer" @click="sortBy('name')">{{ t('roles.player') }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left cursor-pointer" @click="sortBy(role)" v-for="role in roleList" :key="role">{{ t('roles.' + role) }}</th>
                         <th class="font-bold px-4 py-1.5 text-left" v-if="!readonly">&nbsp;</th>
                     </tr>
 
-                    <tr v-for="(player, license) in playerList" :key="license" class="odd:bg-gray-200 dark:odd:bg-gray-500">
+                    <tr v-for="player in playerList" :key="player.license" class="odd:bg-gray-200 dark:odd:bg-gray-500">
                         <td class="italic px-4 py-1.5">
-                            <a :href="`/players/${license}`" target="_blank">
-                                {{ player.playerName }}
+                            <a :href="`/players/${player.license}`" target="_blank">
+                                {{ player.name }}
                                 <sup v-if="player.hasOverrides">*</sup>
                             </a>
                         </td>
@@ -92,11 +92,7 @@ export default {
             return this.getRolePriority(a) - this.getRolePriority(b);
         });
 
-        const players = {};
-
-        for (const player of this.players) {
-            players[player.licenseIdentifier] = this.createPlayer(player);
-        }
+        const players = this.players.map(player => this.createPlayer(player));
 
         return {
             isAdding: false,
@@ -110,7 +106,7 @@ export default {
         addedLicenseValid() {
             if (!this.adding || !this.adding.match(/^license:[a-f0-9]{40}$/m)) return false;
 
-            return !this.playerList[this.adding];
+            return !this.playerList.find(player => player.license === this.adding);
         }
     },
     methods: {
@@ -152,6 +148,18 @@ export default {
 
             return 9;
         },
+        sortBy(key) {
+            this.playerList.sort((a, b) => {
+                const aVal = a[key],
+                    bVal = b[key];
+
+                if (key === "name" || aVal === bVal) {
+                    return a.name < b.name ? -1 : 1;
+                }
+
+                return aVal > bVal ? -1 : 1;
+            });
+        },
         toggleOverride(player, role) {
             if (player.isLoading || !this.canEditRole(role)) return;
 
@@ -162,17 +170,11 @@ export default {
         resetOverrides(player) {
             if (player.isLoading || !player.hasOverrides) return;
 
-            for (const license in this.playerList) {
-                const player = this.playerList[license];
-
-                for (const role in player.overrides) {
-                    player.overrides[role] = !!player[role];
-                }
-
-                player.hasOverrides = false;
+            for (const role in player.overrides) {
+                player.overrides[role] = !!player[role];
             }
 
-            this.hasOverrides = false;
+            player.hasOverrides = false;
         },
         async saveOverrides(player) {
             if (player.isLoading || !player.hasOverrides) return;
@@ -219,7 +221,7 @@ export default {
                 if (data.status) {
                     const player = data.data;
 
-                    this.playerList[player.licenseIdentifier] = this.createPlayer(player);
+                    this.playerList.push(this.createPlayer(player));
                 }
             } catch (error) {
                 console.error(error);

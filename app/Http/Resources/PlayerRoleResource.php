@@ -17,16 +17,14 @@ class PlayerRoleResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'licenseIdentifier' => $this->license_identifier,
-            'playerName'        => $this->getSafePlayerName(),
+            'license' => $this->license_identifier,
+            'name'        => $this->getSafePlayerName(),
 
             'is_super_admin' => $this->is_super_admin,
             'is_senior_staff' => $this->is_senior_staff,
             'is_staff' => $this->is_staff,
             'is_trusted' => $this->is_trusted,
             'is_debugger' => $this->is_debugger,
-
-            'isRoot' => $this->isRoot(),
         ];
     }
 
