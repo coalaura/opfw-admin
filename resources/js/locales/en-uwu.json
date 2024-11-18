@@ -1128,6 +1128,7 @@
         "week_0": "This Week"
     },
     "roles": {
+        "add": "Add pwayew wif wicense identifiew.",
         "description": "Pwayew wowe management.",
         "is_debugger": "Is Debuggew",
         "is_developer": "Is Devewopew",

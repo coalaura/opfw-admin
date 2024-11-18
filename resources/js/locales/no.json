@@ -1128,6 +1128,7 @@
         "week_0": "Denne uken"
     },
     "roles": {
+        "add": "Legg til spiller med lisensidentifikator.",
         "description": "Spillerrollehåndtering.",
         "is_debugger": "Er debugger",
         "is_developer": "Er utvikler",

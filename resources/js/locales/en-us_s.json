@@ -1128,6 +1128,7 @@
         "week_0": "This Week"
     },
     "roles": {
+        "add": "Add a player with a license identifier, y'all.",
         "description": "Player role management.",
         "is_debugger": "Is Debugger",
         "is_developer": "Is Developer",

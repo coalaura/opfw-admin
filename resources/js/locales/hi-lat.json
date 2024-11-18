@@ -1128,6 +1128,7 @@
         "week_0": "Is Hafte"
     },
     "roles": {
+        "add": "Khiladi ko license pahachaan se jodo.",
         "description": "Khiladi ka bhoomika prabandhan.",
         "is_debugger": "Hai Debugger",
         "is_developer": "Hai Vikasak",

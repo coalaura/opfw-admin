@@ -1128,6 +1128,7 @@
         "week_0": "This Week"
     },
     "roles": {
+        "add": "Add player with license.",
         "description": "Player role manage.",
         "is_debugger": "Be Debugger",
         "is_developer": "Be Developer",

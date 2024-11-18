@@ -44,6 +44,11 @@ class RoleController extends Controller
         ]);
     }
 
+    public function get(Request $request, Player $player)
+    {
+        return $this->json(true, PlayerRoleResource::make($player));
+    }
+
     public function update(Request $request, Player $player)
     {
         if (!env('ALLOW_ROLE_EDITING', false) || !$this->isSuperAdmin($request)) {

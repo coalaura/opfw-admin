@@ -1464,6 +1464,7 @@
         "player": "Player",
         "save": "Save Changes",
         "reset": "Reset",
+        "add": "Add player with license identifier.",
 
         "is_super_admin": "Is Super Admin",
         "is_senior_staff": "Is Senior Staff",

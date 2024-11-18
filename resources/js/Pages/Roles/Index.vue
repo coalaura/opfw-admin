@@ -42,6 +42,24 @@
                             </button>
                         </td>
                     </tr>
+
+                    <tr class="odd:bg-gray-200 dark:odd:bg-gray-500 border-t-4 border-gray-300" v-if="!readonly">
+                        <td class="italic px-4 py-1.5" colspan="6">
+                            <input class="block w-full text-sm bg-transparent py-1 px-2 border-0 border-b-2 border-red-600 dark:border-red-400" :class="{ '!border-lime-600 !dark:border-lime-400': addedLicenseValid }" v-model="adding" placeholder="license:2ced2cabd90f1208e..." />
+                        </td>
+
+                        <td class="italic px-4 py-1.5 w-24">
+                            <div class="flex justify-end">
+                                <div class="px-2 py-0.5 rounded bg-secondary dark:bg-dark-secondary" v-if="isAdding">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                </div>
+
+                                <button class="px-2 py-0.5 rounded bg-success dark:bg-dark-success" :title="t('roles.add')" :disabled="!addedLicenseValid" @click="addNewPlayer()" v-else>
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </template>
@@ -77,27 +95,40 @@ export default {
         const players = {};
 
         for (const player of this.players) {
+            players[player.licenseIdentifier] = this.createPlayer(player);
+        }
+
+        return {
+            isAdding: false,
+            adding: "",
+
+            roleList: roles,
+            playerList: players
+        };
+    },
+    computed: {
+        addedLicenseValid() {
+            if (!this.adding || !this.adding.match(/^license:[a-f0-9]{40}$/m)) return false;
+
+            return !this.playerList[this.adding];
+        }
+    },
+    methods: {
+        createPlayer(player) {
             const overrides = {};
 
-            for (const role of roles) {
+            for (const role in this.roles) {
                 overrides[role] = !!player[role];
             }
 
-            players[player.licenseIdentifier] = {
+            return {
                 overrides: overrides,
                 ...player,
 
                 hasOverrides: false,
                 isLoading: false
-            }
-        }
-
-        return {
-            roleList: roles,
-            playerList: players
-        };
-    },
-    methods: {
+            };
+        },
         canEditRole(role) {
             if (this.readonly) return false;
 
@@ -175,6 +206,27 @@ export default {
             }
 
             player.isLoading = false;
+        },
+        async addNewPlayer() {
+            if (this.isAdding || !this.addedLicenseValid) return;
+
+            this.isAdding = true;
+
+            try {
+                const response = await axios.get('/roles/' + this.adding),
+                    data = response.data;
+
+                if (data.status) {
+                    const player = data.data;
+
+                    this.playerList[player.licenseIdentifier] = this.createPlayer(player);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+
+            this.adding = "";
+            this.isAdding = false;
         }
     }
 }
