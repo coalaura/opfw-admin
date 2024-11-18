@@ -411,6 +411,7 @@ export default {
                 case 'infinite_ammo':
                     return metadata.weaponName;
                 case 'illegal_native':
+                case 'honeypot_native':
                     if (!metadata.resource || !metadata.native) return false;
 
                     const args = (metadata.arguments || []).map(arg => {
@@ -437,15 +438,17 @@ export default {
 
                     return `${trace(metadata)} - **${metadata.variable}**`;
                 case 'illegal_damage':
-                    if (!metadata.type || metadata.weaponType === undefined || metadata.distance === undefined || metadata.damage === undefined) return false;
+                    if (!metadata.type || !metadata.event) return false;
 
-                    let dmg = metadata.damage + 'hp';
+                    const { weaponDamage, weaponHash, distance } = metadata.event;
+
+                    let dmg = weaponDamage + 'hp';
 
                     if (metadata.type === 'high_damage' && metadata.maxAllowed !== undefined) {
-                        dmg = `${metadata.maxAllowed}+${metadata.damage - metadata.maxAllowed}hp`;
+                        dmg = `${metadata.maxAllowed}+${weaponDamage - metadata.maxAllowed}hp`;
                     }
 
-                    return `${metadata.type}: --${metadata.weaponType}-- - **${dmg}** (${metadata.distance.toFixed(2)}m)`;
+                    return `${metadata.type}: --${weaponHash}-- - **${dmg}** (${distance.toFixed(2)}m)`;
                 case 'illegal_vehicle_modifier':
                     if (!metadata.modifierName || metadata.actualValue === undefined || metadata.expectedValue === undefined) return false;
 
