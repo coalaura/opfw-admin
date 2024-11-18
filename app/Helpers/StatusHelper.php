@@ -53,6 +53,8 @@ class StatusHelper
         $servers = Server::getOPFWServers();
 
         if (!$servers) {
+            LoggingHelper::log('No op-fw servers found.');
+
             return [];
         }
 
