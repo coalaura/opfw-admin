@@ -40,7 +40,7 @@ const Socket = {
                     return false;
                 }
             } catch (err) {
-                console.log(`Error fetching data from ${url}: ${e.message}`);
+                console.log(`Error fetching data from ${url}: ${err.message}`);
 
                 if (throwError) {
                     throw err;
