@@ -246,9 +246,6 @@ export default {
 
             this.isLoading = false;
         },
-        localizePlayerCount() {
-            return this.t('home.player_count', this.joinedPlayers, this.totalPlayers, this.queuePlayers);
-        },
         copyCoords(e) {
             e.preventDefault();
 
