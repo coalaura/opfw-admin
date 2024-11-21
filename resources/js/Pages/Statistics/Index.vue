@@ -175,9 +175,9 @@
                         <table class="whitespace-nowrap">
                             <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
                                 <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.date') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(players, 0)">{{ t('statistics.minimum_fps') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(players, 1)">{{ t('statistics.maximum_fps') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(players, 2)">{{ t('statistics.average_fps') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(fps, 0)">{{ t('statistics.minimum_fps') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(fps, 1)">{{ t('statistics.maximum_fps') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(fps, 2)">{{ t('statistics.average_fps') }}</th>
                             </tr>
 
                             <tr class="border-t border-gray-500" v-if="!fps">
