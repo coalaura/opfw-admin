@@ -61,6 +61,8 @@
                 <i class="mr-2 fas fa-bug"></i> {{ t("nav.report") }}
             </a>
         </div>
+
+        <div class="fixed left-3 bottom-2 text-sm">{{ time }}</div>
     </div>
 </template>
 
@@ -352,6 +354,8 @@ export default {
 
         data.heights = {};
 
+        data.time = "";
+
         return data;
     },
     watch: {
@@ -391,6 +395,32 @@ export default {
 
             return this.getLinkLabel(link).toLowerCase().includes(query);
         }
+    },
+    mounted() {
+        setInterval(() => {
+            const date = new Date();
+
+            const minutes = date.getMinutes().toString().padStart(2, '0'),
+                hours = date.getHours();
+
+            let ampm, hour;
+
+            if (hours === 0) {
+                hour = 12;
+                ampm = 'AM';
+            } else if (hours === 12) {
+                hour = 12;
+                ampm = 'PM';
+            } else if (hours > 12) {
+                hour = hours - 12;
+                ampm = 'PM';
+            } else {
+                hour = hours;
+                ampm = 'AM';
+            }
+
+            this.time = `${hour}:${minutes} ${ampm}`;
+        }, 1000);
     },
     beforeMount() {
         let max = 0;
