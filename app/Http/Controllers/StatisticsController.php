@@ -182,7 +182,7 @@ class StatisticsController extends Controller
 
     public function economyStatistics()
     {
-        $datasets = 7;
+        $datasets = 9;
 
         $statistics = [
             "data"  => [],
@@ -217,24 +217,38 @@ class StatisticsController extends Controller
                         "pointRadius"     => 0,
                     ],
                     [
-                        "label"           => "Richest",
+                        "label"           => "Shared",
                         "data"            => [],
                         "backgroundColor" => $this->color(4, $datasets, 0.3),
                         "borderColor"     => $this->color(4, $datasets, 1),
                         "pointRadius"     => 0,
                     ],
                     [
-                        "label"           => "Poorest",
+                        "label"           => "Bonds",
                         "data"            => [],
                         "backgroundColor" => $this->color(5, $datasets, 0.3),
                         "borderColor"     => $this->color(5, $datasets, 1),
                         "pointRadius"     => 0,
                     ],
                     [
-                        "label"           => "Total",
+                        "label"           => "Richest",
                         "data"            => [],
                         "backgroundColor" => $this->color(6, $datasets, 0.3),
                         "borderColor"     => $this->color(6, $datasets, 1),
+                        "pointRadius"     => 0,
+                    ],
+                    [
+                        "label"           => "Poorest",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(7, $datasets, 0.3),
+                        "borderColor"     => $this->color(7, $datasets, 1),
+                        "pointRadius"     => 0,
+                    ],
+                    [
+                        "label"           => "Total",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(8, $datasets, 0.3),
+                        "borderColor"     => $this->color(8, $datasets, 1),
                         "pointRadius"     => 0,
                     ],
                 ],
@@ -251,7 +265,7 @@ class StatisticsController extends Controller
 
             $time = strtotime($date);
 
-            $total = $entry->cash + $entry->bank + $entry->stocks + $entry->savings;
+            $total = $entry->cash + $entry->bank + $entry->stocks + $entry->savings + $entry->shared + $entry->bonds;
 
             if ($time >= $min) {
                 $statistics["data"][$date] = [
@@ -260,6 +274,8 @@ class StatisticsController extends Controller
                     "bank"    => $entry->bank,
                     "stocks"  => $entry->stocks,
                     "savings" => $entry->savings,
+                    "shared"  => $entry->shared,
+                    "bonds"   => $entry->bonds,
                     "richest" => $entry->richest,
                     "poorest" => $entry->poorest,
                     "total"   => $total,
@@ -272,9 +288,11 @@ class StatisticsController extends Controller
             $statistics["graph"]["datasets"][1]["data"][] = $entry->bank;
             $statistics["graph"]["datasets"][2]["data"][] = $entry->stocks;
             $statistics["graph"]["datasets"][3]["data"][] = $entry->savings;
-            $statistics["graph"]["datasets"][4]["data"][] = $entry->richest;
-            $statistics["graph"]["datasets"][5]["data"][] = $entry->poorest;
-            $statistics["graph"]["datasets"][6]["data"][] = $total;
+            $statistics["graph"]["datasets"][4]["data"][] = $entry->shared;
+            $statistics["graph"]["datasets"][5]["data"][] = $entry->bonds;
+            $statistics["graph"]["datasets"][6]["data"][] = $entry->richest;
+            $statistics["graph"]["datasets"][7]["data"][] = $entry->poorest;
+            $statistics["graph"]["datasets"][8]["data"][] = $total;
         }
 
         $statistics["data"] = array_reverse(array_values($statistics["data"]));

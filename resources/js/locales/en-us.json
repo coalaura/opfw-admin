@@ -293,6 +293,8 @@
         "bank": "Bank",
         "stocks": "Stocks",
         "savings": "Savings",
+        "shared": "Shared",
+        "bonds": "Bonds",
         "total": "Total",
         "richest": "Richest",
         "poorest": "Poorest",

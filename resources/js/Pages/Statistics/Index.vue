@@ -43,10 +43,12 @@
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 1)">{{ t('statistics.bank') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 2)">{{ t('statistics.stocks') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 3)">{{ t('statistics.savings') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 4)">{{ t('statistics.total') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 4)">{{ t('statistics.shared') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 5)">{{ t('statistics.bonds') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 6)">{{ t('statistics.total') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left">&nbsp;</th>
-                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 5)">{{ t('statistics.richest') }}</th>
-                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 6)">{{ t('statistics.poorest') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 7)">{{ t('statistics.richest') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 8)">{{ t('statistics.poorest') }}</th>
                             </tr>
 
                             <tr class="border-t border-gray-500" v-if="!economy">
@@ -59,16 +61,18 @@
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
                             </tr>
 
                             <tr class="border-t border-gray-500" v-else-if="economyLoading">
-                                <td class="px-2 py-0.5 text-center" colspan="9">
+                                <td class="px-2 py-0.5 text-center" colspan="11">
                                     <i class="fas fa-spinner animate-spin"></i>
                                 </td>
                             </tr>
 
                             <tr class="border-t border-gray-500" v-else-if="economy.data.length === 0">
-                                <td class="px-2 py-0.5 text-center italic" colspan="9">
+                                <td class="px-2 py-0.5 text-center italic" colspan="11">
                                     {{ t('statistics.no_economy_recorded') }}
                                 </td>
                             </tr>
@@ -80,14 +84,16 @@
                                 <td class="px-2 py-0.5"  :style="datasetColor(economy, 1)">{{ numberFormat(entry.bank, false, true) }}</td>
                                 <td class="px-2 py-0.5"  :style="datasetColor(economy, 2)">{{ numberFormat(entry.stocks, false, true) }}</td>
                                 <td class="px-2 py-0.5"  :style="datasetColor(economy, 3)">{{ numberFormat(entry.savings, false, true) }}</td>
-                                <td class="px-2 py-0.5"  :style="datasetColor(economy, 4)">{{ numberFormat(entry.total, false, true) }}</td>
+                                <td class="px-2 py-0.5"  :style="datasetColor(economy, 4)">{{ numberFormat(entry.shared, false, true) }}</td>
+                                <td class="px-2 py-0.5"  :style="datasetColor(economy, 5)">{{ numberFormat(entry.bonds, false, true) }}</td>
+                                <td class="px-2 py-0.5"  :style="datasetColor(economy, 6)">{{ numberFormat(entry.total, false, true) }}</td>
                                 <td class="px-2 py-0.5">
                                     <span class="text-red-700 dark:text-red-300" v-if="index < economy.data.length - 1 && economy.data[index + 1].total > entry.total">-{{ ((economy.data[index + 1].total - entry.total) / economy.data[index + 1].total * 100).toFixed(3) }}%</span>
                                     <span class="text-green-700 dark:text-green-300" v-else-if="index < economy.data.length - 1">+{{ ((entry.total - economy.data[index + 1].total) / economy.data[index + 1].total * 100).toFixed(3) }}%</span>
                                 </td>
 
-                                <td class="px-2 py-0.5"  :style="datasetColor(economy, 5)">{{ numberFormat(entry.richest, false, true) }}</td>
-                                <td class="px-2 py-0.5"  :style="datasetColor(economy, 6)">{{ numberFormat(entry.poorest, false, true) }}</td>
+                                <td class="px-2 py-0.5"  :style="datasetColor(economy, 7)">{{ numberFormat(entry.richest, false, true) }}</td>
+                                <td class="px-2 py-0.5"  :style="datasetColor(economy, 8)">{{ numberFormat(entry.poorest, false, true) }}</td>
                             </tr>
                         </table>
                     </div>

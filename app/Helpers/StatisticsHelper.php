@@ -260,7 +260,7 @@ class StatisticsHelper
     // General economy statistics
     public static function collectEconomyStatistics(): array
     {
-        return DB::select("SELECT date, cash, bank, stocks, savings, richest, poorest FROM economy_statistics ORDER BY STR_TO_DATE(date, '%d.%m.%Y %H:%i') ASC");
+        return DB::select("SELECT date, cash, bank, stocks, savings, shared, bonds, richest, poorest FROM economy_statistics ORDER BY STR_TO_DATE(date, '%d.%m.%Y %H:%i') ASC");
     }
 
     // General user statistics
