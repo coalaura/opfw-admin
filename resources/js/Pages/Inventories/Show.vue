@@ -20,7 +20,7 @@
                 <div class="grid grid-cols-5 gap-3 w-max">
                     <div v-for="(items, slot) in contents" :key="slot" class="bg-black bg-opacity-10 rounded-sm border border-gray-500 w-item relative pt-2 text-white">
                         <template v-if="items.length > 0">
-                            <div class="text-sm absolute top-0.5 right-1.5 select-none">{{ items.length }}</div>
+                            <div class="text-sm absolute top-0.5 right-1.5 select-none">x{{ items.length }}</div>
 
                             <button v-if="canEditItems" class="bg-transparent absolute top-0.5 left-1.5 text-red-600 dark:text-red-500 font-semibold text-sm cursor-pointer" :title="t('inventories.show.delete_item_slot')" @click="deleteItemSlot(slot)">
                                 <i class="fas fa-trash-alt"></i>
