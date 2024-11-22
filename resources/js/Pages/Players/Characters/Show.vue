@@ -614,7 +614,7 @@
                         {{ character.vehicles.length > 0 ? t('players.vehicles.vehicles', character.vehicles.length) : t('players.vehicles.no_vehicles') }}
 
                         <sup :title="t('players.vehicles.vehicle_value')" class="font-mono text-xs -top-6">
-                            {{ vehicleValue }}
+                            {{ numberFormat(vehicleValue, false, true) }}
                         </sup>
                     </h2>
 
