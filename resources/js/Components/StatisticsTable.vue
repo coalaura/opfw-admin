@@ -70,7 +70,7 @@
                 </table>
             </div>
 
-            <SimpleChart :data="data" v-if="!collapsed && data" :amounts="amounts" />
+            <SimpleChart :data="data" v-if="!collapsed && data" :amounts="amounts" :labels="chartLabels" />
         </div>
     </div>
 </template>
@@ -142,6 +142,15 @@ export default {
             }
 
             return this.t('statistics.' + this.source);
+        },
+        chartLabels() {
+            const labels = [];
+
+            for (const locale of this.locales) {
+                labels.push(this.t(`statistics.${locale}`));
+            }
+
+            return labels;
         }
     },
     data() {
@@ -171,19 +180,6 @@ export default {
             }
 
             return total;
-        },
-        getChartData() {
-            if (!this.data) return false;
-
-            const data = [];
-
-            for (const entry of this.data) {
-                data.push({
-                    amount: this.getEntryAmount(entry),
-                });
-            }
-
-            return data;
         },
         async loadData() {
             if (this.loading || this.requested) return;

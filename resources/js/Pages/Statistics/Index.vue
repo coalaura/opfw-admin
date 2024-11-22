@@ -12,6 +12,12 @@
 
         <template>
             <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
+                <input class="block w-full px-4 py-2 bg-gray-200 border rounded dark:bg-gray-600" v-model="search" type="text" placeholder="Casino Rev..." :title="t('statistics.search')" />
+            </div>
+
+            <div class="w-full border-t-2 border-dashed border-gray-500 my-6 hide-double"></div>
+
+            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4" v-if="shouldShowTable(t('statistics.economy_stats'))">
                 <div class="flex">
                     <h2 class="text-lg flex gap-2" @click="loadEconomyStatistics()" :class="{ 'cursor-pointer': !economyLoading && !economy }">
                         {{ t('statistics.economy_stats') }}
@@ -92,7 +98,7 @@
                 </div>
             </div>
 
-            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
+            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4" v-if="shouldShowTable(t('statistics.player_stats'))">
                 <div class="flex">
                     <h2 class="text-lg flex gap-2" @click="loadPlayerStatistics()" :class="{ 'cursor-pointer': !playersLoading && !players }">
                         {{ t('statistics.player_stats') }}
@@ -155,7 +161,7 @@
                 </div>
             </div>
 
-            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
+            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4" v-if="shouldShowTable(t('statistics.fps_stats'))">
                 <div class="flex">
                     <h2 class="text-lg flex gap-2" @click="loadFPSStatistics()" :class="{ 'cursor-pointer': !fpsLoading && !fps }">
                         {{ t('statistics.fps_stats') }}
@@ -215,7 +221,7 @@
                 </div>
             </div>
 
-            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
+            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4" v-if="shouldShowTable(t('statistics.money_logs'))">
                 <div class="flex">
                     <h2 class="text-lg flex gap-2">
                         {{ t('statistics.money_logs') }}
@@ -245,15 +251,7 @@
                 </div>
             </div>
 
-            <div class="w-full border-t-2 border-dashed border-gray-500 my-6"></div>
-
-            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
-                <h2 class="text-lg mb-1">
-                    {{ t("statistics.search") }}
-                </h2>
-
-                <input class="block w-full px-4 py-2 bg-gray-200 border rounded dark:bg-gray-600" v-model="search" type="text" placeholder="Casino Rev..." />
-            </div>
+            <div class="w-full border-t-2 border-dashed border-gray-500 my-6 hide-double"></div>
 
             <StatisticsTable source="airlifts" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="bills" tag="money" :currency="true" :search="search" />
@@ -324,7 +322,23 @@ export default {
             moneyLogData: false
         }
     },
+    watch: {
+        search() {
+            localStorage.setItem('statistics_search', this.search);
+        }
+    },
+    mounted() {
+        this.search = localStorage.getItem('statistics_search') || "";
+    },
     methods: {
+        shouldShowTable(label) {
+            if (!this.search) return true;
+
+            const title = label.toLowerCase(),
+                search = this.search.toLowerCase().trim();
+
+            return !search || title.includes(search);
+        },
         addMoneyLogType() {
             const type = this.moneyLogType;
 

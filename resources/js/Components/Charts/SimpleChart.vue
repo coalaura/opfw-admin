@@ -22,6 +22,10 @@ export default {
         amounts: {
             type: Array,
             default: () => ['amount']
+        },
+        labels: {
+            type: Array,
+            default: () => []
         }
     },
     data() {
@@ -31,9 +35,9 @@ export default {
     },
     methods: {
         calculateCeiling(data) {
-            const max = Math.max(...data.map(entry => {
+            const max = Math.ceil(Math.max(...data.map(entry => {
                 return Math.max(...this.amounts.map(amount => entry[amount]));
-            }));
+            })) * 1.2);
 
             if (max === 0) return 0;
 
@@ -100,7 +104,18 @@ export default {
             }
 
             // Draw the line graph
-            for (const amount of this.amounts) {
+            for (let index = 0; index < this.amounts.length; index++) {
+                const amount = this.amounts[index],
+                    label = index < this.labels.length ? this.labels[index] : false;
+
+                if (label) {
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'bottom';
+                    ctx.font = '600 12px "Montserrat", sans-serif';
+                    ctx.fillStyle = this.color(amount);
+                    ctx.fillText(label, 2, (12 * (index + 1)) + (2 * (index + 1)));
+                }
+
                 ctx.beginPath();
                 ctx.moveTo(1, y(data[0][amount]));
 
