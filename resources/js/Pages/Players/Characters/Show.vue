@@ -1023,9 +1023,9 @@ export default {
         const money = this.getMoneyLocals();
 
         const totalVehicleValue = this.numberFormat(this.character.vehicles.map(vehicle => {
-            const price = Object.values(this.vehicles).find(v => v.model === vehicle.model_name);
+            const price = this.vehicles[vehicle.model] || 0;
 
-            return price && price.price ? price.price : 0;
+            return price;
         }).reduce((a, b) => a + b, 0), 0, true);
 
         return {
@@ -1121,7 +1121,7 @@ export default {
             return false;
         },
         vehicleAddModelValid() {
-            return !!Object.values(this.vehicles).find(vehicle => vehicle.model === this.vehicleAddModel);
+            return this.vehicleAddModel in this.vehicles;
         }
     },
     methods: {

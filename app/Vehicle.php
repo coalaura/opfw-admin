@@ -300,16 +300,10 @@ class Vehicle extends Model
 
         $prices = [];
 
-        if (isset($vehicles['pdm'])) {
-            foreach ($vehicles['pdm'] as $vehicle) {
-                $prices[$vehicle['modelName']] = intval($vehicle['price']);
-            }
-        }
+        foreach ($vehicles as $vehicle) {
+            $model = $vehicle['model'];
 
-        if (isset($vehicles['edm'])) {
-            foreach ($vehicles['edm'] as $vehicle) {
-                $prices[$vehicle['modelName']] = intval($vehicle['price']);
-            }
+            $prices[$model] = isset($vehicle['price']) ? intval($vehicle['price']) : 0;
         }
 
         return $prices;

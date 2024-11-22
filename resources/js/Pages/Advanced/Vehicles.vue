@@ -43,6 +43,10 @@
                             <p class="m-0 text-sm">
                                 {{ result.class }} - {{ result.model }}
                             </p>
+
+                            <p class="m-0 text-sm" v-if="result.price">
+                                {{ numberFormat(result.price, false, true) }}
+                            </p>
                         </div>
 
                         <div class="absolute top-0.5 right-1 text-sm text-indigo-200 font-semibold cursor-help" :title="t('vehicles.distance')">{{ result.distance }}</div>

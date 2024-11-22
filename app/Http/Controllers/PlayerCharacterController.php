@@ -143,7 +143,7 @@ class PlayerCharacterController extends Controller
         $horns = Vehicle::getHornMap(false);
 
         $jobs     = ServerAPI::getJobs();
-        $vehicles = ServerAPI::getVehicles();
+        $vehicles = Vehicle::getVehiclePrices();
 
         return Inertia::render('Players/Characters/Show', [
             'player'          => new PlayerResource($player),
