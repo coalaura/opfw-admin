@@ -1386,7 +1386,9 @@
             "bank": "Bank",
             "cash": "Cash",
             "character": "Character",
-            "stocks_balance": "Stocks"
+            "savings_balance": "Savins'",
+            "stocks_balance": "Stocks",
+            "total_balance": "Total"
         },
         "description": "Suspicious log entries, characters, and whatnot.",
         "filter": "Filter",

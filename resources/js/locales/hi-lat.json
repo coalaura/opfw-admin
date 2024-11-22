@@ -1386,7 +1386,9 @@
             "bank": "Bank",
             "cash": "Nagad",
             "character": "Charitra",
-            "stocks_balance": "Shares"
+            "savings_balance": "Bachat",
+            "stocks_balance": "Shares",
+            "total_balance": "Kul"
         },
         "description": "Sandigdh log pravesh, charitra, aadi.",
         "filter": "Chaan-Been",

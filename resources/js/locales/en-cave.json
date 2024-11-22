@@ -1386,7 +1386,9 @@
             "bank": "Bank",
             "cash": "Money",
             "character": "Person",
-            "stocks_balance": "Shares"
+            "savings_balance": "Save",
+            "stocks_balance": "Shares",
+            "total_balance": "All"
         },
         "description": "Strange log, person, more.",
         "filter": "Find",

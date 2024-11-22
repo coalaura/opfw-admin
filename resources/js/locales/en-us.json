@@ -594,7 +594,9 @@
             "cash": "Cash",
             "bank": "Bank",
             "stocks_balance": "Stocks",
-            "amount": "Value"
+            "amount": "Value",
+            "total_balance": "Total",
+            "savings_balance": "Savings"
         },
         "no_logs": "No entries found"
     },

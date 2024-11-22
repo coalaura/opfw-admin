@@ -76,9 +76,11 @@
                     <tr class="font-semibold text-left" v-if="logType === 'characters'">
                         <th class="px-6 py-4">{{ t('suspicious.items.player') }}</th>
                         <th class="px-6 py-4">{{ t('suspicious.characters.character') }}</th>
+                        <th class="px-6 py-4">{{ t('suspicious.characters.total_balance') }}</th>
                         <th class="px-6 py-4">{{ t('suspicious.characters.cash') }}</th>
                         <th class="px-6 py-4">{{ t('suspicious.characters.bank') }}</th>
                         <th class="px-6 py-4">{{ t('suspicious.characters.stocks_balance') }}</th>
+                        <th class="px-6 py-4">{{ t('suspicious.characters.savings_balance') }}</th>
                     </tr>
                     <tr class="font-semibold text-left" v-else-if="logType === 'vehicles'">
                         <th class="px-6 py-4">{{ t('suspicious.items.player') }}</th>
@@ -132,13 +134,19 @@
                             </inertia-link>
                         </td>
                         <td class="p-3">
+                            {{ numberFormat(log.total_balance, 0, true) }}
+                        </td>
+                        <td class="p-3">
                             {{ numberFormat(log.cash, 0, true) }}
                         </td>
                         <td class="p-3">
                             {{ numberFormat(log.bank, 0, true) }}
                         </td>
-                        <td class="p-3 pr-8">
+                        <td class="p-3">
                             {{ numberFormat(log.stocks_balance, 0, true) }}
+                        </td>
+                        <td class="p-3 pr-8">
+                            {{ numberFormat(log.savings_balance, 0, true) }}
                         </td>
                     </tr>
 

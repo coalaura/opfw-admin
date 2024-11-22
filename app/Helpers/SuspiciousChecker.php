@@ -3,10 +3,8 @@
 namespace App\Helpers;
 
 use App\Character;
-use App\Log;
-use App\Player;
 use App\Helpers\GeneralHelper;
-use Illuminate\Support\Facades\Cache;
+use App\Player;
 use Illuminate\Support\Facades\DB;
 
 class SuspiciousChecker
@@ -130,7 +128,7 @@ class SuspiciousChecker
         'weapon_addon_g36c',
         'weapon_addon_vandal',
         'weapon_addon_mk18',
-        'weapon_addon_p320b'
+        'weapon_addon_p320b',
     ];
 
     /**
@@ -175,7 +173,7 @@ class SuspiciousChecker
         'weapon_addon_g36c',
         'weapon_addon_vandal',
         'weapon_addon_mk18',
-        'weapon_addon_p320b'
+        'weapon_addon_p320b',
     ];
 
     private static function ignoreCharacterInventories(): array
@@ -184,7 +182,7 @@ class SuspiciousChecker
 
         $inventories = [];
 
-        foreach($characters as $character) {
+        foreach ($characters as $character) {
             $id = $character['character_id'];
 
             $inventories[] = 'character-' . $id;
@@ -220,7 +218,7 @@ class SuspiciousChecker
     public static function findUnusualInventories(): array
     {
         $items = self::UnusualItems;
-        $key = 'unusual_inventories_' . md5(json_encode($items)) . '_' . md5(json_encode(self::IgnoreItems));
+        $key   = 'unusual_inventories_' . md5(json_encode($items)) . '_' . md5(json_encode(self::IgnoreItems));
 
         if (CacheHelper::exists($key)) {
             return CacheHelper::read($key, []);
@@ -301,12 +299,7 @@ class SuspiciousChecker
      */
     public static function findSuspiciousCharacters(): array
     {
-        return Character::query()
-            ->where(DB::raw('`cash`+`bank`+`stocks_balance`'), '>=', 700000)
-            ->whereNotIn("license_identifier", self::getIgnorableLicenseIdentifiers())
-            ->select(['license_identifier', 'character_id', 'cash', 'bank', 'stocks_balance', 'first_name', 'last_name'])
-			->orderByRaw('`cash`+`bank`+`stocks_balance` DESC')
-            ->get()->toArray();
+        return DB::select("select license_identifier, characters.character_id, cash, bank, FLOOR(stocks_balance) as stocks_balance, first_name, last_name, COALESCE(SUM(savings_accounts.balance), 0) AS savings_balance, cash + bank + stocks_balance + COALESCE(SUM(savings_accounts.balance), 0) AS total_balance from characters left join savings_accounts on characters.character_id = savings_accounts.character_id where cash + bank + stocks_balance + COALESCE(savings_accounts.balance, 0) >= 1000000 group by characters.character_id order by total_balance desc");
     }
 
     /**
@@ -386,12 +379,12 @@ class SuspiciousChecker
     {
         $ids = Player::query()->select(["license_identifier"])->where("is_super_admin", "=", 1)->orWhere("is_senior_staff", "=", 1)->get()->toArray();
 
-        $ids = array_values(array_map(function($entry) {
+        $ids = array_values(array_map(function ($entry) {
             return $entry["license_identifier"];
         }, $ids));
 
         $root = GeneralHelper::getRootUsers();
-        foreach($root as $user) {
+        foreach ($root as $user) {
             $ids[] = $user;
         }
 

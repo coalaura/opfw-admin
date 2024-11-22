@@ -1386,7 +1386,9 @@
             "bank": "Bank",
             "cash": "Kontanter",
             "character": "Karakter",
-            "stocks_balance": "Aksjer"
+            "savings_balance": "Sparing",
+            "stocks_balance": "Aksjer",
+            "total_balance": "Totalt"
         },
         "description": "Mistenkelige loggoppføringer, karakterer osv.",
         "filter": "Filter",

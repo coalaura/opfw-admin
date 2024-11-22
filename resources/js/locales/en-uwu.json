@@ -1386,7 +1386,9 @@
             "bank": "Bank",
             "cash": "Cash",
             "character": "Chawactew",
-            "stocks_balance": "Stocks"
+            "savings_balance": "Sawvings",
+            "stocks_balance": "Stocks",
+            "total_balance": "Totaw"
         },
         "description": "Suspicious wog entwies, chawactews, etc.",
         "filter": "Fiwtew",
