@@ -165,7 +165,7 @@ class StatisticsHelper
     // Game crashed (count)
     public static function collectGameCrashStatistics(): array
     {
-        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = 'User Disconnected' AND (details LIKE '%`Server->client%' OR details LIKE '%`Game crashed:%') GROUP BY date ORDER BY timestamp DESC");
+        return self::collectStatistics("SELECT 0 as count, SUM(IF(details LIKE '%`Server->client%', 1, 0)) as amount, SUM(IF(details LIKE '%`Game crashed:%', 1, 0)) as amount2, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = 'User Disconnected' AND (details LIKE '%`Server->client%' OR details LIKE '%`Game crashed:%') GROUP BY date ORDER BY timestamp DESC", 30, false, ["amount2"]);
     }
 
     // Airlifts (count)
@@ -306,7 +306,7 @@ class StatisticsHelper
         return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action IN ('{$action}') GROUP BY date ORDER BY timestamp DESC");
     }
 
-    public static function collectStatistics(string $query, int $days = 30, bool $showAll = false): array
+    public static function collectStatistics(string $query, int $days = 30, bool $showAll = false, $secondary = []): array
     {
         $start = microtime(true);
 
@@ -331,11 +331,19 @@ class StatisticsHelper
             $amount = $entry && $entry->amount ? intval($entry->amount) : 0;
             $count  = $entry && $entry->count ? intval($entry->count) : 0;
 
-            $result[] = [
+            $res = [
                 'date'   => date('jS F Y', $time),
                 'amount' => $amount,
                 'count'  => $count,
             ];
+
+            foreach ($secondary as $second) {
+                $val = $entry && isset($entry->{$second}) ? intval($entry->{$second}) : 0;
+
+                $res[$second] = $val;
+            }
+
+            $result[] = $res;
         }
 
         array_reverse($result);

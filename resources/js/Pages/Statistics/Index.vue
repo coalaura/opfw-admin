@@ -259,7 +259,7 @@
             <StatisticsTable source="bills" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="bus_revenue" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="casino" tag="money" :currency="true" :search="search" />
-            <StatisticsTable source="crashes" tag="amount" :currency="false" :search="search" />
+            <StatisticsTable source="crashes" tag="amount" :amounts="['amount', 'amount2']" :locales="['timeouts_val', 'crashes_val']" :currency="false" :search="search" />
             <StatisticsTable source="daily_refresh" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="daily_tasks" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="deaths" tag="amount" :currency="false" :search="search" />

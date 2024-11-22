@@ -32,7 +32,7 @@
                     <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
                         <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.date') }}</th>
                         <th class="font-semibold px-2 py-0.5 text-left" v-if="currency">{{ t('statistics.count') }}</th>
-                        <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.amount') }}</th>
+                        <th class="font-semibold px-2 py-0.5 text-left" v-for="(amount, index) in amounts">{{ t('statistics.' + locales[index]) }}</th>
                         <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.difference') }}</th>
                         <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.average') }}</th>
                         <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.trend') }}</th>
@@ -41,20 +41,20 @@
                     <tr class="border-t border-gray-500" v-if="collapsed">
                         <td class="px-2 py-0.5">...</td>
                         <td class="px-2 py-0.5" v-if="currency">...</td>
-                        <td class="px-2 py-0.5">...</td>
+                        <td class="px-2 py-0.5" v-for="_ in amounts">...</td>
                         <td class="px-2 py-0.5">...</td>
                         <td class="px-2 py-0.5">...</td>
                         <td class="px-2 py-0.5">...</td>
                     </tr>
 
                     <tr class="border-t border-gray-500" v-else-if="loading">
-                        <td class="px-2 py-0.5 text-center" :colspan="currency ? 6 : 5">
+                        <td class="px-2 py-0.5 text-center" :colspan="(currency ? 5 : 4) + amounts.length">
                             <i class="fas fa-spinner animate-spin"></i>
                         </td>
                     </tr>
 
                     <tr class="border-t border-gray-500" v-else-if="!data">
-                        <td class="px-2 py-0.5 text-center text-red-500 font-semibold" :colspan="currency ? 6 : 5">
+                        <td class="px-2 py-0.5 text-center text-red-500 font-semibold" :colspan="(currency ? 5 : 4) + amounts.length">
                             {{ t("statistics.failed_load") }}
                         </td>
                     </tr>
@@ -62,15 +62,15 @@
                     <tr v-for="(entry, index) in data" :key="index" class="border-t border-gray-500" v-else>
                         <td class="italic text-gray-700 dark:text-gray-300 px-2 py-0.5">{{ entry.date }}</td>
                         <td class="px-2 py-0.5" v-if="currency">{{ numberFormat(entry.count, false, false) }}x</td>
-                        <td class="px-2 py-0.5">{{ numberFormat(entry.amount, false, currency) }}</td>
+                        <td class="px-2 py-0.5" v-for="amount in amounts">{{ numberFormat(entry[amount], false, currency) }}</td>
                         <td class="px-2 py-0.5" v-html="previous(index, 'amount')"></td>
-                        <td class="px-2 py-0.5">{{ entry.count > 0 ? numberFormat(entry.amount / entry.count, false, currency) : '-' }}</td>
+                        <td class="px-2 py-0.5">{{ entry.count > 0 ? numberFormat(getEntryAmount(entry) / entry.count, false, currency) : '-' }}</td>
                         <td class="px-2 py-0.5 font-semibold" v-html="trend(index, 'amount')"></td>
                     </tr>
                 </table>
             </div>
 
-            <SimpleChart :data="data" v-if="!collapsed && data" />
+            <SimpleChart :data="data" v-if="!collapsed && data" :amounts="amounts" />
         </div>
     </div>
 </template>
@@ -106,6 +106,14 @@ export default {
         search: {
             type: String,
         },
+        amounts: {
+            type: Array,
+            default: () => ['amount']
+        },
+        locales: {
+            type: Array,
+            default: () => ['amount']
+        }
     },
     computed: {
         totalAmount() {
@@ -155,6 +163,28 @@ export default {
                 this.loadData();
             }
         },
+        getEntryAmount(entry) {
+            let total = 0;
+
+            for (const amount of this.amounts) {
+                total += entry[amount] || 0;
+            }
+
+            return total;
+        },
+        getChartData() {
+            if (!this.data) return false;
+
+            const data = [];
+
+            for (const entry of this.data) {
+                data.push({
+                    amount: this.getEntryAmount(entry),
+                });
+            }
+
+            return data;
+        },
         async loadData() {
             if (this.loading || this.requested) return;
 
@@ -176,8 +206,15 @@ export default {
         getDiffToPrevious(index, key) {
             if (index >= this.data.length - 1) return null;
 
-            const before = this.data[index + 1][key],
+            let before, after;
+
+            if (key === "amount") {
+                before = this.getEntryAmount(this.data[index + 1]);
+                after = this.getEntryAmount(this.data[index]);
+            } else {
+                before = this.data[index + 1][key];
                 after = this.data[index][key];
+            }
 
             return after - before;
         },

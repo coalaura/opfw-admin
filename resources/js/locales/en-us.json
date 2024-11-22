@@ -309,6 +309,9 @@
         "failed_load": "Failed to load statistics.",
         "no_economy_recorded": "No economy statistics recorded yet. (Recorded once every hour)",
         "no_players_recorded": "No players statistics recorded yet.",
+        "timeouts_val": "Timeouts",
+        "crashes_val": "Crashes",
+
         "casino": "Casino Revenue",
         "casino_details": "Combined revenue from all available games in the casino.",
         "pdm": "PDM Sales",

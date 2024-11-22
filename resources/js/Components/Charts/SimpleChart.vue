@@ -18,11 +18,22 @@ export default {
         lines: {
             type: Boolean,
             default: true
+        },
+        amounts: {
+            type: Array,
+            default: () => ['amount']
         }
+    },
+    data() {
+        return {
+            colors: {}
+        };
     },
     methods: {
         calculateCeiling(data) {
-            const max = Math.max(...data);
+            const max = Math.max(...data.map(entry => {
+                return Math.max(...this.amounts.map(amount => entry[amount]));
+            }));
 
             if (max === 0) return 0;
 
@@ -31,13 +42,29 @@ export default {
             return Math.ceil(max / log) * log;
         },
         calculateFloor(data) {
-            const min = Math.min(...data);
+            const min = Math.min(...data.map(entry => {
+                return Math.min(...this.amounts.map(amount => entry[amount]));
+            }));
 
             if (min >= 0) return 0;
 
             const log = Math.pow(10, Math.floor(Math.log10(Math.abs(min))));
 
             return Math.floor(Math.abs(min) / log) * log * -1;
+        },
+        color(amount) {
+            if (this.amounts.length === 1) {
+                return this.themeColor('gray-400');
+            }
+
+            if (!this.colors[amount]) {
+                const index = this.amounts.indexOf(amount),
+                    steps = 360 / this.amounts.length;
+
+                return `hsl(${steps * index}, 35%, 65%)`;
+            }
+
+            return this.colors[amount];
         },
         async render() {
             await this.$nextTick();
@@ -51,7 +78,7 @@ export default {
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            const data = this.data.map(entry => entry.amount);
+            const data = this.data;
 
             data.reverse();
 
@@ -73,21 +100,23 @@ export default {
             }
 
             // Draw the line graph
-            ctx.beginPath();
-            ctx.moveTo(1, y(data[0]));
+            for (const amount of this.amounts) {
+                ctx.beginPath();
+                ctx.moveTo(1, y(data[0][amount]));
 
-            for (let i = 1; i < data.length; i++) {
-                const x = 1 + i * step,
-                    yi = y(data[i]);
+                for (let i = 1; i < data.length; i++) {
+                    const x = 1 + i * step,
+                        yi = y(data[i][amount]);
 
-                ctx.lineTo(x, yi);
+                    ctx.lineTo(x, yi);
+                }
+
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = this.color(amount);
+
+                ctx.stroke();
+                ctx.closePath();
             }
-
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = this.themeColor('gray-400');
-
-            ctx.stroke();
-            ctx.closePath();
 
             // Draw the x axis lines
             if (this.lines) {
