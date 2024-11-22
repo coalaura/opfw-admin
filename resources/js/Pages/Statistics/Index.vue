@@ -51,7 +51,7 @@
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 8)">{{ t('statistics.poorest') }}</th>
                             </tr>
 
-                            <tr class="border-t border-gray-500" v-if="!economy">
+                            <tr class="border-t border-gray-500" v-if="!economyLoading && !economy">
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
@@ -130,7 +130,7 @@
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(players, 3)">{{ t('statistics.unique') }}</th>
                             </tr>
 
-                            <tr class="border-t border-gray-500" v-if="!players">
+                            <tr class="border-t border-gray-500" v-if="!playersLoading && !players">
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
@@ -192,7 +192,7 @@
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(fps, 2)">{{ t('statistics.average_fps') }}</th>
                             </tr>
 
-                            <tr class="border-t border-gray-500" v-if="!fps">
+                            <tr class="border-t border-gray-500" v-if="!fpsLoading && !fps">
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
