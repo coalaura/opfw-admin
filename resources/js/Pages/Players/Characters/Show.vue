@@ -614,7 +614,7 @@
                         {{ character.vehicles.length > 0 ? t('players.vehicles.vehicles', character.vehicles.length) : t('players.vehicles.no_vehicles') }}
 
                         <sup :title="t('players.vehicles.vehicle_value')" class="font-mono text-xs -top-6">
-                            {{ totalVehicleValue }}
+                            {{ vehicleValue }}
                         </sup>
                     </h2>
 
@@ -1022,12 +1022,6 @@ export default {
 
         const money = this.getMoneyLocals();
 
-        const totalVehicleValue = this.numberFormat(this.character.vehicles.map(vehicle => {
-            const price = this.vehicles[vehicle.model] || 0;
-
-            return price;
-        }).reduce((a, b) => a + b, 0), 0, true);
-
         return {
             local: {
                 birth: this.t("players.edit.born", this.$moment(this.character.dateOfBirth).format('l')),
@@ -1046,7 +1040,6 @@ export default {
                 department_name: this.character.departmentName,
                 position_name: this.character.positionName,
             },
-            totalVehicleValue: totalVehicleValue,
             vehicleAddModel: '',
             location: window.location.href,
             vehicleForm: {
@@ -1121,7 +1114,7 @@ export default {
             return false;
         },
         vehicleAddModelValid() {
-            return this.vehicleAddModel in this.vehicles;
+            return this.vehicles.includes(this.vehicleAddModel);
         }
     },
     methods: {

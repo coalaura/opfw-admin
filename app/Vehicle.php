@@ -294,6 +294,19 @@ class Vehicle extends Model
         return $horns;
     }
 
+    public static function getVehicleModels(): array
+    {
+        $vehicles = ServerAPI::getVehicles();
+
+        $models = [];
+
+        foreach ($vehicles as $vehicle) {
+            $models[] = $vehicle['model'];
+        }
+
+        return $models;
+    }
+
     public static function getVehiclePrices(): array
     {
         $vehicles = ServerAPI::getVehicles();
