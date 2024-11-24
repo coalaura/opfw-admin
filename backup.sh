@@ -8,7 +8,7 @@ filename=$(date +%d%m%Y_%H%M%S)
 
 # Deprioritizes the processes for both CPU time and io usage
 # It was eating up resources every time making the panel slow af
-nice -n 19 ionice -c3 tar -cjf panel_$filename.tar.bz2 files.tar
+nice -n 19 ionice -c3 zstd -r -T0 files.tar -o panel_$filename.tar.bz2
 
 rm files.tar
 
