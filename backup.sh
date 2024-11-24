@@ -10,4 +10,6 @@ filename=$(date +%d%m%Y_%H%M%S)
 # It was eating up resources every time making the panel slow af
 nice -n 19 ionice -c3 tar -cjf panel_$filename.tar.bz2 files.tar
 
+rm files.tar
+
 echo "Backup complete!"
