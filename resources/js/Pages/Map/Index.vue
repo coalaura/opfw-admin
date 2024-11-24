@@ -543,9 +543,9 @@ export default {
                     pos && pos.d ? 'dead' : false
                 ].filter(flag => flag).join(", ");
 
-                const speed = pos && "s" in pos ? Math.floor(pos.s * 2.236936) + "mph" : "N/A";
+                const speed = pos && "s" in pos ? (pos.s * 2.236936).toFixed(1) + "mph" : "N/A";
 
-                this.historicDetails = "Flags: " + (flags ? flags : 'N/A') + " - Altitude: " + (pos ? pos.z + "m" : "N/A") + " - Speed: " + speed;
+                this.historicDetails = "Flags: " + (flags ? flags : 'N/A') + " - Altitude: " + (pos ? pos.z.toFixed(1) + "m" : "N/A") + " - Speed: " + speed;
 
                 if (pos && !pos.missing) {
                     const coords = Vector3.fromGameCoords(parseInt(pos.x), parseInt(pos.y), 0).toMap();
