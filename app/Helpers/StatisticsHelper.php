@@ -210,6 +210,12 @@ class StatisticsHelper
         return self::collectStatistics("SELECT COUNT(id) as count, SUM(-amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from money_logs WHERE details = 'daily-activities-refresh-task' GROUP BY date ORDER BY timestamp DESC");
     }
 
+    // ATM Withdraw fees
+    public static function collectATMWithdrawFeesStatistics(): array
+    {
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM(-amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from money_logs WHERE details = 'atm-withdraw-fee' GROUP BY date ORDER BY timestamp DESC");
+    }
+
     // Bus Driver revenue
     public static function collectBusDriverStatistics(): array
     {

@@ -364,6 +364,8 @@
         "mining_explosions_details": "Amount of gems that exploded while being mined.",
         "daily_refresh": "Paid Daily Activities Refresh",
         "daily_refresh_details": "Combined amount of all paid daily activities refreshes.",
+        "atm_withdraw_fee": "ATM Withdrawal Fees",
+        "atm_withdraw_fee_details": "Combined amount of all ATM withdrawal fees.",
         "bus_revenue": "Bus Driver Revenue",
         "bus_revenue_details": "Combined revenue from all money earned through the bus driver job.",
         "found_items": "Found Items on Ground",

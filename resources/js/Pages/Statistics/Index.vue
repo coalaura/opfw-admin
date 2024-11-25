@@ -260,6 +260,7 @@
             <div class="w-full border-t-2 border-dashed border-gray-500 my-6 hide-double"></div>
 
             <StatisticsTable source="airlifts" tag="amount" :currency="false" :search="search" />
+            <StatisticsTable source="atm_withdraw_fee" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="bills" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="bus_revenue" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="casino" tag="money" :currency="true" :search="search" />
