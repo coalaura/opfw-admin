@@ -82,7 +82,7 @@ export default {
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            const data = this.data;
+            const data = JSON.parse(JSON.stringify(this.data)); // Copy the data
 
             data.reverse();
 
