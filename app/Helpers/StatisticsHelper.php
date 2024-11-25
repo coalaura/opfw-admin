@@ -352,7 +352,7 @@ class StatisticsHelper
             $result[] = $res;
         }
 
-        array_reverse($result);
+        // array_reverse($result);
 
         return [
             'data' => $result,
