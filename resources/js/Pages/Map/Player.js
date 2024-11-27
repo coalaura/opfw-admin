@@ -22,7 +22,7 @@ class Player {
         const flags = Player.getPlayerFlags(rawData);
 
         if (flags.identityOverride) {
-            rawData.licenseIdentifier = rawData.licenseIdentifier + "a";
+            rawData.license = rawData.license + "a";
         }
 
         return rawData;
@@ -35,9 +35,9 @@ class Player {
 
         this.player = {
             name: rawData.name,
-            license: rawData.licenseIdentifier,
+            license: rawData.license,
             source: rawData.source,
-            isStaff: !flags.identityOverride && staffMembers.includes(rawData.licenseIdentifier),
+            isStaff: !flags.identityOverride && staffMembers.includes(rawData.license),
             isFake: flags.identityOverride
         };
 
@@ -92,7 +92,7 @@ class Player {
     }
 
     static getPlayerID(rawData) {
-        return rawData.licenseIdentifier;
+        return rawData.license;
     }
 
     getTitle(useHtml) {
@@ -101,6 +101,7 @@ class Player {
         if (useHtml) {
             return name + '<sup>' + this.player.source + '</sup>';
         }
+
         return name + ' (' + this.player.source + ')';
     }
 

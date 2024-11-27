@@ -249,11 +249,33 @@
             </template>
 
             <template #default>
-                <a v-for="player in container.unloadedPlayers" :href="'/players/' + player.licenseIdentifier" target="_blank" class="block dark:text-blue-300 text-blue-500 no-underline">
-                    <b>{{ player.source }}</b> - <i>{{ player.name }}</i>
-                </a>
+                <table class="whitespace-nowrap">
+                    <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
+                        <th class="font-semibold px-2 py-0.5 text-left">{{ t('map.source') }}</th>
+                        <th class="font-semibold px-2 py-0.5 text-left">{{ t('map.name') }}</th>
+                        <th class="font-semibold px-2 py-0.5 text-left">&nbsp;</th>
+                    </tr>
 
-                <span class="italic" v-if="container.unloadedPlayers.length === 0">{{ t("map.no_unloaded_players") }}</span>
+                    <tr v-for="player in container.unloadedPlayers" class="border-t border-gray-500">
+                        <td class="px-2 py-0.5">{{ player.source }}</td>
+                        <td class="px-2 py-0.5">
+                            <a :href="'/players/' + player.license" target="_blank" class="dark:text-blue-300 text-blue-500 no-underline">
+                                {{ player.name }}
+                            </a>
+                        </td>
+                        <td class="px-2 py-0.5">
+                            <div class="flex gap-1">
+                                <i class="fas fa-wheelchair dark:text-lime-400 text-lime-600" :title="t('global.staff')" v-if="player.isStaff"></i>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr v-if="container.unloadedPlayers.length === 0" class="border-t border-gray-500">
+                        <td class="px-2 py-0.5" colspan="3">
+                            {{ t('map.no_unloaded_players') }}
+                        </td>
+                    </tr>
+                </table>
             </template>
 
             <template #actions>

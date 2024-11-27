@@ -512,6 +512,7 @@
         "loading": "Woading pwayew data...",
         "main_instance": "Main Instance",
         "marker": "Mawked position at {0}",
+        "name": "Nyame",
         "no_notify": "Nyo notifications",
         "no_unloaded_players": "Nyo unwoaded pwayews",
         "notify": "Notifications",
@@ -536,6 +537,7 @@
             "remove": "[W]",
             "track": "[T]"
         },
+        "source": "Sewvew ID",
         "spy_satellite": "FIB Spy Satewwite Map",
         "staff_online": "Staff Onwine",
         "stop_highlight": "Stop highwighting",

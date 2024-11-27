@@ -512,6 +512,7 @@
         "loading": "Khiladi data load ho raha hai...",
         "main_instance": "Mukhya Instance",
         "marker": "{0} par sthiti chinhit ki gayi",
+        "name": "Naam",
         "no_notify": "Koi suchna nahi",
         "no_unloaded_players": "Koi anload khiladi nahi",
         "notify": "Suchnaayein",
@@ -536,6 +537,7 @@
             "remove": "[R]",
             "track": "[T]"
         },
+        "source": "Server ID",
         "spy_satellite": "FIB Spy Upagrah Naksha",
         "staff_online": "Staff Online",
         "stop_highlight": "Highlighting band karein",

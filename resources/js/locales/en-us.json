@@ -468,6 +468,8 @@
         "area_none": "Nobody inside the area",
         "filter_none": "No filters",
         "area_filter": "Filters",
+        "source": "Server ID",
+        "name": "Name",
         "short": {
             "remove": "[R]",
             "track": "[T]",

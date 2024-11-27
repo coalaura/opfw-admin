@@ -105,7 +105,10 @@ class PlayerContainer {
         if (rawPlayer.character) {
             this.stats.loaded++;
         } else {
-            this.unloadedPlayers.push(rawPlayer);
+            this.unloadedPlayers.push({
+                ...rawPlayer,
+                isStaff: this.staffMembers.includes(rawPlayer.license)
+            });
 
             this.stats.unloaded++;
         }
