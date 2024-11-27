@@ -10,14 +10,10 @@ class DataCompressor {
 
         switch (type) {
             case "world":
-                isValid = 'v' in data && Array.isArray(data.v) && 'p' in data && typeof data.p === "object" && 'i' in data && typeof data.i === "number";
+                isValid = 'viewers' in data && Array.isArray(data.viewers) && 'players' in data && typeof data.players === "object" && 'instance' in data && typeof data.instance === "number";
 
                 if (isValid) {
-                    result = {
-                        players: this.decompressPlayers(data.p),
-                        viewers: data.v,
-                        instance: data.i
-                    };
+                    result = data;
                 }
 
                 break;
@@ -105,68 +101,6 @@ class DataCompressor {
 
     reset() {
         this.#data = {};
-    }
-
-    decompressPlayers(players) {
-        for (const source in players) {
-            players[source] = this.decompress(players[source]);
-        }
-
-        return players;
-    }
-
-    decompress(player) {
-        this.player = player;
-
-        const character = 'b' in this.player ? {
-            flags: this.get('a', 0, this.player['b']),
-            fullName: this.get('b', '', this.player['b']),
-            id: this.get('c', 0, this.player['b'])
-        } : false;
-
-        const vehicle = 'i' in this.player ? {
-            driving: this.get('a', false, this.player['i']),
-            id: this.get('b', 0, this.player['i']),
-            model: this.get('c', '', this.player['i']),
-            name: this.get('d', '', this.player['i']),
-        } : false;
-
-        const duty = 'e' in this.player ? {
-            type: this.get('a', false, this.player['e']),
-            department: this.get('b', false, this.player['e'])
-        } : false;
-
-        const coordsArray = 'c' in this.player ? this.player['c'].split(',') : [],
-            coords = coordsArray.length >= 3 ? {
-                x: parseFloat(coordsArray[0]),
-                y: parseFloat(coordsArray[1]),
-                z: parseFloat(coordsArray[2])
-            } : { x: 0, y: 0, z: 0 };
-
-        return {
-            character: character,
-            coords: coords,
-            heading: coordsArray.length >= 4 ? parseFloat(coordsArray[3]) : 0.0,
-            flags: this.get('d', 0),
-            duty: duty,
-            name: this.get('f', ''),
-            source: this.get('g', 0),
-            speed: coordsArray.length >= 5 ? parseFloat(coordsArray[4]) : 0.0,
-            licenseIdentifier: this.get('h', ''),
-            vehicle: vehicle,
-            instance: this.get('j', 0)
-        };
-    }
-
-    get(key, def, obj) {
-        if (!obj) {
-            obj = this.player;
-        }
-
-        if (obj && key in obj) {
-            return obj[key];
-        }
-        return def;
     }
 }
 

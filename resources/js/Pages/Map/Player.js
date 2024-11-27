@@ -108,6 +108,7 @@ class Player {
         if (this.character && this.vehicle) {
             return this.vehicle.id;
         }
+
         return null;
     }
 
@@ -252,7 +253,9 @@ class Player {
         const attributes = this.attributes.map(a => '<span class="text-xxs italic block leading-3">- is ' + a + '</span>');
 
         let vehicleInfo = '';
+
         const vehicle = this.getVehicleID();
+
         if (vehicle && vehicle in vehicles) {
             const formatInfo = info => '<a href="/players/' + info.license + '" target="_blank">' + info.name + '</a>';
 

@@ -13,7 +13,7 @@ class Character {
         let c = new Character();
 
         c.id = rawData.character.id;
-        c.name = rawData.character.fullName;
+        c.name = rawData.character.name;
         c.isDead = characterFlags.dead;
         c.invisible = characterFlags.invisible;
         c.invincible = characterFlags.invincible;
