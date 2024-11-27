@@ -50,7 +50,7 @@ class Player {
         this.bearing = rawData.heading < 0 ? rawData.heading + 360 : rawData.heading;
         this.speed = Math.round(rawData.speed * 2.236936); // Convert to mph
 
-        this.heading = mapNumber(-rawData.heading, -180, 180, 0, 360) - 180; // <- leaflet is weird
+        this.heading = mapNumber(-rawData.coords.w, -180, 180, 0, 360) - 180; // <- leaflet is weird
 
         const invisible = this.character && this.character.invisible;
 
