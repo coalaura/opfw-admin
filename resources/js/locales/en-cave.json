@@ -1003,7 +1003,7 @@
             "logs": "Check player logs",
             "more_info": "More Info",
             "multiple_bans": "Many bans",
-            "multiple_bans_details": "Player have {0} active bans. Many bans no auto unban. Must unban by hand.",
+            "multiple_bans_details": "Player have {0} active bans. Player with many bans no can schedule unban. Must unban by hand. Many bans mean player link to other player. Ban copy to this player. To remove bans, unban many times. Unlink players.",
             "muted": "Muted until {0}",
             "muted_forever": "Muted forever",
             "no_anti_cheat_events": "No Anti-Cheat events.",

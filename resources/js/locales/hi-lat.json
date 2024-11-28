@@ -1003,7 +1003,7 @@
             "logs": "Player ke logs check karein",
             "more_info": "Adhik jankari",
             "multiple_bans": "Anek bans",
-            "multiple_bans_details": "Player ke paas {0} active bans hain. Jinke paas anek active bans hain unka unban schedule nahi kiya ja sakta aur manually unban karna padega.",
+            "multiple_bans_details": "Player ke paas {0} active bans hain. Players jinke paas kai active bans hain unko unban ke liye schedule nahi kiya ja sakta aur unhe manually unban karna padta hai. Ek player par kai bans hone ka matlab hota hai ki player ne kisi doosre player se link kiya hai jo unke ban(s) ko is player par automatically copy kar deta hai. Is player par sabhi bans ko hatane ke liye, aapko unhe kai baar unban karna pad sakta hai aur unhe ek doosre se unlink karna padta hai.",
             "muted": "Muted tab tak {0}",
             "muted_forever": "Anischit samay tak muted",
             "no_anti_cheat_events": "Koi Anti-Cheat ghatna nahi mili.",

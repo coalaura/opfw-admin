@@ -1003,7 +1003,7 @@
             "logs": "Sjekk spillerens logger",
             "more_info": "Mer info",
             "multiple_bans": "Flere utestengelser",
-            "multiple_bans_details": "Spilleren har {0} aktive utestengelser. Spillere med flere aktive utestengelser kan ikke settes opp for opphevelse og må oppheves manuelt.",
+            "multiple_bans_details": "Spilleren har {0} aktive utestengelser. Spillere med flere aktive utestengelser kan ikke planlegges for oppheving av utestengelse og må oppheves manuelt. Flere utestengelser på én spiller betyr vanligvis at spilleren er knyttet til en annen spiller, noe som automatisk kopierer deres utestengelse(r) til denne spilleren. For å fjerne alle utestengelser på denne spilleren, må du kanskje oppheve dem flere ganger og koble dem fra hverandre.",
             "muted": "Dempet til {0}",
             "muted_forever": "Dempet på ubestemt tid",
             "no_anti_cheat_events": "Ingen Anti-Cheat-hendelser funnet.",

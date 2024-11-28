@@ -1003,7 +1003,7 @@
             "logs": "Check player's logs",
             "more_info": "More Info",
             "multiple_bans": "Multiple bans",
-            "multiple_bans_details": "Player's got {0} active bans. Players with multiple active bans can't be scheduled for unban and have to be unbanned manually.",
+            "multiple_bans_details": "This here player’s got {0} active bans. Folks with more’n one ban can’t be put on the unban schedule and need to be unbanned by hand. If a player’s got multiple bans, it usually means they’re tied to another player, which automatically slaps their ban(s) onto this player. To lift all them bans off this player, you might have to unban ’em a few times and untangle ’em from each other.",
             "muted": "Muted 'til {0}",
             "muted_forever": "Muted indefinitely",
             "no_anti_cheat_events": "No Anti-Cheat events found.",
