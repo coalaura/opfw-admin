@@ -9,6 +9,7 @@ use App\Helpers\GeneralHelper;
 use App\Helpers\StatisticsHelper;
 use App\Helpers\StatusHelper;
 use App\Http\Controllers\PlayerDataController;
+use App\Http\Resources\BanResource;
 use App\Http\Resources\CharacterResource;
 use App\Http\Resources\PanelLogResource;
 use App\Http\Resources\PlayerIndexResource;
@@ -227,7 +228,7 @@ class PlayerController extends Controller
             'blacklisted'       => !!$blacklisted,
             'tags'              => Player::resolveTags(),
             'enablableCommands' => PlayerDataController::EnablableCommands,
-            'uniqueBans'        => $player->getActiveBan() ? sizeof($player->uniqueBans()) : 0,
+            'uniqueBans'        => BanResource::collection($player->uniqueBans()),
         ]);
     }
 

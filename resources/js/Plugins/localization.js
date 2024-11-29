@@ -105,6 +105,14 @@ const Localization = {
 
             return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
         };
+
+        Vue.prototype.truncate = function(text, length) {
+            if (text.length <= length) {
+                return text;
+            }
+
+            return text.substr(0, length - 3) + '...';
+        };
     },
 }
 

@@ -25,7 +25,7 @@ class PlayerResource extends JsonResource
 
         $drug = (isset($this->panel_drug_department) && $this->panel_drug_department) || ($this->license_identifier && GeneralHelper::isUserRoot($this->license_identifier));
 
-        $ban = $this->getActiveBan();
+        $bans = BanResource::collection($this->uniqueBans());
 
         return [
             'id'                  => $this->user_id,
@@ -44,9 +44,9 @@ class PlayerResource extends JsonResource
             'isSeniorStaff'       => $this->isSeniorStaff(),
             'isSuperAdmin'        => $this->isSuperAdmin(),
             'isRoot'              => $this->isRoot(),
-            'isBanned'            => !!$ban,
+            'isBanned'            => !empty($bans),
             'warnings'            => $plain ? 0 : $this->warnings()->whereIn('warning_type', [Warning::TypeStrike, Warning::TypeWarning])->count(),
-            'ban'                 => new BanResource($ban),
+            'bans'                => $bans,
             'playerAliases'       => $identifiers ? array_values(array_unique(array_filter($identifiers, function ($e) {
                 return $e !== $this->player_name && str_replace('?', '', $e) !== '';
             }))) : [],

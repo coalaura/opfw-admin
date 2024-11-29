@@ -821,32 +821,6 @@ class Player extends Model
     }
 
     /**
-     * Checks whether player is banned.
-     *
-     * @return bool
-     */
-    public function isBanned(): bool
-    {
-        return !is_null($this->getActiveBan());
-    }
-
-    /**
-     * Gets the active ban.
-     *
-     * @return Ban
-     */
-    public function getActiveBan(): ?Ban
-    {
-        if ($this->ban === false) {
-            $this->ban = $this->bans()
-                ->get()
-                ->first();
-        }
-
-        return $this->ban;
-    }
-
-    /**
      * Gets the steam id.
      *
      * @return SteamID|null
@@ -957,17 +931,24 @@ class Player extends Model
     }
 
     /**
-     * Gets the unique ban hashes associated with this player.
+     * Checks whether player is banned.
      *
-     * @return array
+     * @return bool
      */
-    public function uniqueBans(): array
+    public function isBanned(): bool
     {
-        $bans = $this->bans()->select(['ban_hash'])->groupBy('ban_hash')->get();
+        return !!$this->bans()->get()->first();
+    }
 
-        return array_map(function ($ban) {
-            return $ban['ban_hash'];
-        }, $bans->toArray());
+    /**
+     * Gets the unique bans associated with this player.
+     */
+    public function uniqueBans()
+    {
+        return $this->bans()
+            ->orderBy('timestamp', 'desc')
+            ->groupBy('ban_hash')
+            ->get();
     }
 
     /**

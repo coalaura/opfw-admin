@@ -179,7 +179,7 @@
                     {{ t('players.show.kick') }}
                 </button>
                 <!-- Edit Ban -->
-                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/edit'" v-if="player.isBanned && player.ban.issuer && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
+                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + activeBan.id + '/edit'" v-if="player.isBanned && activeBan.issuer && (!activeBan.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
                     <i class="fas fa-edit"></i>
                     {{ t('players.show.edit_ban') }}
                 </inertia-link>
@@ -189,17 +189,17 @@
                     {{ t('players.show.unmute') }}
                 </button>
                 <!-- Unbanning -->
-                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="unbanPlayer()" v-if="player.isBanned && (loadingOpfwBan || !opfwBanned) && (!player.ban.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger flex items-center gap-1" @click="unbanPlayer()" v-if="player.isBanned && (loadingOpfwBan || !opfwBanned) && (!activeBan.locked || this.perm.check(this.perm.PERM_LOCK_BAN))">
                     <i class="fas fa-lock-open"></i>
                     {{ t('players.show.unban') }}
                 </button>
                 <!-- Schedule Unban -->
-                <button class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" @click="isSchedulingUnban = true" v-if="player.isBanned && !player.ban.scheduled && uniqueBans === 1 && !(loadingOpfwBan || opfwBanned)">
+                <button class="px-5 py-2 font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500 flex items-center gap-1" @click="isSchedulingUnban = true" v-if="player.isBanned && !activeBan.scheduled && player.bans.length === 1 && !(loadingOpfwBan || opfwBanned)">
                     <i class="fas fa-calendar-day"></i>
                     {{ t('players.show.schedule_unban') }}
                 </button>
                 <!-- Remove Scheduled Unban -->
-                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-purple-600 dark:bg-purple-500 flex items-center gap-1" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/unschedule'" v-if="player.isBanned && player.ban.scheduled">
+                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-purple-600 dark:bg-purple-500 flex items-center gap-1" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + activeBan.id + '/unschedule'" v-if="player.isBanned && activeBan.scheduled">
                     <i class="fas fa-calendar-times"></i>
                     {{ t('players.show.remove_schedule') }}
                 </inertia-link>
@@ -209,12 +209,12 @@
                     {{ t('players.show.issue') }}
                 </button>
                 <!-- Lock ban -->
-                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-purple-600 dark:bg-purple-500 flex items-center gap-1" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/lock'" v-if="player.isBanned && !player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
+                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-purple-600 dark:bg-purple-500 flex items-center gap-1" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + activeBan.id + '/lock'" v-if="player.isBanned && !activeBan.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
                     <i class="fas fa-lock"></i>
                     {{ t('players.show.lock_ban') }}
                 </inertia-link>
                 <!-- Unlock ban -->
-                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-purple-600 dark:bg-purple-500 flex items-center gap-1" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + player.ban.id + '/unlock'" v-if="player.isBanned && player.ban.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
+                <inertia-link class="px-5 py-2 font-semibold text-white rounded bg-purple-600 dark:bg-purple-500 flex items-center gap-1" method="POST" v-bind:href="'/players/' + player.licenseIdentifier + '/bans/' + activeBan.id + '/unlock'" v-if="player.isBanned && activeBan.locked && this.perm.check(this.perm.PERM_LOCK_BAN)">
                     <i class="fas fa-lock-open"></i>
                     {{ t('players.show.unlock_ban') }}
                 </inertia-link>
@@ -863,7 +863,7 @@
                 <span class="text-sm italic">{{ t('players.show.high_accuracy_title') }}</span>
             </div>
 
-            <div class="mb-4 px-6 py-4 border-2 flex flex-col bg-purple-600 dark:bg-purple-500 rounded border-purple-800" v-if="player.isBanned && player.ban.scheduled">
+            <div class="mb-4 px-6 py-4 border-2 flex flex-col bg-purple-600 dark:bg-purple-500 rounded border-purple-800" v-if="player.isBanned && activeBan.scheduled">
                 <span class="font-bold">
                     <i class="fas fa-calendar-day mr-1"></i>
                     {{ t('players.show.scheduled_unban') }}
@@ -885,40 +885,72 @@
                             <span v-html="local.ban" :class="{ 'line-through': status && player.streamerException }"></span>
                         </h2>
                         <div class="font-semibold">
-                            <i class="mr-1 fas fa-lock" v-if="player.ban.locked" :title="t('players.show.ban_locked')"></i>
-                            {{ player.ban.timestamp | formatTime }}
+                            <i class="mr-1 fas fa-lock" v-if="activeBan.locked" :title="t('players.show.ban_locked')"></i>
+                            {{ activeBan.timestamp | formatTime }}
                         </div>
                     </div>
 
                     <p class="text-gray-100">
-                        <span class="whitespace-pre-line">{{ player.ban.reason || t('players.show.no_reason') }}</span>
+                        <span class="whitespace-pre-line">{{ activeBan.reason || t('players.show.no_reason') }}</span>
                     </p>
 
                     <div class="flex justify-between">
-                        <p class="text-sm italic monospace">
-                            {{ player.ban.banHash }}
-                            <template v-if="player.ban.creationReason">/ {{ player.ban.creationReason }}</template>
+                        <p class="text-sm font-mono">
+                            {{ activeBan.banHash }}
+                            <template v-if="activeBan.creationReason">/ {{ activeBan.creationReason }}</template>
                         </p>
-                        <p class="text-sm monospace font-semibold" v-if="player.ban.smurfAccount" :title="t('players.show.original_ban')">
-                            <a :href="'/smurf/' + player.ban.smurfAccount" target="_blank" class="text-white hover:text-gray-800">{{ player.ban.smurfAccount }}</a>
+                        <p class="text-sm font-mono font-semibold" v-if="activeBan.smurfAccount" :title="t('players.show.original_ban')">
+                            <a :href="'/smurf/' + activeBan.smurfAccount" target="_blank" class="text-white hover:text-gray-800">{{ activeBan.smurfAccount }}</a>
                         </p>
                     </div>
 
-                    <div class="mt-4 text-sm pt-1 border-t border-dashed" v-if="player.ban.info">
-                        <b class="whitespace-nowrap" :class="{ 'cursor-help': isModdingBan() }" @click="showSystemInfo()">{{ player.ban.original }}:</b> <i>{{ player.ban.info }}</i>
+                    <div class="mt-4 text-sm pt-1 border-t border-dashed" v-if="activeBan.info">
+                        <b class="whitespace-nowrap" :class="{ 'cursor-help': isModdingBan() }" @click="showSystemInfo()">{{ activeBan.original }}:</b> <i>{{ activeBan.info }}</i>
                     </div>
                 </alert>
 
-                <alert class="bg-orange-500 mb-4" v-if="uniqueBans > 1">
+                <alert class="bg-orange-500 mb-4" v-if="player.bans.length > 1">
                     <div class="flex items-center justify-between">
                         <h2 class="text-lg font-semibold">
                             {{ t('players.show.multiple_bans') }}
                         </h2>
                     </div>
 
-                    <p class="text-gray-100 italic text-sm">
-                        {{ t('players.show.multiple_bans_details', uniqueBans) }}
+                    <p class="text-gray-100 italic text-xs">
+                        {{ t('players.show.multiple_bans_details', player.bans.length) }}
                     </p>
+
+                    <table class="w-full text-sm mt-2">
+                        <tr class="border-t border-gray-800 bg-black bg-opacity-10" v-if="activeBan.banHash !== ban.banHash" v-for="ban in player.bans" :key="ban.banHash">
+                            <td class="px-2 py-1 font-mono whitespace-nowrap" :title="t('players.show.ban_hash') + (ban.creationReason ? ' / ' + ban.creationReason : '')">
+                                {{ ban.banHash }}
+                            </td>
+                            <td class="px-2 py-1" :title="ban.original">
+                                {{ ban.original ? truncate(ban.original, 100) : t('players.show.no_reason') }}
+                            </td>
+                            <td class="px-2 py-1 whitespace-nowrap" :title="t('players.show.ban_creator')">
+                                {{ ban.issuer ? ban.issuer : t('global.system') }}
+                            </td>
+                            <td class="px-2 py-1 whitespace-nowrap" :title="t('players.show.issue_date')">
+                                {{ ban.timestamp | formatTime }}
+                            </td>
+                            <td class="px-2 py-1 whitespace-nowrap" :title="t('players.show.expiry_date')">
+                                <template v-if="ban.expire">
+                                    {{ ban.expireAt | formatTime }}
+                                </template>
+                                <template v-else>
+                                    {{ t('players.show.indefinite') }}
+                                </template>
+                            </td>
+                            <td class="px-2 py-1 whitespace-nowrap">
+                                <i class="fas fa-clock ml-1" v-if="ban.expire" :title="t('players.show.timed_ban')"></i>
+                                <i class="fas fa-infinity ml-1" v-else :title="t('players.show.indefinite_ban')"></i>
+
+                                <i class="fas fa-lock ml-1" v-if="ban.scheduled" :title="t('players.show.ban_scheduled')"></i>
+                                <i class="fas fa-lock ml-1" v-if="ban.locked" :title="t('players.show.ban_locked')"></i>
+                            </td>
+                        </tr>
+                    </table>
                 </alert>
 
                 <alert class="bg-rose-500 mb-4" v-if="hwidBan">
@@ -1616,6 +1648,7 @@ import MetadataViewer from './../../Components/MetadataViewer';
 import StatisticsTable from './../../Components/StatisticsTable';
 import MultiSelector from './../../Components/MultiSelector';
 import { escape } from 'lodash';
+import { template } from 'lodash';
 
 export default {
     layout: Layout,
@@ -1668,9 +1701,6 @@ export default {
         },
         blacklisted: {
             type: Boolean
-        },
-        uniqueBans: {
-            type: Number
         }
     },
     data() {
@@ -1820,13 +1850,18 @@ export default {
         }
     },
     computed: {
+        activeBan() {
+            if (!this.player.bans.length) return false;
+
+            return this.player.bans[0];
+        },
         confirmedAccuracy() {
-            const ban = this.player.ban;
+            const ban = this.activeBan;
 
             return ban && ban.info && ban.info.startsWith('Impossible');
         },
         prettyHighAccuracy() {
-            const ban = this.player.ban;
+            const ban = this.activeBan;
 
             return ban && ban.info && ban.info.startsWith('Highly unlikely');
         },
@@ -1838,18 +1873,18 @@ export default {
             return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
         },
         scheduledUnban() {
-            if (!this.player.ban || !this.player.ban.scheduled) {
+            if (!this.activeBan || !this.activeBan.scheduled) {
                 return false;
             }
 
-            return this.$moment.utc(this.player.ban.scheduled * 1000).format('MM/DD/YYYY - H:mm A');
+            return this.$moment.utc(this.activeBan.scheduled * 1000).format('MM/DD/YYYY - H:mm A');
         },
         scheduledUnbanIn() {
-            if (!this.player.ban || !this.player.ban.scheduled) {
+            if (!this.activeBan || !this.activeBan.scheduled) {
                 return false;
             }
 
-            return this.$moment.utc(this.player.ban.scheduled * 1000).fromNow();
+            return this.$moment.utc(this.activeBan.scheduled * 1000).fromNow();
         },
         systemNoteCount() {
             return this.warnings.filter(warn => this.isAutomatedWarning(warn)).length;
@@ -1875,7 +1910,7 @@ export default {
     },
     methods: {
         isModdingBan() {
-            return this.player.ban.original && this.player.ban.original.startsWith('MODDING');
+            return this.activeBan.original && this.activeBan.original.startsWith('MODDING');
         },
         async loadMarriedTo(character) {
             const marriedTo = character.marriedTo;
@@ -1901,7 +1936,7 @@ export default {
             this.systemInfo = false;
 
             try {
-                const response = await axios.get('/players/' + this.player.licenseIdentifier + '/bans/' + this.player.ban.id + '/system');
+                const response = await axios.get('/players/' + this.player.licenseIdentifier + '/bans/' + this.activeBan.id + '/system');
 
                 if (response.data && response.data.status) {
                     this.systemInfo = response.data.data;
@@ -1978,7 +2013,7 @@ export default {
         async unbanPlayer() {
             if (this.isLoading) return;
 
-            if (!this.player.ban.issuer && !this.isConfirmingUnban && (this.confirmedAccuracy || this.prettyHighAccuracy)) {
+            if (!this.activeBan.issuer && !this.isConfirmingUnban && (this.confirmedAccuracy || this.prettyHighAccuracy)) {
                 this.isConfirmingUnban = true;
                 this.confirmingUnbanInput = "";
 
@@ -1990,7 +2025,7 @@ export default {
             this.isLoading = true;
 
             // Send request.
-            await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/bans/' + this.player.ban.id);
+            await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/bans/' + this.activeBan.id);
 
             this.isLoading = false;
         },
@@ -2005,7 +2040,7 @@ export default {
             this.isSchedulingUnban = false;
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/bans/' + this.player.ban.id + '/schedule', {
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/bans/' + this.activeBan.id + '/schedule', {
                 timestamp: timestamp
             });
 
@@ -2154,7 +2189,7 @@ export default {
             this.statusLoading = false;
         },
         async loadHWIDLink() {
-            if (this.player.ban) {
+            if (this.activeBan) {
                 return;
             }
 
@@ -2418,15 +2453,15 @@ export default {
             return '';
         },
         localizeBan() {
-            if (!this.player.ban) {
+            if (!this.activeBan) {
                 return '';
             }
 
             let suffix = this.opfwBanned ? '_op' : '';
 
-            return this.player.ban.expireAt
-                ? this.t('players.show.ban' + suffix, this.formatBanCreator(this.player.ban.issuer), this.$options.filters.formatTime(this.player.ban.expireAt))
-                : this.t('players.ban.forever' + suffix, this.formatBanCreator(this.player.ban.issuer));
+            return this.activeBan.expireAt
+                ? this.t('players.show.ban' + suffix, this.formatBanCreator(this.activeBan.issuer), this.$options.filters.formatTime(this.activeBan.expireAt))
+                : this.t('players.ban.forever' + suffix, this.formatBanCreator(this.activeBan.issuer));
         },
         formatTime(t) {
             return this.$options.filters.formatTime(t);

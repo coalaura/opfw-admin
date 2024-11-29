@@ -198,7 +198,7 @@ class PlayerRouteController extends Controller
      */
     public function ban(Player $player): Response
     {
-        $ban = $player->getActiveBan();
+        $ban = $player->bans()->get()->first();
 
         return (new Response([
             'status' => true,
