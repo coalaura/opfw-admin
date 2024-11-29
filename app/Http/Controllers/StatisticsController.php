@@ -428,11 +428,11 @@ class StatisticsController extends Controller
 
             if ($time >= $min) {
                 $statistics["data"][$date] = [
-                    "date"        => $date,
-                    "minimum" => $entry->minimum,
-                    "maximum" => $entry->maximum,
-                    "average" => $entry->average,
-                    "average_1_percent" => $entry->average_1_percent
+                    "date"              => $date,
+                    "minimum"           => $entry->minimum,
+                    "maximum"           => $entry->maximum,
+                    "average"           => $entry->average,
+                    "average_1_percent" => $entry->average_1_percent,
                 ];
             }
 

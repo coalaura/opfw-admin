@@ -76,6 +76,10 @@ const Localization = {
         };
 
         Vue.prototype.numberFormat = function (number, decimals, asCurrency) {
+            if (number === null || number === undefined || number === false) {
+                return '';
+            }
+
             let options = {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: decimals && Number.isInteger(decimals) ? decimals : 2
