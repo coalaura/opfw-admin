@@ -77,7 +77,7 @@ const Localization = {
 
         Vue.prototype.numberFormat = function (number, decimals, asCurrency) {
             if (number === null || number === undefined || number === false) {
-                return '';
+                return '-';
             }
 
             let options = {
