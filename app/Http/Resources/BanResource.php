@@ -19,19 +19,20 @@ class BanResource extends JsonResource
         $reason = $this->getFormattedReason();
 
         return [
-            'id'           => $this->id,
-            'banHash'      => $this->ban_hash,
-            'smurfAccount' => $this->smurf_account,
-            'reason'       => $reason['reason'],
-            'original'     => $this->reason,
-            'info'         => $reason['info'],
-            'identifier'   => $this->identifier,
-            'expire'       => $this->expire,
-            'expireAt'     => $this->expireAt,
-            'timestamp'    => $this->timestamp,
-            'issuer'       => $this->creator_name ?? null,
-            'locked'       => $this->locked,
-            'scheduled'    => $this->scheduled_unban ?? false,
+            'id'             => $this->id,
+            'banHash'        => $this->ban_hash,
+            'smurfAccount'   => $this->smurf_account,
+            'reason'         => $reason['reason'],
+            'original'       => $this->reason,
+            'info'           => $reason['info'],
+            'identifier'     => $this->identifier,
+            'expire'         => $this->expire,
+            'expireAt'       => $this->expireAt,
+            'timestamp'      => $this->timestamp,
+            'issuer'         => $this->creator_name ?? null,
+            'locked'         => $this->locked,
+            'scheduled'      => $this->scheduled_unban ?? false,
+            'creationReason' => $this->creation_reason ?? null,
         ];
     }
 
