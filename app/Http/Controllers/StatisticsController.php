@@ -378,7 +378,7 @@ class StatisticsController extends Controller
 
     public function fpsStatistics()
     {
-        $datasets = 3;
+        $datasets = 4;
 
         $statistics = [
             "data"  => [],
@@ -405,6 +405,13 @@ class StatisticsController extends Controller
                         "borderColor"     => $this->color(2, $datasets, 1),
                         "pointRadius"     => 0,
                     ],
+                    [
+                        "label"           => "Average 1% FPS",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(3, $datasets, 0.3),
+                        "borderColor"     => $this->color(3, $datasets, 1),
+                        "pointRadius"     => 0,
+                    ],
                 ],
                 "labels"   => [],
             ],
@@ -424,7 +431,8 @@ class StatisticsController extends Controller
                     "date"        => $date,
                     "minimum" => $entry->minimum,
                     "maximum" => $entry->maximum,
-                    "average" => $entry->average
+                    "average" => $entry->average,
+                    "average_1_percent" => $entry->average_1_percent
                 ];
             }
 
@@ -433,6 +441,7 @@ class StatisticsController extends Controller
             $statistics["graph"]["datasets"][0]["data"][] = $entry->minimum;
             $statistics["graph"]["datasets"][1]["data"][] = $entry->maximum;
             $statistics["graph"]["datasets"][2]["data"][] = $entry->average;
+            $statistics["graph"]["datasets"][3]["data"][] = $entry->average_1_percent;
         }
 
         $statistics["data"] = array_reverse(array_values($statistics["data"]));

@@ -190,6 +190,7 @@
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(fps, 0)">{{ t('statistics.minimum_fps') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(fps, 1)">{{ t('statistics.maximum_fps') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(fps, 2)">{{ t('statistics.average_fps') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(fps, 3)">{{ t('statistics.average_1_percent') }}</th>
                             </tr>
 
                             <tr class="border-t border-gray-500" v-if="!fpsLoading && !fps">
@@ -197,16 +198,17 @@
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
                                 <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
                             </tr>
 
                             <tr class="border-t border-gray-500" v-else-if="fpsLoading">
-                                <td class="px-2 py-0.5 text-center" colspan="4">
+                                <td class="px-2 py-0.5 text-center" colspan="5">
                                     <i class="fas fa-spinner animate-spin"></i>
                                 </td>
                             </tr>
 
                             <tr class="border-t border-gray-500" v-else-if="fps.data.length === 0">
-                                <td class="px-2 py-0.5 text-center italic" colspan="4">
+                                <td class="px-2 py-0.5 text-center italic" colspan="5">
                                     {{ t('statistics.no_players_recorded') }}
                                 </td>
                             </tr>
@@ -217,6 +219,7 @@
                                 <td class="px-2 py-0.5" :style="datasetColor(fps, 0)">{{ numberFormat(entry.minimum, false, false) }}</td>
                                 <td class="px-2 py-0.5" :style="datasetColor(fps, 1)">{{ numberFormat(entry.maximum, false, false) }}</td>
                                 <td class="px-2 py-0.5" :style="datasetColor(fps, 2)">{{ numberFormat(entry.average, false, false) }}</td>
+                                <td class="px-2 py-0.5" :style="datasetColor(fps, 3)">{{ numberFormat(entry.average_1_percent, false, false) }}</td>
                             </tr>
                         </table>
                     </div>

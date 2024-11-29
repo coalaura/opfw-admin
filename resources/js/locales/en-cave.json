@@ -1236,6 +1236,7 @@
         "atm_withdraw_fee": "ATM take money fee",
         "atm_withdraw_fee_details": "All ATM take money fee sum.",
         "average": "Middle",
+        "average_1_percent": "Average 1% FPS",
         "average_fps": "Average FPS",
         "bank": "Coin Place",
         "bills": "Bills Done",

@@ -1236,6 +1236,7 @@
         "atm_withdraw_fee": "Gebyrer for minibankuttak",
         "atm_withdraw_fee_details": "Samlet beløp for alle minibankuttaksgebyrer.",
         "average": "Gjennomsnitt",
+        "average_1_percent": "Gjennomsnittlig 1% FPS",
         "average_fps": "Gjennomsnittlig FPS",
         "bank": "Bank",
         "bills": "Betalte regninger",
