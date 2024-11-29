@@ -44,7 +44,7 @@ class PlayerResource extends JsonResource
             'isSeniorStaff'       => $this->isSeniorStaff(),
             'isSuperAdmin'        => $this->isSuperAdmin(),
             'isRoot'              => $this->isRoot(),
-            'isBanned'            => !empty($bans),
+            'isBanned'            => $bans->count() > 0,
             'warnings'            => $plain ? 0 : $this->warnings()->whereIn('warning_type', [Warning::TypeStrike, Warning::TypeWarning])->count(),
             'bans'                => $bans,
             'playerAliases'       => $identifiers ? array_values(array_unique(array_filter($identifiers, function ($e) {
