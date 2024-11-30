@@ -183,7 +183,9 @@ class StatisticsHelper
     // Lucky Wheel Spins (count)
     public static function collectLuckyWheelStatistics(): array
     {
-        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM lucky_wheel_spins GROUP BY date ORDER BY timestamp DESC");
+        $before = time() - 30 * 24 * 60 * 60;
+
+        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(FROM_UNIXTIME(timestamp), '%c/%d/%Y') as date FROM lucky_wheel_spins WHERE timestamp > $before GROUP BY date ORDER BY timestamp DESC");
     }
 
     // Items found in Dumpsters (count)
