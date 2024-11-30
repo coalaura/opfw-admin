@@ -1291,6 +1291,8 @@
         "joins_details": "Amount of folks that joined the server.",
         "ls_customs": "LS Customs Purchases",
         "ls_customs_details": "Combined revenue from all them LS Customs purchases.",
+        "lucky_wheel": "Lucky Wheel Spins",
+        "lucky_wheel_details": "How many times that lucky wheel's been spun.",
         "material_vendor": "Material Vendor Sales",
         "material_vendor_details": "Combined revenue from all materials sold at the material vendor.",
         "max_queue": "Max Queue",

@@ -1291,6 +1291,8 @@
         "joins_details": "Amount of usews that joined the sewvew.",
         "ls_customs": "LS Customs Purchases",
         "ls_customs_details": "Combined wevenue fwom aww LS Customs purchases.",
+        "lucky_wheel": "Wucky Wheew Spins",
+        "lucky_wheel_details": "Amount of times the wucky wheew was spun.",
         "material_vendor": "Matewiaw Vendo Sales",
         "material_vendor_details": "Combined wevenue fwom aww matewiaws sowd at the matewiaw vendo.",
         "max_queue": "Max Queue",

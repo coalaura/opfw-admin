@@ -1291,6 +1291,8 @@
         "joins_details": "Antall brukere som har blitt med på serveren.",
         "ls_customs": "LS Customs-kjøp",
         "ls_customs_details": "Kombinert inntekt fra alle LS Customs-kjøp.",
+        "lucky_wheel": "Lykkespinn på hjulet",
+        "lucky_wheel_details": "Antall ganger lykkehjulet ble snurret.",
         "material_vendor": "Materialleverandørsalg",
         "material_vendor_details": "Kombinert inntekt fra alle materialer solgt hos materialleverandøren.",
         "max_queue": "Maks kø",

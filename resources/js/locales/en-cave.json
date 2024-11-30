@@ -1291,6 +1291,8 @@
         "joins_details": "How many users come.",
         "ls_customs": "LS Customs buy.",
         "ls_customs_details": "All LS Customs buy money.",
+        "lucky_wheel": "Lucky Wheel Spin",
+        "lucky_wheel_details": "How many time wheel spin.",
         "material_vendor": "Material sell.",
         "material_vendor_details": "All material sell money.",
         "max_queue": "Max line.",

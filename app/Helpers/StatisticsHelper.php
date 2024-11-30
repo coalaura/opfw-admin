@@ -180,6 +180,12 @@ class StatisticsHelper
         return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = 'Mining Explosion' GROUP BY date ORDER BY timestamp DESC");
     }
 
+    // Lucky Wheel Spins (count)
+    public static function collectLuckyWheelStatistics(): array
+    {
+        return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM lucky_wheel_spins GROUP BY date ORDER BY timestamp DESC");
+    }
+
     // Items found in Dumpsters (count)
     public static function collectDumpsterStatistics(): array
     {

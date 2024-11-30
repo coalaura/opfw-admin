@@ -377,6 +377,8 @@
         "guns_details": "Amount of guns crafted.",
         "shots_fired": "Shots Fired",
         "shots_fired_details": "Amount of shots fired (that dealt damage) from all weapons that shoot bullets (no melee, etc.).",
+        "lucky_wheel": "Lucky Wheel Spins",
+        "lucky_wheel_details": "Amount of times the lucky wheel was spun.",
         "crashes": "Game crashes",
         "crashes_details": "Amount of full game crashes or timeouts.",
         "money_logs": "Money Logs",

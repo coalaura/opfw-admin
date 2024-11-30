@@ -138,6 +138,9 @@ class StatisticsController extends Controller
                 case 'shots_fired':
                     $result = StatisticsHelper::collectShotsFiredStatistics();
                     break;
+                case 'lucky_wheel':
+                    $result = StatisticsHelper::collectLuckyWheelStatistics();
+                    break;
             }
 
             CacheHelper::write($key, $result, CacheHelper::HOUR);
