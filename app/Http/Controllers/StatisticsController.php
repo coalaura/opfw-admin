@@ -474,7 +474,6 @@ class StatisticsController extends Controller
             $date = strtotime($value->date);
 
             $details = $value->details;
-            $count   = $value->count;
             $amount  = $value->amount;
 
             if (!isset($map[$date])) {
@@ -482,7 +481,7 @@ class StatisticsController extends Controller
             }
 
             if (!isset($map[$date][$details])) {
-                $map[$date][$details] = round($amount / $count);
+                $map[$date][$details] = $amount;
             }
         }
 
