@@ -109,6 +109,8 @@ class DiscordAttachmentHelper
             $data = HttpHelper::get($url);
 
             if (empty($data)) {
+                LoggingHelper::log('Failed to download attachment (empty data)');
+
                 return null;
             }
 
