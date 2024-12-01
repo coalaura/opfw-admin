@@ -78,6 +78,8 @@ class DiscordAttachmentHelper
                 return $url;
             }
 
+            LoggingHelper::log('Downloaded attachment: ' . $path);
+
             return url($path);
         }, $message);
 
