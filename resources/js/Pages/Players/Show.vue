@@ -1339,7 +1339,10 @@
                                     </sup>
 
                                     <div class="ml-3 flex gap-2">
-                                        <button class="px-2 py-1 text-sm font-semibold text-white bg-yellow-500 rounded" @click="warningEditId = warning.id" v-if="warningEditId !== warning.id && ($page.auth.player.licenseIdentifier === warning.issuer.licenseIdentifier || $page.auth.player.isRoot) && warning.warningType !== 'system'">
+                                        <button class="px-2 py-1 text-sm font-semibold text-white bg-lime-500 rounded" @click="refreshWarning(warning.id)" v-if="!warningEditId && $page.auth.player.isRoot">
+                                            <i class="fas fa-retweet"></i>
+                                        </button>
+                                        <button class="px-2 py-1 text-sm font-semibold text-white bg-yellow-500 rounded" @click="warningEditId = warning.id" v-if="warningEditId !== warning.id && $page.auth.player.licenseIdentifier === warning.issuer.licenseIdentifier && warning.warningType !== 'system'">
                                             <i class="fas fa-pencil-alt"></i>
                                         </button>
                                         <button class="px-2 py-1 text-sm font-semibold text-white bg-success dark:bg-dark-success rounded" @click="editWarning(warning.id, warning.warningType)" v-if="warningEditId === warning.id">
@@ -2704,6 +2707,10 @@ export default {
 
             // Send request.
             await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/warnings/' + id, {}, { preserveScroll: true });
+        },
+        async refreshWarning(id) {
+            // Send request.
+            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/warnings/' + id + '/refresh', {}, { preserveScroll: true });
         },
         async deleteSelectedWarnings() {
             if (this.deletingWarnings || this.selectedWarnings.length === 0) return;

@@ -66,7 +66,7 @@ class PlayerWarningController extends Controller
         $staffIdentifier = license();
         $issuer = $warning->issuer()->first();
 
-        if (!$issuer || ($staffIdentifier !== $issuer->license_identifier && GeneralHelper::isUserRoot($staffIdentifier))) {
+        if (!$issuer || $staffIdentifier !== $issuer->license_identifier) {
             return backWith('error', 'You can only edit your own warnings/notes!');
         }
 
@@ -78,6 +78,24 @@ class PlayerWarningController extends Controller
         DiscordAttachmentHelper::ensureMessageAttachments($warning);
 
         return backWith('success', 'Successfully updated warning/note');
+    }
+
+    /**
+     * Refreshes the specified resource.
+     *
+     * @param Player $player
+     * @param Warning $warning
+     * @return RedirectResponse
+     */
+    public function refresh(Player $player, Warning $warning): RedirectResponse
+    {
+        if (!GeneralHelper::isUserRoot(license())) {
+            abort(401);
+        }
+
+        DiscordAttachmentHelper::ensureMessageAttachments($warning);
+
+        return backWith('success', 'Successfully refreshed warning/note');
     }
 
     /**
