@@ -28,6 +28,10 @@ class DiscordAttachmentHelper
         'xbm',     // XBM (X BitMap)
     ];
 
+    const NonWebPImageExtensions = [
+        'gif',
+    ];
+
     public static function ensureMessageAttachments(Warning &$warning)
     {
         $message = $warning->message;
@@ -38,13 +42,17 @@ class DiscordAttachmentHelper
 
         /**
          * https://cdn.discordapp.com/attachments/686056492377571497/1271225863366774794/transcript-closed-24005.html?ex=66b690d8&is=66b53f58&hm=9b5e12309339ab4c9533be731a54a88fadca6948f284d0cae0917842ffd53c10&
+         * https://media.discordapp.net/attachments/1268305038456131634/1312859870411620403/image.png?ex=674e0788&is=674cb608&hm=953728c6dc4601a6c790e0c16843eeb2f6b1fd778e05af1e0b42cb2d49019093&=&format=webp&quality=lossless&width=1290&height=572
          */
-        $re = '/https:\/\/cdn\.discordapp\.com\/attachments\/\d+\/(\d+)\/([^\s\/?#]+)\?([^\s#]+)/m';
+        $re = '/https:\/\/(?:cdn\.discordapp\.com|media\.discordapp\.net)\/attachments\/\d+\/(\d+)\/([^\s\/?#]+)\?([^\s#]+)/m';
 
         $message = preg_replace_callback($re, function ($matches) {
             $url = $matches[0];
             $attachId = $matches[1];
             $name = $matches[2];
+
+            // Remove width and height
+            $url = preg_replace('/&(width|height)=[0-9]+/', '', $url);
 
             if (!DiscordAttachmentHelper::isFileNameAllowed($name)) {
                 return $url;
@@ -106,14 +114,14 @@ class DiscordAttachmentHelper
 
             $ext = pathinfo($name, PATHINFO_EXTENSION);
 
-            if (in_array($ext, self::ImageExtensions)) {
+            if (in_array($ext, self::ImageExtensions) && !in_array($ext, self::NonWebPImageExtensions)) {
                 $relative = str_replace($ext, 'webp', $relative);
                 $path = public_path($relative);
 
                 $data = ImageHelper::convertToWebP($data);
 
                 if (!$data) {
-                    LoggingHelper::log('Failed to convert attachment ' . $url . ' to webp');
+                    LoggingHelper::log('Failed to convert attachment to webp');
 
                     return null;
                 }
@@ -121,6 +129,8 @@ class DiscordAttachmentHelper
 
             file_put_contents($path, $data);
         } catch (\Exception $e) {
+            LoggingHelper::log('Failed to download attachment: ' . $e->getMessage());
+
             return null;
         }
 
