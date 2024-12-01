@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\DiscordAttachmentHelper;
+use App\Helpers\GeneralHelper;
 use App\Helpers\Mutex;
 use App\Helpers\PermissionHelper;
 use App\Http\Requests\WarningStoreRequest;
@@ -65,7 +66,7 @@ class PlayerWarningController extends Controller
         $staffIdentifier = license();
         $issuer = $warning->issuer()->first();
 
-        if (!$issuer || $staffIdentifier !== $issuer->license_identifier) {
+        if (!$issuer || ($staffIdentifier !== $issuer->license_identifier && GeneralHelper::isUserRoot($staffIdentifier))) {
             return backWith('error', 'You can only edit your own warnings/notes!');
         }
 
