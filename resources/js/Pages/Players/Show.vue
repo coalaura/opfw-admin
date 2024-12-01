@@ -1349,7 +1349,8 @@
                                             <i class="fas fa-ban"></i>
                                         </button>
                                         <button class="px-2 py-1 text-sm font-semibold text-white bg-lime-600 rounded" @click="refreshWarning(warning.id)" v-if="!warningEditId && $page.auth.player.isRoot && $page.auth.player.licenseIdentifier !== warning.issuer.licenseIdentifier">
-                                            <i class="fas fa-retweet"></i>
+                                            <i class="fas fa-spinner animate-spin" v-if="refreshingWarning === warning.id"></i>
+                                            <i class="fas fa-retweet" v-else></i>
                                         </button>
                                         <button class="block px-2 py-1 text-sm font-semibold text-white bg-gray-500 border-2 border-gray-500 rounded" :class="{ '!bg-red-500 hover:!bg-red-600 !border-red-900': selectedWarnings.includes(warning.id) }" @click="selectWarning(warning.id)" v-if="$page.auth.player.isSeniorStaff">
                                             <i class="fas fa-folder-minus"></i>
@@ -1721,6 +1722,7 @@ export default {
             isTempBanning: false,
             isTempSelect: true,
             warningEditId: 0,
+            refreshingWarning: false,
             form: {
                 ban: {
                     note: null,
@@ -2709,8 +2711,14 @@ export default {
             await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/warnings/' + id, {}, { preserveScroll: true });
         },
         async refreshWarning(id) {
+            if (this.refreshingWarning) return;
+
+            this.refreshingWarning = id;
+
             // Send request.
             await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/warnings/' + id + '/refresh', {}, { preserveScroll: true });
+
+            this.refreshingWarning = false;
         },
         async deleteSelectedWarnings() {
             if (this.deletingWarnings || this.selectedWarnings.length === 0) return;
