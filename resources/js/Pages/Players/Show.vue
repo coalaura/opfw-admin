@@ -1339,9 +1339,6 @@
                                     </sup>
 
                                     <div class="ml-3 flex gap-2">
-                                        <button class="px-2 py-1 text-sm font-semibold text-white bg-lime-600 rounded" @click="refreshWarning(warning.id)" v-if="!warningEditId && $page.auth.player.isRoot">
-                                            <i class="fas fa-retweet"></i>
-                                        </button>
                                         <button class="px-2 py-1 text-sm font-semibold text-white bg-yellow-500 rounded" @click="warningEditId = warning.id" v-if="warningEditId !== warning.id && $page.auth.player.licenseIdentifier === warning.issuer.licenseIdentifier && warning.warningType !== 'system'">
                                             <i class="fas fa-pencil-alt"></i>
                                         </button>
@@ -1351,8 +1348,11 @@
                                         <button class="px-2 py-1 text-sm font-semibold text-white bg-muted dark:bg-dark-muted rounded" @click="warningEditId = 0" v-if="warningEditId === warning.id">
                                             <i class="fas fa-ban"></i>
                                         </button>
+                                        <button class="px-2 py-1 text-sm font-semibold text-white bg-lime-600 rounded" @click="refreshWarning(warning.id)" v-if="!warningEditId && $page.auth.player.isRoot && $page.auth.player.licenseIdentifier !== warning.issuer.licenseIdentifier">
+                                            <i class="fas fa-retweet"></i>
+                                        </button>
                                         <button class="block px-2 py-1 text-sm font-semibold text-white bg-gray-500 border-2 border-gray-500 rounded" :class="{ '!bg-red-500 hover:!bg-red-600 !border-red-900': selectedWarnings.includes(warning.id) }" @click="selectWarning(warning.id)" v-if="$page.auth.player.isSeniorStaff">
-                                            <i class="fas fa-recycle"></i>
+                                            <i class="fas fa-folder-minus"></i>
                                         </button>
                                         <inertia-link class="px-2 py-1 text-sm font-semibold text-white bg-red-500 rounded hover:bg-red-600" method="DELETE" v-bind:href="'/players/' + player.licenseIdentifier + '/warnings/' + warning.id" v-if="$page.auth.player.isSeniorStaff">
                                             <i class="fas fa-trash-alt"></i>
