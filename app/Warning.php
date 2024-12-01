@@ -28,6 +28,7 @@ class Warning extends Model
 
     const Reactions = [
         'blinks',
+        'bruh',
         'chair_stare',
         'confused_pika',
         'cool_cat',
@@ -37,11 +38,13 @@ class Warning extends Model
         'pepoo_clap',
         'shocked',
         'touch_grass',
-        'what'
+        'what',
+        'zerochamp'
     ];
 
     const AnimatedReactions = [
         'blinks',
+        'bruh',
         'pepoo_clap',
         'touch_grass'
     ];
