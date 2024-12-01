@@ -969,6 +969,7 @@
             "damage_logs_by": "Dikhaye kisne is player se nuksaan uthaya",
             "delete_character": "Kya aap sach mein is character ko delete karna chahte hain?",
             "delete_selected": "Delete karein {0} chune hue warning(s)",
+            "delete_selected_warnings": "Kya aap pakke hain ki aap {0} chune hue warnings ko delete karna chahte hain? Yeh vaapas nahi ho sakta!",
             "delete_warning": "Kya aap sach mein is strike/warning/note ko delete karna chahte hain?",
             "description": "Player profile dekh rahe hain.",
             "discord": "Copy karein Discord <@{0}>",

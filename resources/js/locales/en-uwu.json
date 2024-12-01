@@ -969,6 +969,7 @@
             "damage_logs_by": "Show who was damaged by this pwayew",
             "delete_character": "Awe you suwe you want to dewete this chawactew?",
             "delete_selected": "Dewete {0} sewected wawning(s)",
+            "delete_selected_warnings": "Awe you suwe you want to dewete the {0} sewected wawnings? This cannot be undone, nya!",
             "delete_warning": "Awe you suwe you want to dewete this stwike/wawning/nyote?",
             "description": "Viewying pwayew pwofiwe.",
             "discord": "Copy Discowd <@{0}>",

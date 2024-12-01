@@ -969,6 +969,7 @@
             "damage_logs_by": "Show who this player hit",
             "delete_character": "Sure delete this character?",
             "delete_selected": "Delete {0} warning",
+            "delete_selected_warnings": "You sure want delete {0} warnings? No take back!",
             "delete_warning": "Sure delete this strike/warning/note?",
             "description": "See player profile.",
             "discord": "Copy Discord <@{0}>",

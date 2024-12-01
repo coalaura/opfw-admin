@@ -969,6 +969,7 @@
             "damage_logs_by": "Vis hvem som ble skadet av denne spilleren",
             "delete_character": "Er du sikker på at du vil slette denne karakteren?",
             "delete_selected": "Slett {0} valgt(e) advarsel(er)",
+            "delete_selected_warnings": "Er du sikker på at du vil slette de {0} valgte advarslene? Dette kan ikke angres!",
             "delete_warning": "Er du sikker på at du vil slette denne straffen/advarselen/notatet?",
             "description": "Viser spillerprofil.",
             "discord": "Kopier Discord <@{0}>",

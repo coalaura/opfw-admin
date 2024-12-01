@@ -1339,7 +1339,7 @@
                                     </sup>
 
                                     <div class="ml-3 flex gap-2">
-                                        <button class="px-2 py-1 text-sm font-semibold text-white bg-lime-500 rounded" @click="refreshWarning(warning.id)" v-if="!warningEditId && $page.auth.player.isRoot">
+                                        <button class="px-2 py-1 text-sm font-semibold text-white bg-lime-600 rounded" @click="refreshWarning(warning.id)" v-if="!warningEditId && $page.auth.player.isRoot">
                                             <i class="fas fa-retweet"></i>
                                         </button>
                                         <button class="px-2 py-1 text-sm font-semibold text-white bg-yellow-500 rounded" @click="warningEditId = warning.id" v-if="warningEditId !== warning.id && $page.auth.player.licenseIdentifier === warning.issuer.licenseIdentifier && warning.warningType !== 'system'">
@@ -2714,6 +2714,8 @@ export default {
         },
         async deleteSelectedWarnings() {
             if (this.deletingWarnings || this.selectedWarnings.length === 0) return;
+
+            if (!confirm(this.t('players.show.delete_selected_warnings', this.selectedWarnings.length))) return;
 
             this.deletingWarnings = true;
 

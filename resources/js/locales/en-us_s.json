@@ -969,6 +969,7 @@
             "damage_logs_by": "Show who was damaged by this player",
             "delete_character": "Y'all sure you wanna delete this character?",
             "delete_selected": "Delete {0} selected warnin'(s)",
+            "delete_selected_warnings": "Y'all sure 'bout deletin' those {0} selected warnings? Ain't no goin' back!",
             "delete_warning": "Y'all sure you wanna delete this strike/warnin'/note?",
             "description": "Viewin' player profile.",
             "discord": "Copy Discord <@{0}>",

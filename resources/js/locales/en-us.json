@@ -942,6 +942,7 @@
             "panel_logs": "Panel Logs",
             "delete_character": "Are you sure you want to delete this character?",
             "delete_warning": "Are you sure you want to delete this strike/warning/note?",
+            "delete_selected_warnings": "Are you sure you want to delete the {0} selected warnings? This cannot be undone!",
             "unload": "Unload",
             "unload_msg": "Unload Message",
             "unload_msg_description": "This message will be displayed on the character selection screen.",
