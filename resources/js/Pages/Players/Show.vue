@@ -1339,7 +1339,7 @@
                                     </sup>
 
                                     <div class="ml-3 flex gap-2">
-                                        <button class="px-2 py-1 text-sm font-semibold text-white bg-yellow-500 rounded" @click="warningEditId = warning.id" v-if="warningEditId !== warning.id && $page.auth.player.licenseIdentifier === warning.issuer.licenseIdentifier && warning.warningType !== 'system'">
+                                        <button class="px-2 py-1 text-sm font-semibold text-white bg-yellow-500 rounded" @click="warningEditId = warning.id" v-if="warningEditId !== warning.id && ($page.auth.player.licenseIdentifier === warning.issuer.licenseIdentifier || $page.auth.player.isRoot) && warning.warningType !== 'system'">
                                             <i class="fas fa-pencil-alt"></i>
                                         </button>
                                         <button class="px-2 py-1 text-sm font-semibold text-white bg-success dark:bg-dark-success rounded" @click="editWarning(warning.id, warning.warningType)" v-if="warningEditId === warning.id">

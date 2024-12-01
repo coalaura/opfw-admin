@@ -14,7 +14,6 @@ use Illuminate\Support\Str;
 
 class PlayerWarningController extends Controller
 {
-
     /**
      * Store a newly created resource in storage.
      *
