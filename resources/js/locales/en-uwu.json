@@ -145,25 +145,17 @@
             "description": "Wogged FiveM ewwow wepowts fwom cwients.",
             "title": "Cwient Ewwows"
         },
-        "confirm_cycle": "Awe you suwe you want to cweate a nyew ewwow cycwe? This cannot be undwone!",
-        "create_cycle": "Cweate nyew cycwe",
-        "cycle": "Ewwow cycwe",
         "detail": "Detaiwed Ewwow Wepowt",
         "errors": "Ewwows",
         "feedback": "Usew Feeback",
-        "location": "Wocation",
         "no_errors": "No wogged ewwows found.",
-        "no_version_filter": "No fiwtew",
+        "no_feedback": "Nyo usew feedback submitted. UwU",
         "occurrences": "Occuwwences",
-        "player": "Pwayew",
         "search": "Seawch",
         "server": {
             "description": "Wogged FiveM ewwow wepowts fwom the sewvew.",
             "title": "Sewvew Ewwows"
-        },
-        "server_version": "Sewvew Vewsion",
-        "timestamp": "Timestamp",
-        "trace": "Ewwow"
+        }
     },
     "global": {
         "all": "Aww",

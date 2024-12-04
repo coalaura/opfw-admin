@@ -145,25 +145,17 @@
             "description": "Logged FiveM error reports from clients.",
             "title": "Client Errors"
         },
-        "confirm_cycle": "Y'all sure you wanna create a new error cycle? This can't be undone!",
-        "create_cycle": "Create new cycle",
-        "cycle": "Error cycle",
         "detail": "Detailed Error Report",
         "errors": "Errors",
         "feedback": "User Feedback",
-        "location": "Location",
         "no_errors": "Ain't no logged errors found.",
-        "no_version_filter": "No filter",
+        "no_feedback": "Ain't nobody sent in any feedback yet.",
         "occurrences": "Occurrences",
-        "player": "Player",
         "search": "Search",
         "server": {
             "description": "Logged FiveM error reports from the server.",
             "title": "Server Errors"
-        },
-        "server_version": "Server Version",
-        "timestamp": "Timestamp",
-        "trace": "Error"
+        }
     },
     "global": {
         "all": "All",

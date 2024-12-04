@@ -145,25 +145,17 @@
             "description": "Logged FiveM mistakes from clients.",
             "title": "Client Mistakes"
         },
-        "confirm_cycle": "Sure make new mistake round? No undo!",
-        "create_cycle": "Make new round",
-        "cycle": "Mistake round",
         "detail": "Big Mistake Report",
         "errors": "Mistakes",
         "feedback": "User Talk",
-        "location": "Place",
         "no_errors": "No mistakes logged.",
-        "no_version_filter": "No filter",
+        "no_feedback": "No feedback from user.",
         "occurrences": "Times",
-        "player": "Player",
         "search": "Find",
         "server": {
             "description": "Logged FiveM mistakes from server.",
             "title": "Server Mistakes"
-        },
-        "server_version": "Server Version",
-        "timestamp": "Time",
-        "trace": "Mistake"
+        }
     },
     "global": {
         "all": "All",

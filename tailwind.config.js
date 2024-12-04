@@ -221,6 +221,17 @@ module.exports = {
                 'dark-danger-pale':    defaultTheme.colors.red['700'],
                 'dark-warning-pale':   defaultTheme.colors.yellow['700'],
                 'dark-success-pale':   defaultTheme.colors.green['700'],
+
+                'code-background': '#161b22',
+                'code-base': '#ecf2f8',
+                'code-muted': '#89929b',
+                'code-border': '#21262d',
+                'code-red': '#fa7970',
+                'code-orange': '#faa356',
+                'code-green': '#7ce38b',
+                'code-lightblue': '#a2d2fb',
+                'code-blue': '#77bdfb',
+                'code-purple': '#cea5fb',
             }
         }
     },

@@ -145,25 +145,17 @@
             "description": "Clients se logged FiveM error reports.",
             "title": "Client Errors"
         },
-        "confirm_cycle": "Kya aap naya error cycle banana chahte hain? Ye ulta nahi ho sakta!",
-        "create_cycle": "Naya cycle banaye",
-        "cycle": "Error cycle",
         "detail": "Vistrit Error Report",
         "errors": "Errors",
         "feedback": "User Feedback",
-        "location": "Location",
         "no_errors": "Koi logged errors nahi mile.",
-        "no_version_filter": "Koi filter nahi",
+        "no_feedback": "Koi upayogakarta pratikriya prastut nahi ki gayi.",
         "occurrences": "Occurrences",
-        "player": "Player",
         "search": "Khoj",
         "server": {
             "description": "Server se logged FiveM error reports.",
             "title": "Server Errors"
-        },
-        "server_version": "Server Version",
-        "timestamp": "Timestamp",
-        "trace": "Error"
+        }
     },
     "global": {
         "all": "Sab",

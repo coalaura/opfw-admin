@@ -145,25 +145,17 @@
             "description": "Loggede FiveM feilmeldinger fra klienter.",
             "title": "Klientfeil"
         },
-        "confirm_cycle": "Er du sikker på at du vil opprette en ny feilsyklus? Dette kan ikke angres!",
-        "create_cycle": "Opprett ny syklus",
-        "cycle": "Feilsyklus",
         "detail": "Detaljert Feilrapport",
         "errors": "Feil",
         "feedback": "Brukertilbakemelding",
-        "location": "Plassering",
         "no_errors": "Ingen loggede feil funnet.",
-        "no_version_filter": "Ingen filter",
+        "no_feedback": "Ingen bruker tilbakemelding sendt inn.",
         "occurrences": "Forekomster",
-        "player": "Spiller",
         "search": "Søk",
         "server": {
             "description": "Loggede FiveM feilmeldinger fra serveren.",
             "title": "Serverfeil"
-        },
-        "server_version": "Serverversjon",
-        "timestamp": "Tidsstempel",
-        "trace": "Feil"
+        }
     },
     "global": {
         "all": "Alle",
