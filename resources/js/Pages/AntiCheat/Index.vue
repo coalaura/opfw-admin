@@ -477,9 +477,10 @@ export default {
                 case 'illegal_freeze':
                     if (metadata.playerPed === undefined) return false;
 
-                    const flags = metadata.playerPed.flags.join(', ') || 'no flags';
+                    const flags = metadata.playerPed.flags.join(', ') || 'no flags',
+                        camDistance = metadata.distance ? ` - ${metadata.distance.toFixed(2)}m` : '';
 
-                    return `${flags}` + (metadata.playerPed.inVehicle ? ' (in vehicle)' : '');
+                    return `${flags}` + (metadata.playerPed.inVehicle ? ' (in vehicle)' : '') + camDistance;
                 case 'illegal_handling_field':
                     if (!metadata.fields) return false;
 
