@@ -75,7 +75,7 @@ class ErrorController extends Controller
         $start = round(microtime(true) * 1000);
 
         $query = ServerError::query()
-            ->selectRaw("error_id, error_location, error_trace, error_feedback, server_id, timestamp, server_version, COUNT(error_id) as `occurrences`")
+            ->selectRaw("error_id, error_location, error_trace, server_id, timestamp, server_version, COUNT(error_id) as `occurrences`")
             ->orderByDesc('timestamp')
             ->groupByRaw("error_location, error_trace, FLOOR(timestamp / 300)");
 
