@@ -85,6 +85,19 @@ class ErrorController extends Controller
 
         $errors = $query->get()->toArray();
 
+        // "Repair" trace
+        foreach ($errors as &$error) {
+            $trace = $error['error_trace'];
+
+            if (strpos($trace, "(...tail calls...)") === false) {
+                continue;
+            }
+
+            $split = preg_split('/\s+\(...tail calls...\)/', $trace);
+
+            $error['error_trace'] = $split[0];
+        }
+
         $end = round(microtime(true) * 1000);
 
         return Inertia::render('Errors/Index', [

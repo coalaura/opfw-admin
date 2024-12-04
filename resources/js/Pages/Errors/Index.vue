@@ -94,12 +94,12 @@
                 <pre class="block text-sm whitespace-pre-line break-words bg-code-background text-code-base p-2" v-html="formatErrorTrace(details)"></pre>
 
                 <template v-if="details.error_feedback">
-                    <p class="m-0 mb-2 font-bold mt-4 pt-4 border-gray-500 border-dashed border-t-2">{{ t('errors.feedback') }}:</p>
+                    <p class="m-0 mb-2 font-semibold mt-4 pt-4 border-gray-500 border-dashed border-t-2">{{ t('errors.feedback') }}:</p>
 
-                    <pre class="block mb-4 text-sm whitespace-pre-line break-words">{{ details.error_feedback }}</pre>
+                    <pre class="block p-2 bg-code-background text-code-base text-sm whitespace-pre-line break-words">{{ details.error_feedback }}</pre>
                 </template>
                 <template v-else>
-                    <p class="m-0 mb-2 font-bold mt-4 pt-4 border-gray-500 border-dashed border-t-2">{{ t('errors.no_feedback') }}:</p>
+                    <p class="m-0 mb-2 font-semibold italic mt-4 pt-4 border-gray-500 border-dashed border-t-2">{{ t('errors.no_feedback') }}</p>
                 </template>
             </template>
 
