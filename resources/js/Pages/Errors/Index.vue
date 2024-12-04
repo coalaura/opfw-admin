@@ -219,7 +219,7 @@ export default {
             line = line.replace(/\^[1-7]/g, '');
 
             // Strings
-            line = line.replace(/(?<!style=)(["'])(.+?)\1(?!>)/g, '<span class="text-code-green">$1$2$1</span>');
+            line = line.replace(/(?<!style=)(["'`])(.+?)\1(?!>)/g, '<span class="text-code-green">$1$2$1</span>');
             line = line.replace(/(&lt;)(.+?)(&gt;)/g, '<span class="text-code-green">$1$2$3</span>');
 
             // Numbers
