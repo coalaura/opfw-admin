@@ -215,21 +215,34 @@ export default {
             // Escape html
             line = line.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
+            // Temporarily remove strings
+            const strings = [];
+
+            line = line.replace(/(?<!style=)(["'`])(.+?)\1(?!>)/g, match => {
+                const index = strings.push(match) - 1;
+
+                return '$STR' + index;
+            });
+
             // Remove chat colors
             line = line.replace(/\^[1-7]/g, '');
 
-            // Strings
-            line = line.replace(/(?<!style=)(["'`])(.+?)\1(?!>)/g, '<span class="text-code-green">$1$2$1</span>');
+            // Wrapped in <>
             line = line.replace(/(&lt;)(.+?)(&gt;)/g, '<span class="text-code-green">$1$2$3</span>');
 
             // Numbers
-            line = line.replace(/\d+/g, '<span class="text-code-orange">$&</span>');
+            line = line.replace(/(<?!\$STR)\d+/g, '<span class="text-code-orange">$&</span>');
 
             // nil
             line = line.replace(/\bnil\b/g, '<span class="text-code-red">$&</span>');
 
             // Start till :
             line = line.replace(/^.+?:(?= |<)/m, '<span class="text-code-lightblue">$&</span>');
+
+            // Return strings
+            for (let i = 0; i < strings.length; i++) {
+                line = line.replace(new RegExp('\\$STR' + i), strings[i]);
+            }
 
             return line;
         }
