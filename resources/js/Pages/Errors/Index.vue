@@ -64,7 +64,7 @@
                             <i class="mr-1 fas fa-arrow-left"></i>
                             {{ t("pagination.previous") }}
                         </inertia-link>
-                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="errors.length === 15" :href="links.next">
+                        <inertia-link class="px-4 py-2 mr-3 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" v-if="errors.length === 50" :href="links.next">
                             {{ t("pagination.next") }}
                             <i class="ml-1 fas fa-arrow-right"></i>
                         </inertia-link>
