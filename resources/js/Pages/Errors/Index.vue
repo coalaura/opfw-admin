@@ -37,12 +37,9 @@
             <template>
                 <table class="w-full">
                     <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600 font-mono" :class="{ 'bg-pink-500 bg-opacity-20': error.error_feedback }" v-for="error in errors" :key="error.error_id">
-                        <td class="px-2 py-1 mobile:block whitespace-nowrap" v-if="type === 'client'">
+                        <td class="px-2 py-1 mobile:block whitespace-nowrap italic" v-if="type === 'client'">
                             <a :href="`/players/${error.license_identifier}`" target="_blank">
                                 {{ error.player_name }}
-                                <span class="font-semibold">
-                                    [{{ error.server_id }}]
-                                </span>
                             </a>
                         </td>
                         <td class="px-2 py-1 cursor-pointer mobile:block" @click="showError(error)" v-html="previewTrace(error)"></td>
@@ -217,6 +214,9 @@ export default {
 
             // Escape html
             line = line.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+            // Remove chat colors
+            line = line.replace(/\^[1-7]/g, '');
 
             // Strings
             line = line.replace(/(?<!style=)(["'])(.+?)\1(?!>)/g, '<span class="text-code-green">$1$2$1</span>');
