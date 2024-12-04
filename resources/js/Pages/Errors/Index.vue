@@ -241,7 +241,7 @@ export default {
 
             // Return strings
             for (let i = 0; i < strings.length; i++) {
-                line = line.replace(new RegExp('\\$STR' + i), strings[i]);
+                line = line.replace(new RegExp('\\$STR' + i), `<span class="text-code-green">${strings[i]}</span>`);
             }
 
             return line;
