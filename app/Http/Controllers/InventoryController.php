@@ -11,6 +11,7 @@ use App\Http\Resources\LogResource;
 use App\Log;
 use App\Player;
 use App\Server;
+use App\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
@@ -146,12 +147,6 @@ class InventoryController extends Controller
             ->select('inventory_name');
 
         switch ($type) {
-            case "trunk": // trunk-class-id
-                $query->where(DB::raw("SUBSTRING_INDEX(inventory_name, '-', 1)"), '=', $type)
-                    ->where(DB::raw("SUBSTRING_INDEX(inventory_name, '-', -1)"), '=', $id);
-
-                break;
-
             case "property": // property-id-storage
                 $query->where(DB::raw("SUBSTRING_INDEX(inventory_name, '-', 2)"), '=', $type . '-' . $id);
 
@@ -164,10 +159,26 @@ class InventoryController extends Controller
         $item = $query->first();
 
         if (!$item) {
-            abort(404, "Cannot find inventory, most likely empty.");
+            abort(404);
         }
 
         return redirect('/inventory/' . $item->inventory_name);
+    }
+
+    /**
+     * Resolves a trunk inventory.
+     *
+     * @param Vehicle $vehicle
+     */
+    public function resolveTrunk(Vehicle $vehicle)
+    {
+        $class = $vehicle->getVehicleClass();
+
+        if (!$class) {
+            abort(404);
+        }
+
+        return redirect('/inventory/trunk-' . $class . '-' . $vehicle->vehicle_id);
     }
 
     /**

@@ -117,6 +117,23 @@ class Vehicle extends Model
         return null;
     }
 
+    public function getVehicleClass(): ?int
+    {
+        $vehicles = ServerAPI::getVehicles();
+
+        if (!$vehicles) {
+            return null;
+        }
+
+        foreach($vehicles as $vehicle) {
+            if ($vehicle['model'] === $this->model_name) {
+                return $vehicle['class'];
+            }
+        }
+
+        return null;
+    }
+
     public function oilChangeMiles(): ?int
     {
         $milage     = $this->mileage;

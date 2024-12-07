@@ -648,7 +648,7 @@
                         </template>
 
                         <template #footer>
-                            <inertia-link class="block px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/resolve/trunk-' + vehicle.id">
+                            <inertia-link class="block px-3 py-2 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/trunk/' + vehicle.id">
                                 <i class="fas fa-briefcase mr-1"></i>
                                 {{ t('inventories.show_trunk') }}
                             </inertia-link>
@@ -679,7 +679,7 @@
                                 <i class="fas fa-ambulance"></i>
                             </button>
 
-                            <inertia-link class="block px-2 py-1 text-center text-white absolute top-1 right-10 bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/resolve/trunk-' + vehicle.id" :title="t('inventories.show_trunk')">
+                            <inertia-link class="block px-2 py-1 text-center text-white absolute top-1 right-10 bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/trunk/' + vehicle.id" :title="t('inventories.show_trunk')">
                                 <i class="fas fa-car-side"></i>
                             </inertia-link>
                             <inertia-link class="block px-2 py-1 text-center text-white absolute top-1 right-1 bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/glovebox-' + vehicle.id" :title="t('inventories.show_glovebox')">
