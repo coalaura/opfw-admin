@@ -164,7 +164,7 @@ class InventoryController extends Controller
         $item = $query->first();
 
         if (!$item) {
-            abort(404);
+            abort(404, "Cannot find inventory, most likely empty.");
         }
 
         return redirect('/inventory/' . $item->inventory_name);
