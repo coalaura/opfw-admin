@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ban;
+use App\Helpers\DiscordAttachmentHelper;
 use App\Helpers\GeneralHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
@@ -228,10 +229,14 @@ class PlayerBanController extends Controller
         $note = trim($data['note'] ?? '');
 
         if (!empty($note)) {
-            $player->warnings()->create([
-                'issuer_id'      => $user->user_id,
-                'message'        => $note,
+            $warning = $player->warnings()->create([
+                'issuer_id' => $user->user_id,
+                'message'   => $note,
             ]);
+
+            if ($warning) {
+                DiscordAttachmentHelper::ensureMessageAttachments($warning);
+            }
         }
 
         $staffName = $user->player_name;
