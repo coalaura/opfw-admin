@@ -388,14 +388,14 @@ class StatisticsController extends Controller
             "graph" => [
                 "datasets" => [
                     [
-                        "label"           => "Minimum FPS",
+                        "label"           => "Min Average FPS",
                         "data"            => [],
                         "backgroundColor" => $this->color(0, $datasets, 0.3),
                         "borderColor"     => $this->color(0, $datasets, 1),
                         "pointRadius"     => 0,
                     ],
                     [
-                        "label"           => "Maximum FPS",
+                        "label"           => "Max Average FPS",
                         "data"            => [],
                         "backgroundColor" => $this->color(1, $datasets, 0.3),
                         "borderColor"     => $this->color(1, $datasets, 1),

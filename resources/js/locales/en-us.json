@@ -380,7 +380,7 @@
         "player_stats": "Player Statistics",
         "player_stats_details": "Compare player statistics in a graph.",
         "fps_stats": "FPS Statistics",
-        "fps_stats_details": "Compare FPS statistics in a graph."
+        "fps_stats_details": "Compare FPS statistics in a graph. FPS averages are calculated with at least 10 minutes of data. The minimum and maximum represent the minimum and maximum average FPS a player was experiencing at that time."
     },
     "map": {
         "title": "Live-Map",
