@@ -106,6 +106,10 @@ class QueryRunner extends Command
         $dotenv  = Dotenv::createImmutable($dir, ".env");
         $envData = $dotenv->parse($contents);
 
+        if (isset($envData["INACTIVE"]) && $envData["INACTIVE"]) {
+            return [false, "Cluster is inactive"];
+        }
+
         $dbName = "cluster_" . $cluster;
 
         Config::set("database.connections." . $dbName, [
