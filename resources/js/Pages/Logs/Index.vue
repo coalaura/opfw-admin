@@ -447,17 +447,17 @@ export default {
 			this.searchingActions = true;
 		},
 		showDrugLogs() {
-			this.filters.action = this.drugActions.map(e => '=' + e).join(',');
+			this.filters.action = this.drugActions.map(e => '=' + e).join('|');
 
 			this.refresh();
 		},
 		showMoneyLogs() {
-			this.filters.action = MoneyTransferActions.map(action => '=' + action).join(',');
+			this.filters.action = MoneyTransferActions.map(action => '=' + action).join('|');
 
 			this.refresh();
 		},
 		showConnectLogs() {
-			this.filters.action = ConnectActions.concat(DisconnectActions).map(action => '=' + action).join(',');
+			this.filters.action = ConnectActions.concat(DisconnectActions).map(action => '=' + action).join('|');
 
 			this.refresh();
 		},
