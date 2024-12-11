@@ -278,7 +278,7 @@ class Controller extends BaseController
 
         $search = array_map(function ($entry) {
             return trim($entry);
-        }, explode(',', $search));
+        }, explode('|', $search));
 
         $query->where(function ($subQuery) use ($search, $column) {
             foreach ($search as $index => $value) {
