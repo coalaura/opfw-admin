@@ -1,10 +1,10 @@
 import axios from "axios";
+import BadWords from "../data/bad_words.json";
 
 const Dictionary = {
     async install(Vue, options) {
-        let dictionary,
-            badDictionary,
-            badLongDictionary;
+        const badLongDictionary = BadWords.filter(word => word.includes(" "));
+        const badDictionary = BadWords.filter(word => !word.includes(" "));
 
         function skipWord(text, word) {
             word = word.toLowerCase();
@@ -19,48 +19,12 @@ const Dictionary = {
             return false;
         }
 
-        async function loadDictionaryFile(file, onProgress, offset, maxPercentage, noMap) {
-            const data = await axios.get(file, {
-                onDownloadProgress: progressEvent => {
-                    const current = (progressEvent.loaded / progressEvent.total) * 100,
-                        percentage = Math.floor((current + offset) / maxPercentage);
-
-                    onProgress(percentage);
-                }
-            });
-
-            const words = data.data.split("\n").map(word => word.trim());
-
-            if (noMap) return words;
-
-            return words.reduce((map, word) => {
-                map.set(word, true);
-
-                return map;
-            }, new Map());
-        }
-
-        Vue.prototype.loadDictionaries = async function (onProgress) {
-            dictionary = await loadDictionaryFile("/_data/dictionary.txt", onProgress, 0, 200, false);
-
-            badDictionary = await loadDictionaryFile("/_data/bad_words.txt?_=" + Date.now(), onProgress, 100, 200, true);
-
-            badLongDictionary = badDictionary.filter(word => word.includes(" "));
-            badDictionary = badDictionary.filter(word => !word.includes(" "));
-
-            onProgress(100);
-        };
-
-        function isWordEnglish(word) {
-            return dictionary.has(word.toLowerCase());
-        }
-
         function isWordBad(word, nextText) {
             word = word.toLowerCase();
 
             return badDictionary.find(key => {
                 if (key.startsWith("=")) {
-                    key = key.substr(1);
+                    key = key.substring(1);
 
                     return word === key;
                 }
@@ -82,37 +46,23 @@ const Dictionary = {
         }
 
         Vue.prototype.highlightText = function (original, danny) {
-            if (!dictionary || !badDictionary) return false;
-
             danny = (danny || 0) * 100;
 
             let hasBad = 0,
-                noEnglish = 0,
-                hasAnyEnglish = 0,
                 otherIssues = false;
 
             let text = original.replace(/[a-z']+/gi, (word, index) => {
                 const testAgainst = word.toLowerCase().replace(/^'|'$/g, "");
 
-                if (testAgainst.match(/^\d+$/)) return word;
-
-                if (testAgainst.length <= 3) return word;
+                if (testAgainst.length <= 3 || testAgainst.match(/^\d+$/)) {
+                    return word;
+                }
 
                 if (isWordBad(testAgainst, original.substr(index))) {
                     hasBad++;
 
                     return highlight(word, "red", "possibly bad word (commonly used by trolls)");
                 }
-
-                if (skipWord(original, testAgainst)) return word;
-
-                if (!isWordEnglish(testAgainst)) {
-                    noEnglish++;
-
-                    return highlight(word, "yellow", "not english");
-                }
-
-                hasAnyEnglish++;
 
                 return word;
             });
@@ -143,21 +93,11 @@ const Dictionary = {
                 color = "red";
                 prediction = "negative";
                 reason = "contains " + hasBad + " bad word(s)";
-            } else if (hasAnyEnglish === 0) {
-                color = "red";
-                prediction = "negative";
-                reason = "not a single english word";
             } else {
-                if (noEnglish > 3) {
-                    color = "yellow";
-                    prediction = "neutral";
-                    reason = "contains a lot of non-english words";
-                }
-
-                if (hasAnyEnglish <= 2 && danny >= 90) {
+                if (danny >= 90) {
                     color = "red";
                     prediction = "negative";
-                    reason = "very short/not a lot of english words and a high danny percentage";
+                    reason = "high danny percentage";
                 } else if (original === original.toUpperCase()) {
                     color = "red";
                     prediction = "negative";

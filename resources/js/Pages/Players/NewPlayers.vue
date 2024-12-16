@@ -28,12 +28,7 @@
                 <h2 class="relative">
                     {{ t('players.new.title') }}
 
-                    <div class="absolute top-1/2 right-0 transform -translate-y-1/2 h-7 w-48 rounded-sm bg-rose-800 dark:bg-rose-400 shadow-sm" v-if="isLoadingDictionaries">
-                        <div class="h-full rounded-sm bg-rose-900 dark:bg-rose-500" :class="{ 'bg-green-900 dark:bg-green-500': progress === 100 }" :style="'width: ' + progress + '%'"></div>
-                        <div class="absolute top-1/2 left-0 w-full text-center transform -translate-y-1/2 text-xs monospace">{{ t('players.new.loading', progress) }}</div>
-                    </div>
-
-                    <select class="inline-block absolute top-1/2 right-0 transform -translate-y-1/2 px-2 py-1 bg-gray-200 dark:bg-gray-600 border" v-model="sorting" @change="sortList()" v-else>
+                    <select class="inline-block absolute top-1/2 right-0 transform -translate-y-1/2 px-2 py-1 bg-gray-200 dark:bg-gray-600 border" v-model="sorting" @change="sortList()">
                         <option value="percentage">{{ t('players.new.danny_percentage') }}</option>
                         <option value="server_id">{{ t('global.server_id') }}</option>
                         <option value="playtime">{{ t('players.form.playtime') }}</option>
@@ -143,76 +138,22 @@ export default {
     data() {
         return {
             isLoading: false,
-
-            isLoadingDictionaries: false,
-            progress: 0,
-
-            sorting: 'playtime',
-
-            playerList: this.getPlayerList()
+            sorting: 'playtime'
         };
     },
-    methods: {
-        getCharacterData(player) {
-            let data = player?.character?.data;
-
-            if (!data) return [];
-
-            data.sort();
-
-            let remove = [];
-
-            if (data.includes('dead')) remove.push('invincible');
-            if (data.includes('trunk')) remove.push('invisible', 'invincible', 'no_gameplay_cam');
-
-            data = data.filter(key => !remove.includes(key));
-
-            return data.map(key => {
-                const icon = dataIcons[key];
-
-                return icon ? {
-                    key,
-                    icon: icon[0],
-                    color: colors[icon[1]]
-                } : false;
-            }).filter(Boolean);
-        },
-        sortList() {
-            this.playerList = this.getPlayerList();
-        },
-        escapeHTML(text) {
-            return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        },
-        dannyColor(danny) {
-            const h = (1 - danny) * 120;
-
-            return {
-                color: this.isDarkMode() ? `hsl(${h}, 90%, 65%)` : `hsl(${h}, 75%, 55%)`
-            };
-        },
-        getPlayerList() {
+    computed: {
+        playerList() {
             const sortBy = this.sorting || 'playtime';
 
-            return this.players
-                .filter(player => player.character)
+            return this.players.filter(player => player.character)
                 .map(player => {
-                    let backstory = this.escapeHTML(player.character.backstory);
+                    const backstory = this.truncate(this.escapeHTML(player.character.backstory), 100),
+                        highlighted = this.highlightText(backstory, player.character.danny);
 
-                    if (backstory.length > 300) backstory = backstory.substr(0, 300) + "...";
+                    player.info = `<b>${player.character.name}</b><br>${highlighted.text}`;
 
-                    const highlight = this.highlightText(backstory, player.character.danny);
-
-                    if (highlight) {
-                        backstory = highlight.text;
-
-                        player.prediction = `<span class="text-${highlight.color}-700 dark:text-${highlight.color}-300" title="${highlight.reason}">${this.t("players.new.prediction_label", highlight.prediction)}</span>`;
-                        player.sortPrediction = highlight.prediction === "positive" ? 1 : (highlight.prediction === "neutral" ? 2 : 3);
-                    } else {
-                        player.prediction = `<span class="text-blue-700 dark:text-blue-300">${this.t("players.new.prediction_loading")}</span>`;
-                        player.sortPrediction = 0;
-                    }
-
-                    player.info = `<b>${player.character.name}</b><br>${backstory}`;
+                    player.prediction = `<span class="text-${highlighted.color}-700 dark:text-${highlighted.color}-300" title="${highlighted.reason}">${this.t("players.new.prediction_label", highlighted.prediction)}</span>`;
+                    player.sortPrediction = highlighted.prediction === "positive" ? 1 : (highlighted.prediction === "neutral" ? 2 : 3);
 
                     player.data = this.getCharacterData(player);
 
@@ -242,6 +183,42 @@ export default {
 
                     return 0;
                 });
+        }
+    },
+    methods: {
+        getCharacterData(player) {
+            let data = player?.character?.data;
+
+            if (!data) return [];
+
+            data.sort();
+
+            let remove = [];
+
+            if (data.includes('dead')) remove.push('invincible');
+            if (data.includes('trunk')) remove.push('invisible', 'invincible', 'no_gameplay_cam');
+
+            data = data.filter(key => !remove.includes(key));
+
+            return data.map(key => {
+                const icon = dataIcons[key];
+
+                return icon ? {
+                    key,
+                    icon: icon[0],
+                    color: colors[icon[1]]
+                } : false;
+            }).filter(Boolean);
+        },
+        escapeHTML(text) {
+            return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        },
+        dannyColor(danny) {
+            const h = (1 - danny) * 120;
+
+            return {
+                color: this.isDarkMode() ? `hsl(${h}, 90%, 65%)` : `hsl(${h}, 75%, 55%)`
+            };
         },
         formatSecondDiff(sec) {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
@@ -261,34 +238,10 @@ export default {
             } catch (e) { }
 
             this.isLoading = false;
-
-            this.sortList();
-
-            // Bruh moment
-            this.$nextTick(() => {
-                this.sortList();
-            });
         },
         wait(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         },
-    },
-    async mounted() {
-        this.isLoadingDictionaries = true;
-
-        // Wait a bit so the page can start loading
-        await this.wait(250);
-
-        await this.loadDictionaries(percentage => {
-            this.progress = percentage;
-        });
-
-        this.refresh();
-
-        setTimeout(() => {
-            this.progress = 100;
-            this.isLoadingDictionaries = false;
-        }, 1000);
     },
 }
 </script>
