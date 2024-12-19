@@ -53,7 +53,7 @@ const Socket = {
         Vue.prototype.resolveHash = async function (hash) {
             const int = parseInt(hash, 10);
 
-            if (!isNaN(int)) return false;
+            if (isNaN(int)) return false;
 
             try {
                 const response = await fetch('https://joaat.sh/j/reverse/', {
