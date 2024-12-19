@@ -51,6 +51,10 @@ const Socket = {
         };
 
         Vue.prototype.resolveHash = async function (hash) {
+            const int = parseInt(hash, 10);
+
+            if (!isNaN(int)) return false;
+
             try {
                 const response = await fetch('https://joaat.sh/j/reverse/', {
                     method: 'POST',
@@ -58,7 +62,7 @@ const Socket = {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        hash: hash
+                        hash: int
                     })
                 }).then(response => response.json());
 
@@ -70,7 +74,7 @@ const Socket = {
 
                 return {
                     name: names[0],
-                    hash: hash
+                    hash: `0x${int.toString(16)}`
                 };
             } catch (e) {
                 return false;
