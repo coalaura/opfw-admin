@@ -61,9 +61,7 @@ const Socket = {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        hash: int
-                    })
+                    body: JSON.stringify([int])
                 }).then(response => response.json());
 
                 if (!response || !Array.isArray(response)) return false;
