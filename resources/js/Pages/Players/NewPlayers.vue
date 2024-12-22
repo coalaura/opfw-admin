@@ -61,8 +61,8 @@
                             </span>
                         </td>
                         <td class="p-3 mobile:block">
-                            <div class="flex items-center gap-2">
-                                <CountryFlag :country="flagFromTZ(player.timezone)" :title="player.timezone" class="rounded-sm" v-if="player.timezone" />
+                            <div class="flex items-center gap-1">
+                                <CountryFlag :country="flagFromTZ(player.timezone)" :title="player.timezone" class="rounded-sm small-flag" v-if="player.timezone" />
                                 {{ player.playerName }}
                             </div>
                         </td>
