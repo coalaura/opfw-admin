@@ -808,7 +808,7 @@ class PlayerBanController extends Controller
                 $foundMediaDevices = $found->getMediaDevices();
 
                 $devicesOverlap    = sizeof(array_intersect($mediaDevices, $foundMediaDevices));
-                $devicesPercentage = sprintf("%.1f%% - ", $devicesOverlap > 0 ? ($devicesOverlap / $mediaDevicesCount * 100) : 0);
+                $devicesPercentage = sprintf("%.1f%%", $devicesOverlap > 0 ? ($devicesOverlap / $mediaDevicesCount * 100) : 0);
 
                 $count            = sizeof(array_intersect($tokens, $foundTokens));
                 $countIps         = sizeof(array_intersect($ips, $foundIps));
@@ -816,7 +816,7 @@ class PlayerBanController extends Controller
 
                 $total = $count + $countIps + $countIdentifiers + $devicesOverlap;
 
-                $counts = '<span style="color:#ff5b5b">' . $count . '</span>/<span style="color:#5bc2ff">' . $countIps . '</span>/<span style="color:#65d54e">' . $countIdentifiers . '</span>/<span style="color:#f0c622">' . $devicesPercentage . '%</span>';
+                $counts = '<span style="color:#ff5b5b">' . $count . '</span>/<span style="color:#5bc2ff">' . $countIps . '</span>/<span style="color:#65d54e">' . $countIdentifiers . '</span>/<span style="color:#f0c622">' . $devicesPercentage . '</span>';
 
                 $playtime = "Playtime is about " . GeneralHelper::formatSeconds($found->playtime);
 
