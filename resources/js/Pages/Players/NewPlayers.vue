@@ -61,9 +61,10 @@
                             </span>
                         </td>
                         <td class="p-3 mobile:block">
-                            <CountryFlag :country="flagFromTZ(player.timezone)" :title="player.timezone" class="rounded-sm" v-if="player.timezone" />
-
-                            {{ player.playerName }}
+                            <div class="flex items-center gap-2">
+                                <CountryFlag :country="flagFromTZ(player.timezone)" :title="player.timezone" class="rounded-sm" v-if="player.timezone" />
+                                {{ player.playerName }}
+                            </div>
                         </td>
                         <td class="p-3 mobile:block">{{ formatSecondDiff(player.playTime) }}</td>
                         <td class="p-3 mobile:block">
