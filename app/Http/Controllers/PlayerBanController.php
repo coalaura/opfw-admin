@@ -808,7 +808,7 @@ class PlayerBanController extends Controller
                 $foundGPUMediaDevice = $found->getGPUMediaDevice();
 
                 $devicesOverlap = sizeof(array_intersect($mediaDevices, $foundMediaDevices));
-                $gpuOverlap     = $gpuMediaDevice === $foundGPUMediaDevice;
+                $gpuOverlap     = $gpuMediaDevice && $gpuMediaDevice === $foundGPUMediaDevice;
 
                 $count            = sizeof(array_intersect($tokens, $foundTokens));
                 $countIps         = sizeof(array_intersect($ips, $foundIps));
