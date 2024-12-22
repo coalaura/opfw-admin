@@ -1651,8 +1651,6 @@ import Modal from './../../Components/Modal';
 import MetadataViewer from './../../Components/MetadataViewer';
 import StatisticsTable from './../../Components/StatisticsTable';
 import MultiSelector from './../../Components/MultiSelector';
-import { escape } from 'lodash';
-import { template } from 'lodash';
 
 export default {
     layout: Layout,

@@ -60,7 +60,11 @@
                                 {{ t('global.status.offline') }}
                             </span>
                         </td>
-                        <td class="p-3 mobile:block">{{ player.playerName }}</td>
+                        <td class="p-3 mobile:block">
+                            <CountryFlag :country="flagFromTZ(player.variables.timezone)" :title="player.variables.timezone" class="rounded-sm" v-if="player.variables && player.variables.timezone" />
+
+                            {{ player.playerName }}
+                        </td>
                         <td class="p-3 mobile:block">{{ formatSecondDiff(player.playTime) }}</td>
                         <td class="p-3 mobile:block">
                             <span v-if="player.character && player.character.danny !== false" :style="dannyColor(player.character.danny)">
@@ -96,6 +100,7 @@
 </template>
 
 <script>
+import CountryFlag from 'vue-country-flag';
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
 import Badge from './../../Components/Badge';
@@ -128,6 +133,7 @@ export default {
         VSection,
         Badge,
         Pagination,
+        CountryFlag
     },
     props: {
         players: {
