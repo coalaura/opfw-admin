@@ -649,7 +649,7 @@ class PlayerBanController extends Controller
             return false;
         }
 
-        $player = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'user_variables'])->where('license_identifier', '=', $license)->get()->first();
+        $player = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_devices'])->where('license_identifier', '=', $license)->get()->first();
 
         if (!$player) {
             return false;
