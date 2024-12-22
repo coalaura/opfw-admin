@@ -608,6 +608,18 @@ class Player extends Model
     }
 
     /**
+     * Gets the users timezone.
+     *
+     * @return string|null
+     */
+    public function getTimezone(): ?string
+    {
+        $variables = $this->getUserVariables();
+
+        return $variables['timezone'] ?? null;
+    }
+
+    /**
      * Gets all the steam identifiers.
      *
      * @return array
@@ -763,7 +775,7 @@ class Player extends Model
      *
      * @return array
      */
-    public function getComparableMediaDevices()
+    public function getComparableMediaDevices(): array
     {
         $devices = $this->media_devices ?? [];
 
@@ -783,7 +795,7 @@ class Player extends Model
      *
      * @return string|null
      */
-    public function getGPUMediaDevice()
+    public function getGPUMediaDevice(): ?string
     {
         $devices = $this->media_devices ?? [];
 

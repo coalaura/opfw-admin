@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Ban;
 use App\BlacklistedIdentifier;
 use App\Character;
 use App\Helpers\GeneralHelper;
@@ -183,6 +182,7 @@ class PlayerController extends Controller
                     'danny'                   => GeneralHelper::dannyPercentageCreationTime(intval($character->character_creation_time)),
                     'data'                    => $status->characterMetadata ?? [],
                 ],
+                'timezone'          => $player->getTimezone(),
                 'playerName'        => $player->getSafePlayerName(),
                 'playTime'          => $player->playtime,
                 'licenseIdentifier' => $player->license_identifier,
