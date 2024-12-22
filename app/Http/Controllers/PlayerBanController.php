@@ -819,7 +819,7 @@ class PlayerBanController extends Controller
                 $counts = '<span style="color:#ff5b5b">' . $count . '</span>/<span style="color:#5bc2ff">' . $countIps . '</span>/<span style="color:#65d54e">' . $countIdentifiers . '</span>/<span style="color:#f0c622">' . $devicesOverlap . '</span>';
 
                 $playtime = "Playtime is about " . GeneralHelper::formatSeconds($found->playtime);
-                $webgl    = $gpuOverlap ? '<span style="color:#8fe17f" title="GPU fingerprint matches exactly">webgl</span>' : '<span style="color:#e17f7f;text-decoration:line-through" title="GPU fingerprint does not match">webgl</span>';
+                $webgl    = $gpuOverlap ? '<span style="color:#8fe17f" title="GPU fingerprint matches exactly: ' . $gpuMediaDevice . '">webgl</span>' : '<span style="color:#e17f7f;text-decoration:line-through" title="GPU fingerprint does not match">webgl</span>';
 
                 $raw[] = [
                     'label'      => sprintf('[%s] %s - %s - <a href="/players/%s" target="_blank" title="%s">%s</a>', $counts, $webgl, GeneralHelper::formatTimestamp($found->last_connection), $found->license_identifier, $playtime, $found->player_name),
