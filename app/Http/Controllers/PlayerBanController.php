@@ -810,6 +810,10 @@ class PlayerBanController extends Controller
                 $devicesOverlap = sizeof(array_intersect($mediaDevices, $foundMediaDevices));
                 $gpuOverlap     = $gpuMediaDevice === $foundGPUMediaDevice;
 
+                if ($gpuOverlap && $devicesOverlap === 1) { // Purely overlapping the webgl fingerprint isn't too helpful
+                    continue;
+                }
+
                 $count            = sizeof(array_intersect($tokens, $foundTokens));
                 $countIps         = sizeof(array_intersect($ips, $foundIps));
                 $countIdentifiers = sizeof(array_intersect($identifiers, $foundIdentifiers));
