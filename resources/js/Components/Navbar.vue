@@ -65,7 +65,7 @@
                     </inertia-link>
 
                     <div v-if="showingContext" class="absolute top-full right-0 bg-gray-700 rounded border-2 border-gray-500 min-w-context mt-1 shadow-md text-sm text-white">
-                        <a class="px-2 py-1 text-left block w-full hover:bg-gray-600" v-if="$page.connect" :href="$page.connect" :target="$page.connect.startsWith('fivem://') ? '' : '_blank'" @click="hideContext">
+                        <a class="px-2 py-1 text-left block w-full hover:bg-gray-600" v-if="$page.connect" :href="$page.connect" :target="$page.connect.startsWith('fivem://') ? '_self' : '_blank'" @click="hideContext">
                             <i class="fas fa-server mr-1"></i>
                             {{ t('global.connect') }}
                         </a>
