@@ -761,8 +761,7 @@ class Player extends Model
     /**
      * Gets the media devices.
      *
-     * @param $key
-     * @return mixed|null
+     * @return array
      */
     public function getMediaDevices()
     {

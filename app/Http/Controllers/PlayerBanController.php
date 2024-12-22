@@ -792,6 +792,8 @@ class PlayerBanController extends Controller
         $identifiers  = $player->getBannableIdentifiers();
         $mediaDevices = $player->getMediaDevices();
 
+        $mediaDevicesCount = sizeof($mediaDevices);
+
         $players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'user_variables', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function ($join) {
             $join->on(DB::raw("JSON_CONTAINS(identifiers, JSON_QUOTE(identifier), '$')"), '=', DB::raw('1'));
         })->whereRaw($where)->groupBy('license_identifier')->get();
@@ -805,8 +807,8 @@ class PlayerBanController extends Controller
                 $foundIdentifiers  = $found->getBannableIdentifiers();
                 $foundMediaDevices = $found->getMediaDevices();
 
-                $devicesOverlap = sizeof(array_intersect($mediaDevices, $foundMediaDevices));
-                $devicesPercentage = sprintf("%.1f%% - ", $devicesOverlap / sizeof($mediaDevices) * 100);
+                $devicesOverlap    = sizeof(array_intersect($mediaDevices, $foundMediaDevices));
+                $devicesPercentage = sprintf("%.1f%% - ", $devicesOverlap > 0 ? ($devicesOverlap / $mediaDevicesCount * 100) : 0);
 
                 $count            = sizeof(array_intersect($tokens, $foundTokens));
                 $countIps         = sizeof(array_intersect($ips, $foundIps));
