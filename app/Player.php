@@ -79,6 +79,7 @@ class Player extends Model
         'panel_settings',
         'staff_points',
         'user_data',
+        'media_devices'
     ];
 
     /**
