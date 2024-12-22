@@ -1036,7 +1036,7 @@
             "schedule_unban": "Schedule",
             "scheduled_details": "Ban's set to be lifted on <b>{0} UTC</b> (<i>{1}</i>).",
             "scheduled_unban": "Scheduled Unban",
-            "show_link_finger": "Show accounts linked via fingerprint",
+            "show_link_devices": "Show accounts linked through devices, y'all",
             "show_link_identifier": "Show accounts linked via identifiers",
             "show_link_ip": "Show accounts linked via ips",
             "show_link_token": "Show accounts linked via tokens",

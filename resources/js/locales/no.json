@@ -1036,7 +1036,7 @@
             "schedule_unban": "Planlegg",
             "scheduled_details": "Forbudet er planlagt for fjerning den <b>{0} UTC</b> (<i>{1}</i>).",
             "scheduled_unban": "Planlagt oppheving av forbud",
-            "show_link_finger": "Vis kontoer knyttet via fingeravtrykk",
+            "show_link_devices": "Vis kontoer koblet via enheter",
             "show_link_identifier": "Vis kontoer knyttet via identifikatorer",
             "show_link_ip": "Vis kontoer knyttet via IP-adresser",
             "show_link_token": "Vis kontoer knyttet via tokens",

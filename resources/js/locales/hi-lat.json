@@ -1036,7 +1036,7 @@
             "schedule_unban": "Anusuchit karein",
             "scheduled_details": "Ban <b>{0} UTC</b> (<i>{1}</i>) par hatane ke liye anusuchit hai.",
             "scheduled_unban": "Anusuchit Unban",
-            "show_link_finger": "Fingerprint ke madhyam se jude accounts dikhayein",
+            "show_link_devices": "Devices ke madhyam se jude accounts dikhayein",
             "show_link_identifier": "Pahchano ke madhyam se jude accounts dikhayein",
             "show_link_ip": "IPs ke madhyam se jude accounts dikhayein",
             "show_link_token": "Tokens ke madhyam se jude accounts dikhayein",

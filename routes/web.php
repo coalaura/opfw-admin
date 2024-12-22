@@ -153,7 +153,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/linked_ips/{license}', [PlayerBanController::class, 'linkedIPs']);
     Route::get('/linked_tokens/{license}', [PlayerBanController::class, 'linkedTokens']);
     Route::get('/linked_identifiers/{license}', [PlayerBanController::class, 'linkedIdentifiers']);
-    Route::get('/linked_print/{license}', [PlayerBanController::class, 'linkedPrint']);
+    Route::get('/linked_devices/{license}', [PlayerBanController::class, 'linkedDevices']);
 
     // Damage logs.
     Route::get('/damage', [LogController::class, 'damageLogs']);

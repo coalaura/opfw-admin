@@ -107,6 +107,7 @@ class Player extends Model
         'priority_level'        => 'integer',
         'panel_settings'        => 'array',
         'weekly_playtime'       => 'array',
+        'media_devices'         => 'array',
     ];
 
     /**
@@ -758,16 +759,16 @@ class Player extends Model
     }
 
     /**
-     * Gets the opfw fingerprint.
+     * Gets the media devices.
      *
      * @param $key
      * @return mixed|null
      */
-    public function getFingerprint()
+    public function getMediaDevices()
     {
-        $variables = $this->getUserVariables();
+        $devices = $this->media_devices ?? [];
 
-        return isset($variables['ofFingerprint']) ? $variables['ofFingerprint'] : null;
+        return $devices;
     }
 
     /**

@@ -985,7 +985,7 @@
             "resolution": "Resolution",
             "specs": "Specs",
             "specs_title": "Computer specifications and metrics",
-            "show_link_finger": "Show accounts linked via fingerprint",
+            "show_link_devices": "Show accounts linked via devices",
             "show_link_token": "Show accounts linked via tokens",
             "show_link_ip": "Show accounts linked via ips",
             "show_link_identifier": "Show accounts linked via identifiers"

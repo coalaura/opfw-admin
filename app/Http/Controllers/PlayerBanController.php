@@ -764,7 +764,7 @@ class PlayerBanController extends Controller
         return $this->drawLinked("Identifiers", $player, $where);
     }
 
-    public function linkedPrint(Request $request, string $license): \Illuminate\Http\Response
+    public function linkedDevices(Request $request, string $license): \Illuminate\Http\Response
     {
         $player = $this->findPlayer($request, $license);
 
@@ -772,25 +772,25 @@ class PlayerBanController extends Controller
             return $this->text(404, "Player not found.");
         }
 
-        $fingerprint = $player->getFingerprint();
+        $mediaDevices = $player->getMediaDevices();
 
-        if (!$fingerprint) {
-            return $this->text(404, "No fingerprint found.");
+        if (!$mediaDevices || sizeof($mediaDevices) === 0) {
+            return $this->text(404, "No devices found.");
         }
 
-        $where = "JSON_EXTRACT(user_variables, '$.ofFingerprint') = '" . $fingerprint . "'";
+        $where = "JSON_OVERLAPS(media_devices, '" . json_encode($mediaDevices) . "') = 1";
 
-        return $this->drawLinked("Fingerprint", $player, $where);
+        return $this->drawLinked("Devices", $player, $where);
     }
 
     protected function drawLinked(string $type, Player $player, string $where)
     {
         $license = $player->license_identifier;
 
-        $tokens      = $player->getTokens();
-        $ips         = $player->getIps();
-        $identifiers = $player->getBannableIdentifiers();
-        $fingerprint = $player->getFingerprint();
+        $tokens       = $player->getTokens();
+        $ips          = $player->getIps();
+        $identifiers  = $player->getBannableIdentifiers();
+        $mediaDevices = $player->getMediaDevices();
 
         $players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'user_variables', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function ($join) {
             $join->on(DB::raw("JSON_CONTAINS(identifiers, JSON_QUOTE(identifier), '$')"), '=', DB::raw('1'));
@@ -800,24 +800,26 @@ class PlayerBanController extends Controller
 
         foreach ($players as $found) {
             if ($found->license_identifier !== $license) {
-                $foundTokens      = $found->getTokens();
-                $foundIps         = $found->getIps();
-                $foundIdentifiers = $found->getBannableIdentifiers();
-                $foundFingerprint = $found->getFingerprint();
+                $foundTokens       = $found->getTokens();
+                $foundIps          = $found->getIps();
+                $foundIdentifiers  = $found->getBannableIdentifiers();
+                $foundMediaDevices = $found->getMediaDevices();
+
+                $devicesOverlap = sizeof(array_intersect($mediaDevices, $foundMediaDevices));
+                $devicesPercentage = sprintf("%.1f%% - ", $devicesOverlap / sizeof($mediaDevices) * 100);
 
                 $count            = sizeof(array_intersect($tokens, $foundTokens));
                 $countIps         = sizeof(array_intersect($ips, $foundIps));
                 $countIdentifiers = sizeof(array_intersect($identifiers, $foundIdentifiers));
-                $countFingerprint = $fingerprint && $foundFingerprint && $fingerprint === $foundFingerprint ? 1 : 0;
 
-                $total = $count + $countIps + $countIdentifiers + $countFingerprint;
+                $total = $count + $countIps + $countIdentifiers + $devicesOverlap;
 
-                $counts = '<span style="color:#ff5b5b">' . $count . '</span>/<span style="color:#5bc2ff">' . $countIps . '</span>/<span style="color:#65d54e">' . $countIdentifiers . '</span>/<span style="color:#f0c622">' . $countFingerprint . '</span>';
+                $counts = '<span style="color:#ff5b5b">' . $count . '</span>/<span style="color:#5bc2ff">' . $countIps . '</span>/<span style="color:#65d54e">' . $countIdentifiers . '</span>/<span style="color:#f0c622">' . $devicesPercentage . '%</span>';
 
                 $playtime = "Playtime is about " . GeneralHelper::formatSeconds($found->playtime);
 
                 $raw[] = [
-                    'label'      => '[' . $counts . '] - ' . GeneralHelper::formatTimestamp($found->last_connection) . ' - <a href="/players/' . $found->license_identifier . '" target="_blank" title="' . $playtime . '">' . $found->player_name . '</a>',
+                    'label'      => sprintf('[%s] - %s - <a href="/players/%s" target="_blank" title="%s">%s</a>', $counts, GeneralHelper::formatTimestamp($found->last_connection), $found->license_identifier, $playtime, $found->player_name),
                     'connection' => $found->last_connection,
                     'count'      => $total,
                     'banned'     => $found->ban_hash !== null,
@@ -852,10 +854,8 @@ class PlayerBanController extends Controller
             $banned[] = "<i>None</i>";
         }
 
-        $counts = '<span style="color:#ff5b5b">Tokens</span> / <span style="color:#5bc2ff">IPs</span> / <span style="color:#65d54e">Identifiers</span> / <span style="color:#f0c622">Fingerprint</span>';
+        $counts = '<span style="color:#ff5b5b">Tokens</span> / <span style="color:#5bc2ff">IPs</span> / <span style="color:#65d54e">Identifiers</span> / <span style="color:#f0c622">Devices</span>';
 
-        $print = $fingerprint ? " <span style='color:#a0bcff'>{<i>" . $fingerprint . "</i>}</span>" : "";
-
-        return $this->fakeText(200, "Found: <b>" . sizeof($raw) . "</b> Accounts for <a href='/players/" . $license . "' target='_blank'>" . $player->player_name . "</a> using " . $type . $print . "\n\n<i style='color:#c68dbf'>[" . $counts . "] - Last Connection - Player Name</i>\n\n<i style='color:#a3ff9b'>- Not Banned</i>\n" . implode("\n", $linked) . "\n\n<i style='color:#ff8e8e'>- Banned</i>\n" . implode("\n", $banned));
+        return $this->fakeText(200, "Found: <b>" . sizeof($raw) . "</b> Accounts for <a href='/players/" . $license . "' target='_blank'>" . $player->player_name . "</a> using " . $type . "\n\n<i style='color:#c68dbf'>[" . $counts . "] - Last Connection - Player Name</i>\n\n<i style='color:#a3ff9b'>- Not Banned</i>\n" . implode("\n", $linked) . "\n\n<i style='color:#ff8e8e'>- Banned</i>\n" . implode("\n", $banned));
     }
 }
