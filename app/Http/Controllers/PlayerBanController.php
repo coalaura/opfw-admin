@@ -772,7 +772,7 @@ class PlayerBanController extends Controller
             return $this->text(404, "Player not found.");
         }
 
-        $mediaDevices = $player->getMediaDevices();
+        $mediaDevices = $player->getComparableMediaDevices();
 
         if (!$mediaDevices || sizeof($mediaDevices) === 0) {
             return $this->text(404, "No devices found.");
@@ -790,7 +790,7 @@ class PlayerBanController extends Controller
         $tokens       = $player->getTokens();
         $ips          = $player->getIps();
         $identifiers  = $player->getBannableIdentifiers();
-        $mediaDevices = $player->getMediaDevices();
+        $mediaDevices = $player->getComparableMediaDevices();
 
         $mediaDevicesCount = sizeof($mediaDevices);
 
@@ -805,7 +805,7 @@ class PlayerBanController extends Controller
                 $foundTokens       = $found->getTokens();
                 $foundIps          = $found->getIps();
                 $foundIdentifiers  = $found->getBannableIdentifiers();
-                $foundMediaDevices = $found->getMediaDevices();
+                $foundMediaDevices = $found->getComparableMediaDevices();
 
                 $devicesOverlap    = sizeof(array_intersect($mediaDevices, $foundMediaDevices));
                 $devicesPercentage = sprintf("%.1f%%", $devicesOverlap > 0 ? ($devicesOverlap / $mediaDevicesCount * 100) : 0);
