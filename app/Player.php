@@ -763,11 +763,19 @@ class Player extends Model
      *
      * @return array
      */
-    public function getMediaDevices()
+    public function getComparableMediaDevices()
     {
         $devices = $this->media_devices ?? [];
 
-        return $devices;
+        return array_values(array_filter($devices, function ($device) {
+            if (strpos($device, 'obs_virtual') !== false) {
+                return false;
+            } else if (strpos($device, 'nvidia_broadcast') !== false) {
+                return false;
+            }
+
+            return true;
+        }));
     }
 
     /**
