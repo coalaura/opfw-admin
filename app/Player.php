@@ -779,6 +779,24 @@ class Player extends Model
     }
 
     /**
+     * Gets the gpu media device.
+     *
+     * @return string|null
+     */
+    public function getGPUMediaDevice()
+    {
+        $devices = $this->media_devices ?? [];
+
+        foreach ($devices as $device) {
+            if (strpos($device, 'gpu_') === 0) {
+                return $device;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Checks whether this player is a staff member.
      *
      * @return bool

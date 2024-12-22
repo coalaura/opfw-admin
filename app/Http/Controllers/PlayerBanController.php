@@ -787,12 +787,11 @@ class PlayerBanController extends Controller
     {
         $license = $player->license_identifier;
 
-        $tokens       = $player->getTokens();
-        $ips          = $player->getIps();
-        $identifiers  = $player->getBannableIdentifiers();
-        $mediaDevices = $player->getComparableMediaDevices();
-
-        $mediaDevicesCount = sizeof($mediaDevices);
+        $tokens         = $player->getTokens();
+        $ips            = $player->getIps();
+        $identifiers    = $player->getBannableIdentifiers();
+        $mediaDevices   = $player->getComparableMediaDevices();
+        $gpuMediaDevice = $player->getGPUMediaDevice();
 
         $players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_devices', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function ($join) {
             $join->on(DB::raw("JSON_CONTAINS(identifiers, JSON_QUOTE(identifier), '$')"), '=', DB::raw('1'));
@@ -802,25 +801,28 @@ class PlayerBanController extends Controller
 
         foreach ($players as $found) {
             if ($found->license_identifier !== $license) {
-                $foundTokens       = $found->getTokens();
-                $foundIps          = $found->getIps();
-                $foundIdentifiers  = $found->getBannableIdentifiers();
-                $foundMediaDevices = $found->getComparableMediaDevices();
+                $foundTokens         = $found->getTokens();
+                $foundIps            = $found->getIps();
+                $foundIdentifiers    = $found->getBannableIdentifiers();
+                $foundMediaDevices   = $found->getComparableMediaDevices();
+                $foundGPUMediaDevice = $found->getGPUMediaDevice();
 
                 $devicesOverlap = sizeof(array_intersect($mediaDevices, $foundMediaDevices));
+                $gpuOverlap     = $gpuMediaDevice === $foundGPUMediaDevice;
 
                 $count            = sizeof(array_intersect($tokens, $foundTokens));
                 $countIps         = sizeof(array_intersect($ips, $foundIps));
                 $countIdentifiers = sizeof(array_intersect($identifiers, $foundIdentifiers));
 
-                $total = $count + $countIps + $countIdentifiers + $devicesOverlap;
+                $total = $count + $countIps + $countIdentifiers + $devicesOverlap + ($gpuOverlap ? 1 : 0);
 
                 $counts = '<span style="color:#ff5b5b">' . $count . '</span>/<span style="color:#5bc2ff">' . $countIps . '</span>/<span style="color:#65d54e">' . $countIdentifiers . '</span>/<span style="color:#f0c622">' . $devicesOverlap . '</span>';
 
                 $playtime = "Playtime is about " . GeneralHelper::formatSeconds($found->playtime);
+                $webgl    = $gpuOverlap ? '<span style="color:#8fe17f">webgl</span>' : '<span style="color:#e17f7f;text-decoration:line-through">webgl</span>';
 
                 $raw[] = [
-                    'label'      => sprintf('[%s] - %s - <a href="/players/%s" target="_blank" title="%s">%s</a>', $counts, GeneralHelper::formatTimestamp($found->last_connection), $found->license_identifier, $playtime, $found->player_name),
+                    'label'      => sprintf('[%s] %s - %s - <a href="/players/%s" target="_blank" title="%s">%s</a>', $counts, $webgl, GeneralHelper::formatTimestamp($found->last_connection), $found->license_identifier, $playtime, $found->player_name),
                     'connection' => $found->last_connection,
                     'count'      => $total,
                     'banned'     => $found->ban_hash !== null,
