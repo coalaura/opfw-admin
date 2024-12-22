@@ -816,7 +816,7 @@ class PlayerBanController extends Controller
 
                 $total = $count + $countIps + $countIdentifiers + $devicesOverlap + ($gpuOverlap ? 1 : 0);
 
-                if ($gpuOverlap && $devicesOverlap === 1 && $total === 1) { // Purely overlapping the webgl fingerprint isn't too helpful
+                if ($gpuOverlap && $devicesOverlap === 1 && $total === 2) { // Purely overlapping the webgl fingerprint isn't too helpful
                     continue;
                 }
 
