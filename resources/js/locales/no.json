@@ -1226,6 +1226,7 @@
         "disconnected": "Frakoblet fra stemmeserveren. Venter på tilkobling.",
         "local_staff": "Lokalt personale",
         "notice": "<b>Merk:</b> Ansattchat kan bli forsinket med opptil 3 sekunder.",
+        "report_claimed": "Denne rapporten er allerede hentet.",
         "sound": "Lyd",
         "title": "Ansattchat",
         "voice_chat": "Stemmechat"

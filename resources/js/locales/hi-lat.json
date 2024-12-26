@@ -1226,6 +1226,7 @@
         "disconnected": "Voice server se disconnect ho gaya. Connection ka intezaar kar rahe hain.",
         "local_staff": "Sthaniya Karmchari",
         "notice": "<b>Note:</b> Staff chat mein 3 seconds tak ki deri ho sakti hai.",
+        "report_claimed": "Yeh report pehle hi dawa kiya gaya tha.",
         "sound": "Dhwan",
         "title": "Staff Chat",
         "voice_chat": "Voice Chat"

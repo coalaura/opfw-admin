@@ -24,7 +24,7 @@
         </div>
 
         <div class="messages" ref="messages">
-            <div class="message" v-for="message in messages" :class="message.color" v-if="!message.local || localStaff">
+            <div class="message" v-for="message in messages" :class="message.color" :title="message.claimed ? t('staff_chat.report_claimed') : ''" v-if="!message.local || localStaff">
                 <a class="title" :href="'/players/' + message.license" target="_blank">{{ message.title }}:</a>
                 <span class="text" v-html="message.text"></span>
                 <span class="time">{{ message.time }}</span>
@@ -138,6 +138,10 @@ body {
 
 .red {
     background: rgba(140, 50, 35, 0.85);
+}
+
+.gray {
+    background: rgba(90, 90, 90, 0.85);
 }
 
 .notice {
@@ -258,7 +262,7 @@ export default {
             this.chatInput = "";
             this.isSendingChat = false;
 
-            this.$refs.chat.focus();
+            this.$refs.chat?.focus();
         },
         chatKeyPress(event) {
             if (event.key === 'Enter') {
@@ -310,7 +314,7 @@ export default {
         formatColor(message) {
             switch (message.type) {
                 case "report":
-                    return "green";
+                    return "claimed" in message && message.claimed ? "gray" : "green";
                 case "staff":
                     return message.local ? "dark-purple" : "purple";
             }
@@ -361,13 +365,12 @@ export default {
 
                     const hasNew = messages.find(message => !this.messages.find(current => current.createdAt === message.createdAt && current.license === message.user.licenseIdentifier));
 
-                    if (!hasNew) return;
-
                     this.messages = messages.map(message => {
                         return {
                             license: message.user.licenseIdentifier,
                             title: message.title,
                             text: message.text,
+                            claimed: "claimed" in message && message.claimed,
                             color: this.formatColor(message),
                             createdAt: message.createdAt,
                             time: this.$moment.utc(message.createdAt * 1000).local().fromNow(),
@@ -375,10 +378,10 @@ export default {
                         };
                     });
 
-                    this.scroll();
+                    if (hasNew) {
+                        this.scroll();
 
-                    if (this.$refs.chat) {
-                        this.$refs.chat.focus();
+                        this.$refs.chat?.focus();
                     }
                 } catch (e) {
                     console.error('Failed to parse socket message', e);
