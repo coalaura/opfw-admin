@@ -54,8 +54,8 @@
                             <td class="italic px-4 py-1.5">{{ numberFormat(player.xp, 2, false) }}</td>
 
                             <td class="italic px-4 py-1.5">
-                                <a :href="`/players/${player.license}`" target="_blank">
-                                    {{ player.name }}
+                                <a :href="`/players/${player.license}`" target="_blank" :title="player.name">
+                                    {{ truncate(player.name, 60) }}
 
                                     <span class="font-semibold" v-if="status[player.license]">
                                         [{{ status[player.license].source }}]

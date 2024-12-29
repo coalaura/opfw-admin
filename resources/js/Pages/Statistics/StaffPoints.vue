@@ -40,8 +40,8 @@
 
                     <tr v-for="(player, license) in points" :key="license" class="odd:bg-gray-200 dark:odd:bg-gray-500" :class="{'border-2 border-gray-400': license === $page.auth.player.licenseIdentifier}">
                         <td class="italic px-4 py-1.5">
-                            <a :href="`/players/${license}`" target="_blank">
-                                {{ player.name }}
+                            <a :href="`/players/${license}`" target="_blank" :title="player.name">
+                                {{ truncate(player.name, 60) }}
 
                                 <span class="font-semibold" v-if="status[license]">
                                     [{{ status[license].source }}]

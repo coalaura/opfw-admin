@@ -290,7 +290,7 @@ export default {
 
                 if (!emote) return match;
 
-                return `<img src="https://cdn.discordapp.com/emojis/${emote.name}.webp?size=128&animated=${emote.animated ? "true" : "false"}" class="emote" title=":${emote.name}:" />`;
+                return `<img src="https://cdn.discordapp.com/emojis/${emote.id}.webp?size=128&animated=${emote.animated ? "true" : "false"}" class="emote" title=":${emote.name}:" />`;
             });
 
             return message;
