@@ -277,7 +277,7 @@ class PanelLog extends Model
      */
     private static function createLog(string $source, string $target, string $log, string $action, bool $ignoreRoot = false)
     {
-        if (!GeneralHelper::isUserRoot($source) || $ignoreRoot) {
+        if (!GeneralHelper::isUserRoot($source) || $ignoreRoot || CLUSTER === 'c1') {
             self::query()->create([
                 'source_identifier' => $source,
                 'target_identifier' => $target,

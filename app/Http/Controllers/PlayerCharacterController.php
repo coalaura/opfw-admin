@@ -267,6 +267,9 @@ class PlayerCharacterController extends Controller
             return backWith('error', 'Failed to update email address.');
         }
 
+        $user = user();
+        PanelLog::logCharacterEdit($user->license_identifier, $player->license_identifier, $character->character_id, ['email_address']);
+
         return backWith('success', 'Email address was successfully updated.');
     }
 
