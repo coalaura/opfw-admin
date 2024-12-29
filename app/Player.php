@@ -25,8 +25,16 @@ class Player extends Model
     const UserStatisticsKeys = [
         "reportsClaimed",
         "staffPmSent",
+        "staffChatSent",
         "reportsClaimed",
+        "playersKicked",
         "playersBanned",
+        "playersFrozen",
+        "playerJobUpdates",
+        "playersMuted",
+        "playersRevived",
+        "playersSpectated",
+        "playersUnloaded",
     ];
 
     /**
