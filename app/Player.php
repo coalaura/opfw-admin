@@ -26,6 +26,7 @@ class Player extends Model
         "reportsClaimed",
         "staffPmSent",
         "reportsClaimed",
+        "playersBanned",
     ];
 
     /**

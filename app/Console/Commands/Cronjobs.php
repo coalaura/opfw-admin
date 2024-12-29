@@ -4,7 +4,6 @@ namespace App\Console\Commands;
 
 use App\Ban;
 use App\Helpers\CacheHelper;
-use App\Helpers\HttpHelper;
 use App\Helpers\LoggingHelper;
 use App\Helpers\ServerAPI;
 use App\Helpers\SessionHelper;
