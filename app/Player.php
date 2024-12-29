@@ -1036,13 +1036,13 @@ class Player extends Model
         $xp = 0.0;
 
         // reportsClaimed is worth x2.5
-        $xp += $this->getUserStatistic('reportsClaimed')['value'] * 2.5;
+        $xp += $this->getUserStatistic('reportsClaimed') * 2.5;
 
         // staffPmSent is worth x0.8
-        $xp += $this->getUserStatistic('staffPmSent')['value'] * 0.8;
+        $xp += $this->getUserStatistic('staffPmSent') * 0.8;
 
         // reportsCreated is worth -x1.25
-        $xp -= $this->getUserStatistic('reportsCreated')['value'] * 1.25;
+        $xp -= $this->getUserStatistic('reportsCreated') * 1.25;
 
         return $xp;
     }
