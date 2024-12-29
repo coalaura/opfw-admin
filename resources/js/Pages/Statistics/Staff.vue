@@ -149,6 +149,8 @@ export default {
                 classNames.push('metallic-silver font-semibold');
             } else if (index === 2) {
                 classNames.push('metallic-bronze font-semibold');
+            } else if (player.xp < 0) {
+                classNames.push('text-red-700 dark:text-red-300');
             }
 
             return classNames.join(' ');
