@@ -1220,6 +1220,7 @@
             "deleted": "Deleted",
             "job": "Job",
             "phone": "Phone Number",
+            "email": "E-Mail Address",
             "outfits": "This character has {0} saved outfit(s).",
             "gender": "Gender"
         }

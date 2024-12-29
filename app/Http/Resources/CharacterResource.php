@@ -58,6 +58,7 @@ class CharacterResource extends JsonResource
             'lastLoaded'                 => $this->last_loaded,
             'coords'                     => json_decode($this->coords, true),
             'marriedTo'                  => $this->married_to,
+            'emailAddress'               => $this->email_address,
         ];
     }
 }

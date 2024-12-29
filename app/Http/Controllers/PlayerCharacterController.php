@@ -254,6 +254,23 @@ class PlayerCharacterController extends Controller
     }
 
     /**
+     * Refreshes the characters email address.
+     *
+     * @param Request $request
+     * @param Player $player
+     * @param Character $character
+     * @return RedirectResponse
+     */
+    public function refreshEmail(Request $request, Player $player, Character $character): RedirectResponse
+    {
+        if (!$character->refreshEmailAddress()) {
+            return backWith('error', 'Failed to update email address.');
+        }
+
+        return backWith('success', 'Email address was successfully updated.');
+    }
+
+    /**
      * Deletes the specified resource.
      *
      * @param Player $player

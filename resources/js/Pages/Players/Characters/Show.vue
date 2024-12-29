@@ -189,6 +189,16 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <th class="font-semibold p-2">{{ t('players.edit.email') }}</th>
+                                    <td class="p-2">
+                                        <span class="flex justify-between items-center border-gray-500 border-b-2 px-3 py-2 relative">
+                                            {{ character.emailAddress || "N/A" }}
+
+                                            <i class="fas fa-sync cursor-pointer" :class="{ 'animate-spin': isRefreshingEmail }" @click="refreshEmail"></i>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th class="italic p-2 font-normal" colspan="2">{{ t('players.edit.outfits', character.outfits) }}</th>
                                 </tr>
                             </table>
@@ -544,12 +554,12 @@
 
                 <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" @click="editVehicle">
                     <span v-if="!isVehicleLoading">
-                            {{ t('players.characters.vehicle.confirm') }}
-                        </span>
-                        <span v-else>
-                            <i class="fas fa-cog animate-spin"></i>
-                            {{ t('global.loading') }}
-                        </span>
+                        {{ t('players.characters.vehicle.confirm') }}
+                    </span>
+                    <span v-else>
+                        <i class="fas fa-cog animate-spin"></i>
+                        {{ t('global.loading') }}
+                    </span>
                 </button>
             </template>
         </modal>
@@ -966,7 +976,7 @@ export default {
         for (const job in this.jobs) {
             if (Object.hasOwnProperty(job)) continue;
 
-            let jobObject = {
+            const jobObject = {
                 name: job,
                 departments: []
             };
@@ -974,7 +984,7 @@ export default {
             for (const department in this.jobs[job]) {
                 if (Object.hasOwnProperty(department)) continue;
 
-                let departmentObject = {
+                const departmentObject = {
                     name: department,
                     positions: {}
                 };
@@ -991,12 +1001,12 @@ export default {
             jobsObject.push(jobObject);
         }
 
-        let jobs = JSON.parse(JSON.stringify(jobsObject.sort((a, b) => {
+        const jobs = JSON.parse(JSON.stringify(jobsObject.sort((a, b) => {
             return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
         })));
 
         for (let x = 0; x < jobs.length; x++) {
-            let departments = jobs[x].departments.sort((a, b) => {
+            const departments = jobs[x].departments.sort((a, b) => {
                 return a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1
             });
 
@@ -1007,7 +1017,7 @@ export default {
             jobs[x].departments = departments;
         }
 
-        let paychecks = {};
+        const paychecks = {};
         for (let x = 0; x < jobsObject.length; x++) {
             const j = jobsObject[x];
 
@@ -1084,6 +1094,7 @@ export default {
             isVehicleAdd: false,
             isLicenseEdit: false,
             isOffline: false,
+            isRefreshingEmail: false,
 
             isShowingSavingsLogs: false,
             isLoadingSavingsLogs: false,
@@ -1133,9 +1144,9 @@ export default {
             this.savingsLogs = [];
 
             try {
-                const response = await axios.get('/savings/' + account.id + '/logs');
+                const response = await axios.get(`/savings/${account.id}/logs`);
 
-                if (response.data && response.data.status) {
+                if (response.data?.status) {
                     this.savingsLogs = response.data.data;
                 }
             } catch (e) {
@@ -1147,7 +1158,7 @@ export default {
             return this.resetCoords
                 .map(coords => {
                     return {
-                        label: this.t('players.characters.spawn.' + coords),
+                        label: this.t(`players.characters.spawn.${coords}`),
                         key: coords
                     }
                 })
@@ -1167,9 +1178,13 @@ export default {
         getGarageLabel(garage) {
             if (!garage) {
                 return this.t('players.vehicles.not_parked');
-            } else if (garage === '*') {
+            }
+
+            if (garage === '*') {
                 return this.t('players.vehicles.parked_any');
-            } else if (garage === 'Impound') {
+            }
+
+            if (garage === 'Impound') {
                 return this.t('players.vehicles.impounded');
             }
 
@@ -1185,8 +1200,8 @@ export default {
         getAvailableLicenses() {
             return ["heli", "fw", "cfi", "hw", "hwh", "perf", "passenger", "management", "military", "utility", "commercial", "special", "hunting", "fishing", "weapon", "mining", "boat", "driver", "press"]
                 .sort((a, b) => {
-                    const aName = this.t('players.characters.license.' + a),
-                        bName = this.t('players.characters.license.' + b);
+                    const aName = this.t(`players.characters.license.${a}`),
+                        bName = this.t(`players.characters.license.${b}`);
 
                     return aName.localeCompare(bName);
                 });
@@ -1234,7 +1249,7 @@ export default {
                 form.position_name = this.character.positionName;
             }
 
-            this.$inertia.put('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + query, form, { preserveScroll: true })
+            this.$inertia.put(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}${query}`, form, { preserveScroll: true })
         },
         async deleteVehicle(e, vehicleId) {
             e.preventDefault();
@@ -1244,15 +1259,15 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post('/vehicles/delete/' + vehicleId, {}, { preserveScroll: true });
+            await this.$inertia.post(`/vehicles/delete/${vehicleId}`, {}, { preserveScroll: true });
         },
         async resetLastGarage(vehicleId, fullReset) {
-            if (!confirm(this.t('players.characters.vehicle.' + (fullReset ? 'full_reset_confirm' : 'reset_last_garage_confirm')))) {
+            if (!confirm(this.t(`players.characters.vehicle.${fullReset ? 'full_reset_confirm' : 'reset_last_garage_confirm'}`))) {
                 return;
             }
 
             // Send request.
-            await this.$inertia.post('/vehicles/resetGarage/' + vehicleId + '/' + (fullReset ? 'true' : 'false'), {}, { preserveScroll: true });
+            await this.$inertia.post(`/vehicles/resetGarage/${vehicleId}/${fullReset ? 'true' : 'false'}`, {}, { preserveScroll: true });
         },
         sortJobs(array, type) {
             switch (type) {
@@ -1283,7 +1298,7 @@ export default {
         },
         async removeTattoos() {
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + '/removeTattoos', {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/removeTattoos`, {
                 zone: $('#zone').val(),
             }, { preserveScroll: true });
 
@@ -1292,7 +1307,7 @@ export default {
         },
         async resetSpawn() {
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + '/resetSpawn', {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/resetSpawn`, {
                 spawn: $('#spawn').val(),
             }, { preserveScroll: true });
 
@@ -1308,7 +1323,7 @@ export default {
             this.vehicleForm.plate = this.vehicleForm.plate.toUpperCase().trim();
 
             try {
-                const response = (await axios.post('/vehicles/edit/' + this.vehicleForm.id, this.vehicleForm)).data;
+                const response = (await axios.post(`/vehicles/edit/${this.vehicleForm.id}`, this.vehicleForm)).data;
 
                 if (response.status) {
                     $('.overflow-y-auto').scrollTop(0);
@@ -1327,7 +1342,7 @@ export default {
         },
         async addVehicle() {
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + '/addVehicle', {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/addVehicle`, {
                 model: this.vehicleAddModel
             }, { preserveScroll: true });
 
@@ -1337,7 +1352,7 @@ export default {
         },
         async updateLicenses() {
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + '/updateLicenses', {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/updateLicenses`, {
                 licenses: this.licenseForm.licenses
             }, { preserveScroll: true });
 
@@ -1346,9 +1361,23 @@ export default {
 
             this.licenses = this.getAvailableLicenses();
         },
+        async refreshEmail() {
+            if (this.isRefreshingEmail) {
+                return;
+            }
+
+            this.isRefreshingEmail = true;
+
+            // Send request.
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/refreshEmail`, {}, {
+                preserveScroll: true
+            });
+
+            this.isRefreshingEmail = false;
+        },
         async editBalance() {
             // Send request.
-            await this.$inertia.put('/players/' + this.player.licenseIdentifier + '/characters/' + this.character.id + '/editBalance', this.balanceForm, { preserveScroll: true });
+            await this.$inertia.put(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/editBalance`, this.balanceForm, { preserveScroll: true });
 
             const money = this.getMoneyLocals();
 
@@ -1361,7 +1390,7 @@ export default {
             this.balanceForm.stocks = this.character.stocksBalance;
         },
         async loadOfflineStatus() {
-            const status = (await this.requestData("/online/" + this.player.licenseIdentifier)) || {};
+            const status = (await this.requestData(`/online/${this.player.licenseIdentifier}`)) || {};
 
             this.isOffline = !status[this.player.licenseIdentifier];
         }

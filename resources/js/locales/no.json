@@ -847,6 +847,7 @@
             "cash_title": "{0} i kontanter og {1} bank",
             "deleted": "Slettet",
             "dob": "Fødselsdato",
+            "email": "E-postadresse",
             "gender": "Kjønn",
             "job": "Jobb",
             "outfits": "Denne karakteren har {0} lagrede antrekk.",

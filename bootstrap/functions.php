@@ -1,5 +1,12 @@
 <?php
 
+function splitAlphaNum($string)
+{
+    $array = preg_split('/[^a-zA-Z0-9]/', $string, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+    return first($array);
+}
+
 function first($array)
 {
     if (is_string($array)) {

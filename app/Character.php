@@ -76,6 +76,7 @@ class Character extends Model
         'tattoos_data',
         'coords',
         'character_data',
+        'email_address',
     ];
 
     /**
@@ -261,6 +262,37 @@ class Character extends Model
         }
 
         return $characterMap;
+    }
+
+    public function refreshEmailAddress(): bool
+    {
+        $current = $this->email_address;
+
+        $firstName = splitAlphaNum(strtolower($this->first_name));
+        $lastName = splitAlphaNum(strtolower($this->last_name));
+
+        if (!$firstName || !$lastName) {
+            return false;
+        }
+
+        $counter = 0;
+        $email = sprintf("%s.%s", $firstName, $lastName);
+
+        if ($email === $current) {
+            return true;
+        }
+
+        while (self::query()->where('email_address', '=', $email)->count() > 0) {
+            $counter++;
+
+            $email = sprintf("%s.%s%d", $firstName, $lastName, $counter);
+        }
+
+        $this->update([
+            'email_address' => $email
+        ]);
+
+        return true;
     }
 
 }
