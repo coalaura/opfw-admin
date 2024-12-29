@@ -22,6 +22,12 @@ class Player extends Model
 {
     use HasFactory;
 
+    const UserStatisticsKeys = [
+        "reportsClaimed",
+        "staffPmSent",
+        "reportsClaimed",
+    ];
+
     /**
      * The link used for Steam's new invite code.
      */
@@ -991,17 +997,35 @@ class Player extends Model
     }
 
     /**
-     * Gets a certain key from the user statistic.
+     * Gets a certain key's value from the user statistic.
      */
-    public function getUserStatistic(string $key): array
+    public function getUserStatisticsValue(string $key): int
     {
         $statistics = $this->user_statistics ?? [];
-        $entry = $statistics[$key] ?? [];
+        $entry      = $statistics[$key] ?? [];
 
-        return [
-            'value' => $entry['value'] ?? 0,
-            'time'  => $entry['time'] ?? 0,
-        ];
+        return $entry['value'] ?? 0;
+    }
+
+    /**
+     * Gets the full user statistics.
+     */
+    public function getUserStatistics(): array
+    {
+        $raw = $this->user_statistics ?? [];
+
+        $full = [];
+
+        foreach (self::UserStatisticsKeys as $key) {
+            $entry = $raw[$key] ?? [];
+
+            $full[$key] = [
+                'value' => $entry['value'] ?? 0,
+                'time'  => $entry['time'] ?? 0,
+            ];
+        }
+
+        return $full;
     }
 
     /**

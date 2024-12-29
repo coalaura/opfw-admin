@@ -11,11 +11,6 @@ use Inertia\Response;
 
 class StatisticsController extends Controller
 {
-    const UserStatisticsKeys = [
-        "reportsClaimed",
-        "staffPmSent",
-    ];
-
     private $colorHueStart;
 
     /**
@@ -207,22 +202,12 @@ class StatisticsController extends Controller
 
         foreach ($staff as $player) {
             $license = $player->license_identifier;
-            $stats   = $player->user_statistics ?? [];
 
-            $entry = [
-                'license' => $license,
-                'name'    => $player->getSafePlayerName(),
-                'xp'      => $player->calculateXP(),
-            ];
+            $entry = $player->getUserStatistics();
 
-            foreach (self::UserStatisticsKeys as $key) {
-                $value = $stats[$key] ?? [];
-
-                $entry[$key] = [
-                    'value' => $value['value'] ?? 0,
-                    'time'  => $value['time'] ?? 0,
-                ];
-            }
+            $entry['license'] = $license;
+            $entry['name']    = $player->getSafePlayerName();
+            $entry['xp']      = $player->calculateXP();
 
             $players[] = $entry;
         }
