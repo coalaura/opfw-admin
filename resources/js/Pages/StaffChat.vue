@@ -286,7 +286,7 @@ export default {
 
             // Emotes
             message = message.replace(/&lt;(\d{1,})&gt;/gm, (match, id) => {
-                const emote = this.emotes.find(emote => emote.id == id);
+                const emote = this.emotes.find(emote => emote.id === id);
 
                 if (!emote) return match;
 
@@ -309,7 +309,7 @@ export default {
                     break;
             }
 
-            return `${type} ${message.user.playerName} ${message.user.source ? `(${message.user.source})` : ''}`;
+            return `${type} ${message.user.playerName || message.user.displayName} ${message.user.source ? `(${message.user.source})` : ''}`;
         },
         formatColor(message) {
             switch (message.type) {
@@ -330,7 +330,7 @@ export default {
             const isDev = window.location.hostname === 'localhost',
                 token = this.$page.auth.token,
                 server = this.$page.serverName,
-                socketUrl = isDev ? 'ws://localhost:9999' : 'wss://' + window.location.host;
+                socketUrl = isDev ? 'ws://localhost:9999' : `wss://${window.location.host}`;
 
             this.socket = io(socketUrl, {
                 reconnectionDelayMax: 5000,
