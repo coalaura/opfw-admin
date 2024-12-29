@@ -78,7 +78,7 @@ class Player extends Model
         'average_fps',
         'panel_settings',
         'staff_points',
-        'user_data'
+        'user_data',
     ];
 
     /**
@@ -95,6 +95,7 @@ class Player extends Model
         'player_aliases'        => 'array',
         'enabled_commands'      => 'array',
         'user_data'             => 'array',
+        'user_statistics'       => 'array',
         'staff_points'          => 'array',
         'last_connection'       => 'datetime',
         'is_trusted'            => 'boolean',
@@ -159,13 +160,13 @@ class Player extends Model
             "type"    => "string",
             "default" => "en-us",
             "options" => [
-                "en-us"     => "English",
-                "no"        => "Norwegian",
-                "hi-lat"    => "Hindi",
+                "en-us"   => "English",
+                "no"      => "Norwegian",
+                "hi-lat"  => "Hindi",
 
-                "en-cave"   => "Caveman Speak",
-                "en-uwu"    => "UwU Language",
-                "en-us_s"   => "Southern Accent",
+                "en-cave" => "Caveman Speak",
+                "en-uwu"  => "UwU Language",
+                "en-us_s" => "Southern Accent",
             ],
         ],
     ];
@@ -391,7 +392,7 @@ class Player extends Model
 
     public static function getFilteredPlayerName(string $name, $aliases, string $license): string
     {
-        $name  = self::filterPlayerName($name);
+        $name    = self::filterPlayerName($name);
         $aliases = $aliases ?? [];
 
         if (is_string($aliases)) {
@@ -987,6 +988,39 @@ class Player extends Model
             ->orderBy('timestamp', 'desc')
             ->groupBy('ban_hash')
             ->get();
+    }
+
+    /**
+     * Gets a certain key from the user statistic.
+     */
+    public function getUserStatistic(string $key): array
+    {
+        $statistics = $this->user_statistics ?? [];
+        $entry = $statistics[$key] ?? [];
+
+        return [
+            'value' => $entry['value'] ?? 0,
+            'time'  => $entry['time'] ?? 0,
+        ];
+    }
+
+    /**
+     * Calculates the users total XP.
+     */
+    public function calculateXP(): float
+    {
+        $xp = 0.0;
+
+        // reportsClaimed is worth x2.5
+        $xp += $this->getUserStatistic('reportsClaimed')['value'] * 2.5;
+
+        // staffPmSent is worth x0.8
+        $xp += $this->getUserStatistic('staffPmSent')['value'] * 0.8;
+
+        // reportsCreated is worth -x1.25
+        $xp -= $this->getUserStatistic('reportsCreated')['value'] * 1.25;
+
+        return $xp;
     }
 
     /**

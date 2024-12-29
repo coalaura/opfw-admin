@@ -11,6 +11,11 @@ use Inertia\Response;
 
 class StatisticsController extends Controller
 {
+    const UserStatisticsKeys = [
+        "reportsClaimed",
+        "staffPmSent",
+    ];
+
     private $colorHueStart;
 
     /**
@@ -183,6 +188,55 @@ class StatisticsController extends Controller
 
         return Inertia::render('Statistics/StaffPoints', [
             'points' => $points,
+        ]);
+    }
+
+    /**
+     * Resolves all staffs statistics.
+     */
+    public function staffStatistics(Request $request)
+    {
+        $staff = Player::query()
+            ->where('is_staff', '=', '1')
+            ->orWhere('is_senior_staff', '=', '1')
+            ->orWhere('is_super_admin', '=', '1')
+            ->orderBy('player_name')
+            ->get();
+
+        $players = [];
+
+        foreach ($staff as $player) {
+            $license = $player->license_identifier;
+            $stats   = $player->user_statistics ?? [];
+
+            $entry = [
+                'license' => $license,
+                'name'    => $player->getSafePlayerName(),
+                'xp'      => $player->calculateXP(),
+            ];
+
+            foreach (self::UserStatisticsKeys as $key) {
+                $value = $stats[$key] ?? [];
+
+                $entry[$key] = [
+                    'value' => $value['value'] ?? 0,
+                    'time'  => $value['time'] ?? 0,
+                ];
+            }
+
+            $players[] = $entry;
+        }
+
+        usort($players, function ($a, $b) {
+            if ($a['xp'] === $b['xp']) {
+                return $a['name'] <=> $b['name'];
+            }
+
+            return $b['xp'] <=> $a['xp'];
+        });
+
+        return Inertia::render('Statistics/Staff', [
+            'players' => $players,
         ]);
     }
 

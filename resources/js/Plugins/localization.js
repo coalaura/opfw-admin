@@ -12,13 +12,13 @@ const Localization = {
                 return key in object ? object[key] : null;
             }
 
-            let path = key.split('.');
+            const path = key.split('.');
             const current = path.shift();
 
             return current in object ? searchObject(object[current], path.join('.')) : null;
         }
 
-        Vue.prototype.loadLocale = function (locale) {
+        Vue.prototype.loadLocale = (locale) => {
             locale = locale.toLowerCase();
 
             if (locale === "en-us") {
@@ -30,7 +30,7 @@ const Localization = {
             const start = performance.now();
 
             try {
-                lang = require('../locales/' + locale + '.json');
+                lang = require(`../locales/${locale}.json`);
                 activeLocale = locale;
 
                 console.info(`Loaded locale ${locale} in ${performance.now() - start}ms`);
@@ -47,11 +47,11 @@ const Localization = {
             try {
                 Vue.prototype.$moment.locale("en-us");
             } catch (e) {
-                console.error('Failed to load moment locale "' + locale + '"', e);
+                console.error(`Failed to load moment locale "${locale}"`, e);
             }
         };
 
-        Vue.prototype.t = function (key, ...params) {
+        Vue.prototype.t = (key, ...params) => {
             let val = lang ? searchObject(lang, key) : null;
 
             if (!val) {
@@ -68,19 +68,19 @@ const Localization = {
 
             if (Array.isArray(params) && typeof val === 'string') {
                 for (let x = 0; x < params.length; x++) {
-                    val = val.replaceAll('{' + x + '}', params[x]);
+                    val = val.replaceAll(`{${x}}`, params[x]);
                 }
             }
 
             return val;
         };
 
-        Vue.prototype.numberFormat = function (number, decimals, asCurrency) {
+        Vue.prototype.numberFormat = (number, decimals, asCurrency) => {
             if (number === null || number === undefined || number === false) {
                 return '-';
             }
 
-            let options = {
+            const options = {
                 minimumFractionDigits: 0,
                 maximumFractionDigits: decimals && Number.isInteger(decimals) ? decimals : 2
             };
@@ -94,7 +94,7 @@ const Localization = {
             return formatter.format(number);
         };
 
-        Vue.prototype.bytesFormat = function(bytes, decimals = 2) {
+        Vue.prototype.bytesFormat = (bytes, decimals = 2) => {
             if (!+bytes) return '0 bytes'
 
             const k = 1000,
@@ -103,15 +103,15 @@ const Localization = {
 
             const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-            return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`
+            return `${parseFloat((bytes / (k ** i)).toFixed(dm))} ${sizes[i]}`
         };
 
-        Vue.prototype.truncate = function(text, length) {
+        Vue.prototype.truncate = (text, length) => {
             if (text.length <= length) {
                 return text;
             }
 
-            return text.substr(0, length - 3) + '...';
+            return `${text.substr(0, length - 3)}...`;
         };
     },
 }

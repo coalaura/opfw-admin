@@ -212,6 +212,7 @@
         "server_offline": "Server offline lag raha hai.",
         "server_online": "Server {0} se online hai.",
         "server_timeout": "Server ID 5 minute ke liye cached hai",
+        "soon_tm": "Jaldi™",
         "staff": "Staff Sadasya",
         "staff_title": "Staff Sadasyon ko sabhi staff commands ka access hai.",
         "status": {
@@ -1231,6 +1232,15 @@
         "sound": "Dhwan",
         "title": "Staff Chat",
         "voice_chat": "Voice Chat"
+    },
+    "staff_statistics": {
+        "claimed_reports": "Daavee Ripoorts",
+        "description": "Kuch saamaanya sankhiki karmachaari sadasyon ke baare mein.",
+        "last_time": "Antim samay {0} pehle tha ({1}).",
+        "last_time_unknown": "Antim samay anjaana hai.",
+        "player": "Khilaadi",
+        "staff_pm_sent": "Karmachaari PMs Bheje gaye",
+        "title": "Karmachaari Sankhiki"
     },
     "statistics": {
         "airlifts": "Airlifts",

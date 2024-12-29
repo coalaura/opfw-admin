@@ -105,7 +105,7 @@ export default {
         let mapTitle = $("#map_title").text().trim();
 
         if (mapTitle) {
-            mapTitle += ' (' + $("#server").val() + ')';
+            mapTitle += ` (${$("#server").val()})`;
         }
 
         const title = mapTitle || $("header h1").html()?.replace(/<span class="sr-only">.+?<\/span>|<\/?[^>]+(>|$)/g, "")?.trim();
@@ -113,7 +113,7 @@ export default {
         if (title) {
             const cluster = this.$page?.auth?.cluster ? this.$page.auth.cluster.toUpperCase() : "OP-FW";
 
-            $("title").text(cluster + " - " + title);
+            $("title").text(`${cluster} - ${title}`);
         }
     },
     beforeCreate() {
@@ -131,6 +131,15 @@ export default {
         $(this.$refs.scrollable).on("scroll", () => {
             this.scrolled = this.$refs.scrollable.scrollTop > 50;
         });
+
+        // Randomize metallic color animation delays
+        const metallicElements = [...document.querySelectorAll('.metallic-gold, .metallic-silver, .metallic-bronze')];
+
+        for (const metallic of metallicElements) {
+            const randomDelay = Math.random() * -3;
+
+            metallic.style.setProperty('--shine-delay', `${randomDelay}s`);
+        }
     }
 };
 </script>

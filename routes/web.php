@@ -252,6 +252,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::post('/statistics/money', [StatisticsController::class, 'moneyLogs']);
     Route::get('/statistics/{source}', [StatisticsController::class, 'source']);
     Route::get('/points', [StatisticsController::class, 'points']);
+    Route::get('/staff', [StatisticsController::class, 'staffStatistics']);
 
     // Overwatch.
     Route::get('/overwatch', [OverwatchController::class, 'index']);

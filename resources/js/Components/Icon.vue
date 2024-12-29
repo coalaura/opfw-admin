@@ -91,6 +91,7 @@
     <i class="fas fa-home" v-else-if="name === 'home'"></i>
     <i class="fas fa-warehouse" v-else-if="name === 'warehouse'"></i>
     <i class="fas fa-user-md" v-else-if="name === 'user-md'"></i>
+    <i class="fas fa-laptop-medical" v-else-if="name === 'laptop-medical'"></i>
 </template>
 
 <script>

@@ -212,6 +212,7 @@
         "server_offline": "Server not working.",
         "server_online": "Server working since {0}.",
         "server_timeout": "Server ID saved for 5 minutes",
+        "soon_tm": "Soon",
         "staff": "Staff",
         "staff_title": "Staff can use all staff commands.",
         "status": {
@@ -1231,6 +1232,15 @@
         "sound": "Noise",
         "title": "Staff Talk",
         "voice_chat": "Talk Sound"
+    },
+    "staff_statistics": {
+        "claimed_reports": "Report Taken",
+        "description": "Staff stats",
+        "last_time": "Last time {0} ago ({1})",
+        "last_time_unknown": "Last time unknown",
+        "player": "Player",
+        "staff_pm_sent": "Staff PMs sent",
+        "title": "Staff stats"
     },
     "statistics": {
         "airlifts": "Fly",

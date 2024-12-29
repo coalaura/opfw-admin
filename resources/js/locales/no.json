@@ -212,6 +212,7 @@
         "server_offline": "Serveren ser ut til å være offline.",
         "server_online": "Serveren har vært online siden {0}.",
         "server_timeout": "Server-ID er hurtiglagret i 5 minutter",
+        "soon_tm": "Kommer snart™",
         "staff": "Ansatt",
         "staff_title": "Ansatte har tilgang til alle ansattkommandoer.",
         "status": {
@@ -1231,6 +1232,15 @@
         "sound": "Lyd",
         "title": "Ansattchat",
         "voice_chat": "Stemmechat"
+    },
+    "staff_statistics": {
+        "claimed_reports": "Rapporter krevd",
+        "description": "Noen generelle statistikker om ansatte.",
+        "last_time": "Sist gang var for {0} siden ({1}).",
+        "last_time_unknown": "Siste gang er ukjent.",
+        "player": "Spiller",
+        "staff_pm_sent": "Meldinger sendt av ansatte",
+        "title": "Ansattstatistikk"
     },
     "statistics": {
         "airlifts": "Lufttransporter",

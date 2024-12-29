@@ -212,6 +212,7 @@
         "server_offline": "Server seems to be offline.",
         "server_online": "Server's been online since {0}.",
         "server_timeout": "Server ID is cached fer 5 minutes",
+        "soon_tm": "Soon™",
         "staff": "Staff Member",
         "staff_title": "Staff Members can use all staff commands.",
         "status": {
@@ -1231,6 +1232,15 @@
         "sound": "Soun'",
         "title": "Staff Chat",
         "voice_chat": "Voice Chat"
+    },
+    "staff_statistics": {
+        "claimed_reports": "Claimed Reports",
+        "description": "Some general statistics 'bout staff members.",
+        "last_time": "Last time was {0} ago ({1}).",
+        "last_time_unknown": "Last time is unknown.",
+        "player": "Player",
+        "staff_pm_sent": "Staff PMs Sent",
+        "title": "Staff Statistics"
     },
     "statistics": {
         "airlifts": "Airlifts",

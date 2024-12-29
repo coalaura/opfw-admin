@@ -101,7 +101,7 @@ export default {
             const identifiers = Object.keys(this.points);
 
             if (identifiers) {
-                this.status = await this.requestData("/online/" + identifiers);
+                this.status = await this.requestData(`/online/${identifiers}`);
             } else {
                 this.status = {};
             }

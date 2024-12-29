@@ -74,7 +74,7 @@ export default {
         Icon,
     },
     data() {
-        let data = {
+        const data = {
             url: this.$page.url,
             links: [
                 {
@@ -266,6 +266,11 @@ export default {
                             label: 'points.title',
                             icon: 'street-view',
                             url: '/points',
+                        },
+                        {
+                            label: 'staff_statistics.title',
+                            icon: 'laptop-medical',
+                            url: '/staff',
                         }
                     ]
                 },
@@ -438,7 +443,7 @@ export default {
         const styles = document.createElement('style');
 
         // Closed
-        styles.innerHTML += `.side-close { height: 37px; }`;
+        styles.innerHTML += ".side-close { height: 37px; }";
 
         for (let i = 1; i <= max; i++) {
             // 37px = height of closed sidebar item

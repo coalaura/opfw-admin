@@ -7,6 +7,7 @@
         "banned": "Banned",
         "not_banned": "Not banned",
         "by": "by {0}",
+        "soon_tm": "Soon™",
         "debugger": "Debugger",
         "debugger_title": "Debuggers have access to certain dev commands like /debug.",
         "trusted": "Trusted",
@@ -271,6 +272,15 @@
         "description": "Staff points are stored in the balls!",
         "player": "Player",
         "week_0": "This Week"
+    },
+    "staff_statistics": {
+        "title": "Staff Statistics",
+        "description": "Some general statistics about staff members.",
+        "player": "Player",
+        "claimed_reports": "Claimed Reports",
+        "staff_pm_sent": "Staff PMs Sent",
+        "last_time_unknown": "Last time is unknown.",
+        "last_time": "Last time was {0} ago ({1})."
     },
     "statistics": {
         "title": "Statistics",
