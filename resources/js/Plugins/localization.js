@@ -75,13 +75,13 @@ const Localization = {
             return val;
         };
 
-        Vue.prototype.numberFormat = (number, decimals, asCurrency) => {
+        Vue.prototype.numberFormat = (number, decimals, asCurrency, minDecimals = 0) => {
             if (number === null || number === undefined || number === false) {
                 return '-';
             }
 
             const options = {
-                minimumFractionDigits: 0,
+                minimumFractionDigits: minDecimals,
                 maximumFractionDigits: decimals && Number.isInteger(decimals) ? decimals : 2
             };
             if (asCurrency) {

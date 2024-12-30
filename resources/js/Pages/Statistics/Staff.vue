@@ -34,7 +34,7 @@
                         </th>
                         <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.player') }}</th>
                         <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.claimed_reports') }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.staff_pm_sent') }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left italic">{{ t('global.soon_tm') }}</th>
                         <th class="font-bold px-4 py-1.5 text-left italic">{{ t('global.soon_tm') }}</th>
                         <th class="font-bold px-4 py-1.5 text-left italic">{{ t('global.soon_tm') }}</th>
                         <th class="font-bold px-4 py-1.5 text-left italic">{{ t('global.soon_tm') }}</th>
@@ -64,13 +64,10 @@
                             </td>
 
                             <td class="px-4 py-1.5 font-medium" :title="formatLast(player.reportsClaimed.time)">
-                                {{ numberFormat(player.reportsClaimed.value, 1, false) }}
+                                {{ numberFormat(player.reportsClaimed.value, 2, false, 1) }}
                             </td>
 
-                            <td class="px-4 py-1.5 font-medium" :title="formatLast(player.staffPmSent.time)">
-                                {{ numberFormat(player.staffPmSent.value, 1, false) }}
-                            </td>
-
+                            <th class="font-bold px-4 py-1.5 text-left italic">-</th>
                             <th class="font-bold px-4 py-1.5 text-left italic">-</th>
                             <th class="font-bold px-4 py-1.5 text-left italic">-</th>
                             <th class="font-bold px-4 py-1.5 text-left italic">-</th>
