@@ -1239,7 +1239,12 @@
         "last_time": "Sist gang var for {0} siden ({1}).",
         "last_time_unknown": "Siste gang er ukjent.",
         "player": "Spiller",
-        "staff_pm_sent": "Meldinger sendt av ansatte",
+        "players_banned": "Utestengt",
+        "players_kicked": "Sparket",
+        "players_revived": "Gjenopplivet",
+        "players_unloaded": "Lastet ut",
+        "staff_chats": "Ansatt-samtaler",
+        "staff_pms": "Ansatt-PMer",
         "title": "Ansattstatistikk"
     },
     "statistics": {

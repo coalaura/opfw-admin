@@ -1239,7 +1239,12 @@
         "last_time": "Wast time was {0} ago ({1}).",
         "last_time_unknown": "Wast time is unknown.",
         "player": "Pwayew",
-        "staff_pm_sent": "Staff PMs Sent",
+        "players_banned": "Banned >w<",
+        "players_kicked": "Kicked uwu",
+        "players_revived": "Wevived",
+        "players_unloaded": "Unwoaded",
+        "staff_chats": "Staff Chats uwu",
+        "staff_pms": "Staff PMs >w<",
         "title": "Staff Statistics"
     },
     "statistics": {

@@ -278,7 +278,12 @@
         "description": "Some general statistics about staff members.",
         "player": "Player",
         "claimed_reports": "Claimed Reports",
-        "staff_pm_sent": "Staff PMs Sent",
+        "staff_pms": "Staff PMs",
+        "staff_chats": "Staff Chats",
+        "players_revived": "Revived",
+        "players_unloaded": "Unloaded",
+        "players_kicked": "Kicked",
+        "players_banned": "Banned",
         "last_time_unknown": "Last time is unknown.",
         "last_time": "Last time was {0} ago ({1})."
     },

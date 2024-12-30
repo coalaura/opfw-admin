@@ -1239,7 +1239,12 @@
         "last_time": "Antim samay {0} pehle tha ({1}).",
         "last_time_unknown": "Antim samay anjaana hai.",
         "player": "Khilaadi",
-        "staff_pm_sent": "Karmachaari PMs Bheje gaye",
+        "players_banned": "Nishedh",
+        "players_kicked": "Nikala",
+        "players_revived": "Jeevit kiya",
+        "players_unloaded": "Khali kiya",
+        "staff_chats": "Karmchari baatein",
+        "staff_pms": "Karmchari sandesh",
         "title": "Karmachaari Sankhiki"
     },
     "statistics": {

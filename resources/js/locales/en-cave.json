@@ -1239,7 +1239,12 @@
         "last_time": "Last time {0} ago ({1})",
         "last_time_unknown": "Last time unknown",
         "player": "Player",
-        "staff_pm_sent": "Staff PMs sent",
+        "players_banned": "Ban",
+        "players_kicked": "Kick",
+        "players_revived": "Revive",
+        "players_unloaded": "Unload",
+        "staff_chats": "Staff Talk",
+        "staff_pms": "Staff Talk",
         "title": "Staff stats"
     },
     "statistics": {

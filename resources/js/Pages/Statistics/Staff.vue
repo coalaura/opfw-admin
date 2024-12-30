@@ -34,15 +34,16 @@
                         </th>
                         <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.player') }}</th>
                         <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.claimed_reports') }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left italic">{{ t('global.soon_tm') }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left italic">{{ t('global.soon_tm') }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left italic">{{ t('global.soon_tm') }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left italic">{{ t('global.soon_tm') }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left italic">{{ t('global.soon_tm') }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.staff_pms') }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.staff_chats') }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_revived') }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_unloaded') }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_kicked') }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_banned') }}</th>
                     </tr>
 
                     <tr v-for="(player, index) in players" :key="player.license" class="odd:bg-gray-200 dark:odd:bg-gray-500/40" :class="getPlayerClassNames(index, player)">
-                        <td class="px-4 py-1.5 text-center" colspan="9" v-if="isLoading">
+                        <td class="px-4 py-1.5 text-center" colspan="10" v-if="isLoading">
                             <i class="fas fa-spinner animate-spin"></i>
                         </td>
 
@@ -66,12 +67,24 @@
                             <td class="px-4 py-1.5 font-medium" :title="formatLast(player.reportsClaimed.time)">
                                 {{ numberFormat(player.reportsClaimed.value, 0) }}
                             </td>
-
-                            <th class="font-bold px-4 py-1.5 text-left italic">-</th>
-                            <th class="font-bold px-4 py-1.5 text-left italic">-</th>
-                            <th class="font-bold px-4 py-1.5 text-left italic">-</th>
-                            <th class="font-bold px-4 py-1.5 text-left italic">-</th>
-                            <th class="font-bold px-4 py-1.5 text-left italic">-</th>
+                            <td class="px-4 py-1.5 font-medium" :title="formatLast(player.staffPmSent.time)">
+                                {{ numberFormat(player.staffPmSent.value, 0) }}
+                            </td>
+                            <td class="px-4 py-1.5 font-medium" :title="formatLast(player.staffChatSent.time)">
+                                {{ numberFormat(player.staffChatSent.value, 0) }}
+                            </td>
+                            <td class="px-4 py-1.5 font-medium" :title="formatLast(player.playersRevived.time)">
+                                {{ numberFormat(player.playersRevived.value, 0) }}
+                            </td>
+                            <td class="px-4 py-1.5 font-medium" :title="formatLast(player.playersUnloaded.time)">
+                                {{ numberFormat(player.playersUnloaded.value, 0) }}
+                            </td>
+                            <td class="px-4 py-1.5 font-medium" :title="formatLast(player.playersKicked.time)">
+                                {{ numberFormat(player.playersKicked.value, 0) }}
+                            </td>
+                            <td class="px-4 py-1.5 font-medium" :title="formatLast(player.playersBanned.time)">
+                                {{ numberFormat(player.playersBanned.value, 0) }}
+                            </td>
                         </template>
                     </tr>
                 </table>

@@ -1239,7 +1239,12 @@
         "last_time": "Last time was {0} ago ({1}).",
         "last_time_unknown": "Last time is unknown.",
         "player": "Player",
-        "staff_pm_sent": "Staff PMs Sent",
+        "players_banned": "Banned, bless your heart.",
+        "players_kicked": "Kicked, y'all take care now.",
+        "players_revived": "Revived, ain't that somethin'!",
+        "players_unloaded": "Unloaded, just like a pickup truck.",
+        "staff_chats": "Staff Chats, let's have a little chinwag.",
+        "staff_pms": "Staff PMs, just a quick holler.",
         "title": "Staff Statistics"
     },
     "statistics": {
