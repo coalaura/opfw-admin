@@ -51,7 +51,7 @@
                                 {{ index + 1 }}.
                                 <i class="fas fa-award" v-if="index < 3"></i>
                             </td>
-                            <td class="italic px-4 py-1.5">{{ numberFormat(player.xp, 2, false) }}</td>
+                            <td class="italic px-4 py-1.5">{{ numberFormat(player.xp, 2, false, 1) }}</td>
 
                             <td class="italic px-4 py-1.5">
                                 <a :href="`/players/${player.license}`" target="_blank" :title="player.name">
@@ -64,7 +64,7 @@
                             </td>
 
                             <td class="px-4 py-1.5 font-medium" :title="formatLast(player.reportsClaimed.time)">
-                                {{ numberFormat(player.reportsClaimed.value, 2, false, 1) }}
+                                {{ numberFormat(player.reportsClaimed.value, 0) }}
                             </td>
 
                             <th class="font-bold px-4 py-1.5 text-left italic">-</th>
