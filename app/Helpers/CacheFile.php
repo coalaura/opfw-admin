@@ -44,7 +44,7 @@ class CacheFile
     {
         if (isset($this->cache)) return;
 
-        $this->cache = json_decode(file_get_contents($this->path), true);
+        $this->cache = json_decode(file_get_contents($this->path), true) ?? [];
     }
 
     private function populate()
