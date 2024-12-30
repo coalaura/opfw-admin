@@ -75,23 +75,22 @@ const Localization = {
             return val;
         };
 
-        Vue.prototype.numberFormat = (number, decimals, asCurrency, minDecimals = 0) => {
+        Vue.prototype.numberFormat = (number, decimals, asCurrency, minDecimals) => {
             if (number === null || number === undefined || number === false) {
                 return '-';
             }
 
             const options = {
-                minimumFractionDigits: minDecimals,
+                minimumFractionDigits: minDecimals && Number.isInteger(minDecimals) ? minDecimals : 0,
                 maximumFractionDigits: decimals && Number.isInteger(decimals) ? decimals : 2
             };
+
             if (asCurrency) {
                 options['style'] = 'currency';
                 options['currency'] = 'USD';
             }
 
-            const formatter = new Intl.NumberFormat("en-US", options);
-
-            return formatter.format(number);
+            return (new Intl.NumberFormat("en-US", options)).format(number);
         };
 
         Vue.prototype.bytesFormat = (bytes, decimals = 2) => {
