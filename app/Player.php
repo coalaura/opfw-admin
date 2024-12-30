@@ -1045,16 +1045,16 @@ class Player extends Model
     {
         $xp = 0.0;
 
-        // reportsClaimed is worth x2.0
-        $xp += $this->getUserStatisticsValue('reportsClaimed') * 2.0;
+        // reportsClaimed is worth x1.8
+        $xp += $this->getUserStatisticsValue('reportsClaimed') * 1.8;
 
-        // staffPmSent is worth x0.7
-        $xp += $this->getUserStatisticsValue('staffPmSent') * 0.7;
+        // staffPmSent is worth x0.42
+        $xp += $this->getUserStatisticsValue('staffPmSent') * 0.42;
 
         // reportsCreated is worth -x1.0
         $xp -= $this->getUserStatisticsValue('reportsCreated') * 1.0;
 
-        // playersKicked is worth x1.8
+        // playersKicked is worth x1.6
         $xp += $this->getUserStatisticsValue('playersKicked') * 1.2;
 
         // playersBanned is worth x2.4
@@ -1066,11 +1066,11 @@ class Player extends Model
         // playersMuted is worth x1.2
         $xp += $this->getUserStatisticsValue('playersMuted') * 1.2;
 
-        // playersRevived is worth x0.34
-        $xp += $this->getUserStatisticsValue('playersRevived') * 0.34;
+        // playersRevived is worth x0.32
+        $xp += $this->getUserStatisticsValue('playersRevived') * 0.32;
 
-        // playersSpectated is worth x0.2
-        $xp += $this->getUserStatisticsValue('playersSpectated') * 0.2;
+        // playersSpectated is worth x0.22
+        $xp += $this->getUserStatisticsValue('playersSpectated') * 0.22;
 
         // playersUnloaded is worth x0.8
         $xp += $this->getUserStatisticsValue('playersUnloaded') * 0.8;
