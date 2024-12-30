@@ -36,7 +36,7 @@ class OPFWHelper
             return new OPFWResponse(false, 'Player is offline.');
         }
 
-        $response = self::executeRoute(Server::getServerURL($status->serverName) . 'execute/staffPrivateMessage', [
+        $response = self::executeRoute(Server::getServerURL($status->serverName) . 'execute/privateMessage', [
             'licenseIdentifier' => $staffLicenseIdentifier,
             'targetSource'      => $status->serverId,
             'message'           => $message,
@@ -65,7 +65,7 @@ class OPFWHelper
             return new OPFWResponse(false, 'Your message cannot be empty');
         }
 
-        $response = self::executeRoute($serverIp . 'execute/staffChatMessage', [
+        $response = self::executeRoute($serverIp . 'execute/staffMessage', [
             'licenseIdentifier' => $staffLicenseIdentifier,
             'message'           => $message,
         ]);
