@@ -23,13 +23,14 @@ class Player extends Model
     use HasFactory;
 
     const UserStatisticsKeys = [
+        "reportsCreated",
+        "playersFrozen",
+
         "reportsClaimed",
         "staffPmSent",
         "staffChatSent",
-        "reportsClaimed",
         "playersKicked",
         "playersBanned",
-        "playersFrozen",
         "playerJobUpdates",
         "playersMuted",
         "playersRevived",
@@ -1044,17 +1045,39 @@ class Player extends Model
     {
         $xp = 0.0;
 
-        // reportsClaimed is worth x1.8
-        $xp += $this->getUserStatisticsValue('reportsClaimed') * 1.8;
+        // reportsClaimed is worth x2.0
+        $xp += $this->getUserStatisticsValue('reportsClaimed') * 2.0;
 
-        // staffPmSent is worth x0.8
-        $xp += $this->getUserStatisticsValue('staffPmSent') * 0.8;
+        // staffPmSent is worth x0.7
+        $xp += $this->getUserStatisticsValue('staffPmSent') * 0.7;
 
-        // reportsCreated is worth -x1.1
-        $xp -= $this->getUserStatisticsValue('reportsCreated') * 1.1;
+        // reportsCreated is worth -x1.0
+        $xp -= $this->getUserStatisticsValue('reportsCreated') * 1.0;
+
+        // playersKicked is worth x1.8
+        $xp += $this->getUserStatisticsValue('playersKicked') * 1.2;
+
+        // playersBanned is worth x2.4
+        $xp += $this->getUserStatisticsValue('playersBanned') * 2.0;
+
+        // playerJobUpdates is worth x0.62
+        $xp += $this->getUserStatisticsValue('playerJobUpdates') * 0.62;
+
+        // playersMuted is worth x1.2
+        $xp += $this->getUserStatisticsValue('playersMuted') * 1.2;
+
+        // playersRevived is worth x0.34
+        $xp += $this->getUserStatisticsValue('playersRevived') * 0.34;
+
+        // playersSpectated is worth x0.2
+        $xp += $this->getUserStatisticsValue('playersSpectated') * 0.2;
+
+        // playersUnloaded is worth x0.8
+        $xp += $this->getUserStatisticsValue('playersUnloaded') * 0.8;
 
         return $xp;
     }
+
 
     /**
      * Returns the online status of the player
