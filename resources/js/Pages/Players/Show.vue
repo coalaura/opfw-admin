@@ -1861,12 +1861,16 @@ export default {
         confirmedAccuracy() {
             const ban = this.activeBan;
 
-            return ban?.info?.startsWith('Impossible');
+            if (!ban?.info) return false;
+
+            return ban.info?.startsWith('Impossible');
         },
         prettyHighAccuracy() {
             const ban = this.activeBan;
 
-            return ban?.info?.startsWith('Highly unlikely');
+            if (!ban?.info) return false;
+
+            return ban.info?.startsWith('Highly unlikely');
         },
         minDate() {
             const date = new Date();
@@ -2783,10 +2787,10 @@ export default {
             const message = warning.message;
             const type = warning.warningType;
 
-            if (message.includes('This warning was generated automatically')) return true;
-            if (message.startsWith('I scheduled the removal of this players ban for')) return true;
-            if (message.startsWith('I removed this players ban')) return true;
-            if (message.startsWith('Smurf account detected. Ban applied,')) return true;
+            if (message?.includes('This warning was generated automatically')) return true;
+            if (message?.startsWith('I scheduled the removal of this players ban for')) return true;
+            if (message?.startsWith('I removed this players ban')) return true;
+            if (message?.startsWith('Smurf account detected. Ban applied,')) return true;
 
             return type === 'system';
         },
@@ -2863,7 +2867,9 @@ export default {
                 available = available.filter(reaction => reaction !== warning.random);
             }
 
-            return warning.random = available[Math.floor(Math.random() * available.length)];
+            warning.random = available[Math.floor(Math.random() * available.length)];
+
+            return warning.random;
         },
         hoveringReaction(warning) {
             if (this.isReacting[warning.id] || warning.hover || warning.hoverLoading) return;
