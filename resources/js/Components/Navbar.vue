@@ -304,7 +304,6 @@
 
 <script>
 import moment from 'moment';
-import Convert from 'ansi-to-html';
 import Icon from './Icon';
 import Modal from './Modal';
 
@@ -366,9 +365,7 @@ export default {
             banner: false,
 
             streamers: false,
-            showingStreamers: false,
-
-            ansi: new Convert()
+            showingStreamers: false
         }
     },
     computed: {
@@ -484,7 +481,7 @@ export default {
                 return moment.duration(pMilliseconds).format('m [minutes]');
             }
 
-            return moment.duration(pMilliseconds).format('d [days], h [hours]' + (pIncludeMinutes ? ', m [minutes]' : ''));
+            return moment.duration(pMilliseconds).format(`d [days], h [hours]${pIncludeMinutes ? ', m [minutes]' : ''}`);
         },
         async showDebugInfo() {
             if (this.loadingDebug) return;
@@ -536,7 +533,7 @@ export default {
                     time = Date.now() - start;
 
                 if (!data || !("info" in data) || !("logs" in data)) {
-                    throw new Error('No data received: ' + JSON.stringify(data));
+                    throw new Error(`No data received: ${JSON.stringify(data)}`);
                 }
 
                 const now = new Date(),
@@ -554,14 +551,14 @@ export default {
 
                 // Format log lines
                 this.socketInfo += `\n\n<pre class="bg-black py-1 px-1.5 rounded-sm console">`;
-                this.socketInfo += logs.split('\n').map(line => {
-                    // Format date & ANSI codes
-                    return line.replace(/^(\[.+?])(.+?)$/m, (match, date, rest) => {
-                        const m = moment(new Date(date.slice(1, -1)));
 
-                        return `<span class="muted" title="${m.format("llll")} (${m.from(now)})">[${m.format('DD/MM/YYYY HH:mm:ss')}]</span>` + this.ansi.toHtml(rest);
-                    });
-                }).join('\n');
+                this.socketInfo += logs.replace(/^(\[.+?] \[)(.+?)(\])(.+)$/gm, (_1, date, level, _2, message) => {
+                    const dt = moment(new Date(date.slice(1, -1))),
+                        formatted = `${dt.format("llll")} (${dt.from(now)})`;
+
+                    return `<span title="${formatted}" class="ansi-muted">[${m.format('DD/MM/YYYY HH:mm:ss')}] [</span><span class="ansi-${level.trim()}">${level}</span><span class="ansi-muted">]</span>${message}`;
+                });
+
                 this.socketInfo += '</pre>';
 
                 this.socketTime = time;
@@ -576,7 +573,7 @@ export default {
 
             const info = await this.requestStatic("/server");
 
-            if (info && info.uptime) {
+            if (info?.uptime) {
                 this.serverUptime = this.formatUptime(info.uptime, false);
                 this.serverUptimeDetail = this.formatUptime(info.uptime, true);
             } else {
@@ -584,13 +581,13 @@ export default {
                 this.serverUptimeDetail = false;
             }
 
-            if (info && info.name) {
+            if (info?.name) {
                 this.serverName = info.name;
             } else {
                 this.serverName = false;
             }
 
-            if (info && info.logo) {
+            if (info?.logo) {
                 this.serverLogo = info.logo;
             } else {
                 this.serverLogo = false;
