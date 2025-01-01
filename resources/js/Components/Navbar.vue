@@ -552,11 +552,13 @@ export default {
                 // Format log lines
                 this.socketInfo += `\n\n<pre class="bg-black py-1 px-1.5 rounded-sm console">`;
 
-                this.socketInfo += logs.replace(/^(\[.+?] \[)(.+?)(\])(.+)$/gm, (_1, date, level, _2, message) => {
-                    const dt = moment(new Date(date.slice(1, -1))),
-                        formatted = `${dt.format("llll")} (${dt.from(now)})`;
+                this.socketInfo += logs.replace(/^(\[.+?] \[)(.+?)(\])(.+)$/gm, (_1, _date, _level, _2, message) => {
+                    const dt = moment(new Date(_date.slice(1, -1)));
 
-                    return `<span title="${formatted}" class="ansi-muted">[${m.format('DD/MM/YYYY HH:mm:ss')}] [</span><span class="ansi-${level.trim()}">${level}</span><span class="ansi-muted">]</span>${message}`;
+                    const date = `<span title="${dt.format("llll")} (${dt.from(now)})" class="ansi-muted">[${dt.format('DD/MM/YYYY HH:mm:ss')}] [</span>`,
+                        level = `<span class="ansi-${_level.trim()}">${_level}</span><span class="ansi-muted">]</span>`;
+
+                    return `${date}${level} ${message}`;
                 });
 
                 this.socketInfo += '</pre>';
