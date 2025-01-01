@@ -214,7 +214,7 @@ export default {
 
             this.isLoading = true;
             try {
-                await this.$inertia.delete('/loading_screen/' + id);
+                await this.$inertia.delete(`/loading_screen/${id}`);
 
                 if (this.smallSize[id]) {
                     delete this.smallSize[id];
@@ -246,7 +246,7 @@ export default {
             const img = event.target;
 
             if (img.naturalWidth < 1920 || img.naturalHeight < 1080) {
-                this.smallSize[id] = img.naturalWidth + "x" + img.naturalHeight;
+                this.smallSize[id] = `${img.naturalWidth}x${img.naturalHeight}`;
 
                 this.smallSizeCount = Object.values(this.smallSize).length;
             }
@@ -279,8 +279,8 @@ export default {
             this.isAdding = false;
         },
         async handleEdit() {
-            const url = this.editingPicture.image_url.trim(),
-                description = this.editingPicture.description?.trim() || "";
+            const url = this.editingPicture.image_url.trim();
+            const description = this.editingPicture.description?.trim() || "";
 
             if (!url || !url.startsWith("https://")) {
                 alert("Please enter a valid URL");
@@ -294,7 +294,7 @@ export default {
 
             this.isLoading = true;
             try {
-                await this.$inertia.put('/loading_screen/' + this.editingPicture.id, {
+                await this.$inertia.put(`/loading_screen/${this.editingPicture.id}`, {
                     image_url: url,
                     description: description,
                 });

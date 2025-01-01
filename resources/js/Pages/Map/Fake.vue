@@ -126,7 +126,7 @@ export default {
     },
     computed: {
         trackingValid() {
-            this.trackId = parseInt(this.trackId);
+            this.trackId = Number.parseInt(this.trackId);
 
             if (!this.trackId) {
                 return false;
@@ -186,15 +186,15 @@ export default {
                 '.leaflet-control-layers-selector {outline:none !important}',
                 '.leaflet-container {background:#143D6B}',
                 'path.leaflet-interactive[stroke="#FFBF00"] {cursor:default}',
-                '.leaflet-attr {width:' + $('.leaflet-bottom.leaflet-right').width() + 'px}'
+                `.leaflet-attr {width:${$('.leaflet-bottom.leaflet-right').width()}px}`
             ];
 
-            $('#map').append('<style>' + styles.join('') + '</style>');
+            $('#map').append(`<style>${styles.join('')}</style>`);
 
-            const count = Math.round(Math.random() * 10) + 10,
-                icons = ['circle', 'circle_green', 'skull_red', 'circle_red', 'skull', 'circle_police', 'circle_ems'],
-                names = ["Zelda Zippertoes", "Flapjack McWiggles", "Noodle McSprinkles", "Snorkel Buttercrust", "Topsy Turvypants", "Waldo Wibblewobble", "Blippy Fizzlenose", "Sprout McJellybeans", "Cranky Doodlefluff", "Fungus Puddlejumper", "Jellybean Thunderpants", "Waffles McFluffy", "Pickle VonSprout", "Gizmo Tinkerton", "Bingo Fuzzlenut", "Doodle Whiskerbottom", "Zippy Puddingfoot", "Wiggle Wormwood", "Boogie VonDoodle", "Peanut Butterbuns", "Flipper Doodlehop", "Twinkles McSnuffles", "Skippy Bumblebutt", "Zippy McWigglesnort", "Spunky Dipperdoodle", "Frodo Bananabread", "Grumpy Fluffernoodle", "Slinky Tiddlewinks", "Bubbles McGiggles", "Fizzles McJibbles", "Pogo VonTwist", "Scooter McBreezy", "Squishy Whiskersnort", "Wobble McPudding", "Snickers Doodlewhip", "Squeezy Fuzzbottom", "Jumbo Jigglenoodle", "Muffin Waffleboot", "Gizmo Fiddlesticks", "Gloop McSplatter", "Fluffy Wobblepants", "Whiskers VonSnort", "Pippin Tinkertot", "Blimpy Squiggleton", "Nibbles McPuff", "Blinky Snorklewobble", "Jiggly Tumbleweed", "Twiddle Fizzlebop", "Waffle Snuggletop", "Scooby VonTwizzle"],
-                activities = ["Robbing a bank", "Flying a stolen helicopter", "Running from the cops", "Selling tacos", "Racing a lawnmower", "Hosting a car meet", "Breaking into a mansion", "Delivering pizza", "Starting a protest", "Stealing a boat", "Buying illegal fireworks", "Performing a stunt jump", "Fighting with a local", "Trying to sell a broken bike", "Starting a nightclub", "Escaping from jail", "Doing yoga on the beach", "Stealing a cop car", "Spray-painting graffiti", "Driving an ambulance off-road", "Playing guitar at a park", "Starting a street race", "Hacking an ATM", "Selling stolen goods", "Scuba diving for treasure", "Arguing over parking", "Playing poker in a backroom", "Fleeing from a drug deal", "Fixing a broken car", "Riding a horse in the city", "Organizing a protest", "Running an illegal casino", "Stealing a firetruck", "Hijacking a train", "Selling hot dogs", "Breaking into a plane", "Shooting fireworks downtown", "Evading a police blockade", "Flying a drone", "Rescuing a hostage", "Holding up a store", "Winning a street race", "Robbing a jewelry store", "Buying a fake ID", "Escaping a speeding ticket", "Running a taxi service", "Jumping off a building", "Starting a food truck business", "Setting off alarms downtown", "Trying to outdrive a tank"];
+            const count = Math.round(Math.random() * 10) + 10;
+            const icons = ['circle', 'circle_green', 'skull_red', 'circle_red', 'skull', 'circle_police', 'circle_ems'];
+            const names = ["Zelda Zippertoes", "Flapjack McWiggles", "Noodle McSprinkles", "Snorkel Buttercrust", "Topsy Turvypants", "Waldo Wibblewobble", "Blippy Fizzlenose", "Sprout McJellybeans", "Cranky Doodlefluff", "Fungus Puddlejumper", "Jellybean Thunderpants", "Waffles McFluffy", "Pickle VonSprout", "Gizmo Tinkerton", "Bingo Fuzzlenut", "Doodle Whiskerbottom", "Zippy Puddingfoot", "Wiggle Wormwood", "Boogie VonDoodle", "Peanut Butterbuns", "Flipper Doodlehop", "Twinkles McSnuffles", "Skippy Bumblebutt", "Zippy McWigglesnort", "Spunky Dipperdoodle", "Frodo Bananabread", "Grumpy Fluffernoodle", "Slinky Tiddlewinks", "Bubbles McGiggles", "Fizzles McJibbles", "Pogo VonTwist", "Scooter McBreezy", "Squishy Whiskersnort", "Wobble McPudding", "Snickers Doodlewhip", "Squeezy Fuzzbottom", "Jumbo Jigglenoodle", "Muffin Waffleboot", "Gizmo Fiddlesticks", "Gloop McSplatter", "Fluffy Wobblepants", "Whiskers VonSnort", "Pippin Tinkertot", "Blimpy Squiggleton", "Nibbles McPuff", "Blinky Snorklewobble", "Jiggly Tumbleweed", "Twiddle Fizzlebop", "Waffle Snuggletop", "Scooby VonTwizzle"];
+            const activities = ["Robbing a bank", "Flying a stolen helicopter", "Running from the cops", "Selling tacos", "Racing a lawnmower", "Hosting a car meet", "Breaking into a mansion", "Delivering pizza", "Starting a protest", "Stealing a boat", "Buying illegal fireworks", "Performing a stunt jump", "Fighting with a local", "Trying to sell a broken bike", "Starting a nightclub", "Escaping from jail", "Doing yoga on the beach", "Stealing a cop car", "Spray-painting graffiti", "Driving an ambulance off-road", "Playing guitar at a park", "Starting a street race", "Hacking an ATM", "Selling stolen goods", "Scuba diving for treasure", "Arguing over parking", "Playing poker in a backroom", "Fleeing from a drug deal", "Fixing a broken car", "Riding a horse in the city", "Organizing a protest", "Running an illegal casino", "Stealing a firetruck", "Hijacking a train", "Selling hot dogs", "Breaking into a plane", "Shooting fireworks downtown", "Evading a police blockade", "Flying a drone", "Rescuing a hostage", "Holding up a store", "Winning a street race", "Robbing a jewelry store", "Buying a fake ID", "Escaping a speeding ticket", "Running a taxi service", "Jumping off a building", "Starting a food truck business", "Setting off alarms downtown", "Trying to outdrive a tank"];
 
             const bounce = () => Math.random() * 0.5 + 0.75;
 
@@ -204,17 +204,17 @@ export default {
             });
 
             const popup = marker => `<span class="font-bold block border-b border-gray-700 mb-1">${marker.name} <sup>${marker.id}</sup></span>`
-                + `<span class="block border-b border-gray-700 pb-1 mb-1"><b>Speed:</b> ${(Math.sqrt(Math.pow(Math.abs(marker.velX), 2) + Math.pow(Math.abs(marker.velY), 2)) * 2.237).toFixed(1)}mph</span>`
+                + `<span class="block border-b border-gray-700 pb-1 mb-1"><b>Speed:</b> ${(Math.sqrt(Math.abs(marker.velX) ** 2 + Math.abs(marker.velY) ** 2) * 2.237).toFixed(1)}mph</span>`
                 + `<span class="block italic">${marker.activity}</span>`;
 
             const addRandom = () => {
-                const x = Math.random() * -256,
-                    y = Math.random() * 256,
-                    r = Math.random() * 360;
+                const x = Math.random() * -256;
+                const y = Math.random() * 256;
+                const r = Math.random() * 360;
 
-                const velX = (Math.random() * 11.75 + 0.25) * (Math.random() > 0.5 ? 1 : -1),
-                    velY = (Math.random() * 11.75 + 0.25) * (Math.random() > 0.5 ? 1 : -1),
-                    velR = (Math.random() * 18.0 + 2.0) * (Math.random() > 0.5 ? 1 : -1);
+                const velX = (Math.random() * 11.75 + 0.25) * (Math.random() > 0.5 ? 1 : -1);
+                const velY = (Math.random() * 11.75 + 0.25) * (Math.random() > 0.5 ? 1 : -1);
+                const velR = (Math.random() * 18.0 + 2.0) * (Math.random() > 0.5 ? 1 : -1);
 
                 const marker = {
                     id: Math.floor(Math.random() * 2500) + 1,
@@ -271,8 +271,8 @@ export default {
             let lastTime = Date.now();
 
             const animate = () => {
-                const now = Date.now(),
-                    deltaTime = Math.min((now - lastTime) / 1000.0, 0.2);
+                const now = Date.now();
+                const deltaTime = Math.min((now - lastTime) / 1000.0, 0.2);
 
                 lastTime = now;
 
@@ -285,8 +285,11 @@ export default {
                     return;
                 }
 
-                const minX = -256, maxX = 0, minY = 0, maxY = 256,
-                    collisionDistance = 0.4;
+                const minX = -256;
+                const maxX = 0;
+                const minY = 0;
+                const maxY = 256;
+                const collisionDistance = 0.4;
 
                 for (let i = 0; i < this.markers.length; i++) {
                     const marker = this.markers[i];
@@ -316,14 +319,14 @@ export default {
                     for (let j = i + 1; j < this.markers.length; j++) {
                         const otherMarker = this.markers[j];
 
-                        const dx = otherMarker.x - marker.x,
-                            dy = otherMarker.y - marker.y;
+                        const dx = otherMarker.x - marker.x;
+                        const dy = otherMarker.y - marker.y;
 
                         const distance = Math.sqrt(dx * dx + dy * dy);
 
                         if (distance < collisionDistance) {
-                            const tempVelX = marker.velX,
-                                tempVelY = marker.velY;
+                            const tempVelX = marker.velX;
+                            const tempVelY = marker.velY;
 
                             marker.velX = otherMarker.velX;
                             marker.velY = otherMarker.velY;
@@ -331,8 +334,8 @@ export default {
                             otherMarker.velX = tempVelX;
                             otherMarker.velY = tempVelY;
 
-                            const overlap = (collisionDistance - distance) / 2,
-                                separationFactor = overlap / distance;
+                            const overlap = (collisionDistance - distance) / 2;
+                            const separationFactor = overlap / distance;
 
                             marker.x -= separationFactor * dx;
                             marker.y -= separationFactor * dy;

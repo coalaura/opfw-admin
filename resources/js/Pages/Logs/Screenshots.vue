@@ -302,23 +302,23 @@ export default {
 
             this.isLoading = true;
             try {
-                const beforeDate = $('#before-date').val(),
-                    beforeTime = $('#before-time').val(),
-                    afterDate = $('#after-date').val(),
-                    afterTime = $('#after-time').val();
+                const beforeDate = $('#before-date').val();
+                const beforeTime = $('#before-time').val();
+                const afterDate = $('#after-date').val();
+                const afterTime = $('#after-time').val();
 
                 if (beforeDate && beforeTime) {
-                    this.filters.before = Math.round((new Date(beforeDate + ' ' + beforeTime)).getTime() / 1000);
+                    this.filters.before = Math.round((new Date(`${beforeDate} ${beforeTime}`)).getTime() / 1000);
 
-                    if (isNaN(this.filters.before)) {
+                    if (Number.isNaN(this.filters.before)) {
                         this.filters.before = null;
                     }
                 }
 
                 if (afterDate && afterTime) {
-                    this.filters.after = Math.round((new Date(afterDate + ' ' + afterTime)).getTime() / 1000);
+                    this.filters.after = Math.round((new Date(`${afterDate} ${afterTime}`)).getTime() / 1000);
 
-                    if (isNaN(this.filters.after)) {
+                    if (Number.isNaN(this.filters.after)) {
                         this.filters.after = null;
                     }
                 }
@@ -342,14 +342,14 @@ export default {
         if (this.filters.before) {
             const d = new Date(this.filters.before * 1000);
 
-            $('#before-date').val(d.getFullYear() + '-' + ((d.getMonth() + 1) + '').padStart(2, '0') + '-' + (d.getDate() + '').padStart(2, '0'));
-            $('#before-time').val(d.getHours() + ':' + d.getMinutes());
+            $('#before-date').val(`${d.getFullYear()}-${(`${d.getMonth() + 1}`).padStart(2, '0')}-${(`${d.getDate()}`).padStart(2, '0')}`);
+            $('#before-time').val(`${d.getHours()}:${d.getMinutes()}`);
         }
         if (this.filters.after) {
             const d = new Date(this.filters.after * 1000);
 
-            $('#after-date').val(d.getFullYear() + '-' + ((d.getMonth() + 1) + '').padStart(2, '0') + '-' + (d.getDate() + '').padStart(2, '0'));
-            $('#after-time').val(d.getHours() + ':' + d.getMinutes());
+            $('#after-date').val(`${d.getFullYear()}-${(`${d.getMonth() + 1}`).padStart(2, '0')}-${(`${d.getDate()}`).padStart(2, '0')}`);
+            $('#after-time').val(`${d.getHours()}:${d.getMinutes()}`);
         }
     }
 };

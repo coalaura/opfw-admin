@@ -202,7 +202,7 @@ export default {
         },
         cutText(text) {
             if (text.length > 120) {
-                return text.substring(0, 90) + '...';
+                return `${text.substring(0, 90)}...`;
             }
 
             return text;

@@ -311,7 +311,7 @@ export default {
 				const seconds = Math.floor(ms / 1000);
 				ms -= seconds * 1000;
 
-				return (seconds ? seconds + 's ' : '') + (!seconds || ms ? ms + 'ms' : '');
+				return (seconds ? `${seconds}s ` : '') + (!seconds || ms ? `${ms}ms` : '');
 			}
 
 			return this.$moment.duration(Math.round(ms / 1000), 'seconds').format('d[d] h[h] m[m] s[s]');
@@ -323,23 +323,23 @@ export default {
 
 			this.isLoading = true;
 
-			const beforeDate = $('#before-date').val(),
-				beforeTime = $('#before-time').val() || '00:00',
-				afterDate = $('#after-date').val(),
-				afterTime = $('#after-time').val() || '23:59';
+			const beforeDate = $('#before-date').val();
+			const beforeTime = $('#before-time').val() || '00:00';
+			const afterDate = $('#after-date').val();
+			const afterTime = $('#after-time').val() || '23:59';
 
 			if (beforeDate && beforeTime) {
-				this.filters.before = Math.round((new Date(beforeDate + ' ' + beforeTime)).getTime() / 1000);
+				this.filters.before = Math.round((new Date(`${beforeDate} ${beforeTime}`)).getTime() / 1000);
 
-				if (isNaN(this.filters.before)) {
+				if (Number.isNaN(this.filters.before)) {
 					this.filters.before = null;
 				}
 			}
 
 			if (afterDate && afterTime) {
-				this.filters.after = Math.round((new Date(afterDate + ' ' + afterTime)).getTime() / 1000);
+				this.filters.after = Math.round((new Date(`${afterDate} ${afterTime}`)).getTime() / 1000);
 
-				if (isNaN(this.filters.after)) {
+				if (Number.isNaN(this.filters.after)) {
 					this.filters.after = null;
 				}
 			}
@@ -379,7 +379,7 @@ export default {
 		getDamageFlags(bitmask) {
 			if (!bitmask || bitmask < 0) return 'None';
 
-			let flags = [];
+			const flags = [];
 
 			bitmask & 2 ** 0 && flags.push('IsAccurate');
 			bitmask & 2 ** 1 && flags.push('MeleeDamage');

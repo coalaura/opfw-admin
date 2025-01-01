@@ -301,7 +301,7 @@ export default {
             this.isLoading = false;
         },
         readFileContents(file) {
-            return new Promise(function (resolve, reject) {
+            return new Promise((resolve, reject) => {
                 const reader = new FileReader();
 
                 reader.readAsText(file, "UTF-8");
@@ -321,8 +321,8 @@ export default {
             }
             this.isUploadLoading = true;
 
-            const files = $("#import-file")[0].files,
-                file = files.length > 0 ? files[0] : null;
+            const files = $("#import-file")[0].files;
+            const file = files.length > 0 ? files[0] : null;
 
             if (file) {
                 try {
@@ -365,7 +365,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.delete('/blacklist/' + id);
+            await this.$inertia.delete(`/blacklist/${id}`);
         }
     }
 }

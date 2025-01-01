@@ -1706,8 +1706,8 @@ export default {
         }
     },
     data() {
-        const autoExpandCollapsed = this.setting('expandCollapsed'),
-            showSystemNotes = this.setting('showSystemNotes');
+        const autoExpandCollapsed = this.setting('expandCollapsed');
+        const showSystemNotes = this.setting('showSystemNotes');
 
         return {
             local: {
@@ -1861,12 +1861,12 @@ export default {
         confirmedAccuracy() {
             const ban = this.activeBan;
 
-            return ban && ban.info && ban.info.startsWith('Impossible');
+            return ban?.info?.startsWith('Impossible');
         },
         prettyHighAccuracy() {
             const ban = this.activeBan;
 
-            return ban && ban.info && ban.info.startsWith('Highly unlikely');
+            return ban?.info?.startsWith('Highly unlikely');
         },
         minDate() {
             const date = new Date();
@@ -1913,7 +1913,7 @@ export default {
     },
     methods: {
         isModdingBan() {
-            return this.activeBan.original && this.activeBan.original.startsWith('MODDING');
+            return this.activeBan.original?.startsWith('MODDING');
         },
         async loadMarriedTo(character) {
             const marriedTo = character.marriedTo;
@@ -1921,9 +1921,9 @@ export default {
             if (!marriedTo || !Number.isInteger(marriedTo)) return;
 
             try {
-                const response = await axios.get('/api/character/' + marriedTo);
+                const response = await axios.get(`/api/character/${marriedTo}`);
 
-                if (response.data && response.data.status) {
+                if (response.data?.status) {
                     character.marriedTo = response.data.data;
                 }
             } catch (e) { }
@@ -1939,9 +1939,9 @@ export default {
             this.systemInfo = false;
 
             try {
-                const response = await axios.get('/players/' + this.player.licenseIdentifier + '/bans/' + this.activeBan.id + '/system');
+                const response = await axios.get(`/players/${this.player.licenseIdentifier}/bans/${this.activeBan.id}/system`);
 
-                if (response.data && response.data.status) {
+                if (response.data?.status) {
                     this.systemInfo = response.data.data;
                 }
             } catch (e) {
@@ -1950,8 +1950,8 @@ export default {
             this.isSystemInfoLoading = false;
         },
         warningMessageChanged() {
-            const message = this.form.warning.message,
-                type = this.form.warning.warning_type;
+            const message = this.form.warning.message;
+            const type = this.form.warning.warning_type;
 
             if (!message || !type) {
                 sessionStorage.removeItem(`warning_${this.player.licenseIdentifier}`);
@@ -1965,7 +1965,7 @@ export default {
             }));
         },
         resolveStaffStatistics(pSource) {
-            return axios.get('/players/' + this.player.licenseIdentifier + '/statistics/' + pSource);
+            return axios.get(`/players/${this.player.licenseIdentifier}/statistics/${pSource}`);
         },
         showGlobalBans() {
             this.showingGlobalBans = true;
@@ -1999,8 +1999,8 @@ export default {
         },
         formatPanelLog(log) {
             return log.replace(/(license:\w+)(?=\))/gm, match => {
-                const start = match.substring(8, 12),
-                    end = match.substring(match.length - 4);
+                const start = match.substring(8, 12);
+                const end = match.substring(match.length - 4);
 
                 return `<span class="text-gray-700 dark:text-gray-300" title="${match}">${start}...${end}</span>`;
             });
@@ -2028,7 +2028,7 @@ export default {
             this.isLoading = true;
 
             // Send request.
-            await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/bans/' + this.activeBan.id);
+            await this.$inertia.delete(`/players/${this.player.licenseIdentifier}/bans/${this.activeBan.id}`);
 
             this.isLoading = false;
         },
@@ -2043,7 +2043,7 @@ export default {
             this.isSchedulingUnban = false;
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/bans/' + this.activeBan.id + '/schedule', {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/bans/${this.activeBan.id}/schedule`, {
                 timestamp: timestamp
             });
 
@@ -2057,7 +2057,7 @@ export default {
             this.isLoading = true;
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateEnabledCommands', {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/updateEnabledCommands`, {
                 enabledCommands: this.enabledCommands,
             });
 
@@ -2073,7 +2073,7 @@ export default {
             this.isLoading = true;
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/unlink_hwid/' + this.hwidBan.license);
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/unlink_hwid/${this.hwidBan.license}`);
 
             this.isLoading = false;
 
@@ -2093,7 +2093,7 @@ export default {
             this.isLoading = true;
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/unlink/' + pLicenseIdentifier);
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/unlink/${pLicenseIdentifier}`);
 
             this.isLoading = false;
         },
@@ -2110,9 +2110,9 @@ export default {
             this.loadingExtraData = true;
 
             try {
-                const response = await axios.get('/players/' + this.player.licenseIdentifier + '/data');
+                const response = await axios.get(`/players/${this.player.licenseIdentifier}/data`);
 
-                if (response.data && response.data.status) {
+                if (response.data?.status) {
                     const data = response.data.data;
 
                     this.panelLogs = data.panelLogs;
@@ -2128,7 +2128,7 @@ export default {
             if (!global) return;
 
             try {
-                const url = global.replace(/\/?$/, '/') + `bans/${this.player.licenseIdentifier}`;
+                const url = `${global.replace(/\/?$/, '/')}bans/${this.player.licenseIdentifier}`;
 
                 const response = await axios.get(url, {
                     signal: AbortSignal.timeout(3000),
@@ -2150,18 +2150,18 @@ export default {
             }
 
             try {
-                const url = api.replace(/\/?$/, '/') + `global/ban/${this.player.licenseIdentifier}`;
+                const url = `${api.replace(/\/?$/, '/')}global/ban/${this.player.licenseIdentifier}`;
 
                 const response = await axios.get(url, {
                     signal: AbortSignal.timeout(3000),
                 });
 
-                if (response.data && response.data.banned) {
+                if (response.data?.banned) {
                     this.opfwBanned = response.data.ban;
 
-                    const steam = encodeURIComponent(this.player.steam.shift() || this.player.licenseIdentifier),
-                        steamUrl = encodeURIComponent(this.player.steamProfileUrl),
-                        banHash = encodeURIComponent(this.opfwBanned.banHash);
+                    const steam = encodeURIComponent(this.player.steam.shift() || this.player.licenseIdentifier);
+                    const steamUrl = encodeURIComponent(this.player.steamProfileUrl);
+                    const banHash = encodeURIComponent(this.opfwBanned.banHash);
 
                     this.opfwBanned.appeal = `https://docs.google.com/forms/d/e/1FAIpQLSeZZnSHR6wdfQsbMow9pZ5Xo2rKmgCVIt5bVesVCAud_NB2KQ/viewform?entry.516511948=${steamUrl}&entry.123013618=${steam}&entry.122814002=${banHash}`;
                 }
@@ -2174,10 +2174,10 @@ export default {
         },
         async loadIPInfo() {
             try {
-                const response = await axios.get('/players/' + this.player.licenseIdentifier + '/ip'),
-                    data = response.data;
+                const response = await axios.get(`/players/${this.player.licenseIdentifier}/ip`);
+                const data = response.data;
 
-                if (data && data.success) {
+                if (data?.success) {
                     this.isUsingVPN = data.is_vpn;
                 }
             } catch (e) { }
@@ -2185,7 +2185,7 @@ export default {
         async loadStatus() {
             this.statusLoading = true;
 
-            const status = (await this.requestData("/online/" + this.player.licenseIdentifier)) || {};
+            const status = (await this.requestData(`/online/${this.player.licenseIdentifier}`)) || {};
 
             this.status = status[this.player.licenseIdentifier] || false;
 
@@ -2199,9 +2199,9 @@ export default {
             this.loadingHWIDLink = true;
 
             try {
-                const response = await axios.get('/players/' + this.player.licenseIdentifier + '/linked_hwid');
+                const response = await axios.get(`/players/${this.player.licenseIdentifier}/linked_hwid`);
 
-                if (response.data && response.data.status) {
+                if (response.data?.status) {
                     const data = response.data.data;
 
                     this.hwidBan = data;
@@ -2217,7 +2217,7 @@ export default {
             return logs.map(log => {
                 return log.replace(/^(\[\d+:\d+:\d+\]) (.+?)$/gm, (match, time, message) => {
                     message = message.replace(/\d+/g, number => {
-                        number = parseInt(number).toLocaleString("en-US");
+                        number = Number.parseInt(number).toLocaleString("en-US");
 
                         return `<span class="text-teal-700 dark:text-teal-300">${number}</span>`;
                     });
@@ -2231,7 +2231,7 @@ export default {
                 return;
             }
 
-            this.captureData.duration = parseInt(this.captureData.duration) || 0;
+            this.captureData.duration = Number.parseInt(this.captureData.duration) || 0;
 
             if (!Number.isInteger(this.captureData.duration) || this.captureData.duration < 1 || this.captureData.duration > 30) {
                 alert(this.t("screenshot.invalid_duration"));
@@ -2239,7 +2239,7 @@ export default {
                 return;
             }
 
-            let interval = setInterval(() => {
+            const interval = setInterval(() => {
                 this.captureRemaining--;
 
                 if (this.captureRemaining === 0) {
@@ -2257,7 +2257,7 @@ export default {
             try {
                 const result = await axios({
                     method: 'post',
-                    url: '/api/capture/' + this.$page.serverName + '/' + this.status.source + '/' + this.captureData.duration,
+                    url: `/api/capture/${this.$page.serverName}/${this.status.source}/${this.captureData.duration}`,
                     timeout: this.captureData.duration + 20000
                 });
 
@@ -2265,7 +2265,7 @@ export default {
 
                 if (result.data) {
                     if (result.data.status) {
-                        console.info('Screen capture of ID ' + this.status.source, result.data.data.url, result.data.data.license);
+                        console.info(`Screen capture of ID ${this.status.source}`, result.data.data.url, result.data.data.license);
 
                         this.screenCaptureVideo = result.data.data.url;
                         this.screenCaptureLogs = this.formatScreenCaptureLogs(result.data.data.logs);
@@ -2325,7 +2325,7 @@ export default {
         },
         async createScreenshot(cb, shortLifespan) {
             if (this.isScreenshotLoading) {
-                cb && cb(false);
+                cb?.(false);
 
                 return;
             }
@@ -2337,12 +2337,12 @@ export default {
             this.screenshotFlags = null;
 
             try {
-                const result = await axios.post('/api/screenshot/' + this.$page.serverName + '/' + this.status.source + (shortLifespan ? '?short=1' : ''));
+                const result = await axios.post(`/api/screenshot/${this.$page.serverName}/${this.status.source}${shortLifespan ? '?short=1' : ''}`);
                 this.isScreenshotLoading = false;
 
                 if (result.data) {
                     if (result.data.status) {
-                        console.info('Screenshot of ID ' + this.status.source, result.data.data.url, result.data.data.license);
+                        console.info(`Screenshot of ID ${this.status.source}`, result.data.data.url, result.data.data.license);
 
                         this.screenshotImage = result.data.data.url;
                         this.screenshotLicense = result.data.data.license;
@@ -2350,11 +2350,11 @@ export default {
                         this.screenshotFlags = result.data.data.flags;
                         this.screenCaptureLogs = this.formatScreenCaptureLogs(result.data.data.logs);
 
-                        cb && cb(true);
+                        cb?.(true);
                     } else {
                         this.screenshotError = result.data.message ? result.data.message : this.t('map.screenshot_failed');
 
-                        cb && cb(false);
+                        cb?.(false);
                     }
                 }
             } catch (e) {
@@ -2364,7 +2364,7 @@ export default {
 
                 this.isScreenshotLoading = false;
 
-                cb && cb(false);
+                cb?.(false);
             }
         },
         async showDiscord(e) {
@@ -2375,9 +2375,9 @@ export default {
             this.discordAccounts = [];
 
             try {
-                const data = await axios.get('/players/' + this.player.licenseIdentifier + '/discord');
+                const data = await axios.get(`/players/${this.player.licenseIdentifier}/discord`);
 
-                if (data.data && data.data.status) {
+                if (data.data?.status) {
                     const accounts = data.data.data;
 
                     this.discordAccounts = accounts;
@@ -2400,9 +2400,9 @@ export default {
             this.linkedAccounts.linked = [];
 
             try {
-                const data = await axios.get('/players/' + this.player.licenseIdentifier + '/linked');
+                const data = await axios.get(`/players/${this.player.licenseIdentifier}/linked`);
 
-                if (data.data && data.data.status) {
+                if (data.data?.status) {
                     const linked = data.data.data;
 
                     this.linkedAccounts.total = linked.total;
@@ -2428,9 +2428,9 @@ export default {
             this.antiCheatEvents = [];
 
             try {
-                const data = await axios.get('/players/' + this.player.licenseIdentifier + '/antiCheat');
+                const data = await axios.get(`/players/${this.player.licenseIdentifier}/antiCheat`);
 
-                if (data.data && data.data.status) {
+                if (data.data?.status) {
                     this.antiCheatEvents = data.data.data;
                 }
             } catch (e) { }
@@ -2438,19 +2438,19 @@ export default {
             this.isShowingAntiCheatLoading = false;
         },
         getWarningTypeIcon(type) {
-            const label = this.t('players.show.warning_type.' + type);
+            const label = this.t(`players.show.warning_type.${type}`);
 
             switch (type) {
                 case 'strike':
-                    return '<span class="cursor-help text-red-400"><i class="fas fa-bolt" title="' + label + '"></i></span>';
+                    return `<span class="cursor-help text-red-400"><i class="fas fa-bolt" title="${label}"></i></span>`;
                 case 'warning':
-                    return '<span class="cursor-help text-orange-400"><i class="fas fa-exclamation-triangle" title="' + label + '"></i></span>';
+                    return `<span class="cursor-help text-orange-400"><i class="fas fa-exclamation-triangle" title="${label}"></i></span>`;
                 case 'note':
-                    return '<span class="cursor-help text-yellow-400"><i class="fas fa-sticky-note" title="' + label + '"></i></span>';
+                    return `<span class="cursor-help text-yellow-400"><i class="fas fa-sticky-note" title="${label}"></i></span>`;
                 case 'system':
-                    return '<span class="cursor-help text-blue-400"><i class="fas fa-robot" title="' + label + '"></i></span>';
+                    return `<span class="cursor-help text-blue-400"><i class="fas fa-robot" title="${label}"></i></span>`;
                 case 'hidden':
-                    return '<span class="cursor-help text-pink-400"><i class="fas fa-eye-slash" title="' + label + '"></i></span>';
+                    return `<span class="cursor-help text-pink-400"><i class="fas fa-eye-slash" title="${label}"></i></span>`;
             }
 
             return '';
@@ -2460,18 +2460,18 @@ export default {
                 return '';
             }
 
-            let suffix = this.opfwBanned ? '_op' : '';
+            const suffix = this.opfwBanned ? '_op' : '';
 
             return this.activeBan.expireAt
-                ? this.t('players.show.ban' + suffix, this.formatBanCreator(this.activeBan.issuer), this.$options.filters.formatTime(this.activeBan.expireAt))
-                : this.t('players.ban.forever' + suffix, this.formatBanCreator(this.activeBan.issuer));
+                ? this.t(`players.show.ban${suffix}`, this.formatBanCreator(this.activeBan.issuer), this.$options.filters.formatTime(this.activeBan.expireAt))
+                : this.t(`players.ban.forever${suffix}`, this.formatBanCreator(this.activeBan.issuer));
         },
         formatTime(t) {
             return this.$options.filters.formatTime(t);
         },
         async pmPlayer() {
             // Send request.
-            await this.$inertia.post('/players/' + (this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier) + '/staffPM', this.form.pm, { preserveScroll: true });
+            await this.$inertia.post(`/players/${this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier}/staffPM`, this.form.pm, { preserveScroll: true });
 
             // Reset.
             this.isStaffPM = false;
@@ -2487,7 +2487,7 @@ export default {
             this.updatingBanException = true;
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateBanExceptionStatus', {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/updateBanExceptionStatus`, {
                 twitch: false
             }, { preserveScroll: true });
 
@@ -2517,7 +2517,7 @@ export default {
             this.updatingBanException = true;
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateBanExceptionStatus', {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/updateBanExceptionStatus`, {
                 twitch: twitch
             }, { preserveScroll: true });
 
@@ -2526,7 +2526,7 @@ export default {
         },
         editBanException() {
             if (this.player.streamerException) {
-                this.banExceptionTwitch = "https://twitch.tv/" + this.player.streamerException;
+                this.banExceptionTwitch = `https://twitch.tv/${this.player.streamerException}`;
             } else {
                 this.banExceptionTwitch = "";
             }
@@ -2534,12 +2534,12 @@ export default {
             this.editingBanException = true;
         },
         async updateWhitelistStatus(status) {
-            if (!confirm(this.t('players.show.' + (status ? 'whitelist_confirm' : 'unwhitelist_confirm')))) {
+            if (!confirm(this.t(`players.show.${status ? 'whitelist_confirm' : 'unwhitelist_confirm'}`))) {
                 return;
             }
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateWhitelistStatus', {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/updateWhitelistStatus`, {
                 status: status
             }, { preserveScroll: true });
         },
@@ -2549,7 +2549,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateMuteStatus', {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/updateMuteStatus`, {
                 status: false
             }, { preserveScroll: true });
         },
@@ -2558,7 +2558,7 @@ export default {
 
             // Send request.
 
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateTag', {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/updateTag`, {
                 tag: false
             }, { preserveScroll: true });
         },
@@ -2573,7 +2573,7 @@ export default {
 
             // Send request.
 
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/updateTag', {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/updateTag`, {
                 tag: tag
             }, { preserveScroll: true });
         },
@@ -2584,7 +2584,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post('/players/' + (this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier) + '/kick', this.form.kick, { preserveScroll: true });
+            await this.$inertia.post(`/players/${this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier}/kick`, this.form.kick, { preserveScroll: true });
 
             // Reset.
             this.isKicking = false;
@@ -2596,7 +2596,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post('/players/' + (this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier) + '/revivePlayer', { preserveScroll: true });
+            await this.$inertia.post(`/players/${this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier}/revivePlayer`, { preserveScroll: true });
         },
         async unloadCharacter() {
             if (!confirm(this.t('players.show.unload_confirm'))) {
@@ -2604,7 +2604,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post('/players/' + (this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier) + '/unloadCharacter', this.form.unload, { preserveScroll: true });
+            await this.$inertia.post(`/players/${this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier}/unloadCharacter`, this.form.unload, { preserveScroll: true });
 
             this.form.unload.message = this.t('players.show.unload_default');
             this.form.unload.character = null;
@@ -2618,7 +2618,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/characters/' + characterId);
+            await this.$inertia.delete(`/players/${this.player.licenseIdentifier}/characters/${characterId}`);
         },
         async submitBan() {
             // Default expiration.
@@ -2629,10 +2629,10 @@ export default {
                 const nowUnix = this.$moment().unix();
 
                 if (this.isTempSelect) {
-                    const expireUnix = this.$moment(this.form.ban.expireDate + ' ' + this.form.ban.expireTime).unix();
+                    const expireUnix = this.$moment(`${this.form.ban.expireDate} ${this.form.ban.expireTime}`).unix();
                     expire = expireUnix - nowUnix;
                 } else {
-                    let val = parseInt($('#ban-value').val());
+                    let val = Number.parseInt($('#ban-value').val());
 
                     if (val <= 0) {
                         return;
@@ -2664,7 +2664,7 @@ export default {
             this.isBanLoading = true;
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/bans', { ...this.form.ban, expire }, { preserveScroll: true });
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/bans`, { ...this.form.ban, expire }, { preserveScroll: true });
 
             this.local.ban = this.localizeBan();
 
@@ -2680,7 +2680,7 @@ export default {
         },
         async submitWarning() {
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/warnings', this.form.warning, { preserveScroll: true });
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/warnings`, this.form.warning, { preserveScroll: true });
 
             // Reset.
             this.form.warning.message = null;
@@ -2692,8 +2692,8 @@ export default {
             if (this.deletingWarnings) return;
 
             // Send request.
-            await this.$inertia.put('/players/' + this.player.licenseIdentifier + '/warnings/' + id, {
-                message: $('#warning_' + id).val(),
+            await this.$inertia.put(`/players/${this.player.licenseIdentifier}/warnings/${id}`, {
+                message: $(`#warning_${id}`).val(),
                 warning_type: warningType,
             }, { preserveScroll: true });
 
@@ -2706,7 +2706,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.delete('/players/' + this.player.licenseIdentifier + '/warnings/' + id, {}, { preserveScroll: true });
+            await this.$inertia.delete(`/players/${this.player.licenseIdentifier}/warnings/${id}`, {}, { preserveScroll: true });
         },
         async refreshWarning(id) {
             if (this.refreshingWarning) return;
@@ -2714,7 +2714,7 @@ export default {
             this.refreshingWarning = id;
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/warnings/' + id + '/refresh', {}, { preserveScroll: true });
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/warnings/${id}/refresh`, {}, { preserveScroll: true });
 
             this.refreshingWarning = false;
         },
@@ -2726,7 +2726,7 @@ export default {
             this.deletingWarnings = true;
 
             // Send request.
-            await this.$inertia.post('/players/' + this.player.licenseIdentifier + '/warnings/bulk', {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/warnings/bulk`, {
                 ids: this.selectedWarnings
             }, { preserveScroll: true });
 
@@ -2755,15 +2755,14 @@ export default {
             }
         },
         copyLicense(e) {
-            const _this = this,
-                button = $(e.target).closest('.badge');
+            const button = $(e.target).closest('.badge');
 
             this.copyToClipboard(this.player.licenseIdentifier);
 
             $('span', button).text(this.t('global.copied'));
 
-            setTimeout(function () {
-                $('span', button).text(_this.t('players.show.copy_license'));
+            setTimeout(() => {
+                $('span', button).text(this.t('players.show.copy_license'));
             }, 1500);
         },
         copyText(e, text) {
@@ -2775,14 +2774,14 @@ export default {
             button.removeClass('bg-blue-800');
             button.addClass('bg-green-600');
 
-            setTimeout(function () {
+            setTimeout(() => {
                 button.removeClass('bg-green-600');
                 button.addClass('bg-blue-800');
             }, 500);
         },
         isAutomatedWarning(warning) {
-            const message = warning.message,
-                type = warning.warningType;
+            const message = warning.message;
+            const type = warning.warningType;
 
             if (message.includes('This warning was generated automatically')) return true;
             if (message.startsWith('I scheduled the removal of this players ban for')) return true;
@@ -2793,15 +2792,15 @@ export default {
         },
         formatWarning(warning) {
             warning = warning.replace(/(https?:\/\/(.+?)\/players\/)?(steam:\w{15})/gmi, (full, _ignore, host, steam) => {
-                const url = full && full.startsWith("http") ? full : "/players/" + steam,
-                    cluster = host ? host.split(".")[0].replace("localhost", "c1") : this.$page?.auth?.cluster;
+                const url = full?.startsWith("http") ? full : `/players/${steam}`;
+                const cluster = host ? host.split(".")[0].replace("localhost", "c1") : this.$page?.auth?.cluster;
 
                 return `<a href="${url}" target="_blank" class="text-yellow-600 dark:text-yellow-400">${cluster.toLowerCase()}/${steam.toLowerCase()}</a>`;
             });
 
             warning = warning.replace(/(https?:\/\/(.+?)\/players\/)?(license:\w{40})/gmi, (full, _ignore, host, license) => {
-                const url = full && full.startsWith("http") ? full : "/players/" + license,
-                    cluster = host ? host.split(".")[0].replace("localhost", "c1") : this.$page?.auth?.cluster;
+                const url = full?.startsWith("http") ? full : `/players/${license}`;
+                const cluster = host ? host.split(".")[0].replace("localhost", "c1") : this.$page?.auth?.cluster;
 
                 return `<a href="${url}" target="_blank" class="text-yellow-600 dark:text-yellow-400">${cluster.toLowerCase()}/${license.toLowerCase()}</a>`;
             });
@@ -2841,13 +2840,13 @@ export default {
             this.isReacting[warning.id] = true;
 
             try {
-                const response = await axios.post('/players/' + this.player.licenseIdentifier + '/warnings/' + warning.id + '/react', {
+                const response = await axios.post(`/players/${this.player.licenseIdentifier}/warnings/${warning.id}/react`, {
                     emoji: emoji
                 });
 
                 const data = response.data;
 
-                if (data && data.status) {
+                if (data?.status) {
                     warning.reactions = data.data;
                     warning.hover = false;
                 }
@@ -2872,7 +2871,7 @@ export default {
             warning.hoverLoading = true;
             warning.hover = warning.hover || null;
 
-            axios.get('/players/' + this.player.licenseIdentifier + '/warnings/' + warning.id + '/react').then(response => {
+            axios.get(`/players/${this.player.licenseIdentifier}/warnings/${warning.id}/react`).then(response => {
                 const data = response.data;
 
                 if (!data.status || warning.hover === false) return;
@@ -2889,7 +2888,7 @@ export default {
             return text.split('').map(char => {
                 if (char.match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]/)) return char;
 
-                return '\\u' + ('0000' + char.charCodeAt(0).toString(16)).slice(-4);
+                return `\\u${(`0000${char.charCodeAt(0).toString(16)}`).slice(-4)}`;
             }).join('');
         }
     },

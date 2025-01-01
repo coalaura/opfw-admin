@@ -193,7 +193,7 @@ export default {
             try {
                 const result = await axios.delete(`/tokens/${id}`);
 
-                if (result.data && result.data.status) {
+                if (result.data?.status) {
                     this.list = this.list.filter(token => token.id !== id);
                 }
             } catch (e) { }
@@ -220,7 +220,7 @@ export default {
             try {
                 const result = await axios.put(`/tokens/${token.id}`, data);
 
-                if (result.data && result.data.status) {
+                if (result.data?.status) {
                     token.changed = false;
 
                     if (token.id === this.editingNameId) {
@@ -247,7 +247,7 @@ export default {
             try {
                 const result = await axios.post('/tokens');
 
-                if (result.data && result.data.status) {
+                if (result.data?.status) {
                     this.list.push(result.data.data);
                 }
             } catch (e) { }
@@ -260,19 +260,19 @@ export default {
         async loadMoreLogs() {
             this.isLoadingLogs = true;
 
-            const lastId = this.logs.length ? this.logs[this.logs.length - 1].id : 0,
-                query = [`id=${this.logTokenId}`];
+            const lastId = this.logs.length ? this.logs[this.logs.length - 1].id : 0;
+            const query = [`id=${this.logTokenId}`];
 
             if (lastId) {
                 query.push(`before=${lastId}`);
             }
 
             try {
-                const result = await axios.get('/tokens/logs?' + query.join('&'), {
+                const result = await axios.get(`/tokens/logs?${query.join('&')}`, {
                     signal: this.controller.signal
                 });
 
-                if (result.data && result.data.status) {
+                if (result.data?.status) {
                     const logs = result.data.data;
 
                     this.logs = this.logs.concat(logs);
@@ -290,7 +290,7 @@ export default {
                     signal: this.controller.signal
                 });
 
-                if (result.data && result.data.status) {
+                if (result.data?.status) {
                     this.logInfo = result.data.data;
                 }
             } catch (e) { }

@@ -255,7 +255,7 @@ export default {
             const identifiers = this.players.map(player => player.licenseIdentifier).join(',')
 
             if (identifiers) {
-                this.status = await this.requestData("/online/" + identifiers);
+                this.status = await this.requestData(`/online/${identifiers}`);
             } else {
                 this.status = {};
             }

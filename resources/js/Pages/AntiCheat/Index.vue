@@ -279,10 +279,10 @@ export default {
             this.chartData = false;
 
             try {
-                const response = await axios.get('/anti_cheat/statistics'),
-                    data = response.data;
+                const response = await axios.get('/anti_cheat/statistics');
+                const data = response.data;
 
-                if (data && data.status) {
+                if (data?.status) {
                     this.chartData = data.data.data;
                 }
             } catch (e) { }
@@ -294,17 +294,17 @@ export default {
 
             if (!ban.info) return '';
 
-            const star = `<i class="fas fa-star"></i>`,
-                half = `<i class="fas fa-star-half-alt"></i>`,
-                empty = `<i class="far fa-star"></i>`;
+            const star = `<i class="fas fa-star"></i>`;
+            const half = `<i class="fas fa-star-half-alt"></i>`;
+            const empty = `<i class="far fa-star"></i>`;
 
             if (ban.info.startsWith("Impossible to be scuff")) {
                 return star + star + star;
-            } else if (ban.info.startsWith("Highly unlikely to be scuff")) {
+            }if (ban.info.startsWith("Highly unlikely to be scuff")) {
                 return star + star + half;
-            } else if (ban.info.startsWith("Very unlikely to be scuff")) {
+            }if (ban.info.startsWith("Very unlikely to be scuff")) {
                 return star + half + empty;
-            } else if (ban.info.startsWith("Unlikely to be scuff")) {
+            }if (ban.info.startsWith("Unlikely to be scuff")) {
                 return half + empty + empty;
             }
 
@@ -350,7 +350,7 @@ export default {
                         return `C (${metadata.resource}): ${location}`;
                     }
 
-                    const path = metadata.resource + '/' + file.split('/').pop();
+                    const path = `${metadata.resource}/${file.split('/').pop()}`;
 
                     return `${path} ${location}`;
                 });
@@ -384,8 +384,8 @@ export default {
                 case 'text_entry':
                     if (!metadata.textEntry || !metadata.textEntryValue) return false;
 
-                    return `${metadata.textEntry} - ${metadata.textEntryValue}` + (metadata.keyboardValue ? `: "*${metadata.keyboardValue}*"` : '');
-                case 'fast_movement':
+                    return `${metadata.textEntry} - ${metadata.textEntryValue}${metadata.keyboardValue ? `: "*${metadata.keyboardValue}*"` : ''}`;
+                case 'fast_movement': {
                     if (metadata.data === undefined || metadata.data.maxDistance === undefined || metadata.data.totalTravelled === undefined) {
                         if (metadata.distance === undefined) return false;
 
@@ -395,6 +395,7 @@ export default {
                     const diff = metadata.data.totalTravelled - metadata.data.maxDistance;
 
                     return `**${metadata.data.totalTravelled.toFixed(2)}m > ${metadata.data.maxDistance.toFixed(2)}m** (${diff < 0 ? '-' : '+'}${Math.abs(diff).toFixed(2)}m)`;
+                }
                 case 'teleported':
                     if (metadata.distance === undefined) return false;
 
@@ -411,28 +412,30 @@ export default {
                 case 'infinite_ammo':
                     return metadata.weaponName;
                 case 'illegal_native':
-                case 'honeypot_native':
+                case 'honeypot_native': {
                     if (!metadata.resource || !metadata.native) return false;
 
                     const native = metadata.native.startsWith('0x') ? `[${metadata.native}](https://docs.fivem.net/natives/?_0x${metadata.native.substr(2).toUpperCase()})` : metadata.native;
 
                     return `${trace(metadata)} - **${metadata.resource}** / **${native}**`;
+                }
                 case 'illegal_global':
                     if (!metadata.resource || !metadata.variable) return false;
 
                     return `${trace(metadata)} - **${metadata.variable}**`;
-                case 'illegal_damage':
+                case 'illegal_damage': {
                     if (!metadata.type || !metadata.event) return false;
 
                     const { weaponDamage, weaponHash, distance } = metadata.event;
 
-                    let dmg = weaponDamage + 'hp';
+                    let dmg = `${weaponDamage}hp`;
 
                     if (metadata.type === 'high_damage' && metadata.maxAllowed !== undefined) {
                         dmg = `${metadata.maxAllowed}+${weaponDamage - metadata.maxAllowed}hp`;
                     }
 
                     return `${metadata.type}: --${weaponHash}-- - **${dmg}** (${distance.toFixed(2)}m)`;
+                }
                 case 'illegal_vehicle_modifier':
                     if (!metadata.modifierName || metadata.actualValue === undefined || metadata.expectedValue === undefined) return false;
 
@@ -442,51 +445,55 @@ export default {
                 case 'illegal_vehicle_spawn':
                     if (!metadata.distance || !metadata.entity) return false;
 
-                    return `${metadata.script ? metadata.script + ':' : ''} --${metadata.entity.model}-- (${metadata.distance.toFixed(2)}m)` + (metadata.isAddon ? ' (**addon**)' : '');
+                    return `${metadata.script ? `${metadata.script}:` : ''} --${metadata.entity.model}-- (${metadata.distance.toFixed(2)}m)${metadata.isAddon ? ' (**addon**)' : ''}`;
                 case 'illegal_local_vehicle':
                     if (!metadata.model) return false;
 
-                    return `${metadata.script ? metadata.script + ':' : ''} --${metadata.model}--` + (metadata.isAddon ? ' (**addon**)' : '');
+                    return `${metadata.script ? `${metadata.script}:` : ''} --${metadata.model}--${metadata.isAddon ? ' (**addon**)' : ''}`;
                 case 'invalid_health':
                     if (metadata.health === undefined || metadata.maxHealth === undefined || metadata.armor === undefined || metadata.maxArmor === undefined) return false;
 
                     return `${metadata.health}/${metadata.maxHealth}hp - ${metadata.armor}/${metadata.maxArmor}ap`;
-                case 'ped_change':
+                case 'ped_change': {
                     if (!Array.isArray(metadata.changes)) return false;
 
                     const changed = metadata.changes.length;
 
-                    const copied = metadata.copiedPlayers && metadata.copiedPlayers.length > 0 ? '- Copied ' + metadata.copiedPlayers.map(p => {
-                        const regex = / \[\d+\] \((.+?)\)$/gm,
-                            match = regex.exec(p),
-                            license = match ? match[1] : '#';
+                    const copied = metadata.copiedPlayers && metadata.copiedPlayers.length > 0 ? `- Copied ${metadata.copiedPlayers.map(p => {
+                        const regex = / \[\d+\] \((.+?)\)$/gm;
+                        const match = regex.exec(p);
+                        const license = match ? match[1] : '#';
 
                         const name = p.replace(regex, '');
 
                         return `*[${name}](/players/${license})*`;
-                    }).join(', ') : '';
+                    }).join(', ')}` : '';
 
                     return `**${changed}** propert${changed === 1 ? 'y' : 'ies'} changed ${copied}`;
-                case 'advanced_noclip':
+                }
+                case 'advanced_noclip': {
                     if (metadata.aboveGround === undefined) return false;
 
                     const speed = metadata.playerPed?.speed?.toFixed(2) || '0';
 
                     return `**${metadata.aboveGround.toFixed(2)}m** AGL @ **${speed}m/s**`;
+                }
                 case 'freecam_detected':
-                case 'illegal_freeze':
+                case 'illegal_freeze': {
                     if (metadata.playerPed === undefined) return false;
 
-                    const flags = metadata.playerPed.flags.join(', ') || 'no flags',
-                        camDistance = metadata.distance ? ` - ${metadata.distance.toFixed(2)}m` : '';
+                    const flags = metadata.playerPed.flags.join(', ') || 'no flags';
+                    const camDistance = metadata.distance ? ` - ${metadata.distance.toFixed(2)}m` : '';
 
-                    return `${flags}` + (metadata.playerPed.inVehicle ? ' (in vehicle)' : '') + camDistance;
-                case 'illegal_handling_field':
+                    return `${flags}${metadata.playerPed.inVehicle ? ' (in vehicle)' : ''}${camDistance}`;
+                }
+                case 'illegal_handling_field': {
                     if (!metadata.fields) return false;
 
                     const fields = metadata.fields.map(field => field.split(':').shift()).join(', ');
 
                     return `*${fields}*`;
+                }
             }
 
             return false;

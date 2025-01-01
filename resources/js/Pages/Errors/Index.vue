@@ -164,7 +164,7 @@ export default {
             this.isLoading = true;
 
             try {
-                await this.$inertia.replace('/errors/' + this.type, {
+                await this.$inertia.replace(`/errors/${this.type}`, {
                     data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
@@ -176,13 +176,13 @@ export default {
             this.isLoading = false;
         },
         occurrenceColor(occurrences) {
-            const severity = Math.min(100, Math.floor(occurrences / 20 * 100)),
-                rainbow = new Rainbow();
+            const severity = Math.min(100, Math.floor(occurrences / 20 * 100));
+            const rainbow = new Rainbow();
 
             rainbow.setNumberRange(0, 100);
             rainbow.setSpectrum('#fcbab5', '#f8473a');
 
-            return '#' + rainbow.colourAt(severity);
+            return `#${rainbow.colourAt(severity)}`;
         },
         previewTrace(error) {
             return this.formatLine(error.error_trace.split("\n").shift());
@@ -208,7 +208,7 @@ export default {
 
             if (line === "(...tail calls...)") {
                 return '<span class="text-code-muted italic">(...tail calls...)</span>';
-            } else if (line === "stack traceback:") {
+            }if (line === "stack traceback:") {
                 return '<span class="text-code-red font-semibold">stack traceback:</span>';
             }
 
@@ -221,7 +221,7 @@ export default {
             line = line.replace(/(?<!style=)(["'`])(.+?)\1(?!>)/g, match => {
                 const index = strings.push(match) - 1;
 
-                return '$STR' + index;
+                return `$STR${index}`;
             });
 
             // Remove chat colors
@@ -241,7 +241,7 @@ export default {
 
             // Return strings
             for (let i = 0; i < strings.length; i++) {
-                line = line.replace(new RegExp('\\$STR' + i), `<span class="text-code-green">${strings[i]}</span>`);
+                line = line.replace(new RegExp(`\\$STR${i}`), `<span class="text-code-green">${strings[i]}</span>`);
             }
 
             return line;

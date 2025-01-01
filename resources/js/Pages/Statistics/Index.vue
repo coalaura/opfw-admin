@@ -345,8 +345,8 @@ export default {
         shouldShowTable(label) {
             if (!this.search) return true;
 
-            const title = label.toLowerCase(),
-                search = this.search.toLowerCase().trim();
+            const title = label.toLowerCase();
+            const search = this.search.toLowerCase().trim();
 
             return !search || title.includes(search);
         },
@@ -387,8 +387,8 @@ export default {
                     types: this.moneyLogTypes
                 }, {
                     signal: this.moneyLogAbort.signal
-                }),
-                    data = response.data;
+                });
+                const data = response.data;
 
                 if (data.status) {
                     this.moneyLogData = data.data.chart;
@@ -419,8 +419,8 @@ export default {
             this.economyLoading = true;
 
             try {
-                const response = await axios.get('/statistics/economy'),
-                    data = response.data;
+                const response = await axios.get('/statistics/economy');
+                const data = response.data;
 
                 if (data.status) {
                     this.economy = data.data;
@@ -440,8 +440,8 @@ export default {
             this.playersLoading = true;
 
             try {
-                const response = await axios.get('/statistics/players'),
-                    data = response.data;
+                const response = await axios.get('/statistics/players');
+                const data = response.data;
 
                 if (data.status) {
                     this.players = data.data;
@@ -461,8 +461,8 @@ export default {
             this.fpsLoading = true;
 
             try {
-                const response = await axios.get('/statistics/fps'),
-                    data = response.data;
+                const response = await axios.get('/statistics/fps');
+                const data = response.data;
 
                 if (data.status) {
                     this.fps = data.data;
@@ -479,8 +479,8 @@ export default {
         overallEconomyMovement() {
             if (!this.economy || !this.economy.data.length) return;
 
-            const first = this.economy.data[this.economy.data.length - 1],
-                last = this.economy.data[0];
+            const first = this.economy.data[this.economy.data.length - 1];
+            const last = this.economy.data[0];
 
             if (first.total > last.total) {
                 return `<span class="text-red-700 dark:text-red-300" title="Movement since ${first.date}">-${((first.total - last.total) / last.total * 100).toFixed(3)}%</span>`;

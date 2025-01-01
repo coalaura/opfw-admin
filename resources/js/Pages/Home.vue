@@ -230,12 +230,12 @@ export default {
 
                 const data = await axios.get('/api/crafting');
 
-                const rgx = /- - - Station (\d+) - - -\s+(.+?)(?=\s+- - -|$)/gs,
-                    text = data.data;
+                const rgx = /- - - Station (\d+) - - -\s+(.+?)(?=\s+- - -|$)/gs;
+                const text = data.data;
 
                 for (const match of text.matchAll(rgx)) {
-                    const station = match[1],
-                        recipes = match[2];
+                    const station = match[1];
+                    const recipes = match[2];
 
                     this.craftingRecipes.push({
                         id: station,
@@ -249,11 +249,11 @@ export default {
         copyCoords(e) {
             e.preventDefault();
 
-            const coords = '/tp_coords ' + $(e.target).data('coords');
+            const coords = `/tp_coords ${$(e.target).data('coords')}`;
             this.copyToClipboard(coords);
 
             $(e.target).addClass('dark:!text-green-400 !text-green-600');
-            setTimeout(function () {
+            setTimeout(() => {
                 $(e.target).removeClass('dark:!text-green-400 !text-green-600');
             }, 750);
         },

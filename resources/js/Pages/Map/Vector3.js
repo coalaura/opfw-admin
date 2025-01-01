@@ -3,7 +3,7 @@ import {mapNumber} from './helper';
 
 class Vector3 {
     static fromGameCoords(x, y, z) {
-        let v = new Vector3();
+        const v = new Vector3();
 
         v.x = x;
         v.y = y;
@@ -15,7 +15,7 @@ class Vector3 {
     }
 
     static fromMapCoords(lng, lat, alt) {
-        let v = new Vector3();
+        const v = new Vector3();
 
         v.x = mapNumber(lng, conf.map.bounds.min.x, conf.map.bounds.max.x, conf.game.bounds.min.x, conf.game.bounds.max.x);
         v.y = mapNumber(lat, conf.map.bounds.min.y, conf.map.bounds.max.y, conf.game.bounds.min.y, conf.game.bounds.max.y);
@@ -26,8 +26,8 @@ class Vector3 {
 
     toMap() {
         if (!this.mapCoords) {
-            const x = mapNumber(this.x, conf.game.bounds.min.x, conf.game.bounds.max.x, conf.map.bounds.min.x, conf.map.bounds.max.x),
-                y = mapNumber(this.y, conf.game.bounds.min.y, conf.game.bounds.max.y, conf.map.bounds.min.y, conf.map.bounds.max.y);
+            const x = mapNumber(this.x, conf.game.bounds.min.x, conf.game.bounds.max.x, conf.map.bounds.min.x, conf.map.bounds.max.x);
+            const y = mapNumber(this.y, conf.game.bounds.min.y, conf.game.bounds.max.y, conf.map.bounds.min.y, conf.map.bounds.max.y);
 
             this.mapCoords = {
                 lat: y,
@@ -47,7 +47,7 @@ class Vector3 {
     }
 
     toStringGame() {
-        return Math.round(this.x) + ' ' + Math.round(this.y) + ' ' + Math.round(this.z);
+        return `${Math.round(this.x)} ${Math.round(this.y)} ${Math.round(this.z)}`;
     }
 }
 

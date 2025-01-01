@@ -311,8 +311,8 @@ import Bounds from './map.config';
 import DataCompressor from "./DataCompressor";
 import { mapNumber } from './helper';
 
-(function (global) {
-    let MarkerMixin = {
+((global) => {
+    const MarkerMixin = {
         _updateZIndex: function (offset) {
             this._icon.style.zIndex = this.options.forceZIndex ? (this.options.forceZIndex + (this.options.zIndexOffset || 0)) : (this._zIndex + offset);
         },
@@ -446,7 +446,7 @@ export default {
             this.historicValidLicense = true;
         },
         updateTrackingInfo() {
-            this.trackingValid = this.trackServerId && Object.values(this.container.players).find(player => player.player.source == this.trackServerId);
+            this.trackingValid = this.trackServerId && Object.values(this.container.players).find(player => player.player.source === this.trackServerId);
         },
         track(source) {
             this.trackServerId = source;
@@ -455,11 +455,11 @@ export default {
         },
         async resolveHistoricLicenseDates() {
             try {
-                const response = await axios.get('/players/' + this.form.historic_license + '/ban');
+                const response = await axios.get(`/players/${this.form.historic_license}/ban`);
 
                 const data = response.data;
 
-                if (data && data.data && data.status) {
+                if (data?.data && data.status) {
                     // Round to next minute
                     const date = moment((data.data.timestamp + 60) * 1000);
 
@@ -496,14 +496,14 @@ export default {
                 }
             }
 
-            const cls = this.container.players && license in this.container.players ? 'dark:text-green-300 text-green-500' : 'dark:text-blue-300 text-blue-500',
-                title = this.container.players && license in this.container.players ? this.t('map.viewer_in_server') : this.t('map.viewer_not_server');
+            const cls = this.container.players && license in this.container.players ? 'dark:text-green-300 text-green-500' : 'dark:text-blue-300 text-blue-500';
+            const title = this.container.players && license in this.container.players ? this.t('map.viewer_in_server') : this.t('map.viewer_not_server');
 
-            return '<a href="/players/' + license + '" target="_blank" title="' + title + '" class="!no-underline ' + cls + '">' + player_name + '</a>';
+            return `<a href="/players/${license}" target="_blank" title="${title}" class="!no-underline ${cls}">${player_name}</a>`;
         },
         showHistoric() {
-            const fromDate = this.$moment().subtract(1, 'hours'),
-                tillDate = this.$moment().add(1, 'minutes');
+            const fromDate = this.$moment().subtract(1, 'hours');
+            const tillDate = this.$moment().add(1, 'minutes');
 
             if (!this.form.historic_from_date) {
                 this.form.historic_from_date = fromDate.format("YYYY-MM-DD");
@@ -524,20 +524,19 @@ export default {
         isFake(license) {
             const player = this.container.get(license);
 
-            return player && player.player && player.player.isFake;
+            return player?.player?.isFake;
         },
         hostname(isSocket) {
             const isDev = window.location.hostname === 'localhost';
 
             if (isSocket) {
-                return isDev ? 'ws://localhost:9999' : 'wss://' + window.location.host;
-            } else {
-                return isDev ? 'http://localhost:9999' : 'https://' + window.location.host;
+                return isDev ? 'ws://localhost:9999' : `wss://${window.location.host}`;
             }
+                return isDev ? 'http://localhost:9999' : `https://${window.location.host}`;
         },
         historyRangeButton(move) {
             if (this.historyRange && this.historyMarker) {
-                const newVal = parseInt($('#range-slider').val()) + move;
+                const newVal = Number.parseInt($('#range-slider').val()) + move;
 
                 $('#range-slider').val(Math.min(this.historyRange.max, Math.max(this.historyRange.min, newVal)));
 
@@ -546,7 +545,7 @@ export default {
         },
         historyRangeChange(timestamp) {
             if (this.historyRange && this.historyMarker) {
-                const val = parseInt(typeof timestamp === "number" ? timestamp : $('#range-slider').val());
+                const val = Number.parseInt(typeof timestamp === "number" ? timestamp : $('#range-slider').val());
 
                 const pos = this.historyRange.data[val];
 
@@ -555,22 +554,22 @@ export default {
                     timeZoneName: 'short',
                 }).slice(4);
 
-                let icon = "circle",
-                    label = moment.unix(val).format("MM/DD/YYYY - h:mm:ss") + ' ' + timezone + ' (' + val + ')';
+                let icon = "circle";
+                let label = `${moment.unix(val).format("MM/DD/YYYY - h:mm:ss")} ${timezone} (${val})`;
 
                 const flags = [
-                    pos && pos.i ? 'invisible' : false,
-                    pos && pos.c ? 'invincible' : false,
-                    pos && pos.f ? 'frozen' : false,
-                    pos && pos.d ? 'dead' : false
+                    pos?.i ? 'invisible' : false,
+                    pos?.c ? 'invincible' : false,
+                    pos?.f ? 'frozen' : false,
+                    pos?.d ? 'dead' : false
                 ].filter(flag => flag).join(", ");
 
-                const speed = pos && "s" in pos ? (pos.s * 2.236936).toFixed(1) + "mph" : "N/A";
+                const speed = pos && "s" in pos ? `${(pos.s * 2.236936).toFixed(1)}mph` : "N/A";
 
-                this.historicDetails = "Flags: " + (flags ? flags : 'N/A') + " - Altitude: " + (pos ? pos.z.toFixed(1) + "m" : "N/A") + " - Speed: " + speed;
+                this.historicDetails = `Flags: ${flags ? flags : 'N/A'} - Altitude: ${pos ? `${pos.z.toFixed(1)}m` : "N/A"} - Speed: ${speed}`;
 
                 if (pos && !pos.missing) {
-                    const coords = Vector3.fromGameCoords(parseInt(pos.x), parseInt(pos.y), 0).toMap();
+                    const coords = Vector3.fromGameCoords(Number.parseInt(pos.x), Number.parseInt(pos.y), 0).toMap();
 
                     this.historyMarker.setLatLng([coords.lat, coords.lng]);
 
@@ -587,7 +586,7 @@ export default {
 
                 this.historyMarker.setIcon(new L.Icon(
                     {
-                        iconUrl: '/images/icons/' + icon + '.png',
+                        iconUrl: `/images/icons/${icon}.png`,
                         iconSize: [20, 20]
                     }
                 ));
@@ -610,8 +609,8 @@ export default {
             }
         },
         async showHistory() {
-            const fromUnix = this.$moment(this.form.historic_from_date + ' ' + this.form.historic_from_time).unix();
-            const tillUnix = this.$moment(this.form.historic_till_date + ' ' + this.form.historic_till_time).unix();
+            const fromUnix = this.$moment(`${this.form.historic_from_date} ${this.form.historic_from_time}`).unix();
+            const tillUnix = this.$moment(`${this.form.historic_till_date} ${this.form.historic_till_time}`).unix();
 
             if (fromUnix && tillUnix) {
                 if (this.form.historic_license || !this.form.historic_license.startsWith('license:')) {
@@ -635,8 +634,8 @@ export default {
 
             this.loadingScreenStatus = this.t('map.historic_fetch');
 
-            const server = this.activeServer,
-                history = await this.loadHistory(server, license, from, till);
+            const server = this.activeServer;
+            const history = await this.loadHistory(server, license, from, till);
 
             this.loadingScreenStatus = this.t('map.historic_render');
 
@@ -663,11 +662,11 @@ export default {
 
                 const timestamps = Object.keys(history);
 
-                const first = timestamps[0],
-                    last = timestamps[timestamps.length - 1];
+                const first = timestamps[0];
+                const last = timestamps[timestamps.length - 1];
 
                 const addPolyline = (coords) => {
-                    let line = L.polyline(coords, { color: '#3380f3' });
+                    const line = L.polyline(coords, { color: '#3380f3' });
 
                     line.on('click', (e) => {
                         const latlng = e.latlng;
@@ -676,7 +675,7 @@ export default {
                         let closest = false;
 
                         Object.entries(history).forEach(entrySet => {
-                            const coords = Vector3.fromGameCoords(parseInt(entrySet[1].x), parseInt(entrySet[1].y), 0).toMap();
+                            const coords = Vector3.fromGameCoords(Number.parseInt(entrySet[1].x), Number.parseInt(entrySet[1].y), 0).toMap();
 
                             const dst = distance(coords.lat, coords.lng, latlng.lat, latlng.lng);
 
@@ -696,8 +695,8 @@ export default {
                     this.heatmapLayers.push(line);
                 }
 
-                let latlngs = [],
-                    lastEntryNull = 0;
+                let latlngs = [];
+                let lastEntryNull = 0;
 
                 for (let x = first; x <= last; x++) {
                     let pos = history[x];
@@ -756,7 +755,7 @@ export default {
                 this.historyRange.minAltitude = Math.min(...temp);
                 this.historyRange.maxAltitude = Math.max(...temp);
 
-                this.historyRange.val = (new Date(timestamps[0] * 1000)).toGMTString() + ' (' + timestamps[0] + ')';
+                this.historyRange.val = `${(new Date(timestamps[0] * 1000)).toGMTString()} (${timestamps[0]})`;
                 this.historyRange.min = timestamps[0];
                 this.historyRange.max = timestamps[timestamps.length - 1];
 
@@ -768,7 +767,7 @@ export default {
 
                 //this.map.fitBounds(this.heatmapLayer.getBounds());
 
-                this.historyRangeChange(parseInt(timestamps[0]));
+                this.historyRangeChange(Number.parseInt(timestamps[0]));
             }
 
             this.loadingScreenStatus = null;
@@ -776,15 +775,15 @@ export default {
         async loadHistory(server, license, from, till) {
             this.loadingScreenStatus = this.t('map.historic_fetch');
             try {
-                const result = await axios.get(this.hostname(false) + '/socket/' + server + '/history/' + license + '/' + from + '/' + till + '?token=' + this.token);
+                const result = await axios.get(`${this.hostname(false)}/socket/${server}/history/${license}/${from}/${till}?token=${this.token}`);
 
                 this.loadingScreenStatus = this.t('map.historic_parse');
-                if (result.data && result.data.status) {
+                if (result.data?.status) {
                     const data = result.data.data;
 
-                    const keys = Object.keys(data),
-                        first = keys[0],
-                        last = keys[keys.length - 1];
+                    const keys = Object.keys(data);
+                    const first = keys[0];
+                    const last = keys[keys.length - 1];
 
                     let lastEntry = data[first];
 
@@ -799,10 +798,12 @@ export default {
                     }
 
                     return data;
-                } else if (result.data && !result.data.status) {
+                }if (result.data && !result.data.status) {
                     console.error(result.data.error);
 
                     alert(result.data.error);
+
+                    window.location.reload();
                 }
             } catch (e) {
                 console.error(e);
@@ -816,9 +817,9 @@ export default {
                     licenses: licenses
                 });
 
-                if (result.data && result.data.status) {
+                if (result.data?.status) {
                     return result.data.data;
-                } else if (result.data && !result.data.status) {
+                }if (result.data && !result.data.status) {
                     console.error(result.data.error);
                 }
             } catch (e) {
@@ -834,12 +835,12 @@ export default {
 
             return [
                 // !!(pFlags & 64) spawned
-                !!(pFlags & 32) ? `<i class="fas fa-ice-cream ${generic}" title="frozen"></i>` : false,
-                !!(pFlags & 16) ? `<i class="fas fa-fist-raised ${generic}" title="invincible"></i>` : false,
-                !!(pFlags & 8) ? `<i class="fas fa-eye-slash ${generic}" title="invisible"></i>` : false,
-                !!(pFlags & 4) ? `<i class="fas fa-egg ${generic}" title="in_shell"></i>` : false,
-                !!(pFlags & 2) ? `<i class="fas fa-truck-loading ${generic}" title="in trunk"></i>` : false,
-                !!(pFlags & 1) ? `<i class="fas fa-skull-crossbones ${generic}" title="dead"></i>` : false,
+                (pFlags & 32) ? `<i class="fas fa-ice-cream ${generic}" title="frozen"></i>` : false,
+                (pFlags & 16) ? `<i class="fas fa-fist-raised ${generic}" title="invincible"></i>` : false,
+                (pFlags & 8) ? `<i class="fas fa-eye-slash ${generic}" title="invisible"></i>` : false,
+                (pFlags & 4) ? `<i class="fas fa-egg ${generic}" title="in_shell"></i>` : false,
+                (pFlags & 2) ? `<i class="fas fa-truck-loading ${generic}" title="in trunk"></i>` : false,
+                (pFlags & 1) ? `<i class="fas fa-skull-crossbones ${generic}" title="dead"></i>` : false,
             ].filter(Boolean).join("");
         },
         formatUserFlags(pFlags) {
@@ -848,9 +849,9 @@ export default {
             const generic = "text-gray-800 hover:text-blue-600 transition-colors";
 
             return [
-                !!(pFlags & 16) ? `<i class="fas fa-newspaper ${generic}" title="in queue"></i>` : false,
-                !!(pFlags & 8) ? `<i class="fas fa-camera-retro ${generic}" title="modified camera coords"></i>` : false,
-                !!(pFlags & 4) ? `<i class="fas fa-gamepad ${generic}" title="in minigame"></i>` : false,
+                (pFlags & 16) ? `<i class="fas fa-newspaper ${generic}" title="in queue"></i>` : false,
+                (pFlags & 8) ? `<i class="fas fa-camera-retro ${generic}" title="modified camera coords"></i>` : false,
+                (pFlags & 4) ? `<i class="fas fa-gamepad ${generic}" title="in minigame"></i>` : false,
                 // !!(pFlags & 2) fakeDisconnected
                 // !!(pFlags & 1) identityOverride
             ].filter(Boolean).join("");
@@ -862,14 +863,14 @@ export default {
 
             this.loadingScreenStatus = this.t('map.timestamp_fetch');
 
-            const server = this.activeServer,
-                players = await this.loadTimestamp(server, timestamp);
+            const server = this.activeServer;
+            const players = await this.loadTimestamp(server, timestamp);
 
             if (players) {
                 this.loadingScreenStatus = this.t('map.timestamp_load_names');
 
-                const licenses = players.map(player => player.license),
-                    playerInfos = (await this.loadPlayerNames(licenses)) || {};
+                const licenses = players.map(player => player.license);
+                const playerInfos = (await this.loadPlayerNames(licenses)) || {};
 
                 this.loadingScreenStatus = this.t('map.timestamp_render');
 
@@ -900,8 +901,8 @@ export default {
                 cluster.addTo(this.map);
 
                 for (let x = 0; x < players.length; x++) {
-                    const player = players[x],
-                        location = Vector3.fromGameCoords(player.x, player.y, 0.0);
+                    const player = players[x];
+                    const location = Vector3.fromGameCoords(player.x, player.y, 0.0);
 
                     const marker = L.marker(location.toMap(),
                         {
@@ -919,13 +920,13 @@ export default {
 
                     marker.setRotationAngle(markerHeading);
 
-                    const playerName = playerInfos.players[player.license]?.trim() || player.license.substring(8),
-                        characterName = playerInfos.characters[player.cid]?.trim() || false,
-                        speed = player.speed && player.speed > 0.45 ? Math.floor(player.speed * 2.236936) + "mph" : false,
-                        heading = Math.round(player.heading < 0 ? -player.heading : 360 - player.heading),
-                        altitude = Math.round(player.z),
-                        characterFlags = this.formatCharacterFlags(player.characterFlags),
-                        userFlags = this.formatUserFlags(player.userFlags);
+                    const playerName = playerInfos.players[player.license]?.trim() || player.license.substring(8);
+                    const characterName = playerInfos.characters[player.cid]?.trim() || false;
+                    const speed = player.speed && player.speed > 0.45 ? `${Math.floor(player.speed * 2.236936)}mph` : false;
+                    const heading = Math.round(player.heading < 0 ? -player.heading : 360 - player.heading);
+                    const altitude = Math.round(player.z);
+                    const characterFlags = this.formatCharacterFlags(player.characterFlags);
+                    const userFlags = this.formatUserFlags(player.userFlags);
 
                     const infos = [
                         `<div>Heading: <i>${heading}&deg;</i></div>`,
@@ -938,10 +939,7 @@ export default {
                         userFlags ? `<div class="flex gap-2">${userFlags}</div>` : false
                     ].filter(Boolean).join("");
 
-                    const popup = (characterName ? `<a href="/players/${player.license}/characters/${player.cid}" target="_blank" class="block"><i class="fas fa-street-view" title="Character"></i> ${characterName}</a>` : "")
-                        + `<a href="/players/${player.license}" target="_blank" class="block"><i class="fas fa-user-circle" title="Player"></i> ${playerName}</a>`
-                        + `<div class="mt-1 pt-1 border-t border-gray-300 flex flex-col">${infos}</div>`
-                        + (flags ? `<div class="flex flex-col gap-1 mt-1 pt-1 border-t border-gray-300">${flags}</div>` : "");
+                    const popup = `${characterName ? `<a href="/players/${player.license}/characters/${player.cid}" target="_blank" class="block"><i class="fas fa-street-view" title="Character"></i> ${characterName}</a>` : ""}<a href="/players/${player.license}" target="_blank" class="block"><i class="fas fa-user-circle" title="Player"></i> ${playerName}</a><div class="mt-1 pt-1 border-t border-gray-300 flex flex-col">${infos}</div>${flags ? `<div class="flex flex-col gap-1 mt-1 pt-1 border-t border-gray-300">${flags}</div>` : ""}`;
 
                     marker.bindPopup(popup, {
                         autoPan: false
@@ -955,19 +953,19 @@ export default {
         },
         async loadTimestamp(server, timestamp) {
             try {
-                const result = await axios.get(this.hostname(false) + '/socket/' + server + '/timestamp/' + timestamp + '?token=' + this.token);
+                const result = await axios.get(`${this.hostname(false)}/socket/${server}/timestamp/${timestamp}?token=${this.token}`);
 
                 this.loadingScreenStatus = this.t('map.timestamp_parse');
-                if (result.data && result.data.status) {
-                    let players = [];
+                if (result.data?.status) {
+                    const players = [];
 
                     for (const license in result.data.data) {
-                        if (Object.hasOwnProperty(license)) continue;
+                        if (Object.hasOwn(Object, license)) continue;
 
                         const coords = result.data.data[license];
 
                         players.push({
-                            license: "license:" + license.replace(".csv", ""),
+                            license: `license:${license.replace(".csv", "")}`,
                             cid: coords._,
                             heading: coords.h,
                             speed: coords.s,
@@ -981,8 +979,10 @@ export default {
                     }
 
                     return players;
-                } else if (result.data && !result.data.status) {
+                }if (result.data && !result.data.status) {
                     alert(result.data.error);
+
+                    window.location.reload();
                 }
             } catch (e) {
                 console.error(e);
@@ -1061,11 +1061,10 @@ export default {
             }
         },
         addToLayer(marker, layer) {
-            const _this = this;
 
-            $.each(this.layers, function (key) {
+            $.each(this.layers, (key) => {
                 if (layer !== key) {
-                    _this.layers[key].removeLayer(marker);
+                    this.layers[key].removeLayer(marker);
                 }
             });
 
@@ -1079,9 +1078,8 @@ export default {
             }
             if (vehicle) {
                 return "Vehicles";
-            } else {
-                return "Players";
             }
+                return "Players";
         },
         async renderMapData(data, trackedChanged) {
             if (this.isPaused || this.isDragging || this.isTimestampShowing || this.isHistoricShowing) {
@@ -1090,8 +1088,8 @@ export default {
 
             data = this.compressor.decompressData("world", data);
 
-            let isActivelyTracking = false,
-                trackingInfo = false;
+            let isActivelyTracking = false;
+            let trackingInfo = false;
 
             if (data && typeof data.players === "object") {
                 if (this.map) {
@@ -1103,7 +1101,7 @@ export default {
 
                     this.updateTrackingInfo();
 
-                    let unknownCharacters = [];
+                    const unknownCharacters = [];
 
                     this.container.eachPlayer((id, player) => {
                         if (!player.character) {
@@ -1129,7 +1127,7 @@ export default {
                             this.markers[id]._icon.dataset.playerId = id;
                         }
 
-                        if (player.player.source == this.trackServerId) {
+                        if (player.player.source === this.trackServerId) {
                             // this.map.setBearing(player.bearing);
 
                             this.map.setView(player.location.toMap(), trackedChanged ? 7 : this.map.getZoom(), {
@@ -1146,7 +1144,7 @@ export default {
                     });
 
                     for (const id in this.markers) {
-                        if (!this.markers.hasOwnProperty(id) || this.container.shouldDrawPlayerMarker(id, this.selectedInstance)) {
+                        if (!Object.hasOwn(this.markers, id) || this.container.shouldDrawPlayerMarker(id, this.selectedInstance)) {
                             continue;
                         }
 
@@ -1165,16 +1163,16 @@ export default {
                         unloaded = `, ${this.t("map.data_unloaded", 0)}`;
                     }
 
-                    this.data = this.t(
+                    this.data = `${this.t(
                         'map.data',
                         this.container.stats.loaded,
                         this.container.stats.total
-                    ) + '<span class="block text-xs leading-3">' + this.t(
+                    )}<span class="block text-xs leading-3">${this.t(
                         'map.data_stats',
                         this.container.stats.police,
                         this.container.stats.ems,
                         this.container.stats.staff
-                    ) + unloaded + '</span>';
+                    )}${unloaded}</span>`;
 
                     if (unknownCharacters.length > 0) {
                         // Prevent it being requested twice while the other is still loading
@@ -1185,7 +1183,7 @@ export default {
                         axios.post('/api/characters', {
                             ids: unknownCharacters
                         }).then(result => {
-                            if (result.data && result.data.status) {
+                            if (result.data?.status) {
                                 $.each(result.data.data, (_, ch) => {
                                     this.characters[ch.character_id] = ch;
                                 });
@@ -1198,11 +1196,11 @@ export default {
             } else {
                 this.data = this.t('map.error', this.activeServer);
 
-                if (data && data.error) {
+                if (data?.error) {
                     let error = Array.isArray(data.error) ? data.error.pop() : "Something went wrong";
 
                     if (error.length >= 70) {
-                        error = error.substr(0, 70) + "...";
+                        error = `${error.substr(0, 70)}...`;
                     }
 
                     this.data += `<span class="block text-xs leading-3">${error}</span>`;
@@ -1225,7 +1223,6 @@ export default {
             if (this.map) {
                 return;
             }
-            const _this = this;
 
             L.Map.addInitHook("addHandler", "gestureHandling", GestureHandling);
 
@@ -1240,7 +1237,7 @@ export default {
 
             this.map.attributionControl.addAttribution('map by <a href="https://github.com/coalaura" target="_blank">Laura</a> <i>accurate to about 1-2m</i>');
 
-            L.tileLayer("https://worryfree.host/tiles/tiles_" + Bounds.version + "/{z}/{x}/{y}.png", {
+            L.tileLayer(`https://worryfree.host/tiles/tiles_${Bounds.version}/{z}/{x}/{y}.png`, {
                 noWrap: true,
                 bounds: [
                     [0, 0],
@@ -1252,20 +1249,20 @@ export default {
 
             L.control.layers({}, this.layers).addTo(this.map);
 
-            $.each(this.layers, function (key) {
-                _this.layers[key].addTo(_this.map);
+            $.each(this.layers, (key) => {
+                this.layers[key].addTo(this.map);
             });
 
-            $.each(this.blips, function (_, blip) {
-                const coords = eval('(() => (' + blip.coords + '))()'),
-                    coordsText = coords.x.toFixed(2) + ' ' + coords.y.toFixed(2),
-                    location = Vector3.fromGameCoords(coords.x, coords.y, 0);
+            $.each(this.blips, (_, blip) => {
+                const coords = JSON.parse(blip.coords);
+                const coordsText = `${coords.x.toFixed(2)} ${coords.y.toFixed(2)}`;
+                const location = Vector3.fromGameCoords(coords.x, coords.y, 0);
 
-                let marker = L.marker(location.toMap(),
+                const marker = L.marker(location.toMap(),
                     {
                         icon: new L.Icon(
                             {
-                                iconUrl: '/images/icons/' + blip.icon,
+                                iconUrl: `/images/icons/${blip.icon}`,
                                 iconSize: [22, 22]
                             }
                         ),
@@ -1273,17 +1270,17 @@ export default {
                     }
                 );
 
-                marker.bindPopup(blip.label + '<br><i>' + coordsText + '</i>', {
+                marker.bindPopup(`${blip.label}<br><i>${coordsText}</i>`, {
                     autoPan: false
                 });
 
-                _this.layers["Blips"].addLayer(marker);
+                this.layers.Blips.addLayer(marker);
             });
 
             if (this.marker) {
                 const location = Vector3.fromGameCoords(this.marker[0], this.marker[1], 0);
 
-                let marker = L.marker(location.toMap(),
+                const marker = L.marker(location.toMap(),
                     {
                         icon: new L.Icon(
                             {
@@ -1295,7 +1292,7 @@ export default {
                     }
                 );
 
-                marker.bindPopup(this.t('map.marker', this.marker[0] + ", " + this.marker[1]), {
+                marker.bindPopup(this.t('map.marker', `${this.marker[0]}, ${this.marker[1]}`), {
                     autoPan: false
                 });
 
@@ -1306,16 +1303,16 @@ export default {
                 marker.openPopup();
             }
 
-            this.map.on('dragstart', function () {
-                _this.isDragging = true;
+            this.map.on('dragstart', () => {
+                this.isDragging = true;
             });
-            this.map.on('dragend', function () {
-                _this.isDragging = false;
+            this.map.on('dragend', () => {
+                this.isDragging = false;
             });
 
-            this.map.on('fullscreenchange', function () {
-                setTimeout(function () {
-                    _this.map._onResize();
+            this.map.on('fullscreenchange', () => {
+                setTimeout(() => {
+                    this.map._onResize();
                 }, 500);
             });
 
@@ -1329,9 +1326,9 @@ export default {
                 '.leaflet-control-layers-selector {outline:none !important}',
                 '.leaflet-container {background:#143D6B}',
                 'path.leaflet-interactive[stroke="#FFBF00"] {cursor:default}',
-                '.leaflet-attr {width:' + $('.leaflet-bottom.leaflet-right').width() + 'px}'
+                `.leaflet-attr {width:${$('.leaflet-bottom.leaflet-right').width()}px}`
             ];
-            $('#map').append('<style>' + styles.join('') + '</style>');
+            $('#map').append(`<style>${styles.join('')}</style>`);
         }
     },
     mounted() {
@@ -1351,7 +1348,7 @@ export default {
             this.viewingUnloadedPlayerList = true;
         });
 
-        const id = parseInt(window.location.hash.substring(1));
+        const id = Number.parseInt(window.location.hash.substring(1));
 
         if (id) {
             this.track(id);

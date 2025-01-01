@@ -105,7 +105,7 @@ export default {
             const ua = this.parseUserAgent(session.user_agent);
 
             if (!session.last_viewed.startsWith('/')) {
-                session.last_viewed = '/' + session.last_viewed;
+                session.last_viewed = `/${session.last_viewed}`;
             }
 
             return {
@@ -129,14 +129,14 @@ export default {
 
             switch(this.status) {
                 case 'download':
-                    return prefix + ' fas fa-download';
+                    return `${prefix} fas fa-download`;
                 case 'resize':
-                    return prefix + ' fas fa-crop-alt';
+                    return `${prefix} fas fa-crop-alt`;
                 case 'save':
-                    return prefix + ' fas fa-save';
+                    return `${prefix} fas fa-save`;
             }
 
-            return prefix + ' fas fa-truck-loading';
+            return `${prefix} fas fa-truck-loading`;
         },
         formatTimestamp(timestamp) {
             return this.$options.filters.formatTime(timestamp * 1000);
@@ -176,7 +176,7 @@ export default {
             if (overrideValue) setting.value = overrideValue;
 
             try {
-                const data = await this.chunked.put('/settings/' + key, {
+                const data = await this.chunked.put(`/settings/${key}`, {
                     value: setting.value
                 }, chunk => {
                     if (!chunk.status) return;

@@ -37,19 +37,18 @@ class Notifier {
     }
 
     checkPlayers(container, vue) {
-        const _this = this;
 
         // Set current states
-        container.eachPlayer(function (id, player) {
-            _this.checkPlayer(id, player);
+        container.eachPlayer((id, player) => {
+            this.checkPlayer(id, player);
         });
 
         // Set default states for new players and check for state changes
         for (const id in this.currentPlayerState) {
-            if (!this.currentPlayerState.hasOwnProperty(id)) continue;
+            if (!Object.hasOwn(this.currentPlayerState, id)) continue;
 
-            const lastState = id in this.lastPlayerState ? this.lastPlayerState[id] : PlayerState.defaultState(),
-                currentState = this.currentPlayerState[id];
+            const lastState = id in this.lastPlayerState ? this.lastPlayerState[id] : PlayerState.defaultState();
+            const currentState = this.currentPlayerState[id];
 
             // Check if connection state changed
             if (lastState.loaded && !currentState.loaded) {
@@ -70,10 +69,10 @@ class Notifier {
 
         // Update Player map
         for (const target in this.notifications) {
-            if (!this.notifications.hasOwnProperty(target)) continue;
+            if (!Object.hasOwn(this.notifications, target)) continue;
 
             for (const id in this.notifications[target]) {
-                if (!this.notifications[target].hasOwnProperty(id)) continue;
+                if (!Object.hasOwn(this.notifications[target], id)) continue;
 
                 if (id in this.playerMap) {
                     this.notifications[target][id] = this.playerMap[id];
@@ -98,15 +97,15 @@ class Notifier {
                 switch (target) {
                     case 'load':
                         this.playSound('player-joined');
-                        this.notification('Loaded ' + player.name, player.name + ' (' + player.license + ') has loaded into a character.', vue);
+                        this.notification(`Loaded ${player.name}`, `${player.name} (${player.license}) has loaded into a character.`, vue);
                         break;
                     case 'unload':
                         this.playSound('player-left');
-                        this.notification('Unloaded ' + player.name, player.name + ' (' + player.license + ') unloaded or left the server.', vue);
+                        this.notification(`Unloaded ${player.name}`, `${player.name} (${player.license}) unloaded or left the server.`, vue);
                         break;
                     case 'invisible':
                         this.playSound('player-invisible');
-                        this.notification(player.name + ' just went invisible', player.name + ' (' + player.license + ') just went invisible.', vue);
+                        this.notification(`${player.name} just went invisible`, `${player.name} (${player.license}) just went invisible.`, vue);
                         break;
                 }
             }
@@ -114,11 +113,11 @@ class Notifier {
     }
 
     playSound(sound) {
-        const audio = new Audio('/images/sounds/' + sound + '.mp3');
+        const audio = new Audio(`/images/sounds/${sound}.mp3`);
         audio.play()
-            .then(() => console.log('Played ' + sound + '.mp3'))
+            .then(() => console.log(`Played ${sound}.mp3`))
             .catch((e) => {
-                console.error('Failed to play sound ' + sound + '.mp3');
+                console.error(`Failed to play sound ${sound}.mp3`);
                 console.error(e);
             });
     }

@@ -154,8 +154,8 @@ export default {
 
             return this.players.filter(player => player.character)
                 .map(player => {
-                    const backstory = this.truncate(this.escapeHTML(player.character.backstory), 100),
-                        highlighted = this.highlightText(backstory, player.character.danny);
+                    const backstory = this.truncate(this.escapeHTML(player.character.backstory), 100);
+                    const highlighted = this.highlightText(backstory, player.character.danny);
 
                     player.info = `<b>${player.character.name}</b><br>${highlighted.text}`;
 
@@ -171,17 +171,17 @@ export default {
                         const dannyB = b.character.danny ?? 0;
 
                         return dannyB - dannyA;
-                    } else if (sortBy === 'server_id') {
+                    }if (sortBy === 'server_id') {
                         const idA = a.serverId ?? 0;
                         const idB = b.serverId ?? 0;
 
                         return idB - idA;
-                    } else if (sortBy === 'playtime') {
+                    }if (sortBy === 'playtime') {
                         const timeA = a.playTime ?? 0;
                         const timeB = b.playTime ?? 0;
 
                         return timeA - timeB;
-                    } else if (sortBy === 'prediction') {
+                    }if (sortBy === 'prediction') {
                         const predA = a.sortPrediction ?? 0;
                         const predB = b.sortPrediction ?? 0;
 
@@ -200,7 +200,7 @@ export default {
 
             data.sort();
 
-            let remove = [];
+            const remove = [];
 
             if (data.includes('dead')) remove.push('invincible');
             if (data.includes('trunk')) remove.push('invisible', 'invincible', 'no_gameplay_cam');

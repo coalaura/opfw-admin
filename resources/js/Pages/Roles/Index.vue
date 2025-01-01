@@ -150,8 +150,8 @@ export default {
         },
         sortBy(key) {
             this.playerList.sort((a, b) => {
-                const aVal = a[key],
-                    bVal = b[key];
+                const aVal = a[key];
+                const bVal = b[key];
 
                 if (key === "name" || aVal === bVal) {
                     return a.name < b.name ? -1 : 1;
@@ -184,8 +184,8 @@ export default {
             const overrides = {};
 
             for (const role in player.overrides) {
-                const original = !!player[role],
-                    value = player.overrides[role];
+                const original = !!player[role];
+                const value = player.overrides[role];
 
                 if (original !== value) {
                     overrides[role] = value;
@@ -193,8 +193,8 @@ export default {
             }
 
             try {
-                const response = await axios.post('/roles/' + player.license, overrides),
-                    data = response.data;
+                const response = await axios.post(`/roles/${player.license}`, overrides);
+                const data = response.data;
 
                 if (data.status) {
                     for (const role in player.overrides) {
@@ -215,8 +215,8 @@ export default {
             this.isAdding = true;
 
             try {
-                const response = await axios.get('/roles/' + this.adding),
-                    data = response.data;
+                const response = await axios.get(`/roles/${this.adding}`);
+                const data = response.data;
 
                 if (data.status) {
                     const player = data.data;

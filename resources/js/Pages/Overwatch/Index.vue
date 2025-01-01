@@ -99,7 +99,7 @@ export default {
             try {
                 const data = await axios.get('/api/randomScreenshot');
 
-                if (data.data && data.data.status) {
+                if (data.data?.status) {
                     this.screenshot = data.data.data;
                     this.screenshotError = null;
                 } else {

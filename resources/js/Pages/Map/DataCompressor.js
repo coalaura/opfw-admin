@@ -6,7 +6,8 @@ class DataCompressor {
     decompressData(type, compressed) {
         const data = this.#update(unpack(compressed));
 
-        let isValid, result;
+        let isValid;
+        let result;
 
         switch (type) {
             case "world":
@@ -43,17 +44,17 @@ class DataCompressor {
                 dt = nw;
 
                 return dt;
-            } else if (typeof nw === "object") {
+            }if (typeof nw === "object") {
                 if (!dt || typeof dt !== "object") {
                     dt = {};
                 }
 
                 for (const key in nw) {
-                    const oldValue = dt[key],
-                        newValue = nw[key];
+                    const oldValue = dt[key];
+                    const newValue = nw[key];
 
-                    const oldType = typeof oldValue,
-                        newType = typeof newValue;
+                    const oldType = typeof oldValue;
+                    const newType = typeof newValue;
 
                     if (newValue === null) {
                         delete dt[key];
@@ -81,15 +82,14 @@ class DataCompressor {
         const copy = obj => {
             if (Array.isArray(obj)) {
                 return obj.map(copy);
-            } else if (typeof obj === "object") {
+            }if (typeof obj === "object") {
                 return Object.entries(obj).reduce((obj, [key, value]) => {
                     obj[key] = copy(value);
 
                     return obj;
                 }, {});
-            } else {
-                return obj;
             }
+                return obj;
         };
 
         return copy(object);

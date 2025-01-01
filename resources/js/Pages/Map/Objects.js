@@ -10,7 +10,7 @@ class Character {
 
         const characterFlags = Character.getCharacterFlags(rawData.character);
 
-        let c = new Character();
+        const c = new Character();
 
         c.id = rawData.character.id;
         c.name = rawData.character.name;
@@ -20,13 +20,13 @@ class Character {
         c.frozen = characterFlags.frozen;
         c.inShell = characterFlags.shell;
         c.inTrunk = characterFlags.trunk;
-        c.isDriving = rawData.vehicle && rawData.vehicle.driving;
+        c.isDriving = rawData.vehicle?.driving;
 
         return c;
     }
 
     static getCharacterFlags(character) {
-        const flags = character && character.flags ? character.flags : 0;
+        const flags = character?.flags ? character.flags : 0;
 
         return {
             spawned: !!(flags & 64),
@@ -46,16 +46,16 @@ class Vehicle {
             return null;
         }
 
-        let v = new Vehicle();
+        const v = new Vehicle();
 
         v.id = rawData.vehicle.id;
         v.name = rawData.vehicle.name;
-        v.model = rawData.vehicle.model + '';
+        v.model = `${rawData.vehicle.model}`;
 
-        let type = 'car',
-            size = 23;
+        let type = 'car';
+        let size = 23;
 
-        $.each(custom_icons, function (typ, cfg) {
+        $.each(custom_icons, (typ, cfg) => {
             if (cfg.models.includes(v.model)) {
                 type = typ;
                 size = cfg.size;
@@ -74,7 +74,7 @@ class Vehicle {
         if (this.model in blip_map) {
             return new L.Icon(
                 {
-                    iconUrl: '/images/icons/gta/Blip_' + blip_map[this.model] + '.png',
+                    iconUrl: `/images/icons/gta/Blip_${blip_map[this.model]}.png`,
                     iconSize: [28, 28]
                 }
             );
@@ -82,7 +82,7 @@ class Vehicle {
 
         return new L.Icon(
             {
-                iconUrl: '/images/icons/' + this.icon.type + '.png',
+                iconUrl: `/images/icons/${this.icon.type}.png`,
                 iconSize: [this.icon.size, this.icon.size]
             }
         );

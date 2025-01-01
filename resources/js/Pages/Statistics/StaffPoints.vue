@@ -110,7 +110,7 @@ export default {
             if (typeof points === 'number') {
                 if (points < 100) {
                     return 'text-red-600 dark:text-red-400';
-                } else if (points > 500) {
+                }if (points > 500) {
                     return 'text-lime-600 dark:text-lime-400';
                 }
             }

@@ -974,7 +974,7 @@ export default {
         jobsObject = [];
 
         for (const job in this.jobs) {
-            if (Object.hasOwnProperty(job)) continue;
+            if (Object.hasOwn(Object, job)) continue;
 
             const jobObject = {
                 name: job,
@@ -982,7 +982,7 @@ export default {
             };
 
             for (const department in this.jobs[job]) {
-                if (Object.hasOwnProperty(department)) continue;
+                if (Object.hasOwn(Object, department)) continue;
 
                 const departmentObject = {
                     name: department,
@@ -990,7 +990,7 @@ export default {
                 };
 
                 for (const position in this.jobs[job][department]) {
-                    if (Object.hasOwnProperty(position)) continue;
+                    if (Object.hasOwn(Object, position)) continue;
 
                     departmentObject.positions[position] = this.jobs[job][department][position].salary;
                 }
@@ -1103,8 +1103,8 @@ export default {
     },
     computed: {
         licensesChanged() {
-            const licenses = this.character.licenses.sort(),
-                formLicenses = this.licenseForm.licenses.sort();
+            const licenses = this.character.licenses.sort();
+            const formLicenses = this.licenseForm.licenses.sort();
 
             return JSON.stringify(licenses) !== JSON.stringify(formLicenses);
         },
@@ -1112,15 +1112,15 @@ export default {
             if (this.form.first_name.trim() !== this.character.firstName) return true;
             if (this.form.last_name.trim() !== this.character.lastName) return true;
             if (this.form.date_of_birth !== this.character.dateOfBirth) return true;
-            if (parseInt(this.form.gender) !== this.character.gender) return true;
+            if (Number.parseInt(this.form.gender) !== this.character.gender) return true;
             if (this.form.backstory.trim() !== this.character.backstory) return true;
 
             return false;
         },
         balanceEdited() {
-            if (parseInt(this.balanceForm.cash) !== this.character.cash) return true;
-            if (parseInt(this.balanceForm.bank) !== this.character.bank) return true;
-            if (parseInt(this.balanceForm.stocks) !== this.character.stocksBalance) return true;
+            if (Number.parseInt(this.balanceForm.cash) !== this.character.cash) return true;
+            if (Number.parseInt(this.balanceForm.bank) !== this.character.bank) return true;
+            if (Number.parseInt(this.balanceForm.stocks) !== this.character.stocksBalance) return true;
 
             return false;
         },
@@ -1200,8 +1200,8 @@ export default {
         getAvailableLicenses() {
             return ["heli", "fw", "cfi", "hw", "hwh", "perf", "passenger", "management", "military", "utility", "commercial", "special", "hunting", "fishing", "weapon", "mining", "boat", "driver", "press"]
                 .sort((a, b) => {
-                    const aName = this.t(`players.characters.license.${a}`),
-                        bName = this.t(`players.characters.license.${b}`);
+                    const aName = this.t(`players.characters.license.${a}`);
+                    const bName = this.t(`players.characters.license.${b}`);
 
                     return aName.localeCompare(bName);
                 });
@@ -1234,8 +1234,8 @@ export default {
             this.paycheck = 0;
         },
         submit(isJobUpdate) {
-            let form = this.form,
-                query = '';
+            const form = this.form;
+            let query = '';
             if (isJobUpdate) {
                 form.first_name = this.character.firstName;
                 form.last_name = this.character.lastName;

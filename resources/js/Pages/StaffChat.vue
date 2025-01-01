@@ -327,10 +327,10 @@ export default {
             this.isLoading = true;
             this.initialScroll = true;
 
-            const isDev = window.location.hostname === 'localhost',
-                token = this.$page.auth.token,
-                server = this.$page.serverName,
-                socketUrl = isDev ? 'ws://localhost:9999' : `wss://${window.location.host}`;
+            const isDev = window.location.hostname === 'localhost';
+            const token = this.$page.auth.token;
+            const server = this.$page.serverName;
+            const socketUrl = isDev ? 'ws://localhost:9999' : `wss://${window.location.host}`;
 
             this.socket = io(socketUrl, {
                 reconnectionDelayMax: 5000,

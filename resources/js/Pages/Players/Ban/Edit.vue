@@ -102,19 +102,19 @@ export default {
             // Calculate expire relative to now in seconds if temp ban.
             if (this.isTempBanning) {
                 const nowUnix = this.$moment().unix();
-                const expireUnix = this.$moment(this.form.expireDate + ' ' + this.form.expireTime).unix();
+                const expireUnix = this.$moment(`${this.form.expireDate} ${this.form.expireTime}`).unix();
                 expire = expireUnix - nowUnix;
             }
 
             // Send request.
-            await this.$inertia.put('/players/' + this.player.licenseIdentifier + '/bans/' + this.ban.id, {
+            await this.$inertia.put(`/players/${this.player.licenseIdentifier}/bans/${this.ban.id}`, {
                 reason: this.form.reason,
                 expire: expire
             });
 
             setTimeout(() => {
                 // Go back to player page
-                window.location.href = '/players/' + this.player.licenseIdentifier;
+                window.location.href = `/players/${this.player.licenseIdentifier}`;
             }, 3000);
         }
     },

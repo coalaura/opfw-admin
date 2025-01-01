@@ -233,7 +233,7 @@ export default {
 			const identifiers = this.logs.map(player => player.licenseIdentifier).filter((value, index, self) => self.indexOf(value) === index).join(",");
 
 			if (identifiers) {
-				this.status = (await this.requestData("/online/" + identifiers)) || {};
+				this.status = (await this.requestData(`/online/${identifiers}`)) || {};
 			} else {
 				this.status = {};
 			}

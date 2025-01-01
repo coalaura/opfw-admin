@@ -14,9 +14,9 @@ module.exports = {
             const parts = spot.coords.split(' ');
 
             return {
-                "x": parseInt(parts[0]),
-                "y": parseInt(parts[1]),
-                "z": parseInt(parts[2]),
+                "x": Number.parseInt(parts[0]),
+                "y": Number.parseInt(parts[1]),
+                "z": Number.parseInt(parts[2]),
                 "radius": spot.radius,
                 "height": spot.height,
             };
@@ -26,17 +26,17 @@ module.exports = {
                 spot.z - spot.height < coords.z &&
                 spot.z + spot.height > coords.z
             ) && (
-                Math.pow(coords.x - spot.x, 2) + Math.pow(coords.y - spot.y, 2) < Math.pow(spot.radius, 2)
+                (coords.x - spot.x) ** 2 + (coords.y - spot.y) ** 2 < spot.radius ** 2
             );
         }
 
         // If you are in a shell (interior)
-        if (character && character.inShell) {
+        if (character?.inShell) {
             return true;
         }
 
         // If you are in a trunk
-        if (character && character.inTrunk) {
+        if (character?.inTrunk) {
             return true;
         }
 
@@ -67,8 +67,8 @@ module.exports = {
             return source;
         }
 
-        let pcs = source.split(what);
-        let lastPc = pcs.pop();
+        const pcs = source.split(what);
+        const lastPc = pcs.pop();
         return pcs.join(what) + replacement + lastPc;
     },
     dist(pointA, pointB) {

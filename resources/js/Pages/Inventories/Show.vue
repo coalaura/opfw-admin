@@ -156,9 +156,9 @@ export default {
             let weight = 0;
 
             for (const slot in this.contents) {
-                const items = this.contents[slot],
-                    name = items.length ? items[0].name : null,
-                    item = name ? this.items[name] : null;
+                const items = this.contents[slot];
+                const name = items.length ? items[0].name : null;
+                const item = name ? this.items[name] : null;
 
                 weight += item ? item.weight * items.length : 0;
             }
@@ -184,7 +184,7 @@ export default {
 
             const item = this.items[this.editingItem];
 
-            return item && item.stackable;
+            return item?.stackable;
         }
     },
     data() {
@@ -205,8 +205,8 @@ export default {
         getFirstItemName(items) {
             if (!items.length) return "&nbsp;";
 
-            const name = items[0].name,
-                item = this.items[name] || {};
+            const name = items[0].name;
+            const item = this.items[name] || {};
 
             return item.label || name;
         },
@@ -244,13 +244,13 @@ export default {
             const metadata = {};
 
             for (const entry of this.editingMetadata) {
-                let key = entry.key,
-                    value = entry.value;
+                const key = entry.key;
+                let value = entry.value;
 
                 if (!this.isFieldValid(key, value)) {
                     this.isLoading = false;
 
-                    alert("Invalid field: " + key);
+                    alert(`Invalid field: ${key}`);
 
                     return;
                 }
@@ -260,9 +260,9 @@ export default {
                 } else if (value === "true" || value === "false") {
                     value = value === "true";
                 } else if (value.match(/^-?\d+$/)) {
-                    value = parseInt(value);
+                    value = Number.parseInt(value);
                 } else if (value.match(/^-?\d+\.?\d*$/)) {
-                    value = parseFloat(value);
+                    value = Number.parseFloat(value);
                 } else {
                     value = null;
                 }
@@ -307,7 +307,7 @@ export default {
 
                     this.editingMetadata.push({
                         key: key,
-                        value: typeof value === "object" ? JSON.stringify(value) : value + ""
+                        value: typeof value === "object" ? JSON.stringify(value) : `${value}`
                     });
                 }
             } else {
@@ -329,7 +329,7 @@ export default {
             });
         },
         async loadAttachedCharacter() {
-            const id = parseInt(this.attachCharacterId);
+            const id = Number.parseInt(this.attachCharacterId);
 
             if (!id || id <= 0 || this.attachCharacterLoading) return;
 
@@ -338,14 +338,14 @@ export default {
             const slot = this.editingSlot;
 
             try {
-                const response = await axios.get('/inventory/attach_identity/' + id),
-                    data = response.data;
+                const response = await axios.get(`/inventory/attach_identity/${id}`);
+                const data = response.data;
 
-                if (data && data.status && this.isEditing && slot === this.editingSlot) {
+                if (data?.status && this.isEditing && slot === this.editingSlot) {
                     for (const [key, value] of Object.entries(data.data)) {
                         this.editingMetadata.push({
                             key: key,
-                            value: value + ""
+                            value: `${value}`
                         });
                     }
                 }
@@ -382,11 +382,11 @@ export default {
                 case "deaths":
                 case "serialNumber":
                 case "firingMode":
-                    return value && value.match(/^\d+$/m) && parseInt(value) >= 0;
+                    return value?.match(/^\d+$/m) && Number.parseInt(value) >= 0;
 
                 // Needs to be a float and greater than 0
                 case "stepsWalked":
-                    return value && value.match(/^\d+(\.\d+)?$/m) && parseFloat(value) >= 0;
+                    return value?.match(/^\d+(\.\d+)?$/m) && Number.parseFloat(value) >= 0;
 
                 // Needs to be a boolean
                 case "battleRoyaleOnly":
@@ -409,11 +409,11 @@ export default {
                 case "attachments":
                 case "numbers":
                 case "prizes":
-                    return value && value.startsWith("[") && value.endsWith("]");
+                    return value?.startsWith("[") && value.endsWith("]");
 
                 // Needs to be an object
                 case "ingredients":
-                    return value && value.startsWith("{") && value.endsWith("}");
+                    return value?.startsWith("{") && value.endsWith("}");
 
                 // Needs to be an array or object
                 case "contents":

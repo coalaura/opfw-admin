@@ -128,7 +128,7 @@ export default {
             this.isLoading = true;
 
             try {
-                await this.$inertia.post('/twitter/' + this.user.id + '/verify', {}, {
+                await this.$inertia.post(`/twitter/${this.user.id}/verify`, {}, {
                     preserveState: true,
                     preserveScroll: true
                 });

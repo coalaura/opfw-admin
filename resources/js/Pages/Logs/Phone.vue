@@ -127,8 +127,8 @@ import Pagination from './../../Components/Pagination';
 // bg-purple-300 dark:bg-purple-900 border-purple-500 text-purple-500
 // bg-pink-300 dark:bg-pink-900 border-pink-500 text-pink-500
 // bg-lime-300 dark:bg-lime-900 border-lime-500 text-lime-500
-const colors = ['red', 'yellow', 'green', 'blue', 'purple', 'pink', 'lime'],
-    usedColors = {};
+const colors = ['red', 'yellow', 'green', 'blue', 'purple', 'pink', 'lime'];
+const usedColors = {};
 
 let index = 0;
 
@@ -210,7 +210,7 @@ export default {
                     }
                 });
 
-                if (data.data && data.data.status) {
+                if (data.data?.status) {
                     this.isLoading = false;
 
                     this.replaceState();

@@ -447,17 +447,17 @@ export default {
 			this.searchingActions = true;
 		},
 		showDrugLogs() {
-			this.filters.action = this.drugActions.map(e => '=' + e).join('|');
+			this.filters.action = this.drugActions.map(e => `=${e}`).join('|');
 
 			this.refresh();
 		},
 		showMoneyLogs() {
-			this.filters.action = MoneyTransferActions.map(action => '=' + action).join('|');
+			this.filters.action = MoneyTransferActions.map(action => `=${action}`).join('|');
 
 			this.refresh();
 		},
 		showConnectLogs() {
-			this.filters.action = ConnectActions.concat(DisconnectActions).map(action => '=' + action).join('|');
+			this.filters.action = ConnectActions.concat(DisconnectActions).map(action => `=${action}`).join('|');
 
 			this.refresh();
 		},
@@ -476,13 +476,13 @@ export default {
 
 				if (minigames.length > 0) {
 					return 'bg-purple-500 !bg-opacity-20 hover:!bg-opacity-40';
-				} else if (MoneyTransferActions.includes(action)) {
+				}if (MoneyTransferActions.includes(action)) {
 					return 'bg-teal-500 !bg-opacity-20 hover:!bg-opacity-40';
-				} else if (this.drugActions.includes(action)) {
+				}if (this.drugActions.includes(action)) {
 					return 'bg-yellow-500 !bg-opacity-20 hover:!bg-opacity-40';
-				} else if (DisconnectActions.includes(action)) {
+				}if (DisconnectActions.includes(action)) {
 					return 'bg-rose-500 !bg-opacity-20 hover:!bg-opacity-40';
-				} else if (ConnectActions.includes(action)) {
+				}if (ConnectActions.includes(action)) {
 					return 'bg-lime-500 !bg-opacity-20 hover:!bg-opacity-40';
 				}
 			}
@@ -496,13 +496,13 @@ export default {
 
 			if (minigames.length > 0) {
 				return `<i class="text-purple-800 dark:text-purple-200 fas fa-gamepad" title="${minigames.join(', ')}"></i>`;
-			} else if (MoneyTransferActions.includes(action)) {
+			}if (MoneyTransferActions.includes(action)) {
 				return `<i class="text-teal-800 dark:text-teal-200 fas fa-money-bill-wave" title="money transfer"></i>`;
-			} else if (this.drugActions.includes(action)) {
+			}if (this.drugActions.includes(action)) {
 				return `<i class="text-yellow-800 dark:text-yellow-200 fas fa-tablets" title="drugs"></i>`;
-			} else if (DisconnectActions.includes(action)) {
+			}if (DisconnectActions.includes(action)) {
 				return `<i class="text-rose-800 dark:text-rose-200 fas fa-door-open" title="exit/disconnect/unload"></i>`;
-			} else if (ConnectActions.includes(action)) {
+			}if (ConnectActions.includes(action)) {
 				return `<i class="text-lime-800 dark:text-lime-200 fas fa-person-booth" title="connect/join/load"></i>`;
 			}
 
@@ -519,7 +519,7 @@ export default {
 			}
 		},
 		parseLogMetadata(metadata) {
-			if (metadata && metadata.secondaryCause) {
+			if (metadata?.secondaryCause) {
 				const source = metadata.secondaryCause.source ? metadata.secondaryCause.source : '/';
 
 				switch (metadata.secondaryCause.label) {
@@ -531,10 +531,11 @@ export default {
 						return this.t('logs.metadata.secondary_npc');
 					case 'Vehicle':
 						return this.t('logs.metadata.secondary_vehicle', source);
-					case 'Touching Vehicle':
-						const vehicles = metadata.secondaryCause.source ? Object.entries(metadata.secondaryCause.source).map(e => e[0] + " [" + (e[1] ? e[1] : '/') + "]").join(', ') : 'N/A';
+					case 'Touching Vehicle': {
+						const vehicles = metadata.secondaryCause.source ? Object.entries(metadata.secondaryCause.source).map(e => `${e[0]} [${e[1] ? e[1] : '/'}]`).join(', ') : 'N/A';
 
 						return this.t('logs.metadata.secondary_touching', vehicles);
+					}
 				}
 			}
 
@@ -547,23 +548,23 @@ export default {
 
 			this.isLoading = true;
 			try {
-				const beforeDate = $('#before-date').val(),
-					beforeTime = $('#before-time').val() || '00:00',
-					afterDate = $('#after-date').val(),
-					afterTime = $('#after-time').val() || '23:59';
+				const beforeDate = $('#before-date').val();
+				const beforeTime = $('#before-time').val() || '00:00';
+				const afterDate = $('#after-date').val();
+				const afterTime = $('#after-time').val() || '23:59';
 
 				if (beforeDate && beforeTime) {
-					this.filters.before = Math.round((new Date(beforeDate + ' ' + beforeTime)).getTime() / 1000);
+					this.filters.before = Math.round((new Date(`${beforeDate} ${beforeTime}`)).getTime() / 1000);
 
-					if (isNaN(this.filters.before)) {
+					if (Number.isNaN(this.filters.before)) {
 						this.filters.before = null;
 					}
 				}
 
 				if (afterDate && afterTime) {
-					this.filters.after = Math.round((new Date(afterDate + ' ' + afterTime)).getTime() / 1000);
+					this.filters.after = Math.round((new Date(`${afterDate} ${afterTime}`)).getTime() / 1000);
 
-					if (isNaN(this.filters.after)) {
+					if (Number.isNaN(this.filters.after)) {
 						this.filters.after = null;
 					}
 				}
@@ -582,7 +583,7 @@ export default {
 		parseOtherLog(details, action, metadata) {
 			const regex = /attempted to add a song with video ID `(.+?)` to boombox/gmi;
 			const matches = details.matchAll(regex).next();
-			const match = matches && matches.value ? matches.value[1] : null;
+			const match = matches?.value ? matches.value[1] : null;
 
 			if (match) {
 				const html = `<a href="https://youtube.com/watch?v=${match}" target="_blank" class="text-blue-600 dark:text-blue-400">${match}</a>`;
@@ -617,7 +618,7 @@ export default {
 				];
 
 				let description = '';
-				for (let x in descriptions) {
+				for (const x in descriptions) {
 					const entry = descriptions[x];
 
 					if (entry[0].test(match)) {
@@ -656,25 +657,25 @@ export default {
 				});
 			}
 
-			if (metadata && metadata.killerLicenseIdentifier) {
+			if (metadata?.killerLicenseIdentifier) {
 				const killerLicense = metadata.killerLicenseIdentifier;
 
 				details = details.replace(/killed by (.+?), death cause/gm, (match, playerName) => {
-					return 'killed by <a class="text-red-600 dark:text-red-400" href="/players/' + killerLicense + '">' + playerName + '</a>, death cause';
+					return `killed by <a class="text-red-600 dark:text-red-400" href="/players/${killerLicense}">${playerName}</a>, death cause`;
 				});
 			}
 
-			if (metadata && metadata.killerSteam) {
+			if (metadata?.killerSteam) {
 				const killerSteam = metadata.killerSteam;
 
 				details = details.replace(/killed by (.+?), death cause/gm, (match, playerName) => {
-					return 'killed by <a class="text-red-600 dark:text-red-400" href="/players/' + killerSteam + '">' + playerName + '</a>, death cause';
+					return `killed by <a class="text-red-600 dark:text-red-400" href="/players/${killerSteam}">${playerName}</a>, death cause`;
 				});
 			}
 
 			details = details.replace(/(license:\w+)(?=\))/gm, pMatch => {
-				const start = pMatch.substring(8, 12),
-					end = pMatch.substring(pMatch.length - 4);
+				const start = pMatch.substring(8, 12);
+				const end = pMatch.substring(pMatch.length - 4);
 
 				return `<span class="copy_title text-gray-700 dark:text-gray-300 cursor-pointer license_id" title="${pMatch}">${start}...${end}</span>`;
 			});
@@ -714,9 +715,9 @@ export default {
 		});
 
 		$('body').on('click', '.copy_title', function (e) {
-			const title = $(this).attr('title'),
-				timeout = $(this).data('timeout'),
-				original = $(this).data('original') || $(this).text();
+			const title = $(this).attr('title');
+			const timeout = $(this).data('timeout');
+			const original = $(this).data('original') || $(this).text();
 
 			clearTimeout(timeout);
 
@@ -745,14 +746,14 @@ export default {
 		if (this.filters.before) {
 			const d = new Date(this.filters.before * 1000);
 
-			$('#before-date').val(d.getFullYear() + '-' + ((d.getMonth() + 1) + '').padStart(2, '0') + '-' + (d.getDate() + '').padStart(2, '0'));
-			$('#before-time').val(d.getHours() + ':' + d.getMinutes());
+			$('#before-date').val(`${d.getFullYear()}-${(`${d.getMonth() + 1}`).padStart(2, '0')}-${(`${d.getDate()}`).padStart(2, '0')}`);
+			$('#before-time').val(`${d.getHours()}:${d.getMinutes()}`);
 		}
 		if (this.filters.after) {
 			const d = new Date(this.filters.after * 1000);
 
-			$('#after-date').val(d.getFullYear() + '-' + ((d.getMonth() + 1) + '').padStart(2, '0') + '-' + (d.getDate() + '').padStart(2, '0'));
-			$('#after-time').val(d.getHours() + ':' + d.getMinutes());
+			$('#after-date').val(`${d.getFullYear()}-${(`${d.getMonth() + 1}`).padStart(2, '0')}-${(`${d.getDate()}`).padStart(2, '0')}`);
+			$('#after-time').val(`${d.getHours()}:${d.getMinutes()}`);
 		}
 	}
 };

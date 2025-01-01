@@ -22,7 +22,7 @@ class Player {
         const flags = Player.getPlayerFlags(rawData);
 
         if (flags.identityOverride) {
-            rawData.license = rawData.license + "a";
+            rawData.license = `${rawData.license}a`;
         }
 
         return rawData;
@@ -31,7 +31,7 @@ class Player {
     update(rawData, staffMembers) {
         const flags = Player.getPlayerFlags(rawData);
 
-        this.instance = parseInt(rawData.instance);
+        this.instance = Number.parseInt(rawData.instance);
 
         this.player = {
             name: rawData.name,
@@ -52,7 +52,7 @@ class Player {
 
         this.heading = mapNumber(-rawData.coords.w, -180, 180, 0, 360) - 180; // <- leaflet is weird
 
-        const invisible = this.character && this.character.invisible;
+        const invisible = this.character?.invisible;
 
         this.invisible = {
             raw: invisible,
@@ -62,8 +62,8 @@ class Player {
         this.onDuty = rawData.duty ? rawData.duty.type : 'none';
 
         this.icon = {
-            dead: this.character && this.character.isDead,
-            driving: this.character && this.character.isDriving,
+            dead: this.character?.isDead,
+            driving: this.character?.isDriving,
             passenger: this.character && !this.character.isDriving && this.vehicle,
             invisible: this.invisible.raw
         };
@@ -72,7 +72,7 @@ class Player {
             this.icon.invisible ? 'invisible' : null,
             this.icon.dead ? 'dead' : null,
             this.player.isStaff ? 'staff' : null,
-            this.icon.driving ? 'driving (' + this.vehicle.model + ')' : null,
+            this.icon.driving ? `driving (${this.vehicle.model})` : null,
             this.icon.passenger ? 'passenger' : null,
             !this.icon.passenger && !this.icon.driving ? 'on foot' : null,
             this.onDuty === 'police' ? 'on duty (police)' : null,
@@ -99,10 +99,10 @@ class Player {
         const name = this.character ? this.character.name : 'N/A';
 
         if (useHtml) {
-            return name + '<sup>' + this.player.source + '</sup>';
+            return `${name}<sup>${this.player.source}</sup>`;
         }
 
-        return name + ' (' + this.player.source + ')';
+        return `${name} (${this.player.source})`;
     }
 
     getVehicleID() {
@@ -164,7 +164,7 @@ class Player {
                     iconSize: [IconSizes.skull, IconSizes.skull]
                 }
             );
-        } else if (this.player.source == trackServerId) {
+        } else if (this.player.source === trackServerId) {
             icon = new L.Icon(
                 {
                     iconUrl: '/images/icons/circle_yellow.png',
@@ -191,18 +191,18 @@ class Player {
     }
 
     getZIndex(trackServerId) {
-        if (this.player.source == trackServerId) {
+        if (this.player.source === trackServerId) {
             return 200;
-        } else if (this.icon.passenger) {
+        }if (this.icon.passenger) {
             return 102;
-        } else if (!this.icon.driving) {
+        }if (!this.icon.driving) {
             return 101;
         }
         return 100;
     }
 
     static newMarker() {
-        let marker = L.marker({ lat: 0, lng: 0 }, {});
+        const marker = L.marker({ lat: 0, lng: 0 }, {});
 
         marker.bindPopup('', {
             autoPan: false
@@ -241,7 +241,7 @@ class Player {
                     marker._icon.style.transition = '0s';
 
                     // Update the icons rotation with the actual heading while we still have no transition
-                    marker._icon.style.transform = marker._icon.style.transform.replace(/(?<=rotateZ\().+?(?=\))/gm, this.heading + 'deg');
+                    marker._icon.style.transform = marker._icon.style.transform.replace(/(?<=rotateZ\().+?(?=\))/gm, `${this.heading}deg`);
                 }, 300);
             } else {
                 // We are not doing a 360 so no fancy stuff needed
@@ -251,27 +251,24 @@ class Player {
             marker.setRotationAngle(this.heading);
         }
 
-        const attributes = this.attributes.map(a => '<span class="text-xxs italic block leading-3">- is ' + a + '</span>');
+        const attributes = this.attributes.map(a => `<span class="text-xxs italic block leading-3">- is ${a}</span>`);
 
         let vehicleInfo = '';
 
         const vehicle = this.getVehicleID();
 
         if (vehicle && vehicle in vehicles) {
-            const formatInfo = info => '<a href="/players/' + info.license + '" target="_blank">' + info.name + '</a>';
+            const formatInfo = info => `<a href="/players/${info.license}" target="_blank">${info.name}</a>`;
 
-            vehicleInfo = '<span class="block mt-1 text-xxs leading-3 border-t border-gray-700 pt-1"><b>Driver:</b> ' + (vehicles[vehicle].driver ? formatInfo(vehicles[vehicle].driver) : 'N/A') + '</span>' +
-                '<span class="block text-xxs leading-3"><b>Passengers:</b> ' + (
-                    vehicles[vehicle].passengers.length > 0 ?
+            vehicleInfo = `<span class="block mt-1 text-xxs leading-3 border-t border-gray-700 pt-1"><b>Driver:</b> ${vehicles[vehicle].driver ? formatInfo(vehicles[vehicle].driver) : 'N/A'}</span><span class="block text-xxs leading-3"><b>Passengers:</b> ${vehicles[vehicle].passengers.length > 0 ?
                         vehicles[vehicle].passengers.map(i => formatInfo(i)).join(', ') :
-                        'N/A'
-                ) + '</span>';
+                        'N/A'}</span>`;
         }
 
         const popup = [
-            '<a href="/players/' + this.player.license + '" target="_blank" class="font-bold block border-b border-gray-700 mb-1">' + this.getTitle(true) + '</a>',
-            '<span class="block"><b>Altitude:</b> ' + this.location.z + 'm</span>',
-            '<span class="block mb-1 border-b border-gray-700 pb-1"><b>Speed:</b> ' + this.speed + 'mph</span>',
+            `<a href="/players/${this.player.license}" target="_blank" class="font-bold block border-b border-gray-700 mb-1">${this.getTitle(true)}</a>`,
+            `<span class="block"><b>Altitude:</b> ${this.location.z}m</span>`,
+            `<span class="block mb-1 border-b border-gray-700 pb-1"><b>Speed:</b> ${this.speed}mph</span>`,
             attributes.join(''),
             vehicleInfo
         ].join('');

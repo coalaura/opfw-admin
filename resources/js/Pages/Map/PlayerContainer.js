@@ -68,7 +68,7 @@ class PlayerContainer {
 
         this.instances = Object.entries(this.instances).map(entry => {
             return {
-                id: parseInt(entry[0]),
+                id: Number.parseInt(entry[0]),
                 count: entry[1]
             };
         }).sort((a, b) => a.id > b ? 1 : (a.id < b.id ? -1 : 0));
@@ -120,7 +120,7 @@ class PlayerContainer {
             return;
         }
 
-        const instance = parseInt(rawPlayer.instance);
+        const instance = Number.parseInt(rawPlayer.instance);
         if (rawPlayer.character) {
             this.instances[instance] = (this.instances[instance] || 0) + 1;
         }
@@ -191,7 +191,7 @@ class PlayerContainer {
 
         if (!player || !player.character) return false;
 
-        if (player.instance !== parseInt(instance)) return false;
+        if (player.instance !== Number.parseInt(instance)) return false;
 
         return true;
     }
@@ -206,7 +206,7 @@ class PlayerContainer {
 
     eachPlayer(callback) {
         for (const source in this.players) {
-            if (!this.players.hasOwnProperty(source)) continue;
+            if (!Object.hasOwn(this.players, source)) continue;
 
             callback(source, this.players[source]);
         }

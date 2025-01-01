@@ -360,6 +360,8 @@ class GeneralHelper
             $obj   = $matches[1];
             $label = $matches[3];
 
+            $obj = preg_replace('/\b[xyz]\b/', '"$0"', $obj);
+
             $result[] = [
                 'icon'   => $icon,
                 'label'  => $label,

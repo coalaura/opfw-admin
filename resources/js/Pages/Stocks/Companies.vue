@@ -254,11 +254,11 @@ export default {
             if (!key.cid) return;
 
             try {
-                const response = await axios.get('/api/character/' + key.cid),
-                    data = response.data;
+                const response = await axios.get(`/api/character/${key.cid}`);
+                const data = response.data;
 
-                if (data && data.status) {
-                    key.name = data.data.first_name + ' ' + data.data.last_name;
+                if (data?.status) {
+                    key.name = `${data.data.first_name} ${data.data.last_name}`;
                 }
             } catch (e) {
             }
@@ -270,7 +270,7 @@ export default {
 
             this.editingProperty.keys = this.editingProperty.keys.filter(key => key.cid);
 
-            await this.$inertia.post('/stocks/property/' + this.editingPropertyId, this.editingProperty);
+            await this.$inertia.post(`/stocks/property/${this.editingPropertyId}`, this.editingProperty);
 
             this.isLoading = false;
             this.isEditingProperty = false;

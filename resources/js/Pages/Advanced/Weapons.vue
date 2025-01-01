@@ -116,8 +116,8 @@ export default {
         },
 
         damageDescription() {
-            const avg = `<i class="text-lime-500">${this.weaponData.damages.avg}hp</i>`,
-                max = `<i class="text-rose-500">${this.weaponData.damages.max}hp</i>`;
+            const avg = `<i class="text-lime-500">${this.weaponData.damages.avg}hp</i>`;
+            const max = `<i class="text-rose-500">${this.weaponData.damages.max}hp</i>`;
 
             return this.t('weapons.damage_description', this.weaponData.name, avg, max);
         }
@@ -153,8 +153,8 @@ export default {
         getUsageTooltip(datasetLabel, label, value) {
             label = label.split(' ').shift();
 
-            const type = this.usages.categories[label],
-                total = this.usages.labels.map((l, index) => {
+            const type = this.usages.categories[label];
+            const total = this.usages.labels.map((l, index) => {
                     l = l.split(' ').shift();
 
                     if (this.usages.categories[l] !== type) {
@@ -178,11 +178,11 @@ export default {
             const weaponName = this.weaponName;
 
             try {
-                const response = await axios.get('/weapons/' + hash);
+                const response = await axios.get(`/weapons/${hash}`);
 
                 const data = response.data;
 
-                if (data && data.data && data.status) {
+                if (data?.data && data.status) {
                     this.weaponData = data.data;
                     this.weaponData.name = weaponName;
                 } else {
