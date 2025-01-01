@@ -1,15 +1,23 @@
 // Garages
-{x: 274.167, y: -344.255} blips/garage.png Garage A
-{x: 66.501, y: 13.464} blips/garage.png Garage B
-{x: -282.145, y: -774.224} blips/garage.png Garage C
-{x: -75.020, y: -2004.079} blips/garage.png Garage D
-{x: 1037.723, y: -764.004} blips/garage.png Garage E
-{x: 363.877, y: 298.088} blips/garage.png Garage F
-{x: -2029.582, y: -464.123} blips/garage.png Garage G
-{x: 1737.600, y: 3710.031} blips/garage.png Garage H
-{x: -150.949, y: 6350.954} blips/garage.png Garage I
-{x: 5099.902, y: -5721.809} blips/garage.png Garage J
-{x: 4500.091, y: -4551.037} blips/garage.png Garage K
+{x: 274.17, y: -344.25} blips/garage.png Garage A
+{x: 66.51, y: 13.47} blips/garage.png Garage B
+{x: -282.14, y: -774.22} blips/garage.png Garage C
+{x: -75.01, y: -2004.08} blips/garage.png Garage D
+{x: 1037.74, y: -764.00} blips/garage.png Garage E
+{x: 363.89, y: 298.09} blips/garage.png Garage F
+{x: -1395.97, y: -472.93} blips/garage.png Garage G
+{x: 1737.61, y: 3710.04} blips/garage.png Garage H
+{x: -150.94, y: 6350.96} blips/garage.png Garage I
+{x: 5099.90, y: -5721.81} blips/garage.png Garage J
+{x: 4500.09, y: -4551.04} blips/garage.png Garage K
+{x: -572.26, y: 311.68} blips/garage.png Garage L
+{x: 2905.36, y: 5306.02} blips/garage.png Garage M
+{x: -1160.06, y: -740.87} blips/garage.png Garage N
+{x: 841.25, y: -2181.90} blips/garage.png Garage O
+{x: 16.73, y: -1090.06} blips/garage.png Garage P
+{x: -62.97, y: -1686.48} blips/garage.png Garage Q
+{x: 1244.90, y: 2713.46} blips/garage.png Garage R
+{x: -2981.04, y: 357.11} blips/garage.png Garage S
 
 // Ammu Nation
 {x: 843.402, y: -1034.044} blips/ammu_nation.png Ammu Nation 1
@@ -23,20 +31,21 @@
 {x: 21.204, y: -1106.360} blips/ammu_nation_range.png Ammu Nation with Range 2
 
 // Clothing Stores
-{x: 75.851, y: -1392.936} blips/clothing.png Clothing Store 1
-{x: -822.198, y: -1074.092} blips/clothing.png Clothing Store 2
-{x: 424.932, y: -806.281} blips/clothing.png Clothing Store 3
-{x: -1193.459, y: -768.831} blips/clothing.png Clothing Store 4
-{x: -162.936, y: -303.125} blips/clothing.png Clothing Store 5
-{x: -1450.589, y: -237.468} blips/clothing.png Clothing Store 6/7
-{x: 125.684, y: -222.910} blips/clothing.png Clothing Store 8
-{x: -3170.453, y: 1044.633} blips/clothing.png Clothing Store 9
-{x: -1101.231, y: 2710.431} blips/clothing.png Clothing Store 10
-{x: 614.730, y: 2762.018} blips/clothing.png Clothing Store 11
-{x: 1196.677, y: 2709.534} blips/clothing.png Clothing Store 12
-{x: 1693.569, y: 4822.879} blips/clothing.png Clothing Store 13
-{x: 4.549, y: 6512.729} blips/clothing.png Clothing Store 14
-{x: -710.360, y: -153.363} blips/clothing.png Clothing Store 15
+{x: 75.86, y: -1392.94} blips/clothing.png Clothing Store 1
+{x: -822.19, y: -1074.08} blips/clothing.png Clothing Store 2
+{x: 424.94, y: -806.28} blips/clothing.png Clothing Store 3
+{x: -1193.45, y: -768.83} blips/clothing.png Clothing Store 4
+{x: -162.93, y: -303.11} blips/clothing.png Clothing Store 5
+{x: -1450.59, y: -237.46} blips/clothing.png Clothing Store 6
+{x: 125.69, y: -222.91} blips/clothing.png Clothing Store 7
+{x: -3170.44, y: 1044.64} blips/clothing.png Clothing Store 8
+{x: -1101.23, y: 2710.43} blips/clothing.png Clothing Store 9
+{x: 614.74, y: 2762.03} blips/clothing.png Clothing Store 10
+{x: 1196.69, y: 2709.79} blips/clothing.png Clothing Store 11
+{x: 1693.57, y: 4822.89} blips/clothing.png Clothing Store 12
+{x: 4.55, y: 6512.74} blips/clothing.png Clothing Store 13
+{x: -710.36, y: -153.35} blips/clothing.png Clothing Store 14
+{x: 5012.50, y: -5748.89} blips/clothing.png Clothing Store 15
 
 // Banks
 {x: 149.736, y: -1040.730} blips/bank.png Bank 1
@@ -48,35 +57,37 @@
 {x: -351.033, y: -49.978} blips/bank.png Bank 7
 
 // Barbershops
-{x: 137.037, y: -1707.956} blips/barbershop.png Barbershop 1
-{x: -1282.892, y: -1117.200} blips/barbershop.png Barbershop 2
-{x: 1212.224, y: -472.840} blips/barbershop.png Barbershop 3
-{x: -813.455, y: -183.811} blips/barbershop.png Barbershop 4
-{x: -33.099, y: -152.347} blips/barbershop.png Barbershop 5
-{x: 1931.987, y: 3730.338} blips/barbershop.png Barbershop 6
-{x: -278.242, y: 6228.053} blips/barbershop.png Barbershop 7
+{x: 137.04, y: -1707.95} blips/barbershop.png Barbershop 1
+{x: -1282.88, y: -1117.19} blips/barbershop.png Barbershop 2
+{x: 1212.23, y: -472.84} blips/barbershop.png Barbershop 3
+{x: -813.45, y: -183.80} blips/barbershop.png Barbershop 4
+{x: -33.10, y: -152.35} blips/barbershop.png Barbershop 5
+{x: 1932.00, y: 3730.35} blips/barbershop.png Barbershop 6
+{x: -278.23, y: 6228.07} blips/barbershop.png Barbershop 7
+{x: 5005.17, y: -5754.83} blips/barbershop.png Barbershop 8
 
 // Grocery Stores
-{x: -48.330, y: -1757.960} blips/grocery.png Grocery Store 1
-{x: 25.635, y: -1347.745} blips/grocery.png Grocery Store 2
-{x: 1135.635, y: -982.853} blips/grocery.png Grocery Store 3
-{x: -707.327, y: -914.598} blips/grocery.png Grocery Store 4
-{x: -1222.246, y: -906.857} blips/grocery.png Grocery Store 5
-{x: -1487.565, y: -378.791} blips/grocery.png Grocery Store 6
-{x: 1163.697, y: -323.934} blips/grocery.png Grocery Store 7
-{x: 373.516, y: 325.424} blips/grocery.png Grocery Store 8
-{x: 2557.965, y: 381.956} blips/grocery.png Grocery Store 9
-{x: -2967.745, y: 391.596} blips/grocery.png Grocery Store 10
-{x: -3038.677, y: 585.864} blips/grocery.png Grocery Store 11
-{x: -1820.334, y: 792.673} blips/grocery.png Grocery Store 12
-{x: -3241.437, y: 1001.090} blips/grocery.png Grocery Store 13
-{x: 547.780, y: 2671.899} blips/grocery.png Grocery Store 14
-{x: 1165.345, y: 2709.428} blips/grocery.png Grocery Store 15
-{x: 2679.257, y: 3280.062} blips/grocery.png Grocery Store 16
-{x: 1393.754, y: 3605.459} blips/grocery.png Grocery Store 17
-{x: 1961.459, y: 3739.965} blips/grocery.png Grocery Store 18
-{x: 1697.908, y: 4924.457} blips/grocery.png Grocery Store 19
-{x: 1728.593, y: 6414.066} blips/grocery.png Grocery Store 20
+{x: -48.32, y: -1757.96} blips/grocery.png Grocery Store 1
+{x: 25.64, y: -1347.99} blips/grocery.png Grocery Store 2
+{x: 1135.64, y: -982.85} blips/grocery.png Grocery Store 3
+{x: -707.31, y: -914.59} blips/grocery.png Grocery Store 4
+{x: -1222.23, y: -906.85} blips/grocery.png Grocery Store 5
+{x: -1487.65, y: -378.56} blips/grocery.png Grocery Store 6
+{x: 1163.71, y: -323.93} blips/grocery.png Grocery Store 7
+{x: 373.52, y: 325.43} blips/grocery.png Grocery Store 8
+{x: 2557.97, y: 381.97} blips/grocery.png Grocery Store 9
+{x: -2967.73, y: 391.60} blips/grocery.png Grocery Store 10
+{x: -3038.67, y: 585.87} blips/grocery.png Grocery Store 11
+{x: -1820.33, y: 792.67} blips/grocery.png Grocery Store 12
+{x: -3241.44, y: 1001.10} blips/grocery.png Grocery Store 13
+{x: 547.78, y: 2671.91} blips/grocery.png Grocery Store 14
+{x: 1165.35, y: 2709.44} blips/grocery.png Grocery Store 15
+{x: 2679.26, y: 3280.07} blips/grocery.png Grocery Store 16
+{x: 1393.76, y: 3605.47} blips/grocery.png Grocery Store 17
+{x: 1961.47, y: 3739.97} blips/grocery.png Grocery Store 18
+{x: 1697.92, y: 4924.46} blips/grocery.png Grocery Store 19
+{x: 1728.60, y: 6414.08} blips/grocery.png Grocery Store 20
+{x: 160.89, y: 6640.39} blips/grocery.png Don's Country Store
 
 // Impound lot
 {x: 398.637, y: -1641.297} blips/impound.png Impound lot 1
@@ -87,7 +98,6 @@
 // Medical
 {x: -247.358, y: 6331.569} blips/medical.png Paleto Bay Clinic
 {x: -472, y: -336} blips/medical.png Mount Zonah Medical Center
-{x: 1150.602, y: -1530.250} blips/medical.png St. Fiacre Hospital
 {x: 1837, y: 3676} blips/medical.png Sandy Shores Medical Center
 {x: 4926, y: -5273} blips/medical.png Cayo Perico Medical Station
 
@@ -103,9 +113,6 @@
 {x: -1632.290, y: -1015.622} blips/police.png Del Perro Police Station
 {x: 2534.334, y: -384.501} blips/police.png N.O.O.S.E. Headquarters
 
-// Police Sea HQ
-{x: -800.281, y: -1512.382} blips/sea_hq.png Police Sea HQ
-
 // Sunken Ship
 {x: 3173.842, y: -357.798} blips/sunken_ship.png Sunken Ship
 
@@ -114,7 +121,6 @@
 
 // Repair Shop
 {x: -26.413, y: -1672.127} blips/repair.png Mosley's Repair Shop
-{x: 1769.710, y: 3330.343} blips/repair.png Flywheels Repair Shop
 {x: 961.477, y: -106.233} blips/repair.png LostMC Repair Shop
 {x: -1421.209, y: -439.978} blips/repair.png Hayes Repair Shop
 {x: -1145.710, y: -1990.906} blips/repair.png Second Gear Repair Shop
@@ -142,7 +148,7 @@
 // Yoga
 {x: -1494.119, y: 829.398} blips/yoga.png Yoga
 
-//Midnight Tuner Shop
+// Midnight Tuner Shop
 {x: 933.310, y: -971.380} blips/mtc.png Midnight Tuner Club
 
 // Bean Machine
@@ -151,7 +157,7 @@
 // Burger Shot
 {x: -1185, y: -890} blips/burger_shop.png Burger Shot
 
-//Cayo Markers
+// Cayo Markers
 
 // Island Bar
 {x: 4905, y: -4941} blips/island_bar.png Island Bar
