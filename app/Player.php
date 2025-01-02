@@ -1069,8 +1069,8 @@ class Player extends Model
         // playersRevived is worth x0.18
         $xp += $this->getUserStatisticsValue('playersRevived') * 0.18;
 
-        // playersSpectated is worth x0.12
-        $xp += $this->getUserStatisticsValue('playersSpectated') * 0.2;
+        // playersSpectated is worth x0.11
+        $xp += $this->getUserStatisticsValue('playersSpectated') * 0.11;
 
         // playersUnloaded is worth x0.8
         $xp += $this->getUserStatisticsValue('playersUnloaded') * 0.8;
