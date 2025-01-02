@@ -541,6 +541,24 @@ class TestController extends Controller
         return self::respond(implode("\n", $list));
     }
 
+    public function userStatistics(Request $request, Player $player)
+    {
+        if (!$this->isSuperAdmin($request)) {
+            abort(403);
+        }
+
+        $statistics = $player->getUserStatistics();
+        $lines = [
+            sprintf("User statistics for %s", $player->getSafePlayerName()),
+        ];
+
+        foreach ($statistics as $name => $value) {
+            $lines[] = sprintf("%s: %s", $name, $value['value']);
+        }
+
+        return self::respond(implode("\n", $lines));
+    }
+
     public function dannyClassifier(string $api_key)
     {
         if (env('DEV_API_KEY', '') !== $api_key || empty($api_key) || $api_key === "some_random_token") {
