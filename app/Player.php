@@ -1060,8 +1060,8 @@ class Player extends Model
         // playersBanned is worth x1.8
         $xp += $this->getUserStatisticsValue('playersBanned') * 1.8;
 
-        // playerJobUpdates is worth x0.42
-        $xp += $this->getUserStatisticsValue('playerJobUpdates') * 0.42;
+        // playerJobUpdates is worth x0.58
+        $xp += $this->getUserStatisticsValue('playerJobUpdates') * 0.58;
 
         // playersMuted is worth x1.25
         $xp += $this->getUserStatisticsValue('playersMuted') * 1.25;
