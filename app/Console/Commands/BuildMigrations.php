@@ -13,7 +13,7 @@ class BuildMigrations extends Command
      *
      * @var string
      */
-    protected $signature = 'build:migrations {--date=}';
+    protected $signature = 'build:migrations {--fresh}';
 
     /**
      * The console command description.
@@ -442,8 +442,18 @@ EOT;
             mkdir($dir);
         }
 
-        $date = $this->option("date") ?? date('Y_m_d_H');
+        $date = date('Y_m_d_Hi') . '00';
 
-        return sprintf('%s/%s0000_create_%s_table.php', $dir, $date, $table);
+        if (!$this->option('fresh')) {
+            $migrations = scandir(base_path('database/migrations'));
+
+            foreach ($migrations as $migration) {
+                if (Str::contains($migration, sprintf('_create_%s_table', $table))) {
+                    $date = Str::before($migration, '_create_');
+                }
+            }
+        }
+
+        return sprintf('%s/%s_create_%s_table.php', $dir, $date, $table);
     }
 }
