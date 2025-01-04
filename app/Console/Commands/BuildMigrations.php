@@ -310,7 +310,7 @@ EOT;
             $content .= '->primary()';
         }
 
-        return $content . ';';
+        return $content . ';' . ($primary ? ' // primary key' : '');
     }
 
     private function collectSchema(): ?array
@@ -442,8 +442,8 @@ EOT;
             mkdir($dir);
         }
 
-        $date = $this->option("date") ?? date('Y_m_d_His');
+        $date = $this->option("date") ?? date('Y_m_d_H');
 
-        return sprintf('%s/%s_create_%s_table.php', $dir, $date, $table);
+        return sprintf('%s/%s0000_create_%s_table.php', $dir, $date, $table);
     }
 }
