@@ -2,7 +2,7 @@
     <footer class="items-center justify-between px-12 py-4 text-center text-white bg-gray-900 lg:flex">
         <div></div>
         <p>
-            <i class="text-red-500 fas fa-heart"></i> 2022 - 2024 maintained by <a href="https://github.com/coalaura" target="_blank" class="font-semibold">coalaura</a>
+            <i class="text-red-500 fas fa-heart"></i> 2022 - 2025 maintained by <a href="https://github.com/coalaura" target="_blank" class="font-semibold">coalaura</a>
         </p>
         <p class="text-gray-100">
             <a target="_blank" href="https://github.com/coalaura/opfw-admin">
