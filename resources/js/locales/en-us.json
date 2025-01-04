@@ -287,6 +287,7 @@
         "last_time_unknown": "Last time is unknown.",
         "last_time": "Last time was {0} ago ({1}).",
         "xp": "XP Level",
+        "footer": "Your actions contribute to the success and growth of OP-FW. Through the reliable systems of OP-Framework, your efforts are recognized and celebrated as part of our collective progress. Teamwork drives achievement, and dedication builds excellence. Glory to the OP-FW!",
 
         "title_chinese": "Citizen Contribution Tracker",
         "description_chinese": "A detailed record of your contributions to societal harmony and progress, monitored by the Party for the benefit of all. Remember, every action reflects your dedication to the collective future.",
@@ -299,7 +300,7 @@
         "players_kicked_chinese": "Disruptions Removed",
         "players_banned_chinese": "Traitors Expelled",
         "xp_chinese": "Social Credits",
-        "subtitle_chinese": "Every action you take is a testament to your loyalty and commitment to the Party. Under the watchful eyes of the system, your contributions are recorded and celebrated as part of our collective progress. Obedience ensures harmony, and vigilance guarantees prosperity. Glory to the CCP!"
+        "footer_chinese": "Every action you take is a testament to your loyalty and commitment to the Party. Under the watchful eyes of the system, your contributions are recorded and celebrated as part of our collective progress. Obedience ensures harmony, and vigilance guarantees prosperity. Glory to the CCP!"
     },
     "statistics": {
         "title": "Statistics",

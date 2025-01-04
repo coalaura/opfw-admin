@@ -90,7 +90,7 @@
                     </tr>
                 </table>
 
-                <p class="mt-3 italic" v-if="modifier">{{ t('staff_statistics.subtitle_chinese') }}</p>
+                <p class="mt-3 italic">{{ t('staff_statistics.footer' + modifier) }}</p>
             </div>
         </template>
 
