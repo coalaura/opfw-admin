@@ -13,7 +13,7 @@
                 <sidebar class="flex-shrink-0" v-if="!isMobile()" />
 
                 <!-- Content -->
-                <div class="flex flex-col flex-grow overflow-y-auto bg-white dark:bg-gray-800 dark:text-white" scroll-region ref="scrollable">
+                <div class="flex flex-col flex-grow overflow-y-auto bg-white dark:bg-gray-800 dark:text-white main-content" scroll-region ref="scrollable">
                     <div class="flex-grow p-12 pt-10 mobile:px-4 relative">
 
                         <!-- Flash message -->

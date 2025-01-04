@@ -450,25 +450,58 @@ html.dark .new-entry {
 }
 
 .ansi-note {
-    color: #FFAF87;
+    color: #ffaf87;
 }
 
 .ansi-debug {
-    color: #D7D7D7;
+    color: #d7d7d7;
 }
 
 .ansi-info {
-    color: #87D7FF;
+    color: #87d7ff;
 }
 
 .ansi-warn {
-    color: #FF5F00;
+    color: #ff5f00;
 }
 
 .ansi-error {
-    color: #AF0000;
+    color: #af0000;
 }
 
 .ansi-fatal {
-    color: #FF0000;
+    color: #ff0000;
+}
+
+.china {
+    position: relative;
+}
+
+.china > * {
+    position: relative;
+    z-index: 1;
+}
+
+.china::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url(/images/china.svg) no-repeat center center;
+    background-size: auto;
+    background-size: cover;
+    z-index: 0;
+    opacity: 0.5;
+    border-radius: 0.25rem;
+}
+
+.banner-bg:has(.china) footer,
+.banner-bg:has(.china) .main-content {
+    background: #a0342e !important;
+}
+
+.banner-bg:has(.china) p {
+    color: #fff !important;
 }

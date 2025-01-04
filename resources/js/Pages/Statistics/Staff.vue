@@ -2,11 +2,12 @@
     <div>
 
         <portal to="title">
-            <h1 class="dark:text-white">
-                {{ t("staff_statistics.title") }}
+            <h1 class="dark:text-white flex items-center gap-3">
+                <img src="/images/social_credit.webp" class="!m-0 w-16 inline-block" v-if="modifier" />
+                {{ t("staff_statistics.title" + modifier) }}
             </h1>
             <p>
-                {{ t("staff_statistics.description") }}
+                {{ t("staff_statistics.description" + modifier) }}
             </p>
         </portal>
 
@@ -24,22 +25,22 @@
         </portal>
 
         <template>
-            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600">
+            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600" :class="{ 'china': modifier }">
                 <table class="whitespace-nowrap w-full">
                     <tr class="bg-gray-400 dark:bg-gray-800 no-alpha">
                         <th class="font-bold px-4 py-1.5 text-left">&nbsp;</th>
                         <th class="font-bold px-4 py-1.5 text-left">
                             <i class="fas fa-coins"></i>
-                            XP
+                            {{ t('staff_statistics.xp' + modifier) }}
                         </th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.player') }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.claimed_reports') }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.staff_pms') }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.staff_chats') }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_revived') }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_unloaded') }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_kicked') }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_banned') }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.player' + modifier) }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.claimed_reports' + modifier) }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.staff_pms' + modifier) }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.staff_chats' + modifier) }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_revived' + modifier) }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_unloaded' + modifier) }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_kicked' + modifier) }}</th>
+                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_banned' + modifier) }}</th>
                     </tr>
 
                     <tr v-for="(player, index) in players" :key="player.license" class="odd:bg-gray-200 dark:odd:bg-gray-500/40" :class="getPlayerClassNames(index, player)">
@@ -88,6 +89,8 @@
                         </template>
                     </tr>
                 </table>
+
+                <p class="mt-3 italic" v-if="modifier">{{ t('staff_statistics.subtitle_chinese') }}</p>
             </div>
         </template>
 
@@ -100,11 +103,12 @@ import Layout from './../../Layouts/App';
 export default {
     layout: Layout,
     props: {
-        players: Object,
+        players: Array,
     },
     data() {
         return {
             isLoading: false,
+            modifier: Math.round(Math.random() * 100) <= 4 ? '_chinese' : '',
 
             status: {}
         }
@@ -168,6 +172,7 @@ export default {
     },
     mounted() {
         this.updateStatus();
-    }
+    },
+    unmounted() {}
 }
 </script>

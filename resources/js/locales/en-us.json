@@ -285,7 +285,21 @@
         "players_kicked": "Kicked",
         "players_banned": "Banned",
         "last_time_unknown": "Last time is unknown.",
-        "last_time": "Last time was {0} ago ({1})."
+        "last_time": "Last time was {0} ago ({1}).",
+        "xp": "XP Level",
+
+        "title_chinese": "Citizen Contribution Tracker",
+        "description_chinese": "A detailed record of your contributions to societal harmony and progress, monitored by the Party for the benefit of all. Remember, every action reflects your dedication to the collective future.",
+        "player_chinese": "Loyal Citizen",
+        "claimed_reports_chinese": "Reports Addressed",
+        "staff_pms_chinese": "Citizen Communications",
+        "staff_chats_chinese": "Party Discussions",
+        "players_revived_chinese": "Citizens Restored",
+        "players_unloaded_chinese": "Orderly Exclusions",
+        "players_kicked_chinese": "Disruptions Removed",
+        "players_banned_chinese": "Traitors Expelled",
+        "xp_chinese": "Social Credits",
+        "subtitle_chinese": "Every action you take is a testament to your loyalty and commitment to the Party. Under the watchful eyes of the system, your contributions are recorded and celebrated as part of our collective progress. Obedience ensures harmony, and vigilance guarantees prosperity. Glory to the CCP!"
     },
     "statistics": {
         "title": "Statistics",
