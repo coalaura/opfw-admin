@@ -801,6 +801,8 @@ class Player extends Model
                 return false;
             } else if (strpos($device, 'nvidia_broadcast') !== false) {
                 return false;
+            } else if (strpos($device, 'voicemeeter') !== false) {
+                return false;
             }
 
             return true;
