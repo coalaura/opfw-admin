@@ -188,6 +188,10 @@ class PlayerBanController extends Controller
 
         $data = $request->validated();
 
+        if ($data['expire'] < 60 * 60) {
+            return backWith('error', 'Bans must be at least 1 hour long.');
+        }
+
         // Create a unique hash to go with this player's batch of bans.
         $user = user();
         $hash = Ban::generateHash();
