@@ -549,19 +549,7 @@ export default {
                     return `<span class="${line.startsWith('+') ? 'text-green-300' : 'text-red-300'}">${line}</span>`;
                 }).join('\n');
 
-                // Format log lines
-                this.socketInfo += `\n\n<pre class="bg-black py-1 px-1.5 rounded-sm console">`;
-
-                this.socketInfo += logs.replace(/^\[(.+?)\] \[(.+?)\] (.+)$/gm, (_1, _date, _level, _2, message) => {
-                    const dt = moment(new Date(_date.slice(1, -1)));
-
-                    const date = `<span title="${dt.format("llll")} (${dt.from(now)})" class="ansi-muted">[${dt.format('DD/MM/YYYY HH:mm:ss')}] [</span>`,
-                        level = `<span class="ansi-${_level.trim()}">${_level}</span><span class="ansi-muted">]</span>`;
-
-                    return `${date}${level} ${message}`;
-                });
-
-                this.socketInfo += '</pre>';
+                this.socketInfo += `\n\n<pre class="bg-black py-1 px-1.5 rounded-sm console">${logs}</pre>`;
 
                 this.socketTime = time;
             } catch (e) {
