@@ -173,11 +173,10 @@ class StatisticsController extends Controller
             ];
 
             for ($week = 7; $week >= 0; $week--) {
-                $time = $week === 0 ? time() : strtotime("{$week} weeks ago");
+                $time = time() - ($week * 604800);
+                $date = sprintf('%s-%d', date('o', $time), intval(date('W', $time)));
 
-                $date = date('Y', $time) . '-' . intval(date('W', $time));
-
-                $points[$license]['points'][abs($week)] = $staffPoints[$date] ?? 0;
+                $points[$license]['points'][abs($week)] = ($staffPoints[$date] ?? 0);
             }
         }
 
