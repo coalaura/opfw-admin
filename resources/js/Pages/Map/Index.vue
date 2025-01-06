@@ -446,7 +446,9 @@ export default {
             this.historicValidLicense = true;
         },
         updateTrackingInfo() {
-            this.trackingValid = this.trackServerId && Object.values(this.container.players).find(player => player.player.source === this.trackServerId);
+            const source = parseInt(this.trackServerId);
+
+            this.trackingValid = Number.isInteger(source) && Object.values(this.container.players).find(player => player.player.source === source);
         },
         track(source) {
             this.trackServerId = source;
@@ -1008,9 +1010,11 @@ export default {
 
                 const process = async (data) => {
                     try {
-                        await this.renderMapData(data, this.trackServerId !== lastTrackedId);
+                        const trackedId = parseInt(this.trackServerId) || false;
 
-                        lastTrackedId = this.trackServerId;
+                        await this.renderMapData(data, trackedId, trackedId !== lastTrackedId);
+
+                        lastTrackedId = trackedId;
                     } catch (e) {
                         console.error('Failed to parse socket message ', e);
                     }
@@ -1081,7 +1085,7 @@ export default {
             }
                 return "Players";
         },
-        async renderMapData(data, trackedChanged) {
+        async renderMapData(data, trackedId, trackedChanged) {
             if (this.isPaused || this.isDragging || this.isTimestampShowing || this.isHistoricShowing) {
                 return;
             }
@@ -1119,7 +1123,7 @@ export default {
                             this.markers[id] = Player.newMarker();
                         }
 
-                        this.markers[id] = player.updateMarker(this.markers[id], this.trackServerId, this.container.vehicles);
+                        this.markers[id] = player.updateMarker(this.markers[id], trackedId, this.container.vehicles);
 
                         this.addToLayer(this.markers[id], this.getLayer(player));
 
@@ -1127,7 +1131,7 @@ export default {
                             this.markers[id]._icon.dataset.playerId = id;
                         }
 
-                        if (player.player.source === this.trackServerId) {
+                        if (player.player.source === trackedId) {
                             // this.map.setBearing(player.bearing);
 
                             this.map.setView(player.location.toMap(), trackedChanged ? 7 : this.map.getZoom(), {
