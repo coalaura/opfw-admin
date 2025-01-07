@@ -32,6 +32,14 @@
 
         <portal to="actions">
             <div class="flex gap-2">
+                <!-- Show/Hide Chat -->
+                <button class="p-2 w-11 text-center font-semibold text-white rounded bg-green-600 dark:bg-green-500" :title="t('map.show_chat')" @click="chatActive = true" v-if="!chatActive">
+                    <i class="fas fa-comment-dots"></i>
+                </button>
+                <button class="p-2 w-11 text-center font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500" :title="t('map.hide_chat')" @click="chatActive = false" v-else>
+                    <i class="fas fa-comment-slash"></i>
+                </button>
+
                 <!-- Show Timestamp -->
                 <button class="p-2 w-11 text-center font-semibold text-white rounded bg-blue-600 dark:bg-blue-500" :title="t('map.timestamp_title')" @click="isTimestamp = true" v-if="this.perm.check(this.perm.PERM_ADVANCED)">
                     <i class="fas fa-vial"></i>
@@ -43,10 +51,10 @@
                 </button>
 
                 <!-- Play/Pause -->
-                <button class="p-2 w-11 text-center font-semibold text-white rounded bg-green-600 dark:bg-green-500" :title="t('map.pause')" @click="isPaused = true" v-if="!isPaused && !isTimestampShowing && !isHistoricShowing">
+                <button class="p-2 w-11 text-center font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500" :title="t('map.pause')" @click="isPaused = true" v-if="!isPaused && !isTimestampShowing && !isHistoricShowing">
                     <i class="fas fa-pause"></i>
                 </button>
-                <button class="p-2 w-11 text-center font-semibold text-white rounded bg-red-600 dark:bg-red-500" :title="t('map.play')" @click="isPaused = false" v-if="isPaused && !isTimestampShowing && !isHistoricShowing">
+                <button class="p-2 w-11 text-center font-semibold text-white rounded bg-green-600 dark:bg-green-500" :title="t('map.play')" @click="isPaused = false" v-if="isPaused && !isTimestampShowing && !isHistoricShowing">
                     <i class="fas fa-play"></i>
                 </button>
             </div>
@@ -161,7 +169,11 @@
                     </div>
 
                     <div class="relative w-full">
-                        <div id="map" class="w-full relative h-max"></div>
+                        <div class="w-full flex gap-3">
+                            <div id="map" class="w-full relative h-max"></div>
+
+                            <PanelChat :active="chatActive" />
+                        </div>
 
                         <input v-if="!isTimestampShowing && !isHistoricShowing" type="number" class="placeholder absolute z-1k leaflet-tl ml-12 w-16 block px-2 font-base font-semibold" @input="updateTrackingInfo" :placeholder="t('map.track_placeholder')" min="0" max="65536" v-model="trackServerId" :class="trackingValid ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-200'" />
 
@@ -303,6 +315,7 @@ import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
 import SimplePlayerList from './../../Components/Map/SimplePlayerList';
 import Modal from './../../Components/Modal';
+import PanelChat from './../../Components/PanelChat';
 
 import PlayerContainer from './PlayerContainer';
 import Player from './Player';
@@ -329,6 +342,7 @@ export default {
         VSection,
         SimplePlayerList,
         Modal,
+        PanelChat,
     },
     props: {
         servers: {
@@ -407,6 +421,7 @@ export default {
             loadingScreenStatus: null,
             historicValidLicense: false,
 
+            chatActive: false,
             isTimestamp: false,
             isHistoric: false,
 
@@ -429,9 +444,17 @@ export default {
             activeViewers: [],
 
             selectedInstance: false,
-
             viewingUnloadedPlayerList: false
         };
+    },
+    watch: {
+        chatActive() {
+            if (this.chatActive) {
+                localStorage.setItem('chatActive', 'true');
+            } else {
+                localStorage.removeItem('chatActive');
+            }
+        }
     },
     methods: {
         checkHistoricLicense() {
@@ -534,7 +557,8 @@ export default {
             if (isSocket) {
                 return isDev ? 'ws://localhost:9999' : `wss://${window.location.host}`;
             }
-                return isDev ? 'http://localhost:9999' : `https://${window.location.host}`;
+
+            return isDev ? 'http://localhost:9999' : `https://${window.location.host}`;
         },
         historyRangeButton(move) {
             if (this.historyRange && this.historyMarker) {
@@ -1345,6 +1369,8 @@ export default {
         if (Math.round(Math.random() * 100) === 1) { // 1% chance it says fib spy satellite map
             $('#map_title').text(this.t('map.spy_satellite'));
         }
+
+        if (localStorage.getItem('chatActive')) this.chatActive = true;
 
         $("body").on("click", ".view-unloaded", e => {
             e.preventDefault();

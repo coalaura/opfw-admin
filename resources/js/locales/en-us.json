@@ -58,6 +58,9 @@
             "unavailable": "Unavailable",
             "unavailable_info": "Player status or id is unavailable at this moment"
         },
+        "connected": "Connected",
+        "connecting": "Connecting",
+        "disconnected": "Disconnected",
         "all": "All",
         "back": "Back",
         "server_id": "Server ID",
@@ -449,6 +452,8 @@
         "notify_license": "License Identifier",
         "notify_type": "Notification type",
         "no_notify": "No notifications",
+        "show_chat": "Show Chat",
+        "hide_chat": "Hide Chat",
         "historic_title": "Show a single players movements in a certain time period",
         "timestamp_title": "Show all players who were online at a certain time",
         "timestamp_date": "Timestamp",

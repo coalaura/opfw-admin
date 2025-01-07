@@ -95,7 +95,8 @@ module.exports = {
             maxWidth: {
                 '56':    '14rem',
                 'large': 'min(90%, 1220px)',
-                'px':    '1px'
+                'px':    '1px',
+                '40':    '10rem',
             },
             maxHeight: {
                 'max':             'calc(100% - 60px)',
