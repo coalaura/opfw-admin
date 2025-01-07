@@ -119,7 +119,7 @@ const CustomFormatters = {
         return data.map(timing => {
             const date = moment(timing.timestamp * 1000).format('MM/DD h:mm:ss A'),
                 diff = lastTime ? (timing.time - lastTime) : false,
-                diffStr = diff ? (diff < 0 ? '-' : '+') + Math.abs(diff) + 'ms' : '';
+                diffStr = diff ? `${(diff < 0 ? '-' : '+') + Math.abs(diff)}ms` : '';
 
             lastTime = timing.time;
 
@@ -247,7 +247,7 @@ export default {
                 return `${ms}<span class="text-gray-400 ml-0.5">ms</span>`;
             }
 
-            let fmt = [];
+            const fmt = [];
 
             let seconds = Math.floor(ms / 1000).toString().padEnd(2, '0');
             ms = ms % 1000;
