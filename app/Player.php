@@ -102,6 +102,7 @@ class Player extends Model
         'panel_settings',
         'staff_points',
         'user_data',
+        'user_statistics',
     ];
 
     /**
@@ -1053,16 +1054,12 @@ class Player extends Model
     public function incrementStatistics(string $key)
     {
         $raw = $this->user_statistics ?? [];
+        $entry = $raw[$key] ?? [];
 
-        if (!isset($raw[$key]) || !isset($raw[$key]['value'])) {
-            $raw[$key] = [
-                'value' => 1,
-                'time'  => time(),
-            ];
-        } else {
-            $raw[$key]['value']++;
-            $raw[$key]['time'] = time();
-        }
+        $raw[$key] = [
+            'value' => ($entry['value'] ?? 0) + 1,
+            'time'  => time(),
+        ];
 
         $this->update([
             'user_statistics' => $raw,
