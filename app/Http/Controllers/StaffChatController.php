@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\OPFWHelper;
 use App\Helpers\ServerAPI;
+use App\Player;
 use App\Server;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -48,6 +49,8 @@ class StaffChatController extends Controller
         if (!$status->status) {
             return $this->json(false, null, $status->message);
         }
+
+        user()->incrementStatistics(Player::StatisticsStaffChat);
 
         return $this->json(true, $message);
     }

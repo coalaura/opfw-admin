@@ -22,6 +22,13 @@ class Player extends Model
 {
     use HasFactory;
 
+    const StatisticsBan       = "playersBanned";
+    const StatisticsKick      = "playersKicked";
+    const StatisticsUnload    = "playersUnloaded";
+    const StatisticsRevive    = "playersRevived";
+    const StatisticsStaffPM   = "staffPmSent";
+    const StatisticsStaffChat = "staffChatSent";
+
     const UserStatisticsKeys = [
         "reportsCreated",
         "playersFrozen",
@@ -1041,6 +1048,28 @@ class Player extends Model
     }
 
     /**
+     * Increments a key in the user statistics.
+     */
+    public function incrementStatistics(string $key)
+    {
+        $raw = $this->user_statistics ?? [];
+
+        if (!isset($raw[$key]) || !isset($raw[$key]['value'])) {
+            $raw[$key] = [
+                'value' => 1,
+                'time'  => time(),
+            ];
+        } else {
+            $raw[$key]['value']++;
+            $raw[$key]['time'] = time();
+        }
+
+        $this->update([
+            'user_statistics' => $raw,
+        ]);
+    }
+
+    /**
      * Calculates the users total XP.
      */
     public function calculateXP(): float
@@ -1079,7 +1108,6 @@ class Player extends Model
 
         return $xp;
     }
-
 
     /**
      * Returns the online status of the player

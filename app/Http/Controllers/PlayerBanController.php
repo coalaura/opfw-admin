@@ -253,9 +253,13 @@ class PlayerBanController extends Controller
         ? 'You have been banned by ' . $staffName . ' for reason `' . $request->input('reason') . '`.'
         : 'You have been banned without a specified reason by ' . $staffName;
 
-        OPFWHelper::kickPlayer($user->license_identifier, $user->player_name, $player, $kickReason);
+        $response = OPFWHelper::kickPlayer($user->license_identifier, $user->player_name, $player, $kickReason);
 
-        return backWith('success', 'The player has successfully been banned.');
+        if (!$player->isStaff()) {
+            user()->incrementStatistics(Player::StatisticsBan);
+        }
+
+        return backWith('success', 'The player has successfully been banned. ' . ($response->status ? 'They have been kicked from the server.' : 'Unable to kick them from the server.'));
     }
 
     /**

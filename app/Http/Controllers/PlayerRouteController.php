@@ -4,19 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Helpers\CacheHelper;
 use App\Helpers\HttpHelper;
-use App\Helpers\LoggingHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\ServerAPI;
 use App\Player;
-use App\Screenshot;
 use App\Server;
-use GuzzleHttp\Client;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class PlayerRouteController extends Controller
 {
@@ -43,7 +39,17 @@ class PlayerRouteController extends Controller
 
         $reason = $request->input('reason') ?: 'You have been kicked by ' . $staffName;
 
-        return OPFWHelper::kickPlayer($user->license_identifier, $user->player_name, $player, $reason)->redirect();
+        $response = OPFWHelper::kickPlayer($user->license_identifier, $user->player_name, $player, $reason);
+
+        if (!$response->status) {
+            return backWith('error', 'Failed to kick player');
+        }
+
+        if (!$player->isStaff()) {
+            user()->incrementStatistics(Player::StatisticsKick);
+        }
+
+        return $response->redirect();
     }
 
     /**
@@ -62,7 +68,17 @@ class PlayerRouteController extends Controller
             return backWith('error', 'Message cannot be empty');
         }
 
-        return OPFWHelper::staffPM($user->license_identifier, $player, $message)->redirect();
+        $response = OPFWHelper::staffPM($user->license_identifier, $player, $message);
+
+        if (!$response->status) {
+            return backWith('error', 'Failed to send staffPM');
+        }
+
+        if (!$player->isStaff()) {
+            user()->incrementStatistics(Player::StatisticsStaffPM);
+        }
+
+        return $response->redirect();
     }
 
     /**
@@ -83,7 +99,17 @@ class PlayerRouteController extends Controller
 
         $message = trim($request->input('message'));
 
-        return OPFWHelper::unloadCharacter($user->license_identifier, $player, $character, $message)->redirect();
+        $response = OPFWHelper::unloadCharacter($user->license_identifier, $player, $character, $message);
+
+        if (!$response->status) {
+            return backWith('error', 'Failed to unload character');
+        }
+
+        if (!$player->isStaff()) {
+            user()->incrementStatistics(Player::StatisticsUnload);
+        }
+
+        return $response->redirect();
     }
 
     /**
@@ -220,7 +246,17 @@ class PlayerRouteController extends Controller
     {
         $user = user();
 
-        return OPFWHelper::revivePlayer($user->license_identifier, $player->license_identifier)->redirect();
+        $response = OPFWHelper::revivePlayer($user->license_identifier, $player->license_identifier);
+
+        if (!$response->status) {
+            return backWith('error', 'Failed to revive player');
+        }
+
+        if (!$player->isStaff()) {
+            user()->incrementStatistics(Player::StatisticsRevive);
+        }
+
+        return backWith('success', 'Player has been revived');
     }
 
     /**
