@@ -72,6 +72,8 @@ export default {
                 return;
             }
 
+            this.messages = [];
+
             this.connecting = true;
             this.connected = false;
 
