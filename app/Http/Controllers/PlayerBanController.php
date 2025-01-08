@@ -188,7 +188,7 @@ class PlayerBanController extends Controller
 
         $data = $request->validated();
 
-        if ($data['expire'] < 60 * 60) {
+        if ($data['expire'] && $data['expire'] < 60 * 60) {
             return backWith('error', 'Bans must be at least 1 hour long.');
         }
 
