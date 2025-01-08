@@ -154,6 +154,7 @@ export default {
             }
 
             this.scroll();
+            this.notify();
         },
 
         scroll() {
