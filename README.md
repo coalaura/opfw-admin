@@ -147,7 +147,7 @@ server {
 
     # This would be the socket server's configuration.
     # If you are not running it on the standard port you will have to change it here.
-    location ~ ^/(socket|socket\.io) {
+    location ~ ^/(socket|socket\.io|panel_chat) {
         proxy_pass http://127.0.0.1:9999;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
