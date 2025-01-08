@@ -72,7 +72,10 @@ export default {
     },
     computed: {
         names() {
-            return this.users.map(user => user.name);
+            // Remove duplicate discord ids
+            const unique = {};
+
+            return this.users.filter(user => !unique[user.discord] && (unique[user.discord] = true)).map(user => user.name);
         },
     },
     methods: {
