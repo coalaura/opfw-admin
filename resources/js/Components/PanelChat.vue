@@ -84,6 +84,7 @@ export default {
             }
 
             this.messages = [];
+            this.users = [];
 
             this.connecting = true;
             this.connected = false;
