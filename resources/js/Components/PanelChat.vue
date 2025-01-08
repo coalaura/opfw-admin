@@ -1,16 +1,21 @@
 <template>
     <div class="w-52 xl:w-96 h-max transition-all overflow-hidden flex flex-col justify-between" :class="{ '!w-0 opacity-0': !active }">
-        <div class="w-full italic text-xxs text-yellow-700 dark:text-yellow-400 px-1 py-0.5" v-if="connecting">
+        <div class="w-full italic text-xxs text-yellow-700 dark:text-yellow-400 px-1 py-0.5 select-none" v-if="connecting">
             <i class="fas fa-spinner animate-spin mr-1"></i>
             {{ t('global.connecting') }}
         </div>
 
-        <div class="w-full italic text-xxs text-lime-700 dark:text-lime-400 px-1 py-0.5" v-else-if="connected">
+        <div class="w-full italic text-xxs text-lime-700 dark:text-lime-400 px-1 py-0.5 group relative select-none" v-else-if="connected">
             <i class="fas fa-wifi mr-1"></i>
             {{ t('global.connected') }}
+
+            <div class="absolute top-full left-0 right-0 text-xxs flex flex-wrap gap-1 items-center px-1 py-0.5 opacity-0 group-hover:opacity-100 pointer-events-none text-blue-700 dark:text-blue-300 bg-gray-400/20 dark:bg-gray-600/20 backdrop-filter backdrop-blur-md z-10">
+                <i class="fas fa-users"></i>
+                {{ names.join(', ') }}
+            </div>
         </div>
 
-        <div class="w-full italic text-xxs text-red-700 dark:text-red-400 px-1 py-0.5" v-else>
+        <div class="w-full italic text-xxs text-red-700 dark:text-red-400 px-1 py-0.5 select-none" v-else>
             <i class="fas fa-exclamation-triangle mr-1"></i>
             {{ t('global.disconnected') }}
         </div>
@@ -52,7 +57,8 @@ export default {
             connected: false,
 
             message: '',
-            messages: []
+            messages: [],
+            users: []
         };
     },
     watch: {
@@ -62,7 +68,12 @@ export default {
             } else {
                 this.disconnect();
             }
-        }
+        },
+    },
+    computed: {
+        names() {
+            return this.users.map(user => user.name);
+        },
     },
     methods: {
         connect() {
@@ -90,25 +101,41 @@ export default {
                 }
             });
 
-            this.socket.on("chat", async (compressed) => {
+            this.socket.on("chat", compressed => {
                 console.log(`Received socket "chat" event.`);
 
-                const message = unpack(compressed);
-
-                this.addMessage(message);
+                this.addMessage(unpack(compressed));
             });
 
-            this.socket.on("history", async (compressed) => {
+            this.socket.on("history", compressed => {
                 console.log(`Received socket "history" event.`);
 
-                const messages = unpack(compressed);
-
-                this.messages = messages;
+                this.messages = unpack(compressed);
 
                 this.scroll();
             });
 
-            this.socket.on("disconnect", async () => {
+            this.socket.on("join", compressed => {
+                console.log(`Received socket "join" event.`);
+
+                this.users.push(unpack(compressed));
+            });
+
+            this.socket.on("left", compressed => {
+                console.log(`Received socket "left" event.`);
+
+                const id = unpack(compressed);
+
+                this.users = this.users.filter(user => user.id !== id);
+            });
+
+            this.socket.on("users", compressed => {
+                console.log(`Received socket "users" event.`);
+
+                this.users = unpack(compressed);
+            });
+
+            this.socket.on("disconnect", () => {
                 console.log(`Received socket "disconnect" event.`);
 
                 this.disconnect();
@@ -117,8 +144,6 @@ export default {
             });
 
             this.socket.on("connect", () => {
-                console.log(`Received socket "connect" event.`);
-
                 this.connecting = false;
                 this.connected = true;
             });
