@@ -103,8 +103,6 @@ export default {
 
                 const messages = unpack(compressed);
 
-                console.log(unpack(compressed));
-
                 this.messages = messages;
 
                 this.scroll();
