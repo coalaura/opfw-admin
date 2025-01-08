@@ -173,7 +173,7 @@ export default {
         notify() {
             const audio = new Audio("/images/notification_pop3.ogg");
 
-            audio.volume = 0.55;
+            audio.volume = 0.4;
 
             audio.play();
         },
