@@ -167,12 +167,23 @@ export default {
                     behavior: "smooth"
                 });
             });
-        }
+        },
+
+        notify() {
+            const audio = new Audio("/images/notification_pop3.ogg");
+
+            audio.volume = 0.55;
+
+            audio.play();
+        },
     },
     mounted() {
         if (this.active) {
             this.connect();
         }
+
+        // preload
+        fetch("/images/notification_pop3.ogg");
     }
 }
 </script>
