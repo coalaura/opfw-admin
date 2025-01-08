@@ -339,7 +339,8 @@ export default {
                     token: token,
                     type: "staff",
                     license: this.$page.auth.player.licenseIdentifier
-                }
+                },
+                path: "/io",
             });
 
             const process = async (data) => {

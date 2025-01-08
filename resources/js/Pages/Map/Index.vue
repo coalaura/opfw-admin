@@ -1025,7 +1025,8 @@ export default {
                         token: this.token,
                         type: "world",
                         license: this.$page.auth.player.licenseIdentifier
-                    }
+                    },
+                    path: "/io",
                 });
 
                 const pause = () => connection.emit("pause", document.visibilityState === "hidden");
