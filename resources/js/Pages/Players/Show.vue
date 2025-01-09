@@ -1121,7 +1121,7 @@
             </template>
 
             <template>
-                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 wide:grid-cols-4 gap-9 max-h-section overflow-y-auto">
+                <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 wide:grid-cols-4 gap-9 max-h-section overflow-y-auto overflow-x-hidden">
                     <card v-for="(character) in characters" :key="character.id" v-bind:deleted="character.characterDeleted" class="relative mb-0" :class="{ 'shadow-lg': status && status.character === character.id }">
                         <template #header>
                             <div class="flex justify-between gap-3">
@@ -1129,7 +1129,7 @@
                                     <img class="w-32 h-32 rounded-2xl" src="/images/loading.svg" :data-lazy="character.mugshot" v-if="character.mugshot" />
                                     <img class="w-32 h-32 rounded-2xl" src="/images/no_mugshot.png" v-else :title="t('players.characters.no_mugshot')" />
                                 </div>
-                                <div class="w-full">
+                                <div class="w-full overflow-hidden">
                                     <h3 class="mb-2 border-b-2 border-dashed border-gray-500">
                                         {{ character.name }}
                                     </h3>
