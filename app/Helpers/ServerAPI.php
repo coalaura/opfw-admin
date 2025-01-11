@@ -95,6 +95,56 @@ class ServerAPI
     }
 
     /**
+     * /vehicles.txt
+     */
+    public static function getVehiclesTxt(bool $refresh = false): array
+    {
+        if (!$refresh) {
+            if (CacheHelper::exists("opfw_vehicles_txt")) {
+                return CacheHelper::read("opfw_vehicles_txt", []);
+            }
+        }
+
+        $data = self::fresh('GET', '/vehicles.txt', null, self::MediumCacheTime);
+
+        if (!$data) {
+            return [];
+        }
+
+        $list = [];
+
+        $re = '/^([^\s]+)\n((\t.+\n)+)/mi';
+        preg_match_all($re, $data, $matches, PREG_SET_ORDER, 0);
+
+        foreach ($matches as $match) {
+            $resource = trim($match[1]);
+            $vehicles = explode("\n", $match[2]);
+
+            $entries = [];
+
+            foreach ($vehicles as $vehicle) {
+                $vehicle = trim($vehicle);
+                $parts = explode(" - ", $vehicle);
+
+                if (sizeof($parts) < 2) {
+                    continue;
+                }
+
+                $entries[] = [
+                    'label' => $parts[0],
+                    'model' => $parts[1],
+                ];
+            }
+
+            $list[$resource] = $entries;
+        }
+
+        CacheHelper::write("opfw_vehicles_txt", $list, self::MediumCacheTime);
+
+        return $list;
+    }
+
+    /**
      * /execute/createScreenshot
      */
     public static function createScreenshot(string $server, int $source, bool $drawHTML = true, int $lifespan = 3600)

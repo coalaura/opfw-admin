@@ -1535,7 +1535,7 @@
         "description": "Vehicles ko dekhein.",
         "distance": "Khoj aur result ke beech ka Levenshtein distance. Kam hone par behtar, 0 hone par perfect match hai.",
         "no_result": "Khoj se milta hua koi vehicle nahi mila.",
-        "result": "Khoj ka Parinaam",
+        "results": "Khoj Parinaam",
         "search": "Khoj",
         "title": "Vehicle Jankari"
     },

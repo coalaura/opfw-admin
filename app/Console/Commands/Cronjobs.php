@@ -19,6 +19,7 @@ class Cronjobs extends Command
     const StaticJsonAPIs = [
         [ServerAPI::class, 'getItems'],
         [ServerAPI::class, 'getVehicles'],
+        [ServerAPI::class, 'getVehiclesTxt'],
         [ServerAPI::class, 'getWeapons'],
         [ServerAPI::class, 'getJobs'],
         [ServerAPI::class, 'getDefaultJobs'],

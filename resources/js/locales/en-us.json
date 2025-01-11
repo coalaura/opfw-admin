@@ -644,8 +644,8 @@
         "title": "Vehicle Info",
         "description": "Lookup vehicles.",
         "search": "Search",
-        "result": "Search Result",
-        "no_result": "No vehicle matching the search was found.",
+        "results": "Search Results",
+        "no_result": "No vehicles matching the search was found.",
         "distance": "Levenshtein distance between search and result. Lower is better, 0 is a perfect match."
     },
     "weapons": {

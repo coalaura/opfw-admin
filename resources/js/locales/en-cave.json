@@ -1535,7 +1535,7 @@
         "description": "Find vehicles.",
         "distance": "Distance between find and get. Lower good, 0 perfect.",
         "no_result": "No vehicle found.",
-        "result": "Find Result",
+        "results": "Findings",
         "search": "Find",
         "title": "Vehicle Info"
     },

@@ -1535,7 +1535,7 @@
         "description": "Søk etter kjøretøy.",
         "distance": "Levenshtein-avstand mellom søk og resultat. Lavere er bedre, 0 er en perfekt match.",
         "no_result": "Ingen kjøretøy som matcher søket ble funnet.",
-        "result": "Søkeresultat",
+        "results": "Søkeresultater",
         "search": "Søk",
         "title": "Kjøretøyinformasjon"
     },

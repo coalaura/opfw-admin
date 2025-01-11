@@ -1535,7 +1535,7 @@
         "description": "Wookup vehicwes.",
         "distance": "Levenshtein distance between seawch and wesuwt. Lowe is bettew, 0 is a pewfect match.",
         "no_result": "No vehicwe matching the seawch was found.",
-        "result": "Sewarch Wesuwt",
+        "results": "Seawch Wesuwts",
         "search": "Sewarch",
         "title": "Vehicwe Info"
     },

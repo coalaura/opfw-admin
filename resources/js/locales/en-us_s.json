@@ -1535,7 +1535,7 @@
         "description": "Lookup vehicles.",
         "distance": "Levenshtein distance 'tween search and result. Lower's better, 0's a perfect match.",
         "no_result": "No vehicle matchin' the search was found.",
-        "result": "Search Result",
+        "results": "Searchin' Results",
         "search": "Search",
         "title": "Vehicle Info"
     },

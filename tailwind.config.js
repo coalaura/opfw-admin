@@ -75,6 +75,7 @@ module.exports = {
                 'avatar':             '50px',
                 'screenshot':         '540px',
                 'twitter-img':        '500px',
+                '520':                '520px',
             },
             height: {
                 'side-close':      '37px',
@@ -183,6 +184,8 @@ module.exports = {
                 'green-950': 'rgb(5, 46, 22)',
                 'teal-950': 'rgb(4, 47, 46)',
                 'gray-950': 'rgb(18, 22, 33)',
+
+                'gray-850': 'rgb(24 34 47)',
 
                 // Specialty colors
                 'discord': '#6C82CE',

@@ -173,9 +173,6 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Advanced search.
     Route::get('/advanced', [AdvancedSearchController::class, 'index']);
-    Route::get('/vehicles', [AdvancedSearchController::class, 'vehicles']);
-    Route::get('/weapons', [AdvancedSearchController::class, 'weapons']);
-    Route::get('/weapons/{hash}', [AdvancedSearchController::class, 'searchWeapons']);
 
     Route::group(['middleware' => ['super-admin']], function () {
         // Blacklisted Identifiers.
@@ -291,6 +288,9 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Tools
     Route::get('/tools/config', [ToolController::class, 'config']);
+    Route::get('/vehicles', [ToolController::class, 'vehicles']);
+    Route::get('/weapons', [ToolController::class, 'weapons']);
+    Route::get('/weapons/{hash}', [ToolController::class, 'searchWeapons']);
 
     // Test.
     Route::get('/test/logs/{action}', [TestController::class, 'logs']);
