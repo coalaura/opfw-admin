@@ -26,6 +26,8 @@
 
         <template>
             <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600" :class="{ 'china': modifier }">
+                <div v-html="myLevel" class="mb-3 pb-3 border-b border-gray-300 dark:border-gray-700"></div>
+
                 <table class="whitespace-nowrap w-full">
                     <tr class="bg-gray-400 dark:bg-gray-800 no-alpha">
                         <th class="font-bold px-4 py-1.5 text-left">&nbsp;</th>
@@ -53,7 +55,11 @@
                                 {{ index + 1 }}.
                                 <i class="fas fa-award" v-if="index < 3"></i>
                             </td>
-                            <td class="italic px-4 py-1.5" :title="numberFormat(player.xp, 2, false, 1)">{{ humanize(player.xp) }}</td>
+                            <td class="italic px-4 py-1.5" :title="numberFormat(player.xp, 2, false, 1)">
+                                <span :title="level(player.xp, false, true)">{{ level(player.xp, true, false) }}</span>
+
+                                {{ humanize(player.xp) }}
+                            </td>
 
                             <td class="italic px-4 py-1.5">
                                 <a :href="`/players/${player.license}`" target="_blank" :title="player.name">
@@ -111,6 +117,13 @@ export default {
             modifier: Math.round(Math.random() * 100) <= 4 ? '_chinese' : '',
 
             status: {}
+        }
+    },
+    computed: {
+        myLevel() {
+            const xp = this.players.find(player => player.license === this.$page.auth.player.licenseIdentifier)?.xp || 0;
+
+            return this.level(xp);
         }
     },
     methods: {
@@ -193,10 +206,46 @@ export default {
 
             return formatter.format(number);
         },
+        level(xp, emoji = false, plain = false) {
+            const levels = [
+                [20, "🌱", "level_0", 0],
+                [80, "🔮", "level_1", 10],
+                [200, "💫", "level_2", 15],
+                [500, "🛡️", "level_3", 30],
+                [1200, "🌑", "level_4", 50],
+                [2500, "✨", "level_5", 100],
+                [5000, "🔥", "level_6", 150],
+                [10000, "💥", "level_7", 250],
+                [20000, "🌌", "level_8", 500],
+                [50000, "💀", "level_9", 1500],
+                [Infinity, "🌀", "level_10", 2500]
+            ];
+
+            for (const level of levels) {
+                const [min, symbol, locale, xpPerLevel] = level;
+
+                if (xp < min) {
+                    if (emoji) {
+                        return xp >= levels[1][0] ? symbol : "";
+                    }
+
+                    const name = xpPerLevel > 0 ? this.t("staff_statistics.level", Math.ceil(xp / xpPerLevel)) : "",
+                        label = this.t(`staff_statistics.${locale}`),
+                        description = this.t(`staff_statistics.${locale}_description`);
+
+                    if (plain) {
+                        return `${symbol} ${name ? `${name} - ` : ""}${label}`;
+                    }
+
+                    return `<div class="text-lg font-semibold">${symbol} ${name ? `${name} - ` : ""}${label}</div><div class="italic text-sm">${description}</div>`;
+                }
+            }
+
+            return "";
+        }
     },
     mounted() {
         this.updateStatus();
-    },
-    unmounted() {}
+    }
 }
 </script>
