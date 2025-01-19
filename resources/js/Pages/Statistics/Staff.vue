@@ -228,7 +228,7 @@ export default {
 
                 if (xp < max) {
                     if (emoji) {
-                        return xp >= levels[1][0] ? symbol : "";
+                        return xpPerLevel > 0 ? symbol : "";
                     }
 
                     const name = xpPerLevel > 0 ? this.t("staff_statistics.level", Math.ceil((xp - min) / xpPerLevel)) : "",
