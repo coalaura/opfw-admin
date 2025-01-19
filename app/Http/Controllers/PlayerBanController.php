@@ -763,7 +763,7 @@ class PlayerBanController extends Controller
         $mediaDevices = $player->getComparableMediaDeviceIds();
 
         if (! $mediaDevices || empty($mediaDevices)) {
-            $label        = 'Device Names';
+            $label        = 'Device Names <small>(less accurate)</small>';
             $field        = 'media_devices';
             $mediaDevices = $player->getComparableMediaDevices();
         }
@@ -777,7 +777,7 @@ class PlayerBanController extends Controller
         return $this->drawLinked($label, $player, $where, $field === 'media_devices');
     }
 
-    protected function drawLinked(string $type, Player $player, string $where, bool $useDevices = false)
+    protected function drawLinked(string $title, Player $player, string $where, bool $useDevices = false)
     {
         $license = $player->license_identifier;
 
@@ -854,6 +854,6 @@ class PlayerBanController extends Controller
 
         $counts = '<span style="color:#ff5b5b">Tokens</span> / <span style="color:#5bc2ff">IPs</span> / <span style="color:#65d54e">Identifiers</span> / <span style="color:#f0c622">Devices</span>';
 
-        return $this->fakeText(200, "Found: <b>" . sizeof($raw) . "</b> Accounts for <a href='/players/" . $license . "' target='_blank'>" . $player->player_name . "</a> using " . $type . "\n\n<i style='color:#c68dbf'>[" . $counts . "] - Last Connection - Player Name</i>\n\n<i style='color:#a3ff9b'>- Not Banned</i>\n" . implode("\n", $linked) . "\n\n<i style='color:#ff8e8e'>- Banned</i>\n" . implode("\n", $banned));
+        return $this->fakeText(200, "Found: <b>" . sizeof($raw) . "</b> Accounts for <a href='/players/" . $license . "' target='_blank'>" . $player->player_name . "</a> using " . $title . "\n\n<i style='color:#c68dbf'>[" . $counts . "] - Last Connection - Player Name</i>\n\n<i style='color:#a3ff9b'>- Not Banned</i>\n" . implode("\n", $linked) . "\n\n<i style='color:#ff8e8e'>- Banned</i>\n" . implode("\n", $banned));
     }
 }
