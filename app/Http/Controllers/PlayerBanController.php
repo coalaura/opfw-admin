@@ -108,8 +108,13 @@ class PlayerBanController extends Controller
         $query = Player::query();
 
         $query->select([
-            'license_identifier', 'player_name',
-            'reason', 'timestamp', 'expire', 'creator_name', 'creator_identifier',
+            'license_identifier',
+            'player_name',
+            'reason',
+            'timestamp',
+            'expire',
+            'creator_name',
+            'creator_identifier',
         ]);
 
         // Filtering by ban hash.
@@ -656,7 +661,7 @@ class PlayerBanController extends Controller
             return false;
         }
 
-        $player = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_devices', 'media_device_ids', 'user_variables'])->where('license_identifier', '=', $license)->get()->first();
+        $player = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_devices', 'user_variables'])->where('license_identifier', '=', $license)->get()->first();
 
         if (! $player) {
             return false;
@@ -758,26 +763,18 @@ class PlayerBanController extends Controller
             return $this->text(404, "Player not found.");
         }
 
-        $label        = 'Device IDs';
-        $field        = 'media_device_ids';
-        $mediaDevices = $player->getComparableMediaDeviceIds();
-
-        if (! $mediaDevices || empty($mediaDevices)) {
-            $label        = 'Device Names';
-            $field        = 'media_devices';
-            $mediaDevices = $player->getComparableMediaDevices();
-        }
+        $mediaDevices = $player->getComparableMediaDevices();
 
         if (! $mediaDevices || empty($mediaDevices)) {
             return $this->text(404, "No devices found.");
         }
 
-        $where = "JSON_OVERLAPS($field, '" . json_encode($mediaDevices) . "') = 1";
+        $where = "JSON_OVERLAPS(media_devices, '" . json_encode($mediaDevices) . "') = 1";
 
-        return $this->drawLinked($label, $player, $where, $field === 'media_devices');
+        return $this->drawLinked('Media Devices', $player, $where);
     }
 
-    protected function drawLinked(string $title, Player $player, string $where, bool $useDevices = false)
+    protected function drawLinked(string $title, Player $player, string $where)
     {
         $license = $player->license_identifier;
 
@@ -785,10 +782,9 @@ class PlayerBanController extends Controller
         $ips            = $player->getIps();
         $identifiers    = $player->getBannableIdentifiers();
         $gpuMediaDevice = $player->getGPUMediaDevice();
+        $mediaDevices   = $player->getComparableMediaDevices();
 
-        $mediaDevices = $useDevices ? $player->getComparableMediaDevices() : $player->getComparableMediaDeviceIds();
-
-        $players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', $useDevices ? 'media_devices' : 'media_device_ids', 'user_variables', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function ($join) {
+        $players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_devices', 'user_variables', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function ($join) {
             $join->on(DB::raw("JSON_CONTAINS(identifiers, JSON_QUOTE(identifier), '$')"), '=', DB::raw('1'));
         })->whereRaw($where)->groupBy('license_identifier')->get();
 
@@ -801,10 +797,9 @@ class PlayerBanController extends Controller
                 $foundIdentifiers    = $found->getBannableIdentifiers();
                 $foundGPUMediaDevice = $found->getGPUMediaDevice();
                 $foundVariables      = $found->getUserVariables();
+                $foundMediaDevices   = $found->getComparableMediaDevices();
 
-                $foundMediaDevices = $useDevices ? $found->getComparableMediaDevices() : $found->getComparableMediaDeviceIds();
-
-                $matchingDevices = array_intersect($mediaDevices, $foundMediaDevices);
+                $matchingDevices   = array_intersect($mediaDevices, $foundMediaDevices);
                 $matchingVariables = $player->getMatchingVariables($foundVariables);
 
                 $devicesOverlap = sizeof($matchingDevices);
@@ -858,7 +853,7 @@ class PlayerBanController extends Controller
             $banned[] = "<i>None</i>";
         }
 
-        $counts = '<span style="color:#ff5b5b">Tokens</span> / <span style="color:#e4ff5b">IPs</span> / <span style="color:#5bff92">Identifiers</span> / <span style="color:#5badff">Variables</span> / <span style="color:#c85bff">Devices</span>';
+        $counts = '<span style="color:#ff5b5b">Tokens</span> / <span style="color:#e4ff5b">IPs</span> / <span style="color:#5bff92">Identifiers</span> / <span style="color:#5badff">Variables</span> / <span style="color:#c85bff">Media Devices</span>';
 
         return $this->fakeText(200, "Found: <b>" . sizeof($raw) . "</b> Accounts for <a href='/players/" . $license . "' target='_blank'>" . $player->player_name . "</a> using " . $title . "\n\n<i style='color:#c68dbf'>[" . $counts . "] - Last Connection - Player Name</i>\n\n<i style='color:#a3ff9b'>- Not Banned</i>\n" . implode("\n", $linked) . "\n\n<i style='color:#ff8e8e'>- Banned</i>\n" . implode("\n", $banned));
     }
