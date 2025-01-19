@@ -53,7 +53,7 @@
                                 {{ index + 1 }}.
                                 <i class="fas fa-award" v-if="index < 3"></i>
                             </td>
-                            <td class="italic px-4 py-1.5">{{ numberFormat(player.xp, 2, false, 1) }}</td>
+                            <td class="italic px-4 py-1.5" :title="numberFormat(player.xp, 2, false, 1)">{{ humanize(player.xp) }}</td>
 
                             <td class="italic px-4 py-1.5">
                                 <a :href="`/players/${player.license}`" target="_blank" :title="player.name">
@@ -168,7 +168,31 @@ export default {
             }
 
             return classNames.join(' ');
-        }
+        },
+        humanize(number) {
+            const formatter = new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2,
+            });
+
+            const units = [
+                ['K', 1000, 10e5],
+                ['M', 10e5, 10e8],
+                ['B', 10e8, 10e11],
+                ['T', 10e11, 10e14],
+                ['Q', 10e14, 10e17],
+            ];
+
+            for (const unit of units) {
+                const [symbol, min, max] = unit;
+
+                if (number >= min && number < max) {
+                    return formatter.format(number / min) + symbol;
+                }
+            }
+
+            return formatter.format(number);
+        },
     },
     mounted() {
         this.updateStatus();
