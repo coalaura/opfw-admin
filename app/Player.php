@@ -860,7 +860,7 @@ class Player extends Model
         $tResolution = sprintf('%dx%d', $variables['screen_width'] ?? 0, $variables['screen_height'] ?? 0);
 
         if ($sResolution === $tResolution && $sResolution !== '0x0') {
-            $matches[] = sprintf('RS: %s === %s', $sResolution, $tResolution);
+            $matches[] = sprintf('Resolution: %s == %s', $sResolution, $tResolution);
         }
 
         // Timezone
@@ -868,7 +868,7 @@ class Player extends Model
         $tTimezone = $variables['timezone'] ?? null;
 
         if ($sTimezone === $tTimezone && $sTimezone !== null) {
-            $matches[] = sprintf('TZ: %s === %s', $sTimezone, $tTimezone);
+            $matches[] = sprintf('Timezone: %s == %s', $sTimezone, $tTimezone);
         }
 
         // CPU Thread Count
@@ -876,7 +876,7 @@ class Player extends Model
         $tThreads = $variables['threads'] ?? 0;
 
         if ($sThreads === $tThreads && $sThreads > 0) {
-            $matches[] = sprintf('TH: %s === %s', $sThreads, $tThreads);
+            $matches[] = sprintf('Threads: %s == %s', $sThreads, $tThreads);
         }
 
         return $matches;
