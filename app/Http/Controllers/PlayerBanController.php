@@ -765,7 +765,7 @@ class PlayerBanController extends Controller
             return $this->text(404, "No devices found.");
         }
 
-        $where = "JSON_OVERLAPS(media_devices, '" . json_encode($mediaDevices) . "') = 1";
+        $where = "JSON_OVERLAPS(media_device_ids, '" . json_encode($mediaDevices) . "') = 1";
 
         return $this->drawLinked("Devices", $player, $where);
     }
@@ -780,7 +780,7 @@ class PlayerBanController extends Controller
         $mediaDevices   = $player->getComparableMediaDevices();
         $gpuMediaDevice = $player->getGPUMediaDevice();
 
-        $players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_devices', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function ($join) {
+        $players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_device_ids', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function ($join) {
             $join->on(DB::raw("JSON_CONTAINS(identifiers, JSON_QUOTE(identifier), '$')"), '=', DB::raw('1'));
         })->whereRaw($where)->groupBy('license_identifier')->get();
 
@@ -802,10 +802,6 @@ class PlayerBanController extends Controller
                 $countIdentifiers = sizeof(array_intersect($identifiers, $foundIdentifiers));
 
                 $total = $count + $countIps + $countIdentifiers + $devicesOverlap + ($gpuOverlap ? 1 : 0);
-
-                if (!request()->has('all') && $gpuOverlap && $devicesOverlap === 1 && $total === 2) { // Purely overlapping the webgl fingerprint isn't too helpful
-                    continue;
-                }
 
                 $counts = '<span style="color:#ff5b5b">' . $count . '</span>/<span style="color:#5bc2ff">' . $countIps . '</span>/<span style="color:#65d54e">' . $countIdentifiers . '</span>/<span style="color:#f0c622">' . $devicesOverlap . '</span>';
 

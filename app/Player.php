@@ -133,6 +133,7 @@ class Player extends Model
         'panel_settings'        => 'array',
         'weekly_playtime'       => 'array',
         'media_devices'         => 'array',
+        'media_device_ids'      => 'array',
     ];
 
     /**
@@ -802,19 +803,7 @@ class Player extends Model
      */
     public function getComparableMediaDevices(): array
     {
-        $devices = $this->media_devices ?? [];
-
-        return array_values(array_filter($devices, function ($device) {
-            if (strpos($device, 'obs_virtual') !== false) {
-                return false;
-            } else if (strpos($device, 'nvidia_broadcast') !== false) {
-                return false;
-            } else if (strpos($device, 'voicemeeter') !== false) {
-                return false;
-            }
-
-            return true;
-        }));
+        return $this->media_device_ids ?? [];
     }
 
     /**
