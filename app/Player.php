@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use App\Helpers\CacheHelper;
@@ -241,7 +240,7 @@ class Player extends Model
     {
         $info = self::PlayerSettings[$key] ?? null;
 
-        if (!$info) {
+        if (! $info) {
             throw new Exception('Invalid settings key: ' . $key);
         }
 
@@ -250,7 +249,7 @@ class Player extends Model
         $expected = $info['type'];
 
         if ($expected === 'url') {
-            if (!$value) {
+            if (! $value) {
                 $value = '';
             }
 
@@ -262,12 +261,12 @@ class Player extends Model
             $wasPreset = in_array($previous, $presets);
 
             // We only need to validate the URL if it's not a preset
-            if ($value !== '' && !$isPreset) {
-                if (!filter_var($value, FILTER_VALIDATE_URL)) {
+            if ($value !== '' && ! $isPreset) {
+                if (! filter_var($value, FILTER_VALIDATE_URL)) {
                     throw new Exception('Input is not a valid URL.');
                 }
 
-                if (!preg_match('/^https:\/\/[^\s?]+?\.(png|jpe?g|webp)(\?[^\s]*)?$/mi', $value)) {
+                if (! preg_match('/^https:\/\/[^\s?]+?\.(png|jpe?g|webp)(\?[^\s]*)?$/mi', $value)) {
                     throw new Exception('URL is not a valid image.');
                 }
 
@@ -288,7 +287,7 @@ class Player extends Model
 
                 $data = GeneralHelper::get($url, 'image/*');
 
-                if (!$data) {
+                if (! $data) {
                     // Imgur is blocking pretty hard for some reason... :(
                     if (Str::startsWith($url, 'https://i.imgur.com/')) {
                         throw new Exception('Imgur is blocking the download of this image.');
@@ -298,7 +297,7 @@ class Player extends Model
                 }
 
                 $dir = public_path('/_uploads/');
-                if (!file_exists($dir)) {
+                if (! file_exists($dir)) {
                     mkdir($dir, 0777, true);
                 }
 
@@ -307,7 +306,7 @@ class Player extends Model
                 GeneralHelper::renderThumbnail(public_path($value), $data, 1280, 720, true);
             }
 
-            if ($previous && !$wasPreset && preg_match('/^\/_uploads\/[a-f0-9]+\.(png|jpe?g|webp)$/mi', $previous)) {
+            if ($previous && ! $wasPreset && preg_match('/^\/_uploads\/[a-f0-9]+\.(png|jpe?g|webp)$/mi', $previous)) {
                 $file = public_path($previous);
 
                 if (file_exists($file)) {
@@ -318,7 +317,7 @@ class Player extends Model
             throw new Exception('Invalid input type, expected ' . $expected . '.');
         }
 
-        if (isset($info['options']) && !isset($info['options'][$value])) {
+        if (isset($info['options']) && ! isset($info['options'][$value])) {
             throw new Exception('Input is not a valid option.');
         }
 
@@ -337,7 +336,7 @@ class Player extends Model
 
         $setting = self::PlayerSettings[$key] ?? null;
 
-        if (!$setting) {
+        if (! $setting) {
             return null;
         }
 
@@ -345,7 +344,7 @@ class Player extends Model
         if ($value && preg_match('/^\/_uploads\/[a-f0-9]+\.(png|jpe?g|webp)$/mi', $value)) {
             $file = public_path($value);
 
-            if (!file_exists($file)) {
+            if (! file_exists($file)) {
                 $value = '';
             }
         }
@@ -429,7 +428,7 @@ class Player extends Model
         }
 
         foreach ($aliases as $alias) {
-            if (!preg_match('/[a-z0-9]/i', $alias)) {
+            if (! preg_match('/[a-z0-9]/i', $alias)) {
                 continue;
             }
 
@@ -468,7 +467,7 @@ class Player extends Model
 
     public static function resolveTags(bool $refreshCache = false): array
     {
-        if ($refreshCache || !CacheHelper::exists('tags')) {
+        if ($refreshCache || ! CacheHelper::exists('tags')) {
             $tags = self::query()->select(['panel_tag'])->whereNotNull('panel_tag')->groupBy('panel_tag')->get()->toArray();
 
             CacheHelper::write('tags', $tags, CacheHelper::WEEK);
@@ -481,7 +480,7 @@ class Player extends Model
     {
         $data = $this->user_data ?? [];
 
-        if (!isset($data['muted']) || !$data['muted']) {
+        if (! isset($data['muted']) || ! $data['muted']) {
             return null;
         }
 
@@ -502,7 +501,7 @@ class Player extends Model
     {
         $data = $this->user_data ?? [];
 
-        if ($value && !empty($value)) {
+        if ($value && ! empty($value)) {
             $data[$key] = $value;
         } else {
             unset($data[$key]);
@@ -532,7 +531,7 @@ class Player extends Model
             $id = intval($value);
         }
 
-        if (!$id) {
+        if (! $id) {
             return null;
         }
 
@@ -600,7 +599,7 @@ class Player extends Model
             if (Str::startsWith($id, 'discord:')) {
                 $discord = str_replace('discord:', '', $id);
 
-                if (!in_array($discord, $discords)) {
+                if (! in_array($discord, $discords)) {
                     $discords[] = $discord;
                 }
             }
@@ -659,7 +658,7 @@ class Player extends Model
             )
         );
 
-        if (!empty($lastUsed)) {
+        if (! empty($lastUsed)) {
             return $lastUsed;
         }
 
@@ -709,7 +708,7 @@ class Player extends Model
                     $identifiers
                 ),
                 function ($identifier) use ($ignoreLicense2) {
-                    return $ignoreLicense2 ? !Str::startsWith($identifier, 'license2:') : true;
+                    return $ignoreLicense2 ? ! Str::startsWith($identifier, 'license2:') : true;
                 }
             )
         );
@@ -723,14 +722,14 @@ class Player extends Model
     public static function isLinked(array $identifiers1, array $identifiers2): bool
     {
         $identifiers1 = array_values(array_filter($identifiers1, function ($identifier) {
-            return !Str::startsWith($identifier, 'ip:');
+            return ! Str::startsWith($identifier, 'ip:');
         }));
 
         $identifiers2 = array_values(array_filter($identifiers2, function ($identifier) {
-            return !Str::startsWith($identifier, 'ip:');
+            return ! Str::startsWith($identifier, 'ip:');
         }));
 
-        return !empty(array_intersect($identifiers1, $identifiers2));
+        return ! empty(array_intersect($identifiers1, $identifiers2));
     }
 
     /**
@@ -773,7 +772,7 @@ class Player extends Model
     public function getBannableIdentifiers(): array
     {
         return array_values(array_filter($this->getIdentifiers(), function ($identifier) {
-            return !Str::startsWith($identifier, 'ip:');
+            return ! Str::startsWith($identifier, 'ip:');
         }));
     }
 
@@ -814,7 +813,13 @@ class Player extends Model
                 return false;
             }
 
-            return true;
+            // Ingore empty devices
+            return ! in_array($device, [
+                'videoinput_',
+                'audioinput_',
+                'audiooutput_',
+                'videooutput_',
+            ]);
         }));
     }
 
@@ -979,7 +984,7 @@ class Player extends Model
             ->where('player_id', '=', $this->user_id)
             ->leftJoin('users', 'issuer_id', '=', 'user_id');
 
-        if (!$includeHidden) {
+        if (! $includeHidden) {
             $warnings = $warnings->where('warning_type', '!=', Warning::TypeHidden);
         }
 
@@ -1049,7 +1054,7 @@ class Player extends Model
      */
     public function isBanned(): bool
     {
-        return !!$this->bans()->get()->first();
+        return ! ! $this->bans()->get()->first();
     }
 
     /**
@@ -1100,7 +1105,7 @@ class Player extends Model
      */
     public function incrementStatistics(string $key)
     {
-        $raw = $this->user_statistics ?? [];
+        $raw   = $this->user_statistics ?? [];
         $entry = $raw[$key] ?? [];
 
         $raw[$key] = [
@@ -1164,11 +1169,11 @@ class Player extends Model
     {
         $player = StatusHelper::get($licenseIdentifier);
 
-        if (!$player) {
+        if (! $player) {
             return new PlayerStatus(PlayerStatus::STATUS_OFFLINE, '', 0);
         }
 
-        if (!$trueStatus && $player['fakeDisconnected']) {
+        if (! $trueStatus && $player['fakeDisconnected']) {
             return new PlayerStatus(PlayerStatus::STATUS_OFFLINE, '', 0);
         }
 
@@ -1186,7 +1191,7 @@ class Player extends Model
     public static function fetchLicensePlayerNameMap(array $source, $sourceKey): array
     {
         if ($sourceKey) {
-            if (!is_array($sourceKey)) {
+            if (! is_array($sourceKey)) {
                 $sourceKey = [$sourceKey];
             }
 
@@ -1196,7 +1201,7 @@ class Player extends Model
                 foreach ($sourceKey as $key) {
                     $d = is_array($entry) ? $entry[$key] : $entry->$key;
 
-                    if ($d && !in_array($d, $identifiers)) {
+                    if ($d && ! in_array($d, $identifiers)) {
                         $identifiers[] = $d;
                     }
                 }
@@ -1254,7 +1259,7 @@ class Player extends Model
  */
 function get_steam_id(?string $identifier): ?SteamID
 {
-    if (!$identifier) {
+    if (! $identifier) {
         return null;
     }
 
