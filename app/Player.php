@@ -628,9 +628,7 @@ class Player extends Model
      */
     public function getUserVariables(): array
     {
-        $variables = $this->user_variables ?? [];
-
-        return $variables;
+        return $this->user_variables ?? [];
     }
 
     /**
@@ -846,6 +844,42 @@ class Player extends Model
         }
 
         return null;
+    }
+
+    /**
+     * Gets the matching user variables. Like screen resolution, timezone, etc.
+     */
+    public function getMatchingVariables(array $variables): array
+    {
+        $source = $this->getUserVariables();
+
+        $matches = [];
+
+        // Screen resolution
+        $sResolution = sprintf('%dx%d', $source['screen_width'] ?? 0, $source['screen_height'] ?? 0);
+        $tResolution = sprintf('%dx%d', $variables['screen_width'] ?? 0, $variables['screen_height'] ?? 0);
+
+        if ($sResolution === $tResolution && $sResolution !== '0x0') {
+            $matches[] = sprintf('RS: %s === %s', $sResolution, $tResolution);
+        }
+
+        // Timezone
+        $sTimezone = $source['timezone'] ?? null;
+        $tTimezone = $variables['timezone'] ?? null;
+
+        if ($sTimezone === $tTimezone && $sTimezone !== null) {
+            $matches[] = sprintf('TZ: %s === %s', $sTimezone, $tTimezone);
+        }
+
+        // CPU Thread Count
+        $sThreads = $source['threads'] ?? 0;
+        $tThreads = $variables['threads'] ?? 0;
+
+        if ($sThreads === $tThreads && $sThreads > 0) {
+            $matches[] = sprintf('TH: %s === %s', $sThreads, $tThreads);
+        }
+
+        return $matches;
     }
 
     /**

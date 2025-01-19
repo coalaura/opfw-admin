@@ -656,7 +656,7 @@ class PlayerBanController extends Controller
             return false;
         }
 
-        $player = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_devices'])->where('license_identifier', '=', $license)->get()->first();
+        $player = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_devices', 'media_device_ids', 'user_variables'])->where('license_identifier', '=', $license)->get()->first();
 
         if (! $player) {
             return false;
@@ -788,7 +788,7 @@ class PlayerBanController extends Controller
 
         $mediaDevices = $useDevices ? $player->getComparableMediaDevices() : $player->getComparableMediaDeviceIds();
 
-        $players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_devices', 'media_device_ids', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function ($join) {
+        $players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', $useDevices ? 'media_devices' : 'media_device_ids', 'user_variables', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function ($join) {
             $join->on(DB::raw("JSON_CONTAINS(identifiers, JSON_QUOTE(identifier), '$')"), '=', DB::raw('1'));
         })->whereRaw($where)->groupBy('license_identifier')->get();
 
@@ -799,19 +799,25 @@ class PlayerBanController extends Controller
                 $foundTokens         = $found->getTokens();
                 $foundIps            = $found->getIps();
                 $foundIdentifiers    = $found->getBannableIdentifiers();
-                $foundMediaDevices   = $useDevices ? $found->getComparableMediaDevices() : $found->getComparableMediaDeviceIds();
                 $foundGPUMediaDevice = $found->getGPUMediaDevice();
+                $foundVariables      = $found->getUserVariables();
 
-                $devicesOverlap = sizeof(array_intersect($mediaDevices, $foundMediaDevices));
+                $foundMediaDevices = $useDevices ? $found->getComparableMediaDevices() : $found->getComparableMediaDeviceIds();
+
+                $matchingDevices = array_intersect($mediaDevices, $foundMediaDevices);
+                $matchingVariables = $player->getMatchingVariables($foundVariables);
+
+                $devicesOverlap = sizeof($matchingDevices);
                 $gpuOverlap     = $gpuMediaDevice && $gpuMediaDevice === $foundGPUMediaDevice;
 
                 $count            = sizeof(array_intersect($tokens, $foundTokens));
                 $countIps         = sizeof(array_intersect($ips, $foundIps));
                 $countIdentifiers = sizeof(array_intersect($identifiers, $foundIdentifiers));
+                $countVariables   = sizeof($matchingVariables);
 
-                $total = $count + $countIps + $countIdentifiers + $devicesOverlap + ($gpuOverlap ? 1 : 0);
+                $total = $count + $countIps + $countIdentifiers + $devicesOverlap + ($gpuOverlap ? 1 : 0) + $countVariables;
 
-                $counts = '<span style="color:#ff5b5b">' . $count . '</span>/<span style="color:#5bc2ff">' . $countIps . '</span>/<span style="color:#65d54e">' . $countIdentifiers . '</span>/<span style="color:#f0c622">' . $devicesOverlap . '</span>';
+                $counts = '<span style="color:#ff5b5b">' . $count . '</span>/<span style="color:#e4ff5b">' . $countIps . '</span>/<span style="color:#5bff92">' . $countIdentifiers . '</span>/<span style="color:#5badff" title="' . implode("\n", $matchingVariables) . '">' . $matchingVariables . '</span>/<span style="color:#c85bff" title="' . implode("\n", $matchingDevices) . '">' . $devicesOverlap . '</span>';
 
                 $playtime = "Playtime is about " . GeneralHelper::formatSeconds($found->playtime);
                 $webgl    = $gpuOverlap ? '<span style="color:#8fe17f" title="WebGL fingerprint matches exactly: ' . $gpuMediaDevice . '">webgl</span>' : '<span style="color:#e17f7f;text-decoration:line-through" title="WebGL fingerprint does not match">webgl</span>';
@@ -852,7 +858,7 @@ class PlayerBanController extends Controller
             $banned[] = "<i>None</i>";
         }
 
-        $counts = '<span style="color:#ff5b5b">Tokens</span> / <span style="color:#5bc2ff">IPs</span> / <span style="color:#65d54e">Identifiers</span> / <span style="color:#f0c622">Devices</span>';
+        $counts = '<span style="color:#ff5b5b">Tokens</span> / <span style="color:#e4ff5b">IPs</span> / <span style="color:#5bff92">Identifiers</span> / <span style="color:#5badff">Variables</span> / <span style="color:#c85bff">Devices</span>';
 
         return $this->fakeText(200, "Found: <b>" . sizeof($raw) . "</b> Accounts for <a href='/players/" . $license . "' target='_blank'>" . $player->player_name . "</a> using " . $title . "\n\n<i style='color:#c68dbf'>[" . $counts . "] - Last Connection - Player Name</i>\n\n<i style='color:#a3ff9b'>- Not Banned</i>\n" . implode("\n", $linked) . "\n\n<i style='color:#ff8e8e'>- Banned</i>\n" . implode("\n", $banned));
     }
