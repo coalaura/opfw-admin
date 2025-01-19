@@ -229,7 +229,7 @@ export default {
                         return xp >= levels[1][0] ? symbol : "";
                     }
 
-                    const name = xpPerLevel > 0 ? this.t("staff_statistics.level", Math.ceil(xp / xpPerLevel)) : "",
+                    const name = xpPerLevel > 0 ? this.t("staff_statistics.level", Math.ceil((xp - min) / xpPerLevel)) : "",
                         label = this.t(`staff_statistics.${locale}`),
                         description = this.t(`staff_statistics.${locale}_description`);
 
