@@ -758,10 +758,12 @@ class PlayerBanController extends Controller
             return $this->text(404, "Player not found.");
         }
 
+        $label        = 'Device IDs';
         $field        = 'media_device_ids';
         $mediaDevices = $player->getComparableMediaDeviceIds();
 
         if (! $mediaDevices || empty($mediaDevices)) {
+            $label        = 'Device Names';
             $field        = 'media_devices';
             $mediaDevices = $player->getComparableMediaDevices();
         }
@@ -772,7 +774,7 @@ class PlayerBanController extends Controller
 
         $where = "JSON_OVERLAPS($field, '" . json_encode($mediaDevices) . "') = 1";
 
-        return $this->drawLinked("Devices", $player, $where, $field === 'media_devices');
+        return $this->drawLinked($label, $player, $where, $field === 'media_devices');
     }
 
     protected function drawLinked(string $type, Player $player, string $where, bool $useDevices = false)
