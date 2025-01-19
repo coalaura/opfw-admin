@@ -817,7 +817,7 @@ class PlayerBanController extends Controller
 
                 $total = $count + $countIps + $countIdentifiers + $devicesOverlap + ($gpuOverlap ? 1 : 0) + $countVariables;
 
-                $counts = '<span style="color:#ff5b5b">' . $count . '</span>/<span style="color:#e4ff5b">' . $countIps . '</span>/<span style="color:#5bff92">' . $countIdentifiers . '</span>/<span style="color:#5badff" title="' . implode("\n", $matchingVariables) . '">' . $matchingVariables . '</span>/<span style="color:#c85bff" title="' . implode("\n", $matchingDevices) . '">' . $devicesOverlap . '</span>';
+                $counts = '<span style="color:#ff5b5b">' . $count . '</span>/<span style="color:#e4ff5b">' . $countIps . '</span>/<span style="color:#5bff92">' . $countIdentifiers . '</span>/<span style="color:#5badff" title="' . implode("\n", $matchingVariables) . '">' . $countVariables . '</span>/<span style="color:#c85bff" title="' . implode("\n", $matchingDevices) . '">' . $devicesOverlap . '</span>';
 
                 $playtime = "Playtime is about " . GeneralHelper::formatSeconds($found->playtime);
                 $webgl    = $gpuOverlap ? '<span style="color:#8fe17f" title="WebGL fingerprint matches exactly: ' . $gpuMediaDevice . '">webgl</span>' : '<span style="color:#e17f7f;text-decoration:line-through" title="WebGL fingerprint does not match">webgl</span>';
