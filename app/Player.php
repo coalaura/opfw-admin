@@ -803,6 +803,30 @@ class Player extends Model
      */
     public function getComparableMediaDevices(): array
     {
+        $devices = $this->media_devices ?? [];
+
+        return array_values(array_filter($devices, function ($device) {
+            if (strpos($device, 'obs_virtual') !== false) {
+                return false;
+            } else if (strpos($device, 'nvidia_broadcast') !== false) {
+                return false;
+            } else if (strpos($device, 'voicemeeter') !== false) {
+                return false;
+            } else if (strpos($device, 'gpu_') === 0) {
+                return false;
+            }
+
+            return true;
+        }));
+    }
+
+    /**
+     * Gets the media device ids.
+     *
+     * @return array
+     */
+    public function getComparableMediaDeviceIds(): array
+    {
         return $this->media_device_ids ?? [];
     }
 

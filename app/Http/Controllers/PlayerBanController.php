@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Ban;
@@ -59,7 +58,7 @@ class PlayerBanController extends Controller
             ->whereNotNull('license_identifier')
             ->first();
 
-        if (!$ban) {
+        if (! $ban) {
             abort(404);
         }
 
@@ -74,7 +73,7 @@ class PlayerBanController extends Controller
             ->whereNotNull('license_identifier')
             ->first();
 
-        if (!$ban) {
+        if (! $ban) {
             return $this->json(true, null, "Not found");
         }
 
@@ -232,7 +231,7 @@ class PlayerBanController extends Controller
 
         $note = trim($data['note'] ?? '');
 
-        if (!empty($note)) {
+        if (! empty($note)) {
             $warning = $player->warnings()->create([
                 'issuer_id' => $user->user_id,
                 'message'   => $note,
@@ -255,7 +254,7 @@ class PlayerBanController extends Controller
 
         $response = OPFWHelper::kickPlayer($user->license_identifier, $user->player_name, $player, $kickReason);
 
-        if (!$player->isStaff()) {
+        if (! $player->isStaff()) {
             user()->incrementStatistics(Player::StatisticsBan);
         }
 
@@ -272,7 +271,7 @@ class PlayerBanController extends Controller
      */
     public function destroy(Player $player, Ban $ban, Request $request): RedirectResponse
     {
-        if ($ban->locked && !PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN)) {
+        if ($ban->locked && ! PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN)) {
             abort(401);
         }
 
@@ -290,7 +289,7 @@ class PlayerBanController extends Controller
             ->whereNotNull('smurf_account')
             ->delete();
 
-        if (!$ban->creator_name) {
+        if (! $ban->creator_name) {
             PanelLog::logSystemBanRemove($user->license_identifier, $player->license_identifier);
         }
 
@@ -305,7 +304,7 @@ class PlayerBanController extends Controller
 
     public function lockBan(Player $player, Ban $ban, Request $request): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN)) {
+        if (! PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN)) {
             abort(401);
         }
 
@@ -318,7 +317,7 @@ class PlayerBanController extends Controller
 
     public function unlockBan(Player $player, Ban $ban, Request $request): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN)) {
+        if (! PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN)) {
             abort(401);
         }
 
@@ -333,11 +332,11 @@ class PlayerBanController extends Controller
     {
         $time = intval($request->input('timestamp'));
 
-        if (!$time || $time < time()) {
+        if (! $time || $time < time()) {
             return backWith('error', 'Invalid date.');
         }
 
-        if (!$ban->ban_hash) {
+        if (! $ban->ban_hash) {
             return backWith('error', 'Invalid ban.');
         }
 
@@ -354,7 +353,7 @@ class PlayerBanController extends Controller
         // Sometimes there are bans where just a few identifiers are banned not actually the license.
         $isMainLicenseBanned = Ban::query()->where('ban_hash', '=', $ban->ban_hash)->where('identifier', '=', $player->license_identifier)->exists();
 
-        if (!$isMainLicenseBanned) {
+        if (! $isMainLicenseBanned) {
             $newBan = $ban->toArray();
 
             unset($newBan['id']);
@@ -388,7 +387,7 @@ class PlayerBanController extends Controller
 
     public function unlinkHWID(Player $player, Player $player2, Request $request): RedirectResponse
     {
-        if (!$this->isSuperAdmin($request)) {
+        if (! $this->isSuperAdmin($request)) {
             abort(401);
         }
 
@@ -417,7 +416,7 @@ class PlayerBanController extends Controller
 
     public function unlinkIdentifiers(Player $player, Player $player2, Request $request): RedirectResponse
     {
-        if (!$this->isSuperAdmin($request)) {
+        if (! $this->isSuperAdmin($request)) {
             abort(401);
         }
 
@@ -427,18 +426,18 @@ class PlayerBanController extends Controller
         $lastUsed  = $player->getLastUsedIdentifiers(true);
         $lastUsed2 = $player2->getLastUsedIdentifiers(true);
 
-        if (!Player::isLinked($identifiers, $identifiers2)) {
+        if (! Player::isLinked($identifiers, $identifiers2)) {
             return backWith('error', 'Players are not linked.');
         }
 
         $intersect = array_values(array_intersect($identifiers, $identifiers2));
 
         $newIdentifiers = array_values(array_filter($identifiers, function ($identifier) use ($intersect, $lastUsed) {
-            return !in_array($identifier, $intersect) || in_array($identifier, $lastUsed);
+            return ! in_array($identifier, $intersect) || in_array($identifier, $lastUsed);
         }));
 
         $newIdentifiers2 = array_values(array_filter($identifiers2, function ($identifier) use ($intersect, $lastUsed2) {
-            return !in_array($identifier, $intersect) || in_array($identifier, $lastUsed2);
+            return ! in_array($identifier, $intersect) || in_array($identifier, $lastUsed2);
         }));
 
         // Check if still linked
@@ -469,7 +468,7 @@ class PlayerBanController extends Controller
      */
     public function edit(Request $request, Player $player, Ban $ban): Response
     {
-        if (!$ban->creator_name || ($ban->locked && !PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN))) {
+        if (! $ban->creator_name || ($ban->locked && ! PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN))) {
             abort(401);
         }
 
@@ -489,7 +488,7 @@ class PlayerBanController extends Controller
      */
     public function update(Player $player, Ban $ban, BanUpdateRequest $request): RedirectResponse
     {
-        if ($ban->locked && !PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN)) {
+        if ($ban->locked && ! PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN)) {
             abort(401);
         }
 
@@ -597,7 +596,7 @@ class PlayerBanController extends Controller
 
             $averages[] = $count->triggers;
 
-            if (!$date) {
+            if (! $date) {
                 continue;
             }
 
@@ -632,13 +631,13 @@ class PlayerBanController extends Controller
 
     public function smurfBan(string $hash): RedirectResponse
     {
-        if (!$hash) {
+        if (! $hash) {
             abort(404);
         }
 
         $ban = Ban::query()->where('ban_hash', '=', $hash)->whereRaw("SUBSTRING_INDEX(identifier, ':', 1) = 'license'")->first();
 
-        if (!$ban) {
+        if (! $ban) {
             abort(404);
         }
 
@@ -649,17 +648,17 @@ class PlayerBanController extends Controller
 
     protected function findPlayer(Request $request, string $license)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LINKED)) {
+        if (! PermissionHelper::hasPermission($request, PermissionHelper::PERM_LINKED)) {
             abort(401);
         }
 
-        if (!$license || !Str::startsWith($license, 'license:')) {
+        if (! $license || ! Str::startsWith($license, 'license:')) {
             return false;
         }
 
         $player = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_devices'])->where('license_identifier', '=', $license)->get()->first();
 
-        if (!$player) {
+        if (! $player) {
             return false;
         }
 
@@ -670,7 +669,7 @@ class PlayerBanController extends Controller
     {
         $player = $this->findPlayer($request, $license);
 
-        if (!$player) {
+        if (! $player) {
             return $this->text(404, "Player not found.");
         }
 
@@ -717,7 +716,7 @@ class PlayerBanController extends Controller
     {
         $player = $this->findPlayer($request, $license);
 
-        if (!$player) {
+        if (! $player) {
             return $this->text(404, "Player not found.");
         }
 
@@ -736,7 +735,7 @@ class PlayerBanController extends Controller
     {
         $player = $this->findPlayer($request, $license);
 
-        if (!$player) {
+        if (! $player) {
             return $this->text(404, "Player not found.");
         }
 
@@ -755,32 +754,39 @@ class PlayerBanController extends Controller
     {
         $player = $this->findPlayer($request, $license);
 
-        if (!$player) {
+        if (! $player) {
             return $this->text(404, "Player not found.");
         }
 
-        $mediaDevices = $player->getComparableMediaDevices();
+        $field        = 'media_device_ids';
+        $mediaDevices = $player->getComparableMediaDeviceIds();
 
-        if (!$mediaDevices || sizeof($mediaDevices) === 0) {
+        if (! $mediaDevices || empty($mediaDevices)) {
+            $field        = 'media_devices';
+            $mediaDevices = $player->getComparableMediaDevices();
+        }
+
+        if (! $mediaDevices || empty($mediaDevices)) {
             return $this->text(404, "No devices found.");
         }
 
-        $where = "JSON_OVERLAPS(media_device_ids, '" . json_encode($mediaDevices) . "') = 1";
+        $where = "JSON_OVERLAPS($field, '" . json_encode($mediaDevices) . "') = 1";
 
-        return $this->drawLinked("Devices", $player, $where);
+        return $this->drawLinked("Devices", $player, $where, $field === 'media_devices');
     }
 
-    protected function drawLinked(string $type, Player $player, string $where)
+    protected function drawLinked(string $type, Player $player, string $where, bool $useDevices = false)
     {
         $license = $player->license_identifier;
 
         $tokens         = $player->getTokens();
         $ips            = $player->getIps();
         $identifiers    = $player->getBannableIdentifiers();
-        $mediaDevices   = $player->getComparableMediaDevices();
         $gpuMediaDevice = $player->getGPUMediaDevice();
 
-        $players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_device_ids', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function ($join) {
+        $mediaDevices = $useDevices ? $player->getComparableMediaDevices() : $player->getComparableMediaDeviceIds();
+
+        $players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_devices', 'media_device_ids', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function ($join) {
             $join->on(DB::raw("JSON_CONTAINS(identifiers, JSON_QUOTE(identifier), '$')"), '=', DB::raw('1'));
         })->whereRaw($where)->groupBy('license_identifier')->get();
 
@@ -791,7 +797,7 @@ class PlayerBanController extends Controller
                 $foundTokens         = $found->getTokens();
                 $foundIps            = $found->getIps();
                 $foundIdentifiers    = $found->getBannableIdentifiers();
-                $foundMediaDevices   = $found->getComparableMediaDevices();
+                $foundMediaDevices   = $useDevices ? $found->getComparableMediaDevices() : $found->getComparableMediaDeviceIds();
                 $foundGPUMediaDevice = $found->getGPUMediaDevice();
 
                 $devicesOverlap = sizeof(array_intersect($mediaDevices, $foundMediaDevices));
