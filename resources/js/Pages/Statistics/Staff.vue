@@ -221,10 +221,12 @@ export default {
                 [Infinity, "🌀", "level_10", 2500]
             ];
 
-            for (const level of levels) {
-                const [min, symbol, locale, xpPerLevel] = level;
+            let min = 0;
 
-                if (xp < min) {
+            for (const level of levels) {
+                const [max, symbol, locale, xpPerLevel] = level;
+
+                if (xp < max) {
                     if (emoji) {
                         return xp >= levels[1][0] ? symbol : "";
                     }
@@ -239,6 +241,8 @@ export default {
 
                     return `<div class="text-lg font-semibold">${symbol} ${name ? `${name} - ` : ""}${label}</div><div class="italic text-sm">${description}</div>`;
                 }
+
+                min = max;
             }
 
             return "";
