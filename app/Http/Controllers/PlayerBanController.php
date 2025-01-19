@@ -763,7 +763,7 @@ class PlayerBanController extends Controller
         $mediaDevices = $player->getComparableMediaDeviceIds();
 
         if (! $mediaDevices || empty($mediaDevices)) {
-            $label        = 'Device Names <small>(less accurate)</small>';
+            $label        = 'Device Names';
             $field        = 'media_devices';
             $mediaDevices = $player->getComparableMediaDevices();
         }
