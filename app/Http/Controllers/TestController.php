@@ -582,7 +582,22 @@ class TestController extends Controller
             }
         }
 
-        return self::json(true, $lost);
+        $list = [];
+
+        foreach ($lost as $name => $count) {
+            $list = [
+                'name' => $name,
+                'count' => $count,
+            ];
+        }
+
+        usort($list, function ($a, $b) {
+            return $b['count'] <=> $a['count'];
+        });
+
+        return self::respond(implode("\n", array_map(function($item) {
+            return sprintf("%dx %s", $item['count'], $item['name']);
+        }, $list)));
     }
 
     public function test(Request $request): Response
