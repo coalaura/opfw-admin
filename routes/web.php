@@ -302,6 +302,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/test/staff_activity', [TestController::class, 'staffActivity']);
     Route::get('/test/staff_activity_2', [TestController::class, 'staffActivity2']);
     Route::get('/test/user_statistics/{player}', [TestController::class, 'userStatistics']);
+    Route::get('/test/nancy_statistics', [TestController::class, 'nancyStatistics']);
 
     // Graphs.
     Route::get('/graph/bans', [GraphController::class, 'systemBans']);
