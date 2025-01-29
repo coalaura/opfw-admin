@@ -585,7 +585,7 @@ class TestController extends Controller
         $list = [];
 
         foreach ($lost as $name => $count) {
-            $list = [
+            $list[] = [
                 'name' => $name,
                 'count' => $count,
             ];
