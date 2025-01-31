@@ -515,8 +515,6 @@ class PlayerCharacterController extends Controller
                 'model_name'               => $model,
                 'plate'                    => $plate,
                 'mileage'                  => 0,
-                'modifications'            => null,
-                'data'                     => null,
                 'garage_identifier'        => '*',
                 'garage_state'             => 1,
                 'garage_impound'           => 0,
