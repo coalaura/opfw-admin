@@ -259,6 +259,8 @@ class PlayerCharacterController extends Controller
      */
     public function refreshEmail(Request $request, Player $player, Character $character): RedirectResponse
     {
+        $before = $character->email_address;
+
         if (!$character->refreshEmailAddress()) {
             return backWith('error', 'Failed to update email address.');
         }
@@ -269,6 +271,10 @@ class PlayerCharacterController extends Controller
             $user->license_identifier,
             "Refreshed E-Mail",
             sprintf("%s refreshed the email address of %s (#%d).", $user->consoleName(), $player->consoleName(), $character->character_id),
+            [
+                'before' => $before,
+                'after' => $character->email_address,
+            ]
         );
 
         return backWith('success', 'Email address was successfully updated.');
