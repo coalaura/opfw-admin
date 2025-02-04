@@ -14,7 +14,7 @@
                         {{ player.safePlayerName }}
                     </h1>
 
-                    <div v-if="loadingHWIDLink || loadingExtraData" class="relative text-pink-600 dark:text-pink-400" :title="t('players.show.loading_extra')">
+                    <div v-if="loadingHWIDLink" class="relative text-pink-600 dark:text-pink-400" :title="t('players.show.loading_extra')">
                         <i class="fas fa-spinner animate-spin absolute top-0"></i>
                     </div>
                 </div>
@@ -1469,50 +1469,6 @@
             </template>
         </v-section>
 
-        <v-section :noFooter="true" :collapsed="extraDataCollapsed">
-            <template #header>
-                <div class="flex gap-4">
-                    <div class="cursor-pointer text-2xl flex items-center" @click="extraDataCollapsed = !extraDataCollapsed">
-                        <i class="fas fa-chevron-right" :class="{ 'rotate-90': !extraDataCollapsed }"></i>
-                    </div>
-
-                    <h2>
-                        {{ t('players.show.panel_logs') }}
-                    </h2>
-                </div>
-            </template>
-
-            <template v-if="loadingExtraData">
-                <div class="flex justify-center text-lg items-center">
-                    <div>
-                        <i class="fas fa-cog animate-spin"></i>
-                        {{ t('global.loading') }}
-                    </div>
-                </div>
-            </template>
-
-            <template v-else>
-                <table class="w-full mt-6">
-                    <tr class="font-semibold text-left mobile:hidden">
-                        <th class="py-2 px-4">{{ t('logs.action') }}</th>
-                        <th class="py-2 px-4">{{ t('logs.details') }}</th>
-                        <th class="py-2 px-4">{{ t('logs.timestamp') }}</th>
-                    </tr>
-                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="log in panelLogs" :key="log.id">
-                        <td class="py-2 px-4 border-t mobile:block whitespace-nowrap">{{ log.action }}</td>
-                        <td class="py-2 px-4 border-t mobile:block" v-html="formatPanelLog(log.log)"></td>
-                        <td class="py-2 px-4 border-t w-60 mobile:block whitespace-nowrap">{{ log.timestamp | formatTime(true) }}</td>
-                    </tr>
-                    <tr v-if="panelLogs.length === 0">
-                        <td class="py-2 px-4 text-center border-t" colspan="100%">
-                            {{ t('players.show.no_panel_logs') }}
-                        </td>
-                    </tr>
-                </table>
-            </template>
-
-        </v-section>
-
         <!-- Screenshot -->
         <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k" v-if="isScreenshot && this.perm.check(this.perm.PERM_SCREENSHOT)">
             <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded" :class="continuouslyScreenshotting ? 'w-vlarge-alert' : 'w-alert'">
@@ -1808,10 +1764,7 @@ export default {
             deletingWarnings: false,
             selectedWarnings: [],
 
-            loadingExtraData: false,
             loadingHWIDLink: false,
-
-            panelLogs: [],
 
             updatingBanException: false,
             editingBanException: false,
@@ -1834,7 +1787,6 @@ export default {
 
             charactersCollapsed: false,
             warningsCollapsed: true && !autoExpandCollapsed,
-            extraDataCollapsed: true && !autoExpandCollapsed,
 
             hwidBan: null,
 
@@ -2001,14 +1953,6 @@ export default {
         formatSecondDiff(sec) {
             return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m]').replace(/(?<=\s|^)0\w/gm, '') || "0s";
         },
-        formatPanelLog(log) {
-            return log.replace(/(license:\w+)(?=\))/gm, match => {
-                const start = match.substring(8, 12);
-                const end = match.substring(match.length - 4);
-
-                return `<span class="text-gray-700 dark:text-gray-300" title="${match}">${start}...${end}</span>`;
-            });
-        },
         showAntiCheatMetadata(event, eventData) {
             event.preventDefault();
 
@@ -2109,22 +2053,6 @@ export default {
             }
 
             return false;
-        },
-        async loadExtraData() {
-            this.loadingExtraData = true;
-
-            try {
-                const response = await axios.get(`/players/${this.player.licenseIdentifier}/data`);
-
-                if (response.data?.status) {
-                    const data = response.data.data;
-
-                    this.panelLogs = data.panelLogs;
-                }
-            } catch (e) {
-            }
-
-            this.loadingExtraData = false;
         },
         async loadGlobalBans() {
             const global = this.$page.global;
@@ -2922,7 +2850,6 @@ export default {
 
         // Delay loading of extra data since it blocks other resources from loading
         setTimeout(() => {
-            this.loadExtraData();
             this.loadHWIDLink();
             this.loadStatus();
             this.loadGlobalBans();

@@ -10,7 +10,6 @@ use App\Helpers\StatusHelper;
 use App\Http\Controllers\PlayerDataController;
 use App\Http\Resources\BanResource;
 use App\Http\Resources\CharacterResource;
-use App\Http\Resources\PanelLogResource;
 use App\Http\Resources\PlayerIndexResource;
 use App\Http\Resources\PlayerResource;
 use App\Player;
@@ -230,21 +229,6 @@ class PlayerController extends Controller
             'enablableCommands' => PlayerDataController::EnablableCommands,
             'uniqueBans'        => BanResource::collection($player->uniqueBans()),
         ]);
-    }
-
-    /**
-     * Extra data loaded via ajax.
-     *
-     * @param Player $player
-     * @return Response|void
-     */
-    public function extraData(Player $player)
-    {
-        $data = [
-            'panelLogs' => PanelLogResource::collection($player->panelLogs()->orderByDesc('timestamp')->limit(10)->get()),
-        ];
-
-        return $this->json(true, $data);
     }
 
     /**
