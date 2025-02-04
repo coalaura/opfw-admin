@@ -1454,15 +1454,15 @@
         "description": "On this page you can view and filter the panel logs.",
         "logs": "Logs",
         "filter": "Filter Logs",
-        "source": "Source",
-        "target": "Target",
+        "player": "Player",
         "action": "Action",
-        "log": "Message",
+        "details": "Details",
         "timestamp": "Timestamp",
         "no_logs": "No logs were found.",
         "placeholder_action": "Kicked Player",
-        "placeholder_log": "Laura kicked Twentz",
-        "search": "Search logs"
+        "placeholder_details": "Laura kicked Twentz",
+        "search": "Search logs",
+        "refresh": "Refresh"
     },
     "containers": {
         "title": "Storage Containers",

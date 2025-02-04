@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PanelLogResource;
 use App\PanelLog;
 use App\Player;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -25,55 +26,50 @@ class PanelLogController extends Controller
 
         $query = PanelLog::query()->orderByDesc('timestamp');
 
-        // Filtering by source_identifier.
-        $this->searchQuery($request, $query, 'source', 'source_identifier');
-
-        // Filtering by target_identifier.
-        $this->searchQuery($request, $query, 'target', 'target_identifier');
+        // Filtering by identifier.
+        $this->searchQuery($request, $query, 'identifier', 'identifier');
 
         // Filtering by action.
         $this->searchQuery($request, $query, 'action', 'action');
 
-        // Filtering by log.
-        $this->searchQuery($request, $query, 'log', 'log');
+        // Filtering by details.
+        $this->searchQuery($request, $query, 'details', 'details');
+
+        // Filtering by before.
+        if ($before = intval($request->input('before'))) {
+            $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '<', $before);
+        }
+
+        // Filtering by after.
+        if ($after = intval($request->input('after'))) {
+            $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '>', $after);
+        }
 
         $page = Paginator::resolveCurrentPage('page');
 
-        $query->select(['id', 'source_identifier', 'target_identifier', 'timestamp', 'log', 'action']);
-        $query->limit(15)->offset(($page - 1) * 15);
+        $query->select(['id', 'identifier', 'action', 'details', 'metadata', 'timestamp']);
+        $query->limit(30)->offset(($page - 1) * 30);
 
-        $logs = $query->get()->toArray();
+        $logs = $query->get();
 
-        $sources = PanelLog::query()
-            ->select(['source_identifier'])
-            ->groupBy('source_identifier')
-            ->get()->toArray();
+        $logs = PanelLogResource::collection($logs);
 
         $end = round(microtime(true) * 1000);
 
-        $identifiers = $sources;
-        foreach ($logs as $log) {
-            $license = $log['target_identifier'];
-
-            $identifiers[] = [
-                'source_identifier' => $license,
-            ];
-        }
-
-        return Inertia::render('PanelLogs/Index', [
-            'logs'      => $logs,
-            'sources'   => $sources,
-            'filters'   => [
-                'source' => $request->input('source') ?? '',
-                'target' => $request->input('target'),
-                'action' => $request->input('action'),
-                'log'    => $request->input('log'),
-            ],
-            'links'     => $this->getPageUrls($page),
-            'time'      => $end - $start,
-            'playerMap' => Player::fetchLicensePlayerNameMap($identifiers, ['source_identifier']),
-            'page'      => $page,
+        return Inertia::render('Logs/PanelLogs', [
+            'logs'           => $logs,
+            'filters'        => $request->all(
+                'identifier',
+                'action',
+                'details',
+                'after',
+                'before'
+            ),
+            'links'          => $this->getPageUrls($page),
+            'time'           => $end - $start,
+            'playerMap'      => Player::fetchLicensePlayerNameMap($logs->toArray($request), 'licenseIdentifier'),
+            'page'           => $page,
+            'actions'        => PanelLog::Actions,
         ]);
     }
-
 }

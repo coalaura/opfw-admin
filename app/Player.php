@@ -375,6 +375,11 @@ class Player extends Model
         return $list;
     }
 
+    public function consoleName(): string
+    {
+        return sprintf("%s (%s)", $this->getSafePlayerName(), $this->license_identifier);
+    }
+
     public function isStaffToggled(): bool
     {
         $data = $this->user_data ?? [];
@@ -1025,16 +1030,6 @@ class Player extends Model
             'hash'    => $ban->ban_hash,
             'license' => $ban->license_identifier,
         ] : null;
-    }
-
-    /**
-     * Gets the panel_logs relationship.
-     *
-     * @return HasMany
-     */
-    public function panelLogs(): HasMany
-    {
-        return $this->hasMany(PanelLog::class, 'target_identifier', 'license_identifier');
     }
 
     /**

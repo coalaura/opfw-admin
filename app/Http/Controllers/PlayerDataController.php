@@ -30,6 +30,7 @@ class PlayerDataController extends Controller
      */
     public function updateMuteStatus(Player $player, Request $request): RedirectResponse
     {
+        $user = user();
         $status = !!$request->input('status');
 
         if ($status) {
@@ -51,11 +52,22 @@ class PlayerDataController extends Controller
                 'expiryTimestamp' => $expires,
                 'creatorName' => user()->player_name,
             ]);
+
+            PanelLog::log(
+                $user->license_identifier,
+                "Muted Player",
+                sprintf("%s muted %s.", $user->consoleName(), $player->consoleName()),
+                ['reason' => $reason]
+            );
         } else {
             $player->setUserData('muted', null);
-        }
 
-        PanelLog::logMuteUpdate(license(), $player->license_identifier, $status);
+            PanelLog::log(
+                $user->license_identifier,
+                "Unmuted Player",
+                sprintf("%s unmuted %s.", $user->consoleName(), $player->consoleName()),
+            );
+        }
 
         return backWith('success', 'Muted status has been updated successfully.');
     }
@@ -108,12 +120,26 @@ class PlayerDataController extends Controller
             return backWith('error', 'You dont have permissions to do this.');
         }
 
+        $user = user();
+
         $twitch = $request->input('twitch');
         $twitch = is_string($twitch) ? preg_replace('/[^a-zA-Z0-9_]/', '', $twitch) : false;
 
         $player->setUserData('twitchBanException', $twitch);
 
-        PanelLog::logBanExceptionUpdate(license(), $player->license_identifier, $twitch ?? null);
+        if ($twitch) {
+            PanelLog::log(
+                $user->license_identifier,
+                "Enabled Ban Exception",
+                sprintf("%s enabled ban exception for %s (`%s`).", $user->consoleName(), $player->consoleName(), $twitch),
+            );
+        } else {
+            PanelLog::log(
+                $user->license_identifier,
+                "Removed Ban Exception",
+                sprintf("%s removed ban exception for %s.", $user->consoleName(), $player->consoleName(), $twitch),
+            );
+        }
 
         return backWith('success', 'Ban exception status has been updated successfully.');
     }

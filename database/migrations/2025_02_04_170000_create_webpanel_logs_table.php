@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePanelLogsTable extends Migration
+class CreateWebPanelLogsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,20 +17,26 @@ class CreatePanelLogsTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("panel_logs");
+		$tableExists = Schema::hasTable("webpanel_logs");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("panel_logs", function (Blueprint $table) use ($columns, $indexes) {
+		Schema::$func("webpanel_logs", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement(); // primary key
+			!in_array("identifier", $columns) && $table->string("identifier", 50)->nullable();
+			!in_array("action", $columns) && $table->string("action", 50)->nullable();
+			!in_array("details", $columns) && $table->longText("details")->nullable();
+			!in_array("metadata", $columns) && $table->longText("metadata")->nullable();
 			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->useCurrent();
-			!in_array("source_identifier", $columns) && $table->string("source_identifier", 255);
-			!in_array("target_identifier", $columns) && $table->string("target_identifier", 255);
-			!in_array("log", $columns) && $table->string("log", 255);
-			!in_array("action", $columns) && $table->string("action", 255);
+
+			!in_array("identifier", $indexes) && $table->index("identifier");
+			!in_array("action", $indexes) && $table->index("action");
+			!in_array("details", $indexes) && $table->index("details");
+			!in_array("metadata", $indexes) && $table->index("metadata");
+			!in_array("timestamp", $indexes) && $table->index("timestamp");
 		});
 	}
 
@@ -41,7 +47,7 @@ class CreatePanelLogsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("panel_logs");
+		Schema::dropIfExists("webpanel_logs");
 	}
 
 	/**
@@ -51,7 +57,7 @@ class CreatePanelLogsTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `panel_logs`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `webpanel_logs`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -65,7 +71,7 @@ class CreatePanelLogsTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `panel_logs` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `webpanel_logs` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

@@ -212,7 +212,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::resource('casino', CasinoLogController::class);
 
     // Panel Logs.
-    Route::resource('panel_logs', PanelLogController::class);
+    Route::get('/panel', [PanelLogController::class, 'index']);
 
     // Characters.
     Route::resource('characters', PlayerCharacterController::class);

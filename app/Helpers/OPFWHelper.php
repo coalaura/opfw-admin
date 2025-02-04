@@ -44,8 +44,6 @@ class OPFWHelper
 
         if ($response->status) {
             $response->message = 'Staff Message has been sent successfully.';
-
-            PanelLog::logStaffPM($staffLicenseIdentifier, $player->license_identifier, $message);
         }
 
         return $response;
@@ -132,8 +130,6 @@ class OPFWHelper
 
         if ($response->status) {
             $response->message = 'Kicked player from the server.';
-
-            PanelLog::logKick($staffLicenseIdentifier, $license, $reason);
         }
 
         return $response;
@@ -159,8 +155,6 @@ class OPFWHelper
 
         if ($response->status) {
             $response->message = 'Revived player.';
-
-            PanelLog::logRevive($staffLicenseIdentifier, $licenseIdentifier);
         }
 
         return $response;
@@ -268,8 +262,6 @@ class OPFWHelper
 
         if ($response->status) {
             $response->message = 'Unloaded players character.';
-
-            PanelLog::logUnload($staffLicenseIdentifier, $license, $character_id, $message);
         }
 
         return $response;

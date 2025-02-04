@@ -181,7 +181,7 @@ export default {
                         {
                             label: 'panel_logs.title',
                             icon: 'paperstack',
-                            url: '/panel_logs',
+                            url: '/panel',
                         },
                         {
                             label: 'search_logs.title',

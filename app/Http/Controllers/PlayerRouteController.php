@@ -7,6 +7,7 @@ use App\Helpers\HttpHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\ServerAPI;
+use App\PanelLog;
 use App\Player;
 use App\Server;
 use Illuminate\Http\RedirectResponse;
@@ -45,6 +46,13 @@ class PlayerRouteController extends Controller
             return backWith('error', 'Failed to kick player');
         }
 
+        PanelLog::log(
+            $user->license_identifier,
+            "Kicked Player",
+            sprintf("%s kicked %s.", $user->consoleName(), $player->consoleName()),
+            ['reason' => $reason]
+        );
+
         if (!$player->isStaff()) {
             user()->incrementStatistics(Player::StatisticsKick);
         }
@@ -73,6 +81,13 @@ class PlayerRouteController extends Controller
         if (!$response->status) {
             return backWith('error', 'Failed to send staffPM');
         }
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Staff PM",
+            sprintf("%s sent a staffPM to %s.", $user->consoleName(), $player->consoleName()),
+            ['message' => $message]
+        );
 
         if (!$player->isStaff()) {
             user()->incrementStatistics(Player::StatisticsStaffPM);
@@ -104,6 +119,13 @@ class PlayerRouteController extends Controller
         if (!$response->status) {
             return backWith('error', 'Failed to unload character');
         }
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Unloaded Character",
+            sprintf("%s unloaded %s.", $user->consoleName(), $player->consoleName()),
+            ['message' => $message]
+        );
 
         if (!$player->isStaff()) {
             user()->incrementStatistics(Player::StatisticsUnload);
@@ -251,6 +273,12 @@ class PlayerRouteController extends Controller
         if (!$response->status) {
             return backWith('error', 'Failed to revive player');
         }
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Revived Player",
+            sprintf("%s revived %s.", $user->consoleName(), $player->consoleName())
+        );
 
         if (!$player->isStaff()) {
             user()->incrementStatistics(Player::StatisticsRevive);

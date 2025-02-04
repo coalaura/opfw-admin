@@ -294,9 +294,12 @@ class PlayerBanController extends Controller
             ->whereNotNull('smurf_account')
             ->delete();
 
-        if (! $ban->creator_name) {
-            PanelLog::logSystemBanRemove($user->license_identifier, $player->license_identifier);
-        }
+        PanelLog::log(
+            $user->license_identifier,
+            "Removed Ban",
+            sprintf("%s removed a ban from %s.", $user->consoleName(), $player->consoleName()),
+            ['hash' => $ban->ban_hash]
+        );
 
         // Automatically log the ban update as a warning.
         $player->warnings()->create([
@@ -396,6 +399,8 @@ class PlayerBanController extends Controller
             abort(401);
         }
 
+        $user = user();
+
         $tokens  = $player->getTokens();
         $tokens2 = $player2->getTokens();
 
@@ -414,7 +419,11 @@ class PlayerBanController extends Controller
             'player_tokens' => $newTokens2,
         ]);
 
-        PanelLog::logUnlink("hwid", license(), $player->license_identifier, $player2->license_identifier);
+        PanelLog::log(
+            $user->license_identifier,
+            "Unlinked HWID",
+            sprintf("%s unlinked %s from %s.", $user->consoleName(), $player->consoleName(), $player2->consoleName())
+        );
 
         return backWith('success', 'The players have been successfully unlinked.');
     }
@@ -424,6 +433,8 @@ class PlayerBanController extends Controller
         if (! $this->isSuperAdmin($request)) {
             abort(401);
         }
+
+        $user = user();
 
         $identifiers  = $player->getIdentifiers();
         $identifiers2 = $player2->getIdentifiers();
@@ -458,7 +469,11 @@ class PlayerBanController extends Controller
             'identifiers' => $newIdentifiers2,
         ]);
 
-        PanelLog::logUnlink("identifier", license(), $player->license_identifier, $player2->license_identifier);
+        PanelLog::log(
+            $user->license_identifier,
+            "Unlinked Identifier",
+            sprintf("%s unlinked %s from %s.", $user->consoleName(), $player->consoleName(), $player2->consoleName())
+        );
 
         return backWith('success', 'The players have been successfully unlinked.');
     }

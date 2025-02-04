@@ -203,6 +203,7 @@ class PlayerCharacterController extends Controller
      */
     public function update(Player $player, Character $character, CharacterUpdateRequest $request): RedirectResponse
     {
+        $user = user();
         $data = $request->validated();
 
         $data['first_name'] = trim(ucwords(strtolower($data['first_name'])));
@@ -228,15 +229,6 @@ class PlayerCharacterController extends Controller
             $data['position_name']   = null;
         }
 
-        $changed = [];
-        $old     = $character->toArray();
-        foreach ($data as $k => $v) {
-            $c = isset($old[$k]) ? $old[$k] : null;
-            if ($v !== $c) {
-                $changed[] = $k;
-            }
-        }
-
         $character->update($data);
 
         $info = 'In-Game character refresh failed, user has to soft-nap.';
@@ -247,8 +239,12 @@ class PlayerCharacterController extends Controller
             $info = $refresh->notExecuted ? '' : 'In-Game character refresh was successful too.';
         }
 
-        $user = user();
-        PanelLog::logCharacterEdit($user->license_identifier, $player->license_identifier, $character->character_id, $changed);
+        PanelLog::log(
+            $user->license_identifier,
+            "Edited Character",
+            sprintf("%s edited %s (#%d).", $user->consoleName(), $player->consoleName(), $character->character_id),
+            ['data' => $data]
+        );
 
         return backWith('success', 'Character was successfully updated. ' . $info);
     }
@@ -268,7 +264,12 @@ class PlayerCharacterController extends Controller
         }
 
         $user = user();
-        PanelLog::logCharacterEdit($user->license_identifier, $player->license_identifier, $character->character_id, ['email_address']);
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Refreshed E-Mail",
+            sprintf("%s refreshed the email address of %s (#%d).", $user->consoleName(), $player->consoleName(), $character->character_id),
+        );
 
         return backWith('success', 'Email address was successfully updated.');
     }
@@ -308,6 +309,8 @@ class PlayerCharacterController extends Controller
      */
     public function removeTattoos(Player $player, Character $character, Request $request): RedirectResponse
     {
+        $user = user();
+
         $zone = $request->get('zone');
         $json = json_decode($character->tattoos_data, true);
         $map  = json_decode(file_get_contents(__DIR__ . '/../../../helpers/tattoo-map.json'), true);
@@ -352,8 +355,11 @@ class PlayerCharacterController extends Controller
             'tattoos_data' => json_encode($json),
         ]);
 
-        $user = user();
-        PanelLog::logTattooRemoval($user->license_identifier, $player->license_identifier, $character->character_id, $zone);
+        PanelLog::log(
+            $user->license_identifier,
+            "Removed Tattoos",
+            sprintf("%s removed %s tattoos from %s (#%d).", $user->consoleName(), $zone, $player->consoleName(), $character->character_id),
+        );
 
         $info    = 'In-Game Tattoo refresh failed, user has to softnap.';
         $refresh = OPFWHelper::updateTattoos($player, $character->character_id);
@@ -374,6 +380,8 @@ class PlayerCharacterController extends Controller
      */
     public function resetSpawn(Player $player, Character $character, Request $request): RedirectResponse
     {
+        $user = user();
+
         $spawn       = $request->get('spawn');
         $resetCoords = json_decode(file_get_contents(__DIR__ . '/../../../helpers/coords_reset.json'), true);
 
@@ -391,8 +399,11 @@ class PlayerCharacterController extends Controller
             'coords' => $coords,
         ]);
 
-        $user = user();
-        PanelLog::logSpawnReset($user->license_identifier, $player->license_identifier, $character->character_id, $spawn);
+        PanelLog::log(
+            $user->license_identifier,
+            "Reset Spawn",
+            sprintf("%s reset the spawn for %s (#%d).", $user->consoleName(), $player->consoleName(), $character->character_id),
+        );
 
         return backWith('success', 'Spawn was reset successfully.');
     }
@@ -407,6 +418,8 @@ class PlayerCharacterController extends Controller
      */
     public function editBalance(Player $player, Character $character, Request $request): RedirectResponse
     {
+        $user = user();
+
         $cash   = intval($request->post("cash"));
         $bank   = intval($request->post("bank"));
         $stocks = intval($request->post("stocks"));
@@ -438,8 +451,12 @@ class PlayerCharacterController extends Controller
             'stocks_balance' => $stocks,
         ]);
 
-        $user = user();
-        PanelLog::logCharacterBalanceEdit($user->license_identifier, $player->license_identifier, $character->character_id, $changed);
+        PanelLog::log(
+            $user->license_identifier,
+            "Edited Balance",
+            sprintf("%s edited the balance of %s (#%d).", $user->consoleName(), $player->consoleName(), $character->character_id),
+            ['changed' => $changed]
+        );
 
         return backWith('success', 'Balance has been updated successfully.');
     }
@@ -539,6 +556,7 @@ class PlayerCharacterController extends Controller
      */
     public function updateLicenses(Request $request, Player $player, Character $character): RedirectResponse
     {
+        $user = user();
         $licenses = $request->post('licenses');
 
         if (!is_array($licenses)) {
@@ -565,9 +583,12 @@ class PlayerCharacterController extends Controller
             $info = $refresh->notExecuted ? '' : 'In-Game character refresh was successful too.';
         }
 
-        $user = user();
-
-        PanelLog::logLicenseUpdate($user->license_identifier, $player->license_identifier, $character->character_id);
+        PanelLog::log(
+            $user->license_identifier,
+            "Edited Licenses",
+            sprintf("%s edited the licenses of %s (#%d).", $user->consoleName(), $player->consoleName(), $character->character_id),
+            ['licenses' => $licenses]
+        );
 
         return backWith('success', 'Licenses were successfully updated. ' . $info);
     }

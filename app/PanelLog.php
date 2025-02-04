@@ -1,11 +1,8 @@
 <?php
-
 namespace App;
 
-use App\Helpers\GeneralHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
 
 /**
@@ -16,6 +13,26 @@ use Illuminate\Support\Carbon;
 class PanelLog extends Model
 {
     use HasFactory;
+
+    const Actions = [
+        "Removed Ban",
+        "Unlinked HWID",
+        "Unlinked Identifier",
+        "Edited Character",
+        "Refreshed E-Mail",
+        "Removed Tattoos",
+        "Reset Spawn",
+        "Edited Balance",
+        "Edited Licenses",
+        "Muted Player",
+        "Unmuted Player",
+        "Enabled Ban Exception",
+        "Removed Ban Exception",
+        "Kicked Player",
+        "Staff PM",
+        "Unloaded Character",
+        "Revived Player",
+    ];
 
     /**
      * Column name for when the model was created.
@@ -32,7 +49,7 @@ class PanelLog extends Model
      *
      * @var string
      */
-    protected $table = 'panel_logs';
+    protected $table = 'webpanel_logs';
 
     /**
      * The attributes that are mass assignable.
@@ -40,11 +57,11 @@ class PanelLog extends Model
      * @var array
      */
     protected $fillable = [
-        'source_identifier',
-        'target_identifier',
-        'timestamp',
-        'log',
+        'identifier',
         'action',
+        'details',
+        'metadata',
+        'timestamp',
     ];
 
     /**
@@ -53,16 +70,9 @@ class PanelLog extends Model
      * @var array
      */
     protected $casts = [
+        'metadata'  => 'array',
         'timestamp' => 'datetime',
     ];
-
-    /**
-     * Returns all related identifiers
-     */
-    public function identifiers(): array
-    {
-        return array_unique([$this->source_identifier, $this->target_identifier]);
-    }
 
     /**
      * Removes all panel logs older than 1 month
@@ -73,220 +83,16 @@ class PanelLog extends Model
     }
 
     /**
-     * Logs a character edit from the panel
+     * Creates a new panel log.
      */
-    public static function logCharacterEdit(string $fromIdentifier, string $toIdentifier, string $character, array $changedFields)
+    public static function log(string $license, string $action, string $details, ?array $metadata = null)
     {
-        if (empty($changedFields)) {
-            return;
-        }
-
-        $from = self::resolvePlayerLogName($fromIdentifier);
-        $to = self::resolvePlayerCharacterLogName($toIdentifier, $character);
-
-        $log = $from . ' edited ' . $to . '. Fields changed: `' . implode(', ', $changedFields) . '`';
-        self::createLog($fromIdentifier, $toIdentifier, $log, 'Character Edit');
+        self::query()->insert([
+            'identifier' => $license,
+            'action'     => $action,
+            'details'    => $details,
+            'metadata'   => json_encode($metadata),
+            'timestamp'  => Carbon::now(),
+        ]);
     }
-
-    /**
-     * Logs a character balance edit from the panel
-     */
-    public static function logCharacterBalanceEdit(string $fromIdentifier, string $toIdentifier, string $character, array $changedBalance)
-    {
-        if (empty($changedBalance)) {
-            return;
-        }
-
-        $from = self::resolvePlayerLogName($fromIdentifier);
-        $to = self::resolvePlayerCharacterLogName($toIdentifier, $character);
-
-        $log = $from . ' edited the balance of ' . $to . ': `' . implode(', ', $changedBalance) . '`';
-        self::createLog($fromIdentifier, $toIdentifier, $log, 'Character Balance Edit', true);
-    }
-
-    /**
-     * Logs tattoo removals from the panel
-     */
-    public static function logTattooRemoval(string $fromIdentifier, string $toIdentifier, string $character, string $zone)
-    {
-        $from = self::resolvePlayerLogName($fromIdentifier);
-        $to = self::resolvePlayerCharacterLogName($toIdentifier, $character);
-
-        $log = $from . ' removed all tattoos of ' . $to . ' in the zone `' . $zone . '`';
-        self::createLog($fromIdentifier, $toIdentifier, $log, 'Tattoo Removal');
-    }
-
-    /**
-     * Logs spawn resets from the panel
-     */
-    public static function logSpawnReset(string $fromIdentifier, string $toIdentifier, string $character, string $spawn)
-    {
-        $from = self::resolvePlayerLogName($fromIdentifier);
-        $to = self::resolvePlayerCharacterLogName($toIdentifier, $character);
-
-        $log = $from . ' set the spawn point of ' . $to . ' to `' . $spawn . '`';
-        self::createLog($fromIdentifier, $toIdentifier, $log, 'Spawn Reset');
-    }
-
-    /**
-     * Logs a staffPM sent from the panel
-     */
-    public static function logStaffPM(string $fromIdentifier, string $toIdentifier, string $message)
-    {
-        $from = self::resolvePlayerLogName($fromIdentifier);
-        $to = self::resolvePlayerLogName($toIdentifier);
-
-        $log = $from . ' sent the following message to ' . $to . ': `' . $message . '`';
-        self::createLog($fromIdentifier, $toIdentifier, $log, 'StaffPM');
-    }
-
-    /**
-     * Logs a kick from the panel
-     */
-    public static function logKick(string $fromIdentifier, string $toIdentifier, string $reason)
-    {
-        $from = self::resolvePlayerLogName($fromIdentifier);
-        $to = self::resolvePlayerLogName($toIdentifier);
-
-        $log = $from . ' kicked ' . $to . ' with the reason: `' . $reason . '`';
-        self::createLog($fromIdentifier, $toIdentifier, $log, 'Kicked Player', true);
-    }
-
-    /**
-     * Logs a revive from the panel
-     */
-    public static function logRevive(string $fromIdentifier, string $toIdentifier)
-    {
-        $from = self::resolvePlayerLogName($fromIdentifier);
-        $to = self::resolvePlayerLogName($toIdentifier);
-
-        $log = $from . ' revived ' . $to;
-        self::createLog($fromIdentifier, $toIdentifier, $log, 'Revived Player');
-    }
-
-    /**
-     * Logs a license add from the panel
-     */
-    public static function logLicenseUpdate(string $fromIdentifier, string $toIdentifier, string $character)
-    {
-        $from = self::resolvePlayerLogName($fromIdentifier);
-        $to = self::resolvePlayerCharacterLogName($toIdentifier, $character);
-
-        $log = $from . ' updated ' . $to . '\'s characters (#' . $character . ') licenses';
-        self::createLog($fromIdentifier, $toIdentifier, $log, 'Updated Licenses');
-    }
-
-    /**
-     * Logs a system ban removal from the panel
-     */
-    public static function logSystemBanRemove(string $fromIdentifier, string $toIdentifier)
-    {
-        $from = self::resolvePlayerLogName($fromIdentifier);
-        $to = self::resolvePlayerLogName($toIdentifier);
-
-        $log = $from . ' removed a system ban from ' . $to;
-        self::createLog($fromIdentifier, $toIdentifier, $log, 'Removed System Ban', false);
-    }
-
-    /**
-     * Logs a character unload from the panel
-     */
-    public static function logUnload(string $fromIdentifier, string $toIdentifier, string $character, string $reason)
-    {
-        $from = self::resolvePlayerLogName($fromIdentifier);
-        $to = self::resolvePlayerCharacterLogName($toIdentifier, $character);
-
-        $reason = $reason ? ' with the reason `' . $reason . '`' : ' with no reason';
-
-        $log = $from . ' unloaded ' . $to . $reason;
-        self::createLog($fromIdentifier, $toIdentifier, $log, 'Unloaded Character', true);
-    }
-
-    /**
-     * Logs unlinking 2 players
-     */
-    public static function logUnlink(string $type, string $staffLicense, string $player1License, string $player2License)
-    {
-        $staff = self::resolvePlayerLogName($staffLicense);
-
-        $player1 = self::resolvePlayerLogName($player1License);
-        $player2 = self::resolvePlayerLogName($player2License);
-
-        $log = $staff . ' unlinked ' . $player1 . ' and ' . $player2 . ' (' . $type . ')';
-
-        self::createLog($staffLicense, $player1License, $log, 'Unlinked ' . ucfirst($type), false);
-    }
-
-    /**
-     * Logs updating a player's ban exception
-     */
-    public static function logBanExceptionUpdate(string $staffLicense, string $playerLicense, ?string $twitch)
-    {
-        $staff = self::resolvePlayerLogName($staffLicense);
-        $player = self::resolvePlayerLogName($playerLicense);
-
-        if ($twitch) {
-            $log = $staff . ' removed the twitch ban exception from ' . $player;
-        } else {
-            $log = $staff . ' set the twitch ban exception of ' . $player . ' to ' . $twitch;
-        }
-
-        self::createLog($staffLicense, $playerLicense, $log, 'Updated Ban Exception', false);
-    }
-
-    /**
-     * Logs updating a player's mute
-     */
-    public static function logMuteUpdate(string $staffLicense, string $playerLicense, bool $status)
-    {
-        $staff = self::resolvePlayerLogName($staffLicense);
-        $player = self::resolvePlayerLogName($playerLicense);
-
-        if ($status) {
-            $action = 'Muted Player';
-            $log = $staff . ' muted ' . $player;
-        } else {
-            $action = 'Unmuted Player';
-            $log = $staff . ' unmuted ' . $player;
-        }
-
-        self::createLog($staffLicense, $playerLicense, $log, $action, false);
-    }
-
-    /**
-     * Returns "Laura (license:2ced2cabd90f1208e7e056485d4704c7e1284196)"
-     */
-    private static function resolvePlayerLogName(string $identifier): string
-    {
-        $player = Player::query()->where('license_identifier', $identifier)->first();
-        $playerName = $player ? $player->player_name : 'Unknown';
-
-        return $playerName . ' (' . $identifier . ')';
-    }
-
-    /**
-     * Returns "Laura (license:2ced2cabd90f1208e7e056485d4704c7e1284196)'s character (#739)"
-     */
-    private static function resolvePlayerCharacterLogName(string $identifier, string $character): string
-    {
-        return self::resolvePlayerLogName($identifier) . '\'s character (#' . $character . ')';
-    }
-
-    /**
-     * Creates a log entry
-     */
-    private static function createLog(string $source, string $target, string $log, string $action, bool $ignoreRoot = false)
-    {
-        if (!GeneralHelper::isUserRoot($source) || $ignoreRoot || CLUSTER === 'c1') {
-            self::query()->create([
-                'source_identifier' => $source,
-                'target_identifier' => $target,
-                'log' => $log,
-                'action' => $action,
-            ]);
-        }
-
-        self::doCleanup();
-    }
-
 }

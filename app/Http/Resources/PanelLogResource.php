@@ -17,10 +17,12 @@ class PanelLogResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id'        => $this->id,
-            'action'    => $this->action,
-            'log'       => $this->log,
-            'timestamp' => $this->timestamp,
+            'id'                => $this->id,
+            'action'            => $this->action,
+            'details'           => $this->details,
+            'metadata'          => $this->metadata,
+            'timestamp'         => $this->timestamp,
+            'licenseIdentifier' => $this->identifier,
         ];
     }
 
