@@ -102,6 +102,8 @@ class Cronjobs extends Command
         echo " - Cleaning up panel logs...";
         PanelLog::cleanup();
 
+        echo $this->stopTime($start);
+
         $start = microtime(true);
         echo " - Removing scheduled bans...";
         $time = time();
