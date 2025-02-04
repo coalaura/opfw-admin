@@ -436,22 +436,11 @@ class PlayerCharacterController extends Controller
             return backWith('error', 'Only super admins can edit a characters balance.');
         }
 
-        $changed = [];
-
-        $cashDiff = $cash - $character->cash;
-        if ($cashDiff !== 0) {
-            $changed[] = ($cashDiff > 0 ? '+' : '') . '$' . number_format($cashDiff) . ' cash';
-        }
-
-        $bankDiff = $bank - $character->bank;
-        if ($bankDiff !== 0) {
-            $changed[] = ($bankDiff > 0 ? '+' : '') . '$' . number_format($bankDiff) . ' bank';
-        }
-
-        $stocksDiff = $stocks - $character->stocks_balance;
-        if ($stocksDiff !== 0) {
-            $changed[] = ($stocksDiff > 0 ? '+' : '') . '$' . number_format($stocksDiff) . ' stocks';
-        }
+        $changed = [
+            sprintf("cash: %d -> %d", $character->cash, $cash),
+            sprintf("bank: %d -> %d", $character->bank, $bank),
+            sprintf("stocks: %d -> %d", $character->stocks_balance, $stocks),
+        ];
 
         $character->update([
             'cash'           => $cash,
