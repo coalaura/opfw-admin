@@ -85,6 +85,8 @@ class PlayerDataController extends Controller
             return backWith('error', 'You dont have permissions to do this.');
         }
 
+        $user = user();
+
         $whitelisted = DB::table('user_whitelist')
             ->select(['license_identifier'])
             ->where('license_identifier', '=', $player->license_identifier)
@@ -98,10 +100,22 @@ class PlayerDataController extends Controller
                     'license_identifier' => $player->license_identifier,
                 ]);
             }
+
+            PanelLog::log(
+                $user->license_identifier,
+                "Whitelisted Player",
+                sprintf("%s whitelisted %s.", $user->consoleName(), $player->consoleName()),
+            );
         } else {
             if ($whitelisted) {
                 DB::table('user_whitelist')->where('license_identifier', '=', $player->license_identifier)->delete();
             }
+
+            PanelLog::log(
+                $user->license_identifier,
+                "Unwhitelisted Player",
+                sprintf("%s unwhitelisted %s.", $user->consoleName(), $player->consoleName()),
+            );
         }
 
         return backWith('success', 'Whitelist status has been updated successfully.');
@@ -157,6 +171,8 @@ class PlayerDataController extends Controller
             return backWith('error', 'You dont have permissions to do this.');
         }
 
+        $user = user();
+
         $tag = $request->input('tag') ? trim($request->input('tag')) : null;
 
         $player->update([
@@ -164,6 +180,20 @@ class PlayerDataController extends Controller
         ]);
 
         Player::resolveTags(true);
+
+        if ($tag) {
+            PanelLog::log(
+                $user->license_identifier,
+                "Updated Tag",
+                sprintf("%s set the tag of %s to `%s`.", $user->consoleName(), $player->consoleName(), $tag),
+            );
+        } else {
+            PanelLog::log(
+                $user->license_identifier,
+                "Removed Tag",
+                sprintf("%s removed the tag of %s.", $user->consoleName(), $player->consoleName()),
+            );
+        }
 
         return backWith('success', 'Tag has been updated successfully.');
     }
@@ -181,6 +211,8 @@ class PlayerDataController extends Controller
             return backWith('error', 'You dont have permissions to do this.');
         }
 
+        $user = user();
+
         $enabledCommands = $request->input('enabledCommands');
 
         foreach ($enabledCommands as $command) {
@@ -192,6 +224,13 @@ class PlayerDataController extends Controller
         $player->update([
             "enabled_commands" => $enabledCommands,
         ]);
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Edited Commands",
+            sprintf("%s edited the enabled commands of %s.", $user->consoleName(), $player->consoleName()),
+            ['commands' => $enabledCommands]
+        );
 
         return backWith('success', 'Commands have been updated successfully.');
     }

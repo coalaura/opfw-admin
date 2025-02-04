@@ -288,11 +288,19 @@ class PlayerCharacterController extends Controller
             return backWith('error', 'Only super admins can delete characters.');
         }
 
+        $user = user();
+
         if ($character->character_deleted) {
             return backWith('error', 'Character is already deleted.');
         }
 
         if (DB::statement('UPDATE `characters` SET `character_deleted` = 1, `character_deletion_timestamp`=' . time() . ' WHERE `character_id` = ' . $character->character_id)) {
+            PanelLog::log(
+                $user->license_identifier,
+                "Deleted Character",
+                sprintf("%s deleted character #%d from %s.", $user->consoleName(), $character->character_id, $player->consoleName()),
+            );
+
             return backWith('success', 'Character was successfully deleted.');
         }
 
@@ -474,9 +482,17 @@ class PlayerCharacterController extends Controller
             return backWith('error', 'Only super admins can delete vehicles.');
         }
 
+        $user = user();
+
         $vehicle->update([
             'vehicle_deleted' => '1',
         ]);
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Deleted Vehicle",
+            sprintf("%s deleted vehicle #%d from character #%d.", $user->consoleName(), $vehicle->vehicle_id, $vehicle->owner_cid),
+        );
 
         return backWith('success', 'Vehicle was successfully deleted.');
     }
@@ -496,6 +512,8 @@ class PlayerCharacterController extends Controller
         if (!$this->isSuperAdmin($request)) {
             return backWith('error', 'Only super admins can add vehicles.');
         }
+
+        $user = user();
 
         $genPlate = function () {
             $a_z = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -542,6 +560,12 @@ class PlayerCharacterController extends Controller
                 'vehicle_deleted'          => 0,
             ],
         ]);
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Added Vehicle",
+            sprintf("%s added a `%s` to %s (#%d).", $user->consoleName(), $model, $player->consoleName(), $character->character_id),
+        );
 
         return backWith('success', 'Vehicle was successfully added (Model: ' . $model . ', Plate: ' . $plate . ').');
     }
