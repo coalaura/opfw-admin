@@ -37,7 +37,7 @@ class PanelLog extends Model
         "Unlinked Identifier",
         "Unloaded Character",
         "Unmuted Player",
-        "Unwhitelisted Player",
+        "Un-Whitelisted Player",
         "Updated Tag",
         "Whitelisted Player",
     ];

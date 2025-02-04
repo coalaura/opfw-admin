@@ -113,8 +113,8 @@ class PlayerDataController extends Controller
 
             PanelLog::log(
                 $user->license_identifier,
-                "Unwhitelisted Player",
-                sprintf("%s unwhitelisted %s.", $user->consoleName(), $player->consoleName()),
+                "Un-Whitelisted Player",
+                sprintf("%s un-whitelisted %s.", $user->consoleName(), $player->consoleName()),
             );
         }
 
