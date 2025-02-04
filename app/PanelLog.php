@@ -85,7 +85,7 @@ class PanelLog extends Model
     /**
      * Removes all panel logs older than 1 month
      */
-    private static function doCleanup()
+    public static function cleanup()
     {
         self::query()->where('timestamp', '<=', Carbon::now()->subMonths(6))->delete();
     }

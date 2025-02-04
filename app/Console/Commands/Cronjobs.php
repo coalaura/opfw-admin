@@ -7,6 +7,7 @@ use App\Helpers\CacheHelper;
 use App\Helpers\LoggingHelper;
 use App\Helpers\ServerAPI;
 use App\Helpers\SessionHelper;
+use App\PanelLog;
 use App\Server;
 use App\Warning;
 use Illuminate\Console\Command;
@@ -96,6 +97,10 @@ class Cronjobs extends Command
         LoggingHelper::cleanup();
 
         echo $this->stopTime($start);
+
+        $start = microtime(true);
+        echo " - Cleaning up panel logs...";
+        PanelLog::cleanup();
 
         $start = microtime(true);
         echo " - Removing scheduled bans...";
