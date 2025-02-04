@@ -180,7 +180,7 @@ export default {
                         },
                         {
                             label: 'panel_logs.title',
-                            icon: 'paperstack',
+                            icon: 'vote-yeah',
                             url: '/panel',
                         },
                         {
