@@ -8,7 +8,7 @@
                         <i class="fas fa-copy relative top-2px"></i>
                     </div>
 
-                    <CountryFlag :country="flagFromTZ(player.variables.timezone)" :title="player.variables.timezone + ' - ' + playerTime" class="rounded-sm" v-if="player.variables && player.variables.timezone" />
+                    <CountryFlag :country="flagFromTZ(player.variables.tz_name)" :title="player.variables.tz_name + ' - ' + playerTime" class="rounded-sm" v-if="player.variables && player.variables.tz_name" />
 
                     <h1 class="dark:text-white">
                         {{ player.safePlayerName }}
@@ -1852,19 +1852,19 @@ export default {
             return this.characters.filter(c => c.characterDeleted).length;
         },
         playerTimezone() {
-            if (!this.player.variables || !this.player.variables.timezone || typeof this.player.variables.timezoneOffset !== 'number') return false;
+            if (!this.player.variables || !this.player.variables.tz_name || typeof this.player.variables.tz_offset !== 'number') return false;
 
-            return this.player.variables.timezone;
+            return this.player.variables.tz_name;
         },
         playerResolution() {
-            if (!this.player.variables || !this.player.variables.screenWidth || !this.player.variables.screenHeight) return false;
+            if (!this.player.variables || !this.player.variables.screen_width || !this.player.variables.screen_height) return false;
 
-            return `${this.player.variables.screenWidth}x${this.player.variables.screenHeight}`;
+            return `${this.player.variables.screen_width}x${this.player.variables.screen_height}`;
         },
         playerFingerprint() {
-            if (!this.player.variables || !this.player.variables.ofFingerprint) return false;
+            if (!this.player.variables || !this.player.variables.fingerprint) return false;
 
-            return this.player.variables.ofFingerprint;
+            return this.player.variables.fingerprint;
         }
     },
     methods: {
