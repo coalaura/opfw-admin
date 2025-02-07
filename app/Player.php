@@ -83,7 +83,6 @@ class Player extends Model
         'last_used_identifiers',
         'ips',
         'player_tokens',
-        'user_variables',
         'is_staff',
         'is_senior_staff',
         'is_super_admin',
@@ -114,7 +113,6 @@ class Player extends Model
         'last_used_identifiers' => 'array',
         'player_tokens'         => 'array',
         'ips'                   => 'array',
-        'user_variables'        => 'array',
         'player_aliases'        => 'array',
         'enabled_commands'      => 'array',
         'user_data'             => 'array',
@@ -140,7 +138,14 @@ class Player extends Model
      *
      * @var ?Ban
      */
-    private $ban = false;
+    private $ban = null;
+
+    /**
+     * Cached user variables.
+     *
+     * @var ?array
+     */
+    private $userVariables = null;
 
     const PlayerSettings = [
         "banner"          => [
@@ -628,11 +633,17 @@ class Player extends Model
     /**
      * Gets all user variables.
      *
-     * @return array
+     * @return ?array
      */
-    public function getUserVariables(): array
+    public function getUserVariables(): ?array
     {
-        return $this->user_variables ?? [];
+        if (!$this->userVariables) {
+            $this->userVariables = (array) DB::table("user_variables")
+                ->where("user_id", "=", $this->user_id)
+                ->first();
+        }
+
+        return $this->userVariables;
     }
 
     /**
@@ -644,7 +655,7 @@ class Player extends Model
     {
         $variables = $this->getUserVariables();
 
-        return $variables['timezone'] ?? null;
+        return $variables['tz_name'] ?? null;
     }
 
     /**
@@ -874,16 +885,16 @@ class Player extends Model
         }
 
         // Timezone
-        $sTimezone = $source['timezone'] ?? null;
-        $tTimezone = $variables['timezone'] ?? null;
+        $sTimezone = $source['tz_name'] ?? null;
+        $tTimezone = $variables['tz_name'] ?? null;
 
         if ($sTimezone === $tTimezone && $sTimezone !== null) {
             $matches[] = sprintf('Timezone: %s == %s', $sTimezone, $tTimezone);
         }
 
         // CPU Thread Count
-        $sThreads = $source['threads'] ?? 0;
-        $tThreads = $variables['threads'] ?? 0;
+        $sThreads = $source['cpu_threads'] ?? 0;
+        $tThreads = $variables['cpu_threads'] ?? 0;
 
         if ($sThreads === $tThreads && $sThreads > 0) {
             $matches[] = sprintf('Threads: %s == %s', $sThreads, $tThreads);

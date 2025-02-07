@@ -51,7 +51,6 @@ class CreateUsersTable extends Migration
 			!in_array("country_name", $columns) && $table->string("country_name", 120)->nullable();
 			!in_array("user_settings", $columns) && $table->longText("user_settings")->nullable();
 			!in_array("user_data", $columns) && $table->longText("user_data")->nullable();
-			!in_array("user_variables", $columns) && $table->longText("user_variables")->nullable();
 			!in_array("admin_features", $columns) && $table->longText("admin_features")->nullable();
 			!in_array("staff_points", $columns) && $table->longText("staff_points")->nullable();
 			!in_array("weekly_playtime", $columns) && $table->longText("weekly_playtime")->nullable();

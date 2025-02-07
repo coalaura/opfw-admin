@@ -107,12 +107,11 @@ class GeneralHelper
             return CacheHelper::read($key, []);
         }
 
-        $timezones = DB::table('users')
-            ->select(DB::raw("COUNT(1) as count, JSON_UNQUOTE(JSON_EXTRACT(user_variables, '$.timezone')) as timezone"))
-            ->whereNotNull(DB::raw("JSON_EXTRACT(user_variables, '$.timezone')"))
-            ->groupBy("timezone")
+        $timezones = DB::table('user_variables')
+            ->selectRaw("tz_name, COUNT(*) as count")
+            ->groupBy("tz_name")
             ->orderBy("count", "DESC")
-            ->orderBy("timezone", "ASC")
+            ->orderBy("tz_name", "ASC")
             ->limit(10)
             ->get()->toArray();
 
