@@ -237,14 +237,14 @@
                     </div>
                 </div>
 
-                <div class="flex py-4 px-6 mb-5 bg-white dark:bg-gray-600 rounded-lg shadow-sm gap-10 relative" v-for="timezone in timezones" :key="timezone.timezone">
+                <div class="flex py-4 px-6 mb-5 bg-white dark:bg-gray-600 rounded-lg shadow-sm gap-10 relative" v-for="timezone in timezones" :key="timezone.tz_name">
                     <div class="text-7xl">
                         <img :src="'/images/earth/' + timezone.icon" class="w-20" />
                     </div>
 
                     <div class="flex items-center overflow-hidden">
                         <div class="overflow-hidden">
-                            <p class="font-semibold text-lg">{{ timezone.timezone }}</p>
+                            <p class="font-semibold text-lg">{{ timezone.tz_name }}</p>
                             <p class="text-sm">{{ timezone.time }}</p>
                             <p class="mt-1 text-xs text-muted dark:text-dark-muted italic overflow-ellipsis overflow-hidden whitespace-nowrap" v-if="timezone.alias.length > 0">{{ t('nav.world_time_also', timezone.alias.join(', ')) }}</p>
                         </div>
@@ -317,7 +317,7 @@ export default {
     data() {
         const timezones = this.$page.timezones.map(timezone => {
             timezone.time = this.getDateForTimezone(timezone);
-            timezone.icon = this.getTimezoneIcon(timezone.timezone);
+            timezone.icon = this.getTimezoneIcon(timezone.tz_name);
 
             timezone.alias = [];
 
@@ -327,7 +327,7 @@ export default {
 
             if (initial === index) return true;
 
-            self[initial].alias.push(timezone.timezone);
+            self[initial].alias.push(timezone.tz_name);
 
             return false;
         });
@@ -407,7 +407,7 @@ export default {
     },
     methods: {
         getDateForTimezone(pTimezone) {
-            const date = new Date((new Date()).toLocaleString('en-US', { timeZone: pTimezone.timezone }));
+            const date = new Date((new Date()).toLocaleString('en-US', { timeZone: pTimezone.tz_name }));
 
             return moment(date).format('dddd, MMMM Do YYYY, h:mm:ss A');
         },
