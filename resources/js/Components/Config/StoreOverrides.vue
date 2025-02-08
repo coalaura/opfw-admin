@@ -87,7 +87,7 @@
                 <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" v-model="cluster" id="cluster" type="number" min="1" max="100" placeholder="3" />
 
                 <label class="block mb-1 font-semibold mt-5 pt-5 border-t-2 border-dashed border-gray-500" for="cluster">{{ t('tools.config.or_read_text') }}</label>
-                <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" v-model="reading" id="reading" placeholder="Law Enforcement:SASP:Cadet=70;Probationary Officer=80;Officer=90..." />
+                <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" v-model="reading" id="reading" placeholder="gun_store=pistol_ammo:42,sub_ammo:69..." />
             </template>
 
             <template #actions>
@@ -232,7 +232,7 @@ export default {
             }
         },
         exportConfig() {
-            let entries = [];
+            const entries = [];
 
             for (const override of this.overrides) {
                 const { store, items } = override;

@@ -135,7 +135,7 @@
                 <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" v-model="cluster" id="cluster" type="number" min="1" max="100" placeholder="3" />
 
                 <label class="block mb-1 font-semibold mt-5 pt-5 border-t-2 border-dashed border-gray-500" for="cluster">{{ t('tools.config.or_read_text') }}</label>
-                <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" v-model="reading" id="reading" placeholder="Law Enforcement:SASP:Cadet=70;Probationary Officer=80;Officer=90..." />
+                <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" v-model="reading" id="reading" placeholder="Law Enforcement/SASP=Cadet:70,Probationary Officer:80,Officer:90" />
             </template>
 
             <template #actions>
@@ -361,29 +361,35 @@ export default {
                 reading = reading.substring(0, reading.length - 1);
             }
 
-            const overrides = reading.trim().split(",");
+            const overrides = reading.trim().split(";");
 
             if (!overrides.length) {
                 return;
             }
 
             for (const override of overrides) {
-                const parts = override.split(":");
+                const parts = override.split("=");
 
-                if (parts.length !== 3) {
+                if (parts.length !== 2) {
                     continue;
                 }
 
-                const jobName = parts[0],
-                    departmentName = parts[1],
-                    positions = parts[2].split(";");
+                const jobParts = parts[0].split("/");
+
+                if (jobParts.length !== 2) {
+                    continue;
+                }
+
+                const jobName = jobParts[0],
+                    departmentName = jobParts[1],
+                    positions = parts[1].split(",");
 
                 if (!jobName || !departmentName || !positions.length) {
                     continue;
                 }
 
                 for (const position of positions) {
-                    const [positionName, salary] = position.split("=");
+                    const [positionName, salary] = position.split(":");
 
                     if (!positionName || !salary || !salary.match(/^\d+$/)) {
                         continue;
@@ -394,7 +400,7 @@ export default {
             }
         },
         exportConfig() {
-            let entries = [];
+            const entries = [];
 
             for (const override of this.overrides) {
                 const { jobName, departmentName, positions } = override;
@@ -403,9 +409,9 @@ export default {
                     continue;
                 }
 
-                const positionStr = positions.map(position => `${position.name}=${position.salary}`).join(";");
+                const positionStr = positions.map(position => `${position.name}:${position.salary}`).join(",");
 
-                entries.push(`${jobName}:${departmentName}:${positionStr}`);
+                entries.push(`${jobName}/${departmentName}=${positionStr}`);
             }
 
             const config = entries.join(",");
