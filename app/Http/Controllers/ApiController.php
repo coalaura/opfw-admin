@@ -97,20 +97,21 @@ class ApiController extends Controller
             abort(404);
         }
 
-        $value = "";
+        $result = "";
         $lines = explode("\n", $data);
 
         foreach($lines as $line) {
+            $line = trim($line);
+
             if (!$line || !Str::startsWith($line, $key)) {
                 continue;
             }
 
-            $value = trim(preg_replace('/^' . $key . '\s*=\s*/', '', $line));
-            $value = trim($value, '"');
+            $result = $line;
 
             break;
         }
 
-        return $this->json(true, $value);
+        return $this->json(true, $result);
     }
 }

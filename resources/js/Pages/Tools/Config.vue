@@ -42,11 +42,11 @@ export default {
     },
     props: {
         jobs: {
-            type: Object,
+            type: Object | Array,
             required: true
         },
         items: {
-            type: Object,
+            type: Object | Array,
             required: true
         }
     },

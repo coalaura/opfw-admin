@@ -152,6 +152,7 @@
 
 <script>
 import Modal from '../Modal';
+import ServerConfig from './ServerConfig.js';
 
 export default {
     name: 'JobOverrides',
@@ -160,7 +161,7 @@ export default {
     },
     props: {
         jobs: {
-            type: Object,
+            type: Object | Array,
             required: true
         }
     },
@@ -356,47 +357,23 @@ export default {
                 this.isLoading = false;
             }
 
-            if (reading.startsWith("job_overrides")) {
-                reading = reading.replace(/job_overrides ?= ?/, "").trim().substring(1);
-                reading = reading.substring(0, reading.length - 1);
-            }
+            try {
+                const cfg = new ServerConfig(reading),
+                    data = cfg.mapMap();
 
-            const overrides = reading.trim().split(";");
+                for (const [jobParts, overrides] of Object.entries(data)) {
+                    const [jobName, departmentName] = jobParts.split("/");
 
-            if (!overrides.length) {
-                return;
-            }
-
-            for (const override of overrides) {
-                const parts = override.split("=");
-
-                if (parts.length !== 2) {
-                    continue;
-                }
-
-                const jobParts = parts[0].split("/");
-
-                if (jobParts.length !== 2) {
-                    continue;
-                }
-
-                const jobName = jobParts[0],
-                    departmentName = jobParts[1],
-                    positions = parts[1].split(",");
-
-                if (!jobName || !departmentName || !positions.length) {
-                    continue;
-                }
-
-                for (const position of positions) {
-                    const [positionName, salary] = position.split(":");
-
-                    if (!positionName || !salary || !salary.match(/^\d+$/)) {
+                    if (!jobName || !departmentName) {
                         continue;
                     }
 
-                    this.importPosition(jobName, departmentName, positionName, salary);
+                    for (const [positionName, salary] of Object.entries(overrides)) {
+                        this.importPosition(jobName, departmentName, positionName, salary);
+                    }
                 }
+            } catch(e) {
+                console.error(e);
             }
         },
         exportConfig() {

@@ -104,6 +104,7 @@
 
 <script>
 import Modal from '../Modal';
+import ServerConfig from './ServerConfig.js';
 
 export default {
     name: 'StoreOverrides',
@@ -112,7 +113,7 @@ export default {
     },
     props: {
         items: {
-            type: Object,
+            type: Object | Array,
             required: true
         }
     },
@@ -182,53 +183,30 @@ export default {
                 this.isLoading = false;
             }
 
-            if (reading.startsWith("store_overrides")) {
-                reading = reading.replace(/store_overrides ?= ?/, "").trim().substring(1);
-                reading = reading.substring(0, reading.length - 1);
-            }
+            try {
+                const cfg = new ServerConfig(reading),
+                    overrides = cfg.mapMap();
 
-            const overrides = reading.trim().split(";");
+                for (const [storeName, overrideItems] of Object.entries(overrides)) {
+                    const newOverride = {
+                        store: storeName,
+                        items: []
+                    };
 
-            if (!overrides.length) {
-                return;
-            }
-
-            for (const override of overrides) {
-                const parts = override.split("=");
-
-                if (parts.length !== 2) {
-                    continue;
-                }
-
-                const storeName = parts[0],
-                    items = parts[1].split(",");
-
-                if (!storeName || !items.length) {
-                    continue;
-                }
-
-                const newOverride = {
-                    store: storeName,
-                    items: []
-                };
-
-                for (const item of items) {
-                    const [name, price] = item.split(":");
-
-                    if (!name || !price || !price.match(/^\d+$/)) {
-                        continue;
+                    for (const [itemName, price] of Object.entries(overrideItems)) {
+                        newOverride.items.push({
+                            name: itemName,
+                            price: parseInt(price),
+                            valid: !!this.items[itemName]
+                        });
                     }
 
-                    newOverride.items.push({
-                        name: name,
-                        price: parseInt(price),
-                        valid: !!this.items[name]
-                    });
+                    if (newOverride.items.length) {
+                        this.overrides.push(newOverride);
+                    }
                 }
-
-                if (newOverride.items.length) {
-                    this.overrides.push(newOverride);
-                }
+            } catch(e) {
+                console.error(e);
             }
         },
         exportConfig() {
