@@ -626,9 +626,16 @@
         "attach": "Add screenshot to players.",
         "auto_refresh": "Switch auto-refresh.",
         "description": "Look at random player games, find strange thing.",
+        "error_manifest": "Stream load fail.",
+        "live": "Overwatch - Live",
+        "live_description": "Watch players on server.",
+        "no_streams": "No streams.",
         "profile": "{0} - {1} (#{2})",
         "refresh": "Get new screenshot.",
         "server": "Server: {0}",
+        "stream": "Stream #{0}",
+        "stream_error": "Stream Bad",
+        "streams": "Streams",
         "title": "Overwatch"
     },
     "pagination": {

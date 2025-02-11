@@ -119,7 +119,7 @@ class TwitterController extends Controller
      */
     public function editTweet(Request $request, TwitterPost $post): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_TWITTER_EDIT)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_TWITTER_EDIT)) {
             abort(401);
         }
 
@@ -150,7 +150,7 @@ class TwitterController extends Controller
      */
     public function deleteTweets(Request $request): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_TWITTER)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_TWITTER)) {
             abort(401);
         }
 
@@ -173,7 +173,7 @@ class TwitterController extends Controller
      */
     public function verify(Request $request, TwitterUser $user): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_TWITTER_VERIFY)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_TWITTER_VERIFY)) {
             abort(401);
         }
 

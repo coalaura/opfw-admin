@@ -81,7 +81,7 @@ class PlayerDataController extends Controller
      */
     public function updateWhitelistStatus(Player $player, Request $request): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_WHITELIST)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_WHITELIST)) {
             return backWith('error', 'You dont have permissions to do this.');
         }
 
@@ -130,7 +130,7 @@ class PlayerDataController extends Controller
      */
     public function updateBanExceptionStatus(Player $player, Request $request): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_BAN_EXCEPTION)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_BAN_EXCEPTION)) {
             return backWith('error', 'You dont have permissions to do this.');
         }
 
@@ -167,7 +167,7 @@ class PlayerDataController extends Controller
      */
     public function updateTag(Player $player, Request $request): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_EDIT_TAG)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_EDIT_TAG)) {
             return backWith('error', 'You dont have permissions to do this.');
         }
 

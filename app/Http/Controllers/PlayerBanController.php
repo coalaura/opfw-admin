@@ -276,7 +276,7 @@ class PlayerBanController extends Controller
      */
     public function destroy(Player $player, Ban $ban, Request $request): RedirectResponse
     {
-        if ($ban->locked && ! PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN)) {
+        if ($ban->locked && ! PermissionHelper::hasPermission(PermissionHelper::PERM_LOCK_BAN)) {
             abort(401);
         }
 
@@ -312,7 +312,7 @@ class PlayerBanController extends Controller
 
     public function lockBan(Player $player, Ban $ban, Request $request): RedirectResponse
     {
-        if (! PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_LOCK_BAN)) {
             abort(401);
         }
 
@@ -325,7 +325,7 @@ class PlayerBanController extends Controller
 
     public function unlockBan(Player $player, Ban $ban, Request $request): RedirectResponse
     {
-        if (! PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_LOCK_BAN)) {
             abort(401);
         }
 
@@ -488,7 +488,7 @@ class PlayerBanController extends Controller
      */
     public function edit(Request $request, Player $player, Ban $ban): Response
     {
-        if (! $ban->creator_name || ($ban->locked && ! PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN))) {
+        if (! $ban->creator_name || ($ban->locked && ! PermissionHelper::hasPermission(PermissionHelper::PERM_LOCK_BAN))) {
             abort(401);
         }
 
@@ -508,7 +508,7 @@ class PlayerBanController extends Controller
      */
     public function update(Player $player, Ban $ban, BanUpdateRequest $request): RedirectResponse
     {
-        if ($ban->locked && ! PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOCK_BAN)) {
+        if ($ban->locked && ! PermissionHelper::hasPermission(PermissionHelper::PERM_LOCK_BAN)) {
             abort(401);
         }
 
@@ -668,7 +668,7 @@ class PlayerBanController extends Controller
 
     protected function findPlayer(Request $request, string $license)
     {
-        if (! PermissionHelper::hasPermission($request, PermissionHelper::PERM_LINKED)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_LINKED)) {
             abort(401);
         }
 

@@ -17,7 +17,7 @@ class ApiController extends Controller
 {
     public function crafting(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_CRAFTING)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_CRAFTING)) {
             abort(401);
         }
 

@@ -24,7 +24,7 @@ class MapController extends Controller
      */
     public function index(Request $request, string $server = ''): Response
     {
-        $perms = PermissionHelper::hasPermission($request, PermissionHelper::PERM_LIVEMAP);
+        $perms = PermissionHelper::hasPermission(PermissionHelper::PERM_LIVEMAP);
         $fake = $perms && $request->query('meow') === '420';
 
         if (!$server) {
@@ -85,7 +85,7 @@ class MapController extends Controller
     {
         $licenses = $request->input('licenses') ?? [];
 
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LIVEMAP)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_LIVEMAP)) {
             return self::json(false, null, 'You can not use the livemap functionality');
         }
 
@@ -117,7 +117,7 @@ class MapController extends Controller
 
     public function noclipBans(Request $request): \Illuminate\Http\Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LIVEMAP)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_LIVEMAP)) {
             return self::json(false, null, 'You can not use the livemap functionality');
         }
 

@@ -21,11 +21,26 @@ class OverwatchController extends Controller
      */
     public function index(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_SCREENSHOT)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_SCREENSHOT)) {
             abort(401);
         }
 
         return Inertia::render('Overwatch/Index');
+    }
+
+    /**
+     * Live streams of new players.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function live(Request $request): Response
+    {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_SCREENSHOT)) {
+            abort(401);
+        }
+
+        return Inertia::render('Overwatch/Live');
     }
 
     /**
@@ -36,7 +51,7 @@ class OverwatchController extends Controller
      */
     public function getRandomScreenshot(Request $request): \Illuminate\Http\Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_SCREENSHOT)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_SCREENSHOT)) {
             return self::json(false, null, 'You can not use the screenshot functionality');
         }
 

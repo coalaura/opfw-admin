@@ -12,7 +12,7 @@ class TokenController extends Controller
 {
     public function index(Request $request)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_API_TOKENS)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
             abort(401);
         }
 
@@ -28,7 +28,7 @@ class TokenController extends Controller
 
     public function update(Request $request, Token $token)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_API_TOKENS)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
             abort(401);
         }
 
@@ -50,7 +50,7 @@ class TokenController extends Controller
 
     public function create(Request $request)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_API_TOKENS)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
             abort(401);
         }
 
@@ -67,7 +67,7 @@ class TokenController extends Controller
 
     public function delete(Request $request, Token $token)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_API_TOKENS)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
             abort(401);
         }
 
@@ -78,7 +78,7 @@ class TokenController extends Controller
 
     public function logs(Request $request)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_API_TOKENS)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
             abort(401);
         }
 
@@ -97,7 +97,7 @@ class TokenController extends Controller
 
     public function rps(Request $request)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_API_TOKENS)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
             abort(401);
         }
 

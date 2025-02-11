@@ -51,7 +51,7 @@ class StocksController extends Controller
 
             $sharedKeys = false;
 
-            if (PermissionHelper::hasPermission($request, PermissionHelper::PERM_REALTY_EDIT)) {
+            if (PermissionHelper::hasPermission(PermissionHelper::PERM_REALTY_EDIT)) {
                 $keys = explode(';', $property->shared_keys ?? '');
                 $keys = array_values(array_filter($keys));
 
@@ -105,7 +105,7 @@ class StocksController extends Controller
 
     public function updateProperty(Request $request, int $propertyId)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_REALTY_EDIT)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_REALTY_EDIT)) {
             abort(401);
         }
 

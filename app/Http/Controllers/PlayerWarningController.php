@@ -123,7 +123,7 @@ class PlayerWarningController extends Controller
 
     public function bulkDeleteWarnings(Request $request, Player $player)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_BULK_DELETE)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_BULK_DELETE)) {
             abort(401);
         }
 

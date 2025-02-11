@@ -94,10 +94,11 @@ module.exports = {
                 'base': '10rem'
             },
             maxWidth: {
-                '56':    '14rem',
-                'large': 'min(90%, 1220px)',
-                'px':    '1px',
-                '40':    '10rem',
+                '56':     '14rem',
+                'large':  'min(90%, 1220px)',
+                'px':     '1px',
+                '40':     '10rem',
+                'stream': '1400px',
             },
             maxHeight: {
                 'max':             'calc(100% - 60px)',

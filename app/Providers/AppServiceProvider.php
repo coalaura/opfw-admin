@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Providers;
 
 use App\Helpers\GeneralHelper;
@@ -39,13 +38,13 @@ class AppServiceProvider extends ServiceProvider
         // Disable resource wrapping.
         JsonResource::withoutWrapping();
 
-        $canUseDB = !app()->runningInConsole() && env('DB_CONNECTION');
+        $canUseDB = ! app()->runningInConsole() && env('DB_CONNECTION');
 
         $discord = $canUseDB ? SessionHelper::getInstance()->getDiscord() : null;
         $name    = $discord ? $discord['username'] : 'Guest';
 
         DB::listen(function ($query) use ($name) {
-            if (!env('LOG_QUERIES') || !CLUSTER) {
+            if (! env('LOG_QUERIES') || ! CLUSTER) {
                 return;
             }
 
@@ -137,6 +136,24 @@ class AppServiceProvider extends ServiceProvider
                 $session = sessionHelper();
 
                 return $session->get('discord') ?: null;
+            },
+
+            'overwatch'  => function () {
+                if (PermissionHelper::hasPermission(PermissionHelper::PERM_SCREENSHOT)) {
+                    $url     = env('OVERWATCH_URL', '');
+
+                    $streams = array_map(function($stream) use ($url) {
+                        return sprintf($url, trim($stream));
+                    }, explode(',', env('OVERWATCH_STREAMS', '')));
+
+                    if (! empty($streams)) {
+                        return [
+                            'streams' => $streams,
+                        ];
+                    }
+                }
+
+                return false;
             },
 
             'global'     => env('GLOBAL_SERVER', 'https://global.op-framework.com/'),

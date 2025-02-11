@@ -80,7 +80,7 @@ class InventoryController extends Controller
         $slots    = self::MinInventorySlots[$inventoryParams[0]] ?? 5;
         $contents = [];
 
-        if (PermissionHelper::hasPermission($request, PermissionHelper::PERM_VIEW_INVENTORY)) {
+        if (PermissionHelper::hasPermission(PermissionHelper::PERM_VIEW_INVENTORY)) {
             $items = DB::table('inventories')->where('inventory_name', '=', $inventory)->get();
 
             foreach ($items as $item) {

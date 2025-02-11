@@ -162,7 +162,7 @@ class LogController extends Controller
      */
     public function moneyLogs(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_MONEY_LOGS)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_MONEY_LOGS)) {
             abort(403);
         }
 
@@ -230,7 +230,7 @@ class LogController extends Controller
 
     public function darkChat(Request $request)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_DARK_CHAT)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_DARK_CHAT)) {
             abort(403);
         }
 
@@ -280,7 +280,7 @@ class LogController extends Controller
      */
     public function phoneLogs(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_PHONE_LOGS)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_PHONE_LOGS)) {
             abort(403);
         }
 
@@ -300,7 +300,7 @@ class LogController extends Controller
      */
     public function phoneLogsData(Request $request)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_PHONE_LOGS)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_PHONE_LOGS)) {
             abort(403);
         }
 
@@ -352,7 +352,7 @@ class LogController extends Controller
 
     public function searches(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_ADVANCED)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_ADVANCED)) {
             abort(401);
         }
 
@@ -396,7 +396,7 @@ class LogController extends Controller
 
     public function screenshotLogs(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_ADVANCED)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_ADVANCED)) {
             abort(401);
         }
 
@@ -488,7 +488,7 @@ class LogController extends Controller
 
     public function damageLogs(Request $request)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_DAMAGE_LOGS)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_DAMAGE_LOGS)) {
             abort(401);
         }
 

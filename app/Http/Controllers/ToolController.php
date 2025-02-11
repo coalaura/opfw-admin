@@ -51,7 +51,7 @@ class ToolController extends Controller
      */
     public function weapons(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_ADVANCED)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_ADVANCED)) {
             abort(401);
         }
 
@@ -141,7 +141,7 @@ class ToolController extends Controller
      */
     public function searchWeapons(Request $request, int $hash)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_ADVANCED)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_ADVANCED)) {
             abort(401);
         }
 

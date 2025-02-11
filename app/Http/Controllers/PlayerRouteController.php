@@ -222,7 +222,7 @@ class PlayerRouteController extends Controller
      */
     public function antiCheat(Player $player, Request $request): Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_ANTI_CHEAT)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_ANTI_CHEAT)) {
             abort(401);
         }
 
@@ -297,7 +297,7 @@ class PlayerRouteController extends Controller
      */
     public function screenshot(string $server, int $id, Request $request): Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_SCREENSHOT)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_SCREENSHOT)) {
             return self::json(false, null, 'You can not use the screenshot functionality');
         }
 
@@ -356,7 +356,7 @@ class PlayerRouteController extends Controller
      */
     public function capture(string $server, int $id, int $duration, Request $request): Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_SCREENSHOT)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_SCREENSHOT)) {
             return self::json(false, null, 'Only trusted Panel users can use screenshot functionality');
         }
 

@@ -20,7 +20,7 @@ class LoadingScreenController extends Controller
      */
     public function index(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOADING_SCREEN)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_LOADING_SCREEN)) {
             abort(401);
         }
 
@@ -39,7 +39,7 @@ class LoadingScreenController extends Controller
      */
     public function delete(Request $request, int $id): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOADING_SCREEN)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_LOADING_SCREEN)) {
             abort(401);
         }
 
@@ -56,7 +56,7 @@ class LoadingScreenController extends Controller
      */
     public function edit(Request $request, int $id): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOADING_SCREEN)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_LOADING_SCREEN)) {
             abort(401);
         }
 
@@ -84,7 +84,7 @@ class LoadingScreenController extends Controller
      */
     public function add(Request $request): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_LOADING_SCREEN)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_LOADING_SCREEN)) {
             abort(401);
         }
 

@@ -90,7 +90,7 @@ class HomeController extends Controller
 	 */
 	protected function serverAnnouncement(Request $request)
 	{
-		if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_ANNOUNCEMENT)) {
+		if (!PermissionHelper::hasPermission(PermissionHelper::PERM_ANNOUNCEMENT)) {
             abort(401);
         }
 

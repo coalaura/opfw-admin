@@ -33,7 +33,7 @@ class AntiCheatController extends Controller
      */
     public function render(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_ANTI_CHEAT)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_ANTI_CHEAT)) {
             abort(401);
         }
 
@@ -91,7 +91,7 @@ class AntiCheatController extends Controller
      */
     public function statistics(Request $request)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_ANTI_CHEAT)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_ANTI_CHEAT)) {
             abort(401);
         }
 

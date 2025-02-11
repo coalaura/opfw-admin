@@ -93,7 +93,7 @@ class AdvancedSearchController extends Controller
      */
     public function index(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_ADVANCED)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_ADVANCED)) {
             abort(401);
         }
 

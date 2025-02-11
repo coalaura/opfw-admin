@@ -285,6 +285,12 @@ export default {
                             hidden: !this.perm.check(this.perm.PERM_SCREENSHOT),
                         },
                         {
+                            label: 'overwatch.live',
+                            icon: 'video',
+                            url: '/overwatch/live',
+                            hidden: !this.$page.overwatch,
+                        },
+                        {
                             label: 'backstories.title',
                             icon: 'box-open',
                             url: '/backstories',
@@ -370,10 +376,10 @@ export default {
     },
     methods: {
         isUrl(url) {
-            if (this.url === url) return true;
-            if (this.url.substring(1) === '' || url.substring(1) === '') return false;
+            const test = url.replace(/[?#].+$/m, ""),
+                against = this.url.replace(/[?#].+$/m, "");
 
-            return this.url.startsWith(url);
+            return test === against;
         },
         height(sub, isSuperAdmin) {
             const length = sub.filter(l => (!l.private || isSuperAdmin) && !l.hidden && this.matchesSearch(l)).length;

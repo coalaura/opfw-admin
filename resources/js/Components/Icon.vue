@@ -93,6 +93,7 @@
     <i class="fas fa-user-md" v-else-if="name === 'user-md'"></i>
     <i class="fas fa-laptop-medical" v-else-if="name === 'laptop-medical'"></i>
     <i class="fas fa-vote-yeah" v-else-if="name === 'vote-yeah'"></i>
+    <i class="fas fa-video" v-else-if="name === 'video'"></i>
 </template>
 
 <script>

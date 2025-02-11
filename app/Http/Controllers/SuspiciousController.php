@@ -21,7 +21,7 @@ class SuspiciousController extends Controller
      */
     public function index(Request $request)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_SUSPICIOUS)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_SUSPICIOUS)) {
             abort(401);
         }
 

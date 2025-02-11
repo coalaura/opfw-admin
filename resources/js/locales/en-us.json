@@ -173,7 +173,15 @@
         "refresh": "Get a new screenshot.",
         "auto_refresh": "Toggle the auto-refresh.",
         "profile": "{0} - {1} (#{2})",
-        "server": "Server: {0}"
+        "server": "Server: {0}",
+
+        "live": "Overwatch - Live",
+        "live_description": "Live spectate of players in the server.",
+        "streams": "Streams",
+        "no_streams": "No available streams.",
+        "stream": "Stream #{0}",
+        "stream_error": "Stream Error",
+        "error_manifest": "Failed to load stream manifest."
     },
     "errors": {
         "client": {

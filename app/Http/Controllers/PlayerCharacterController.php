@@ -802,7 +802,7 @@ class PlayerCharacterController extends Controller
 
     public function savingsLogs(Request $request, int $id)
     {
-        if (!PermissionHelper::hasPermission($request, PermissionHelper::PERM_SAVINGS_LOGS)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_SAVINGS_LOGS)) {
             abort(401);
         }
 
