@@ -180,8 +180,7 @@
         "streams": "Streams",
         "no_streams": "No available streams.",
         "stream": "Stream #{0}",
-        "stream_error": "Stream Error",
-        "error_manifest": "Failed to load stream manifest."
+        "stream_error": "Stream Error"
     },
     "errors": {
         "client": {

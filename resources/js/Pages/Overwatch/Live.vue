@@ -13,7 +13,7 @@
         </portal>
 
         <v-section class="-mt-2 max-w-stream" :noFooter="true" :noHeader="true">
-            <div class="flex gap-3">
+            <div class="flex items-stretch gap-3" ref="container">
                 <div class="w-72">
                     <h3 class="font-bold text-md border-b-2 border-gray-500 mb-3 flex justify-between items-start">
                         {{ t('overwatch.streams') }}
@@ -37,7 +37,7 @@
                 </div>
 
                 <div class="w-full relative">
-                    <video class="w-full" ref="video" controlslist="nofullscreen nodownload noplaybackrate" poster="/images/no_stream.webp"></video>
+                    <video class="w-full pointer-events-none" ref="video" controlslist="nofullscreen nodownload noplaybackrate" poster="/images/no_stream.webp"></video>
 
                     <div class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-red-500/40 border-2 border-red-500 text-white backdrop-filter backdrop-blur-md px-5 py-3 shadow-lgs" v-if="error">
                         <h3 class="font-bold text-md border-b-2 border-red-300 mb-2">{{ t('overwatch.stream_error') }}</h3>
@@ -45,7 +45,7 @@
                     </div>
                 </div>
 
-                <PanelChat :active="true" dimensions="w-96" />
+                <PanelChat :active="true" :height="height" dimensions="w-96" />
             </div>
         </v-section>
 
@@ -60,6 +60,59 @@ import PanelChat from './../../Components/PanelChat';
 
 import Hls from "hls.js";
 
+const HlsErrorDetails = {
+    keySystemNoKeys: "No keys available for the key system.",
+    keySystemNoAccess: "Access to the key system was denied.",
+    keySystemNoSession: "No active session in the key system.",
+    keySystemNoConfiguredLicense: "No configured license found for the key system.",
+    keySystemLicenseRequestFailed: "License request failed for the key system.",
+    keySystemServerCertificateRequestFailed: "Server certificate request failed for the key system.",
+    keySystemServerCertificateUpdateFailed: "Server certificate update failed for the key system.",
+    keySystemSessionUpdateFailed: "Session update failed for the key system.",
+    keySystemStatusOutputRestricted: "Output is restricted by the key system.",
+    keySystemStatusInternalError: "An internal error occurred in the key system.",
+    keySystemDestroyMediaKeysError: "Error destroying media keys in the key system.",
+    keySystemDestroyCloseSessionError: "Error closing session in the key system.",
+    keySystemDestroyRemoveSessionError: "Error removing session in the key system.",
+    manifestLoadError: "Failed to load the manifest.",
+    manifestLoadTimeOut: "Manifest load timed out.",
+    manifestParsingError: "Error parsing the manifest.",
+    manifestIncompatibleCodecsError: "Manifest contains only incompatible codecs.",
+    levelEmptyError: "No fragments found in the level.",
+    levelLoadError: "Failed to load the level.",
+    levelLoadTimeOut: "Level load timed out.",
+    levelParsingError: "Error parsing the level.",
+    levelSwitchError: "Error switching levels.",
+    audioTrackLoadError: "Failed to load the audio track.",
+    audioTrackLoadTimeOut: "Audio track load timed out.",
+    subtitleTrackLoadError: "Failed to load the subtitle track.",
+    subtitleTrackLoadTimeOut: "Subtitle track load timed out.",
+    fragLoadError: "Failed to load fragment.",
+    fragLoadTimeOut: "Fragment load timed out.",
+    fragDecryptError: "Error decrypting the fragment.",
+    fragParsingError: "Error parsing the fragment.",
+    fragGap: "Fragment skipped due to a gap.",
+    remuxAllocError: "Remux allocation failed.",
+    keyLoadError: "Failed to load decryption key.",
+    keyLoadTimeOut: "Decryption key load timed out.",
+    bufferAddCodecError: "Error adding codec to buffer.",
+    bufferIncompatibleCodecsError: "Buffer codecs are incompatible.",
+    bufferAppendError: "Error appending to buffer.",
+    bufferAppendingError: "Error during buffer appending.",
+    bufferStalledError: "Buffer has stalled.",
+    bufferFullError: "Buffer is full.",
+    bufferSeekOverHole: "Buffer seeked over a hole.",
+    bufferNudgeOnStall: "Buffer nudge triggered due to stall.",
+    assetListLoadError: "Failed to load the asset list.",
+    assetListLoadTimeout: "Asset list load timed out.",
+    assetListParsingError: "Error parsing the asset list.",
+    interstitialAssetItemError: "Error with interstitial asset item.",
+    internalException: "An internal exception occurred in the HLS player.",
+    aborted: "Operation was aborted.",
+    attachMediaError: "Failed to attach media.",
+    unknown: "An unknown error occurred."
+};
+
 export default {
     layout: Layout,
     components: {
@@ -72,6 +125,8 @@ export default {
             isLoading: false,
             error: false,
 
+            height: false,
+
             hls: false,
             source: false,
             interval: false
@@ -79,9 +134,7 @@ export default {
     },
     computed: {
         streams() {
-            const overwatch = this.$page.overwatch;
-
-            return overwatch?.streams ?? [];
+            return this.$page.overwatch?.streams ?? [];
         }
     },
     methods: {
@@ -105,16 +158,7 @@ export default {
         setError(details) {
             this.isLoading = false;
 
-            switch (details) {
-                case "manifestLoadError":
-                    this.error = this.t('overwatch.error_manifest');
-
-                    break;
-                default:
-                    this.error = details;
-
-                    break;
-            }
+            this.error = HlsErrorDetails[details] || details;
 
             this.destroyStream(false);
         },
@@ -169,14 +213,6 @@ export default {
                 video.play();
 
                 this.interval = setInterval(() => {
-                    const video = this.$refs.video;
-
-                    if (!video) {
-                        this.destroyStream(true);
-
-                        return;
-                    }
-
                     if (!video.duration) {
                         return;
                     }
@@ -190,7 +226,26 @@ export default {
             });
 
             this.hls.startLoad();
+        },
+        setChatHeight() {
+            this.height = `${this.$refs.video.scrollHeight}px`;
+        },
+        preload(url, cb) {
+            const image = new Image();
+
+            image.addEventListener("load", cb);
+
+            image.src = url;
         }
+    },
+    created() {
+        window.addEventListener("resize", this.setChatHeight);
+    },
+    destroyed() {
+        window.removeEventListener("resize", this.setChatHeight);
+    },
+    mounted() {
+        this.preload(this.$refs.video.poster, this.setChatHeight);
     }
 };
 </script>

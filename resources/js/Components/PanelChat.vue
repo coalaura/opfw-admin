@@ -1,5 +1,5 @@
 <template>
-    <div class="transition-all overflow-hidden flex flex-col justify-between" :class="classes">
+    <div class="overflow-hidden flex flex-col justify-between" :class="classes" :style="height ? `height:${height}` : ''">
         <div class="w-full italic text-xxs text-yellow-700 dark:text-yellow-400 px-1 py-0.5 select-none" v-if="connecting">
             <i class="fas fa-spinner animate-spin mr-1"></i>
             {{ t('global.connecting') }}
@@ -48,6 +48,7 @@ export default {
     props: {
         active: Boolean,
         dimensions: String,
+        height: String | Boolean,
     },
     data() {
         return {
@@ -59,7 +60,9 @@ export default {
 
             message: '',
             messages: [],
-            users: []
+            users: [],
+
+            debounce: false
         };
     },
     watch: {
@@ -70,6 +73,12 @@ export default {
                 this.disconnect();
             }
         },
+
+        height() {
+            clearTimeout(this.debounce);
+
+            this.debounce = setTimeout(this.scroll, 250);
+        }
     },
     computed: {
         classes() {

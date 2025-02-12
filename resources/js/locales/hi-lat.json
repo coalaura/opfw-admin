@@ -626,7 +626,6 @@
         "attach": "Khiladiyon panel mein screenshot jodein.",
         "auto_refresh": "Swayam-taaza karne ko toggle karein.",
         "description": "Kisi bhi ajeeb cheez ko dhundhne ke liye random khiladiyon ke game renders dekhein.",
-        "error_manifest": "Stream manifest load karne mein asafal.",
         "live": "Overwatch - Live",
         "live_description": "Server mein khiladiyon ka live spectate.",
         "no_streams": "Koi uplabdh streams nahi hain.",

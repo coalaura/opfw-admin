@@ -120,6 +120,12 @@ module.exports = {
             animation: {
                 'spin-once': 'spin 1s ease-in-out',
             },
+            gridTemplateColumns: {
+                'stream': 'max-content 1fr max-content'
+            },
+            gridTemplateRows: {
+                'min': 'min-content'
+            },
             colors: {
                 // Light & dark.
                 'light': defaultTheme.colors.white,

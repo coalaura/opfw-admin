@@ -626,7 +626,6 @@
         "attach": "Legg ved skjermbilde til spillerpanelet.",
         "auto_refresh": "Veksle auto-oppdatering.",
         "description": "Se gjennom tilfeldige spilleres spillbilder for å se om du finner noe uvanlig",
-        "error_manifest": "Kunne ikke laste inn strømmanifest.",
         "live": "Overwatch - Live",
         "live_description": "Live-overvåkning av spillere på serveren.",
         "no_streams": "Ingen tilgjengelige strømmer.",
