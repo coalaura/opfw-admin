@@ -1,5 +1,5 @@
 <template>
-    <div class="p-8 mb-10 rounded-lg shadow mobile:p-4 mobile:py-2 relative max-w-full" :class="bright ? 'bg-gray-300 dark:bg-gray-600 scale-105' : 'bg-secondary dark:bg-dark-secondary'" ref="section">
+    <div class="p-8 mb-10 rounded-lg shadow mobile:p-4 mobile:py-2 relative max-w-full" :class="{'bg-gray-300 dark:bg-gray-600 scale-105': bright, 'bg-secondary dark:bg-dark-secondary': !bright, 'resizing': isResizing}" ref="section">
         <!-- Header -->
         <header :class="{ 'mb-8': !collapsed }" v-if="!noHeader">
             <slot name="header" />
@@ -46,6 +46,11 @@ export default {
             default: false
         }
     },
+    data() {
+        return {
+            isResizing: false
+        };
+    },
     methods: {
         resetResize() {
             localStorage.removeItem(StorageId);
@@ -61,12 +66,16 @@ export default {
                 return;
             }
 
+            this.isResizing = true;
+
             window.addEventListener("mousemove", this.resize);
             window.addEventListener("mouseup", this.finishResize);
         },
         finishResize() {
             window.removeEventListener("mousemove", this.resize);
             window.removeEventListener("mouseup", this.finishResize);
+
+            this.isResizing = false;
 
             this.$emit("resize");
         },
