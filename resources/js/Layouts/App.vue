@@ -15,6 +15,7 @@
                 <!-- Content -->
                 <div class="flex flex-col flex-grow overflow-y-auto bg-white dark:bg-gray-800 dark:text-white main-content" scroll-region ref="scrollable">
                     <div class="flex-grow p-12 pt-10 mobile:px-4 relative">
+                        <i class="fas fa-clone cursor-pointer" :title="t('nav.hide_header')" @click="toggleHeader"></i>
 
                         <!-- Flash message -->
                         <div>
@@ -22,7 +23,7 @@
                         </div>
 
                         <!-- Header -->
-                        <header class="flex flex-wrap items-start justify-between flex-grow mb-8 relative">
+                        <header class="flex flex-wrap items-start justify-between flex-grow mb-8 relative" v-if="!headerClosed">
 
                             <!-- Title -->
                             <div class="max-w-full w-full prose dark:text-white">
@@ -74,7 +75,8 @@ export default {
     },
     data() {
         return {
-            scrolled: false
+            scrolled: false,
+            headerClosed: false
         };
     },
     methods: {
@@ -99,6 +101,10 @@ export default {
                 top: 0,
                 behavior: 'smooth'
             });
+        },
+
+        toggleHeader() {
+            this.headerClosed = !this.headerClosed;
         }
     },
     updated() {

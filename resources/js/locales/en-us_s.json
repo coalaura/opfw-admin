@@ -570,6 +570,7 @@
         "debug_system_uptime": "System Uptime",
         "debug_user_agent": "User-Agent",
         "game_time": "In-Game Time runs 12 times faster than real time.",
+        "hide_header": "Click here to hide or show the header, y'all.",
         "level_0": "Guest",
         "level_1": "Staff",
         "level_2": "Senior Staff",

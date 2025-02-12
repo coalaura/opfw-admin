@@ -570,6 +570,7 @@
         "debug_system_uptime": "System uptime",
         "debug_user_agent": "User-agent",
         "game_time": "Game time 12x faster than real.",
+        "hide_header": "Click hide/show top.",
         "level_0": "Guest",
         "level_1": "Staff",
         "level_2": "Senior staff",
