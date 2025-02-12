@@ -1,5 +1,5 @@
 <template>
-    <div class="w-52 xl:w-96 h-max transition-all overflow-hidden flex flex-col justify-between" :class="{ '!w-0 opacity-0': !active }">
+    <div class="transition-all overflow-hidden flex flex-col justify-between" :class="classes">
         <div class="w-full italic text-xxs text-yellow-700 dark:text-yellow-400 px-1 py-0.5 select-none" v-if="connecting">
             <i class="fas fa-spinner animate-spin mr-1"></i>
             {{ t('global.connecting') }}
@@ -47,6 +47,7 @@ export default {
     inheritAttrs: true,
     props: {
         active: Boolean,
+        dimensions: String,
     },
     data() {
         return {
@@ -71,6 +72,17 @@ export default {
         },
     },
     computed: {
+        classes() {
+            const list = [
+                this.dimensions || 'w-52 xl:w-96 h-max'
+            ];
+
+            if (!this.active) {
+                list.push('!w-0 opacity-0');
+            }
+
+            return list.join(' ');
+        },
         names() {
             // Remove duplicate discord ids
             const unique = {};

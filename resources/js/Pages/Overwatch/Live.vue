@@ -14,15 +14,6 @@
 
         <v-section class="-mt-2 max-w-stream" :noFooter="true" :noHeader="true">
             <div class="flex gap-3">
-                <div class="w-full relative">
-                    <video class="w-full" ref="video" controlslist="nofullscreen nodownload noplaybackrate" poster="/images/no_stream.webp"></video>
-
-                    <div class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-red-500/40 border-2 border-red-500 text-white backdrop-filter backdrop-blur-md px-5 py-3 shadow-lgs" v-if="error">
-                        <h3 class="font-bold text-md border-b-2 border-red-300 mb-2">{{ t('overwatch.stream_error') }}</h3>
-                        <div class="italic">{{ error }}</div>
-                    </div>
-                </div>
-
                 <div class="w-72">
                     <h3 class="font-bold text-md border-b-2 border-gray-500 mb-3 flex justify-between items-start">
                         {{ t('overwatch.streams') }}
@@ -44,6 +35,17 @@
 
                     <div class="italic" v-else>{{ t('overwatch.no_streams') }}</div>
                 </div>
+
+                <div class="w-full relative">
+                    <video class="w-full" ref="video" controlslist="nofullscreen nodownload noplaybackrate" poster="/images/no_stream.webp"></video>
+
+                    <div class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-red-500/40 border-2 border-red-500 text-white backdrop-filter backdrop-blur-md px-5 py-3 shadow-lgs" v-if="error">
+                        <h3 class="font-bold text-md border-b-2 border-red-300 mb-2">{{ t('overwatch.stream_error') }}</h3>
+                        <div class="italic">{{ error }}</div>
+                    </div>
+                </div>
+
+                <PanelChat :active="true" dimensions="w-96" />
             </div>
         </v-section>
 
@@ -54,6 +56,7 @@
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
 import Badge from './../../Components/Badge';
+import PanelChat from './../../Components/PanelChat';
 
 import Hls from "hls.js";
 
@@ -62,6 +65,7 @@ export default {
     components: {
         VSection,
         Badge,
+        PanelChat,
     },
     data() {
         return {

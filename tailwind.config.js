@@ -98,7 +98,7 @@ module.exports = {
                 'large':  'min(90%, 1220px)',
                 'px':     '1px',
                 '40':     '10rem',
-                'stream': '1400px',
+                'stream': '1920px',
             },
             maxHeight: {
                 'max':             'calc(100% - 60px)',
