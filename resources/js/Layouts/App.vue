@@ -15,7 +15,7 @@
                 <!-- Content -->
                 <div class="flex flex-col flex-grow overflow-y-auto bg-white dark:bg-gray-800 dark:text-white main-content" scroll-region ref="scrollable">
                     <div class="flex-grow p-12 pt-10 mobile:px-4 relative">
-                        <i class="fas fa-clone cursor-pointer" :title="t('nav.hide_header')" @click="toggleHeader"></i>
+                        <i class="fas fa-clone cursor-pointer text-sm absolute top-1 left-1.5" :title="t('nav.hide_header')" @click="toggleHeader" v-if="canHideHeader"></i>
 
                         <!-- Flash message -->
                         <div>
@@ -78,6 +78,11 @@ export default {
             scrolled: false,
             headerClosed: false
         };
+    },
+    computed: {
+        canHideHeader() {
+            return !window.location.pathname.startsWith("/players/license:");
+        }
     },
     methods: {
         isMobile() {
