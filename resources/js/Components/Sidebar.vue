@@ -180,7 +180,7 @@ export default {
                         },
                         {
                             label: 'panel_logs.title',
-                            icon: 'vote-yeah',
+                            icon: 'spell-check',
                             url: '/panel',
                         },
                         {

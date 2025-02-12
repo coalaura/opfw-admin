@@ -92,7 +92,7 @@
     <i class="fas fa-warehouse" v-else-if="name === 'warehouse'"></i>
     <i class="fas fa-user-md" v-else-if="name === 'user-md'"></i>
     <i class="fas fa-laptop-medical" v-else-if="name === 'laptop-medical'"></i>
-    <i class="fas fa-vote-yeah" v-else-if="name === 'vote-yeah'"></i>
+    <i class="fas fa-spell-check" v-else-if="name === 'spell-check'"></i>
     <i class="fas fa-video" v-else-if="name === 'video'"></i>
 </template>
 
