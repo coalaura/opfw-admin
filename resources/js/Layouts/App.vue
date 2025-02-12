@@ -76,7 +76,7 @@ export default {
     data() {
         return {
             scrolled: false,
-            headerClosed: false
+            headerClosed: !!this.pageStore.get("header_closed")
         };
     },
     computed: {
@@ -110,6 +110,12 @@ export default {
 
         toggleHeader() {
             this.headerClosed = !this.headerClosed;
+
+            if (this.headerClosed) {
+                this.pageStore.set("header_closed", "yes");
+            } else {
+                this.pageStore.remove("header_closed");
+            }
         }
     },
     updated() {

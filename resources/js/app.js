@@ -16,6 +16,7 @@ import UserAgent from "./Plugins/user-agent.js";
 import Dictionary from "./Plugins/dictionary.js";
 import Permissions from "./Plugins/permissions.js";
 import Settings from "./Plugins/settings.js";
+import Storage from "./Plugins/storage.js";
 import Style from "./Plugins/style.js";
 import Flags from "./Plugins/flags.js";
 import humanizeSeconds from "./Filters/humanizeSeconds.js";
@@ -57,6 +58,7 @@ Vue.use(Interceptor);
 Vue.use(Theme);
 Vue.use(PortalVue);
 Vue.use(Localization);
+Vue.use(Storage);
 Vue.use(Copy);
 Vue.use(Wait);
 Vue.use(Chunked);
@@ -86,17 +88,16 @@ Vue.filter("formatTime", formatTime);
 Vue.filter("formatGender", formatGender);
 
 Vue.directive("click-outside", {
-	bind: function(el, binding, vnode) {
-		el.clickOutsideEvent = function(event) {
-			// here I check that click was outside the el and his children
-			if (!(el == event.target || el.contains(event.target))) {
-				// and if it did, call method provided in attribute value
+	bind: (el, binding, vnode) => {
+		el.clickOutsideEvent = (event) => {
+			if (!(el === event.target || el.contains(event.target))) {
 				vnode.context[binding.expression](event);
 			}
 		};
+
 		document.body.addEventListener("click", el.clickOutsideEvent);
 	},
-	unbind: function(el) {
+	unbind: (el) => {
 		document.body.removeEventListener("click", el.clickOutsideEvent);
 	}
 });

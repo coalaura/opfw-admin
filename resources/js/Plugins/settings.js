@@ -7,6 +7,18 @@ const Settings = {
 
             return settings[key].value;
         };
+
+        Vue.prototype.pageId = (prefix = "") => {
+            let id = window.location.pathname
+                .replace(/[^\w]+/g, "_")
+                .replace(/^_+|_+$/gm, "");
+
+            if (prefix) {
+                id = `${prefix}_${id}`;
+            }
+
+            return id;
+        };
     },
 }
 

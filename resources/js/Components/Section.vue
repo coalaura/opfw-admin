@@ -20,8 +20,6 @@
 </template>
 
 <script>
-const StorageId = `section_${window.location.pathname.replace(/[^\w]+/g, "_").replace(/^_+|_+$/gm, "")}`;
-
 export default {
     name: 'Section',
     props: {
@@ -53,7 +51,7 @@ export default {
     },
     methods: {
         resetResize() {
-            localStorage.removeItem(StorageId);
+            this.pageStore.remove("section");
 
             this.$refs.section.style.width = "";
         },
@@ -86,7 +84,7 @@ export default {
 
             section.style.width = width;
 
-            localStorage.setItem(StorageId, width);
+            this.pageStore.set("section", width);
 
             this.$emit("resize");
         }
@@ -96,7 +94,7 @@ export default {
             return;
         }
 
-        const width = localStorage.getItem(StorageId);
+        const width = this.pageStore.get("section");
 
         if (width) {
             this.$refs.section.style.width = width;
