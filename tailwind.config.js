@@ -126,6 +126,9 @@ module.exports = {
             gridTemplateRows: {
                 'min': 'min-content'
             },
+            cursor: {
+                'resize': 'w-resize'
+            },
             colors: {
                 // Light & dark.
                 'light': defaultTheme.colors.white,

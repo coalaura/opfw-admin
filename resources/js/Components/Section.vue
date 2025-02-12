@@ -1,6 +1,5 @@
 <template>
-    <div class="p-8 mb-10 rounded-lg shadow mobile:p-4 mobile:py-2 relative" :class="bright ? 'bg-gray-300 dark:bg-gray-600 scale-105' : 'bg-secondary dark:bg-dark-secondary'">
-
+    <div class="p-8 mb-10 rounded-lg shadow mobile:p-4 mobile:py-2 relative max-w-full" :class="bright ? 'bg-gray-300 dark:bg-gray-600 scale-105' : 'bg-secondary dark:bg-dark-secondary'" ref="section">
         <!-- Header -->
         <header :class="{ 'mb-8': !collapsed }" v-if="!noHeader">
             <slot name="header" />
@@ -16,10 +15,13 @@
             <slot name="footer" />
         </footer>
 
+        <div class="absolute top-0 right-0 bottom-0 w-2 bg-gray-300 dark:bg-gray-500 cursor-resize" @mousedown="startResize" @dblclick="resetResize" v-if="resizable"></div>
     </div>
 </template>
 
 <script>
+const StorageId = `section_${window.location.pathname.replace(/[^\w]+/g, "_").replace(/^_+|_+$/gm, "")}`;
+
 export default {
     name: 'Section',
     props: {
@@ -38,6 +40,57 @@ export default {
         collapsed: {
             type: Boolean,
             default: false
+        },
+        resizable: {
+            type: Boolean,
+            default: false
+        }
+    },
+    methods: {
+        resetResize() {
+            localStorage.removeItem(StorageId);
+
+            this.$refs.section.style.width = "";
+        },
+        startResize($event) {
+            if ($event.buttons !== 1) {
+                if ($event.buttons === 4) {
+                    this.resetResize();
+                }
+
+                return;
+            }
+
+            window.addEventListener("mousemove", this.resize);
+            window.addEventListener("mouseup", this.finishResize);
+        },
+        finishResize() {
+            window.removeEventListener("mousemove", this.resize);
+            window.removeEventListener("mouseup", this.finishResize);
+
+            this.$emit("resize");
+        },
+        resize($event) {
+            const section = this.$refs.section,
+                rect = section.getBoundingClientRect(),
+                width = `min(100%, ${$event.clientX - rect.left}px)`;
+
+            section.style.width = width;
+
+            localStorage.setItem(StorageId, width);
+
+            this.$emit("resize");
+        }
+    },
+    mounted() {
+        if (!this.resizable) {
+            return;
+        }
+
+        const width = localStorage.getItem(StorageId);
+
+        if (width) {
+            this.$refs.section.style.width = width;
         }
     }
 }
