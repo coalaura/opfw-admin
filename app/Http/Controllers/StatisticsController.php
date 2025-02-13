@@ -1,10 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Helpers\CacheHelper;
 use App\Helpers\StatisticsHelper;
 use App\Player;
+use DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -37,7 +37,7 @@ class StatisticsController extends Controller
             $result = CacheHelper::read($key) ?? false;
         }
 
-        if (!$result) {
+        if (! $result) {
             switch ($source) {
                 // Currency statistics
                 case 'pdm':
@@ -194,21 +194,39 @@ class StatisticsController extends Controller
             ->where('is_staff', '=', '1')
             ->orWhere('is_senior_staff', '=', '1')
             ->orWhere('is_super_admin', '=', '1')
-            ->orderBy('player_name')
+            ->select('user_id', 'license_identifier', 'player_name')
             ->get();
 
+        $licenses = [];
         $players = [];
 
         foreach ($staff as $player) {
             $license = $player->license_identifier;
 
-            $entry = $player->getUserStatistics();
+            $licenses[] = $license;
+            $players[$license] = [
+                'license' => $license,
+                'name'    => $player->getSafePlayerName(),
+                'xp' => 0,
+            ];
+        }
 
-            $entry['license'] = $license;
-            $entry['name']    = $player->getSafePlayerName();
-            $entry['xp']      = $player->calculateXP();
+        $statistics = DB::table('staff_statistics')
+            ->whereIn('identifier', $licenses)
+            ->selectRaw('identifier, action, count(*) as count')
+            ->groupBy('action', 'identifier')
+            ->get();
 
-            $players[] = $entry;
+        foreach ($statistics as $statistic) {
+            $license = $statistic->identifier;
+            $action = $statistic->action;
+            $count = $statistic->count;
+
+            $players[$license][$action] = ($players[$license][$action] ?? 0) + $count;
+        }
+
+        foreach ($players as $license => $actions) {
+            $players[$license]['xp'] = Player::calculateXp($actions);
         }
 
         usort($players, function ($a, $b) {
@@ -494,7 +512,7 @@ class StatisticsController extends Controller
     {
         $types = $request->input('types', []);
 
-        if (!is_array($types) || empty($types)) {
+        if (! is_array($types) || empty($types)) {
             return $this->json(false, null, 'Invalid types');
         }
 
@@ -517,11 +535,11 @@ class StatisticsController extends Controller
             $details = $value->details;
             $amount  = $value->amount;
 
-            if (!isset($map[$date])) {
+            if (! isset($map[$date])) {
                 $map[$date] = [];
             }
 
-            if (!isset($map[$date][$details])) {
+            if (! isset($map[$date][$details])) {
                 $map[$date][$details] = $amount;
             }
         }
@@ -567,7 +585,7 @@ class StatisticsController extends Controller
 
     private function color($index, $total, $alpha): string
     {
-        if (!isset($this->colorHueStart)) {
+        if (! isset($this->colorHueStart)) {
             $this->colorHueStart = rand(0, 360);
         }
 

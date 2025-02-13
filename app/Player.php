@@ -1127,39 +1127,61 @@ class Player extends Model
     /**
      * Calculates the users total XP.
      */
-    public function calculateXP(): float
+    public static function calculateXP(array $actions): float
     {
+        $get = function($key) use ($actions): int {
+            return $actions[$key] ?? 0;
+        };
+
         $xp = 0.0;
 
-        // reportsClaimed is worth x1.8
-        $xp += $this->getUserStatisticsValue('reportsClaimed') * 1.8;
+        // claimed-report is worth x1.8
+        $xp += $get('claimed-report') * 1.8;
 
-        // staffPmSent is worth x0.26
-        $xp += $this->getUserStatisticsValue('staffPmSent') * 0.26;
+        // sent-staff-pm is worth x0.26
+        $xp += $get('sent-staff-pm') * 0.26;
 
-        // reportsCreated is worth -x1.2
-        $xp -= $this->getUserStatisticsValue('reportsCreated') * 1.2;
+        // created-report is worth -x1.2
+        $xp -= $get('created-report') * 1.2;
 
-        // playersKicked is worth x1.2
-        $xp += $this->getUserStatisticsValue('playersKicked') * 1.2;
+        // kicked-player is worth x1.2
+        $xp += $get('kicked-player') * 1.2;
 
-        // playersBanned is worth x1.8
-        $xp += $this->getUserStatisticsValue('playersBanned') * 1.8;
+        // banned-player is worth x1.8
+        $xp += $get('banned-player') * 1.8;
 
-        // playerJobUpdates is worth x0.58
-        $xp += $this->getUserStatisticsValue('playerJobUpdates') * 0.58;
+        // set-player-job is worth x0.58
+        $xp += $get('set-player-job') * 0.58;
 
-        // playersMuted is worth x1.25
-        $xp += $this->getUserStatisticsValue('playersMuted') * 1.25;
+        // muted-player is worth x1.25
+        $xp += $get('muted-player') * 1.25;
 
-        // playersRevived is worth x0.18
-        $xp += $this->getUserStatisticsValue('playersRevived') * 0.18;
+        // revived-player is worth x0.18
+        $xp += $get('revived-player') * 0.18;
 
-        // playersSpectated is worth x0.11
-        $xp += $this->getUserStatisticsValue('playersSpectated') * 0.11;
+        // spectated-player is worth x0.11
+        $xp += $get('spectated-player') * 0.11;
 
-        // playersUnloaded is worth x0.8
-        $xp += $this->getUserStatisticsValue('playersUnloaded') * 0.8;
+        // unloaded-player is worth x0.8
+        $xp += $get('unloaded-player') * 0.8;
+
+        // wiped-entities is worth x0.5
+        $xp += $get('wiped-entities') * 0.5;
+
+        // froze-player is worth x0.4
+        $xp += $get('froze-player') * 0.4;
+
+        // slapped-player is worth x0.18
+        $xp += $get('slapped-player') * 0.18;
+
+        // damaged-player is worth x0.04
+        $xp += $get('damaged-player') * 0.04;
+
+        // reskinned-player is worth x0.3
+        $xp += $get('reskinned-player') * 0.3;
+
+        // set-player-armor is worth x0.12
+        $xp += $get('set-player-armor') * 0.12;
 
         return $xp;
     }

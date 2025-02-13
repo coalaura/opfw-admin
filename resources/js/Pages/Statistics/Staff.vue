@@ -71,26 +71,26 @@
                                 </a>
                             </td>
 
-                            <td class="px-4 py-1.5 font-medium" :title="formatLast(player.reportsClaimed.time)">
-                                {{ numberFormat(player.reportsClaimed.value, 0) }}
+                            <td class="px-4 py-1.5 font-medium">
+                                {{ numberFormat(player['claimed-report'] || 0, 0) }}
                             </td>
-                            <td class="px-4 py-1.5 font-medium" :title="formatLast(player.staffPmSent.time)">
-                                {{ numberFormat(player.staffPmSent.value, 0) }}
+                            <td class="px-4 py-1.5 font-medium">
+                                {{ numberFormat(player['sent-staff-pm'] || 0, 0) }}
                             </td>
-                            <td class="px-4 py-1.5 font-medium" :title="formatLast(player.staffChatSent.time)">
-                                {{ numberFormat(player.staffChatSent.value, 0) }}
+                            <td class="px-4 py-1.5 font-medium">
+                                {{ numberFormat(player['sent-staff-chat'] || 0, 0) }}
                             </td>
-                            <td class="px-4 py-1.5 font-medium" :title="formatLast(player.playersRevived.time)">
-                                {{ numberFormat(player.playersRevived.value, 0) }}
+                            <td class="px-4 py-1.5 font-medium">
+                                {{ numberFormat(player['revived-player'] || 0, 0) }}
                             </td>
-                            <td class="px-4 py-1.5 font-medium" :title="formatLast(player.playersUnloaded.time)">
-                                {{ numberFormat(player.playersUnloaded.value, 0) }}
+                            <td class="px-4 py-1.5 font-medium">
+                                {{ numberFormat(player['unloaded-player'] || 0, 0) }}
                             </td>
-                            <td class="px-4 py-1.5 font-medium" :title="formatLast(player.playersKicked.time)">
-                                {{ numberFormat(player.playersKicked.value, 0) }}
+                            <td class="px-4 py-1.5 font-medium">
+                                {{ numberFormat(player['kicked-player'] || 0, 0) }}
                             </td>
-                            <td class="px-4 py-1.5 font-medium" :title="formatLast(player.playersBanned.time)">
-                                {{ numberFormat(player.playersBanned.value, 0) }}
+                            <td class="px-4 py-1.5 font-medium">
+                                {{ numberFormat(player['banned-player'] || 0, 0) }}
                             </td>
                         </template>
                     </tr>
