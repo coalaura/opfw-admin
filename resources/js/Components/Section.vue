@@ -94,7 +94,7 @@ export default {
             return;
         }
 
-        const width = this.pageStore.get("section");
+        const width = this.pageStore.get("section", 1920);
 
         if (width) {
             this.$refs.section.style.width = width;

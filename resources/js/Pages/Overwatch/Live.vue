@@ -12,7 +12,7 @@
             </p>
         </portal>
 
-        <v-section class="-mt-2 max-w-stream relative" :noFooter="true" :noHeader="true" :resizable="true" @resize="setChatHeight">
+        <v-section class="-mt-2 relative" :noFooter="true" :noHeader="true" :resizable="true" @resize="setChatHeight">
             <div class="flex items-stretch gap-3" ref="container">
                 <div class="w-72 flex flex-col gap-3">
                     <h3 class="font-bold text-md border-b-2 border-gray-500 flex justify-between items-start">

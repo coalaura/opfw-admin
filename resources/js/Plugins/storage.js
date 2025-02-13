@@ -11,8 +11,8 @@ const Storage = {
 		};
 
 		Vue.prototype.pageStore = {
-			get: key => {
-				return localStorage.getItem(pageId(key));
+			get: (key, def = null) => {
+				return localStorage.getItem(pageId(key)) || def;
 			},
 			set: (key, value) => {
 				return localStorage.setItem(pageId(key), value);
