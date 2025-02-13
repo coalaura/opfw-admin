@@ -14,15 +14,15 @@
 
         <v-section class="-mt-2 max-w-stream relative" :noFooter="true" :noHeader="true" :resizable="true" @resize="setChatHeight">
             <div class="flex items-stretch gap-3" ref="container">
-                <div class="w-72">
-                    <h3 class="font-bold text-md border-b-2 border-gray-500 mb-3 flex justify-between items-start">
+                <div class="w-72 flex flex-col gap-3">
+                    <h3 class="font-bold text-md border-b-2 border-gray-500 flex justify-between items-start">
                         {{ t('overwatch.streams') }}
 
                         <small v-if="streams.length">{{ streams.length }}</small>
                     </h3>
 
-                    <div class="italic flex flex-col gap-1" v-if="streams.length">
-                        <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 transition flex items-center justify-between" :class="getStreamListingClass(stream)" v-for="(stream, index) in streams" @click="setStream(stream)">
+                    <div class="italic flex flex-col gap-1 h-full">
+                        <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 transition flex items-center justify-between" :class="getStreamListingClass(stream)" v-for="(stream, index) in streams" @click="setStream(stream)" v-if="streams.length">
                             {{ t('overwatch.stream', index + 1) }}
 
                             <template v-if="stream === source">
@@ -31,13 +31,22 @@
                                 <i class="fas fa-video" v-else></i>
                             </template>
                         </div>
+
+                        <div class="italic" v-else>{{ t('overwatch.no_streams') }}</div>
                     </div>
 
-                    <div class="italic" v-else>{{ t('overwatch.no_streams') }}</div>
+                    <div class="flex gap-3 items-center text-xl">
+                        <i class="fas fa-volume-mute w-7 cursor-pointer" v-if="volume === 0" @click="setVolume(0.5)"></i>
+                        <i class="fas fa-volume-down w-7 cursor-pointer" v-else @click="setVolume(0)"></i>
+
+                        <input type="range" min="0" max="1" step="0.01" v-model.number="volume" class="w-full range" @input="setVolume">
+
+                        <i :class="`fas fa-${fullscreen ? 'compress' : 'expand'} w-7 cursor-pointer`" @click="toggleFullscreen"></i>
+                    </div>
                 </div>
 
                 <div class="w-full relative">
-                    <video class="w-full pointer-events-none" ref="video" controlslist="nofullscreen nodownload noplaybackrate" poster="/images/no_stream.webp"></video>
+                    <video class="w-full pointer-events-none" ref="video" controlslist="nodownload noplaybackrate" poster="/images/no_stream.webp"></video>
 
                     <div class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-red-500/40 border-2 border-red-500 text-white backdrop-filter backdrop-blur-md px-5 py-3 shadow-lgs" v-if="error">
                         <h3 class="font-bold text-md border-b-2 border-red-300 mb-2">{{ t('overwatch.stream_error') }}</h3>
@@ -126,6 +135,8 @@ export default {
             error: false,
 
             height: false,
+            volume: 0.5,
+            fullscreen: false,
 
             hls: false,
             source: false,
@@ -155,12 +166,26 @@ export default {
 
             return list;
         },
+        toggleFullscreen() {
+            if (this.fullscreen) {
+                document.exitFullscreen();
+            } else {
+                this.$refs.video.requestFullscreen();
+            }
+        },
         setError(details) {
             this.isLoading = false;
 
             this.error = HlsErrorDetails[details] || details;
 
             this.destroyStream(false);
+        },
+        setVolume(override) {
+            if (typeof override === "number") {
+                this.volume = override;
+            }
+
+            this.$refs.video.volume = this.volume;
         },
         destroyStream(full) {
             clearInterval(this.interval);
@@ -208,6 +233,8 @@ export default {
             this.hls.on(Hls.Events.MANIFEST_PARSED, async () => {
                 this.isLoading = false;
 
+                this.setVolume();
+
                 video.currentTime = video.duration || 0;
 
                 video.play();
@@ -230,6 +257,9 @@ export default {
         setChatHeight() {
             this.height = `${this.$refs.video.scrollHeight}px`;
         },
+        updateFullscreen() {
+            this.fullscreen = !!document.fullscreenElement;
+        },
         preload(url, cb) {
             const image = new Image();
 
@@ -240,11 +270,15 @@ export default {
     },
     created() {
         window.addEventListener("resize", this.setChatHeight);
+        window.addEventListener("fullscreenchange", this.updateFullscreen);
     },
     destroyed() {
         window.removeEventListener("resize", this.setChatHeight);
+        window.removeEventListener("fullscreenchange", this.updateFullscreen);
     },
     mounted() {
+        this.setVolume();
+
         this.preload(this.$refs.video.poster, this.setChatHeight);
     }
 };

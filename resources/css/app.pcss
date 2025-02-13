@@ -512,3 +512,59 @@ html.dark .new-entry {
 .banner-bg:has(.china) p {
     color: #fff !important;
 }
+
+/*
+ * Range Styles
+ */
+
+.range {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    width: 100%;
+}
+
+.range:focus {
+    outline: none;
+}
+
+.range::-webkit-slider-runnable-track {
+    background-color: rgb(75, 85, 99);
+    border-radius: 0rem;
+    height: 0.2rem;
+}
+
+.range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -10.4px;
+    background-color: rgb(55, 65, 81);
+    border-radius: 0rem;
+    height: 1.5rem;
+    width: 0.4rem;
+}
+
+.range::-moz-range-track {
+    background-color: rgb(75, 85, 99);
+    border-radius: 0rem;
+    height: 0.2rem;
+}
+
+.range::-moz-range-thumb {
+    background-color: rgb(55, 65, 81);
+    border: none;
+    border-radius: 0rem;
+    height: 1.5rem;
+    width: 0.4rem;
+}
+
+html.dark .range::-moz-range-thumb,
+html.dark .range::-webkit-slider-thumb {
+    background-color: rgb(209, 213, 219);
+}
+
+html.dark .range::-moz-range-track,
+html.dark .range::-webkit-slider-runnable-track {
+    background-color: rgb(156, 163, 175);
+}

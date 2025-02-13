@@ -127,7 +127,8 @@ module.exports = {
                 'min': 'min-content'
             },
             cursor: {
-                'resize': 'w-resize'
+                'resize': 'w-resize',
+                'none':   'none'
             },
             colors: {
                 // Light & dark.
