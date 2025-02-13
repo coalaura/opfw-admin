@@ -260,7 +260,7 @@ class PlayerBanController extends Controller
         $response = OPFWHelper::kickPlayer($user->license_identifier, $user->player_name, $player, $kickReason);
 
         if (! $player->isStaff()) {
-            user()->incrementStatistics(Player::StatisticsBan);
+            user()->trackStatistics('banned-player');
         }
 
         return backWith('success', 'The player has successfully been banned. ' . ($response->status ? 'They have been kicked from the server.' : 'Unable to kick them from the server.'));

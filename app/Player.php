@@ -21,29 +21,6 @@ class Player extends Model
 {
     use HasFactory;
 
-    const StatisticsBan       = "playersBanned";
-    const StatisticsKick      = "playersKicked";
-    const StatisticsUnload    = "playersUnloaded";
-    const StatisticsRevive    = "playersRevived";
-    const StatisticsStaffPM   = "staffPmSent";
-    const StatisticsStaffChat = "staffChatSent";
-
-    const UserStatisticsKeys = [
-        "reportsCreated",
-        "playersFrozen",
-
-        "reportsClaimed",
-        "staffPmSent",
-        "staffChatSent",
-        "playersKicked",
-        "playersBanned",
-        "playerJobUpdates",
-        "playersMuted",
-        "playersRevived",
-        "playersSpectated",
-        "playersUnloaded",
-    ];
-
     /**
      * The link used for Steam's new invite code.
      */
@@ -637,7 +614,7 @@ class Player extends Model
      */
     public function getUserVariables(): ?array
     {
-        if (!$this->userVariables) {
+        if (! $this->userVariables) {
             $this->userVariables = (array) DB::table("user_variables")
                 ->where("user_id", "=", $this->user_id)
                 ->first();
@@ -1107,20 +1084,14 @@ class Player extends Model
     }
 
     /**
-     * Increments a key in the user statistics.
+     * Track an action in the user statistics.
      */
-    public function incrementStatistics(string $key)
+    public function trackStatistics(string $action)
     {
-        $raw   = $this->user_statistics ?? [];
-        $entry = $raw[$key] ?? [];
-
-        $raw[$key] = [
-            'value' => ($entry['value'] ?? 0) + 1,
-            'time'  => time(),
-        ];
-
-        $this->update([
-            'user_statistics' => $raw,
+        DB::table('staff_statistics')->insert([
+            'identifier' => $this->license_identifier,
+            'action'     => $action,
+            'timestamp'  => time(),
         ]);
     }
 
@@ -1129,8 +1100,8 @@ class Player extends Model
      */
     public static function calculateXP(array $actions): float
     {
-        $get = function($key) use ($actions): int {
-            return $actions[$key] ?? 0;
+        $get = function ($action) use ($actions): int {
+            return $actions[$action] ?? 0;
         };
 
         $xp = 0.0;

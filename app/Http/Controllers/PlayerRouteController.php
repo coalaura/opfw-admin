@@ -54,7 +54,7 @@ class PlayerRouteController extends Controller
         );
 
         if (!$player->isStaff()) {
-            user()->incrementStatistics(Player::StatisticsKick);
+            user()->trackStatistics('kicked-player');
         }
 
         return $response->redirect();
@@ -90,7 +90,7 @@ class PlayerRouteController extends Controller
         );
 
         if (!$player->isStaff()) {
-            user()->incrementStatistics(Player::StatisticsStaffPM);
+            user()->trackStatistics('sent-staff-pm');
         }
 
         return $response->redirect();
@@ -128,7 +128,7 @@ class PlayerRouteController extends Controller
         );
 
         if (!$player->isStaff()) {
-            user()->incrementStatistics(Player::StatisticsUnload);
+            user()->trackStatistics('unloaded-player');
         }
 
         return $response->redirect();
@@ -281,7 +281,7 @@ class PlayerRouteController extends Controller
         );
 
         if (!$player->isStaff()) {
-            user()->incrementStatistics(Player::StatisticsRevive);
+            user()->trackStatistics('revived-player');
         }
 
         return backWith('success', 'Player has been revived');

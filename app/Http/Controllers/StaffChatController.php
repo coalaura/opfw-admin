@@ -50,7 +50,7 @@ class StaffChatController extends Controller
             return $this->json(false, null, $status->message);
         }
 
-        user()->incrementStatistics(Player::StatisticsStaffChat);
+        user()->trackStatistics('sent-staff-chat');
 
         return $this->json(true, $message);
     }
