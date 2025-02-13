@@ -197,30 +197,50 @@ class StatisticsController extends Controller
             ->select('user_id', 'license_identifier', 'player_name')
             ->get();
 
+        $keys     = [];
         $licenses = [];
-        $players = [];
+        $players  = [];
 
         foreach ($staff as $player) {
             $license = $player->license_identifier;
 
-            $licenses[] = $license;
+            $licenses[]        = $license;
             $players[$license] = [
                 'license' => $license,
                 'name'    => $player->getSafePlayerName(),
-                'xp' => 0,
+                'xp'      => 0,
             ];
         }
 
-        $statistics = DB::table('staff_statistics')
+        $query = DB::table('staff_statistics')
             ->whereIn('identifier', $licenses)
             ->selectRaw('identifier, action, count(*) as count')
-            ->groupBy('action', 'identifier')
-            ->get();
+            ->groupBy('action', 'identifier');
+
+        $from     = $request->get('from');
+        $fromTime = $from ? strtotime($from . ' 00:00:00') : false;
+
+        if ($fromTime) {
+            $query->where('timestamp', '>=', $fromTime);
+        }
+
+        $to     = $request->get('to');
+        $toTime = $to ? strtotime($to . ' 23:59:59') : false;
+
+        if ($toTime) {
+            $query->where('timestamp', '<=', $toTime);
+        }
+
+        $statistics = $query->get();
 
         foreach ($statistics as $statistic) {
             $license = $statistic->identifier;
-            $action = $statistic->action;
-            $count = $statistic->count;
+            $action  = $statistic->action;
+            $count   = $statistic->count;
+
+            if (! in_array($action, $keys)) {
+                $keys[] = $action;
+            }
 
             $players[$license][$action] = ($players[$license][$action] ?? 0) + $count;
         }
@@ -237,8 +257,15 @@ class StatisticsController extends Controller
             return $b['xp'] <=> $a['xp'];
         });
 
+        sort($keys);
+
         return Inertia::render('Statistics/Staff', [
+            'keys'    => $keys,
             'players' => $players,
+            'filters' => [
+                'from' => $from,
+                'to'   => $to,
+            ],
         ]);
     }
 

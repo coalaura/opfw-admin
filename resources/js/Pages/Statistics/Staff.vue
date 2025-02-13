@@ -26,6 +26,18 @@
 
         <template>
             <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600" :class="{ 'china': modifier }">
+                <div class="mb-3 pb-3 border-b border-gray-300 dark:border-gray-700 flex items-center gap-5">
+                    <button class="block h-12 px-4 py-1 text-white bg-indigo-600 rounded dark:bg-indigo-400">{{ t('global.apply') }}</button>
+
+                    <input class="block h-12 w-52 px-3 py-1 bg-gray-200 border dark:bg-gray-600" type="date" :max="filters.to" v-model="filters.from">
+                    <i class="fas fa-arrows-alt-h text-lg"></i>
+                    <input class="block h-12 w-52 px-3 py-1 bg-gray-200 border dark:bg-gray-600" type="date" :min="filters.from" v-model="filters.to">
+
+                    <div class="h-12 w-px bg-gray-300 dark:bg-gray-700"></div>
+
+                    <MultiSelector :items="keys" locale="staff_statistics" v-model="selectedKeys" layout="w-full h-12 flex flex-wrap items-center gap-3 overflow-y-auto" />
+                </div>
+
                 <div v-html="myLevel" class="mb-3 pb-3 border-b border-gray-300 dark:border-gray-700"></div>
 
                 <table class="whitespace-nowrap w-full">
@@ -36,13 +48,8 @@
                             {{ t('staff_statistics.xp' + modifier) }}
                         </th>
                         <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.player' + modifier) }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.claimed_reports' + modifier) }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.staff_pms' + modifier) }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.staff_chats' + modifier) }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_revived' + modifier) }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_unloaded' + modifier) }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_kicked' + modifier) }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left">{{ t('staff_statistics.players_banned' + modifier) }}</th>
+
+                        <th class="font-bold px-4 py-1.5 text-left" v-for="key in selectedKeys">{{ t(`staff_statistics.${key}`) }}</th>
                     </tr>
 
                     <tr v-for="(player, index) in players" :key="player.license" class="odd:bg-gray-200 dark:odd:bg-gray-500/40" :class="getPlayerClassNames(index, player)">
@@ -71,26 +78,8 @@
                                 </a>
                             </td>
 
-                            <td class="px-4 py-1.5 font-medium">
-                                {{ numberFormat(player['claimed-report'] || 0, 0) }}
-                            </td>
-                            <td class="px-4 py-1.5 font-medium">
-                                {{ numberFormat(player['sent-staff-pm'] || 0, 0) }}
-                            </td>
-                            <td class="px-4 py-1.5 font-medium">
-                                {{ numberFormat(player['sent-staff-chat'] || 0, 0) }}
-                            </td>
-                            <td class="px-4 py-1.5 font-medium">
-                                {{ numberFormat(player['revived-player'] || 0, 0) }}
-                            </td>
-                            <td class="px-4 py-1.5 font-medium">
-                                {{ numberFormat(player['unloaded-player'] || 0, 0) }}
-                            </td>
-                            <td class="px-4 py-1.5 font-medium">
-                                {{ numberFormat(player['kicked-player'] || 0, 0) }}
-                            </td>
-                            <td class="px-4 py-1.5 font-medium">
-                                {{ numberFormat(player['banned-player'] || 0, 0) }}
+                            <td class="px-4 py-1.5 font-medium" v-for="key in selectedKeys">
+                                {{ numberFormat(player[key] || 0, 0) }}
                             </td>
                         </template>
                     </tr>
@@ -105,18 +94,34 @@
 
 <script>
 import Layout from './../../Layouts/App';
+import MultiSelector from '../../Components/MultiSelector';
 
 export default {
     layout: Layout,
+    components: {
+        MultiSelector,
+    },
     props: {
         players: Array,
+        keys: Array,
+        filters: {
+            from: String,
+            to: String,
+        }
     },
     data() {
         return {
             isLoading: false,
             modifier: Math.round(Math.random() * 100) <= 4 ? '_chinese' : '',
 
-            status: {}
+            status: {},
+            selectedKeys: [
+                "kicked-player",
+                "banned-player",
+                "claimed-report",
+                "sent-staff-pm",
+                "sent-staff-chat",
+            ].filter(key => this.keys.includes(key))
         }
     },
     computed: {

@@ -1,5 +1,5 @@
 <template>
-    <div class="grid grid-cols-4 gap-3 justify-evenly">
+    <div :class="layout">
         <div class="px-2 py-0.5 cursor-pointer truncate border-lime-300 bg-lime-200 dark:bg-lime-700" :title="itemLabel(item)" :class="{ '!border-red-300 !bg-red-200 dark:!bg-red-700': !value.includes(item) }" v-for="item in items" :key="value.value" @click="toggle(item)">
             {{ itemLabel(item) }}
         </div>
@@ -24,6 +24,10 @@ export default {
         },
         locale: {
             type: String
+        },
+        layout: {
+            type: String,
+            default: "grid grid-cols-4 gap-3 justify-evenly"
         }
     },
     methods: {
