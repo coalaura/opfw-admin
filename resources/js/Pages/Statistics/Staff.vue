@@ -36,6 +36,10 @@
                     <div class="h-12 w-px bg-gray-300 dark:bg-gray-700"></div>
 
                     <MultiSelector :items="keys" locale="staff_statistics" v-model="selectedKeys" layout="w-full h-12 flex flex-wrap items-center gap-3 overflow-y-auto" />
+
+                    <div class="h-12 w-px bg-gray-300 dark:bg-gray-700"></div>
+
+                    <button class="block h-12 px-4 py-1 text-white bg-indigo-600 rounded dark:bg-indigo-400" @click="download">{{ t('global.download') }}</button>
                 </div>
 
                 <div v-html="myLevel" class="mb-3 pb-3 border-b border-gray-300 dark:border-gray-700"></div>
@@ -132,6 +136,35 @@ export default {
         }
     },
     methods: {
+        download() {
+            const header = [
+                this.t('staff_statistics.license'),
+                this.t('staff_statistics.player'),
+                this.t('staff_statistics.xp'),
+            ];
+
+            for (const key of this.selectedKeys) {
+                header.push(this.t(`staff_statistics.${key}`));
+            }
+
+            const rows = [header];
+
+            for (const player of this.players) {
+                const row = [
+                    player.license,
+                    player.name,
+                    this.numberFormat(player.xp, 2, false, 1),
+                ];
+
+                for (const key of this.selectedKeys) {
+                    row.push(this.numberFormat(player[key] || 0, 0));
+                }
+
+                rows.push(row);
+            }
+
+            this.createSpreadsheet("staff", rows);
+        },
         async refresh() {
             if (this.isLoading) return;
 
