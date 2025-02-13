@@ -137,17 +137,16 @@ export default {
     },
     methods: {
         download() {
-            const header = [
-                this.t('staff_statistics.license'),
-                this.t('staff_statistics.player'),
-                this.t('staff_statistics.xp'),
-            ];
+            const rows = [],
+                header = [
+                    this.t('staff_statistics.license'),
+                    this.t('staff_statistics.player'),
+                    this.t('staff_statistics.xp'),
+                ];
 
             for (const key of this.selectedKeys) {
                 header.push(this.t(`staff_statistics.${key}`));
             }
-
-            const rows = [header];
 
             for (const player of this.players) {
                 const row = [
@@ -163,7 +162,7 @@ export default {
                 rows.push(row);
             }
 
-            this.createSpreadsheet("staff", rows);
+            this.createSpreadsheet("staff.xls", "Staff Statistics", header, rows);
         },
         async refresh() {
             if (this.isLoading) return;

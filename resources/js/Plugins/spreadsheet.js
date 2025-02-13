@@ -17,24 +17,42 @@ function escapeXml(unsafe) {
 	});
 }
 
-function generateExcelXml(rows) {
+function renderRow(row, style = false) {
+	let xml = "<Row>";
+
+	for (const cell of row) {
+		xml += `<Cell ss:StyleID="${style || "Default"}"><Data ss:Type="String">${escapeXml(cell)}</Data></Cell>`;
+	}
+
+	xml += "</Row>";
+
+	return xml;
+}
+
+function generateExcelXml(sheet, header, rows) {
 	let xml = `<?xml version="1.0"?>
 <?mso-application progid="Excel.Sheet"?>
 <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
 	xmlns:o="urn:schemas-microsoft-com:office:office"
 	xmlns:x="urn:schemas-microsoft-com:office:excel"
 	xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet">
-<Worksheet ss:Name="Sheet1">
+<Styles>
+	<Style ss:ID="Default" ss:Name="Normal">
+		<Font ss:FontName="Montserrat"/>
+    </Style>
+    <Style ss:ID="HeaderStyle" ss:Parent="Default">
+		<Borders>
+			<Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1"/>
+		</Borders>
+    </Style>
+</Styles>
+<Worksheet ss:Name="${sheet}">
 <Table>`;
 
+	xml += renderRow(header, "HeaderStyle");
+
 	for (const row of rows) {
-		xml += "<Row>";
-
-		for (const cell of row) {
-			xml += `<Cell><Data ss:Type="String">${escapeXml(cell)}</Data></Cell>`;
-		}
-
-		xml += "</Row>";
+		xml += renderRow(row);
 	}
 
 	xml += `</Table>
@@ -44,15 +62,15 @@ function generateExcelXml(rows) {
 	return xml;
 }
 
-function downloadExcel(name, rows) {
-	const xml = generateExcelXml(rows),
+function downloadExcel(file, sheet, header, rows) {
+	const xml = generateExcelXml(sheet, header, rows),
 		blob = new Blob([xml], { type: "application/vnd.ms-excel" }),
 		url = URL.createObjectURL(blob);
 
 	const a = document.createElement("a");
 
 	a.href = url;
-	a.download = `${name}.xls`;
+	a.download = file;
 
 	document.body.appendChild(a);
 
@@ -64,8 +82,8 @@ function downloadExcel(name, rows) {
 
 const Spreadsheet = {
 	async install(Vue, options) {
-		Vue.prototype.createSpreadsheet = (name, rows) => {
-			downloadExcel(name, rows);
+		Vue.prototype.createSpreadsheet = (file, sheet, header, rows) => {
+			downloadExcel(file, sheet, header, rows);
 		};
 	},
 };
