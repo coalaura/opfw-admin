@@ -126,7 +126,7 @@ $ npm run dev/prod
 
 Set up a cron job to be ran every 2 hours (Edit cron.sh to fit your setup):
 ```bash
-0 */2 * * * bash /var/www/opfw-admin/cron.sh > /var/log/opfw_cron.log/var/log/opfw_cron.log
+0 */2 * * * bash /var/www/opfw-admin/cron.sh > /var/log/opfw_cron.log
 ```
 
 Finally, set up nginx:
