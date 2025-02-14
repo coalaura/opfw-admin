@@ -115,7 +115,7 @@ class OverwatchController extends Controller
                 return self::json(false, null, 'Failed to load character.');
             }
 
-            sleep(1);
+            sleep(5);
         }
 
         $response = ServerAPI::runCommand($serverIp, $license, sprintf("spectate %d", $source));

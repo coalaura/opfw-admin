@@ -242,7 +242,9 @@ export default {
                     method: "PATCH",
                 }).then(response => response.json());
 
-                console.log(data);
+                if (!data?.status) {
+                    alert(data?.message || "Something went wrong.");
+                }
             } catch(e) {
                 console.error(e);
             }
