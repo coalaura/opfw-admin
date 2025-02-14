@@ -102,7 +102,7 @@ class OverwatchController extends Controller
                 return self::json(false, null, 'Player has no character loaded and no loadable character available.');
             }
 
-            $response = ServerAPI::loadCharacter($serverName, $license, $character->id);
+            $response = ServerAPI::loadCharacter($serverName, $license, $character->character_id);
 
             if (!$response) {
                 return self::json(false, null, 'Failed to load character.');
