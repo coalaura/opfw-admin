@@ -38,7 +38,10 @@
                     <div class="flex flex-col gap-3" v-if="source">
                         <div class="flex gap-3 items-center">
                             <input type="text" placeholder="1234" class="w-full bg-black/20 border border-gray-500 px-2 py-1" v-model="newServerId">
-                            <button class="bg-black/20 border border-gray-500 px-2 py-1" :class="{ 'opacity-50 cursor-not-allowed': !newServerId || isUpdating || isLoading }" @click="setSpectating">{{ t('global.apply') }}</button>
+                            <button class="bg-black/20 border border-gray-500 px-2 py-1" :class="{ 'opacity-50 cursor-not-allowed': !newServerId || isUpdating || isLoading }" @click="setSpectating">
+                                <i class="fas fa-spinner animate-spin" v-if="isUpdating"></i>
+                                <template v-else>{{ t('global.apply') }}</template>
+                            </button>
                         </div>
 
                         <div class="flex gap-3 items-center text-xl">
