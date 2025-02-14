@@ -30,6 +30,10 @@
                                 <i class="fas fa-exclamation-triangle" v-else-if="error"></i>
                                 <i class="fas fa-video" v-else></i>
                             </template>
+
+                            <template v-else-if="spectator.spectating">
+                                <span class="italic">{{ spectator.spectating.source }}</span>
+                            </template>
                         </div>
 
                         <div class="italic" v-else>{{ t('overwatch.no_streams') }}</div>

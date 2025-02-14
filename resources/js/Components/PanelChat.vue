@@ -6,8 +6,14 @@
         </div>
 
         <div class="w-full italic text-xxs text-lime-700 dark:text-lime-400 px-1 py-0.5 group relative select-none" v-else-if="connected">
-            <i class="fas fa-wifi mr-1"></i>
-            {{ t('global.connected') }}
+            <div class="flex justify-between items-center">
+                <div>
+                    <i class="fas fa-wifi mr-1"></i>
+                    {{ t('global.connected') }}
+                </div>
+
+                <i :class="`fas fa-volume-${muted ? 'mute' : 'up'} cursor-pointer`" @click="toggleMute"></i>
+            </div>
 
             <div class="absolute top-full left-0 right-0 text-xxs flex flex-wrap gap-1 items-center px-1 py-0.5 opacity-0 group-hover:opacity-100 pointer-events-none text-blue-700 dark:text-blue-300 bg-gray-400/20 dark:bg-gray-600/20 backdrop-filter backdrop-blur-md z-10">
                 <i class="fas fa-users"></i>
@@ -57,6 +63,7 @@ export default {
             timeout: false,
             connecting: false,
             connected: false,
+            muted: false,
 
             message: '',
             messages: [],
@@ -100,6 +107,15 @@ export default {
         },
     },
     methods: {
+        toggleMute() {
+            this.muted = !this.muted;
+
+            if (this.muted) {
+                localStorage.setItem('panel_chat_muted', 'yes');
+            } else {
+                localStorage.removeItem('panel_chat_muted');
+            }
+        },
         getMessageColor(message) {
             if (message.system) {
                 return 'text-gray-600 dark:text-gray-400';
@@ -228,6 +244,8 @@ export default {
         },
 
         notify() {
+            if (this.muted) return;
+
             const audio = new Audio("/images/notification_pop3.ogg");
 
             audio.volume = 0.3;
@@ -239,6 +257,8 @@ export default {
         if (this.active) {
             this.connect();
         }
+
+        this.muted = !!localStorage.getItem("panel_chat_muted");
 
         // preload
         fetch("/images/notification_pop3.ogg");
