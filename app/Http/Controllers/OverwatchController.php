@@ -77,7 +77,7 @@ class OverwatchController extends Controller
         }
 
         if (! $valid) {
-            return self::json(false, null, 'Invalid license.');
+            return self::json(false, null, 'Invalid spectator.');
         }
 
         $target = StatusHelper::source($source);

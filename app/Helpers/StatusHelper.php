@@ -31,13 +31,13 @@ class StatusHelper
         return self::$cache->get()[$license] ?? null;
     }
 
-    public static function source(string $source): ?array
+    public static function source(int $source): ?array
     {
         self::init();
 
         $data = self::$cache->get();
 
-        if (!$data) {
+        if (!$data || empty($data)) {
             return null;
         }
 
