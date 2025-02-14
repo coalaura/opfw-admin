@@ -36,6 +36,10 @@
                     </div>
 
                     <div class="flex flex-col gap-3" v-if="source">
+                        <div class="flex gap-3 items-center text-lime-600 dark:text-lime-400" v-if="isTimedOut">
+                            {{ t('overwatch.stream_timeout') }}
+                        </div>
+
                         <div class="flex gap-3 items-center">
                             <input type="text" placeholder="1234" class="w-full bg-black/20 border border-gray-500 px-2 py-1" v-model="newServerId">
                             <button class="bg-black/20 border border-gray-500 px-2 py-1" :class="{ 'opacity-50 cursor-not-allowed': !newServerId || isUpdating || isLoading }" @click="setSpectating">
@@ -145,6 +149,7 @@ export default {
     },
     data() {
         return {
+            isTimedOut: false,
             isUpdating: false,
             isLoading: false,
             error: false,
@@ -219,7 +224,7 @@ export default {
             this.hls = false;
         },
         async setSpectating() {
-            if (this.isLoading || this.isUpdating) {
+            if (this.isLoading || this.isUpdating || this.isTimedOut) {
                 return;
             }
 
@@ -244,6 +249,12 @@ export default {
 
                 if (!data?.status) {
                     alert(data?.message || "Something went wrong.");
+                } else {
+                    this.isTimedOut = true;
+
+                    setTimeout(() => {
+                        this.isTimedOut = false;
+                    }, 5000);
                 }
             } catch(e) {
                 console.error(e);

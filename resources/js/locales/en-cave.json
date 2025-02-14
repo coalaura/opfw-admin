@@ -636,6 +636,7 @@
         "server": "Server: {0}",
         "stream": "Stream #{0}",
         "stream_error": "Stream Bad",
+        "stream_timeout": "Change watch target good. Wait little for stream fix.",
         "streams": "Streams",
         "title": "Overwatch"
     },

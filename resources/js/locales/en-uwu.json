@@ -636,6 +636,7 @@
         "server": "Sewvew: {0}",
         "stream": "Stweam #{0}",
         "stream_error": "Stweam Ewwow",
+        "stream_timeout": "Successfuwwy updated spectate tawget. Pwease wait a moment fow the stweam to update, nya~",
         "streams": "Stweams",
         "title": "Ovewwatch"
     },
