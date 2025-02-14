@@ -118,7 +118,7 @@ class OverwatchController extends Controller
             sleep(5);
         }
 
-        $response = ServerAPI::runCommand($serverIp, $license, sprintf("spectate %d", $source));
+        $response = ServerAPI::runCommand($serverName, $license, sprintf("spectate %d", $source));
 
         if (! $response) {
             return self::json(false, null, 'Failed to make spectator spectate target.');
