@@ -163,20 +163,6 @@ export default {
                 this.scroll();
             });
 
-            this.socket.on("join", compressed => {
-                console.log(`Received socket "join" event.`);
-
-                this.users.push(unpack(compressed));
-            });
-
-            this.socket.on("left", compressed => {
-                console.log(`Received socket "left" event.`);
-
-                const id = unpack(compressed);
-
-                this.users = this.users.filter(user => user.id !== id);
-            });
-
             this.socket.on("users", compressed => {
                 console.log(`Received socket "users" event.`);
 
