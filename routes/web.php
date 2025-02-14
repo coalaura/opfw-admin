@@ -252,7 +252,8 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Overwatch.
     Route::get('/overwatch', [OverwatchController::class, 'index']);
-    Route::get('/overwatch/live', [OverwatchController::class, 'live']);
+    Route::get('/live', [OverwatchController::class, 'live']);
+    Route::patch('/live/{license}/{source}', [OverwatchController::class, 'setSpectating']);
 
     // Screenshots.
     Route::get('/anti_cheat', [AntiCheatController::class, 'render']);

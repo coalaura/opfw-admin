@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Helpers;
 
 use App\Server;
@@ -26,6 +25,14 @@ class SocketAPI
     }
 
     /**
+     * /data/spectators
+     */
+    public static function getSpectators(string $ip): array
+    {
+        return self::fresh($ip, 'GET', '/data/spectators') ?? [];
+    }
+
+    /**
      * Actually executes the route on the socket server.
      *
      * @param string $ip
@@ -36,7 +43,7 @@ class SocketAPI
      */
     private static function fresh(string $ip, string $method, string $route): ?array
     {
-        if (!self::isUp()) {
+        if (! self::isUp()) {
             LoggingHelper::log('Socket server is not running (op-fw.sock not found).');
 
             return null;
@@ -44,7 +51,7 @@ class SocketAPI
 
         $server = Server::getServerName($ip);
 
-        if (!$server) {
+        if (! $server) {
             LoggingHelper::log(sprintf('No server name found for %s.', $ip));
 
             return null;
@@ -52,7 +59,7 @@ class SocketAPI
 
         $token = sessionKey();
 
-        if (!$token) {
+        if (! $token) {
             LoggingHelper::log('No session key found.');
 
             return false;
@@ -90,7 +97,7 @@ class SocketAPI
 
             $json = json_decode($body, true);
 
-            if (!$json || empty($json['status']) || !$json['status']) {
+            if (! $json || empty($json['status']) || ! $json['status']) {
                 throw new \Exception(sprintf('Invalid JSON response %s: %s', $status, substr($body, 0, 100)));
             }
 

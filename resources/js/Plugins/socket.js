@@ -15,7 +15,7 @@ const Socket = {
 
             const token = vue.$page.auth.token,
                 server = vue.$page.serverName,
-                host = isDev ? 'http://localhost:9999' : 'https://' + window.location.host,
+                host = isDev ? 'http://localhost:9999' : `https://${window.location.host}`,
                 query = type === "data" ? `?token=${token}`: '';
 
             const url = `${host}/socket/${server}/${type}/${route}${query}`;
@@ -30,7 +30,7 @@ const Socket = {
                     return data.data;
                 }
 
-                if (data.data && data.data.status) {
+                if (data.data?.status) {
                     return data.data.data;
                 } else {
                     if (throwError) {
@@ -50,10 +50,10 @@ const Socket = {
             }
         };
 
-        Vue.prototype.resolveHash = async function (hash) {
+        Vue.prototype.resolveHash = async (hash) => {
             const int = parseInt(hash, 10);
 
-            if (isNaN(int)) return false;
+            if (Number.isNaN(int)) return false;
 
             try {
                 const response = await fetch('https://joaat.sh/j/reverse/', {

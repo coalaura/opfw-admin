@@ -455,7 +455,7 @@ class GeneralHelper
         if (empty($cluster)) {
             return null;
         } else if ($cluster === 'localhost') {
-            return 'c1';
+            return 'c3';
         } else {
             return $cluster;
         }

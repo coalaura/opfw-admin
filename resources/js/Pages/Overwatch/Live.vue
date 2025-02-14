@@ -18,14 +18,14 @@
                     <h3 class="font-bold text-md border-b-2 border-gray-500 flex justify-between items-start">
                         {{ t('overwatch.streams') }}
 
-                        <small v-if="streams.length">{{ streams.length }}</small>
+                        <small v-if="spectators.length">{{ spectators.length }}</small>
                     </h3>
 
                     <div class="italic flex flex-col gap-1 h-full">
-                        <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 transition flex items-center justify-between" :class="getStreamListingClass(stream)" v-for="(stream, index) in streams" @click="setStream(stream)" v-if="streams.length">
+                        <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 transition flex items-center justify-between" :class="getSpectatorListingClass(spectator)" v-for="(spectator, index) in spectators" :key="spectator.license" @click="setStream(spectator.stream)" v-if="spectators.length">
                             {{ t('overwatch.stream', index + 1) }}
 
-                            <template v-if="stream === source">
+                            <template v-if="spectator.stream === source">
                                 <i class="fas fa-spinner animate-spin" v-if="isLoading"></i>
                                 <i class="fas fa-exclamation-triangle" v-else-if="error"></i>
                                 <i class="fas fa-video" v-else></i>
@@ -35,13 +35,20 @@
                         <div class="italic" v-else>{{ t('overwatch.no_streams') }}</div>
                     </div>
 
-                    <div class="flex gap-3 items-center text-xl">
-                        <i class="fas fa-volume-mute w-7 cursor-pointer" v-if="volume === 0" @click="setVolume(0.5)"></i>
-                        <i class="fas fa-volume-down w-7 cursor-pointer" v-else @click="setVolume(0)"></i>
+                    <div class="flex flex-col gap-3" v-if="source">
+                        <div class="flex gap-3 items-center">
+                            <input type="text" placeholder="1234" class="w-full bg-black/20 border border-gray-500 px-2 py-1" v-model="newServerId">
+                            <button class="bg-black/20 border border-gray-500 px-2 py-1" :class="{ 'opacity-50 cursor-not-allowed': !newServerId || isUpdating || isLoading }" @click="setSpectating">{{ t('global.apply') }}</button>
+                        </div>
 
-                        <input type="range" min="0" max="1" step="0.01" v-model.number="volume" class="w-full range" @input="setVolume">
+                        <div class="flex gap-3 items-center text-xl">
+                            <i class="fas fa-volume-mute w-7 cursor-pointer" v-if="volume === 0" @click="setVolume(0.5)"></i>
+                            <i class="fas fa-volume-down w-7 cursor-pointer" v-else @click="setVolume(0)"></i>
 
-                        <i :class="`fas fa-${fullscreen ? 'compress' : 'expand'} w-7 cursor-pointer`" @click="toggleFullscreen"></i>
+                            <input type="range" min="0" max="1" step="0.01" v-model.number="volume" class="w-full range" @input="setVolume">
+
+                            <i :class="`fas fa-${fullscreen ? 'compress' : 'expand'} w-7 cursor-pointer`" @click="toggleFullscreen"></i>
+                        </div>
                     </div>
                 </div>
 
@@ -122,6 +129,10 @@ const HlsErrorDetails = {
     unknown: "An unknown error occurred."
 };
 
+const RetryHlsErrorDetails = [
+    "bufferStalledError"
+];
+
 export default {
     layout: Layout,
     components: {
@@ -131,8 +142,11 @@ export default {
     },
     data() {
         return {
+            isUpdating: false,
             isLoading: false,
             error: false,
+
+            spectators: [],
 
             height: false,
             volume: 0.5,
@@ -143,20 +157,19 @@ export default {
             interval: false
         };
     },
-    computed: {
-        streams() {
-            return this.$page.overwatch?.streams ?? [];
-        }
-    },
     methods: {
-        getStreamListingClass(stream) {
+        getSpectatorListingClass(spectator) {
             if (this.isLoading) {
                 return "opacity-50 cursor-not-allowed";
             }
 
             let list = "hover:bg-black/30";
 
-            if (this.source === stream) {
+            if (this.isUpdating) {
+                list += " cursor-not-allowed";
+            }
+
+            if (this.source === spectator.stream) {
                 // text-lime-600 dark:text-lime-400 border-lime-600 dark:border-lime-400
                 // text-red-600 dark:text-red-400 border-red-600 dark:border-red-400
                 const color = this.error ? "red" : "lime";
@@ -202,8 +215,39 @@ export default {
 
             this.hls = false;
         },
+        async setSpectating() {
+            if (this.isLoading || this.isUpdating) {
+                return;
+            }
+
+            const spectator = this.spectators.find(spectator => spectator.stream === this.source);
+
+            if (!spectator) {
+                return;
+            }
+
+            const serverId = parseInt(this.newServerId);
+
+            if (!serverId || serverId < 1 || serverId > 65535) {
+                return;
+            }
+
+            this.isUpdating = true;
+
+            try {
+                const data = await fetch(`/live/${spectator.license}/${serverId}`, {
+                    method: "PATCH",
+                }).then(response => response.json());
+
+                console.log(data);
+            } catch(e) {
+                console.error(e);
+            }
+
+            this.isUpdating = false;
+        },
         async setStream(source) {
-            if (this.isLoading) {
+            if (this.isLoading || this.isUpdating) {
                 return;
             }
 
@@ -227,6 +271,14 @@ export default {
             });
 
             this.hls.on("hlsError", (_, data) => {
+                if (RetryHlsErrorDetails.includes(data.details)) {
+                    this.isLoading = true;
+
+                    this.hls.loadSource(this.source);
+
+                    return;
+                }
+
                 this.setError(data.details);
             });
 
@@ -260,6 +312,16 @@ export default {
         updateFullscreen() {
             this.fullscreen = !!document.fullscreenElement;
         },
+        async updateSpectators() {
+            this.spectators = await this.requestData("/spectators");
+
+            // Check if component is still active
+            if (!this.$el) {
+                return;
+            }
+
+            setTimeout(this.updateSpectators, 4000);
+        },
         preload(url, cb) {
             const image = new Image();
 
@@ -278,6 +340,7 @@ export default {
     },
     mounted() {
         this.setVolume();
+        this.updateSpectators();
 
         this.preload(this.$refs.video.poster, this.setChatHeight);
     }

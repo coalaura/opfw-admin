@@ -1052,38 +1052,6 @@ class Player extends Model
     }
 
     /**
-     * Gets a certain key's value from the user statistic.
-     */
-    public function getUserStatisticsValue(string $key): int
-    {
-        $statistics = $this->user_statistics ?? [];
-        $entry      = $statistics[$key] ?? [];
-
-        return $entry['value'] ?? 0;
-    }
-
-    /**
-     * Gets the full user statistics.
-     */
-    public function getUserStatistics(): array
-    {
-        $raw = $this->user_statistics ?? [];
-
-        $full = [];
-
-        foreach (self::UserStatisticsKeys as $key) {
-            $entry = $raw[$key] ?? [];
-
-            $full[$key] = [
-                'value' => $entry['value'] ?? 0,
-                'time'  => $entry['time'] ?? 0,
-            ];
-        }
-
-        return $full;
-    }
-
-    /**
      * Track an action in the user statistics.
      */
     public function trackStatistics(string $action)
@@ -1177,6 +1145,19 @@ class Player extends Model
         }
 
         return new PlayerStatus(PlayerStatus::STATUS_ONLINE, $player['server'], $player['source'], $player['character'] ? $player['character']['id'] : null, $player['characterData']);
+    }
+
+    /**
+     * Returns if the player has a character loaded.
+     *
+     * @param string $licenseIdentifier
+     * @return bool
+     */
+    public static function doesPlayerHaveCharacterLoaded(string $licenseIdentifier): bool
+    {
+        $status = self::getOnlineStatus($licenseIdentifier, true);
+
+        return $status->status && $status->character;
     }
 
     /**

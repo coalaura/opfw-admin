@@ -539,24 +539,6 @@ class TestController extends Controller
         return self::respond(implode("\n", $list));
     }
 
-    public function userStatistics(Request $request, Player $player)
-    {
-        if (! $this->isSuperAdmin($request)) {
-            abort(403);
-        }
-
-        $statistics = $player->getUserStatistics();
-        $lines      = [
-            sprintf("User statistics for %s", $player->getSafePlayerName()),
-        ];
-
-        foreach ($statistics as $name => $value) {
-            $lines[] = sprintf("%s: %s", $name, $value['value']);
-        }
-
-        return self::respond(implode("\n", $lines));
-    }
-
     public function nancyStatistics()
     {
         $logs = Log::query()

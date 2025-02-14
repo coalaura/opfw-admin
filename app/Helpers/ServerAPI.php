@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Helpers;
 
 use App\Server;
@@ -99,7 +98,7 @@ class ServerAPI
      */
     public static function getVehiclesTxt(bool $refresh = false): array
     {
-        if (!$refresh) {
+        if (! $refresh) {
             if (CacheHelper::exists("opfw_vehicles_txt")) {
                 return CacheHelper::read("opfw_vehicles_txt", []);
             }
@@ -107,7 +106,7 @@ class ServerAPI
 
         $data = self::fresh('GET', '/vehicles.txt', null, self::MediumCacheTime);
 
-        if (!$data) {
+        if (! $data) {
             return [];
         }
 
@@ -124,7 +123,7 @@ class ServerAPI
 
             foreach ($vehicles as $vehicle) {
                 $vehicle = trim($vehicle);
-                $parts = explode(" - ", $vehicle);
+                $parts   = explode(" - ", $vehicle);
 
                 if (sizeof($parts) < 2) {
                     continue;
@@ -178,6 +177,36 @@ class ServerAPI
     }
 
     /**
+     * /execute/loadCharacter
+     */
+    public static function loadCharacter(string $server, string $licenseIdentifier, int $characterId)
+    {
+        $url = Server::getServerURL($server);
+
+        $url .= 'execute/loadCharacter';
+
+        return self::do('POST', $url, [
+            'licenseIdentifier' => $licenseIdentifier,
+            'characterId'       => $characterId,
+        ], 3, true);
+    }
+
+    /**
+     * /execute/runCommand
+     */
+    public static function runCommand(string $server, string $licenseIdentifier, string $command)
+    {
+        $url = Server::getServerURL($server);
+
+        $url .= 'execute/runCommand';
+
+        return self::do('POST', $url, [
+            'licenseIdentifier' => $licenseIdentifier,
+            'command'           => $command,
+        ], 3, true);
+    }
+
+    /**
      * Returns the cached value if it exists, otherwise refreshes the cache and returns the fresh value (if $refresh is true).
      *
      * @param string $route
@@ -188,7 +217,7 @@ class ServerAPI
      */
     private static function cached(string $route, bool $refresh = false, int $ttl = self::ShortCacheTime)
     {
-        if (!self::$forceRefresh) {
+        if (! self::$forceRefresh) {
             $key = sprintf('opfw_%s', ltrim($route, '/'));
 
             if (CacheHelper::exists($key)) {
@@ -218,7 +247,7 @@ class ServerAPI
     {
         $serverUrl = Server::getFirstServer('url');
 
-        if (!$serverUrl) {
+        if (! $serverUrl) {
             LoggingHelper::log('No OP-FW server found.');
 
             return null;
@@ -253,7 +282,7 @@ class ServerAPI
     {
         $token = env('OP_FW_TOKEN');
 
-        if (!$token) {
+        if (! $token) {
             LoggingHelper::log('No OP-FW token found.');
 
             return null;
@@ -295,7 +324,7 @@ class ServerAPI
 
                 $json = json_decode($body, true);
 
-                if (!$json || !isset($json['statusCode'])) {
+                if (! $json || ! isset($json['statusCode'])) {
                     throw new \Exception(sprintf('Invalid JSON response %s: %s', $status, substr($body, 0, 100)));
                 }
 
@@ -303,6 +332,10 @@ class ServerAPI
 
                 if ($status < 200 || $status > 299) {
                     throw new \Exception(sprintf('Invalid JSON status %s', $status));
+                }
+
+                if (!empty($json['message'])) {
+                    return $json['message'];
                 }
 
                 $result = $json['data'] ?? null;

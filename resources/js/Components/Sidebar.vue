@@ -287,7 +287,7 @@ export default {
                         {
                             label: 'overwatch.live',
                             icon: 'video',
-                            url: '/overwatch/live',
+                            url: '/live',
                             hidden: !this.$page.overwatch,
                         },
                         {

@@ -31,6 +31,25 @@ class StatusHelper
         return self::$cache->get()[$license] ?? null;
     }
 
+    public static function source(string $source): ?array
+    {
+        self::init();
+
+        $data = self::$cache->get();
+
+        if (!$data) {
+            return null;
+        }
+
+        foreach ($data as $player) {
+            if ($player['source'] === $source) {
+                return $player;
+            }
+        }
+
+        return null;
+    }
+
     private static function parseCharacterFlags(int $flags): array
     {
         $data = [];
