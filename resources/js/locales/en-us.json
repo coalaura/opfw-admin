@@ -183,7 +183,12 @@
         "stream": "Stream #{0}",
         "stream_error": "Stream Error",
         "stream_timeout": "Success! Please wait a moment for the stream to update.",
-        "watching": "Watching"
+        "watching": "Watching",
+        "replay": "Toggle Instant Replay",
+        "save_replay": "Save the last 15 seconds as a clip.",
+        "no_replay": "Turn on instant replay to save the last 15 seconds.",
+        "clip": "Clip",
+        "replay_not_supported": "Instant replay is not supported on this browser."
     },
     "errors": {
         "client": {

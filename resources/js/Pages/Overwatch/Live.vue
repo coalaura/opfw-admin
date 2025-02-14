@@ -37,6 +37,17 @@
                         </div>
 
                         <div class="italic" v-else>{{ t('overwatch.no_streams') }}</div>
+
+                        <div class="flex gap-1 border-t border-gray-500 pt-3 mt-2" v-if="source">
+                            <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500" @click="toggleReplay" :title="t('overwatch.replay')">
+                                <i class="fas fa-video" v-if="replay"></i>
+                                <i class="fas fa-video-slash" v-else></i>
+                            </div>
+                            <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center w-full select-none" :class="{ 'opacity-50 cursor-not-allowed': !replay || isSavingReplay }" @click="saveReplay" :title="t(`overwatch.${replay ? 'save_replay' : 'no_replay'}`)">
+                                <i class="fas fa-cut"></i>
+                                {{ t('overwatch.clip') }}
+                            </div>
+                        </div>
                     </div>
 
                     <div class="flex flex-col gap-3" v-if="source">
@@ -79,6 +90,8 @@
 
                 <PanelChat :active="true" :height="height" dimensions="w-96" />
             </div>
+
+            <video ref="replay" class="hidden"></video>
         </v-section>
 
     </div>
@@ -166,6 +179,16 @@ export default {
             spectators: [],
             newServerId: "",
 
+            isSavingReplay: false,
+            replay: false,
+            replayStream: false,
+            replayRecorder: false,
+            replayBuffer: [],
+            replayOptions: {
+                mimeType: 'video/webm',
+                videoBitsPerSecond: 5_000_000,
+            },
+
             height: false,
             volume: 0.5,
             fullscreen: false,
@@ -187,6 +210,91 @@ export default {
         }
     },
     methods: {
+        toggleReplay() {
+            const replay = this.$refs.replay;
+
+            if (!replay.captureStream && !replay.mozCaptureStream) {
+                alert(this.t('overwatch.replay_not_supported'));
+
+                return;
+            }
+
+            this.replay = !this.replay;
+
+            if (this.replay) {
+                this.replayBuffer = [];
+
+                this.replayStream = this.createStream(this.source, replay, null, this.stopReplay);
+
+                replay.addEventListener('playing', () => {
+                    const capture = replay.captureStream ? replay.captureStream() : replay.mozCaptureStream();
+
+                    try {
+                        this.replayRecorder = new MediaRecorder(capture, this.replayOptions);
+                    } catch (e) {
+                        alert(this.t('overwatch.replay_not_supported'));
+
+                        this.stopReplay();
+
+                        return;
+                    }
+
+                    this.replayRecorder.ondataavailable = (event) => {
+                        if (!event.data?.size) {
+                            return;
+                        }
+
+                        const now = Date.now();
+
+                        this.replayBuffer.push({
+                            data: event.data,
+                            time: now
+                        });
+
+                        this.replayBuffer = this.replayBuffer.filter(chunk => now - chunk.time < 15 * 1000);
+                    };
+
+                    this.replayRecorder.start(500);
+                });
+            } else {
+                this.stopReplay();
+            }
+        },
+        stopReplay() {
+            console.log("stop");
+            this.replay = false;
+
+            if (this.replayRecorder) {
+                this.replayRecorder.stop();
+
+                this.replayRecorder = false;
+            }
+
+            if (this.replayStream) {
+                this.replayStream.destroy();
+            }
+
+            this.replayBuffer = [];
+        },
+        saveReplay() {
+            if (!this.replay || this.isSavingReplay) return;
+
+            const chunks = this.replayBuffer.map(chunk => chunk.data),
+                blob = new Blob(chunks, this.replayOptions),
+                url = URL.createObjectURL(blob);
+
+                const a = document.createElement('a');
+
+                a.href = url;
+                a.download = `replay-${this.$moment().format('YYYY-MM-DD_HH-mm-ss')}.webm`;
+
+                document.body.appendChild(a);
+
+                a.click();
+
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+        },
         getSpectatorListingClass(spectator) {
             if (this.isLoading) {
                 return "opacity-50 cursor-not-allowed";
@@ -238,6 +346,8 @@ export default {
                 this.isLoading = false;
             }
 
+            this.stopReplay();
+
             if (!this.hls) return;
 
             this.hls.destroy();
@@ -283,7 +393,65 @@ export default {
 
             this.isUpdating = false;
         },
-        async setStream(source) {
+        createStream(source, element, onReady, onError) {
+            const hls = new Hls({
+                backBufferLength: 30
+            });
+
+            let timeout, interval;
+
+            hls.loadSource(source);
+            hls.attachMedia(element);
+
+            hls.on(Hls.Events.MEDIA_ATTACHED, () => {
+                console.log("Attached media to HLS");
+            });
+
+            hls.on("hlsError", (_, data) => {
+                if (RetryHlsErrorDetails.includes(data.details)) {
+                    timeout = setTimeout(() => {
+                        hls.loadSource(source);
+                    }, 500);
+
+                    return;
+                }
+
+                onError?.(data.details);
+            });
+
+            hls.on(Hls.Events.MANIFEST_PARSED, async () => {
+                element.currentTime = element.duration || 0;
+                element.play();
+
+                clearInterval(interval);
+
+                interval = setInterval(() => {
+                    if (!element.duration) {
+                        return;
+                    }
+
+                    if ((element.duration - element.currentTime) > 5) {
+                        element.currentTime = element.duration;
+
+                        element.play();
+                    }
+                }, 1000);
+
+                onReady?.();
+            });
+
+            hls.startLoad();
+
+            return {
+                destroy: () => {
+                    clearTimeout(timeout);
+                    clearInterval(interval);
+
+                    hls.destroy();
+                }
+            };
+        },
+        setStream(source) {
             if (this.isLoading || this.isUpdating) {
                 return;
             }
@@ -291,59 +459,15 @@ export default {
             this.destroyStream(true);
 
             this.isLoading = true;
-
-            this.hls = new Hls({
-                backBufferLength: 30
-            });
+            this.source = source;
 
             const video = this.$refs.video;
 
-            this.source = source;
-
-            this.hls.loadSource(this.source);
-            this.hls.attachMedia(video);
-
-            this.hls.on(Hls.Events.MEDIA_ATTACHED, () => {
-                console.log("Attached media to HLS");
-            });
-
-            this.hls.on("hlsError", (_, data) => {
-                if (RetryHlsErrorDetails.includes(data.details)) {
-                    this.isLoading = true;
-
-                    setTimeout(() => {
-                        this.hls.loadSource(this.source);
-                    }, 500);
-
-                    return;
-                }
-
-                this.setError(data.details);
-            });
-
-            this.hls.on(Hls.Events.MANIFEST_PARSED, async () => {
+            this.hls = this.createStream(source, video, () => {
                 this.isLoading = false;
 
                 this.setVolume();
-
-                video.currentTime = video.duration || 0;
-
-                video.play();
-
-                this.interval = setInterval(() => {
-                    if (!video.duration) {
-                        return;
-                    }
-
-                    if ((video.duration - video.currentTime) > 5) {
-                        video.currentTime = video.duration;
-
-                        video.play();
-                    }
-                }, 1000);
-            });
-
-            this.hls.startLoad();
+            }, this.setError);
         },
         setChatHeight() {
             this.height = `${this.$refs.video.scrollHeight}px`;
