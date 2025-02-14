@@ -22,8 +22,8 @@
 
         <div class="w-full h-full overflow-y-auto" ref="chat">
             <div v-for="message in messages" :key="message.id" class="relative group dark:odd:bg-gray-500/10 px-1 py-0.5">
-                <div class="font-semibold max-w-40 truncate inline pr-1" :title="message.name">{{ message.name }}</div>
-                <div class="text-gray-700 dark:text-gray-300 inline break-words">{{ message.text }}</div>
+                <div class="font-semibold max-w-40 truncate inline pr-1" :title="message.name" v-if="!message.system">{{ message.name }}</div>
+                <div class="inline break-words" :class="getMessageColor(message)">{{ message.text }}</div>
 
                 <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 text-xxs pointer-events-none italic text-gray-600 dark:text-gray-400 bg-gray-400/20 dark:bg-gray-600/20 backdrop-filter backdrop-blur-md px-1 py-0.5">
                     {{ $moment.unix(message.time).fromNow() }}
@@ -100,6 +100,13 @@ export default {
         },
     },
     methods: {
+        getMessageColor(message) {
+            if (message.system) {
+                return 'text-gray-600 dark:text-gray-400';
+            }
+
+            return 'text-gray-700 dark:text-gray-300';
+        },
         connect() {
             clearTimeout(this.timeout);
 

@@ -638,7 +638,8 @@
         "stream_error": "Stream's gone all wonky",
         "stream_timeout": "Well, we done updated the spectate target. Y'all hang tight for a spell while the stream catches up.",
         "streams": "Streams",
-        "title": "Overwatch"
+        "title": "Overwatch",
+        "watching": "Watchin'"
     },
     "pagination": {
         "next": "Next",

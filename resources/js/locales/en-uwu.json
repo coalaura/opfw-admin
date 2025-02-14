@@ -638,7 +638,8 @@
         "stream_error": "Stweam Ewwow",
         "stream_timeout": "Successfuwwy updated spectate tawget. Pwease wait a moment fow the stweam to update, nya~",
         "streams": "Stweams",
-        "title": "Ovewwatch"
+        "title": "Ovewwatch",
+        "watching": "Watchin'~"
     },
     "pagination": {
         "next": "Nyext",

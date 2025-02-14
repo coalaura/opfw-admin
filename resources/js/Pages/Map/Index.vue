@@ -32,14 +32,6 @@
 
         <portal to="actions">
             <div class="flex gap-2">
-                <!-- Show/Hide Chat -->
-                <button class="p-2 w-11 text-center font-semibold text-white rounded bg-green-600 dark:bg-green-500" :title="t('map.show_chat')" @click="chatActive = true" v-if="!chatActive">
-                    <i class="fas fa-comment-dots"></i>
-                </button>
-                <button class="p-2 w-11 text-center font-semibold text-white rounded bg-yellow-600 dark:bg-yellow-500" :title="t('map.hide_chat')" @click="chatActive = false" v-else>
-                    <i class="fas fa-comment-slash"></i>
-                </button>
-
                 <!-- Show Timestamp -->
                 <!-- This shit breaks all the time idk if i cba to fix it or just remove it permanently
                     <button class="p-2 w-11 text-center font-semibold text-white rounded bg-blue-600 dark:bg-blue-500" :title="t('map.timestamp_title')" @click="isTimestamp = true" v-if="this.perm.check(this.perm.PERM_ADVANCED)">
@@ -173,8 +165,6 @@
                     <div class="relative w-full">
                         <div class="w-full flex gap-3">
                             <div id="map" class="w-full relative h-max"></div>
-
-                            <PanelChat :active="chatActive" />
                         </div>
 
                         <input v-if="!isTimestampShowing && !isHistoricShowing" type="number" class="placeholder absolute z-1k leaflet-tl ml-12 w-16 block px-2 font-base font-semibold" @input="updateTrackingInfo" :placeholder="t('map.track_placeholder')" min="0" max="65536" v-model="trackServerId" :class="trackingValid ? 'text-green-700 bg-green-100' : 'text-red-700 bg-red-200'" />
@@ -317,7 +307,6 @@ import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
 import SimplePlayerList from './../../Components/Map/SimplePlayerList';
 import Modal from './../../Components/Modal';
-import PanelChat from './../../Components/PanelChat';
 
 import PlayerContainer from './PlayerContainer';
 import Player from './Player';
@@ -344,7 +333,6 @@ export default {
         VSection,
         SimplePlayerList,
         Modal,
-        PanelChat,
     },
     props: {
         servers: {
@@ -423,7 +411,6 @@ export default {
             loadingScreenStatus: null,
             historicValidLicense: false,
 
-            chatActive: false,
             isTimestamp: false,
             isHistoric: false,
 
@@ -448,15 +435,6 @@ export default {
             selectedInstance: false,
             viewingUnloadedPlayerList: false
         };
-    },
-    watch: {
-        chatActive() {
-            if (this.chatActive) {
-                localStorage.setItem('chatActive', 'true');
-            } else {
-                localStorage.removeItem('chatActive');
-            }
-        }
     },
     methods: {
         checkHistoricLicense() {
@@ -1372,8 +1350,6 @@ export default {
         if (Math.round(Math.random() * 100) === 1) { // 1% chance it says fib spy satellite map
             $('#map_title').text(this.t('map.spy_satellite'));
         }
-
-        if (localStorage.getItem('chatActive')) this.chatActive = true;
 
         $("body").on("click", ".view-unloaded", e => {
             e.preventDefault();

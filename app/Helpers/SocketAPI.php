@@ -33,6 +33,16 @@ class SocketAPI
     }
 
     /**
+     * PUT /chat
+     */
+    public static function putPanelChatMessage(string $ip, string $message): ?array
+    {
+        return self::fresh($ip, 'PUT', '/chat', [
+            'message' => $message,
+        ]);
+    }
+
+    /**
      * Actually executes the route on the socket server.
      *
      * @param string $ip
@@ -41,7 +51,7 @@ class SocketAPI
      *
      * @return null|array
      */
-    private static function fresh(string $ip, string $method, string $route): ?array
+    private static function fresh(string $ip, string $method, string $route, ?array $data = null): ?array
     {
         if (! self::isUp()) {
             LoggingHelper::log('Socket server is not running (op-fw.sock not found).');
@@ -62,7 +72,7 @@ class SocketAPI
         if (! $token) {
             LoggingHelper::log('No session key found.');
 
-            return false;
+            return null;
         }
 
         $url = sprintf('http://localhost:9999/socket/%s/%s', $server, ltrim($route, '/'));
@@ -83,6 +93,7 @@ class SocketAPI
                 'query' => [
                     'token' => $token,
                 ],
+                'json'  => $data,
             ]);
 
             $body = $response->getBody()->getContents();

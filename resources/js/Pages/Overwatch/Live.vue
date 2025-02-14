@@ -36,13 +36,18 @@
                     </div>
 
                     <div class="flex flex-col gap-3" v-if="source">
-                        <div class="flex gap-3 items-center text-lime-600 dark:text-lime-400" v-if="isTimedOut">
+                        <div class="flex gap-3 items-center text-lime-600 dark:text-lime-400 text-xs italic leading-4 border-b border-gray-500 pb-3" v-if="isTimedOut">
                             {{ t('overwatch.stream_timeout') }}
+                        </div>
+
+                        <div class="flex flex-col border-b border-gray-500 pb-3" v-if="target">
+                            <div class="font-semibold">{{ t('overwatch.watching') }}:</div>
+                            <a :href="`/players/${target.license}`" target="_blank" class="text-lime-600 dark:text-lime-400 no-underline italic">[{{ target.source }}] {{ target.name }}</a>
                         </div>
 
                         <div class="flex gap-3 items-center">
                             <input type="text" placeholder="1234" class="w-full bg-black/20 border border-gray-500 px-2 py-1" v-model="newServerId">
-                            <button class="bg-black/20 border border-gray-500 px-2 py-1" :class="{ 'opacity-50 cursor-not-allowed': !newServerId || isUpdating || isLoading }" @click="setSpectating">
+                            <button class="bg-black/20 border border-gray-500 px-2 py-1" :class="{ 'opacity-50 cursor-not-allowed': !newServerId || isUpdating || isLoading || isTimedOut }" @click="setSpectating">
                                 <i class="fas fa-spinner animate-spin" v-if="isUpdating"></i>
                                 <template v-else>{{ t('global.apply') }}</template>
                             </button>
@@ -155,6 +160,7 @@ export default {
             error: false,
 
             spectators: [],
+            newServerId: "",
 
             height: false,
             volume: 0.5,
@@ -164,6 +170,17 @@ export default {
             source: false,
             interval: false
         };
+    },
+    computed: {
+        target() {
+            if (!this.source) return false;
+
+            const spectator = this.spectators.find(spectator => spectator.stream === this.source);
+
+            if (!spectator) return false;
+
+            return spectator.spectating;
+        }
     },
     methods: {
         getSpectatorListingClass(spectator) {
@@ -254,7 +271,7 @@ export default {
 
                     setTimeout(() => {
                         this.isTimedOut = false;
-                    }, 5000);
+                    }, 10000);
                 }
             } catch(e) {
                 console.error(e);
@@ -290,7 +307,9 @@ export default {
                 if (RetryHlsErrorDetails.includes(data.details)) {
                     this.isLoading = true;
 
-                    this.hls.loadSource(this.source);
+                    setTimeout(() => {
+                        this.hls.loadSource(this.source);
+                    }, 500);
 
                     return;
                 }

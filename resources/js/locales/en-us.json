@@ -182,7 +182,8 @@
         "no_streams": "No available streams.",
         "stream": "Stream #{0}",
         "stream_error": "Stream Error",
-        "stream_timeout": "Successfully updated spectate target. Please wait a moment for the stream to update."
+        "stream_timeout": "Success! Please wait a moment for the stream to update.",
+        "watching": "Watching"
     },
     "errors": {
         "client": {

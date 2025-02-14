@@ -12,6 +12,8 @@ class Mutex
 
     public function __construct(string $name)
     {
+        $name = preg_replace('/[^\w]+/', '_', $name);
+
         $this->path = storage_path('locks/' . $name . '.lock');
 
         $dir = dirname($this->path);

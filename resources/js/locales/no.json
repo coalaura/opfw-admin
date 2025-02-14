@@ -638,7 +638,8 @@
         "stream_error": "Strømfeil",
         "stream_timeout": "Mål for tilskuerfunksjonen ble oppdatert. Vennligst vent et øyeblikk mens strømmen oppdateres.",
         "streams": "Strømmer",
-        "title": "Overwatch"
+        "title": "Overwatch",
+        "watching": "Ser på"
     },
     "pagination": {
         "next": "Neste",

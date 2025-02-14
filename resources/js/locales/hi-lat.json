@@ -638,7 +638,8 @@
         "stream_error": "Stream Error",
         "stream_timeout": "Safaltaapoorvak spectate target update kiya. Kripya stream update hone ke liye ek kshan prateeksha karein.",
         "streams": "Streams",
-        "title": "Overwatch"
+        "title": "Overwatch",
+        "watching": "Dekhte hue"
     },
     "pagination": {
         "next": "Agla",

@@ -638,7 +638,8 @@
         "stream_error": "Stream Bad",
         "stream_timeout": "Change watch target good. Wait little for stream fix.",
         "streams": "Streams",
-        "title": "Overwatch"
+        "title": "Overwatch",
+        "watching": "Watch"
     },
     "pagination": {
         "next": "Next",

@@ -60,46 +60,46 @@ class OverwatchController extends Controller
         }
 
         $serverName = Server::getFirstServer('name');
-        $serverIp = Server::getFirstServer('ip');
+        $serverIp   = Server::getFirstServer('ip');
 
         if (! $serverIp) {
             return self::json(false, null, 'No OP-FW server found.');
         }
 
-        $spectators = SocketAPI::getSpectators($serverIp);
-        $valid      = false;
+        $spectators  = SocketAPI::getSpectators($serverIp);
+        $spectatorId = false;
 
-        foreach ($spectators as $spectator) {
+        foreach ($spectators as $id => $spectator) {
             if ($spectator['license'] === $license) {
-                $valid = true;
+                $spectatorId = $id + 1;
 
                 break;
             }
         }
 
-        if (! $valid) {
+        if (! $spectatorId) {
             return self::json(false, null, 'Invalid spectator.');
         }
 
         $target = StatusHelper::source($source);
 
-        if (!$target || !$target['character']) {
+        if (! $target || ! $target['character']) {
             return self::json(false, null, 'Target is not connected to the server or does not have a character loaded.');
         }
 
         $spectator = StatusHelper::get($license);
 
-        if (!$spectator) {
+        if (! $spectator) {
             return self::json(false, null, 'Spectator is not connected to the server.');
         }
 
         $mutex = new Mutex(sprintf('live_spectate_%s', $license));
 
-        if (!$mutex->lock()) {
+        if (! $mutex->lock()) {
             return self::json(false, null, 'Already processing a spectate request for this spectator. Please wait a moment and try again.');
         }
 
-        if (!$spectator['character']) {
+        if (! $spectator['character']) {
             $character = Character::query()
                 ->where('license_identifier', '=', $license)
                 ->where('character_deleted', '=', 0)
@@ -111,7 +111,7 @@ class OverwatchController extends Controller
 
             $response = ServerAPI::loadCharacter($serverName, $license, $character->character_id);
 
-            if (!$response) {
+            if (! $response) {
                 return self::json(false, null, 'Failed to load character.');
             }
 
@@ -123,6 +123,8 @@ class OverwatchController extends Controller
         if (! $response) {
             return self::json(false, null, 'Failed to make spectator spectate target.');
         }
+
+        SocketAPI::putPanelChatMessage($serverIp, sprintf('%s set stream #%d to spectate %d.', user()->player_name, $spectatorId, $source));
 
         return self::json(true, null, 'Player is now being spectated.');
     }

@@ -2,8 +2,10 @@
 namespace App\Http\Controllers;
 
 use App\Character;
+use App\Helpers\SocketAPI;
 use App\Log;
 use App\Player;
+use App\Server;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -568,7 +570,7 @@ class TestController extends Controller
 
         foreach ($lost as $name => $count) {
             $list[] = [
-                'name' => $name,
+                'name'  => $name,
                 'count' => $count,
             ];
         }
@@ -577,7 +579,7 @@ class TestController extends Controller
             return $b['count'] <=> $a['count'];
         });
 
-        return self::respond(implode("\n", array_map(function($item) {
+        return self::respond(implode("\n", array_map(function ($item) {
             return sprintf("%dx %s", $item['count'], $item['name']);
         }, $list)));
     }
@@ -590,7 +592,10 @@ class TestController extends Controller
             return self::respond('Unauthorized.');
         }
 
-        return self::respond("dick and balls");
+        $serverIp = Server::getFirstServer('ip');
+        $success  = SocketAPI::putPanelChatMessage($serverIp, sprintf('%s set stream #%d to spectate %d.', user()->player_name, 1, 123));
+
+        return self::respond($success ? 'Success.' : 'Failed.');
     }
 
     /**
