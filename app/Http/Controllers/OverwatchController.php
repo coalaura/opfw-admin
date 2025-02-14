@@ -121,7 +121,7 @@ class OverwatchController extends Controller
         $response = ServerAPI::runCommand($serverIp, $license, sprintf("spectate %d", $source));
 
         if (! $response) {
-            return self::json(false, null, 'Failed to spectate player.');
+            return self::json(false, null, 'Failed to make spectator spectate target.');
         }
 
         return self::json(true, null, 'Player is now being spectated.');

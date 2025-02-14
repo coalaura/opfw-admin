@@ -331,7 +331,7 @@ class ServerAPI
                 $status = intval($json['statusCode']) ?? $status;
 
                 if ($status < 200 || $status > 299) {
-                    throw new \Exception(sprintf('Invalid JSON status %s', $status));
+                    throw new \Exception(sprintf('Invalid JSON status %s: %s', $status, $json['message'] ?? 'No message'));
                 }
 
                 if (!empty($json['message'])) {
