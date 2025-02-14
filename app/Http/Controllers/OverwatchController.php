@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Character;
 use App\Helpers\GeneralHelper;
+use App\Helpers\Mutex;
 use App\Helpers\PermissionHelper;
 use App\Helpers\ServerAPI;
 use App\Helpers\SocketAPI;
@@ -90,6 +91,12 @@ class OverwatchController extends Controller
 
         if (!$spectator) {
             return self::json(false, null, 'Spectator is not connected to the server.');
+        }
+
+        $mutex = new Mutex(sprintf('live_spectate_%s', $license));
+
+        if (!$mutex->lock()) {
+            return self::json(false, null, 'Already processing a spectate request for this spectator. Please wait a moment and try again.');
         }
 
         if (!$spectator['character']) {
