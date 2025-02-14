@@ -1148,19 +1148,6 @@ class Player extends Model
     }
 
     /**
-     * Returns if the player has a character loaded.
-     *
-     * @param string $licenseIdentifier
-     * @return bool
-     */
-    public static function doesPlayerHaveCharacterLoaded(string $licenseIdentifier): bool
-    {
-        $status = self::getOnlineStatus($licenseIdentifier, true);
-
-        return $status->status && $status->character;
-    }
-
-    /**
      * Returns a map of licenseIdentifier->player_name
      * This is used instead of a left join as it appears to be a lot faster
      *

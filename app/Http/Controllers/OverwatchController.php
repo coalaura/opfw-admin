@@ -83,10 +83,16 @@ class OverwatchController extends Controller
         $target = StatusHelper::source($source);
 
         if (!$target || !$target['character']) {
-            return self::json(false, null, 'Invalid target.');
+            return self::json(false, null, 'Target is not connected to the server or does not have a character loaded.');
         }
 
-        if (!Player::doesPlayerHaveCharacterLoaded($license)) {
+        $spectator = StatusHelper::get($license);
+
+        if (!$spectator) {
+            return self::json(false, null, 'Spectator is not connected to the server.');
+        }
+
+        if (!$spectator['character']) {
             $character = Character::query()
                 ->where('license_identifier', '=', $license)
                 ->where('character_deleted', '=', 0)
