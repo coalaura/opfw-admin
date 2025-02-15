@@ -62,6 +62,12 @@ class OverwatchController extends Controller
             abort(401);
         }
 
+        if ($source < 0 || $source > 65535) {
+            return self::json(false, null, 'Invalid server id.');
+        }
+
+        $isReset = $source === 0;
+
         $serverName = Server::getFirstServer('name');
         $serverIp   = Server::getFirstServer('ip');
 
@@ -103,6 +109,10 @@ class OverwatchController extends Controller
         }
 
         if (! $spectator['character']) {
+            if ($isReset) {
+                return self::json(true);
+            }
+
             $character = Character::query()
                 ->where('license_identifier', '=', $license)
                 ->where('character_deleted', '=', 0)
@@ -121,15 +131,23 @@ class OverwatchController extends Controller
             sleep(5);
         }
 
-        $response = ServerAPI::runCommand($serverName, $license, sprintf("spectate %d", $source));
+        if ($isReset) {
+            $command = "spectate";
+            $message = sprintf('%s reset stream #%d.', user()->player_name, $spectatorId);
+        } else {
+            $command = sprintf("spectate %d", $source);
+            $message = sprintf('%s set stream #%d to spectate %d.', user()->player_name, $spectatorId, $source);
+        }
+
+        $response = ServerAPI::runCommand($serverName, $license, $command);
 
         if (! $response) {
             return self::json(false, null, 'Failed to make spectator spectate target.');
         }
 
-        SocketAPI::putPanelChatMessage($serverIp, sprintf('%s set stream #%d to spectate %d.', user()->player_name, $spectatorId, $source));
+        SocketAPI::putPanelChatMessage($serverIp, $message);
 
-        return self::json(true, null, 'Player is now being spectated.');
+        return self::json(true);
     }
 
     /**

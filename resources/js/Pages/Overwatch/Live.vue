@@ -62,7 +62,7 @@
 
                         <div class="flex gap-3 items-center">
                             <input type="text" placeholder="1234" class="w-full bg-black/20 border border-gray-500 px-2 py-1" v-model="newServerId">
-                            <button class="bg-black/20 border border-gray-500 px-2 py-1" :class="{ 'opacity-50 cursor-not-allowed': !newServerId || isUpdating || isLoading || isTimedOut }" @click="setSpectating">
+                            <button class="bg-black/20 border border-gray-500 px-2 py-1" :class="{ 'opacity-50 cursor-not-allowed': !Number.isInteger(newServerId) || isUpdating || isLoading || isTimedOut }" @click="setSpectating">
                                 <i class="fas fa-spinner animate-spin" v-if="isUpdating"></i>
                                 <template v-else>{{ t('global.apply') }}</template>
                             </button>
@@ -381,7 +381,7 @@ export default {
 
             const serverId = parseInt(this.newServerId);
 
-            if (!serverId || serverId < 1 || serverId > 65535) {
+            if (serverId !== 0 && (!serverId || serverId < 1 || serverId > 65535)) {
                 return;
             }
 
