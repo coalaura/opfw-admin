@@ -10,6 +10,7 @@ use App\Helpers\SocketAPI;
 use App\Helpers\StatusHelper;
 use App\Player;
 use App\Server;
+use App\Warning;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -44,7 +45,9 @@ class OverwatchController extends Controller
             abort(401);
         }
 
-        return Inertia::render('Overwatch/Live');
+        return Inertia::render('Overwatch/Live', [
+            'emotes' => Warning::getAllReactions(),
+        ]);
     }
 
     /**

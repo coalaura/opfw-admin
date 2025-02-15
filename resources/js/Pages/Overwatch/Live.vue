@@ -88,7 +88,7 @@
                     </div>
                 </div>
 
-                <PanelChat :active="true" :height="height" dimensions="w-96" />
+                <PanelChat :active="true" :height="height" dimensions="w-96" :emotes="emotes" />
             </div>
 
             <video ref="replay" class="fixed left-[-10000px]"></video>
@@ -168,6 +168,12 @@ export default {
         VSection,
         Badge,
         PanelChat,
+    },
+    props: {
+        emotes: {
+            type: Object | Array,
+            required: true
+        }
     },
     data() {
         return {
@@ -511,7 +517,9 @@ export default {
         this.setVolume();
         this.updateSpectators();
 
-        this.preload(this.$refs.video.poster, this.setChatHeight);
+        this.preload(this.$refs.video.poster, () => {
+            setTimeout(this.setChatHeight, 250);
+        });
     }
 };
 </script>

@@ -29,7 +29,7 @@
         <div class="w-full h-full overflow-y-auto" ref="chat">
             <div v-for="message in messages" :key="message.id" class="relative group dark:odd:bg-gray-500/10 px-1 py-0.5">
                 <div class="font-semibold max-w-40 truncate inline pr-1" :title="message.name" v-if="!message.system">{{ message.name }}</div>
-                <div class="inline break-words" :class="getMessageColor(message)">{{ message.text }}</div>
+                <div class="inline break-words" :class="getMessageColor(message)" v-html="getMessageHTML(message)"></div>
 
                 <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 text-xxs pointer-events-none italic text-gray-600 dark:text-gray-400 bg-gray-400/20 dark:bg-gray-600/20 backdrop-filter backdrop-blur-md px-1 py-0.5">
                     {{ $moment.unix(message.time).fromNow() }}
@@ -37,9 +37,17 @@
             </div>
         </div>
 
-        <div class="w-full relative bg-gray-300 dark:bg-gray-600">
-            <input class="block w-full text-sm px-2 py-1 bg-transparent pr-8" v-model="message" minlength="1" maxlength="256" @keyup.enter="send" />
+        <div class="w-full relative bg-gray-300 dark:bg-gray-600" v-click-outside="hideEmotePicker">
+            <input class="block w-full text-sm px-2 py-1 bg-transparent pr-8" v-model="message" minlength="1" maxlength="256" @keyup.enter="send" ref="input" />
+
+            <i class="fas fa-smile-beam cursor-pointer absolute right-8 top-1/2 transform -translate-y-1/2" @click="showEmotes = !showEmotes" v-if="hasEmotes"></i>
             <i class="fas fa-paper-plane cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2" @click="send"></i>
+
+            <div class="absolute bottom-full right-0 left-0 grid grid-cols-auto-6 gap-1 flex-wrap p-1 justify-between items-center bg-gray-300 dark:bg-gray-600 border-b border-gray-400 dark:border-gray-500" :class="{ 'hidden': !showEmotes }">
+                <div class="w-6 h-6 cursor-pointer" v-for="(url, emote) in emotes" :key="emote" @click="insertEmote(emote)">
+                    <img :src="url" :title="emote" class="w-full h-full object-contain">
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -55,10 +63,13 @@ export default {
         active: Boolean,
         dimensions: String,
         height: String | Boolean,
+        emotes: Object | Array
     },
     data() {
         return {
             socket: null,
+
+            showEmotes: false,
 
             timeout: false,
             connecting: false,
@@ -105,8 +116,14 @@ export default {
 
             return this.users.filter(user => !unique[user.discord] && (unique[user.discord] = true)).map(user => user.name);
         },
+        hasEmotes() {
+            return this.emotes && Object.keys(this.emotes).length > 0;
+        }
     },
     methods: {
+        hideEmotePicker() {
+            this.showEmotes = false;
+        },
         toggleMute() {
             this.muted = !this.muted;
 
@@ -116,12 +133,49 @@ export default {
                 localStorage.removeItem('panel_chat_muted');
             }
         },
+		escapeHtml(unsafe) {
+			return unsafe
+				.replace(/&/g, "&amp;")
+				.replace(/</g, "&lt;")
+				.replace(/>/g, "&gt;")
+				.replace(/"/g, "&quot;")
+				.replace(/'/g, "&#039;");
+		},
         getMessageColor(message) {
             if (message.system) {
                 return 'text-gray-600 dark:text-gray-400';
             }
 
             return 'text-gray-700 dark:text-gray-300';
+        },
+        getMessageHTML(message) {
+            let html = this.escapeHtml(message.text);
+
+            for (const emote in this.emotes) {
+                const url = this.emotes[emote];
+
+                html = html.replace(new RegExp(emote, 'g'), `<img src="${url}" title="${emote}" class="inline-block w-6 h-6" />`);
+            }
+
+            return html;
+        },
+        insertEmote(emote) {
+            this.showEmotes = false;
+
+            const input = this.$refs.input,
+                startPos = input.selectionStart,
+                endPos = input.selectionEnd,
+                newPos = startPos + emote.length + 1,
+                text = this.message;
+
+            const before = text.substring(0, startPos),
+                after = text.substring(endPos);
+
+            this.message = `${before}${emote} ${after}`
+
+            input.setSelectionRange(newPos, newPos);
+
+            input.focus();
         },
         connect() {
             clearTimeout(this.timeout);

@@ -92,6 +92,21 @@ class Warning extends Model
         return $this->belongsTo(Player::class, 'issuer_id', 'user_id');
     }
 
+    public static function getAllReactions(): array
+    {
+        $reactions = [];
+
+        foreach(self::Reactions as $emoji) {
+            $reactions[$emoji] = "/images/reactions/{$emoji}.png";
+        }
+
+        foreach(self::AnimatedReactions as $emoji) {
+            $reactions[$emoji] = "/images/reactions/{$emoji}.gif";
+        }
+
+        return $reactions;
+    }
+
     public function getReactions(?string $forLicense = null): array
     {
         $raw = $this->reactions ?? [];

@@ -120,7 +120,8 @@ module.exports = {
                 'spin-once': 'spin 1s ease-in-out',
             },
             gridTemplateColumns: {
-                'stream': 'max-content 1fr max-content'
+                'stream': 'max-content 1fr max-content',
+                'auto-6':   'repeat(auto-fill, minmax(1.5rem, 1fr))'
             },
             gridTemplateRows: {
                 'min': 'min-content'
