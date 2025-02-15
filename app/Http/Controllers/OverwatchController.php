@@ -90,10 +90,12 @@ class OverwatchController extends Controller
             return self::json(false, null, 'Invalid spectator.');
         }
 
-        $target = StatusHelper::source($source);
+        if (!$isReset) {
+            $target = StatusHelper::source($source);
 
-        if (! $target || ! $target['character']) {
-            return self::json(false, null, 'Target is not connected to the server or does not have a character loaded.');
+            if (! $target || ! $target['character']) {
+                return self::json(false, null, 'Target is not connected to the server or does not have a character loaded.');
+            }
         }
 
         $spectator = StatusHelper::get($license);
