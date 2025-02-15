@@ -223,7 +223,9 @@ export default {
 
             if (this.replay) {
                 // Workaround for chrome
-                replay.volume = 0.01;
+                if (replay.captureStream) {
+                    replay.volume = 0.01;
+                }
 
                 this.replayBuffer = [];
 
