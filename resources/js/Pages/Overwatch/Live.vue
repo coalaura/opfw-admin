@@ -91,7 +91,7 @@
                 <PanelChat :active="true" :height="height" dimensions="w-96" />
             </div>
 
-            <video ref="replay" class="hidden"></video>
+            <video ref="replay" class="fixed left-[-10000px]"></video>
         </v-section>
 
     </div>
@@ -222,11 +222,14 @@ export default {
             this.replay = !this.replay;
 
             if (this.replay) {
+                // Workaround for chrome
+                replay.volume = 0.01;
+
                 this.replayBuffer = [];
 
                 this.replayStream = this.createStream(this.source, replay, null, this.stopReplay);
 
-                replay.addEventListener('playing', () => {
+                replay.addEventListener('playing', async () => {
                     const capture = replay.captureStream ? replay.captureStream() : replay.mozCaptureStream();
 
                     try {
@@ -261,7 +264,6 @@ export default {
             }
         },
         stopReplay() {
-            console.log("stop");
             this.replay = false;
 
             if (this.replayRecorder) {
