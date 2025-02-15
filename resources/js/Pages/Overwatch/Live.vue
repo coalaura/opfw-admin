@@ -103,7 +103,6 @@ import VSection from './../../Components/Section';
 import Badge from './../../Components/Badge';
 import PanelChat from './../../Components/PanelChat';
 
-import DataCompressor from "../Map/DataCompressor";
 import Hls from "hls.js";
 
 const HlsErrorDetails = {
@@ -217,11 +216,11 @@ export default {
             return spectator.spectating;
         },
         validServerId() {
-            const serverId = this.newServerId;
+            const serverId = parseInt(this.newServerId);
 
-            if (serverId === 0) return true;
+            if (!Number.isInteger(serverId)) return false;
 
-            return serverId && serverId >= 1 && serverId <= 65535;
+            return serverId === 0 || (serverId && serverId >= 1 && serverId <= 65535);
         }
     },
     methods: {
