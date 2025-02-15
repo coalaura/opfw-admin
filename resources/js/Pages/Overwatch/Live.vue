@@ -258,7 +258,7 @@ export default {
                             time: now
                         });
 
-                        this.replayBuffer = this.replayBuffer.filter(chunk => now - chunk.time < 15 * 1000);
+                        this.replayBuffer = this.replayBuffer.filter(chunk => now - chunk.time < 20 * 1000);
                     };
 
                     this.replayRecorder.start(500);
