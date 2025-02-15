@@ -103,6 +103,7 @@ import VSection from './../../Components/Section';
 import Badge from './../../Components/Badge';
 import PanelChat from './../../Components/PanelChat';
 
+import DataCompressor from "../Map/DataCompressor";
 import Hls from "hls.js";
 
 const HlsErrorDetails = {
@@ -181,6 +182,9 @@ export default {
             isUpdating: false,
             isLoading: false,
             error: false,
+
+            socket: false,
+            compressor: new DataCompressor(),
 
             spectators: [],
             newServerId: "",
@@ -487,23 +491,45 @@ export default {
         updateFullscreen() {
             this.fullscreen = !!document.fullscreenElement;
         },
-        async updateSpectators() {
-            this.spectators = await this.requestData("/spectators");
-
-            // Check if component is still active
-            if (!this.$el) {
-                return;
-            }
-
-            setTimeout(this.updateSpectators, 4000);
-        },
         preload(url, cb) {
             const image = new Image();
 
             image.addEventListener("load", cb);
 
             image.src = url;
-        }
+        },
+        init() {
+            if (this.socket) return;
+
+            this.socket = this.createSocket("spectators");
+
+            this.socket.on("message", data => {
+                this.spectators = this.compressor.decompressData("spectators", data);
+            });
+
+            this.socket.on("reset", data => {
+                console.log(`Received socket "reset" event.`);
+
+                this.spectators = this.compressor.decompressData("spectators", data);
+            });
+
+            this.socket.on("connect", () => {
+                console.log(`Received socket "connect" event.`);
+            });
+
+            this.socket.on("disconnect", () => {
+                console.log(`Received socket "disconnect" event.`);
+
+                this.compressor.reset();
+
+                this.socket.close();
+                this.socket = false;
+
+                setTimeout(() => {
+                    this.init();
+                }, 5000);
+            });
+        },
     },
     created() {
         window.addEventListener("resize", this.setChatHeight);
@@ -515,7 +541,8 @@ export default {
     },
     mounted() {
         this.setVolume();
-        this.updateSpectators();
+
+        this.init();
 
         this.preload(this.$refs.video.poster, () => {
             setTimeout(this.setChatHeight, 250);

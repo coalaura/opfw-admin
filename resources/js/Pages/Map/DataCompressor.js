@@ -19,6 +19,7 @@ class DataCompressor {
 
                 break;
             case "staff":
+            case "spectators":
                 isValid = data && Array.isArray(data);
 
                 if (isValid) {
