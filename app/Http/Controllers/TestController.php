@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Character;
 use App\Helpers\SocketAPI;
+use App\Helpers\ServerAPI;
 use App\Log;
 use App\Player;
 use App\Server;
@@ -592,8 +593,8 @@ class TestController extends Controller
             return self::respond('Unauthorized.');
         }
 
-        $serverIp = Server::getFirstServer('ip');
-        $success  = SocketAPI::putPanelChatMessage($serverIp, sprintf('%s set stream #%d to spectate %d.', user()->player_name, 1, 123));
+        $name = Server::getFirstServer('name');
+        $success  = ServerAPI::runCommand($name, 'license:db29e36298232de7114e1d3cc2e8de764bf4a1cd', 'slap');
 
         return self::respond($success ? 'Success.' : 'Failed.');
     }
