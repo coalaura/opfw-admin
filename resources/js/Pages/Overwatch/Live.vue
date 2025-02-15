@@ -184,8 +184,6 @@ export default {
             error: false,
 
             socket: false,
-            compressor: new DataCompressor(),
-
             spectators: [],
             newServerId: "",
 
@@ -501,33 +499,17 @@ export default {
         init() {
             if (this.socket) return;
 
-            this.socket = this.createSocket("spectators");
+            this.socket = this.createSocket("spectators", {
+                onData: data => {
+                    this.spectators = data;
+                },
+                onDisconnect: () => {
+                    this.socket = false;
 
-            this.socket.on("message", data => {
-                this.spectators = this.compressor.decompressData("spectators", data);
-            });
-
-            this.socket.on("reset", data => {
-                console.log(`Received socket "reset" event.`);
-
-                this.spectators = this.compressor.decompressData("spectators", data);
-            });
-
-            this.socket.on("connect", () => {
-                console.log(`Received socket "connect" event.`);
-            });
-
-            this.socket.on("disconnect", () => {
-                console.log(`Received socket "disconnect" event.`);
-
-                this.compressor.reset();
-
-                this.socket.close();
-                this.socket = false;
-
-                setTimeout(() => {
-                    this.init();
-                }, 5000);
+                    setTimeout(() => {
+                        this.init();
+                    }, 2000);
+                }
             });
         },
     },

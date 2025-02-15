@@ -1,3 +1,5 @@
+import DataCompressor from "../Pages/Map/DataCompressor";
+
 import { io } from "socket.io-client";
 
 const Socket = {
@@ -93,12 +95,14 @@ const Socket = {
 			return await executeRequest(this, "misc", route, throwError);
 		};
 
-		Vue.prototype.createSocket = function (type) {
+		Vue.prototype.createSocket = function (type, options = {}) {
 			const socketUrl = isDev ? 'ws://localhost:9999' : `wss://${window.location.host}`,
                 token = this.$page.auth.token,
 				server = this.$page.serverName;
 
-			return io(socketUrl, {
+            const compressor = new DataCompressor();
+
+			const socket = io(socketUrl, {
 				reconnectionDelayMax: 5000,
 				query: {
 					server: server,
@@ -108,6 +112,53 @@ const Socket = {
 				},
 				path: "/io",
 			});
+
+            socket.on("reset", data => {
+                console.log(`[${type}] Received socket "reset" event (${data.byteLength || data.length} bytes).`);
+
+                compressor.reset();
+
+                data = compressor.decompressData(type, data);
+
+                options?.onData?.(data);
+            });
+
+            let received;
+
+            socket.on("message", data => {
+                if (!received) {
+                    received = true;
+
+                    console.log(`[${type}] Received first socket "message" event (${data.byteLength || data.length} bytes).`);
+                }
+
+                data = compressor.decompressData(type, data);
+
+                options?.onData?.(data);
+            });
+
+            socket.on("no_data", () => {
+                console.log(`[${type}] Received socket "no_data" event.`);
+
+                options?.onNoData?.();
+            });
+
+            socket.on("connect", () => {
+                console.log(`[${type}] Received socket "connect" event.`);
+
+                options?.onConnect?.();
+            });
+
+            socket.on("disconnect", () => {
+                console.log(`[${type}] Received socket "disconnect" event.`);
+
+                compressor.reset();
+                socket.close();
+
+                options?.onDisconnect?.();
+            });
+
+            return socket;
 		};
 	},
 };

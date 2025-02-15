@@ -182,10 +182,6 @@ body {
 </style>
 
 <script>
-import DataCompressor from "./Map/DataCompressor";
-
-import { io } from "socket.io-client";
-
 export default {
     props: {
         emotes: {
@@ -208,8 +204,7 @@ export default {
             notifications: localStorage.getItem("notifications") === "true",
             autoScroll: localStorage.getItem("autoScroll") !== "false",
 
-            socket: false,
-            compressor: new DataCompressor()
+            socket: false
         };
     },
     watch: {
@@ -332,98 +327,60 @@ export default {
             const server = this.$page.serverName;
             const socketUrl = isDev ? 'ws://localhost:9999' : `wss://${window.location.host}`;
 
-            this.socket = io(socketUrl, {
-                reconnectionDelayMax: 5000,
-                query: {
-                    server: server,
-                    token: token,
-                    type: "staff",
-                    license: this.$page.auth.player.licenseIdentifier
+            this.socket = this.createSocket("staff", {
+                onData: data => {
+                    this.isLoading = false;
+
+                    try {
+                        const messages = data.map(message => {
+                            message.title = this.formatTitle(message);
+                            message.text = this.formatMessage(message.message);
+
+                            return message;
+                        });
+
+                        if (!messages.length) return;
+
+                        const hasReports = messages.find(message => message.type === "report");
+
+                        if (hasReports) {
+                            this.notify();
+                        }
+
+                        const hasNew = messages.find(message => !this.messages.find(current => current.createdAt === message.createdAt && current.license === message.user.licenseIdentifier));
+
+                        this.messages = messages.map(message => {
+                            return {
+                                license: message.user.licenseIdentifier,
+                                title: message.title,
+                                text: message.text,
+                                claimed: "claimed" in message && message.claimed,
+                                color: this.formatColor(message),
+                                createdAt: message.createdAt,
+                                time: this.$moment.utc(message.createdAt * 1000).local().fromNow(),
+                                local: !!message.local
+                            };
+                        });
+
+                        if (hasNew) {
+                            this.scroll();
+
+                            this.$refs.chat?.focus();
+                        }
+                    } catch (e) {
+                        console.error('Failed to parse socket message', e);
+                    }
                 },
-                path: "/io",
-            });
+                onNoData: () => {
+                    this.isLoading = false;
+                },
+                onDisconnect: () => {
+                    this.socket = false;
 
-            const process = async (data) => {
-                this.isLoading = false;
-
-                data = this.compressor.decompressData("staff", data);
-
-                try {
-                    const messages = data.map(message => {
-                        message.title = this.formatTitle(message);
-                        message.text = this.formatMessage(message.message);
-
-                        return message;
-                    });
-
-                    if (!messages.length) return;
-
-                    const hasReports = messages.find(message => message.type === "report");
-
-                    if (hasReports) {
-                        this.notify();
-                    }
-
-                    const hasNew = messages.find(message => !this.messages.find(current => current.createdAt === message.createdAt && current.license === message.user.licenseIdentifier));
-
-                    this.messages = messages.map(message => {
-                        return {
-                            license: message.user.licenseIdentifier,
-                            title: message.title,
-                            text: message.text,
-                            claimed: "claimed" in message && message.claimed,
-                            color: this.formatColor(message),
-                            createdAt: message.createdAt,
-                            time: this.$moment.utc(message.createdAt * 1000).local().fromNow(),
-                            local: !!message.local
-                        };
-                    });
-
-                    if (hasNew) {
-                        this.scroll();
-
-                        this.$refs.chat?.focus();
-                    }
-                } catch (e) {
-                    console.error('Failed to parse socket message', e);
-                }
-            };
-
-            this.socket.on("reset", data => {
-                console.log(`Received socket "reset" event (${this.bytesFormat(data.byteLength)}).`);
-
-                this.isLoading = false;
-
-                this.compressor.reset();
-
-                process(data);
-            });
-
-            this.socket.on("no_data", () => {
-                console.log(`Received socket "no_data" event.`);
-
-                this.isLoading = false;
-            });
-
-            this.socket.on("message", data => {
-                process(data);
-            });
-
-            this.socket.on("connect", () => {
-                console.log(`Received socket "connect" event.`);
-            });
-
-            this.socket.on("disconnect", () => {
-                console.log(`Received socket "disconnect" event.`);
-
-                this.compressor.reset();
-
-                this.socket.close();
-                this.socket = false;
-
-                setTimeout(() => {
-                    this.init();
-                }, 5000);
+                    setTimeout(() => {
+                        this.init();
+                    }, 2000);
+                },
             });
         },
         scroll() {

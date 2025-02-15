@@ -301,7 +301,6 @@ import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-rotatedmarker";
 import "leaflet-fullscreen";
 import "leaflet.markercluster";
-import { io } from "socket.io-client";
 
 import Layout from './../../Layouts/App';
 import VSection from './../../Components/Section';
@@ -312,7 +311,6 @@ import PlayerContainer from './PlayerContainer';
 import Player from './Player';
 import Vector3 from "./Vector3";
 import Bounds from './map.config';
-import DataCompressor from "./DataCompressor";
 import { mapNumber } from './helper';
 
 ((global) => {
@@ -377,7 +375,7 @@ export default {
             container: new PlayerContainer(this.staff),
             markers: {},
             data: this.t('map.loading'),
-            connection: null,
+            connection: false,
             isPaused: false,
             invisiblePeople: [],
             isDragging: false,
@@ -396,8 +394,6 @@ export default {
                 "Vehicles": L.layerGroup(),
                 "Blips": L.layerGroup(),
             },
-
-            compressor: new DataCompressor(),
 
             trackServerId: "",
             trackingValid: false,
@@ -997,69 +993,41 @@ export default {
             return null;
         },
         async initializeMap() {
-            try {
-                const connection = io(this.hostname(true), {
-                    reconnectionDelayMax: 5000,
-                    query: {
-                        server: this.activeServer,
-                        token: this.token,
-                        type: "world",
-                        license: this.$page.auth.player.licenseIdentifier
-                    },
-                    path: "/io",
-                });
+            if (this.connection) return;
 
-                const pause = () => connection.emit("pause", document.visibilityState === "hidden");
+            try {
+                const pause = () => this.connection.emit("pause", document.visibilityState === "hidden");
 
                 let lastTrackedId = "";
 
-                const process = async (data) => {
-                    try {
-                        const trackedId = parseInt(this.trackServerId) || false;
+                this.connection = this.createSocket("world", {
+                    onData: async data => {
+                        try {
+                            const trackedId = parseInt(this.trackServerId) || false;
 
-                        await this.renderMapData(data, trackedId, trackedId !== lastTrackedId);
+                            await this.renderMapData(data, trackedId, trackedId !== lastTrackedId);
 
-                        lastTrackedId = trackedId;
-                    } catch (e) {
-                        console.error('Failed to parse socket message ', e);
+                            lastTrackedId = trackedId;
+                        } catch (e) {
+                            console.error('Failed to parse socket message ', e);
+                        }
+                    },
+                    onNoData: () => {
+                        this.data = this.t('map.waiting_startup', this.activeServer);
+                    },
+                    onConnect: () => {
+                        if (document.visibilityState === "visible") return;
+
+                        pause();
+                    },
+                    onDisconnect: () => {
+                        this.connection = false;
+
+                        this.data = this.t('map.closed_expected', this.activeServer);
+
+                        window.removeEventListener("blur", pause);
+                        window.removeEventListener("focus", pause);
                     }
-                };
-
-                connection.on("message", async (data) => {
-                    process(data);
-                });
-
-                connection.on("reset", data => {
-                    console.log(`Received socket "reset" event (${this.bytesFormat(data.byteLength)}).`);
-
-                    this.compressor.reset();
-
-                    process(data);
-                });
-
-                connection.on("no_data", () => {
-                    console.log(`Received socket "no_data" event.`);
-
-                    this.data = this.t('map.waiting_startup', this.activeServer);
-                });
-
-                connection.on("disconnect", async () => {
-                    console.log(`Received socket "disconnect" event.`);
-
-                    this.compressor.reset();
-
-                    this.data = this.t('map.closed_expected', this.activeServer);
-
-                    window.removeEventListener("blur", pause);
-                    window.removeEventListener("focus", pause);
-                });
-
-                connection.on("connect", () => {
-                    console.log(`Received socket "connect" event.`);
-
-                    if (document.visibilityState === "visible") return;
-
-                    pause();
                 });
 
                 document.addEventListener("visibilitychange", pause);
@@ -1094,8 +1062,6 @@ export default {
             if (this.isPaused || this.isDragging || this.isTimestampShowing || this.isHistoricShowing) {
                 return;
             }
-
-            data = this.compressor.decompressData("world", data);
 
             let isActivelyTracking = false;
             let trackingInfo = false;
