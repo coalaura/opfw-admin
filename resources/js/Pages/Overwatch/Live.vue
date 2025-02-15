@@ -222,6 +222,8 @@ export default {
             this.replay = !this.replay;
 
             if (this.replay) {
+                replay.volume = 1;
+
                 // Workaround for chrome
                 if (replay.captureStream) {
                     replay.volume = 0.01;
