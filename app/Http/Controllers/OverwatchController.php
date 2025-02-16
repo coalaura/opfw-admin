@@ -105,7 +105,9 @@ class OverwatchController extends Controller
             abort(401);
         }
 
-        if (! $this->resolveSpectatorOrReject($license)) {
+        $spectator = $this->resolveSpectatorOrReject($license);
+
+        if (! $spectator) {
             return;
         }
 
@@ -115,10 +117,18 @@ class OverwatchController extends Controller
 
                 break;
             case 'new_player':
-                $players = Player::getNewPlayers()->filter(function ($player) {
+                $players = Player::getNewPlayers()->filter(function ($player) use ($spectator) {
                     $status = StatusHelper::get($player->license_identifier);
 
-                    return $status && $status['character'];
+                    if (!$status || !$status['character']) {
+                        return false;
+                    }
+
+                    if ($spectator['spectating'] && $spectator['spectating']['license'] === $player->license_identifier) {
+                        return false;
+                    }
+
+                    return true;
                 })->values();
 
                 if (empty($players)) {
