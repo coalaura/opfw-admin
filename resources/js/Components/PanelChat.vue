@@ -28,7 +28,10 @@
 
         <div class="w-full h-full overflow-y-auto" ref="chat" @chat-image-loaded="scrollInstant">
             <div v-for="message in messages" :key="message.id" class="relative group dark:odd:bg-gray-500/10 px-1 py-0.5" :class="{ 'italic text-xs py-1': message.system }">
-                <div class="font-semibold max-w-40 truncate inline pr-1" :title="message.name" v-if="!message.system">{{ message.name }}</div>
+                <div class="font-semibold max-w-40 truncate inline pr-1" :title="message.name" v-if="!message.system">
+                    {{ message.name }}
+                    <sup v-if="message.room">{{ message.room }}</sup>
+                </div>
                 <div class="inline break-words" :class="getMessageColor(message)" v-html="getMessageHTML(message)"></div>
 
                 <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 text-xxs pointer-events-none italic text-gray-600 dark:text-gray-400 bg-gray-400/20 dark:bg-gray-600/20 backdrop-filter backdrop-blur-md px-1 py-0.5">
@@ -62,6 +65,7 @@ export default {
     props: {
         active: Boolean,
         dimensions: String,
+        room: String,
         height: String | Boolean,
         emotes: Object | Array
     },
@@ -263,7 +267,10 @@ export default {
             if (!this.socket || !text) return;
 
             this.message = '';
-            this.socket.emit("chat", pack(text));
+            this.socket.emit("chat", pack({
+                room: this.room || false,
+                text: text,
+            }));
         },
 
         addMessage(message) {
