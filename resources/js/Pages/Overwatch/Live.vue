@@ -356,6 +356,8 @@ export default {
                 this.source = false;
                 this.error = false;
                 this.isLoading = false;
+
+                this.updateChatRoom();
             }
 
             if (!this.hls) return;
