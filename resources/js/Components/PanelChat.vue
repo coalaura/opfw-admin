@@ -312,20 +312,6 @@ export default {
 
                 return;
             }
-
-            // Alt + Escape unfocuses the chat input
-            if (e.altKey && e.key === "Escape") {
-                this.$refs.input?.blur();
-
-                return;
-            }
-
-            // Alt + E toggles the emote picker
-            if (e.altKey && e.key === "e") {
-                this.showEmotes = !this.showEmotes;
-
-                return;
-            }
         }
     },
     created() {
