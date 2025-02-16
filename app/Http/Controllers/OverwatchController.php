@@ -155,6 +155,12 @@ class OverwatchController extends Controller
             return self::json(false, null, 'Invalid spectator.');
         }
 
+        if ($isReset && !$spectator['spectating']) {
+            return self::json(true);
+        } else if (!$isReset && $spectator['spectating'] && $spectator['spectating']['source'] === $source) {
+            return self::json(true);
+        }
+
         if (! $isReset) {
             $target = StatusHelper::source($source);
 
