@@ -48,6 +48,7 @@ class Warning extends Model
         'blinks',
         'bruh',
         'cat_jam',
+        'jigglin',
         'monkey_jam',
         'pepoo_clap',
         'pet_kitty',
