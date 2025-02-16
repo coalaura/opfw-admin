@@ -39,7 +39,7 @@
                         <div class="italic" v-else>{{ t('overwatch.no_streams') }}</div>
 
                         <div class="flex gap-1 border-t border-gray-500 pt-3 mt-2" v-if="source">
-                            <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center w-full select-none" :class="{ 'opacity-50 cursor-not-allowed': !replay || isSavingReplay }" @click="saveReplay" :title="t(`overwatch.${replay ? 'save_replay' : 'replay_unavailable'}`)">
+                            <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center w-full select-none" :class="{ 'opacity-50 cursor-not-allowed': !replay || isSavingReplay || isReplayTimeout }" @click="saveReplay" :title="t(`overwatch.${replay ? 'save_replay' : 'replay_unavailable'}`)">
                                 <i class="fas fa-spinner animate-spin" v-if="isSavingReplay"></i>
                                 <i class="fas fa-video" v-else-if="replay"></i>
                                 <i class="fas fa-video-slash" v-else></i>
@@ -187,6 +187,7 @@ export default {
             spectators: [],
             newServerId: "",
 
+            isReplayTimeout: false,
             isSavingReplay: false,
 
             height: false,
@@ -225,6 +226,7 @@ export default {
             if (!spectator) return false;
 
             this.isSavingReplay = true;
+            this.isReplayTimeout = true;
 
             try {
                 const response = await fetch(`/live/replay/${spectator.license}`);
@@ -255,8 +257,10 @@ export default {
                 alert(e.message);
             }
 
+            this.isSavingReplay = false;
+
             setTimeout(() => {
-                this.isSavingReplay = false;
+                this.isReplayTimeout = false;
             }, 2000);
         },
         getSpectatorListingClass(spectator) {
