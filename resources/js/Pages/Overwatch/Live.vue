@@ -94,7 +94,7 @@
                     </div>
                 </div>
 
-                <PanelChat :active="true" :height="height" :dimensions="fullscreen ? 'w-chat-full px-2 py-1 border-l-4 border-lightbd dark:border-darkbd bg-lightbg dark:bg-darkbg' : 'w-96'" :emotes="emotes" />
+                <PanelChat :active="true" :height="height" :room="chatRoom" :dimensions="fullscreen ? 'w-chat-full px-2 py-1 border-l-4 border-lightbd dark:border-darkbd bg-lightbg dark:bg-darkbg' : 'w-96'" :emotes="emotes" />
             </div>
         </v-section>
 
@@ -200,6 +200,7 @@ export default {
             isReplayTimeout: false,
             isSavingReplay: false,
 
+            chatRoom: false,
             height: false,
             volume: 0.5,
             fullscreen: false,
@@ -363,6 +364,23 @@ export default {
 
             this.hls = false;
         },
+        updateChatRoom() {
+            if (this.source) {
+                let index = 1;
+
+                for (const spectator of this.spectators) {
+                    if (spectator.stream === this.source) {
+                        this.chatRoom = `#${index}`;
+
+                        return;
+                    }
+
+                    index++
+                }
+            }
+
+            this.chatRoom = false;
+        },
         async setSpectating() {
             if (this.isLoading || this.isUpdating || this.isTimedOut) {
                 return;
@@ -467,6 +485,8 @@ export default {
 
             this.isLoading = true;
             this.source = source;
+
+            this.updateChatRoom();
 
             const video = this.$refs.video;
 
