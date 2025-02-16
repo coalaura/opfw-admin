@@ -29,7 +29,7 @@
             {{ t('global.disconnected') }}
         </div>
 
-        <div class="w-full h-full overflow-y-auto" ref="chat" @chat-image-loaded="scrollInstant" @scroll="onChatScroll">
+        <div class="w-full h-full overflow-y-auto" ref="chat" @chat-image-loaded="scrollInstant" @wheel="onScrollWheel">
             <div v-for="message in messages" :key="message.id" class="relative group dark:odd:bg-gray-500/10 px-1 py-0.5" :class="{ 'italic text-xs py-1': message.system }">
                 <div class="font-semibold max-w-40 truncate inline pr-1" :title="message.name" v-if="!message.system">
                     {{ message.name }}
@@ -230,7 +230,7 @@ export default {
 
                 this.messages = unpack(compressed);
 
-                this.scrollInstant();
+                this.scrollInstant(true);
             });
 
             this.socket.on("users", compressed => {
@@ -253,7 +253,7 @@ export default {
             });
         },
 
-        onChatScroll() {
+        onScrollWheel() {
             clearTimeout(this.scrollDebounce);
 
             setTimeout(() => {
@@ -318,8 +318,8 @@ export default {
             });
         },
 
-        scrollInstant() {
-            if (this.scrollDisabled) return;
+        scrollInstant(force = false) {
+            if (this.scrollDisabled && !force) return;
 
             const chat = this.$refs.chat;
 
