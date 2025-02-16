@@ -317,10 +317,12 @@ export default {
     created() {
         window.addEventListener("keyup", this.handleKeypress);
         window.addEventListener("focus", this.scrollInstant);
+        window.addEventListener("fullscreenchange", this.scrollInstant);
     },
     destroyed() {
         window.removeEventListener("keyup", this.handleKeypress);
         window.removeEventListener("focus", this.scrollInstant);
+        window.removeEventListener("fullscreenchange", this.scrollInstant);
     },
     mounted() {
         if (this.active) {
