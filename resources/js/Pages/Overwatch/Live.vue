@@ -324,7 +324,7 @@ export default {
                 return;
             }
 
-            if (!this.validServerId) {
+            if (!this.validServerId || (spectator.spectating && this.newServerId === spectator.spectating.source)) {
                 return;
             }
 
