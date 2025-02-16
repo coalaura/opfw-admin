@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
@@ -33,20 +32,26 @@ class Warning extends Model
         'confused_pika',
         'cool_cat',
         'grrr',
+        'happy_cat',
         'hmmm',
         'kekw',
         'pepoo_clap',
         'shocked',
+        'shrug',
         'touch_grass',
-        'what',
-        'zerochamp'
+        'uhhhh',
+        'zerochamp',
     ];
 
     const AnimatedReactions = [
+        'bed_time',
         'blinks',
         'bruh',
+        'cat_jam',
+        'monkey_jam',
         'pepoo_clap',
-        'touch_grass'
+        'pet_kitty',
+        'touch_grass',
     ];
 
     /**
@@ -96,11 +101,11 @@ class Warning extends Model
     {
         $reactions = [];
 
-        foreach(self::Reactions as $emoji) {
+        foreach (self::Reactions as $emoji) {
             $reactions[$emoji] = "/images/reactions/{$emoji}.png";
         }
 
-        foreach(self::AnimatedReactions as $emoji) {
+        foreach (self::AnimatedReactions as $emoji) {
             $reactions[$emoji] = "/images/reactions/{$emoji}.gif";
         }
 
@@ -113,7 +118,7 @@ class Warning extends Model
 
         $reactions = [
             'mine' => [],
-            'all' => []
+            'all'  => [],
         ];
 
         foreach (self::Reactions as $emoji) {
