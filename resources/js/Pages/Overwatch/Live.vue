@@ -250,7 +250,7 @@ export default {
             this.isActionTimedOut = true;
 
             try {
-                await fetch(`/live/do/${action}/${spectator.license}`, { method: "PATCH" });
+                await fetch(`/live/do/${spectator.license}/${action}`, { method: "PATCH" });
             } catch {}
 
             this.isPerformingAction = false;
