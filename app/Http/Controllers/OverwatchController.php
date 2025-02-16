@@ -161,9 +161,9 @@ class OverwatchController extends Controller
             }
         }
 
-        $spectator = StatusHelper::get($license);
+        $spectatorUser = StatusHelper::get($license);
 
-        if (! $spectator) {
+        if (! $spectatorUser) {
             return self::json(false, null, 'Spectator is not connected to the server.');
         }
 
@@ -173,7 +173,7 @@ class OverwatchController extends Controller
             return self::json(false, null, 'Already processing a spectate request for this spectator. Please wait a moment and try again.');
         }
 
-        if (! $spectator['character']) {
+        if (! $spectatorUser['character']) {
             if ($isReset) {
                 return self::json(true);
             }
