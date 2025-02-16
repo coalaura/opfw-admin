@@ -210,7 +210,7 @@ export default {
 
             actions: [
                 {
-                    name: 'replay',
+                    name: 'revive',
                     icon: 'medkit'
                 },
                 {
