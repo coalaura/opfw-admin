@@ -151,11 +151,18 @@ export default {
         getMessageHTML(message) {
             let html = this.escapeHtml(message.text);
 
+            // Emotes
             for (const emote in this.emotes) {
                 const url = this.emotes[emote];
 
                 html = html.replace(new RegExp(emote, 'g'), `<img src="${url}" title="${emote}" class="inline-block w-6 h-6" />`);
             }
+
+            // Italic *text*
+            html = html.replace(/\*([^\s][^*]+[^\s]|[^\s*]+)\*/g, '<i>$1</i>');
+
+            // Underlined _text_
+            html = html.replace(/_([^\s][^_]+[^\s]|[^\s_]+)_/g, '<u>$1</u>');
 
             return html;
         },
