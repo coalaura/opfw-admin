@@ -128,6 +128,8 @@ class OverwatchController extends Controller
                 $player = $players[rand(0, sizeof($players) - 1)];
                 $status = StatusHelper::get($player->license_identifier);
 
+                sessionHelper()->put('isRandom', true);
+
                 return redirect()->action(
                     [OverwatchController::class, 'setSpectating'],
                     [
@@ -158,11 +160,16 @@ class OverwatchController extends Controller
             abort(401);
         }
 
+        $isReset = $source === 0;
+        $isRandom = sessionHelper()->get('isRandom');
+
+        if ($isRandom) {
+            sessionHelper()->forget('isRandom');
+        }
+
         if ($source < 0 || $source > 65535) {
             return self::json(false, null, 'Invalid server id.');
         }
-
-        $isReset = $source === 0;
 
         $spectator = $this->resolveSpectatorOrReject($license);
 
@@ -224,7 +231,7 @@ class OverwatchController extends Controller
             $message = sprintf('%s reset stream #%d.', user()->player_name, $spectator['id']);
         } else {
             $command = sprintf("spectate %d", $source);
-            $message = sprintf('%s set stream #%d to spectate %d.', user()->player_name, $spectator['id'], $source);
+            $message = sprintf('%s set stream #%d to spectate %d%s.', user()->player_name, $spectator['id'], $source, $isRandom ? ' (randomized)' : '');
         }
 
         $response = ServerAPI::runCommand($spectator['server'], $license, $command);
