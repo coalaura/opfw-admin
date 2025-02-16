@@ -115,11 +115,11 @@ class OverwatchController extends Controller
 
                 break;
             case 'new_player':
-                $players = array_filter(Player::getNewPlayers(), function ($player) {
+                $players = Player::getNewPlayers()->filter(function ($player) {
                     $status = StatusHelper::get($player->license_identifier);
 
                     return $status && $status['character'];
-                });
+                })->values();
 
                 if (empty($players)) {
                     return self::json(false, null, 'No new players found.');
