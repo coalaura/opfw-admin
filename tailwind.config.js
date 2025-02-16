@@ -43,7 +43,8 @@ module.exports = {
                 '2k': '2000'
             },
             padding: {
-                'xs': '1px'
+                'xs': '1px',
+                '13': '3.25rem',
             },
             fontSize: {
                 'xxs': '11px',

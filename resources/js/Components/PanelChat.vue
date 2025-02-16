@@ -38,7 +38,7 @@
         </div>
 
         <div class="w-full relative bg-gray-300 dark:bg-gray-600" v-click-outside="hideEmotePicker">
-            <input class="block w-full text-sm px-2 py-1 bg-transparent pr-8" v-model="message" minlength="1" maxlength="256" @keyup.enter="send" ref="input" />
+            <input class="block w-full text-sm px-2 py-1 bg-transparent" :class="hasEmotes ? 'pr-13' : 'pr-8'" placeholder="Hi team..." v-model="message" minlength="1" maxlength="256" @keyup.enter="send" ref="input" />
 
             <i class="fas fa-smile-beam cursor-pointer absolute right-8 top-1/2 transform -translate-y-1/2" @click="showEmotes = !showEmotes" v-if="hasEmotes"></i>
             <i class="fas fa-paper-plane cursor-pointer absolute right-2 top-1/2 transform -translate-y-1/2" @click="send"></i>
