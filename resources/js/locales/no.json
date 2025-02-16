@@ -192,6 +192,7 @@
         "loading": "Laster",
         "male": "Mann",
         "no": "Nei",
+        "no_auto_scroll": "Automatisk rulling deaktivert, klikk for å aktivere igjen.",
         "none": "Ingen",
         "not_banned": "Ikke utestengt",
         "not_restricted": "Ikke begrenset.",

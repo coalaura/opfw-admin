@@ -192,6 +192,7 @@
         "loading": "Loading",
         "male": "Man",
         "no": "No",
+        "no_auto_scroll": "Auto-Scroll off, click on.",
         "none": "None",
         "not_banned": "Not banned",
         "not_restricted": "Not blocked.",

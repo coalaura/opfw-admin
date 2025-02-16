@@ -12,7 +12,10 @@
                     {{ t('global.connected') }}
                 </div>
 
-                <i :class="`fas fa-volume-${muted ? 'mute' : 'up'} cursor-pointer`" @click="toggleMute"></i>
+                <div class="flex gap-1 items-center">
+                    <i class="fas fa-scroll cursor-pointer" @click="enableScroll" :title="t('global.no_auto_scroll')" v-if="scrollDisabled"></i>
+                    <i :class="`fas fa-volume-${muted ? 'mute' : 'up'} cursor-pointer`" @click="toggleMute"></i>
+                </div>
             </div>
 
             <div class="absolute top-full left-0 right-0 text-xxs flex flex-wrap gap-1 items-center px-1 py-0.5 opacity-0 group-hover:opacity-100 pointer-events-none text-blue-700 dark:text-blue-300 bg-gray-400/20 dark:bg-gray-600/20 backdrop-filter backdrop-blur-md z-10">
@@ -26,7 +29,7 @@
             {{ t('global.disconnected') }}
         </div>
 
-        <div class="w-full h-full overflow-y-auto" ref="chat" @chat-image-loaded="scrollInstant">
+        <div class="w-full h-full overflow-y-auto" ref="chat" @chat-image-loaded="scrollInstant" @scroll="onChatScroll">
             <div v-for="message in messages" :key="message.id" class="relative group dark:odd:bg-gray-500/10 px-1 py-0.5" :class="{ 'italic text-xs py-1': message.system }">
                 <div class="font-semibold max-w-40 truncate inline pr-1" :title="message.name" v-if="!message.system">
                     {{ message.name }}
@@ -74,6 +77,7 @@ export default {
             socket: null,
 
             showEmotes: false,
+            scrollDisabled: false,
 
             timeout: false,
             connecting: false,
@@ -84,7 +88,8 @@ export default {
             messages: [],
             users: [],
 
-            debounce: false
+            debounce: false,
+            scrollDebounce: false
         };
     },
     watch: {
@@ -248,6 +253,14 @@ export default {
             });
         },
 
+        onChatScroll() {
+            clearTimeout(this.scrollDebounce);
+
+            setTimeout(() => {
+                this.scrollDisabled = this.$refs.chat.scrollTop < (this.$refs.chat.scrollHeight - this.$refs.chat.clientHeight) - 20;
+            }, 250);
+        },
+
         disconnect() {
             if (!this.socket) {
                 return;
@@ -284,7 +297,15 @@ export default {
             this.notify();
         },
 
+        enableScroll() {
+            this.scrollDisabled = false;
+
+            this.scroll();
+        },
+
         scroll() {
+            if (this.scrollDisabled) return;
+
             const chat = this.$refs.chat;
 
             if (!chat) return;
@@ -298,6 +319,8 @@ export default {
         },
 
         scrollInstant() {
+            if (this.scrollDisabled) return;
+
             const chat = this.$refs.chat;
 
             if (!chat) return;

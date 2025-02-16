@@ -47,6 +47,7 @@
         "connect": "Connect",
         "copied_ip": "Copied!",
         "do_search": "Search",
+        "no_auto_scroll": "Auto-Scroll disabled, click to re-enable.",
         "whitelisted": "On Whitelist",
         "blacklisted": "Is Blacklisted",
         "server_offline": "Server seems to be offline.",
