@@ -231,7 +231,7 @@ class OverwatchController extends Controller
             $message = sprintf('%s reset stream #%d.', user()->player_name, $spectator['id']);
         } else {
             $command = sprintf("spectate %d", $source);
-            $message = sprintf('%s set stream #%d to spectate %d%s.', user()->player_name, $spectator['id'], $source, $isRandom ? ' (randomized)' : '');
+            $message = sprintf('%s set stream #%d to spectate %d%s.', user()->player_name, $spectator['id'], $source, $isRandom ? ' (rng)' : '');
         }
 
         $response = ServerAPI::runCommand($spectator['server'], $license, $command);
