@@ -27,7 +27,7 @@
         </div>
 
         <div class="w-full h-full overflow-y-auto" ref="chat">
-            <div v-for="message in messages" :key="message.id" class="relative group dark:odd:bg-gray-500/10 px-1 py-0.5">
+            <div v-for="message in messages" :key="message.id" class="relative group dark:odd:bg-gray-500/10 px-1 py-0.5" :class="{ 'italic text-xs': message.system }">
                 <div class="font-semibold max-w-40 truncate inline pr-1" :title="message.name" v-if="!message.system">{{ message.name }}</div>
                 <div class="inline break-words" :class="getMessageColor(message)" v-html="getMessageHTML(message)"></div>
 
