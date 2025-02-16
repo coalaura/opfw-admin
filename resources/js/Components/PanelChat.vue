@@ -292,6 +292,35 @@ export default {
 
             audio.play();
         },
+
+        handleKeypress(e) {
+            // Tab, Space and Enter makes you focus the chat input
+            if (["Tab", " ", "Enter"].includes(e.key)) {
+                this.$refs.input?.focus();
+
+                return;
+            }
+
+            // Escape unfocuses the chat input
+            if (e.key === "Escape") {
+                this.$refs.input?.blur();
+
+                return;
+            }
+
+            // Ctrl + E toggles the emote picker
+            if (e.ctrlKey && e.key === "e") {
+                this.showEmotes = !this.showEmotes;
+
+                return;
+            }
+        }
+    },
+    created() {
+        window.addEventListener("keyup", this.handleKeypress);
+    },
+    destroyed() {
+        window.removeEventListener("keyup", this.handleKeypress);
     },
     mounted() {
         if (this.active) {

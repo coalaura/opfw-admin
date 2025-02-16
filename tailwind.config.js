@@ -77,6 +77,7 @@ module.exports = {
                 'screenshot':         '540px',
                 'twitter-img':        '500px',
                 '520':                '520px',
+                'chat-full':          '27rem',
             },
             height: {
                 'side-close':      '37px',
@@ -135,6 +136,11 @@ module.exports = {
                 // Light & dark.
                 'light': defaultTheme.colors.white,
                 'dark':  defaultTheme.colors.gray['900'],
+
+                'lightbg': defaultTheme.colors.gray['100'],
+                'darkbg':  defaultTheme.colors.gray['800'],
+                'lightbd': defaultTheme.colors.gray['200'],
+                'darkbd':  defaultTheme.colors.gray['700'],
 
                 // Saturated gray variants
                 'gray-900v': 'hsl(242, 47%, 34%)',

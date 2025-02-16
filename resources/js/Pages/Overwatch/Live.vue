@@ -13,8 +13,8 @@
         </portal>
 
         <v-section class="-mt-2 relative" :noFooter="true" :noHeader="true" :resizable="true" @resize="setChatHeight">
-            <div class="flex items-stretch gap-3" ref="container">
-                <div class="w-72 flex flex-col gap-3">
+            <div class="flex items-stretch" :class="{ 'gap-3': !fullscreen }" ref="container">
+                <div class="w-72 flex flex-col gap-3" v-if="!fullscreen">
                     <h3 class="font-bold text-md border-b-2 border-gray-500 flex justify-between items-start">
                         {{ t('overwatch.streams') }}
 
@@ -79,7 +79,7 @@
                 </div>
 
                 <div class="w-full relative">
-                    <video class="w-full pointer-events-none" ref="video" controlslist="nodownload noplaybackrate" poster="/images/no_stream.webp"></video>
+                    <video class="w-full pointer-events-none" :class="{ 'h-full object-contain': fullscreen }" ref="video" controlslist="nodownload noplaybackrate" poster="/images/no_stream.webp"></video>
 
                     <div class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-red-500/40 border-2 border-red-500 text-white backdrop-filter backdrop-blur-md px-5 py-3 shadow-lgs" v-if="error">
                         <h3 class="font-bold text-md border-b-2 border-red-300 mb-2">{{ t('overwatch.stream_error') }}</h3>
@@ -87,7 +87,7 @@
                     </div>
                 </div>
 
-                <PanelChat :active="true" :height="height" dimensions="w-96" :emotes="emotes" />
+                <PanelChat :active="true" :height="height" :dimensions="fullscreen ? 'w-chat-full px-2 py-1 border-l-4 border-lightbd dark:border-darkbd bg-lightbg dark:bg-darkbg' : 'w-96'" :emotes="emotes" />
             </div>
         </v-section>
 
@@ -288,8 +288,11 @@ export default {
             if (this.fullscreen) {
                 document.exitFullscreen();
             } else {
-                this.$refs.video.requestFullscreen();
+                this.$refs.container.requestFullscreen();
             }
+
+            this.updateFullscreen();
+            this.setChatHeight();
         },
         setError(details) {
             this.isLoading = false;
@@ -434,6 +437,12 @@ export default {
             }, this.setError);
         },
         setChatHeight() {
+            if (this.fullscreen) {
+                this.height = false;
+
+                return;
+            }
+
             this.height = `${this.$refs.video.scrollHeight}px`;
         },
         updateFullscreen() {
@@ -462,12 +471,33 @@ export default {
                 }
             });
         },
+        handleKeypress(e) {
+            // Ctrl + M toggles the mute button
+            if (e.ctrlKey && e.key === "m") {
+                if (this.volume > 0) {
+                    this.setVolume(0);
+                } else {
+                    this.setVolume(0.5);
+                }
+
+                return;
+            }
+
+            // F (if no input is focused) toggles fullscreen
+            if (e.key === "f" && document.activeElement.tagName !== "INPUT") {
+                this.toggleFullscreen();
+
+                return;
+            }
+        }
     },
     created() {
+        window.addEventListener("keyup", this.handleKeypress);
         window.addEventListener("resize", this.setChatHeight);
         window.addEventListener("fullscreenchange", this.updateFullscreen);
     },
     destroyed() {
+        window.removeEventListener("keyup", this.handleKeypress);
         window.removeEventListener("resize", this.setChatHeight);
         window.removeEventListener("fullscreenchange", this.updateFullscreen);
     },
