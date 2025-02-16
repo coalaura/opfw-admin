@@ -257,7 +257,7 @@ export default {
 
             setTimeout(() => {
                 this.isActionTimedOut = false;
-            }, 3000);
+            }, 5000);
         },
         async saveReplay() {
             if (!this.replay || this.isSavingReplay) return;
