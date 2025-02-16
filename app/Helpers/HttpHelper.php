@@ -44,6 +44,22 @@ class HttpHelper
         return self::$error;
     }
 
+    /**
+     * Checks if the given port is in use.
+     *
+     * @param int $port The port to check
+     * @return bool True if the port is in use, false otherwise
+     */
+    public static function isPortInUse($port = 4644): bool {
+        if (stripos(PHP_OS, "win") !== false) {
+            $output = shell_exec("netstat -ano | findstr :$port");
+        } else {
+            $output = shell_exec("ss -tuln | grep :$port") ?: shell_exec("netstat -tuln | grep :$port");
+        }
+
+        return !empty($output);
+    }
+
     public static function getIPInfo(string $ip): ?array
     {
         $key = "ip_info_" . $ip;

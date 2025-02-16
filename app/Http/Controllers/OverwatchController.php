@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use App\Character;
 use App\Helpers\GeneralHelper;
+use App\Helpers\HttpHelper;
+use App\Helpers\LoggingHelper;
 use App\Helpers\Mutex;
 use App\Helpers\PermissionHelper;
 use App\Helpers\ServerAPI;
@@ -11,6 +13,7 @@ use App\Helpers\StatusHelper;
 use App\Player;
 use App\Server;
 use App\Warning;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -46,8 +49,70 @@ class OverwatchController extends Controller
         }
 
         return Inertia::render('Overwatch/Live', [
+            'replay' => HttpHelper::isPortInUse(4644),
             'emotes' => Warning::getAllReactions(),
         ]);
+    }
+
+    /**
+     * Save a replay of a stream.
+     *
+     * @param string $license
+     */
+    public function replay(string $license)
+    {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_SCREENSHOT)) {
+            abort(401);
+        }
+
+        $serverIp   = Server::getFirstServer('ip');
+
+        if (! $serverIp) {
+            return self::json(false, null, 'No OP-FW server found.');
+        }
+
+        if (! HttpHelper::isPortInUse(4644)) {
+            return self::json(false, null, 'Replay server is not running.');
+        }
+
+        $license = str_replace('license:', '', $license);
+
+        $streams = explode(',', env('OVERWATCH_STREAMS'));
+        $stream  = false;
+
+        foreach ($streams as $entry) {
+            $parts = explode(':', $entry);
+
+            if (sizeof($parts) !== 2) {
+                continue;
+            }
+
+            if ($parts[0] === $license) {
+                $stream = $parts[1];
+
+                break;
+            }
+        }
+
+        if (! $stream) {
+            return self::json(false, null, 'Invalid spectator.');
+        }
+
+        $client = new Client([
+            'timeout'         => 10,
+            'connect_timeout' => 2,
+            'http_errors'     => true,
+        ]);
+
+        try {
+            $res = $client->get(sprintf('http://localhost:4644/%s', $stream));
+
+            return $res->getBody();
+        } catch (\Exception $e) {
+            LoggingHelper::log(sprintf('Could not get replay: %s', $e->getMessage()));
+
+            return self::json(false, null, "Could not get replay.");
+        }
     }
 
     /**
@@ -90,7 +155,7 @@ class OverwatchController extends Controller
             return self::json(false, null, 'Invalid spectator.');
         }
 
-        if (!$isReset) {
+        if (! $isReset) {
             $target = StatusHelper::source($source);
 
             if (! $target || ! $target['character']) {

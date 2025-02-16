@@ -186,7 +186,7 @@
         "watching": "Watching",
         "replay": "Toggle Instant Replay",
         "save_replay": "Save the last 20 seconds as a clip.",
-        "no_replay": "Turn on instant replay to save the last 20 seconds.",
+        "replay_unavailable": "Replay is not available at this time.",
         "clip": "Clip",
         "replay_not_supported": "Instant replay is not supported on this browser."
     },

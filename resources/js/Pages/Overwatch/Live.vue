@@ -39,12 +39,10 @@
                         <div class="italic" v-else>{{ t('overwatch.no_streams') }}</div>
 
                         <div class="flex gap-1 border-t border-gray-500 pt-3 mt-2" v-if="source">
-                            <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500" @click="toggleReplay" :title="t('overwatch.replay')">
+                            <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center w-full select-none" :class="{ 'opacity-50 cursor-not-allowed': !replay || isSavingReplay }" @click="saveReplay" :title="t(`overwatch.${replay ? 'save_replay' : 'replay_unavailable'}`)">
                                 <i class="fas fa-video" v-if="replay"></i>
                                 <i class="fas fa-video-slash" v-else></i>
-                            </div>
-                            <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center w-full select-none" :class="{ 'opacity-50 cursor-not-allowed': !replay || isSavingReplay }" @click="saveReplay" :title="t(`overwatch.${replay ? 'save_replay' : 'no_replay'}`)">
-                                <i class="fas fa-cut"></i>
+
                                 {{ t('overwatch.clip') }}
                             </div>
                         </div>
@@ -90,8 +88,6 @@
 
                 <PanelChat :active="true" :height="height" dimensions="w-96" :emotes="emotes" />
             </div>
-
-            <video ref="replay" class="fixed left-[-10000px]"></video>
         </v-section>
 
     </div>
@@ -173,6 +169,10 @@ export default {
         emotes: {
             type: Object | Array,
             required: true
+        },
+        replay: {
+            type: Boolean,
+            required: true
         }
     },
     data() {
@@ -187,14 +187,6 @@ export default {
             newServerId: "",
 
             isSavingReplay: false,
-            replay: false,
-            replayStream: false,
-            replayRecorder: false,
-            replayBuffer: [],
-            replayOptions: {
-                mimeType: 'video/webm',
-                videoBitsPerSecond: 5_000_000,
-            },
 
             height: false,
             volume: 0.5,
@@ -224,84 +216,28 @@ export default {
         }
     },
     methods: {
-        toggleReplay() {
-            const replay = this.$refs.replay;
-
-            if (!replay.captureStream && !replay.mozCaptureStream) {
-                alert(this.t('overwatch.replay_not_supported'));
-
-                return;
-            }
-
-            this.replay = !this.replay;
-
-            if (this.replay) {
-                replay.volume = 1;
-
-                // Workaround for chrome
-                if (replay.captureStream) {
-                    replay.volume = 0.01;
-                }
-
-                this.replayBuffer = [];
-
-                this.replayStream = this.createStream(this.source, replay, null, this.stopReplay);
-
-                replay.addEventListener('playing', async () => {
-                    const capture = replay.captureStream ? replay.captureStream() : replay.mozCaptureStream();
-
-                    try {
-                        this.replayRecorder = new MediaRecorder(capture, this.replayOptions);
-                    } catch (e) {
-                        alert(this.t('overwatch.replay_not_supported'));
-
-                        this.stopReplay();
-
-                        return;
-                    }
-
-                    this.replayRecorder.ondataavailable = (event) => {
-                        if (!event.data?.size) {
-                            return;
-                        }
-
-                        const now = Date.now();
-
-                        this.replayBuffer.push({
-                            data: event.data,
-                            time: now
-                        });
-
-                        this.replayBuffer = this.replayBuffer.filter(chunk => now - chunk.time < 20 * 1000);
-                    };
-
-                    this.replayRecorder.start(500);
-                });
-            } else {
-                this.stopReplay();
-            }
-        },
-        stopReplay() {
-            this.replay = false;
-
-            if (this.replayRecorder) {
-                this.replayRecorder.stop();
-
-                this.replayRecorder = false;
-            }
-
-            if (this.replayStream) {
-                this.replayStream.destroy();
-            }
-
-            this.replayBuffer = [];
-        },
-        saveReplay() {
+        async saveReplay() {
             if (!this.replay || this.isSavingReplay) return;
 
-            const chunks = this.replayBuffer.map(chunk => chunk.data),
-                blob = new Blob(chunks, this.replayOptions),
-                url = URL.createObjectURL(blob);
+            const spectator = this.spectators.find(spectator => spectator.stream === this.source);
+
+            if (!spectator) return false;
+
+            this.isSavingReplay = true;
+
+            try {
+                const response = await fetch(`/live/replay/${spectator.license}`);
+
+                if (!response.ok) {
+                    throw new Error("Failed to fetch replay.");
+                } else if (response.headers.get("content-type").includes("application/json")) {
+                    const json = await response.json();
+
+                    throw new Error(json?.error || "Failed to fetch replay.")
+                }
+
+                const blob = await response.blob(),
+                    url = URL.createObjectURL(blob);
 
                 const a = document.createElement('a');
 
@@ -314,6 +250,11 @@ export default {
 
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
+            } catch(e) {
+                alert(e.message);
+            }
+
+            this.isSavingReplay = false;
         },
         getSpectatorListingClass(spectator) {
             if (this.isLoading) {
@@ -366,8 +307,6 @@ export default {
                 this.isLoading = false;
             }
 
-            this.stopReplay();
-
             if (!this.hls) return;
 
             this.hls.destroy();
@@ -392,7 +331,7 @@ export default {
             this.isUpdating = true;
 
             try {
-                const data = await fetch(`/live/${spectator.license}/${this.newServerId}`, {
+                const data = await fetch(`/live/set/${spectator.license}/${this.newServerId}`, {
                     method: "PATCH",
                 }).then(response => response.json());
 
