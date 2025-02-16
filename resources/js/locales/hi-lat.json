@@ -631,6 +631,7 @@
         "description": "Kisi bhi ajeeb cheez ko dhundhne ke liye random khiladiyon ke game renders dekhein.",
         "live": "Overwatch - Live",
         "live_description": "Server mein khiladiyon ka live spectate.",
+        "new_player": "Kisi random naye khiladi ko dekhne ke liye chunen.",
         "no_streams": "Koi uplabdh streams nahi hain.",
         "profile": "{0} - {1} (#{2})",
         "refresh": "Naya screenshot prapt karein.",

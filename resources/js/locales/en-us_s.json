@@ -631,6 +631,7 @@
         "description": "Look through random players' game renders to see if ya can find anything outta the ordinary",
         "live": "Overwatch - Live",
         "live_description": "Watchin' players do their thing on the server, live.",
+        "new_player": "Pick yerself a random new player to watch.",
         "no_streams": "Ain't no streams available.",
         "profile": "{0} - {1} (#{2})",
         "refresh": "Get yourself a new screenshot.",

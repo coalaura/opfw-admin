@@ -631,6 +631,7 @@
         "description": "Se gjennom tilfeldige spilleres spillbilder for å se om du finner noe uvanlig",
         "live": "Overwatch - Live",
         "live_description": "Live-overvåkning av spillere på serveren.",
+        "new_player": "Velg en tilfeldig ny spiller å se på.",
         "no_streams": "Ingen tilgjengelige strømmer.",
         "profile": "{0} - {1} (#{2})",
         "refresh": "Få et nytt skjermbilde.",

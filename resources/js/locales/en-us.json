@@ -188,7 +188,8 @@
         "save_replay": "Save the last 30 seconds as a clip.",
         "replay_unavailable": "Replay is not available at this time.",
         "clip": "Clip",
-        "revive": "Revive the spectator client."
+        "revive": "Revive the spectator client.",
+        "new_player": "Pick a random new player to spectate."
     },
     "errors": {
         "client": {

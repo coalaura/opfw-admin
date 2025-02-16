@@ -1216,6 +1216,18 @@ class Player extends Model
     {
         return sizeof(explode(':', $identifier)) === 2 && self::getIdentifierLabel($identifier) !== null;
     }
+
+    public static function getNewPlayers()
+    {
+        $playerList = StatusHelper::all();
+        $players    = array_keys($playerList);
+
+        return self::query()
+            ->whereIn('license_identifier', $players)
+            ->where('playtime', '<=', 60 * 60 * 36)
+            ->orderBy('playtime')
+            ->get();
+    }
 }
 
 /**

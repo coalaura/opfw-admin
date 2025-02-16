@@ -48,9 +48,9 @@
                             </div>
 
                             <div class="flex gap-1">
-                                <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center select-none" :class="{ 'opacity-50 cursor-not-allowed': isPerformingAction }" @click="performAction('revive')" :title="t('overwatch.revive')">
+                                <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center select-none" :class="{ 'opacity-50 cursor-not-allowed': isPerformingAction || isActionTimedOut }" @click="performAction(action.name)" :title="t(`overwatch.${action.name}`)" v-for="action in actions">
                                     <i class="fas fa-spinner animate-spin" v-if="isPerformingAction"></i>
-                                    <i class="fas fa-medkit" v-else></i>
+                                    <i :class="`fas fa-${action.icon}`" v-else></i>
                                 </div>
                             </div>
                         </div>
@@ -185,11 +185,13 @@ export default {
     },
     data() {
         return {
-            isPerformingAction: false,
             isTimedOut: false,
             isUpdating: false,
             isLoading: false,
             error: false,
+
+            isActionTimedOut: false,
+            isPerformingAction: false,
 
             socket: false,
             spectators: [],
@@ -204,7 +206,18 @@ export default {
 
             hls: false,
             source: false,
-            interval: false
+            interval: false,
+
+            actions: [
+                {
+                    name: 'replay',
+                    icon: 'medkit'
+                },
+                {
+                    name: 'new_player',
+                    icon: 'kiwi-bird'
+                }
+            ]
         };
     },
     computed: {
@@ -227,19 +240,24 @@ export default {
     },
     methods: {
         async performAction(action) {
-            if (this.isPerformingAction) return;
+            if (this.isPerformingAction || this.isActionTimedOut) return;
 
             const spectator = this.spectators.find(spectator => spectator.stream === this.source);
 
             if (!spectator) return false;
 
             this.isPerformingAction = true;
+            this.isActionTimedOut = true;
 
             try {
                 await fetch(`/live/do/${action}/${spectator.license}`, { method: "PATCH" });
             } catch {}
 
             this.isPerformingAction = false;
+
+            setTimeout(() => {
+                this.isActionTimedOut = false;
+            }, 3000);
         },
         async saveReplay() {
             if (!this.replay || this.isSavingReplay) return;
@@ -315,7 +333,6 @@ export default {
             }
 
             this.updateFullscreen();
-            this.setChatHeight();
         },
         setError(details) {
             this.isLoading = false;
@@ -470,6 +487,12 @@ export default {
         },
         updateFullscreen() {
             this.fullscreen = !!document.fullscreenElement;
+
+            this.setChatHeight();
+
+            this.$nextTick(() => {
+                this.setChatHeight();
+            });
         },
         preload(url, cb) {
             const image = new Image();

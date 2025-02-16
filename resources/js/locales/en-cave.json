@@ -631,6 +631,7 @@
         "description": "Look at random player games, find strange thing.",
         "live": "Overwatch - Live",
         "live_description": "Watch players on server.",
+        "new_player": "Pick new player to watch.",
         "no_streams": "No streams.",
         "profile": "{0} - {1} (#{2})",
         "refresh": "Get new screenshot.",

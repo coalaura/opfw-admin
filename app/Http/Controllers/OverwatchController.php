@@ -112,12 +112,35 @@ class OverwatchController extends Controller
         switch ($action) {
             case 'revive':
                 OPFWHelper::revivePlayer($license);
+
                 break;
+            case 'new_player':
+                $players = array_filter(Player::getNewPlayers(), function ($player) {
+                    $status = StatusHelper::get($player->license_identifier);
+
+                    return $status && $status['character'];
+                });
+
+                if (empty($players)) {
+                    return self::json(false, null, 'No new players found.');
+                }
+
+                $player = $players[rand(0, sizeof($players) - 1)];
+                $status = StatusHelper::get($player->license_identifier);
+
+                return redirect()->action(
+                    [OverwatchController::class, 'setSpectating'],
+                    [
+                        'license' => $license,
+                        'source'  => $status['source'],
+                    ]
+                );
             case 'center':
                 OPFWHelper::setGameplayCamera($license, 0, 0);
+
                 break;
             default:
-               return self::json(false, null, 'Invalid action.');
+                return self::json(false, null, 'Invalid action.');
         }
 
         return self::json(true);
@@ -281,14 +304,14 @@ class OverwatchController extends Controller
         }
 
         $spectators = SocketAPI::getSpectators($server['ip']);
-        $spectator = false;
+        $spectator  = false;
 
         foreach ($spectators as $id => $spec) {
             if ($spec['license'] === $license) {
                 $spectator = $spec;
 
-                $spectator['id'] = $id + 1;
-                $spectator['ip'] = $server['ip'];
+                $spectator['id']     = $id + 1;
+                $spectator['ip']     = $server['ip'];
                 $spectator['server'] = $server['name'];
 
                 break;

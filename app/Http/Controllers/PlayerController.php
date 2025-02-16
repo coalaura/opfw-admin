@@ -123,17 +123,7 @@ class PlayerController extends Controller
      */
     public function newPlayers(): Response
     {
-        $query = Player::query();
-
-        $playerList = StatusHelper::all();
-        $players    = array_keys($playerList);
-
-        $query->whereIn('license_identifier', $players);
-        $query->where('playtime', '<=', 60 * 60 * 36);
-
-        $query->orderBy('playtime');
-
-        $players = $query->get();
+        $players = Player::getNewPlayers();
 
         $characterIds = [];
 
