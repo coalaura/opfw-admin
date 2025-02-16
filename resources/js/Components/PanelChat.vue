@@ -26,7 +26,7 @@
             {{ t('global.disconnected') }}
         </div>
 
-        <div class="w-full h-full overflow-y-auto" ref="chat">
+        <div class="w-full h-full overflow-y-auto" ref="chat" @chat-image-loaded="scrollInstant">
             <div v-for="message in messages" :key="message.id" class="relative group dark:odd:bg-gray-500/10 px-1 py-0.5" :class="{ 'italic text-xs py-1': message.system }">
                 <div class="font-semibold max-w-40 truncate inline pr-1" :title="message.name" v-if="!message.system">{{ message.name }}</div>
                 <div class="inline break-words" :class="getMessageColor(message)" v-html="getMessageHTML(message)"></div>
@@ -162,7 +162,7 @@ export default {
             html = html.replace(/\*([^\s][^*]+[^\s]|[^\s*]+)\*/g, '<i>$1</i>');
 
             // Image links
-            html = html.replace(/(?<!")(https?:\/\/[^\s]+\.(png|jpe?g|webp|gif))/g, '<a href="$1" target="_blank"><img src="$1" class="inline-block max-w-full max-h-64" /></a>');
+            html = html.replace(/(?<!")(https?:\/\/[^\s]+\.(png|jpe?g|webp|gif))/g, `<a href="$1" target="_blank"><img src="$1" class="inline-block max-w-full max-h-64" loading="lazy" onload="this.dispatchEvent(new CustomEvent('chat-image-loaded', {bubbles:true}))" /></a>`);
 
             return html;
         },
