@@ -318,9 +318,11 @@ export default {
     },
     created() {
         window.addEventListener("keyup", this.handleKeypress);
+        window.addEventListener("focus", this.scroll);
     },
     destroyed() {
         window.removeEventListener("keyup", this.handleKeypress);
+        window.removeEventListener("focus", this.scroll);
     },
     mounted() {
         if (this.active) {
