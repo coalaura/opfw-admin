@@ -637,7 +637,7 @@
         "replay": "Toggle Instant Replay",
         "replay_not_supported": "Instant replay ain't supported on this here browser.",
         "replay_unavailable": "Replay ain't available right now.",
-        "save_replay": "Save the last 20 seconds as a clip.",
+        "save_replay": "Save the last 30 seconds as a clip.",
         "server": "Server: {0}",
         "stream": "Stream #{0}",
         "stream_error": "Stream's gone all wonky",

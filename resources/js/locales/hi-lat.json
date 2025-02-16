@@ -637,7 +637,7 @@
         "replay": "Turant Punaravriti ko Toggle karein",
         "replay_not_supported": "Is browser par turant punaravriti supported nahi hai.",
         "replay_unavailable": "Is samay punarvatan uplabdh nahi hai.",
-        "save_replay": "Pichle 20 second ko klip ke roop mein bachayein.",
+        "save_replay": "Pichle 30 second ko klip ke roop mein bachayein.",
         "server": "Server: {0}",
         "stream": "Stream #{0}",
         "stream_error": "Stream Error",

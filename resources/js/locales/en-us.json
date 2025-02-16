@@ -185,7 +185,7 @@
         "stream_timeout": "Success! Please wait a moment for the stream to update.",
         "watching": "Watching",
         "replay": "Toggle Instant Replay",
-        "save_replay": "Save the last 20 seconds as a clip.",
+        "save_replay": "Save the last 30 seconds as a clip.",
         "replay_unavailable": "Replay is not available at this time.",
         "clip": "Clip",
         "replay_not_supported": "Instant replay is not supported on this browser."

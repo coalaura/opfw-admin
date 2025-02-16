@@ -637,7 +637,7 @@
         "replay": "Toggle replay",
         "replay_not_supported": "Replay no work on this browser.",
         "replay_unavailable": "Replay no work now.",
-        "save_replay": "Save last 20 second clip.",
+        "save_replay": "Save last 30 second clip.",
         "server": "Server: {0}",
         "stream": "Stream #{0}",
         "stream_error": "Stream Bad",
