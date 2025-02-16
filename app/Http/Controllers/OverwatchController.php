@@ -70,7 +70,11 @@ class OverwatchController extends Controller
             return self::json(false, null, 'Replay server is not running.');
         }
 
-        $spectator = $this->resolveSpectatorOrAbort($license);
+        $spectator = $this->resolveSpectatorOrReject($license);
+
+        if (! $spectator) {
+            return;
+        }
 
         $client = new Client([
             'timeout'         => 10,
@@ -101,7 +105,9 @@ class OverwatchController extends Controller
             abort(401);
         }
 
-        $this->resolveSpectatorOrAbort($license);
+        if (! $this->resolveSpectatorOrReject($license)) {
+            return;
+        }
 
         switch ($action) {
             case 'revive':
@@ -135,7 +141,11 @@ class OverwatchController extends Controller
 
         $isReset = $source === 0;
 
-        $spectator = $this->resolveSpectatorOrAbort($license);
+        $spectator = $this->resolveSpectatorOrReject($license);
+
+        if (! $spectator) {
+            return;
+        }
 
         if ($isReset && ! $spectator['spectating']) {
             return self::json(true);
@@ -258,29 +268,41 @@ class OverwatchController extends Controller
      * @param string $license
      * @return array|null
      */
-    private function resolveSpectatorOrAbort(string $license): ?array
+    private function resolveSpectatorOrReject(string $license): ?array
     {
         $server = Server::getFirstServer();
 
         if (! $server) {
             LoggingHelper::log("No opfw server found while trying to resolve spectator.");
 
-            abort(500);
+            self::json(false, null, "No opfw server found.")->send();
+
+            return null;
         }
 
         $spectators = SocketAPI::getSpectators($server['ip']);
+        $spectator = false;
 
-        foreach ($spectators as $id => $spectator) {
-            if ($spectator['license'] === $license) {
+        foreach ($spectators as $id => $spec) {
+            if ($spec['license'] === $license) {
+                $spectator = $spec;
+
                 $spectator['id'] = $id + 1;
-
                 $spectator['ip'] = $server['ip'];
                 $spectator['server'] = $server['name'];
 
-                return $spectator;
+                break;
             }
         }
 
-        abort(400);
+        if (! $spectator) {
+            LoggingHelper::log("Failed to find spectator with license {$license}.");
+
+            self::json(false, null, "Failed to find spectator.")->send();
+
+            return null;
+        }
+
+        return $spectator;
     }
 }
