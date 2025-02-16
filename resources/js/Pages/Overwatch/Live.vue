@@ -40,7 +40,8 @@
 
                         <div class="flex gap-1 border-t border-gray-500 pt-3 mt-2" v-if="source">
                             <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center w-full select-none" :class="{ 'opacity-50 cursor-not-allowed': !replay || isSavingReplay }" @click="saveReplay" :title="t(`overwatch.${replay ? 'save_replay' : 'replay_unavailable'}`)">
-                                <i class="fas fa-video" v-if="replay"></i>
+                                <i class="fas fa-spinner animate-spin" v-if="isSavingReplay"></i>
+                                <i class="fas fa-video" v-else-if="replay"></i>
                                 <i class="fas fa-video-slash" v-else></i>
 
                                 {{ t('overwatch.clip') }}
@@ -254,7 +255,9 @@ export default {
                 alert(e.message);
             }
 
-            this.isSavingReplay = false;
+            setTimeout(() => {
+                this.isSavingReplay = false;
+            }, 2000);
         },
         getSpectatorListingClass(spectator) {
             if (this.isLoading) {
