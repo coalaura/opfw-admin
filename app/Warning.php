@@ -31,6 +31,7 @@ class Warning extends Model
         'chair_stare',
         'confused_pika',
         'cool_cat',
+        'fufu',
         'grrr',
         'happy_cat',
         'hmmm',

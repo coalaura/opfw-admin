@@ -40,7 +40,7 @@ class PlayerRouteController extends Controller
 
         $reason = $request->input('reason') ?: 'You have been kicked by ' . $staffName;
 
-        $response = OPFWHelper::kickPlayer($user->license_identifier, $user->player_name, $player, $reason);
+        $response = OPFWHelper::kickPlayer($user->player_name, $player, $reason);
 
         if (!$response->status) {
             return backWith('error', 'Failed to kick player');
@@ -268,7 +268,7 @@ class PlayerRouteController extends Controller
     {
         $user = user();
 
-        $response = OPFWHelper::revivePlayer($user->license_identifier, $player->license_identifier);
+        $response = OPFWHelper::revivePlayer($player->license_identifier);
 
         if (!$response->status) {
             return backWith('error', 'Failed to revive player');

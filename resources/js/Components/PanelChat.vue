@@ -161,9 +161,6 @@ export default {
             // Italic *text*
             html = html.replace(/\*([^\s][^*]+[^\s]|[^\s*]+)\*/g, '<i>$1</i>');
 
-            // Underlined _text_
-            html = html.replace(/_([^\s][^_]+[^\s]|[^\s_]+)_/g, '<u>$1</u>');
-
             return html;
         },
         insertEmote(emote) {
@@ -221,7 +218,7 @@ export default {
 
                 this.messages = unpack(compressed);
 
-                this.scroll();
+                this.scrollInstant();
             });
 
             this.socket.on("users", compressed => {
@@ -290,6 +287,14 @@ export default {
             });
         },
 
+        scrollInstant() {
+            const chat = this.$refs.chat;
+
+            if (!chat) return;
+
+            chat.scrollTop = chat.scrollHeight;
+        },
+
         notify() {
             if (this.muted) return;
 
@@ -308,15 +313,15 @@ export default {
                 return;
             }
 
-            // Escape unfocuses the chat input
-            if (e.key === "Escape") {
+            // Alt + Escape unfocuses the chat input
+            if (e.altKey && e.key === "Escape") {
                 this.$refs.input?.blur();
 
                 return;
             }
 
-            // Ctrl + E toggles the emote picker
-            if (e.ctrlKey && e.key === "e") {
+            // Alt + E toggles the emote picker
+            if (e.altKey && e.key === "e") {
                 this.showEmotes = !this.showEmotes;
 
                 return;
@@ -325,11 +330,11 @@ export default {
     },
     created() {
         window.addEventListener("keyup", this.handleKeypress);
-        window.addEventListener("focus", this.scroll);
+        window.addEventListener("focus", this.scrollInstant);
     },
     destroyed() {
         window.removeEventListener("keyup", this.handleKeypress);
-        window.removeEventListener("focus", this.scroll);
+        window.removeEventListener("focus", this.scrollInstant);
     },
     mounted() {
         if (this.active) {

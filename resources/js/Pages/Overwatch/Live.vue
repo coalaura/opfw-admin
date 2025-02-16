@@ -13,7 +13,7 @@
         </portal>
 
         <v-section class="-mt-2 relative" :noFooter="true" :noHeader="true" :resizable="true" @resize="setChatHeight">
-            <div class="flex items-stretch" :class="{ 'gap-3': !fullscreen }" ref="container">
+            <div class="flex items-stretch" :class="fullscreen ? 'bg-vdarkbg' : 'gap-3'" ref="container">
                 <div class="w-72 flex flex-col gap-3" v-if="!fullscreen">
                     <h3 class="font-bold text-md border-b-2 border-gray-500 flex justify-between items-start">
                         {{ t('overwatch.streams') }}
@@ -38,13 +38,20 @@
 
                         <div class="italic" v-else>{{ t('overwatch.no_streams') }}</div>
 
-                        <div class="flex gap-1 border-t border-gray-500 pt-3 mt-2" v-if="source">
+                        <div class="flex flex-col gap-1 border-t border-gray-500 pt-3 mt-2" v-if="source">
                             <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center w-full select-none" :class="{ 'opacity-50 cursor-not-allowed': !replay || isSavingReplay || isReplayTimeout }" @click="saveReplay" :title="t(`overwatch.${replay ? 'save_replay' : 'replay_unavailable'}`)">
                                 <i class="fas fa-spinner animate-spin" v-if="isSavingReplay"></i>
                                 <i class="fas fa-video" v-else-if="replay"></i>
                                 <i class="fas fa-video-slash" v-else></i>
 
                                 {{ t('overwatch.clip') }}
+                            </div>
+
+                            <div class="flex gap-1">
+                                <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center select-none" :class="{ 'opacity-50 cursor-not-allowed': isPerformingAction }" @click="performAction('revive')" :title="t('overwatch.revive')">
+                                    <i class="fas fa-spinner animate-spin" v-if="isPerformingAction"></i>
+                                    <i class="fas fa-medkit" v-else></i>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -178,6 +185,7 @@ export default {
     },
     data() {
         return {
+            isPerformingAction: false,
             isTimedOut: false,
             isUpdating: false,
             isLoading: false,
@@ -218,6 +226,21 @@ export default {
         }
     },
     methods: {
+        async performAction(action) {
+            if (this.isPerformingAction) return;
+
+            const spectator = this.spectators.find(spectator => spectator.stream === this.source);
+
+            if (!spectator) return false;
+
+            this.isPerformingAction = true;
+
+            try {
+                await fetch(`/live/do/${action}/${spectator.license}`, { method: "PATCH" });
+            } catch {}
+
+            this.isPerformingAction = false;
+        },
         async saveReplay() {
             if (!this.replay || this.isSavingReplay) return;
 

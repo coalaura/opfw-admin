@@ -254,6 +254,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/overwatch', [OverwatchController::class, 'index']);
     Route::get('/live', [OverwatchController::class, 'live']);
     Route::get('/live/replay/{license}', [OverwatchController::class, 'replay']);
+    Route::patch('/live/do/{license}/{action}', [OverwatchController::class, 'doAction']);
     Route::patch('/live/set/{license}/{source}', [OverwatchController::class, 'setSpectating']);
 
     // Screenshots.

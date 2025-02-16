@@ -1,10 +1,8 @@
 <?php
-
 namespace App\Helpers;
 
 use App\Helpers\LoggingHelper;
 use App\OPFWResponse;
-use App\PanelLog;
 use App\Player;
 use App\Server;
 use GuzzleHttp\Client;
@@ -27,12 +25,12 @@ class OPFWHelper
      */
     public static function staffPM(string $staffLicenseIdentifier, Player $player, string $message): OPFWResponse
     {
-        if (!$message) {
+        if (! $message) {
             return new OPFWResponse(false, 'Your message cannot be empty');
         }
 
         $status = Player::getOnlineStatus($player->license_identifier, false);
-        if (!$status->isOnline()) {
+        if (! $status->isOnline()) {
             return new OPFWResponse(false, 'Player is offline.');
         }
 
@@ -59,7 +57,7 @@ class OPFWHelper
      */
     public static function staffChat(string $serverIp, string $staffLicenseIdentifier, string $message): OPFWResponse
     {
-        if (!$message) {
+        if (! $message) {
             return new OPFWResponse(false, 'Your message cannot be empty');
         }
 
@@ -83,7 +81,7 @@ class OPFWHelper
      */
     public static function serverAnnouncement(string $serverUrl, string $message): OPFWResponse
     {
-        if (!$message) {
+        if (! $message) {
             return new OPFWResponse(false, 'Your message cannot be empty.');
         }
 
@@ -103,18 +101,17 @@ class OPFWHelper
     /**
      * Kicks a player from the server
      *
-     * @param string $staffLicenseIdentifier
      * @param string $staffPlayerName
      * @param Player $player
      * @param string $reason
      * @return OPFWResponse
      */
-    public static function kickPlayer(string $staffLicenseIdentifier, string $staffPlayerName, Player $player, string $reason): OPFWResponse
+    public static function kickPlayer(string $staffPlayerName, Player $player, string $reason): OPFWResponse
     {
         $license = $player->license_identifier;
 
         $status = Player::getOnlineStatus($license, false);
-        if (!$status->isOnline()) {
+        if (! $status->isOnline()) {
             return new OPFWResponse(false, 'Player is offline.');
         }
 
@@ -138,14 +135,13 @@ class OPFWHelper
     /**
      * Revives a player in the server
      *
-     * @param string $staffLicenseIdentifier
      * @param string $licenseIdentifier
      * @return OPFWResponse
      */
-    public static function revivePlayer(string $staffLicenseIdentifier, string $licenseIdentifier): OPFWResponse
+    public static function revivePlayer(string $licenseIdentifier): OPFWResponse
     {
         $status = Player::getOnlineStatus($licenseIdentifier, false);
-        if (!$status->isOnline()) {
+        if (! $status->isOnline()) {
             return new OPFWResponse(false, 'Player is offline.');
         }
 
@@ -155,6 +151,34 @@ class OPFWHelper
 
         if ($response->status) {
             $response->message = 'Revived player.';
+        }
+
+        return $response;
+    }
+
+    /**
+     * Sets the gameplay camera pitch and heading for a player
+     *
+     * @param string $licenseIdentifier
+     * @param float $pitch
+     * @param float $heading
+     * @return OPFWResponse
+     */
+    public static function setGameplayCamera(string $licenseIdentifier, float $pitch, float $heading): OPFWResponse
+    {
+        $status = Player::getOnlineStatus($licenseIdentifier, false);
+        if (! $status->isOnline()) {
+            return new OPFWResponse(false, 'Player is offline.');
+        }
+
+        $response = self::executeRoute(Server::getServerURL($status->serverName) . 'execute/setGameplayCamera', [
+            'targetLicense' => $licenseIdentifier,
+            'pitch'         => $pitch,
+            'heading'       => $heading,
+        ]);
+
+        if ($response->status) {
+            $response->message = 'Set gameplay camera for player.';
         }
 
         return $response;
@@ -172,7 +196,7 @@ class OPFWHelper
         $license = $player->license_identifier;
 
         $status = Player::getOnlineStatus($license, false);
-        if (!$status->isOnline()) {
+        if (! $status->isOnline()) {
             return new OPFWResponse(true, 'Player is offline, no refresh needed.');
         }
 
@@ -200,7 +224,7 @@ class OPFWHelper
         $license = $player->license_identifier;
 
         $status = Player::getOnlineStatus($license, false);
-        if (!$status->isOnline()) {
+        if (! $status->isOnline()) {
             return OPFWResponse::didNotExecute();
         }
 
@@ -250,7 +274,7 @@ class OPFWHelper
         $license = $player->license_identifier;
 
         $status = Player::getOnlineStatus($license, false);
-        if (!$status->isOnline()) {
+        if (! $status->isOnline()) {
             return new OPFWResponse(true, 'Player is offline, no unload needede.');
         }
 
@@ -296,7 +320,7 @@ class OPFWHelper
     {
         $token = env('OP_FW_TOKEN');
 
-        if (!$token) {
+        if (! $token) {
             return new OPFWResponse(false, 'Invalid OP-FW configuration.');
         }
 
@@ -365,7 +389,7 @@ class OPFWHelper
 
             $result = self::parseResponse($response);
 
-            if (!$result->status && $statusCodeInt !== 404) {
+            if (! $result->status && $statusCodeInt !== 404) {
                 if ($x + 1 < self::RetryAttempts) {
                     sleep(2);
                 }
@@ -400,12 +424,11 @@ class OPFWHelper
                 case 400:
                 case 403:
                 case 404:
-                    return new OPFWResponse(false, !empty($json['message']) ? $json['message'] : 'Unknown error');
+                    return new OPFWResponse(false, ! empty($json['message']) ? $json['message'] : 'Unknown error');
             }
 
-            switch ($category) {
-                case 2: // All 200 status codes
-                    return new OPFWResponse(true, !empty($json['message']) ? 'Success: ' . $json['message'] : 'Successfully executed route', $json['data'] ?? null);
+            if ($category === 2) {
+                return new OPFWResponse(true, ! empty($json['message']) ? 'Success: ' . $json['message'] : 'Successfully executed route', $json['data'] ?? null);
             }
 
             return new OPFWResponse(false, 'Failed to execute route: "Unknown server response ' . $code . '"');
@@ -422,28 +445,14 @@ class OPFWHelper
 
     private static function jsonErrorToString(int $error): string
     {
-        switch ($error) {
-            case JSON_ERROR_NONE:
-                return 'No errors';
-                break;
-            case JSON_ERROR_DEPTH:
-                return 'Maximum stack depth exceeded';
-                break;
-            case JSON_ERROR_STATE_MISMATCH:
-                return 'Underflow or the modes mismatch';
-                break;
-            case JSON_ERROR_CTRL_CHAR:
-                return 'Unexpected control character found';
-                break;
-            case JSON_ERROR_SYNTAX:
-                return 'Syntax error, malformed JSON';
-                break;
-            case JSON_ERROR_UTF8:
-                return 'Malformed UTF-8 characters, possibly incorrectly encoded';
-                break;
-            default:
-                return 'Unknown error';
-                break;
-        }
+        return match ($error) {
+            JSON_ERROR_NONE => 'No errors',
+            JSON_ERROR_DEPTH => 'Maximum stack depth exceeded',
+            JSON_ERROR_STATE_MISMATCH => 'Underflow or the modes mismatch',
+            JSON_ERROR_CTRL_CHAR => 'Unexpected control character found',
+            JSON_ERROR_SYNTAX => 'Syntax error, malformed JSON',
+            JSON_ERROR_UTF8 => 'Malformed UTF-8 characters, possibly incorrectly encoded',
+            default => 'Unknown error'
+        };
     }
 }

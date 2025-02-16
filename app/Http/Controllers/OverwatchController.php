@@ -6,6 +6,7 @@ use App\Helpers\GeneralHelper;
 use App\Helpers\HttpHelper;
 use App\Helpers\LoggingHelper;
 use App\Helpers\Mutex;
+use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\ServerAPI;
 use App\Helpers\SocketAPI;
@@ -65,38 +66,11 @@ class OverwatchController extends Controller
             abort(401);
         }
 
-        $serverIp   = Server::getFirstServer('ip');
-
-        if (! $serverIp) {
-            return self::json(false, null, 'No OP-FW server found.');
-        }
-
         if (! HttpHelper::isPortInUse(4644)) {
             return self::json(false, null, 'Replay server is not running.');
         }
 
-        $license = str_replace('license:', '', $license);
-
-        $streams = explode(',', env('OVERWATCH_STREAMS'));
-        $stream  = false;
-
-        foreach ($streams as $entry) {
-            $parts = explode(':', $entry);
-
-            if (sizeof($parts) !== 2) {
-                continue;
-            }
-
-            if ($parts[0] === $license) {
-                $stream = $parts[1];
-
-                break;
-            }
-        }
-
-        if (! $stream) {
-            return self::json(false, null, 'Invalid spectator.');
-        }
+        $spectator = $this->resolveSpectatorOrAbort($license);
 
         $client = new Client([
             'timeout'         => 10,
@@ -105,7 +79,7 @@ class OverwatchController extends Controller
         ]);
 
         try {
-            $res = $client->get(sprintf('http://localhost:4644/%s', $stream));
+            $res = $client->get(sprintf('http://localhost:4644/%s', $spectator['key']));
 
             return $res->getBody();
         } catch (\Exception $e) {
@@ -113,6 +87,34 @@ class OverwatchController extends Controller
 
             return self::json(false, null, "Could not get replay.");
         }
+    }
+
+    /**
+     * Perform an action on a spectator.
+     *
+     * @param string $license
+     * @param string $action
+     */
+    public function doAction(string $license, string $action)
+    {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_SCREENSHOT)) {
+            abort(401);
+        }
+
+        $this->resolveSpectatorOrAbort($license);
+
+        switch ($action) {
+            case 'revive':
+                OPFWHelper::revivePlayer($license);
+                break;
+            case 'center':
+                OPFWHelper::setGameplayCamera($license, 0, 0);
+                break;
+            default:
+               return self::json(false, null, 'Invalid action.');
+        }
+
+        return self::json(true);
     }
 
     /**
@@ -133,31 +135,11 @@ class OverwatchController extends Controller
 
         $isReset = $source === 0;
 
-        $serverName = Server::getFirstServer('name');
-        $serverIp   = Server::getFirstServer('ip');
+        $spectator = $this->resolveSpectatorOrAbort($license);
 
-        if (! $serverIp) {
-            return self::json(false, null, 'No OP-FW server found.');
-        }
-
-        $spectators  = SocketAPI::getSpectators($serverIp);
-        $spectatorId = false;
-
-        foreach ($spectators as $id => $spectator) {
-            if ($spectator['license'] === $license) {
-                $spectatorId = $id + 1;
-
-                break;
-            }
-        }
-
-        if (! $spectatorId) {
-            return self::json(false, null, 'Invalid spectator.');
-        }
-
-        if ($isReset && !$spectator['spectating']) {
+        if ($isReset && ! $spectator['spectating']) {
             return self::json(true);
-        } else if (!$isReset && $spectator['spectating'] && $spectator['spectating']['source'] === $source) {
+        } else if (! $isReset && $spectator['spectating'] && $spectator['spectating']['source'] === $source) {
             return self::json(true);
         }
 
@@ -195,7 +177,7 @@ class OverwatchController extends Controller
                 return self::json(false, null, 'Player has no character loaded and no loadable character available.');
             }
 
-            $response = ServerAPI::loadCharacter($serverName, $license, $character->character_id);
+            $response = ServerAPI::loadCharacter($spectator['server'], $license, $character->character_id);
 
             if (! $response) {
                 return self::json(false, null, 'Failed to load character.');
@@ -206,19 +188,19 @@ class OverwatchController extends Controller
 
         if ($isReset) {
             $command = "spectate";
-            $message = sprintf('%s reset stream #%d.', user()->player_name, $spectatorId);
+            $message = sprintf('%s reset stream #%d.', user()->player_name, $spectator['id']);
         } else {
             $command = sprintf("spectate %d", $source);
-            $message = sprintf('%s set stream #%d to spectate %d.', user()->player_name, $spectatorId, $source);
+            $message = sprintf('%s set stream #%d to spectate %d.', user()->player_name, $spectator['id'], $source);
         }
 
-        $response = ServerAPI::runCommand($serverName, $license, $command);
+        $response = ServerAPI::runCommand($spectator['server'], $license, $command);
 
         if (! $response) {
             return self::json(false, null, 'Failed to make spectator spectate target.');
         }
 
-        SocketAPI::putPanelChatMessage($serverIp, $message);
+        SocketAPI::putPanelChatMessage($spectator['ip'], $message);
 
         return self::json(true);
     }
@@ -268,5 +250,37 @@ class OverwatchController extends Controller
         } else {
             return self::json(false, null, "There are no players available.");
         }
+    }
+
+    /**
+     * Get a spectator by license.
+     *
+     * @param string $license
+     * @return array|null
+     */
+    private function resolveSpectatorOrAbort(string $license): ?array
+    {
+        $server = Server::getFirstServer();
+
+        if (! $server) {
+            LoggingHelper::log("No opfw server found while trying to resolve spectator.");
+
+            abort(500);
+        }
+
+        $spectators = SocketAPI::getSpectators($server['ip']);
+
+        foreach ($spectators as $id => $spectator) {
+            if ($spectator['license'] === $license) {
+                $spectator['id'] = $id + 1;
+
+                $spectator['ip'] = $server['ip'];
+                $spectator['server'] = $server['name'];
+
+                return $spectator;
+            }
+        }
+
+        abort(400);
     }
 }

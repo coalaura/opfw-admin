@@ -188,7 +188,7 @@
         "save_replay": "Save the last 30 seconds as a clip.",
         "replay_unavailable": "Replay is not available at this time.",
         "clip": "Clip",
-        "replay_not_supported": "Instant replay is not supported on this browser."
+        "revive": "Revive the spectator client."
     },
     "errors": {
         "client": {

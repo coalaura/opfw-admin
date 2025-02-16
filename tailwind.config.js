@@ -141,6 +141,7 @@ module.exports = {
                 'darkbg':  defaultTheme.colors.gray['800'],
                 'lightbd': defaultTheme.colors.gray['200'],
                 'darkbd':  defaultTheme.colors.gray['700'],
+                'vdarkbg': 'rgb(18, 22, 33)', // gray-950
 
                 // Saturated gray variants
                 'gray-900v': 'hsl(242, 47%, 34%)',
