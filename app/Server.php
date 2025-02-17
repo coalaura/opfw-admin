@@ -12,26 +12,6 @@ use Illuminate\Support\Str;
 class Server
 {
     /**
-     * Gets the API data.
-     *
-     * @return array
-     */
-    public static function fetchApi(): array
-    {
-        $url = self::getFirstServer('url');
-
-        if (!$url) {
-            return [];
-        }
-
-        $data = GeneralHelper::get($url . 'variables.json') ?? null;
-
-        $response = OPFWHelper::parseResponse($data);
-
-        return $response->status && $response->data ? $response->data : [];
-    }
-
-    /**
      * Gets the api url
      *
      * @param string $serverIp
