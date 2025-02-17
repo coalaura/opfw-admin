@@ -190,7 +190,7 @@ class Cronjobs extends Command
         $start = microtime(true);
         echo " - Checking if FiveM server is reachable...";
 
-        $reachable = !empty(Server::fetchApi());
+        $reachable = !empty(ServerAPI::getVariables());
 
         echo $this->stopTime($start);
 
