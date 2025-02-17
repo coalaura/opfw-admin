@@ -151,6 +151,10 @@ class OverwatchController extends Controller
                 ServerAPI::setGameplayCamera($spectator['server'], $license, 0, 0);
 
                 break;
+            case 'backwards':
+                ServerAPI::setGameplayCamera($spectator['server'], $license, 0, 180);
+
+                break;
             default:
                 return self::json(false, null, 'Invalid action.');
         }

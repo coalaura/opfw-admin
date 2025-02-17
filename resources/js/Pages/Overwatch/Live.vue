@@ -216,7 +216,11 @@ export default {
                 },
                 {
                     name: 'center',
-                    icon: 'camera-retro'
+                    icon: 'arrow-circle-up'
+                },
+                {
+                    name: 'backwards',
+                    icon: 'arrow-circle-down'
                 },
                 {
                     name: 'new_player',
