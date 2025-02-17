@@ -104,8 +104,8 @@ class LoggingHelper
         }
         self::$lastTime = round(microtime(true) * 1000);
 
-        if (strlen($msg) > 200) {
-            $msg = substr($msg, 0, length: 200) . '...';
+        if (strlen($msg) > 300) {
+            $msg = substr($msg, 0, length: 300) . '...';
         }
 
         $msg = [$classInfo, $time . $sessionKey . ' -> ' . $msg . PHP_EOL];
