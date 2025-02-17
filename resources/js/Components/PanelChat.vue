@@ -161,7 +161,7 @@ export default {
             return 'text-gray-700 dark:text-gray-300';
         },
         getMessageTime(time) {
-            const now = this.$moment.unix(this.timestamp);
+            const now = this.$moment.unix(this.timestamp / 1000);
 
             return this.$moment.unix(time).from(now);
         },
