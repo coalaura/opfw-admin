@@ -152,7 +152,7 @@ class OverwatchController extends Controller
 
                 break;
             case 'backwards':
-                ServerAPI::setGameplayCamera($spectator['server'], $license, 0, 180);
+                ServerAPI::setGameplayCamera($spectator['server'], $license, 0, 180.1);
 
                 break;
             default:
