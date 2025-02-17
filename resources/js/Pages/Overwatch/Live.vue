@@ -215,6 +215,10 @@ export default {
                     icon: 'medkit'
                 },
                 {
+                    name: 'center',
+                    icon: 'camera-retro'
+                },
+                {
                     name: 'new_player',
                     icon: 'kiwi-bird'
                 }

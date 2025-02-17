@@ -628,6 +628,7 @@
     "overwatch": {
         "attach": "Legg ved skjermbilde til spillerpanelet.",
         "auto_refresh": "Veksle auto-oppdatering.",
+        "center": "Sentrer tilskuernes kamera for å peke fremover.",
         "clip": "Klipp",
         "description": "Se gjennom tilfeldige spilleres spillbilder for å se om du finner noe uvanlig",
         "live": "Overwatch - Live",

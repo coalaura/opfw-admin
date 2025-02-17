@@ -148,7 +148,7 @@ class OverwatchController extends Controller
                     ]
                 );
             case 'center':
-                OPFWHelper::setGameplayCamera($license, 0, 0);
+                ServerAPI::setGameplayCamera($spectator['server'], $license, 0, 0);
 
                 break;
             default:

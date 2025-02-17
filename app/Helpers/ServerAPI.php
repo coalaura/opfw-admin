@@ -194,16 +194,32 @@ class ServerAPI
     /**
      * /execute/runCommand
      */
-    public static function runCommand(string $server, string $licenseIdentifier, string $command)
+    public static function runCommand(string $server, string $targetLicense, string $command)
     {
         $url = Server::getServerURL($server);
 
         $url .= 'execute/runCommand';
 
         return self::do('POST', $url, [
-            'licenseIdentifier' => $licenseIdentifier,
-            'command'           => $command,
+            'targetLicense' => $targetLicense,
+            'command'       => $command,
         ], 3, true);
+    }
+
+    /**
+     * /execute/setGameplayCamera
+     */
+    public static function setGameplayCamera(string $server, string $targetLicense, float $pitch, float $heading)
+    {
+        $url = Server::getServerURL($server);
+
+        $url .= 'execute/setGameplayCamera';
+
+        return self::do('PATCH', $url, [
+            'targetLicense' => $targetLicense,
+            'pitch'         => $pitch,
+            'heading'       => $heading,
+        ], 3, false);
     }
 
     /**
@@ -334,7 +350,7 @@ class ServerAPI
                     throw new \Exception(sprintf('Invalid JSON status %s: %s', $status, $json['message'] ?? 'No message'));
                 }
 
-                if (!empty($json['message'])) {
+                if (! empty($json['message'])) {
                     return $json['message'];
                 }
 

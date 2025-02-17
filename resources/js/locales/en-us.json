@@ -190,6 +190,7 @@
         "replay_unavailable": "Replay is not available at this time.",
         "clip": "Clip",
         "revive": "Revive the spectator client.",
+        "center": "Center the spectators camera to point forwards.",
         "new_player": "Pick a random new player to spectate."
     },
     "errors": {

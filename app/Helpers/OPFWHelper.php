@@ -157,34 +157,6 @@ class OPFWHelper
     }
 
     /**
-     * Sets the gameplay camera pitch and heading for a player
-     *
-     * @param string $licenseIdentifier
-     * @param float $pitch
-     * @param float $heading
-     * @return OPFWResponse
-     */
-    public static function setGameplayCamera(string $licenseIdentifier, float $pitch, float $heading): OPFWResponse
-    {
-        $status = Player::getOnlineStatus($licenseIdentifier, false);
-        if (! $status->isOnline()) {
-            return new OPFWResponse(false, 'Player is offline.');
-        }
-
-        $response = self::executeRoute(Server::getServerURL($status->serverName) . 'execute/setGameplayCamera', [
-            'targetLicense' => $licenseIdentifier,
-            'pitch'         => $pitch,
-            'heading'       => $heading,
-        ]);
-
-        if ($response->status) {
-            $response->message = 'Set gameplay camera for player.';
-        }
-
-        return $response;
-    }
-
-    /**
      * Updates tattoo data for a player
      *
      * @param Player $player

@@ -628,6 +628,7 @@
     "overwatch": {
         "attach": "Khiladiyon panel mein screenshot jodein.",
         "auto_refresh": "Swayam-taaza karne ko toggle karein.",
+        "center": "Darsakon ke camera ko aage ki or point karne ke liye kendrit karein.",
         "clip": "Klip",
         "description": "Kisi bhi ajeeb cheez ko dhundhne ke liye random khiladiyon ke game renders dekhein.",
         "live": "Overwatch - Live",

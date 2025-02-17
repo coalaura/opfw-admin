@@ -628,6 +628,7 @@
     "overwatch": {
         "attach": "Add screenshot to players.",
         "auto_refresh": "Switch auto-refresh.",
+        "center": "Center spectator camera. Point forward.",
         "clip": "Clip",
         "description": "Look at random player games, find strange thing.",
         "live": "Overwatch - Live",
