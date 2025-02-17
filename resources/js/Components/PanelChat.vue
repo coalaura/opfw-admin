@@ -38,7 +38,7 @@
                 <div class="inline break-words" :class="getMessageColor(message)" v-html="getMessageHTML(message)"></div>
 
                 <div class="absolute top-0 right-0 opacity-0 group-hover:opacity-100 text-xxs pointer-events-none italic text-gray-600 dark:text-gray-400 bg-gray-400/20 dark:bg-gray-600/20 backdrop-filter backdrop-blur-md px-1 py-0.5">
-                    {{ $moment.unix(message.time).fromNow() }}
+                    {{ getMessageTime(message.time) }}
                 </div>
             </div>
         </div>
@@ -78,6 +78,9 @@ export default {
 
             showEmotes: false,
             scrollDisabled: false,
+
+            interval: false,
+            timestamp: false,
 
             timeout: false,
             connecting: false,
@@ -157,6 +160,11 @@ export default {
 
             return 'text-gray-700 dark:text-gray-300';
         },
+        getMessageTime(time) {
+            const now = this.$moment.unix(this.timestamp);
+
+            return this.$moment.unix(time).from(now);
+        },
         getMessageHTML(message) {
             let html = this.escapeHtml(message.text);
 
@@ -222,6 +230,7 @@ export default {
             this.socket.on("chat", compressed => {
                 console.log(`Received socket "chat" event.`);
 
+                this.updateTimestamp();
                 this.addMessage(unpack(compressed));
             });
 
@@ -230,6 +239,7 @@ export default {
 
                 this.messages = unpack(compressed);
 
+                this.updateTimestamp();
                 this.scrollInstant(true);
             });
 
@@ -345,6 +355,10 @@ export default {
 
                 return;
             }
+        },
+
+        updateTimestamp() {
+            this.timestamp = Date.now();
         }
     },
     created() {
@@ -364,8 +378,13 @@ export default {
 
         this.muted = !!localStorage.getItem("panel_chat_muted");
 
+        this.interval = setInterval(this.updateTimestamp, 2000);
+
         // preload
         fetch("/images/notification_pop3.ogg");
+    },
+    unmounted() {
+        clearInterval(this.interval);
     }
 }
 </script>
