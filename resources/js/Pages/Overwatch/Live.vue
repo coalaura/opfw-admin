@@ -48,7 +48,7 @@
                             </div>
 
                             <div class="flex gap-1">
-                                <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center select-none" :class="{ 'opacity-50 cursor-not-allowed': isPerformingAction || isActionTimedOut }" @click="performAction(action.name)" :title="t(`overwatch.${action.name}`)" v-for="action in actions">
+                                <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center select-none" :class="{ 'opacity-50 cursor-not-allowed': isPerformingAction || isActionTimedOut || action.disabled }" @click="performAction(action)" :title="t(`overwatch.${action.name}`)" v-for="action in actions">
                                     <i class="fas fa-spinner animate-spin" v-if="isPerformingAction"></i>
                                     <i :class="`fas fa-${action.icon}`" v-else></i>
                                 </div>
@@ -220,7 +220,8 @@ export default {
                 },
                 {
                     name: 'backwards',
-                    icon: 'arrow-circle-down'
+                    icon: 'arrow-circle-down',
+                    disabled: true
                 },
                 {
                     name: 'new_player',
@@ -249,7 +250,7 @@ export default {
     },
     methods: {
         async performAction(action) {
-            if (this.isPerformingAction || this.isActionTimedOut) return;
+            if (this.isPerformingAction || this.isActionTimedOut || action.disabled) return;
 
             const spectator = this.spectators.find(spectator => spectator.stream === this.source);
 
@@ -259,7 +260,7 @@ export default {
             this.isActionTimedOut = true;
 
             try {
-                await fetch(`/live/do/${spectator.license}/${action}`, { method: "PATCH" });
+                await fetch(`/live/do/${spectator.license}/${action.name}`, { method: "PATCH" });
             } catch {}
 
             this.isPerformingAction = false;
