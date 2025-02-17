@@ -191,6 +191,7 @@
         "clip": "Clip",
         "revive": "Revive the spectator client.",
         "center": "Center the spectators camera to point forwards.",
+        "backwards": "Center the spectators camera to point backwards.",
         "new_player": "Pick a random new player to spectate."
     },
     "errors": {
