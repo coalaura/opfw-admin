@@ -315,7 +315,7 @@ class ServerAPI
             $result = null;
 
             if ($status < 200 || $status > 299) {
-                throw new \Exception(sprintf('HTTP %s: %s', $status, substr($body, 0, 100)));
+                throw new \Exception(sprintf('HTTP %s: %s', $status, substr($body, 0, 250)));
             }
 
             if (Str::endsWith($url, '.json') || $forceJson) {
@@ -325,7 +325,7 @@ class ServerAPI
                 $json = json_decode($body, true);
 
                 if (! $json || ! isset($json['statusCode'])) {
-                    throw new \Exception(sprintf('Invalid JSON response %s: %s', $status, substr($body, 0, 100)));
+                    throw new \Exception(sprintf('Invalid JSON response %s: %s', $status, substr($body, 0, 250)));
                 }
 
                 $status = intval($json['statusCode']) ?? $status;
