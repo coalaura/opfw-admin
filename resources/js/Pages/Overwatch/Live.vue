@@ -48,7 +48,7 @@
                             </div>
 
                             <div class="flex gap-1">
-                                <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center select-none" :class="{ 'opacity-50 cursor-not-allowed': isPerformingAction || isActionTimedOut || action.disabled }" @click="performAction(action)" :title="t(`overwatch.${action.name}`)" v-for="action in actions">
+                                <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center select-none" :class="getActionColor(action)" @click="performAction(action)" :title="t(`overwatch.${action.name}`)" v-for="action in actions">
                                     <i class="fas fa-spinner animate-spin" v-if="isPerformingAction"></i>
                                     <i :class="`fas fa-${action.icon}`" v-else></i>
                                 </div>
@@ -207,9 +207,27 @@ export default {
 
             hls: false,
             source: false,
-            interval: false,
+            interval: false
+        };
+    },
+    computed: {
+        spectator() {
+            if (!this.source) return null;
 
-            actions: [
+            return this.spectators.find(spectator => spectator.stream === this.source);
+        },
+        target() {
+            return this.spectator?.spectating;
+        },
+        validServerId() {
+            const serverId = parseInt(this.newServerId);
+
+            if (!Number.isInteger(serverId)) return false;
+
+            return serverId === 0 || (serverId && serverId >= 1 && serverId <= 65535);
+        },
+        actions() {
+            return [
                 {
                     name: 'revive',
                     icon: 'medkit'
@@ -224,43 +242,42 @@ export default {
                     disabled: true
                 },
                 {
+                    name: 'camera',
+                    icon: 'ticket-alt',
+                    disabled: true,
+                    active: !!this.spectator?.data?.spectatorCamera
+                },
+                {
                     name: 'new_player',
                     icon: 'kiwi-bird'
                 }
-            ]
-        };
-    },
-    computed: {
-        target() {
-            if (!this.source) return false;
-
-            const spectator = this.spectators.find(spectator => spectator.stream === this.source);
-
-            if (!spectator) return false;
-
-            return spectator.spectating;
-        },
-        validServerId() {
-            const serverId = parseInt(this.newServerId);
-
-            if (!Number.isInteger(serverId)) return false;
-
-            return serverId === 0 || (serverId && serverId >= 1 && serverId <= 65535);
+            ];
         }
     },
     methods: {
+        getActionColor(action) {
+            const color = [];
+
+            if (this.isPerformingAction || this.isActionTimedOut || action.disabled) {
+                color.push("opacity-50 cursor-not-allowed");
+            }
+
+            if (action.active === true) {
+                color.push("border-lime-400 dark:border-lime-600 text-lime-400 dark:text-lime-600");
+            } else if (action.active === false) {
+                color.push("border-red-400 dark:border-red-600 text-red-400 dark:text-red-600");
+            }
+
+            return color.join(" ");
+        },
         async performAction(action) {
-            if (this.isPerformingAction || this.isActionTimedOut || action.disabled) return;
-
-            const spectator = this.spectators.find(spectator => spectator.stream === this.source);
-
-            if (!spectator) return false;
+            if (this.isPerformingAction || this.isActionTimedOut || action.disabled || !this.spectator) return;
 
             this.isPerformingAction = true;
             this.isActionTimedOut = true;
 
             try {
-                await fetch(`/live/do/${spectator.license}/${action.name}`, { method: "PATCH" });
+                await fetch(`/live/do/${this.spectator.license}/${action.name}`, { method: "PATCH" });
             } catch {}
 
             this.isPerformingAction = false;
@@ -270,17 +287,13 @@ export default {
             }, 5000);
         },
         async saveReplay() {
-            if (!this.replay || this.isSavingReplay) return;
-
-            const spectator = this.spectators.find(spectator => spectator.stream === this.source);
-
-            if (!spectator) return false;
+            if (!this.replay || this.isSavingReplay || !this.spectator) return;
 
             this.isSavingReplay = true;
             this.isReplayTimeout = true;
 
             try {
-                const response = await fetch(`/live/replay/${spectator.license}`);
+                const response = await fetch(`/live/replay/${this.spectator.license}`);
 
                 if (!response.ok) {
                     throw new Error("Failed to fetch replay.");
@@ -393,24 +406,18 @@ export default {
             this.chatRoom = false;
         },
         async setSpectating() {
-            if (this.isLoading || this.isUpdating || this.isTimedOut) {
+            if (this.isLoading || this.isUpdating || this.isTimedOut || !this.spectator) {
                 return;
             }
 
-            const spectator = this.spectators.find(spectator => spectator.stream === this.source);
-
-            if (!spectator) {
-                return;
-            }
-
-            if (!this.validServerId || (spectator.spectating && this.newServerId === spectator.spectating.source)) {
+            if (!this.validServerId || (this.newServerId === target?.source)) {
                 return;
             }
 
             this.isUpdating = true;
 
             try {
-                const data = await fetch(`/live/set/${spectator.license}/${this.newServerId}`, {
+                const data = await fetch(`/live/set/${this.spectator.license}/${this.newServerId}`, {
                     method: "PATCH",
                 }).then(response => response.json());
 

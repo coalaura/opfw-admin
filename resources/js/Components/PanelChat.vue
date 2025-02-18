@@ -68,7 +68,7 @@ export default {
     props: {
         active: Boolean,
         dimensions: String,
-        room: String,
+        room: String | Boolean,
         height: String | Boolean,
         emotes: Object | Array
     },

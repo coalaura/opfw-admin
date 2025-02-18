@@ -628,6 +628,8 @@
     "overwatch": {
         "attach": "Add screenshot to players.",
         "auto_refresh": "Switch auto-refresh.",
+        "backwards": "Center watcher eye to look back.",
+        "camera": "Switch watcher eye (auto center when aim, etc.)",
         "center": "Center spectator camera. Point forward.",
         "clip": "Clip",
         "description": "Look at random player games, find strange thing.",

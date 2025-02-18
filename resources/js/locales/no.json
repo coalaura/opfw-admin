@@ -628,6 +628,8 @@
     "overwatch": {
         "attach": "Legg ved skjermbilde til spillerpanelet.",
         "auto_refresh": "Veksle auto-oppdatering.",
+        "backwards": "Sentrum seerkameraet for å peke bakover.",
+        "camera": "Veksle tilskuerkamera (sentrerer automatisk kameraet når du sikter, osv.)",
         "center": "Sentrer tilskuernes kamera for å peke fremover.",
         "clip": "Klipp",
         "description": "Se gjennom tilfeldige spilleres spillbilder for å se om du finner noe uvanlig",
