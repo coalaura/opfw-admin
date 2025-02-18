@@ -111,6 +111,8 @@ class OverwatchController extends Controller
             return;
         }
 
+        $hasSpectatorCamera = isset($spectator['data']) && isset($spectator['data']['spectatorCamera']);
+
         switch ($action) {
             case 'revive':
                 OPFWHelper::revivePlayer($license);
@@ -153,6 +155,10 @@ class OverwatchController extends Controller
                 break;
             case 'backwards':
                 ServerAPI::setGameplayCamera($spectator['server'], $license, 0, 180);
+
+                break;
+            case 'camera':
+                ServerAPI::setSpectatorCamera($spectator['server'], $license, $hasSpectatorCamera);
 
                 break;
             default:

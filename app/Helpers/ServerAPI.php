@@ -223,6 +223,21 @@ class ServerAPI
     }
 
     /**
+     * /execute/setSpectatorCamera
+     */
+    public static function setSpectatorCamera(string $server, string $targetLicense, bool $enabled)
+    {
+        $url = Server::getServerURL($server);
+
+        $url .= 'execute/setSpectatorCamera';
+
+        return self::do('PATCH', $url, [
+            'targetLicense' => $targetLicense,
+            'enabled'       => $enabled ? 'true' : ''
+        ], 3, false);
+    }
+
+    /**
      * Returns the cached value if it exists, otherwise refreshes the cache and returns the fresh value (if $refresh is true).
      *
      * @param string $route
