@@ -209,7 +209,7 @@ class ServerAPI
     /**
      * /execute/setGameplayCamera
      */
-    public static function setGameplayCamera(string $server, string $targetLicense, float $pitch, float $heading)
+    public static function setGameplayCamera(string $server, string $targetLicense, int $duration, float $pitch, float $heading)
     {
         $url = Server::getServerURL($server);
 
@@ -217,6 +217,7 @@ class ServerAPI
 
         return self::do('PATCH', $url, [
             'targetLicense' => $targetLicense,
+            'duration'      => $duration,
             'pitch'         => $pitch,
             'heading'       => $heading,
         ], 3, false);
