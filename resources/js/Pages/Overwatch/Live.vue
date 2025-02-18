@@ -410,7 +410,7 @@ export default {
                 return;
             }
 
-            if (!this.validServerId || (this.newServerId === target?.source)) {
+            if (!this.validServerId || (this.newServerId === this.target?.source)) {
                 return;
             }
 
