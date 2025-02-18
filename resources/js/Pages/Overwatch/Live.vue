@@ -238,13 +238,11 @@ export default {
                 },
                 {
                     name: 'backwards',
-                    icon: 'arrow-circle-down',
-                    disabled: true
+                    icon: 'arrow-circle-down'
                 },
                 {
                     name: 'camera',
                     icon: 'ticket-alt',
-                    disabled: true,
                     active: !!this.spectator?.data?.spectatorCamera
                 },
                 {
