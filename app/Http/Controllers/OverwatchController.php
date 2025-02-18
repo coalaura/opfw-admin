@@ -158,7 +158,7 @@ class OverwatchController extends Controller
 
                 break;
             case 'camera':
-                ServerAPI::setSpectatorCamera($spectator['server'], $license, $hasSpectatorCamera);
+                ServerAPI::setSpectatorCamera($spectator['server'], $license, !$hasSpectatorCamera);
 
                 break;
             default:
