@@ -47,7 +47,7 @@
                                 {{ t('overwatch.clip') }}
                             </div>
 
-                            <div class="flex gap-1">
+                            <div class="flex justify-between gap-1">
                                 <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center select-none" :class="getActionColor(action)" @click="performAction(action)" :title="t(`overwatch.${action.name}`)" v-for="action in actions">
                                     <i class="fas fa-spinner animate-spin" v-if="isPerformingAction"></i>
                                     <i :class="`fas fa-${action.icon}`" v-else></i>
