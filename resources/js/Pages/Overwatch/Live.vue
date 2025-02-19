@@ -243,7 +243,7 @@ export default {
                 {
                     name: 'camera',
                     icon: 'ticket-alt',
-                    active: !!this.spectator?.data?.spectatorCamera
+                    active: this.spectator?.data?.spectatorCamera
                 },
                 {
                     name: 'new_player',
