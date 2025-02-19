@@ -31,14 +31,6 @@ const momentDuration = require("moment-duration-format");
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import "vue-search-select/dist/VueSearchSelect.css";
-import { InertiaProgress } from "@inertiajs/progress";
-
-InertiaProgress.init({
-	delay: 250,
-	color: "#29d",
-	includeCSS: true,
-	showSpinner: true
-});
 
 import "./scripts/overrides.js";
 import "./scripts/chartjs-highlights.js";

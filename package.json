@@ -43,7 +43,6 @@
         "webpack": "^5.88.2"
     },
     "dependencies": {
-        "@inertiajs/progress": "^0.2.7",
         "browser-notification": "^3.0.0",
         "chart.js": "^2.9.4",
         "chartjs-plugin-trendline": "^0.1.1",
