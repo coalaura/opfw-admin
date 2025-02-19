@@ -17,8 +17,8 @@
         "postcss": "^8.5.3",
         "postcss-import": "^16.0.1",
         "resolve-url-loader": "^5.0.0",
-        "sass": "^1.66.1",
-        "sass-loader": "^13.3.2",
+        "sass": "^1.85.0",
+        "sass-loader": "^16.0.5",
         "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.2",
         "vite": "^6.1.1",
         "vue": "^2.5.17",
@@ -28,7 +28,6 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "aos": "^2.3.4",
         "autoprefixer": "^10.4.20",
         "browser-notification": "^3.0.0",
         "chart.js": "^2.9.4",
@@ -45,8 +44,6 @@
         "leaflet-rotatedmarker": "^0.2.0",
         "leaflet.markercluster": "^1.5.3",
         "mini-svg-data-uri": "^1.4.4",
-        "moment-duration-format": "^2.3.2",
-        "moment-timezone": "^0.5.47",
         "msgpackr": "^1.9.9",
         "pako": "^2.0.4",
         "rainbowvis.js": "^1.1.1",
