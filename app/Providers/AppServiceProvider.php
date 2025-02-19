@@ -44,12 +44,12 @@ class AppServiceProvider extends ServiceProvider
 
             $manifestPath = public_path($base . '.vite/manifest.json');
             if (! file_exists($manifestPath)) {
-                return '';
+                return '<!-- manifest not found -->';
             }
 
             $manifest = json_decode(file_get_contents($manifestPath), true);
             if (!$manifest || !is_array($manifest)) {
-                return '';
+                return '<!-- manifest unreadable -->';
             }
 
             $import = [];
@@ -70,6 +70,10 @@ class AppServiceProvider extends ServiceProvider
                 } elseif (Str::endsWith($src, '.css')) {
                     $import[] = '<link rel="stylesheet" href="/' . $src . '" />';
                 }
+            }
+
+            if (empty($import)) {
+                return '<!-- nothing to import -->';
             }
 
             return implode('', $import);
