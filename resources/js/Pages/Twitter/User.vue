@@ -23,8 +23,8 @@
                 </div>
 
                 <button @click="toggleVerify" class="p-1 top-1 right-1 absolute font-semibold flex items-center justify-center drop-shadow" :title="user.is_verified ? t('twitter.un_verify') : t('twitter.verify')" v-if="this.perm.check(this.perm.PERM_TWITTER_VERIFY)">
-                    <img v-if="user.is_verified" class="w-7" src="/images/un_verify.png" />
-                    <img v-else class="w-7" src="/images/verify.png" />
+                    <img v-if="user.is_verified" class="w-7" :src="'/images/un_verify.png'" />
+                    <img v-else class="w-7" :src="'/images/verify.png'" />
                 </button>
             </div>
         </template>

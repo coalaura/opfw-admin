@@ -78,7 +78,7 @@
                     </button>
                 </div>
 
-                <img v-if="pictures.length === 0" src="/images/no-pictures.png" class="w-full" />
+                <img v-if="pictures.length === 0" :src="'/images/no-pictures.png'" class="w-full" />
             </div>
         </template>
 

@@ -24,12 +24,17 @@ function clearViewCachePlugin() {
 
 export default defineConfig({
 	publicDir: false,
+	assetsInclude: ["**/*.webp", "**/*.svg", "**/*.png"],
 	plugins: [
 		laravel({
 			input: ["resources/js/app.js", "resources/css/app.pcss"],
 			refresh: true,
 		}),
-		vue(),
+		vue({
+			transformAssetUrls: {
+				includeAbsolute: false,
+			},
+		}),
 		clearViewCachePlugin(),
 	],
 	resolve: {
@@ -40,8 +45,11 @@ export default defineConfig({
 	build: {
 		manifest: true,
 		outDir: "public/build",
+		target: "es2020",
 		rollupOptions: {
-			external: id => id.startsWith("/images/"),
+			external: [
+				/^\/images\//m
+			]
 		},
 	},
 });

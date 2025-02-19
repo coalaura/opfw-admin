@@ -14,7 +14,7 @@
                     Any input field that has the markdown logo (<i class="fab fa-markdown"></i>) has basic markdown support.
                 </p>
 
-                <img src="/images/docs/markdown.png" class="w-full shadow-md mb-3 border border-gray-500" />
+                <img :src="'/images/docs/markdown.png'" class="w-full shadow-md mb-3 border border-gray-500" />
 
                 <p class="mb-3">
                     The supported markdown syntax is limited to...
@@ -61,7 +61,7 @@ multiple lines
                     - another unordered list item
                 </p>
 
-                <img src="/images/docs/markdown_embed.png" class="w-full shadow-md border border-gray-500 mb-3" />
+                <img :src="'/images/docs/markdown_embed.png'" class="w-full shadow-md border border-gray-500 mb-3" />
 
                 <p class="mb-3">
                     In addition to the basic markdown support, the panel also supports embedding images, videos, etc. from certain providers. The following are supported:

@@ -57,31 +57,31 @@
                     <!-- Map Legend -->
                     <div class="my-2 flex flex-wrap justify-between text-xs w-full">
                         <div class="mx-2">
-                            <img src="/images/icons/circle.png" class="w-map-icon inline-block" alt="on foot" />
+                            <img :src="'/images/icons/circle.png'" class="w-map-icon inline-block" alt="on foot" />
                             <span class="leading-map-icon">on foot</span>
                         </div>
                         <div class="mx-2">
-                            <img src="/images/icons/circle_green.png" class="w-map-icon inline-block" alt="invisible" />
+                            <img :src="'/images/icons/circle_green.png'" class="w-map-icon inline-block" alt="invisible" />
                             <span class="leading-map-icon">invisible</span>
                         </div>
                         <div class="mx-2">
-                            <img src="/images/icons/circle_red.png" class="w-map-icon inline-block" alt="passenger" />
+                            <img :src="'/images/icons/circle_red.png'" class="w-map-icon inline-block" alt="passenger" />
                             <span class="leading-map-icon">passenger</span>
                         </div>
                         <div class="mx-2">
-                            <img src="/images/icons/skull.png" class="w-map-icon inline-block" alt="dead" />
+                            <img :src="'/images/icons/skull.png'" class="w-map-icon inline-block" alt="dead" />
                             <span class="leading-map-icon">dead</span>
                         </div>
                         <div class="mx-2">
-                            <img src="/images/icons/skull_red.png" class="w-map-icon inline-block" alt="dead passenger" />
+                            <img :src="'/images/icons/skull_red.png'" class="w-map-icon inline-block" alt="dead passenger" />
                             <span class="leading-map-icon">dead (passenger)</span>
                         </div>
                         <div class="mx-2">
-                            <img src="/images/icons/circle_police.png" class="w-map-icon inline-block" alt="police" />
+                            <img :src="'/images/icons/circle_police.png'" class="w-map-icon inline-block" alt="police" />
                             <span class="leading-map-icon">police</span>
                         </div>
                         <div class="mx-2">
-                            <img src="/images/icons/circle_ems.png" class="w-map-icon inline-block" alt="ems" />
+                            <img :src="'/images/icons/circle_ems.png'" class="w-map-icon inline-block" alt="ems" />
                             <span class="leading-map-icon">ems</span>
                         </div>
                     </div>

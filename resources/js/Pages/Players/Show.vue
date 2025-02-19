@@ -976,7 +976,7 @@
             <!-- Issuing -->
             <div class="p-8 mb-10 bg-gray-100 rounded dark:bg-dark-secondary" v-if="isBanning">
                 <template v-if="isBanLoading">
-                    <img src="/images/banned.webp" class="h-72" style="image-rendering: pixelated" />
+                    <img :src="'/images/banned.webp'" class="h-72" style="image-rendering: pixelated" />
                 </template>
                 <template v-else>
                     <div class="mb-8 space-y-5">
@@ -1126,8 +1126,8 @@
                         <template #header>
                             <div class="flex justify-between gap-3">
                                 <div class="flex-shrink-0">
-                                    <img class="w-32 h-32 rounded-2xl" src="/images/loading.svg" :data-lazy="character.mugshot" v-if="character.mugshot" />
-                                    <img class="w-32 h-32 rounded-2xl" src="/images/no_mugshot.png" v-else :title="t('players.characters.no_mugshot')" />
+                                    <img class="w-32 h-32 rounded-2xl" :src="'/images/loading.svg'" :data-lazy="character.mugshot" v-if="character.mugshot" />
+                                    <img class="w-32 h-32 rounded-2xl" :src="'/images/no_mugshot.png'" v-else :title="t('players.characters.no_mugshot')" />
                                 </div>
                                 <div class="w-full overflow-hidden">
                                     <h3 class="mb-2 border-b-2 border-dashed border-gray-500">

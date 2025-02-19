@@ -3,7 +3,7 @@
 
         <portal to="title">
             <h1 class="dark:text-white flex items-center gap-3">
-                <img src="/images/social_credit.webp" class="!m-0 w-16 inline-block" v-if="modifier" />
+                <img :src="'/images/social_credit.webp'" class="!m-0 w-16 inline-block" v-if="modifier" />
                 {{ t("staff_statistics.title" + modifier) }}
             </h1>
             <p>
