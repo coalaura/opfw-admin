@@ -66,7 +66,7 @@ body {
 }
 
 #chat {
-    background: url(/images/default.webp);
+    background: url(../../css/images/default.webp);
     background-size: cover;
     background-position: center;
     padding: 5vh;
