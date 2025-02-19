@@ -408,7 +408,7 @@ export default {
         getDateForTimezone(pTimezone) {
             const date = new Date((new Date()).toLocaleString('en-US', { timeZone: pTimezone.tz_name }));
 
-            return this.$moment(date).format('dddd, MMMM Do YYYY, h:mm:ss A');
+            return dayjs(date).format('dddd, MMMM Do YYYY, h:mm:ss A');
         },
         getTimezoneIcon(pTimezone) {
             const area = pTimezone.split('/').shift();
@@ -477,10 +477,10 @@ export default {
         },
         formatUptime(pMilliseconds, pIncludeMinutes) {
             if (pMilliseconds < 3600000) {
-                return this.$moment.duration(pMilliseconds).format('m [minutes]');
+                return dayjs.duration(pMilliseconds).format('m [minutes]');
             }
 
-            return this.$moment.duration(pMilliseconds).format(`d [days], h [hours]${pIncludeMinutes ? ', m [minutes]' : ''}`);
+            return dayjs.duration(pMilliseconds).format(`d [days], h [hours]${pIncludeMinutes ? ', m [minutes]' : ''}`);
         },
         async showDebugInfo() {
             if (this.loadingDebug) return;

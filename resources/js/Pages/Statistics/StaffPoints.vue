@@ -118,7 +118,7 @@ export default {
             return false;
         },
         getWeekName(week) {
-            return this.$moment.utc().subtract(week, 'weeks').day("Monday").format('Do MMM');
+            return dayjs.utc().subtract(week, 'weeks').day("Monday").format('Do MMM');
         }
     },
     mounted() {

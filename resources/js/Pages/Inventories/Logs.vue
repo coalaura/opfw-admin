@@ -171,7 +171,7 @@ export default {
 	},
 	methods: {
 		formatRawTimestamp(timestamp) {
-			return this.$moment(timestamp).unix();
+			return dayjs(timestamp).unix();
 		},
 		itemHistoryTitle(metadata) {
 			const itemIds = metadata.itemIds;

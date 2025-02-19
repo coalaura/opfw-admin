@@ -77,7 +77,7 @@ export default {
         },
     },
     data() {
-        const banTime = this.ban.expireAt ? this.$options.filters.humanizeSeconds(this.$moment(this.ban.expireAt).unix() - this.$moment(this.ban.timestamp).unix()) : null;
+        const banTime = this.ban.expireAt ? this.$options.filters.humanizeSeconds(dayjs(this.ban.expireAt).unix() - dayjs(this.ban.timestamp).unix()) : null;
 
         return {
             local: {
@@ -87,11 +87,11 @@ export default {
             form: {
                 reason: this.ban.reason,
                 expire: null,
-                expireDate: this.ban.expireAt ? this.$moment(this.ban.expireAt).local().format('YYYY-MM-DD') : null,
-                expireTime: this.ban.expireAt ? this.$moment(this.ban.expireAt).local().format('HH:mm') : null,
+                expireDate: this.ban.expireAt ? dayjs(this.ban.expireAt).local().format('YYYY-MM-DD') : null,
+                expireTime: this.ban.expireAt ? dayjs(this.ban.expireAt).local().format('HH:mm') : null,
             },
             isTempBanning: !!this.ban.expireAt,
-            banTime: this.ban.expireAt ? this.$options.filters.humanizeSeconds(this.$moment(this.ban.expireAt).unix() - this.$moment(this.ban.timestamp).unix()) : this.t('players.ban.forever_edit')
+            banTime: this.ban.expireAt ? this.$options.filters.humanizeSeconds(dayjs(this.ban.expireAt).unix() - dayjs(this.ban.timestamp).unix()) : this.t('players.ban.forever_edit')
         };
     },
     methods: {
@@ -101,8 +101,8 @@ export default {
 
             // Calculate expire relative to now in seconds if temp ban.
             if (this.isTempBanning) {
-                const nowUnix = this.$moment().unix();
-                const expireUnix = this.$moment(`${this.form.expireDate} ${this.form.expireTime}`).unix();
+                const nowUnix = dayjs().unix();
+                const expireUnix = dayjs(`${this.form.expireDate} ${this.form.expireTime}`).unix();
                 expire = expireUnix - nowUnix;
             }
 

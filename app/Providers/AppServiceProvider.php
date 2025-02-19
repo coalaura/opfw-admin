@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::directive('vite', function () {
             $base = 'build/';
 
-            $manifestPath = public_path($base . '.vite/manifest.json');
+            $manifestPath = public_path($base . 'manifest.json');
             if (! file_exists($manifestPath)) {
                 return '<!-- manifest not found -->';
             }

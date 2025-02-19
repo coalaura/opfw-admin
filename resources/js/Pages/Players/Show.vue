@@ -1834,14 +1834,14 @@ export default {
                 return false;
             }
 
-            return this.$moment.utc(this.activeBan.scheduled * 1000).format('MM/DD/YYYY - H:mm A');
+            return dayjs.utc(this.activeBan.scheduled * 1000).format('MM/DD/YYYY - H:mm A');
         },
         scheduledUnbanIn() {
             if (!this.activeBan || !this.activeBan.scheduled) {
                 return false;
             }
 
-            return this.$moment.utc(this.activeBan.scheduled * 1000).fromNow();
+            return dayjs.utc(this.activeBan.scheduled * 1000).fromNow();
         },
         systemNoteCount() {
             return this.warnings.filter(warn => this.isAutomatedWarning(warn)).length;
@@ -1931,7 +1931,7 @@ export default {
                 return;
             }
 
-            this.playerTime = this.$moment().utcOffset(timezoneOffset * -1).format('h:mm:ss A');
+            this.playerTime = dayjs().utcOffset(timezoneOffset * -1).format('h:mm:ss A');
         },
         estimateRatio(pRatio) {
             if (!pRatio) return '???';
@@ -1949,7 +1949,7 @@ export default {
             return `??? (${pRatio.toFixed(2)})`;
         },
         formatSecondDiff(sec) {
-            return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m]').replace(/(?<=\s|^)0\w/gm, '') || "0s";
+            return dayjs.duration(sec, 'seconds').format('d[d] h[h] m[m]').replace(/(?<=\s|^)0\w/gm, '') || "0s";
         },
         showAntiCheatMetadata(event, eventData) {
             event.preventDefault();
@@ -1981,7 +1981,7 @@ export default {
         async scheduleUnban() {
             if (this.isLoading || !this.scheduledUnbanDate) return;
 
-            const timestamp = this.$moment.utc(this.scheduledUnbanDate).unix();
+            const timestamp = dayjs.utc(this.scheduledUnbanDate).unix();
 
             if (timestamp * 1000 < Date.now()) return;
 
@@ -2553,10 +2553,10 @@ export default {
 
             // Calculate expire relative to now in seconds if temp ban.
             if (this.isTempBanning) {
-                const nowUnix = this.$moment().unix();
+                const nowUnix = dayjs().unix();
 
                 if (this.isTempSelect) {
-                    const expireUnix = this.$moment(`${this.form.ban.expireDate} ${this.form.ban.expireTime}`).unix();
+                    const expireUnix = dayjs(`${this.form.ban.expireDate} ${this.form.ban.expireTime}`).unix();
                     expire = expireUnix - nowUnix;
                 } else {
                     let val = Number.parseInt($('#ban-value').val());

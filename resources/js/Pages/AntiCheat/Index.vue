@@ -310,7 +310,7 @@ export default {
             return '';
         },
         formatSecondDiff(sec) {
-            return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
+            return dayjs.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
         },
         showMetadata(metadata, screenshotUrl) {
             this.showingMetadata = JSON.parse(JSON.stringify(metadata));

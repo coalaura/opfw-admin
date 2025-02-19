@@ -267,10 +267,10 @@ export default {
     },
     methods: {
         formatSecondDiff(sec) {
-            return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
+            return dayjs.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
         },
         stamp(time) {
-            return this.$moment.utc(time).unix();
+            return dayjs.utc(time).unix();
         },
         failedImage(e) {
             e.target.src = '/images/not_found.png';

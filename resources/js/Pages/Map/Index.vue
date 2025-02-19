@@ -459,7 +459,7 @@ export default {
 
                 if (data?.data && data.status) {
                     // Round to next minute
-                    const date = this.$moment((data.data.timestamp + 60) * 1000);
+                    const date = dayjs((data.data.timestamp + 60) * 1000);
 
                     this.form.historic_till_date = date.format("YYYY-MM-DD");
                     this.form.historic_till_time = date.format("HH:mm");
@@ -500,8 +500,8 @@ export default {
             return `<a href="/players/${license}" target="_blank" title="${title}" class="!no-underline ${cls}">${player_name}</a>`;
         },
         showHistoric() {
-            const fromDate = this.$moment().subtract(1, 'hours');
-            const tillDate = this.$moment().add(1, 'minutes');
+            const fromDate = dayjs().subtract(1, 'hours');
+            const tillDate = dayjs().add(1, 'minutes');
 
             if (!this.form.historic_from_date) {
                 this.form.historic_from_date = fromDate.format("YYYY-MM-DD");
@@ -554,7 +554,7 @@ export default {
                 }).slice(4);
 
                 let icon = "circle";
-                let label = `${this.$moment.unix(val).format("MM/DD/YYYY - h:mm:ss")} ${timezone} (${val})`;
+                let label = `${dayjs.unix(val).format("MM/DD/YYYY - h:mm:ss")} ${timezone} (${val})`;
 
                 const flags = [
                     pos?.i ? 'invisible' : false,
@@ -608,8 +608,8 @@ export default {
             }
         },
         async showHistory() {
-            const fromUnix = this.$moment(`${this.form.historic_from_date} ${this.form.historic_from_time}`).unix();
-            const tillUnix = this.$moment(`${this.form.historic_till_date} ${this.form.historic_till_time}`).unix();
+            const fromUnix = dayjs(`${this.form.historic_from_date} ${this.form.historic_from_time}`).unix();
+            const tillUnix = dayjs(`${this.form.historic_till_date} ${this.form.historic_till_time}`).unix();
 
             if (fromUnix && tillUnix) {
                 if (this.form.historic_license || !this.form.historic_license.startsWith('license:')) {

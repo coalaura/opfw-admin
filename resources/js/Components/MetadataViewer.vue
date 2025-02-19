@@ -116,7 +116,7 @@ const CustomFormatters = {
         let lastTime;
 
         return data.map(timing => {
-            const date = this.$moment(timing.timestamp * 1000).format('MM/DD h:mm:ss A'),
+            const date = dayjs(timing.timestamp * 1000).format('MM/DD h:mm:ss A'),
                 diff = lastTime ? (timing.time - lastTime) : false,
                 diffStr = diff ? `${(diff < 0 ? '-' : '+') + Math.abs(diff)}ms` : '';
 

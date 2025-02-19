@@ -23,8 +23,7 @@ function clearViewCachePlugin() {
 }
 
 export default defineConfig({
-	publicDir: false,
-	assetsInclude: ["**/*.webp", "**/*.svg", "**/*.png"],
+	publicDir: "public",
 	plugins: [
 		laravel({
 			input: ["resources/js/app.js", "resources/css/app.pcss"],
@@ -43,13 +42,27 @@ export default defineConfig({
 		},
 	},
 	build: {
-		manifest: true,
+		chunkSizeWarningLimit: 1024,
+		manifest: "manifest.json",
+		minify: "esbuild",
+		copyPublicDir: false,
+		emptyOutDir: true,
 		outDir: "public/build",
-		target: "es2020",
 		rollupOptions: {
-			external: [
-				/^\/images\//m
-			]
+			output: {
+				sourcemap: false,
+				entryFileNames: "assets/[hash].js",
+				chunkFileNames: "assets/[hash].js",
+				assetFileNames: "assets/[hash].[ext]",
+				generatedCode: {
+					arrowFunctions: true,
+					constBindings: true,
+					objectShorthand: true,
+					reservedNamesAsProps: true,
+				},
+				hashCharacters: "hex",
+			},
+			external: [/^\/images\//m],
 		},
 	},
 });

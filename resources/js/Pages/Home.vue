@@ -266,7 +266,7 @@ export default {
             }
         },
         banTime(ban) {
-            return ban.expireAt ? this.$options.filters.humanizeSeconds(this.$moment(ban.expireAt).unix() - this.$moment(ban.timestamp).unix()) : this.t('players.ban.forever_edit');
+            return ban.expireAt ? this.$options.filters.humanizeSeconds(dayjs(ban.expireAt).unix() - dayjs(ban.timestamp).unix()) : this.t('players.ban.forever_edit');
         },
         playerName(licenseIdentifier) {
             return licenseIdentifier in this.playerMap ? this.playerMap[licenseIdentifier] : licenseIdentifier;

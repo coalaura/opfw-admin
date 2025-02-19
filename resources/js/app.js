@@ -1,9 +1,10 @@
 import "./bootstrap.js";
+
 import { InertiaApp } from "@inertiajs/inertia-vue";
 import Vue from "vue";
 import PortalVue from "portal-vue";
-import moment from "moment";
-import momentDuration from "moment-duration-format";
+import Toast from "vue-toastification";
+
 import Localization from "./Plugins/localization.js";
 import Theme from "./Plugins/theme.js";
 import Markdown from "./Plugins/markdown.js";
@@ -25,10 +26,10 @@ import humanizeSeconds from "./Filters/humanizeSeconds.js";
 import formatTime from "./Filters/formatTime.js";
 import formatGender from "./Filters/formatGender.js";
 import linkify from "vue-linkify";
+
 import "leaflet/dist/leaflet.css";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import "leaflet-fullscreen/dist/leaflet.fullscreen.css";
-import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import "vue-search-select/dist/VueSearchSelect.css";
 
@@ -71,10 +72,8 @@ Vue.use(Toast, {
 	newestOnTop: true,
 });
 
-momentDuration(moment);
-
 // Properties / methods.
-Vue.prototype.$moment = moment;
+Vue.prototype.$moment = dayjs;
 
 // Custom filters.
 Vue.filter("humanizeSeconds", humanizeSeconds);

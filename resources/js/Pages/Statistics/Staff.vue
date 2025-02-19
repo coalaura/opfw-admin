@@ -194,7 +194,7 @@ export default {
         formatLast(pTimestamp) {
             if (!pTimestamp) return this.t('staff_statistics.last_time_unknown');
 
-            const date = this.$moment(pTimestamp * 1000);
+            const date = dayjs(pTimestamp * 1000);
             const ago = date.fromNow();
             const formatted = date.format('dddd, MMMM Do YYYY, h:mm:ss A');
 

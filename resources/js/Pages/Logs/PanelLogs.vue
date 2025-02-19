@@ -270,15 +270,15 @@ export default {
 	computed: {
 		selectedTimezone() {
 			if (this.logTimezone) {
-				return this.$moment.tz(this.logTimezone).zoneName();
+				return dayjs.tz(this.logTimezone).zoneName();
 			}
 
-			return this.$moment.tz.guess();
+			return dayjs.tz.guess();
 		}
 	},
 	methods: {
 		formatTimestampWithTimezone(timestamp) {
-			const date = this.$moment(timestamp);
+			const date = dayjs(timestamp);
 
 			if (this.logTimezone) {
 				return date.tz(this.logTimezone).format('MMM D, YYYY h:mm:ss A');
@@ -322,13 +322,13 @@ export default {
 			this.searchingActions = true;
 		},
 		formatRawTimestamp(timestamp) {
-			return this.$moment(timestamp).unix();
+			return dayjs(timestamp).unix();
 		},
 		formatSecondDiff(sec) {
-			return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
+			return dayjs.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
 		},
 		stamp(time) {
-			return this.$moment.utc(time).unix();
+			return dayjs.utc(time).unix();
 		},
 		showMetadata(e, log) {
 			e.preventDefault();

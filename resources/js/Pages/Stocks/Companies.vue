@@ -201,7 +201,7 @@ export default {
         },
 
         maxDate() {
-            return this.$moment().add(1, 'year').format('YYYY-MM-DD');
+            return dayjs().add(1, 'year').format('YYYY-MM-DD');
         }
     },
     data() {
@@ -218,7 +218,7 @@ export default {
         editProperty(propertyId, property) {
             this.isEditingProperty = true;
 
-            const lastPay = this.$moment(property.last_pay * 1000).format('YYYY-MM-DD');
+            const lastPay = dayjs(property.last_pay * 1000).format('YYYY-MM-DD');
 
             this.editingPropertyId = propertyId;
             this.editingProperty = {

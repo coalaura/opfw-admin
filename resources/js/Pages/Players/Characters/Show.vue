@@ -1033,7 +1033,7 @@ export default {
 
         return {
             local: {
-                birth: this.t("players.edit.born", this.$moment(this.character.dateOfBirth).format('l')),
+                birth: this.t("players.edit.born", dayjs(this.character.dateOfBirth).format('l')),
                 cash: money.cash,
                 cashTitle: money.cashTitle,
                 stocks: money.stocks

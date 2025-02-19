@@ -307,7 +307,7 @@ export default {
                 const a = document.createElement('a');
 
                 a.href = url;
-                a.download = `replay-${this.$moment().format('YYYY-MM-DD_HH-mm-ss')}.webm`;
+                a.download = `replay-${dayjs().format('YYYY-MM-DD_HH-mm-ss')}.webm`;
 
                 document.body.appendChild(a);
 

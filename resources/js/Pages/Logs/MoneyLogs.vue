@@ -264,7 +264,7 @@ export default {
 			return '!bg-gray-500 !bg-opacity-10 hover:!bg-opacity-20';
 		},
 		formatRawTimestamp(timestamp) {
-			return this.$moment(timestamp).unix();
+			return dayjs(timestamp).unix();
 		},
 		async refresh() {
 			if (this.isLoading) {
