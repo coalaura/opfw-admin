@@ -23,7 +23,7 @@ function clearViewCachePlugin() {
 }
 
 export default defineConfig({
-	publicDir: "public",
+	publicDir: false,
 	plugins: [
 		laravel({
 			input: ["resources/js/app.js", "resources/css/app.pcss"],
@@ -39,5 +39,9 @@ export default defineConfig({
 	},
 	build: {
 		manifest: true,
+		outDir: "public/build",
+		rollupOptions: {
+			external: id => id.startsWith("/images/"),
+		},
 	},
 });
