@@ -1,5 +1,5 @@
 import {initNotifications, notify} from 'browser-notification';
-import PlayerState from './PlayerState';
+import PlayerState from './PlayerState.js';
 
 class Notifier {
     constructor() {

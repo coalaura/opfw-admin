@@ -217,10 +217,10 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Pagination from './../../Components/Pagination';
-import Modal from './../../Components/Modal';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Pagination from './../../Components/Pagination.vue';
+import Modal from './../../Components/Modal.vue';
 
 export default {
     layout: Layout,
@@ -266,11 +266,8 @@ export default {
         };
     },
     methods: {
-        formatSecondDiff(sec) {
-            return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
-        },
         stamp(time) {
-            return this.$moment.utc(time).unix();
+            return dayjs.utc(time).unix();
         },
         failedImage(e) {
             e.target.src = '/images/not_found.png';

@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import Modal from './Modal';
+import Modal from './Modal.vue';
 
 export default {
     name: 'TwitterPost',
@@ -167,10 +167,10 @@ export default {
             this.isLoading = false;
         },
         formatDate(date) {
-            const d = this.$moment.utc(date).local(),
+            const d = dayjs.utc(date).local(),
                 day = d.format('DD-MM-YYYY'),
-                today = this.$moment().format('DD-MM-YYYY'),
-                yesterday = this.$moment().subtract(1, 'days').format('DD-MM-YYYY'),
+                today = dayjs().format('DD-MM-YYYY'),
+                yesterday = dayjs().subtract(1, 'days').format('DD-MM-YYYY'),
                 time = d.format('h:mm A');
 
             if (day === today) {

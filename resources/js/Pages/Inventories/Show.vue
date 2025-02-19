@@ -124,9 +124,9 @@
 </template>
 
 <script>
-import Layout from '../../Layouts/App';
-import VSection from '../../Components/Section';
-import Modal from './../../Components/Modal';
+import Layout from '../../Layouts/App.vue';
+import VSection from '../../Components/Section.vue';
+import Modal from './../../Components/Modal.vue';
 
 export default {
     layout: Layout,
@@ -338,8 +338,7 @@ export default {
             const slot = this.editingSlot;
 
             try {
-                const response = await axios.get(`/inventory/attach_identity/${id}`);
-                const data = response.data;
+                const data = await fetch(`/inventory/attach_identity/${id}`).then(response => response.json());;
 
                 if (data?.status && this.isEditing && slot === this.editingSlot) {
                     for (const [key, value] of Object.entries(data.data)) {

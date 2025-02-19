@@ -1,8 +1,8 @@
-const custom_icons = require("../../data/vehicles.json");
-const blip_map = require("../../data/blip-map.json");
-const L = require("leaflet");
+import custom_icons from "../../data/vehicles.json";
+import blip_map from "../../data/blip-map.json";
+import L from "leaflet";
 
-class Character {
+export class Character {
     static fromRaw(rawData) {
         if (!rawData.character) {
             return null;
@@ -40,7 +40,7 @@ class Character {
     }
 }
 
-class Vehicle {
+export class Vehicle {
     static fromRaw(rawData) {
         if (!rawData.vehicle) {
             return null;
@@ -90,8 +90,3 @@ class Vehicle {
         );
     }
 }
-
-module.exports = {
-    Character: Character,
-    Vehicle: Vehicle
-};

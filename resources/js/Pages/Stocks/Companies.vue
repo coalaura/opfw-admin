@@ -179,9 +179,9 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Modal from './../../Components/Modal';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Modal from './../../Components/Modal.vue';
 
 export default {
     layout: Layout,
@@ -201,7 +201,7 @@ export default {
         },
 
         maxDate() {
-            return this.$moment().add(1, 'year').format('YYYY-MM-DD');
+            return dayjs().add(1, 'year').format('YYYY-MM-DD');
         }
     },
     data() {
@@ -218,7 +218,7 @@ export default {
         editProperty(propertyId, property) {
             this.isEditingProperty = true;
 
-            const lastPay = this.$moment(property.last_pay * 1000).format('YYYY-MM-DD');
+            const lastPay = dayjs(property.last_pay * 1000).format('YYYY-MM-DD');
 
             this.editingPropertyId = propertyId;
             this.editingProperty = {
@@ -254,8 +254,7 @@ export default {
             if (!key.cid) return;
 
             try {
-                const response = await axios.get(`/api/character/${key.cid}`);
-                const data = response.data;
+                const data = await fetch(`/api/character/${key.cid}`).then(response => response.json());
 
                 if (data?.status) {
                     key.name = `${data.data.first_name} ${data.data.last_name}`;

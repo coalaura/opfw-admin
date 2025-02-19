@@ -82,8 +82,8 @@
 </template>
 
 <script>
-import Layout from './../Layouts/App';
-import Card from './../Components/Card';
+import Layout from './../Layouts/App.vue';
+import Card from './../Components/Card.vue';
 
 export default {
     layout: Layout,

@@ -68,8 +68,7 @@
 </template>
 
 <script>
-import axios from 'axios';
-import Layout from './../../Layouts/App';
+import Layout from './../../Layouts/App.vue';
 
 export default {
     layout: Layout,
@@ -193,8 +192,10 @@ export default {
             }
 
             try {
-                const response = await axios.post(`/roles/${player.license}`, overrides);
-                const data = response.data;
+                const data = await fetch(`/roles/${player.license}`, {
+                    method: "POST",
+                    body: post_data(overrides)
+                }).then(response => response.json());
 
                 if (data.status) {
                     for (const role in player.overrides) {
@@ -215,8 +216,7 @@ export default {
             this.isAdding = true;
 
             try {
-                const response = await axios.get(`/roles/${this.adding}`);
-                const data = response.data;
+                const data = await fetch(`/roles/${this.adding}`).then(response => response.json());
 
                 if (data.status) {
                     const player = data.data;

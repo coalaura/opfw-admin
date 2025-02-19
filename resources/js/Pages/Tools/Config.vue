@@ -30,9 +30,9 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import JobOverrides from './../../Components/Config/JobOverrides';
-import StoreOverrides from './../../Components/Config/StoreOverrides';
+import Layout from './../../Layouts/App.vue';
+import JobOverrides from './../../Components/Config/JobOverrides.vue';
+import StoreOverrides from './../../Components/Config/StoreOverrides.vue';
 
 export default {
     layout: Layout,

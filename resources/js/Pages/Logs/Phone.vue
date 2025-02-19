@@ -116,9 +116,9 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Pagination from './../../Components/Pagination';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Pagination from './../../Components/Pagination.vue';
 
 // bg-red-300 dark:bg-red-900 border-red-500 text-red-500
 // bg-yellow-300 dark:bg-yellow-900 border-yellow-500 text-yellow-500
@@ -201,21 +201,20 @@ export default {
             this.isLoading = true;
 
             try {
-                const before = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : 0;
-
-                const data = await axios.get('/phoneLogs/get', {
-                    params: {
+                const before = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : 0,
+                    params = new URLSearchParams({
                         before: before,
                         ...this.filters
-                    }
-                });
+                    }).toString();
 
-                if (data.data?.status) {
+                const data = await fetch(`/phoneLogs/get?${params}`).then(response => response.json());
+
+                if (data?.status) {
                     this.isLoading = false;
 
                     this.replaceState();
 
-                    return data.data.data;
+                    return data.data;
                 }
             } catch (e) {
             }

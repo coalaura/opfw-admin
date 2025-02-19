@@ -18,7 +18,7 @@
 
                 <div class="w-full h-px bg-gray-700 dark:bg-gray-300 my-4"></div>
 
-                <img src="/images/docs/reason_exiting.png" class="w-full shadow-md mb-3 border border-gray-500" />
+                <img :src="'/images/docs/reason_exiting.png'" class="w-full shadow-md mb-3 border border-gray-500" />
 
                 <p class="mb-1">
                     This disconnect reason is triggered...
@@ -32,7 +32,7 @@
 
                 <div class="w-full h-px bg-gray-700 dark:bg-gray-300 my-4"></div>
 
-                <img src="/images/docs/reason_disconnected.png" class="w-full shadow-md mb-3 border border-gray-500" />
+                <img :src="'/images/docs/reason_disconnected.png'" class="w-full shadow-md mb-3 border border-gray-500" />
 
                 <p class="mb-1">
                     This disconnect reason is triggered...
@@ -45,7 +45,7 @@
 
                 <div class="w-full h-px bg-gray-700 dark:bg-gray-300 my-4"></div>
 
-                <img src="/images/docs/reason_reloading.png" class="w-full shadow-md mb-3 border border-gray-500" />
+                <img :src="'/images/docs/reason_reloading.png'" class="w-full shadow-md mb-3 border border-gray-500" />
 
                 <p class="mb-1">
                     This disconnect reason is triggered...
@@ -57,7 +57,7 @@
 
                 <div class="w-full h-px bg-gray-700 dark:bg-gray-300 my-4"></div>
 
-                <img src="/images/docs/reason_timeout.png" class="w-full shadow-md mb-3 border border-gray-500" />
+                <img :src="'/images/docs/reason_timeout.png'" class="w-full shadow-md mb-3 border border-gray-500" />
 
                 <p class="mb-1">
                     This disconnect reason is triggered...
@@ -73,7 +73,7 @@
 
                 <div class="w-full h-px bg-gray-700 dark:bg-gray-300 my-4"></div>
 
-                <img src="/images/docs/reason_crash.png" class="w-full shadow-md mb-3 border border-gray-500" />
+                <img :src="'/images/docs/reason_crash.png'" class="w-full shadow-md mb-3 border border-gray-500" />
 
                 <p class="mb-1">
                     This disconnect reason is triggered...
@@ -89,7 +89,7 @@
                     <b>One thing to keep in mind</b> is that disconnect reasons <u>can be faked</u>. By typing "<i>quit meow</i>" in the F8 console for example...
                 </p>
 
-                <img src="/images/docs/reason_custom.png" class="w-full shadow-md mb-3 border border-gray-500" />
+                <img :src="'/images/docs/reason_custom.png'" class="w-full shadow-md mb-3 border border-gray-500" />
 
                 <p class="mb-1">
                     ...we can trigger a disconnect reason that looks like this. You can replace "<i>meow</i>" with anything, to theoretically fake a
@@ -106,8 +106,8 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
 
 export default {
     layout: Layout,

@@ -34,7 +34,7 @@
                             #{{ container.character_id }}
                         </a>
                     </td>
-                    <td class="px-2 py-1" :title="$moment.utc(container.paid_until * 1000).fromNow()">{{ container.paid_until * 1000 | formatTime(false) }}</td>
+                    <td class="px-2 py-1" :title="dayjs.utc(container.paid_until * 1000).fromNow()">{{ container.paid_until * 1000 | formatTime(false) }}</td>
                     <td class="px-2 py-1">x{{ containerItems(container.container_id) }}</td>
                     <td class="px-2 py-1 pr-3">
                         <a href="#" @click.prevent="copyLocation(container.container_id)" class="text-indigo-700 dark:text-indigo-200" :title="t('containers.copy_loc')">
@@ -53,8 +53,8 @@
 </template>
 
 <script>
-import Layout from './../Layouts/App';
-import VSection from './../Components/Section';
+import Layout from './../Layouts/App.vue';
+import VSection from './../Components/Section.vue';
 
 import locations from './../data/containers.json';
 

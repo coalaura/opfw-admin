@@ -29,7 +29,7 @@
                 </button>
 
                 <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-yellow-700 bg-warning rounded dark:bg-dark-warning" :title="t('global.permission')" @click="showPermissions" :class="{ 'cursor-pointer': $page.auth.player.isSuperAdmin, 'shadow-sm': banner }">
-                    <i class="fas fa-tools"></i>
+                    <i class="fas fa-tools mr-1"></i>
                     <span v-if="$page.auth.player.isRoot">{{ t('global.root') }}</span>
                     <span v-else-if="$page.auth.player.isSuperAdmin">{{ t('global.super') }}</span>
                     <span v-else-if="$page.auth.player.isSeniorStaff">{{ t('global.senior_staff') }}</span>
@@ -37,8 +37,8 @@
                 </span>
 
                 <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded" :class="{ 'shadow': banner, 'bg-gray-500 border-gray-700': serverStatusLoading, 'bg-green-500 border-green-700': !serverStatusLoading && serverUptime, 'bg-red-500 border-red-700': !serverStatusLoading && !serverUptime }" :title="!serverStatusLoading ? (!serverUptime ? t('global.server_offline') : t('global.server_online', serverUptimeDetail)) : ''">
-                    <i class="fas fa-sync-alt" v-if="serverStatusLoading"></i>
-                    <i class="fas fa-server" v-else></i>
+                    <i class="fas fa-sync-alt mr-1" v-if="serverStatusLoading"></i>
+                    <i class="fas fa-server mr-1" v-else></i>
 
                     <span v-if="serverUptime">{{ serverUptime }}</span>
                     <span v-else>{{ $page.serverName }}</span>
@@ -303,9 +303,8 @@
 </template>
 
 <script>
-import moment from 'moment';
-import Icon from './Icon';
-import Modal from './Modal';
+import Icon from './Icon.vue';
+import Modal from './Modal.vue';
 
 import Abbreviations from '../data/abbreviations.json';
 
@@ -409,7 +408,7 @@ export default {
         getDateForTimezone(pTimezone) {
             const date = new Date((new Date()).toLocaleString('en-US', { timeZone: pTimezone.tz_name }));
 
-            return moment(date).format('dddd, MMMM Do YYYY, h:mm:ss A');
+            return dayjs(date).format('dddd, MMMM D YYYY, h:mm:ss A');
         },
         getTimezoneIcon(pTimezone) {
             const area = pTimezone.split('/').shift();
@@ -478,10 +477,10 @@ export default {
         },
         formatUptime(pMilliseconds, pIncludeMinutes) {
             if (pMilliseconds < 3600000) {
-                return moment.duration(pMilliseconds).format('m [minutes]');
+                return dayjs.duration(pMilliseconds).format('m [minutes]');
             }
 
-            return moment.duration(pMilliseconds).format(`d [days], h [hours]${pIncludeMinutes ? ', m [minutes]' : ''}`);
+            return dayjs.duration(pMilliseconds).format(`H [hours]${pIncludeMinutes ? ', m [minutes]' : ''}`);
         },
         async showDebugInfo() {
             if (this.loadingDebug) return;
@@ -497,13 +496,11 @@ export default {
             try {
                 const start = Date.now();
 
-                const debugInfo = await axios.get('/api/debug');
+                const data = await fetch('/api/debug').then(response => response.json());
 
                 let time = Date.now() - start;
 
-                const data = debugInfo.data;
-
-                if (data.status && data.data) {
+                if (data?.status && data.data) {
                     time -= Math.floor(data.data.time * 1000);
 
                     this.debugInfo = data.data.info;

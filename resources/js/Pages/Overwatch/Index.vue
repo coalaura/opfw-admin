@@ -54,9 +54,9 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Badge from './../../Components/Badge';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Badge from './../../Components/Badge.vue';
 
 export default {
     layout: Layout,
@@ -97,14 +97,14 @@ export default {
             this.isLoading = true;
 
             try {
-                const data = await axios.get('/api/randomScreenshot');
+                const data = await fetch('/api/randomScreenshot').then(response => response.json());
 
-                if (data.data?.status) {
-                    this.screenshot = data.data.data;
+                if (data?.status) {
+                    this.screenshot = data.data;
                     this.screenshotError = null;
                 } else {
                     this.screenshot = null;
-                    this.screenshotError = data.data.message;
+                    this.screenshotError = data.message;
                 }
             } catch (e) { }
 

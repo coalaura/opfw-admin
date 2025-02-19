@@ -7,6 +7,7 @@ use App\Helpers\SessionHelper;
 use App\Helpers\SocketAPI;
 use App\Http\Resources\LoggedInPlayerResource;
 use App\Server;
+use Blade;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
@@ -37,6 +38,46 @@ class AppServiceProvider extends ServiceProvider
     {
         // Disable resource wrapping.
         JsonResource::withoutWrapping();
+
+        Blade::directive('vite', function () {
+            $base = 'build/';
+
+            $manifestPath = public_path($base . 'manifest.json');
+            if (! file_exists($manifestPath)) {
+                return '<!-- manifest not found -->';
+            }
+
+            $manifest = json_decode(file_get_contents($manifestPath), true);
+            if (!$manifest || !is_array($manifest)) {
+                return '<!-- manifest unreadable -->';
+            }
+
+            $import = [];
+
+            foreach ($manifest as $file) {
+                if (empty($file) || empty($file['isEntry'])) {
+                    continue;
+                }
+
+                $src = $base . $file['file'];
+
+                if (Str::endsWith($src, '.js')) {
+                    $import[] = '<script type="module" src="/' . $src . '"></script>';
+
+                    foreach ($file['css'] ?? [] as $stylesheet) {
+                        $import[] = '<link rel="stylesheet" href="/' . $base . $stylesheet . '" />';
+                    }
+                } elseif (Str::endsWith($src, '.css')) {
+                    $import[] = '<link rel="stylesheet" href="/' . $src . '" />';
+                }
+            }
+
+            if (empty($import)) {
+                return '<!-- nothing to import -->';
+            }
+
+            return implode('', $import);
+        });
 
         $canUseDB = ! app()->runningInConsole() && env('DB_CONNECTION');
 
@@ -140,9 +181,9 @@ class AppServiceProvider extends ServiceProvider
 
             'overwatch'  => function () {
                 if (PermissionHelper::hasPermission(PermissionHelper::PERM_SCREENSHOT)) {
-                    $url     = env('OVERWATCH_URL', '');
+                    $url = env('OVERWATCH_URL', '');
 
-                    $streams = array_map(function($stream) use ($url) {
+                    $streams = array_map(function ($stream) use ($url) {
                         return sprintf($url, trim($stream));
                     }, explode(',', env('OVERWATCH_STREAMS', '')));
 

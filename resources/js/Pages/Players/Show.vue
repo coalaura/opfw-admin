@@ -66,7 +66,7 @@
                         </span>
                     </badge>
 
-                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary" :title="t('players.show.playtime', formatSecondDiff(player.playTime), formatSecondDiff(player.recentPlayTime))" v-html="local.played"></badge>
+                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary" :title="t('players.show.playtime', formatSeconds(player.playTime), formatSeconds(player.recentPlayTime))" v-html="local.played"></badge>
 
                     <badge class="border-pink-300 bg-pink-200 dark:bg-pink-700" v-if="player.tag" :title="player.tag">
                         <span class="font-semibold">{{ player.tag.length > 20 ? player.tag.substring(0, 18) + '...' : player.tag }}</span>
@@ -99,7 +99,7 @@
                     <!-- Last Connection -->
                     <tr class="border-t border-gray-500">
                         <th class="px-2 py-0.5">{{ t('players.show.last_connection') }}</th>
-                        <td class="px-2 py-0.5" :title="$moment.utc(player.lastConnection).fromNow()">{{ player.lastConnection | formatTime(true) }}</td>
+                        <td class="px-2 py-0.5" :title="dayjs.utc(player.lastConnection).fromNow()">{{ player.lastConnection | formatTime(true) }}</td>
                     </tr>
 
                     <!-- System specs -->
@@ -976,7 +976,7 @@
             <!-- Issuing -->
             <div class="p-8 mb-10 bg-gray-100 rounded dark:bg-dark-secondary" v-if="isBanning">
                 <template v-if="isBanLoading">
-                    <img src="/images/banned.webp" class="h-72" style="image-rendering: pixelated" />
+                    <img :src="'/images/banned.webp'" class="h-72" style="image-rendering: pixelated" />
                 </template>
                 <template v-else>
                     <div class="mb-8 space-y-5">
@@ -1008,7 +1008,7 @@
                                     {{ t('players.ban.expiration') }}
                                 </label>
                                 <div class="flex items-center">
-                                    <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow mr-1" type="date" id="expireDate" name="expireDate" step="any" :min="$moment().format('YYYY-MM-DD')" v-model="form.ban.expireDate" required>
+                                    <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow mr-1" type="date" id="expireDate" name="expireDate" step="any" :min="dayjs().format('YYYY-MM-DD')" v-model="form.ban.expireDate" required>
                                     <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow" type="time" id="expireTime" name="expireTime" step="any" v-model="form.ban.expireTime" required>
                                 </div>
                             </div>
@@ -1126,8 +1126,8 @@
                         <template #header>
                             <div class="flex justify-between gap-3">
                                 <div class="flex-shrink-0">
-                                    <img class="w-32 h-32 rounded-2xl" src="/images/loading.svg" :data-lazy="character.mugshot" v-if="character.mugshot" />
-                                    <img class="w-32 h-32 rounded-2xl" src="/images/no_mugshot.png" v-else :title="t('players.characters.no_mugshot')" />
+                                    <img class="w-32 h-32 rounded-2xl" :src="'/images/loading.svg'" :data-lazy="character.mugshot" v-if="character.mugshot" />
+                                    <img class="w-32 h-32 rounded-2xl" :src="'/images/no_mugshot.png'" v-else :title="t('players.characters.no_mugshot')" />
                                 </div>
                                 <div class="w-full overflow-hidden">
                                     <h3 class="mb-2 border-b-2 border-dashed border-gray-500">
@@ -1142,25 +1142,25 @@
                                     <table class="whitespace-nowrap text-sm text-left w-full">
                                         <tr class="border-t border-gray-500">
                                             <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.created_at') }}</th>
-                                            <td class="px-2 py-0.5 italic w-full">{{ $moment(character.characterCreationTimestamp).format('LLL') }}</td>
+                                            <td class="px-2 py-0.5 italic w-full">{{ character.characterCreationTimestamp | formatTime }}</td>
                                         </tr>
 
                                         <tr class="border-t border-gray-500" v-if="character.characterDeleted">
                                             <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.deleted_at') }}</th>
-                                            <td class="px-2 py-0.5 italic w-full">{{ $moment(character.characterDeletionTimestamp).format('LLL') }}</td>
+                                            <td class="px-2 py-0.5 italic w-full">{{ character.characterDeletionTimestamp | formatTime }}</td>
                                         </tr>
 
                                         <tr class="border-t border-gray-500">
                                             <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.playtime_label') }}</th>
                                             <td class="px-2 py-0.5 italic w-full">
-                                                {{ formatSecondDiff(character.playtime) }}
-                                                <i class="fas fa-signal ml-1 cursor-help" :title="t('players.characters.playtime_recent', formatSecondDiff(character.playtime_2w))"></i>
+                                                {{ character.playtime | formatSeconds }}
+                                                <i class="fas fa-signal ml-1 cursor-help" :title="t('players.characters.playtime_recent', formatSeconds(character.playtime_2w))"></i>
                                             </td>
                                         </tr>
 
                                         <tr class="border-t border-gray-500">
                                             <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.born') }}</th>
-                                            <td class="px-2 py-0.5 italic w-full">{{ $moment(character.dateOfBirth).format('LL') }}</td>
+                                            <td class="px-2 py-0.5 italic w-full">{{ character.dateOfBirth | formatTime }}</td>
                                         </tr>
 
                                         <tr class="border-t border-gray-500" v-if="character.marriedTo">
@@ -1595,18 +1595,16 @@
 </template>
 
 <script>
-import CountryFlag from 'vue-country-flag';
-
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Badge from './../../Components/Badge';
-import Alert from './../../Components/Alert';
-import Card from './../../Components/Card';
-import Avatar from './../../Components/Avatar';
-import Modal from './../../Components/Modal';
-import MetadataViewer from './../../Components/MetadataViewer';
-import StatisticsTable from './../../Components/StatisticsTable';
-import MultiSelector from './../../Components/MultiSelector';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Badge from './../../Components/Badge.vue';
+import Alert from './../../Components/Alert.vue';
+import Card from './../../Components/Card.vue';
+import Avatar from './../../Components/Avatar.vue';
+import Modal from './../../Components/Modal.vue';
+import MetadataViewer from './../../Components/MetadataViewer.vue';
+import StatisticsTable from './../../Components/StatisticsTable.vue';
+import MultiSelector from './../../Components/MultiSelector.vue';
 
 export default {
     layout: Layout,
@@ -1620,7 +1618,7 @@ export default {
         MetadataViewer,
         StatisticsTable,
         MultiSelector,
-        CountryFlag
+        CountryFlag: () => import('vue-country-flag')
     },
     props: {
         player: {
@@ -1836,14 +1834,14 @@ export default {
                 return false;
             }
 
-            return this.$moment.utc(this.activeBan.scheduled * 1000).format('MM/DD/YYYY - H:mm A');
+            return dayjs.utc(this.activeBan.scheduled * 1000).format('MM/DD/YYYY - H:mm A');
         },
         scheduledUnbanIn() {
             if (!this.activeBan || !this.activeBan.scheduled) {
                 return false;
             }
 
-            return this.$moment.utc(this.activeBan.scheduled * 1000).fromNow();
+            return dayjs.utc(this.activeBan.scheduled * 1000).fromNow();
         },
         systemNoteCount() {
             return this.warnings.filter(warn => this.isAutomatedWarning(warn)).length;
@@ -1877,10 +1875,10 @@ export default {
             if (!marriedTo || !Number.isInteger(marriedTo)) return;
 
             try {
-                const response = await axios.get(`/api/character/${marriedTo}`);
+                const response = await fetch(`/api/character/${marriedTo}`).then(response => response.json());
 
-                if (response.data?.status) {
-                    character.marriedTo = response.data.data;
+                if (response?.status) {
+                    character.marriedTo = response.data;
                 }
             } catch (e) { }
         },
@@ -1895,10 +1893,10 @@ export default {
             this.systemInfo = false;
 
             try {
-                const response = await axios.get(`/players/${this.player.licenseIdentifier}/bans/${this.activeBan.id}/system`);
+                const response = await fetch(`/players/${this.player.licenseIdentifier}/bans/${this.activeBan.id}/system`).then(response => response.json());;
 
-                if (response.data?.status) {
-                    this.systemInfo = response.data.data;
+                if (response?.status) {
+                    this.systemInfo = response.data;
                 }
             } catch (e) {
             }
@@ -1921,19 +1919,19 @@ export default {
             }));
         },
         resolveStaffStatistics(pSource) {
-            return axios.get(`/players/${this.player.licenseIdentifier}/statistics/${pSource}`);
+            return fetch(`/players/${this.player.licenseIdentifier}/statistics/${pSource}`).then(response => response.json());
         },
         showGlobalBans() {
             this.showingGlobalBans = true;
         },
         updatePlayerTime() {
-            const timezoneOffset = this.player.variables?.timezoneOffset;
+            const timezoneOffset = this.player.variables?.tz_offset;
 
             if (typeof timezoneOffset !== "number") {
                 return;
             }
 
-            this.playerTime = this.$moment().utcOffset(timezoneOffset * -1).format('h:mm:ss A');
+            this.playerTime = dayjs().utcOffset(timezoneOffset * -1).format('h:mm:ss A');
         },
         estimateRatio(pRatio) {
             if (!pRatio) return '???';
@@ -1949,9 +1947,6 @@ export default {
             }
 
             return `??? (${pRatio.toFixed(2)})`;
-        },
-        formatSecondDiff(sec) {
-            return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m]').replace(/(?<=\s|^)0\w/gm, '') || "0s";
         },
         showAntiCheatMetadata(event, eventData) {
             event.preventDefault();
@@ -1983,7 +1978,7 @@ export default {
         async scheduleUnban() {
             if (this.isLoading || !this.scheduledUnbanDate) return;
 
-            const timestamp = this.$moment.utc(this.scheduledUnbanDate).unix();
+            const timestamp = dayjs.utc(this.scheduledUnbanDate).unix();
 
             if (timestamp * 1000 < Date.now()) return;
 
@@ -2062,9 +2057,9 @@ export default {
             try {
                 const url = `${global.replace(/\/?$/, '/')}bans/${this.player.licenseIdentifier}`;
 
-                const response = await axios.get(url, {
+                const response = await fetch(url, {
                     signal: AbortSignal.timeout(3000),
-                });
+                }).then(response => response.json());
 
                 if (response.data && Array.isArray(response.data)) {
                     this.globalBans = response.data.filter(ban => !ban.serverId || !ban.serverId.startsWith(this.$page.auth.cluster));
@@ -2084,12 +2079,12 @@ export default {
             try {
                 const url = `${api.replace(/\/?$/, '/')}global/ban/${this.player.licenseIdentifier}`;
 
-                const response = await axios.get(url, {
+                const response = await fetch(url, {
                     signal: AbortSignal.timeout(3000),
-                });
+                }).then(response => response.json());
 
-                if (response.data?.banned) {
-                    this.opfwBanned = response.data.ban;
+                if (response?.banned) {
+                    this.opfwBanned = response.ban;
 
                     const steam = encodeURIComponent(this.player.steam.shift() || this.player.licenseIdentifier);
                     const steamUrl = encodeURIComponent(this.player.steamProfileUrl);
@@ -2106,8 +2101,7 @@ export default {
         },
         async loadIPInfo() {
             try {
-                const response = await axios.get(`/players/${this.player.licenseIdentifier}/ip`);
-                const data = response.data;
+                const data = await fetch(`/players/${this.player.licenseIdentifier}/ip`).then(response => response.json());
 
                 if (data?.success) {
                     this.isUsingVPN = data.is_vpn;
@@ -2131,10 +2125,10 @@ export default {
             this.loadingHWIDLink = true;
 
             try {
-                const response = await axios.get(`/players/${this.player.licenseIdentifier}/linked_hwid`);
+                const response = await fetch(`/players/${this.player.licenseIdentifier}/linked_hwid`).then(response => response.json());
 
-                if (response.data?.status) {
-                    const data = response.data.data;
+                if (response?.status) {
+                    const data = response.data;
 
                     this.hwidBan = data;
                 }
@@ -2187,23 +2181,20 @@ export default {
             this.screenCaptureStatus = "capturing";
 
             try {
-                const result = await axios({
+                const result = await fetch(`/api/capture/${this.$page.serverName}/${this.status.source}/${this.captureData.duration}`, {
                     method: 'post',
-                    url: `/api/capture/${this.$page.serverName}/${this.status.source}/${this.captureData.duration}`,
-                    timeout: this.captureData.duration + 20000
-                });
+                    signal: AbortSignal.timeout(this.captureData.duration + 20000)
+                }).then(response => response.json());
 
                 clearInterval(interval);
 
-                if (result.data) {
-                    if (result.data.status) {
-                        console.info(`Screen capture of ID ${this.status.source}`, result.data.data.url, result.data.data.license);
+                if (result.status) {
+                    console.info(`Screen capture of ID ${this.status.source}`, result.data.url, result.data.license);
 
-                        this.screenCaptureVideo = result.data.data.url;
-                        this.screenCaptureLogs = this.formatScreenCaptureLogs(result.data.data.logs);
-                    } else {
-                        this.screenshotError = result.data.message ? result.data.message : this.t('screenshot.screencapture_failed');
-                    }
+                    this.screenCaptureVideo = result.data.url;
+                    this.screenCaptureLogs = this.formatScreenCaptureLogs(result.data.logs);
+                } else {
+                    this.screenshotError = result?.message || this.t('screenshot.screencapture_failed');
                 }
             } catch (e) {
                 clearInterval(interval);
@@ -2269,25 +2260,26 @@ export default {
             this.screenshotFlags = null;
 
             try {
-                const result = await axios.post(`/api/screenshot/${this.$page.serverName}/${this.status.source}${shortLifespan ? '?short=1' : ''}`);
+                const result = await fetch(`/api/screenshot/${this.$page.serverName}/${this.status.source}${shortLifespan ? '?short=1' : ''}`, {
+                    method: "POST"
+                }).then(response => response.json());
+
                 this.isScreenshotLoading = false;
 
-                if (result.data) {
-                    if (result.data.status) {
-                        console.info(`Screenshot of ID ${this.status.source}`, result.data.data.url, result.data.data.license);
+                if (result.status) {
+                    console.info(`Screenshot of ID ${this.status.source}`, result.data.url, result.data.license);
 
-                        this.screenshotImage = result.data.data.url;
-                        this.screenshotLicense = result.data.data.license;
+                    this.screenshotImage = result.data.url;
+                    this.screenshotLicense = result.data.license;
 
-                        this.screenshotFlags = result.data.data.flags;
-                        this.screenCaptureLogs = this.formatScreenCaptureLogs(result.data.data.logs);
+                    this.screenshotFlags = result.data.flags;
+                    this.screenCaptureLogs = this.formatScreenCaptureLogs(result.data.logs);
 
-                        cb?.(true);
-                    } else {
-                        this.screenshotError = result.data.message ? result.data.message : this.t('map.screenshot_failed');
+                    cb?.(true);
+                } else {
+                    this.screenshotError = result?.message || this.t('map.screenshot_failed');
 
-                        cb?.(false);
-                    }
+                    cb?.(false);
                 }
             } catch (e) {
                 console.error(e);
@@ -2307,10 +2299,10 @@ export default {
             this.discordAccounts = [];
 
             try {
-                const data = await axios.get(`/players/${this.player.licenseIdentifier}/discord`);
+                const data = await fetch(`/players/${this.player.licenseIdentifier}/discord`).then(response => response.json());
 
-                if (data.data?.status) {
-                    const accounts = data.data.data;
+                if (data?.status) {
+                    const accounts = data.data;
 
                     this.discordAccounts = accounts;
                 } else {
@@ -2332,10 +2324,10 @@ export default {
             this.linkedAccounts.linked = [];
 
             try {
-                const data = await axios.get(`/players/${this.player.licenseIdentifier}/linked`);
+                const data = await fetch(`/players/${this.player.licenseIdentifier}/linked`).then(response => response.json());
 
-                if (data.data?.status) {
-                    const linked = data.data.data;
+                if (data?.status) {
+                    const linked = data.data;
 
                     this.linkedAccounts.total = linked.total;
                     this.linkedAccounts.linked = linked.linked;
@@ -2360,10 +2352,10 @@ export default {
             this.antiCheatEvents = [];
 
             try {
-                const data = await axios.get(`/players/${this.player.licenseIdentifier}/antiCheat`);
+                const data = await fetch(`/players/${this.player.licenseIdentifier}/antiCheat`).then(response => response.json());
 
-                if (data.data?.status) {
-                    this.antiCheatEvents = data.data.data;
+                if (data?.status) {
+                    this.antiCheatEvents = data.data;
                 }
             } catch (e) { }
 
@@ -2558,10 +2550,10 @@ export default {
 
             // Calculate expire relative to now in seconds if temp ban.
             if (this.isTempBanning) {
-                const nowUnix = this.$moment().unix();
+                const nowUnix = dayjs().unix();
 
                 if (this.isTempSelect) {
-                    const expireUnix = this.$moment(`${this.form.ban.expireDate} ${this.form.ban.expireTime}`).unix();
+                    const expireUnix = dayjs(`${this.form.ban.expireDate} ${this.form.ban.expireTime}`).unix();
                     expire = expireUnix - nowUnix;
                 } else {
                     let val = Number.parseInt($('#ban-value').val());
@@ -2772,11 +2764,12 @@ export default {
             this.isReacting[warning.id] = true;
 
             try {
-                const response = await axios.post(`/players/${this.player.licenseIdentifier}/warnings/${warning.id}/react`, {
-                    emoji: emoji
-                });
-
-                const data = response.data;
+                const data = await fetch(`/players/${this.player.licenseIdentifier}/warnings/${warning.id}/react`, {
+                    method: "POST",
+                    body: post_data({
+                        emoji: emoji
+                    })
+                }).then(response => response.json());
 
                 if (data?.status) {
                     warning.reactions = data.data;
@@ -2805,9 +2798,7 @@ export default {
             warning.hoverLoading = true;
             warning.hover = warning.hover || null;
 
-            axios.get(`/players/${this.player.licenseIdentifier}/warnings/${warning.id}/react`).then(response => {
-                const data = response.data;
-
+            fetch(`/players/${this.player.licenseIdentifier}/warnings/${warning.id}/react`).then(response => response.json()).then(data => {
                 if (!data.status || warning.hover === false) return;
 
                 warning.hover = data.data;

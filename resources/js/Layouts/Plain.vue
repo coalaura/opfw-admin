@@ -43,8 +43,8 @@
 </template>
 
 <script>
-import FlashMessage from './../Components/FlashMessage';
-import SmallNavbar from './../Components/SmallNavbar';
+import FlashMessage from './../Components/FlashMessage.vue';
+import SmallNavbar from './../Components/SmallNavbar.vue';
 
 export default {
     components: {

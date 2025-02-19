@@ -233,10 +233,10 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Badge from './../../Components/Badge';
-import Pagination from './../../Components/Pagination';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Badge from './../../Components/Badge.vue';
+import Pagination from './../../Components/Pagination.vue';
 
 export default {
     layout: Layout,

@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import Layout from '../../Layouts/App';
+import Layout from '../../Layouts/App.vue';
 
 import levenshtein from 'fast-levenshtein';
 

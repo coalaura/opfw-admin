@@ -78,7 +78,7 @@
                     </button>
                 </div>
 
-                <img v-if="pictures.length === 0" src="/images/no-pictures.png" class="w-full" />
+                <img v-if="pictures.length === 0" :src="'/images/no-pictures.png'" class="w-full" />
             </div>
         </template>
 
@@ -164,9 +164,9 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Modal from '../../Components/Modal';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Modal from '../../Components/Modal.vue';
 
 export default {
     layout: Layout,

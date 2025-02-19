@@ -208,9 +208,9 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Pagination from './../../Components/Pagination';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Pagination from './../../Components/Pagination.vue';
 
 export default {
 	layout: Layout,
@@ -264,7 +264,7 @@ export default {
 			return '!bg-gray-500 !bg-opacity-10 hover:!bg-opacity-20';
 		},
 		formatRawTimestamp(timestamp) {
-			return this.$moment(timestamp).unix();
+			return dayjs(timestamp).unix();
 		},
 		async refresh() {
 			if (this.isLoading) {

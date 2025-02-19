@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import Icon from './Icon';
+import Icon from './Icon.vue';
 
 export default {
     components: {
@@ -389,7 +389,7 @@ export default {
             return `side-close side-${length}`;
         },
         isMobile() {
-            return $(window).width() <= 640;
+            return window.outerWidth <= 640;
         },
         collapse($event) {
             $event.preventDefault();

@@ -1,5 +1,5 @@
-import Player from './Player';
-import Notifier from './Notifier';
+import Player from './Player.js';
+import Notifier from './Notifier.js';
 import { Character } from './Objects.js';
 
 class PlayerContainer {

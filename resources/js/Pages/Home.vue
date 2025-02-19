@@ -160,10 +160,10 @@
 </template>
 
 <script>
-import Layout from './../Layouts/App';
-import Modal from './../Components/Modal';
+import Layout from './../Layouts/App.vue';
+import Modal from './../Components/Modal.vue';
 
-const TPLocations = require('../data/tp_locations.json');
+import TPLocations from '../data/tp_locations.json';
 
 export default {
     layout: Layout,
@@ -228,10 +228,9 @@ export default {
             if (!this.craftingRecipes) {
                 this.craftingRecipes = [];
 
-                const data = await axios.get('/api/crafting');
+                const text = await fetch('/api/crafting').then(response => response.text());
 
                 const rgx = /- - - Station (\d+) - - -\s+(.+?)(?=\s+- - -|$)/gs;
-                const text = data.data;
 
                 for (const match of text.matchAll(rgx)) {
                     const station = match[1];
@@ -267,7 +266,7 @@ export default {
             }
         },
         banTime(ban) {
-            return ban.expireAt ? this.$options.filters.humanizeSeconds(this.$moment(ban.expireAt).unix() - this.$moment(ban.timestamp).unix()) : this.t('players.ban.forever_edit');
+            return ban.expireAt ? this.$options.filters.humanizeSeconds(dayjs(ban.expireAt).unix() - dayjs(ban.timestamp).unix()) : this.t('players.ban.forever_edit');
         },
         playerName(licenseIdentifier) {
             return licenseIdentifier in this.playerMap ? this.playerMap[licenseIdentifier] : licenseIdentifier;

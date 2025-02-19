@@ -9,7 +9,7 @@
                     <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale" v-if="character.characterDeleted">
                         <span class="font-semibold">
                             {{ t('players.edit.deleted') }}:
-                            {{ $moment(character.characterDeletionTimestamp).format('l') }}
+                            {{ character.characterDeletionTimestamp | formatTime }}
                         </span>
                     </badge>
                 </div>
@@ -904,15 +904,14 @@
 </template>
 
 <script>
-import Layout from './../../../Layouts/App';
-import VSection from './../../../Components/Section';
-import Card from './../../../Components/Card';
-import Badge from './../../../Components/Badge';
-import Modal from "../../../Components/Modal";
-import MultiSelector from '../../../Components/MultiSelector';
+import Layout from './../../../Layouts/App.vue';
+import VSection from './../../../Components/Section.vue';
+import Card from './../../../Components/Card.vue';
+import Badge from './../../../Components/Badge.vue';
+import Modal from "../../../Components/Modal.vue";
+import MultiSelector from '../../../Components/MultiSelector.vue';
 
 import { ModelSelect } from 'vue-search-select';
-import axios from 'axios';
 
 import models from "../../../data/ped_models.json";
 
@@ -1034,7 +1033,7 @@ export default {
 
         return {
             local: {
-                birth: this.t("players.edit.born", this.$moment(this.character.dateOfBirth).format('l')),
+                birth: this.t("players.edit.born", dayjs(this.character.dateOfBirth).format('l')),
                 cash: money.cash,
                 cashTitle: money.cashTitle,
                 stocks: money.stocks
@@ -1144,10 +1143,10 @@ export default {
             this.savingsLogs = [];
 
             try {
-                const response = await axios.get(`/savings/${account.id}/logs`);
+                const data = await fetch(`/savings/${account.id}/logs`).then(response => response.json());
 
-                if (response.data?.status) {
-                    this.savingsLogs = response.data.data;
+                if (data?.status) {
+                    this.savingsLogs = data.data;
                 }
             } catch (e) {
             }
@@ -1323,7 +1322,10 @@ export default {
             this.vehicleForm.plate = this.vehicleForm.plate.toUpperCase().trim();
 
             try {
-                const response = (await axios.post(`/vehicles/edit/${this.vehicleForm.id}`, this.vehicleForm)).data;
+                const response = await fetch(`/vehicles/edit/${this.vehicleForm.id}`, {
+                    method: "POST",
+                    body: post_data(this.vehicleForm)
+                }).then(response => response.json());
 
                 if (response.status) {
                     $('.overflow-y-auto').scrollTop(0);

@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="w-full relative">
-                    <video class="w-full pointer-events-none" :class="{ 'h-full object-contain': fullscreen }" ref="video" controlslist="nodownload noplaybackrate" poster="/images/no_stream.webp"></video>
+                    <video class="w-full pointer-events-none" :class="{ 'h-full object-contain': fullscreen }" ref="video" controlslist="nodownload noplaybackrate" :poster="'/images/no_stream.webp'"></video>
 
                     <div class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-red-500/40 border-2 border-red-500 text-white backdrop-filter backdrop-blur-md px-5 py-3 shadow-lgs" v-if="error">
                         <h3 class="font-bold text-md border-b-2 border-red-300 mb-2">{{ t('overwatch.stream_error') }}</h3>
@@ -102,10 +102,10 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Badge from './../../Components/Badge';
-import PanelChat from './../../Components/PanelChat';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Badge from './../../Components/Badge.vue';
+import PanelChat from './../../Components/PanelChat.vue';
 
 import Hls from "hls.js";
 
@@ -307,7 +307,7 @@ export default {
                 const a = document.createElement('a');
 
                 a.href = url;
-                a.download = `replay-${this.$moment().format('YYYY-MM-DD_HH-mm-ss')}.webm`;
+                a.download = `replay-${dayjs().format('YYYY-MM-DD_HH-mm-ss')}.webm`;
 
                 document.body.appendChild(a);
 

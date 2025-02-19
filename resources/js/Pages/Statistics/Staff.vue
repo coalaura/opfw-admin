@@ -3,7 +3,7 @@
 
         <portal to="title">
             <h1 class="dark:text-white flex items-center gap-3">
-                <img src="/images/social_credit.webp" class="!m-0 w-16 inline-block" v-if="modifier" />
+                <img :src="'/images/social_credit.webp'" class="!m-0 w-16 inline-block" v-if="modifier" />
                 {{ t("staff_statistics.title" + modifier) }}
             </h1>
             <p>
@@ -97,8 +97,8 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import MultiSelector from '../../Components/MultiSelector';
+import Layout from './../../Layouts/App.vue';
+import MultiSelector from '../../Components/MultiSelector.vue';
 
 export default {
     layout: Layout,
@@ -194,7 +194,7 @@ export default {
         formatLast(pTimestamp) {
             if (!pTimestamp) return this.t('staff_statistics.last_time_unknown');
 
-            const date = this.$moment(pTimestamp * 1000);
+            const date = dayjs(pTimestamp * 1000);
             const ago = date.fromNow();
             const formatted = date.format('dddd, MMMM Do YYYY, h:mm:ss A');
 

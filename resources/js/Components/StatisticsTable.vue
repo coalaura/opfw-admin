@@ -188,10 +188,9 @@ export default {
             this.requested = true;
 
             try {
-                const response = await (this.resolve ? this.resolve(this.source) : axios.get('/statistics/' + this.source)),
-                    data = response.data;
+                const data = await (this.resolve ? this.resolve(this.source) : fetch(`/statistics/${this.source}`).then(response => response.json()));
 
-                if (data.status) {
+                if (data?.status) {
                     this.data = data.data.data;
                     this.time = data.data.time;
                 }

@@ -49,11 +49,10 @@
 </template>
 
 <script>
-import Modal from './Modal';
-import HashResolver from './HashResolver';
+import Modal from './Modal.vue';
+import HashResolver from './HashResolver.vue';
 
-import moment from 'moment';
-import hljs from 'highlight.js';
+import hljs from 'highlight.js/lib/core';
 import json from 'highlight.js/lib/languages/json';
 
 import 'highlight.js/styles/github-dark-dimmed.css';
@@ -117,7 +116,7 @@ const CustomFormatters = {
         let lastTime;
 
         return data.map(timing => {
-            const date = moment(timing.timestamp * 1000).format('MM/DD h:mm:ss A'),
+            const date = dayjs(timing.timestamp * 1000).format('MM/DD h:mm:ss A'),
                 diff = lastTime ? (timing.time - lastTime) : false,
                 diffStr = diff ? `${(diff < 0 ? '-' : '+') + Math.abs(diff)}ms` : '';
 

@@ -248,9 +248,9 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Pagination from './../../Components/Pagination';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Pagination from './../../Components/Pagination.vue';
 
 export default {
 	layout: Layout,
@@ -314,7 +314,7 @@ export default {
 				return (seconds ? `${seconds}s ` : '') + (!seconds || ms ? `${ms}ms` : '');
 			}
 
-			return this.$moment.duration(Math.round(ms / 1000), 'seconds').format('d[d] h[h] m[m] s[s]');
+			return dayjs.duration(Math.round(ms / 1000), 'seconds').format('D[d] H[h] m[m] s[s]');
 		},
 		async refresh() {
 			if (this.isLoading) {
@@ -412,14 +412,14 @@ export default {
 	},
 	mounted() {
 		if (this.filters.before) {
-			const d = this.$moment.utc(this.filters.before * 1000);
+			const d = dayjs.utc(this.filters.before * 1000);
 
 			$('#before-date').val(d.format('YYYY-MM-DD'));
 			$('#before-time').val(d.format('HH:mm'));
 		}
 
 		if (this.filters.after) {
-			const d = this.$moment.utc(this.filters.after * 1000);
+			const d = dayjs.utc(this.filters.after * 1000);
 
 			$('#after-date').val(d.format('YYYY-MM-DD'));
 			$('#after-time').val(d.format('HH:mm'));

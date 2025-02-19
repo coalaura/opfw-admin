@@ -66,7 +66,7 @@
                                 {{ player.playerName }}
                             </div>
                         </td>
-                        <td class="p-3 mobile:block">{{ formatSecondDiff(player.playTime) }}</td>
+                        <td class="p-3 mobile:block">{{ player.playTime | formatSeconds }}</td>
                         <td class="p-3 mobile:block">
                             <span v-if="player.character && player.character.danny !== false" :style="dannyColor(player.character.danny)">
                                 {{ (player.character.danny * 100).toFixed(1) }}% Default Danny
@@ -102,10 +102,10 @@
 
 <script>
 import CountryFlag from 'vue-country-flag';
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Badge from './../../Components/Badge';
-import Pagination from './../../Components/Pagination';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Badge from './../../Components/Badge.vue';
+import Pagination from './../../Components/Pagination.vue';
 
 const colors = {
     pink: 'text-pink-700 dark:text-pink-300',
@@ -226,9 +226,6 @@ export default {
             return {
                 color: this.isDarkMode() ? `hsl(${h}, 90%, 65%)` : `hsl(${h}, 75%, 55%)`
             };
-        },
-        formatSecondDiff(sec) {
-            return this.$moment.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
         },
         refresh: async function () {
             if (this.isLoading) {

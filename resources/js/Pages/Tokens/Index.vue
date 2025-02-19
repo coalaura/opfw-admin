@@ -135,8 +135,8 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import Modal from './../../Components/Modal';
+import Layout from './../../Layouts/App.vue';
+import Modal from './../../Components/Modal.vue';
 
 export default {
     layout: Layout,
@@ -191,9 +191,11 @@ export default {
             this.isLoading = true;
 
             try {
-                const result = await axios.delete(`/tokens/${id}`);
+                const result = await fetch(`/tokens/${id}`, {
+                    method: "DELETE"
+                }).then(response => response.json());
 
-                if (result.data?.status) {
+                if (result?.status) {
                     this.list = this.list.filter(token => token.id !== id);
                 }
             } catch (e) { }
@@ -218,9 +220,12 @@ export default {
             };
 
             try {
-                const result = await axios.put(`/tokens/${token.id}`, data);
+                const result = await fetch(`/tokens/${token.id}`, {
+                    method: "PUT",
+                    body: post_data(data)
+                }).then(response => response.json());
 
-                if (result.data?.status) {
+                if (result?.status) {
                     token.changed = false;
 
                     if (token.id === this.editingNameId) {
@@ -245,10 +250,12 @@ export default {
             this.isLoading = true;
 
             try {
-                const result = await axios.post('/tokens');
+                const result = await fetch('/tokens', {
+                    method: "POST"
+                }).then(response => response.json());
 
-                if (result.data?.status) {
-                    this.list.push(result.data.data);
+                if (result?.status) {
+                    this.list.push(result.data);
                 }
             } catch (e) { }
 
@@ -268,12 +275,12 @@ export default {
             }
 
             try {
-                const result = await axios.get(`/tokens/logs?${query.join('&')}`, {
+                const result = await fetch(`/tokens/logs?${query.join('&')}`, {
                     signal: this.controller.signal
-                });
+                }).then(response => response.json());
 
-                if (result.data?.status) {
-                    const logs = result.data.data;
+                if (result?.status) {
+                    const logs = result.data;
 
                     this.logs = this.logs.concat(logs);
 
@@ -286,12 +293,12 @@ export default {
         },
         async loadLogInfo() {
             try {
-                const result = await axios.get(`/tokens/rps?id=${this.logTokenId}`, {
+                const result = await fetch(`/tokens/rps?id=${this.logTokenId}`, {
                     signal: this.controller.signal
-                });
+                }).then(response => response.json());
 
-                if (result.data?.status) {
-                    this.logInfo = result.data.data;
+                if (result?.status) {
+                    this.logInfo = result.data;
                 }
             } catch (e) { }
         },

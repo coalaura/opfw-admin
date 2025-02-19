@@ -151,7 +151,7 @@
 </template>
 
 <script>
-import Modal from '../Modal';
+import Modal from '../Modal.vue';
 import ServerConfig from './ServerConfig.js';
 
 export default {
@@ -342,10 +342,9 @@ export default {
                 this.isLoading = true;
 
                 try {
-                    const response = await axios.get(`/api/config/${cluster}/job_overrides`),
-                        data = response.data;
+                    const data = await fetch(`/api/config/${cluster}/job_overrides`).then(response => response.json());
 
-                    if (!data || !data.status) {
+                    if (!data?.status) {
                         throw new Error("Config not found");
                     }
 

@@ -1,8 +1,10 @@
-import "./bootstrap";
+import "./bootstrap.js";
+
 import { InertiaApp } from "@inertiajs/inertia-vue";
 import Vue from "vue";
 import PortalVue from "portal-vue";
-import moment from "moment";
+import Toast from "vue-toastification";
+
 import Localization from "./Plugins/localization.js";
 import Theme from "./Plugins/theme.js";
 import Markdown from "./Plugins/markdown.js";
@@ -21,14 +23,14 @@ import Spreadsheet from "./Plugins/spreadsheet.js";
 import Style from "./Plugins/style.js";
 import Flags from "./Plugins/flags.js";
 import humanizeSeconds from "./Filters/humanizeSeconds.js";
+import formatSeconds from "./Filters/formatSeconds.js";
 import formatTime from "./Filters/formatTime.js";
 import formatGender from "./Filters/formatGender.js";
 import linkify from "vue-linkify";
+
 import "leaflet/dist/leaflet.css";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import "leaflet-fullscreen/dist/leaflet.fullscreen.css";
-const momentDuration = require("moment-duration-format");
-import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import "vue-search-select/dist/VueSearchSelect.css";
 
@@ -68,22 +70,21 @@ Vue.use(Style);
 Vue.use(Toast, {
 	transition: "Vue-Toastification__slideBlurred",
 	maxToasts: 10,
-	newestOnTop: true
+	newestOnTop: true,
 });
-
-momentDuration(moment);
-
-// Properties / methods.
-Vue.prototype.$moment = moment;
 
 // Custom filters.
 Vue.filter("humanizeSeconds", humanizeSeconds);
+Vue.filter("formatSeconds", formatSeconds);
 Vue.filter("formatTime", formatTime);
 Vue.filter("formatGender", formatGender);
 
+// For using filters as functions (add/remove as needed)
+Vue.prototype.formatSeconds = formatSeconds;
+
 Vue.directive("click-outside", {
 	bind: (el, binding, vnode) => {
-		el.clickOutsideEvent = (event) => {
+		el.clickOutsideEvent = event => {
 			if (!(el === event.target || el.contains(event.target))) {
 				vnode.context[binding.expression](event);
 			}
@@ -91,25 +92,35 @@ Vue.directive("click-outside", {
 
 		document.body.addEventListener("click", el.clickOutsideEvent);
 	},
-	unbind: (el) => {
+	unbind: el => {
 		document.body.removeEventListener("click", el.clickOutsideEvent);
-	}
+	},
 });
 
 Vue.component("scoped-style", {
-	render: function(createElement) {
+	render: function (createElement) {
 		return createElement("style", this.$slots.default);
-	}
+	},
 });
 
 // Create Vue.
-const vue = new Vue({
+const pages = import.meta.glob("./Pages/**/*.vue");
+
+new Vue({
 	el: app,
 	render: h =>
 		h(InertiaApp, {
 			props: {
 				initialPage: page,
-				resolveComponent: name => import(`./Pages/${name}`).then(module => module.default)
-			}
-		})
+				resolveComponent: name => {
+					const importPage = pages[`./Pages/${name}.vue`];
+
+					if (importPage) {
+						return importPage().then(module => module.default);
+					}
+
+					return Promise.reject(new Error(`Page not found: ${name}.vue`));
+				},
+			},
+		}),
 });

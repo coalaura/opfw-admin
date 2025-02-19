@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import Layout from '../../../Layouts/App';
+import Layout from '../../../Layouts/App.vue';
 
 export default {
     layout: Layout,
@@ -60,10 +60,10 @@ export default {
             this.isLoading = true;
 
             try {
-                const data = await axios.get('/api/backstories');
+                const data = await fetch('/api/backstories').then(response => response.json());;
 
-                if (data.data?.data) {
-                    this.character = data.data.data;
+                if (data?.data) {
+                    this.character = data.data;
                 } else {
                     this.character = null;
                 }

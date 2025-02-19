@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import Layout from '../../Layouts/App';
+import Layout from '../../Layouts/App.vue';
 
 export default {
     layout: Layout,
@@ -94,12 +94,15 @@ export default {
             this.isLoading = true;
 
             try {
-                const data = await axios.post('/discord', {
-                    search: this.search
-                });
+                const data = await fetch('/discord', {
+                    method: 'POST',
+                    body: post_data({
+                        search: this.search
+                    })
+                }).then(response => response.json());
 
-                if (data.data) {
-                    this.result = data.data;
+                if (data) {
+                    this.result = data;
                 } else {
                     this.result = null;
                 }

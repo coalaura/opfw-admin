@@ -161,9 +161,9 @@ export default {
             return 'text-gray-700 dark:text-gray-300';
         },
         getMessageTime(time) {
-            const now = this.$moment.unix(this.timestamp / 1000);
+            const now = dayjs.unix(this.timestamp / 1000);
 
-            return this.$moment.unix(time).from(now);
+            return dayjs.unix(time).from(now);
         },
         getMessageHTML(message) {
             let html = this.escapeHtml(message.text);

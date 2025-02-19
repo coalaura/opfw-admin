@@ -249,8 +249,11 @@ export default {
             });
 
             try {
-                await axios.post('/chat', {
-                    message: text
+                await fetch('/chat', {
+                    method: "POST",
+                    body: post_data({
+                        message: text
+                    })
                 });
             } catch (e) { }
 
@@ -357,7 +360,7 @@ export default {
                                 claimed: "claimed" in message && message.claimed,
                                 color: this.formatColor(message),
                                 createdAt: message.createdAt,
-                                time: this.$moment.utc(message.createdAt * 1000).local().fromNow(),
+                                time: dayjs.utc(message.createdAt * 1000).local().fromNow(),
                                 local: !!message.local
                             };
                         });

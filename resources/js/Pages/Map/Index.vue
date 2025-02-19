@@ -181,31 +181,31 @@
                     <!-- Map Legend -->
                     <div class="my-2 flex flex-wrap justify-between text-xs w-full">
                         <div class="mx-2">
-                            <img src="/images/icons/circle.png" class="w-map-icon inline-block" alt="on foot" />
+                            <img :src="'/images/icons/circle.png'" class="w-map-icon inline-block" alt="on foot" />
                             <span class="leading-map-icon">on foot</span>
                         </div>
                         <div class="mx-2">
-                            <img src="/images/icons/circle_green.png" class="w-map-icon inline-block" alt="invisible" />
+                            <img :src="'/images/icons/circle_green.png'" class="w-map-icon inline-block" alt="invisible" />
                             <span class="leading-map-icon">invisible</span>
                         </div>
                         <div class="mx-2">
-                            <img src="/images/icons/circle_red.png" class="w-map-icon inline-block" alt="passenger" />
+                            <img :src="'/images/icons/circle_red.png'" class="w-map-icon inline-block" alt="passenger" />
                             <span class="leading-map-icon">passenger</span>
                         </div>
                         <div class="mx-2">
-                            <img src="/images/icons/skull.png" class="w-map-icon inline-block" alt="dead" />
+                            <img :src="'/images/icons/skull.png'" class="w-map-icon inline-block" alt="dead" />
                             <span class="leading-map-icon">dead</span>
                         </div>
                         <div class="mx-2">
-                            <img src="/images/icons/skull_red.png" class="w-map-icon inline-block" alt="dead passenger" />
+                            <img :src="'/images/icons/skull_red.png'" class="w-map-icon inline-block" alt="dead passenger" />
                             <span class="leading-map-icon">dead (passenger)</span>
                         </div>
                         <div class="mx-2">
-                            <img src="/images/icons/circle_police.png" class="w-map-icon inline-block" alt="police" />
+                            <img :src="'/images/icons/circle_police.png'" class="w-map-icon inline-block" alt="police" />
                             <span class="leading-map-icon">police</span>
                         </div>
                         <div class="mx-2">
-                            <img src="/images/icons/circle_ems.png" class="w-map-icon inline-block" alt="ems" />
+                            <img :src="'/images/icons/circle_ems.png'" class="w-map-icon inline-block" alt="ems" />
                             <span class="leading-map-icon">ems</span>
                         </div>
                     </div>
@@ -295,23 +295,22 @@
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
-import moment from "moment";
 import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-rotatedmarker";
 import "leaflet-fullscreen";
 import "leaflet.markercluster";
 
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import SimplePlayerList from './../../Components/Map/SimplePlayerList';
-import Modal from './../../Components/Modal';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import SimplePlayerList from './../../Components/Map/SimplePlayerList.vue';
+import Modal from './../../Components/Modal.vue';
 
-import PlayerContainer from './PlayerContainer';
-import Player from './Player';
-import Vector3 from "./Vector3";
-import Bounds from './map.config';
-import { mapNumber } from './helper';
+import PlayerContainer from './PlayerContainer.js';
+import Player from './Player.js';
+import Vector3 from "./Vector3.js";
+import Bounds from './map.config.js';
+import { mapNumber } from './helper.js';
 
 ((global) => {
     const MarkerMixin = {
@@ -456,13 +455,11 @@ export default {
         },
         async resolveHistoricLicenseDates() {
             try {
-                const response = await axios.get(`/players/${this.form.historic_license}/ban`);
-
-                const data = response.data;
+                const data = await fetch(`/players/${this.form.historic_license}/ban`).then(response => response.json());;
 
                 if (data?.data && data.status) {
                     // Round to next minute
-                    const date = moment((data.data.timestamp + 60) * 1000);
+                    const date = dayjs((data.data.timestamp + 60) * 1000);
 
                     this.form.historic_till_date = date.format("YYYY-MM-DD");
                     this.form.historic_till_time = date.format("HH:mm");
@@ -503,8 +500,8 @@ export default {
             return `<a href="/players/${license}" target="_blank" title="${title}" class="!no-underline ${cls}">${player_name}</a>`;
         },
         showHistoric() {
-            const fromDate = this.$moment().subtract(1, 'hours');
-            const tillDate = this.$moment().add(1, 'minutes');
+            const fromDate = dayjs().subtract(1, 'hours');
+            const tillDate = dayjs().add(1, 'minutes');
 
             if (!this.form.historic_from_date) {
                 this.form.historic_from_date = fromDate.format("YYYY-MM-DD");
@@ -557,7 +554,7 @@ export default {
                 }).slice(4);
 
                 let icon = "circle";
-                let label = `${moment.unix(val).format("MM/DD/YYYY - h:mm:ss")} ${timezone} (${val})`;
+                let label = `${dayjs.unix(val).format("MM/DD/YYYY - h:mm:ss")} ${timezone} (${val})`;
 
                 const flags = [
                     pos?.i ? 'invisible' : false,
@@ -611,8 +608,8 @@ export default {
             }
         },
         async showHistory() {
-            const fromUnix = this.$moment(`${this.form.historic_from_date} ${this.form.historic_from_time}`).unix();
-            const tillUnix = this.$moment(`${this.form.historic_till_date} ${this.form.historic_till_time}`).unix();
+            const fromUnix = dayjs(`${this.form.historic_from_date} ${this.form.historic_from_time}`).unix();
+            const tillUnix = dayjs(`${this.form.historic_till_date} ${this.form.historic_till_time}`).unix();
 
             if (fromUnix && tillUnix) {
                 if (this.form.historic_license || !this.form.historic_license.startsWith('license:')) {
@@ -777,11 +774,12 @@ export default {
         async loadHistory(server, license, from, till) {
             this.loadingScreenStatus = this.t('map.historic_fetch');
             try {
-                const result = await axios.get(`${this.hostname(false)}/socket/${server}/history/${license}/${from}/${till}?token=${this.token}`);
+                const result = await fetch(`${this.hostname(false)}/socket/${server}/history/${license}/${from}/${till}?token=${this.token}`).then(response => response.json());;
 
                 this.loadingScreenStatus = this.t('map.historic_parse');
-                if (result.data?.status) {
-                    const data = result.data.data;
+
+                if (result?.status) {
+                    const data = result.data;
 
                     const keys = Object.keys(data);
                     const first = keys[0];
@@ -800,10 +798,10 @@ export default {
                     }
 
                     return data;
-                }if (result.data && !result.data.status) {
-                    console.error(result.data.error);
+                }if (!result.status) {
+                    console.error(result.error);
 
-                    alert(result.data.error);
+                    alert(result.error);
 
                     window.location.reload();
                 }
@@ -815,14 +813,17 @@ export default {
         },
         async loadPlayerNames(licenses) {
             try {
-                const result = await axios.post('/map/playerNames', {
-                    licenses: licenses
-                });
+                const result = await fetch('/map/playerNames', {
+                    method: "POST",
+                    body: post_data({
+                        licenses: licenses
+                    })
+                }).then(response => response.json());
 
-                if (result.data?.status) {
-                    return result.data.data;
-                }if (result.data && !result.data.status) {
-                    console.error(result.data.error);
+                if (result?.status) {
+                    return result.data;
+                } else if (!result.status) {
+                    console.error(result.error);
                 }
             } catch (e) {
                 console.error(e);
@@ -955,16 +956,16 @@ export default {
         },
         async loadTimestamp(server, timestamp) {
             try {
-                const result = await axios.get(`${this.hostname(false)}/socket/${server}/timestamp/${timestamp}?token=${this.token}`);
+                const result = await fetch(`${this.hostname(false)}/socket/${server}/timestamp/${timestamp}?token=${this.token}`).then(response => response.json());
 
                 this.loadingScreenStatus = this.t('map.timestamp_parse');
-                if (result.data?.status) {
+                if (result?.status) {
                     const players = [];
 
-                    for (const license in result.data.data) {
+                    for (const license in result.data) {
                         if (Object.hasOwn(Object, license)) continue;
 
-                        const coords = result.data.data[license];
+                        const coords = result.data[license];
 
                         players.push({
                             license: `license:${license.replace(".csv", "")}`,
@@ -981,8 +982,8 @@ export default {
                     }
 
                     return players;
-                }if (result.data && !result.data.status) {
-                    alert(result.data.error);
+                } else if (!result?.status) {
+                    alert(result.error);
 
                     window.location.reload();
                 }
@@ -1154,11 +1155,14 @@ export default {
                             this.characters[id] = null;
                         }
 
-                        axios.post('/api/characters', {
-                            ids: unknownCharacters
-                        }).then(result => {
-                            if (result.data?.status) {
-                                for (const ch of result.data.data) {
+                        fetch('/api/characters', {
+                            method: "POST",
+                            body: post_data({
+                                ids: unknownCharacters
+                            })
+                        }).then(response => response.json()).then(result => {
+                            if (result?.status) {
+                                for (const ch of result.data) {
                                     this.characters[ch.character_id] = ch;
                                 }
                             }
