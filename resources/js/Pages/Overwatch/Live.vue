@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="w-full relative">
-                    <video class="w-full pointer-events-none" :class="{ 'h-full object-contain': fullscreen }" ref="video" controlslist="nodownload noplaybackrate" poster="/images/no_stream.webp"></video>
+                    <video class="w-full pointer-events-none" :class="{ 'h-full object-contain': fullscreen }" ref="video" controlslist="nodownload noplaybackrate" :poster="'/images/no_stream.webp'"></video>
 
                     <div class="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 bg-red-500/40 border-2 border-red-500 text-white backdrop-filter backdrop-blur-md px-5 py-3 shadow-lgs" v-if="error">
                         <h3 class="font-bold text-md border-b-2 border-red-300 mb-2">{{ t('overwatch.stream_error') }}</h3>
