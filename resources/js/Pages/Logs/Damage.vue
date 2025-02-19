@@ -314,7 +314,7 @@ export default {
 				return (seconds ? `${seconds}s ` : '') + (!seconds || ms ? `${ms}ms` : '');
 			}
 
-			return dayjs.duration(Math.round(ms / 1000), 'seconds').format('d[d] h[h] m[m] s[s]');
+			return dayjs.duration(Math.round(ms / 1000), 'seconds').format('D[d] H[h] m[m] s[s]');
 		},
 		async refresh() {
 			if (this.isLoading) {

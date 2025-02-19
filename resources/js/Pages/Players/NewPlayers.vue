@@ -66,7 +66,7 @@
                                 {{ player.playerName }}
                             </div>
                         </td>
-                        <td class="p-3 mobile:block">{{ formatSecondDiff(player.playTime) }}</td>
+                        <td class="p-3 mobile:block">{{ player.playTime | formatSeconds }}</td>
                         <td class="p-3 mobile:block">
                             <span v-if="player.character && player.character.danny !== false" :style="dannyColor(player.character.danny)">
                                 {{ (player.character.danny * 100).toFixed(1) }}% Default Danny
@@ -226,9 +226,6 @@ export default {
             return {
                 color: this.isDarkMode() ? `hsl(${h}, 90%, 65%)` : `hsl(${h}, 75%, 55%)`
             };
-        },
-        formatSecondDiff(sec) {
-            return dayjs.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
         },
         refresh: async function () {
             if (this.isLoading) {

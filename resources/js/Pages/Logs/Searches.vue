@@ -209,9 +209,6 @@ export default {
         };
     },
     methods: {
-        formatSecondDiff(sec) {
-            return dayjs.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
-        },
         stamp(time) {
             return dayjs.utc(time).unix();
         },

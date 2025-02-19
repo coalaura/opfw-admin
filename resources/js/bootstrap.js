@@ -1,3 +1,5 @@
+import Vue from "vue";
+
 // day.js
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -11,6 +13,8 @@ dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
 window.dayjs = dayjs;
+
+Vue.prototype.dayjs = dayjs;
 
 // jquery i guess :(
 import $ from "jquery-slim";

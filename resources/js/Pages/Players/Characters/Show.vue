@@ -9,7 +9,7 @@
                     <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale" v-if="character.characterDeleted">
                         <span class="font-semibold">
                             {{ t('players.edit.deleted') }}:
-                            {{ $moment(character.characterDeletionTimestamp).format('l') }}
+                            {{ character.characterDeletionTimestamp | formatTime }}
                         </span>
                     </badge>
                 </div>

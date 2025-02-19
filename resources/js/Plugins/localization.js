@@ -43,12 +43,6 @@ const Localization = {
                     console.error('Failed to load fallback locale "en-us"');
                 }
             }
-
-            try {
-                Vue.prototype.$moment.locale("en-us");
-            } catch (e) {
-                console.error(`Failed to load moment locale "${locale}"`, e);
-            }
         };
 
         Vue.prototype.t = (key, ...params) => {

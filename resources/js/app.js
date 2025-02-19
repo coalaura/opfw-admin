@@ -23,6 +23,7 @@ import Spreadsheet from "./Plugins/spreadsheet.js";
 import Style from "./Plugins/style.js";
 import Flags from "./Plugins/flags.js";
 import humanizeSeconds from "./Filters/humanizeSeconds.js";
+import formatSeconds from "./Filters/formatSeconds.js";
 import formatTime from "./Filters/formatTime.js";
 import formatGender from "./Filters/formatGender.js";
 import linkify from "vue-linkify";
@@ -72,13 +73,14 @@ Vue.use(Toast, {
 	newestOnTop: true,
 });
 
-// Properties / methods.
-Vue.prototype.$moment = dayjs;
-
 // Custom filters.
 Vue.filter("humanizeSeconds", humanizeSeconds);
+Vue.filter("formatSeconds", formatSeconds);
 Vue.filter("formatTime", formatTime);
 Vue.filter("formatGender", formatGender);
+
+// For using filters as functions (add/remove as needed)
+Vue.prototype.formatSeconds = formatSeconds;
 
 Vue.directive("click-outside", {
 	bind: (el, binding, vnode) => {

@@ -309,9 +309,6 @@ export default {
 
             return '';
         },
-        formatSecondDiff(sec) {
-            return dayjs.duration(sec, 'seconds').format('d[d] h[h] m[m] s[s]');
-        },
         showMetadata(metadata, screenshotUrl) {
             this.showingMetadata = JSON.parse(JSON.stringify(metadata));
             this.showingMetadataImage = screenshotUrl;

@@ -66,7 +66,7 @@
                         </span>
                     </badge>
 
-                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary" :title="t('players.show.playtime', formatSecondDiff(player.playTime), formatSecondDiff(player.recentPlayTime))" v-html="local.played"></badge>
+                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary" :title="t('players.show.playtime', formatSeconds(player.playTime), formatSeconds(player.recentPlayTime))" v-html="local.played"></badge>
 
                     <badge class="border-pink-300 bg-pink-200 dark:bg-pink-700" v-if="player.tag" :title="player.tag">
                         <span class="font-semibold">{{ player.tag.length > 20 ? player.tag.substring(0, 18) + '...' : player.tag }}</span>
@@ -99,7 +99,7 @@
                     <!-- Last Connection -->
                     <tr class="border-t border-gray-500">
                         <th class="px-2 py-0.5">{{ t('players.show.last_connection') }}</th>
-                        <td class="px-2 py-0.5" :title="$moment.utc(player.lastConnection).fromNow()">{{ player.lastConnection | formatTime(true) }}</td>
+                        <td class="px-2 py-0.5" :title="dayjs.utc(player.lastConnection).fromNow()">{{ player.lastConnection | formatTime(true) }}</td>
                     </tr>
 
                     <!-- System specs -->
@@ -1008,7 +1008,7 @@
                                     {{ t('players.ban.expiration') }}
                                 </label>
                                 <div class="flex items-center">
-                                    <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow mr-1" type="date" id="expireDate" name="expireDate" step="any" :min="$moment().format('YYYY-MM-DD')" v-model="form.ban.expireDate" required>
+                                    <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow mr-1" type="date" id="expireDate" name="expireDate" step="any" :min="dayjs().format('YYYY-MM-DD')" v-model="form.ban.expireDate" required>
                                     <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow" type="time" id="expireTime" name="expireTime" step="any" v-model="form.ban.expireTime" required>
                                 </div>
                             </div>
@@ -1142,25 +1142,25 @@
                                     <table class="whitespace-nowrap text-sm text-left w-full">
                                         <tr class="border-t border-gray-500">
                                             <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.created_at') }}</th>
-                                            <td class="px-2 py-0.5 italic w-full">{{ $moment(character.characterCreationTimestamp).format('LLL') }}</td>
+                                            <td class="px-2 py-0.5 italic w-full">{{ character.characterCreationTimestamp | formatTime }}</td>
                                         </tr>
 
                                         <tr class="border-t border-gray-500" v-if="character.characterDeleted">
                                             <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.deleted_at') }}</th>
-                                            <td class="px-2 py-0.5 italic w-full">{{ $moment(character.characterDeletionTimestamp).format('LLL') }}</td>
+                                            <td class="px-2 py-0.5 italic w-full">{{ character.characterDeletionTimestamp | formatTime }}</td>
                                         </tr>
 
                                         <tr class="border-t border-gray-500">
                                             <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.playtime_label') }}</th>
                                             <td class="px-2 py-0.5 italic w-full">
-                                                {{ formatSecondDiff(character.playtime) }}
-                                                <i class="fas fa-signal ml-1 cursor-help" :title="t('players.characters.playtime_recent', formatSecondDiff(character.playtime_2w))"></i>
+                                                {{ character.playtime | formatSeconds }}
+                                                <i class="fas fa-signal ml-1 cursor-help" :title="t('players.characters.playtime_recent', formatSeconds(character.playtime_2w))"></i>
                                             </td>
                                         </tr>
 
                                         <tr class="border-t border-gray-500">
                                             <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.born') }}</th>
-                                            <td class="px-2 py-0.5 italic w-full">{{ $moment(character.dateOfBirth).format('LL') }}</td>
+                                            <td class="px-2 py-0.5 italic w-full">{{ character.dateOfBirth | formatTime }}</td>
                                         </tr>
 
                                         <tr class="border-t border-gray-500" v-if="character.marriedTo">
@@ -1947,9 +1947,6 @@ export default {
             }
 
             return `??? (${pRatio.toFixed(2)})`;
-        },
-        formatSecondDiff(sec) {
-            return dayjs.duration(sec, 'seconds').format('d[d] h[h] m[m]').replace(/(?<=\s|^)0\w/gm, '') || "0s";
         },
         showAntiCheatMetadata(event, eventData) {
             event.preventDefault();

@@ -26,7 +26,7 @@
                             {{ t('players.ban.expiration') }}
                         </label>
                         <div class="flex items-center">
-                            <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow" type="date" id="expireDate" name="expireDate" step="any" :min="$moment().format('YYYY-MM-DD')" v-model="form.expireDate" required>
+                            <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow" type="date" id="expireDate" name="expireDate" step="any" :min="dayjs().format('YYYY-MM-DD')" v-model="form.expireDate" required>
                             <input class="block p-3 bg-gray-200 dark:bg-gray-600 rounded shadow" type="time" id="expireTime" name="expireTime" step="any" v-model="form.expireTime" required>
                         </div>
                     </div>
