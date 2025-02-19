@@ -1038,12 +1038,11 @@ export default {
             }
         },
         addToLayer(marker, layer) {
-
-            $.each(this.layers, (key) => {
+            for (const key in this.layers) {
                 if (layer !== key) {
                     this.layers[key].removeLayer(marker);
                 }
-            });
+            }
 
             this.layers[layer].addLayer(marker);
         },
@@ -1151,17 +1150,17 @@ export default {
 
                     if (unknownCharacters.length > 0) {
                         // Prevent it being requested twice while the other is still loading
-                        $.each(unknownCharacters, (_, id) => {
+                        for (const id of unknownCharacters) {
                             this.characters[id] = null;
-                        });
+                        }
 
                         axios.post('/api/characters', {
                             ids: unknownCharacters
                         }).then(result => {
                             if (result.data?.status) {
-                                $.each(result.data.data, (_, ch) => {
+                                for (const ch of result.data.data) {
                                     this.characters[ch.character_id] = ch;
-                                });
+                                }
                             }
                         });
                     }
@@ -1224,11 +1223,11 @@ export default {
 
             L.control.layers({}, this.layers).addTo(this.map);
 
-            $.each(this.layers, (key) => {
+            for (const key in this.layers) {
                 this.layers[key].addTo(this.map);
-            });
+            }
 
-            $.each(this.blips, (_, blip) => {
+            for (const blip of this.blips) {
                 const coords = JSON.parse(blip.coords);
                 const coordsText = `${coords.x.toFixed(2)} ${coords.y.toFixed(2)}`;
                 const location = Vector3.fromGameCoords(coords.x, coords.y, 0);
@@ -1250,7 +1249,7 @@ export default {
                 });
 
                 this.layers.Blips.addLayer(marker);
-            });
+            }
 
             if (this.marker) {
                 const location = Vector3.fromGameCoords(this.marker[0], this.marker[1], 0);

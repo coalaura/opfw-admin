@@ -55,12 +55,14 @@ class Vehicle {
         let type = 'car';
         let size = 23;
 
-        $.each(custom_icons, (typ, cfg) => {
+        for (const typ in custom_icons) {
+            const cfg = custom_icons[typ];
+
             if (cfg.models.includes(v.model)) {
                 type = typ;
                 size = cfg.size;
             }
-        });
+        }
 
         v.icon = {
             type: type,

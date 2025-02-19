@@ -166,9 +166,9 @@ export default {
 
             L.control.layers({}, this.layers).addTo(this.map);
 
-            $.each(this.layers, key => {
+            for (const key in this.layers) {
                 this.layers[key].addTo(this.map);
-            });
+            }
 
             this.map.on('fullscreenchange', () => {
                 setTimeout(() => {
