@@ -12,25 +12,6 @@ dayjs.extend(relativeTime);
 
 window.dayjs = dayjs;
 
-// popper.js
-import Popper from "popper.js";
-
-window.Popper = Popper;
-
-// aos.js
-import aos from "aos/dist/aos";
-
-window.AOS = aos;
-
-window.AOS.init({
-	offset: 120,
-	delay: 0,
-	duration: 1000,
-	easing: "ease",
-	once: false,
-	mirror: false,
-});
-
 // jquery i guess :(
 import $ from "jquery-slim";
 

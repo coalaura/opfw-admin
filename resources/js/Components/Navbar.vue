@@ -480,7 +480,7 @@ export default {
                 return dayjs.duration(pMilliseconds).format('m [minutes]');
             }
 
-            return dayjs.duration(pMilliseconds).format(`D days, H hours${pIncludeMinutes ? ', m minutes' : ''}`);
+            return dayjs.duration(pMilliseconds).format(`D [days], H [hours]${pIncludeMinutes ? ', m [minutes]' : ''}`);
         },
         async showDebugInfo() {
             if (this.loadingDebug) return;

@@ -13,7 +13,6 @@
         "@tailwindcss/typography": "^0.3.1",
         "@vitejs/plugin-vue2": "^2.3.3",
         "laravel-vite-plugin": "^1.2.0",
-        "popper.js": "^1.12",
         "portal-vue": "^2.1.7",
         "postcss": "^8.5.3",
         "postcss-import": "^16.0.1",
