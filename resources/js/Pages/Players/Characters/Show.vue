@@ -904,15 +904,14 @@
 </template>
 
 <script>
-import Layout from './../../../Layouts/App';
-import VSection from './../../../Components/Section';
-import Card from './../../../Components/Card';
-import Badge from './../../../Components/Badge';
-import Modal from "../../../Components/Modal";
-import MultiSelector from '../../../Components/MultiSelector';
+import Layout from './../../../Layouts/App.vue';
+import VSection from './../../../Components/Section.vue';
+import Card from './../../../Components/Card.vue';
+import Badge from './../../../Components/Badge.vue';
+import Modal from "../../../Components/Modal.vue";
+import MultiSelector from '../../../Components/MultiSelector.vue';
 
 import { ModelSelect } from 'vue-search-select';
-import axios from 'axios';
 
 import models from "../../../data/ped_models.json";
 
@@ -1144,10 +1143,10 @@ export default {
             this.savingsLogs = [];
 
             try {
-                const response = await axios.get(`/savings/${account.id}/logs`);
+                const data = await fetch(`/savings/${account.id}/logs`).then(response => response.json());
 
-                if (response.data?.status) {
-                    this.savingsLogs = response.data.data;
+                if (data?.status) {
+                    this.savingsLogs = data.data;
                 }
             } catch (e) {
             }
@@ -1323,7 +1322,10 @@ export default {
             this.vehicleForm.plate = this.vehicleForm.plate.toUpperCase().trim();
 
             try {
-                const response = (await axios.post(`/vehicles/edit/${this.vehicleForm.id}`, this.vehicleForm)).data;
+                const response = await fetch(`/vehicles/edit/${this.vehicleForm.id}`, {
+                    method: "POST",
+                    body: post_data(this.vehicleForm)
+                }).then(response => response.json());
 
                 if (response.status) {
                     $('.overflow-y-auto').scrollTop(0);

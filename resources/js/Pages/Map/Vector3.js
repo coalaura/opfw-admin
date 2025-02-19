@@ -1,5 +1,5 @@
-import conf from './map.config';
-import {mapNumber} from './helper';
+import conf from './map.config.js';
+import {mapNumber} from './helper.js';
 
 class Vector3 {
     static fromGameCoords(x, y, z) {

@@ -260,6 +260,6 @@ module.exports = {
     },
     plugins: [
         require('@tailwindcss/typography'),
-        require('./resources/js/scripts/tailwind-forms.js')
+        require('./resources/js/scripts/tailwind-forms.cjs')
     ]
 }

@@ -186,12 +186,12 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Pagination from './../../Components/Pagination';
-import Modal from './../../Components/Modal';
-import HashResolver from './../../Components/HashResolver';
-import MetadataViewer from './../../Components/MetadataViewer';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Pagination from './../../Components/Pagination.vue';
+import Modal from './../../Components/Modal.vue';
+import HashResolver from './../../Components/HashResolver.vue';
+import MetadataViewer from './../../Components/MetadataViewer.vue';
 import SimpleChart from '../../Components/Charts/SimpleChart.vue';
 
 export default {
@@ -279,8 +279,7 @@ export default {
             this.chartData = false;
 
             try {
-                const response = await axios.get('/anti_cheat/statistics');
-                const data = response.data;
+                const data = await fetch('/anti_cheat/statistics').then(response => response.json());;
 
                 if (data?.status) {
                     this.chartData = data.data.data;

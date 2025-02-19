@@ -61,10 +61,10 @@
 </template>
 
 <script>
-import FlashMessage from './../Components/FlashMessage';
-import Navbar from './../Components/Navbar';
-import Sidebar from './../Components/Sidebar';
-import Foot from './../Components/Footer';
+import FlashMessage from './../Components/FlashMessage.vue';
+import Navbar from './../Components/Navbar.vue';
+import Sidebar from './../Components/Sidebar.vue';
+import Foot from './../Components/Footer.vue';
 
 export default {
     components: {
@@ -81,12 +81,12 @@ export default {
     },
     computed: {
         canHideHeader() {
-            return !window.location.pathname.startsWith("/players/license:");
+            return !this.$page.url.startsWith("/players/license:");
         }
     },
     methods: {
         isMobile() {
-            return $(window).width() <= 640;
+            return window.outerWidth <= 640;
         },
 
         padVerticalOverflows() {

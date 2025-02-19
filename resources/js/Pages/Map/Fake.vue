@@ -101,8 +101,8 @@ import "leaflet-rotatedmarker";
 import "leaflet-fullscreen";
 import "leaflet.markercluster";
 
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
 
 export default {
     layout: Layout,

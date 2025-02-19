@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Alert from './Alert';
+import Alert from './Alert.vue';
 
 export default {
     components: {

@@ -1,8 +1,8 @@
-import Vector3 from './Vector3';
-import { shouldIgnoreInvisible, mapNumber } from './helper';
-import { Character, Vehicle } from './Objects';
+import Vector3 from './Vector3.js';
+import { shouldIgnoreInvisible, mapNumber } from './helper.js';
+import { Character, Vehicle } from './Objects.js';
 import L from "leaflet";
-import Bounds from "./map.config";
+import Bounds from "./map.config.js";
 
 const IconSizes = {
     circle: 17,

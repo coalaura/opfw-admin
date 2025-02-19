@@ -249,8 +249,11 @@ export default {
             });
 
             try {
-                await axios.post('/chat', {
-                    message: text
+                await fetch('/chat', {
+                    method: "POST",
+                    body: post_data({
+                        message: text
+                    })
                 });
             } catch (e) { }
 

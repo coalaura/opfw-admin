@@ -1595,18 +1595,16 @@
 </template>
 
 <script>
-import CountryFlag from 'vue-country-flag';
-
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Badge from './../../Components/Badge';
-import Alert from './../../Components/Alert';
-import Card from './../../Components/Card';
-import Avatar from './../../Components/Avatar';
-import Modal from './../../Components/Modal';
-import MetadataViewer from './../../Components/MetadataViewer';
-import StatisticsTable from './../../Components/StatisticsTable';
-import MultiSelector from './../../Components/MultiSelector';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Badge from './../../Components/Badge.vue';
+import Alert from './../../Components/Alert.vue';
+import Card from './../../Components/Card.vue';
+import Avatar from './../../Components/Avatar.vue';
+import Modal from './../../Components/Modal.vue';
+import MetadataViewer from './../../Components/MetadataViewer.vue';
+import StatisticsTable from './../../Components/StatisticsTable.vue';
+import MultiSelector from './../../Components/MultiSelector.vue';
 
 export default {
     layout: Layout,
@@ -1620,7 +1618,7 @@ export default {
         MetadataViewer,
         StatisticsTable,
         MultiSelector,
-        CountryFlag
+        CountryFlag: () => import('vue-country-flag')
     },
     props: {
         player: {
@@ -1877,10 +1875,10 @@ export default {
             if (!marriedTo || !Number.isInteger(marriedTo)) return;
 
             try {
-                const response = await axios.get(`/api/character/${marriedTo}`);
+                const response = await fetch(`/api/character/${marriedTo}`).then(response => response.json());
 
-                if (response.data?.status) {
-                    character.marriedTo = response.data.data;
+                if (response?.status) {
+                    character.marriedTo = response.data;
                 }
             } catch (e) { }
         },
@@ -1895,10 +1893,10 @@ export default {
             this.systemInfo = false;
 
             try {
-                const response = await axios.get(`/players/${this.player.licenseIdentifier}/bans/${this.activeBan.id}/system`);
+                const response = await fetch(`/players/${this.player.licenseIdentifier}/bans/${this.activeBan.id}/system`).then(response => response.json());;
 
-                if (response.data?.status) {
-                    this.systemInfo = response.data.data;
+                if (response?.status) {
+                    this.systemInfo = response.data;
                 }
             } catch (e) {
             }
@@ -1921,13 +1919,13 @@ export default {
             }));
         },
         resolveStaffStatistics(pSource) {
-            return axios.get(`/players/${this.player.licenseIdentifier}/statistics/${pSource}`);
+            return fetch(`/players/${this.player.licenseIdentifier}/statistics/${pSource}`).then(response => response.json());
         },
         showGlobalBans() {
             this.showingGlobalBans = true;
         },
         updatePlayerTime() {
-            const timezoneOffset = this.player.variables?.timezoneOffset;
+            const timezoneOffset = this.player.variables?.tz_offset;
 
             if (typeof timezoneOffset !== "number") {
                 return;
@@ -2062,9 +2060,9 @@ export default {
             try {
                 const url = `${global.replace(/\/?$/, '/')}bans/${this.player.licenseIdentifier}`;
 
-                const response = await axios.get(url, {
+                const response = await fetch(url, {
                     signal: AbortSignal.timeout(3000),
-                });
+                }).then(response => response.json());
 
                 if (response.data && Array.isArray(response.data)) {
                     this.globalBans = response.data.filter(ban => !ban.serverId || !ban.serverId.startsWith(this.$page.auth.cluster));
@@ -2084,12 +2082,12 @@ export default {
             try {
                 const url = `${api.replace(/\/?$/, '/')}global/ban/${this.player.licenseIdentifier}`;
 
-                const response = await axios.get(url, {
+                const response = await fetch(url, {
                     signal: AbortSignal.timeout(3000),
-                });
+                }).then(response => response.json());
 
-                if (response.data?.banned) {
-                    this.opfwBanned = response.data.ban;
+                if (response?.banned) {
+                    this.opfwBanned = response.ban;
 
                     const steam = encodeURIComponent(this.player.steam.shift() || this.player.licenseIdentifier);
                     const steamUrl = encodeURIComponent(this.player.steamProfileUrl);
@@ -2106,8 +2104,7 @@ export default {
         },
         async loadIPInfo() {
             try {
-                const response = await axios.get(`/players/${this.player.licenseIdentifier}/ip`);
-                const data = response.data;
+                const data = await fetch(`/players/${this.player.licenseIdentifier}/ip`).then(response => response.json());
 
                 if (data?.success) {
                     this.isUsingVPN = data.is_vpn;
@@ -2131,10 +2128,10 @@ export default {
             this.loadingHWIDLink = true;
 
             try {
-                const response = await axios.get(`/players/${this.player.licenseIdentifier}/linked_hwid`);
+                const response = await fetch(`/players/${this.player.licenseIdentifier}/linked_hwid`).then(response => response.json());
 
-                if (response.data?.status) {
-                    const data = response.data.data;
+                if (response?.status) {
+                    const data = response.data;
 
                     this.hwidBan = data;
                 }
@@ -2187,23 +2184,20 @@ export default {
             this.screenCaptureStatus = "capturing";
 
             try {
-                const result = await axios({
+                const result = await fetch(`/api/capture/${this.$page.serverName}/${this.status.source}/${this.captureData.duration}`, {
                     method: 'post',
-                    url: `/api/capture/${this.$page.serverName}/${this.status.source}/${this.captureData.duration}`,
-                    timeout: this.captureData.duration + 20000
-                });
+                    signal: AbortSignal.timeout(this.captureData.duration + 20000)
+                }).then(response => response.json());
 
                 clearInterval(interval);
 
-                if (result.data) {
-                    if (result.data.status) {
-                        console.info(`Screen capture of ID ${this.status.source}`, result.data.data.url, result.data.data.license);
+                if (result.status) {
+                    console.info(`Screen capture of ID ${this.status.source}`, result.data.url, result.data.license);
 
-                        this.screenCaptureVideo = result.data.data.url;
-                        this.screenCaptureLogs = this.formatScreenCaptureLogs(result.data.data.logs);
-                    } else {
-                        this.screenshotError = result.data.message ? result.data.message : this.t('screenshot.screencapture_failed');
-                    }
+                    this.screenCaptureVideo = result.data.url;
+                    this.screenCaptureLogs = this.formatScreenCaptureLogs(result.data.logs);
+                } else {
+                    this.screenshotError = result?.message || this.t('screenshot.screencapture_failed');
                 }
             } catch (e) {
                 clearInterval(interval);
@@ -2269,25 +2263,26 @@ export default {
             this.screenshotFlags = null;
 
             try {
-                const result = await axios.post(`/api/screenshot/${this.$page.serverName}/${this.status.source}${shortLifespan ? '?short=1' : ''}`);
+                const result = await fetch(`/api/screenshot/${this.$page.serverName}/${this.status.source}${shortLifespan ? '?short=1' : ''}`, {
+                    method: "POST"
+                }).then(response => response.json());
+
                 this.isScreenshotLoading = false;
 
-                if (result.data) {
-                    if (result.data.status) {
-                        console.info(`Screenshot of ID ${this.status.source}`, result.data.data.url, result.data.data.license);
+                if (result.status) {
+                    console.info(`Screenshot of ID ${this.status.source}`, result.data.url, result.data.license);
 
-                        this.screenshotImage = result.data.data.url;
-                        this.screenshotLicense = result.data.data.license;
+                    this.screenshotImage = result.data.url;
+                    this.screenshotLicense = result.data.license;
 
-                        this.screenshotFlags = result.data.data.flags;
-                        this.screenCaptureLogs = this.formatScreenCaptureLogs(result.data.data.logs);
+                    this.screenshotFlags = result.data.flags;
+                    this.screenCaptureLogs = this.formatScreenCaptureLogs(result.data.logs);
 
-                        cb?.(true);
-                    } else {
-                        this.screenshotError = result.data.message ? result.data.message : this.t('map.screenshot_failed');
+                    cb?.(true);
+                } else {
+                    this.screenshotError = result?.message || this.t('map.screenshot_failed');
 
-                        cb?.(false);
-                    }
+                    cb?.(false);
                 }
             } catch (e) {
                 console.error(e);
@@ -2307,10 +2302,10 @@ export default {
             this.discordAccounts = [];
 
             try {
-                const data = await axios.get(`/players/${this.player.licenseIdentifier}/discord`);
+                const data = await fetch(`/players/${this.player.licenseIdentifier}/discord`).then(response => response.json());
 
-                if (data.data?.status) {
-                    const accounts = data.data.data;
+                if (data?.status) {
+                    const accounts = data.data;
 
                     this.discordAccounts = accounts;
                 } else {
@@ -2332,10 +2327,10 @@ export default {
             this.linkedAccounts.linked = [];
 
             try {
-                const data = await axios.get(`/players/${this.player.licenseIdentifier}/linked`);
+                const data = await fetch(`/players/${this.player.licenseIdentifier}/linked`).then(response => response.json());
 
-                if (data.data?.status) {
-                    const linked = data.data.data;
+                if (data?.status) {
+                    const linked = data.data;
 
                     this.linkedAccounts.total = linked.total;
                     this.linkedAccounts.linked = linked.linked;
@@ -2360,10 +2355,10 @@ export default {
             this.antiCheatEvents = [];
 
             try {
-                const data = await axios.get(`/players/${this.player.licenseIdentifier}/antiCheat`);
+                const data = await fetch(`/players/${this.player.licenseIdentifier}/antiCheat`).then(response => response.json());
 
-                if (data.data?.status) {
-                    this.antiCheatEvents = data.data.data;
+                if (data?.status) {
+                    this.antiCheatEvents = data.data;
                 }
             } catch (e) { }
 
@@ -2772,11 +2767,12 @@ export default {
             this.isReacting[warning.id] = true;
 
             try {
-                const response = await axios.post(`/players/${this.player.licenseIdentifier}/warnings/${warning.id}/react`, {
-                    emoji: emoji
-                });
-
-                const data = response.data;
+                const data = await fetch(`/players/${this.player.licenseIdentifier}/warnings/${warning.id}/react`, {
+                    method: "POST",
+                    body: post_data({
+                        emoji: emoji
+                    })
+                }).then(response => response.json());
 
                 if (data?.status) {
                     warning.reactions = data.data;
@@ -2805,9 +2801,7 @@ export default {
             warning.hoverLoading = true;
             warning.hover = warning.hover || null;
 
-            axios.get(`/players/${this.player.licenseIdentifier}/warnings/${warning.id}/react`).then(response => {
-                const data = response.data;
-
+            fetch(`/players/${this.player.licenseIdentifier}/warnings/${warning.id}/react`).then(response => response.json()).then(data => {
                 if (!data.status || warning.hover === false) return;
 
                 warning.hover = data.data;

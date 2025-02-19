@@ -97,8 +97,8 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import MultiSelector from '../../Components/MultiSelector';
+import Layout from './../../Layouts/App.vue';
+import MultiSelector from '../../Components/MultiSelector.vue';
 
 export default {
     layout: Layout,

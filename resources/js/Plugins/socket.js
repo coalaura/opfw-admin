@@ -1,4 +1,4 @@
-import DataCompressor from "../Pages/Map/DataCompressor";
+import DataCompressor from "../Pages/Map/DataCompressor.js";
 
 import { io } from "socket.io-client";
 
@@ -25,20 +25,13 @@ const Socket = {
 			const url = `${host}/socket/${server}/${type}/${route}${query}`;
 
 			try {
-				const data = await axios.get(url);
+				const data = await fetch(url).then(response => response.json());
 
-				const contentType = data.headers["content-type"];
-
-				// Its a text response
-				if (contentType && contentType.indexOf("text/plain") !== -1) {
+				if (data?.status) {
 					return data.data;
-				}
-
-				if (data.data?.status) {
-					return data.data.data;
 				} else {
 					if (throwError) {
-						throw new Error(data?.data?.error || "Unknown error");
+						throw new Error(data?.error || "Unknown error");
 					}
 
 					return false;

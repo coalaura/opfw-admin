@@ -106,8 +106,8 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
 
 export default {
     layout: Layout,

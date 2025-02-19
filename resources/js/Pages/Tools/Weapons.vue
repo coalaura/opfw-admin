@@ -76,9 +76,9 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import BarChart from './../../Components/Charts/BarChart';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import BarChart from './../../Components/Charts/BarChart.vue';
 
 export default {
     layout: Layout,
@@ -178,9 +178,7 @@ export default {
             const weaponName = this.weaponName;
 
             try {
-                const response = await axios.get(`/weapons/${hash}`);
-
-                const data = response.data;
+                const data = await fetch(`/weapons/${hash}`).then(response => response.json());
 
                 if (data?.data && data.status) {
                     this.weaponData = data.data;

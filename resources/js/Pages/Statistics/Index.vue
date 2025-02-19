@@ -301,7 +301,7 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
+import Layout from './../../Layouts/App.vue';
 import StatisticsTable from '../../Components/StatisticsTable.vue';
 import LineChart from '../../Components/Charts/LineChart.vue';
 
@@ -383,12 +383,13 @@ export default {
             this.moneyLogAbort = new AbortController();
 
             try {
-                const response = await axios.post('/statistics/money', {
-                    types: this.moneyLogTypes
-                }, {
+                const data = await fetch('/statistics/money', {
+                    method: "POST",
+                    body: post_data({
+                        types: this.moneyLogTypes
+                    }),
                     signal: this.moneyLogAbort.signal
-                });
-                const data = response.data;
+                }).then(response => response.json());
 
                 if (data.status) {
                     this.moneyLogData = data.data.chart;
@@ -419,8 +420,7 @@ export default {
             this.economyLoading = true;
 
             try {
-                const response = await axios.get('/statistics/economy');
-                const data = response.data;
+                const data = await fetch('/statistics/economy').then(response => response.json());
 
                 if (data.status) {
                     this.economy = data.data;
@@ -440,8 +440,7 @@ export default {
             this.playersLoading = true;
 
             try {
-                const response = await axios.get('/statistics/players');
-                const data = response.data;
+                const data = await fetch('/statistics/players').then(response => response.json());
 
                 if (data.status) {
                     this.players = data.data;
@@ -461,8 +460,7 @@ export default {
             this.fpsLoading = true;
 
             try {
-                const response = await axios.get('/statistics/fps');
-                const data = response.data;
+                const data = await fetch('/statistics/fps').then(response => response.json());
 
                 if (data.status) {
                     this.fps = data.data;

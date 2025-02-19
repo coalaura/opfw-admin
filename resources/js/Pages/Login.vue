@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import FlashMessage from './../Components/FlashMessage';
+import FlashMessage from './../Components/FlashMessage.vue';
 
 export default {
     components: {

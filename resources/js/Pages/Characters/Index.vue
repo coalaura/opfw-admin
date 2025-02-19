@@ -184,9 +184,9 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Pagination from './../../Components/Pagination';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Pagination from './../../Components/Pagination.vue';
 
 export default {
     layout: Layout,

@@ -207,13 +207,11 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Pagination from './../../Components/Pagination';
-import Modal from './../../Components/Modal';
-import MetadataViewer from './../../Components/MetadataViewer';
-
-import moment from "moment-timezone";
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Pagination from './../../Components/Pagination.vue';
+import Modal from './../../Components/Modal.vue';
+import MetadataViewer from './../../Components/MetadataViewer.vue';
 
 export default {
 	layout: Layout,
@@ -272,15 +270,15 @@ export default {
 	computed: {
 		selectedTimezone() {
 			if (this.logTimezone) {
-				return moment.tz(this.logTimezone).zoneName();
+				return this.$moment.tz(this.logTimezone).zoneName();
 			}
 
-			return moment.tz.guess();
+			return this.$moment.tz.guess();
 		}
 	},
 	methods: {
 		formatTimestampWithTimezone(timestamp) {
-			const date = moment(timestamp);
+			const date = this.$moment(timestamp);
 
 			if (this.logTimezone) {
 				return date.tz(this.logTimezone).format('MMM D, YYYY h:mm:ss A');

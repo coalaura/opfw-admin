@@ -1,49 +1,37 @@
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
+import Popper from "popper.js";
+import aos from "aos/dist/aos";
+import $ from "jquery-slim";
 
 try {
-    window.Popper = require('popper.js').default;
-} catch (e) { }
-
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
-window.axios = require('axios');
+	window.Popper = Popper;
+} catch (e) {}
 
 /**
  * We'll load the AOS library which allows us to easily animate elements.
  */
 
-window.AOS = require('aos/dist/aos');
+window.AOS = aos;
 
 window.AOS.init({
-    offset: 120,
-    delay: 0,
-    duration: 1000,
-    easing: 'ease',
-    once: false,
-    mirror: false,
+	offset: 120,
+	delay: 0,
+	duration: 1000,
+	easing: "ease",
+	once: false,
+	mirror: false,
 });
 
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
+// jquery i guess :(
+window.$ = $;
 
-// import Echo from 'laravel-echo';
+// Some fetch helpers
+window.post_data = data => {
+	console.log("post_data", data);
+	const body = new FormData();
 
-// window.Pusher = require('pusher-js');
+	for (const key in data) {
+		body.set(key, data[key]);
+	}
 
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     forceTLS: true
-// });
+	return body;
+};

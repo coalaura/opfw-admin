@@ -54,10 +54,10 @@
 </template>
 
 <script>
-import Layout from './../../../Layouts/App';
-import VSection from './../../../Components/Section';
-import Card from './../../../Components/Card';
-import Badge from './../../../Components/Badge';
+import Layout from './../../../Layouts/App.vue';
+import VSection from './../../../Components/Section.vue';
+import Card from './../../../Components/Card.vue';
+import Badge from './../../../Components/Badge.vue';
 
 export default {
     layout: Layout,

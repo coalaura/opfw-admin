@@ -1,4 +1,3 @@
-import axios from "axios";
 import BadWords from "../data/bad_words.json";
 
 const Dictionary = {

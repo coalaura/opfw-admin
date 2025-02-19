@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import Layout from '../../Layouts/App';
+import Layout from '../../Layouts/App.vue';
 
 export default {
     layout: Layout,
@@ -89,15 +89,14 @@ export default {
             this.isLoading = true;
 
             try {
-                const data = await axios.post('/steam', {
-                    search: this.search
-                });
+                const data = await fetch('/steam', {
+                    method: "POST",
+                    body: post_data({
+                        search: this.search
+                    })
+                }).then(response => response.json());
 
-                if (data.data) {
-                    this.result = data.data;
-                } else {
-                    this.result = null;
-                }
+                this.result = data;
             } catch (e) { }
 
             this.isLoading = false;

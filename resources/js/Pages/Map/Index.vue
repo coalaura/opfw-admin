@@ -295,23 +295,22 @@
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
-import moment from "moment";
 import L from "leaflet";
 import { GestureHandling } from "leaflet-gesture-handling";
 import "leaflet-rotatedmarker";
 import "leaflet-fullscreen";
 import "leaflet.markercluster";
 
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import SimplePlayerList from './../../Components/Map/SimplePlayerList';
-import Modal from './../../Components/Modal';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import SimplePlayerList from './../../Components/Map/SimplePlayerList.vue';
+import Modal from './../../Components/Modal.vue';
 
-import PlayerContainer from './PlayerContainer';
-import Player from './Player';
-import Vector3 from "./Vector3";
-import Bounds from './map.config';
-import { mapNumber } from './helper';
+import PlayerContainer from './PlayerContainer.js';
+import Player from './Player.js';
+import Vector3 from "./Vector3.js";
+import Bounds from './map.config.js';
+import { mapNumber } from './helper.js';
 
 ((global) => {
     const MarkerMixin = {
@@ -456,13 +455,11 @@ export default {
         },
         async resolveHistoricLicenseDates() {
             try {
-                const response = await axios.get(`/players/${this.form.historic_license}/ban`);
-
-                const data = response.data;
+                const data = await fetch(`/players/${this.form.historic_license}/ban`).then(response => response.json());;
 
                 if (data?.data && data.status) {
                     // Round to next minute
-                    const date = moment((data.data.timestamp + 60) * 1000);
+                    const date = this.$moment((data.data.timestamp + 60) * 1000);
 
                     this.form.historic_till_date = date.format("YYYY-MM-DD");
                     this.form.historic_till_time = date.format("HH:mm");
@@ -557,7 +554,7 @@ export default {
                 }).slice(4);
 
                 let icon = "circle";
-                let label = `${moment.unix(val).format("MM/DD/YYYY - h:mm:ss")} ${timezone} (${val})`;
+                let label = `${this.$moment.unix(val).format("MM/DD/YYYY - h:mm:ss")} ${timezone} (${val})`;
 
                 const flags = [
                     pos?.i ? 'invisible' : false,
@@ -777,11 +774,12 @@ export default {
         async loadHistory(server, license, from, till) {
             this.loadingScreenStatus = this.t('map.historic_fetch');
             try {
-                const result = await axios.get(`${this.hostname(false)}/socket/${server}/history/${license}/${from}/${till}?token=${this.token}`);
+                const result = await fetch(`${this.hostname(false)}/socket/${server}/history/${license}/${from}/${till}?token=${this.token}`).then(response => response.json());;
 
                 this.loadingScreenStatus = this.t('map.historic_parse');
-                if (result.data?.status) {
-                    const data = result.data.data;
+
+                if (result?.status) {
+                    const data = result.data;
 
                     const keys = Object.keys(data);
                     const first = keys[0];
@@ -800,10 +798,10 @@ export default {
                     }
 
                     return data;
-                }if (result.data && !result.data.status) {
-                    console.error(result.data.error);
+                }if (!result.status) {
+                    console.error(result.error);
 
-                    alert(result.data.error);
+                    alert(result.error);
 
                     window.location.reload();
                 }
@@ -815,14 +813,17 @@ export default {
         },
         async loadPlayerNames(licenses) {
             try {
-                const result = await axios.post('/map/playerNames', {
-                    licenses: licenses
-                });
+                const result = await fetch('/map/playerNames', {
+                    method: "POST",
+                    body: post_data({
+                        licenses: licenses
+                    })
+                }).then(response => response.json());
 
-                if (result.data?.status) {
-                    return result.data.data;
-                }if (result.data && !result.data.status) {
-                    console.error(result.data.error);
+                if (result?.status) {
+                    return result.data;
+                } else if (!result.status) {
+                    console.error(result.error);
                 }
             } catch (e) {
                 console.error(e);
@@ -955,16 +956,16 @@ export default {
         },
         async loadTimestamp(server, timestamp) {
             try {
-                const result = await axios.get(`${this.hostname(false)}/socket/${server}/timestamp/${timestamp}?token=${this.token}`);
+                const result = await fetch(`${this.hostname(false)}/socket/${server}/timestamp/${timestamp}?token=${this.token}`).then(response => response.json());
 
                 this.loadingScreenStatus = this.t('map.timestamp_parse');
-                if (result.data?.status) {
+                if (result?.status) {
                     const players = [];
 
-                    for (const license in result.data.data) {
+                    for (const license in result.data) {
                         if (Object.hasOwn(Object, license)) continue;
 
-                        const coords = result.data.data[license];
+                        const coords = result.data[license];
 
                         players.push({
                             license: `license:${license.replace(".csv", "")}`,
@@ -981,8 +982,8 @@ export default {
                     }
 
                     return players;
-                }if (result.data && !result.data.status) {
-                    alert(result.data.error);
+                } else if (!result?.status) {
+                    alert(result.error);
 
                     window.location.reload();
                 }
@@ -1154,11 +1155,14 @@ export default {
                             this.characters[id] = null;
                         }
 
-                        axios.post('/api/characters', {
-                            ids: unknownCharacters
-                        }).then(result => {
-                            if (result.data?.status) {
-                                for (const ch of result.data.data) {
+                        fetch('/api/characters', {
+                            method: "POST",
+                            body: post_data({
+                                ids: unknownCharacters
+                            })
+                        }).then(response => response.json()).then(result => {
+                            if (result?.status) {
+                                for (const ch of result.data) {
                                     this.characters[ch.character_id] = ch;
                                 }
                             }

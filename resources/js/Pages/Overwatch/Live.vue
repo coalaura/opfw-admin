@@ -102,10 +102,10 @@
 </template>
 
 <script>
-import Layout from './../../Layouts/App';
-import VSection from './../../Components/Section';
-import Badge from './../../Components/Badge';
-import PanelChat from './../../Components/PanelChat';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Badge from './../../Components/Badge.vue';
+import PanelChat from './../../Components/PanelChat.vue';
 
 import Hls from "hls.js";
 

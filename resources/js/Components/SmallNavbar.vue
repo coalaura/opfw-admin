@@ -45,13 +45,14 @@ export default {
             else if (userPrefersDark)
                 this.theme = 'dark';
 
-            $('html').removeClass('dark');
+            document.html.classList.remove('dark');
+
             if (this.theme === 'dark') {
-                $('html').addClass('dark');
+                document.html.classList.add('dark');
             }
         },
         toggleTheme() {
-            if ($('html').hasClass('dark')) {
+            if (document.html.classList.includes('dark')) {
                 localStorage.setItem('theme', 'light');
             } else {
                 localStorage.setItem('theme', 'dark');

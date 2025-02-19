@@ -1,7 +1,7 @@
+import base from '../locales/en-us.json';
+
 const Localization = {
     async install(Vue, options) {
-        const base = require('../locales/en-us.json');
-
         let lang = {},
             activeLocale = "en-us";
 
@@ -18,7 +18,7 @@ const Localization = {
             return current in object ? searchObject(object[current], path.join('.')) : null;
         }
 
-        Vue.prototype.loadLocale = (locale) => {
+        Vue.prototype.loadLocale = async (locale) => {
             locale = locale.toLowerCase();
 
             if (locale === "en-us") {
@@ -30,7 +30,7 @@ const Localization = {
             const start = performance.now();
 
             try {
-                lang = require(`../locales/${locale}.json`);
+                lang = await fetch(`../locales/${locale}.json`).then(response => response.json());
                 activeLocale = locale;
 
                 console.info(`Loaded locale ${locale} in ${performance.now() - start}ms`);
