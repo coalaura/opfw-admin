@@ -34,17 +34,17 @@ function request(method) {
 			method: method,
 		};
 
-		if (data._signal) {
-			options.signal = data._signal;
-
-			data._signal = null;
-		} else if (data._timeout) {
-			options.signal = AbortSignal.timeout(data._timeout);
-
-			data._timeout = null;
-		}
-
 		if (data) {
+			if (data._signal) {
+				options.signal = data._signal;
+
+				data._signal = null;
+			} else if (data._timeout) {
+				options.signal = AbortSignal.timeout(data._timeout);
+
+				data._timeout = null;
+			}
+
 			if (isQuery) {
 				url += `?${query(data)}`;
 			} else {

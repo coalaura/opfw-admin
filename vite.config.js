@@ -22,6 +22,8 @@ function clearViewCachePlugin() {
 	};
 }
 
+const isDev = process.env.IS_DEV === "true";
+
 export default defineConfig({
 	publicDir: "public",
 	plugins: [
@@ -44,22 +46,24 @@ export default defineConfig({
 	build: {
 		chunkSizeWarningLimit: 1024,
 		manifest: "manifest.json",
-		minify: "esbuild",
+		minify: isDev ? false : "esbuild",
 		copyPublicDir: false,
 		emptyOutDir: true,
 		outDir: "public/build",
 		rollupOptions: {
 			output: {
-				sourcemap: false,
+				sourcemap: isDev,
 				entryFileNames: "assets/[hash].js",
 				chunkFileNames: "assets/[hash].js",
 				assetFileNames: "assets/[hash].[ext]",
-				generatedCode: {
-					arrowFunctions: true,
-					constBindings: true,
-					objectShorthand: true,
-					reservedNamesAsProps: true,
-				},
+				generatedCode: !isDev
+					? {
+							arrowFunctions: true,
+							constBindings: true,
+							objectShorthand: true,
+							reservedNamesAsProps: true,
+						}
+					: {},
 				hashCharacters: "hex",
 			},
 			external: [/^\/images\//m],
