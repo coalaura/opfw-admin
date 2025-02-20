@@ -29,7 +29,7 @@ function form(data) {
 function request(method) {
 	const isQuery = method === "GET";
 
-	return async (url, data = null, text = false) => {
+	return async (url, data = null, asText = false) => {
 		const options = {
 			method: method,
 		};
@@ -45,7 +45,13 @@ function request(method) {
 				data._timeout = null;
 			}
 
-			if (isQuery) {
+			if (typeof data === "string") {
+				options.headers = {
+					"Content-Type": "application/json",
+				};
+
+				options.body = data;
+			} else if (isQuery) {
 				url += `?${query(data)}`;
 			} else {
 				options.body = form(data);
@@ -53,7 +59,7 @@ function request(method) {
 		}
 
 		return await fetch(url, options).then(response => {
-			if (text) {
+			if (asText) {
 				return response.text();
 			}
 
@@ -62,8 +68,8 @@ function request(method) {
 	};
 }
 
-window._get = request("GET");
-window._post = request("POST");
-window._put = request("PUT");
-window._patch = request("PATCH");
-window._delete = request("DELETE");
+window._get = request("GET", false, false);
+window._post = request("POST", false, false);
+window._put = request("PUT", false, false);
+window._patch = request("PATCH", false, false);
+window._delete = request("DELETE", false, false);

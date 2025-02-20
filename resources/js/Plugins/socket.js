@@ -54,13 +54,7 @@ const Socket = {
 			if (Number.isNaN(int)) return false;
 
 			try {
-				const response = await fetch("https://joaat.sh/j/reverse", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify([int]),
-				}).then(response => response.json());
+				const response = await _post("https://joaat.sh/j/reverse", JSON.stringify([int]));
 
 				if (!response || !Array.isArray(response)) return false;
 
