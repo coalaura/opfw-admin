@@ -4,6 +4,7 @@ import { InertiaApp } from "@inertiajs/inertia-vue";
 import Vue from "vue";
 import PortalVue from "portal-vue";
 import Toast from "vue-toastification";
+import NProgress from "nprogress";
 
 import Localization from "./Plugins/localization.js";
 import Theme from "./Plugins/theme.js";
@@ -33,6 +34,7 @@ import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import "leaflet-fullscreen/dist/leaflet.fullscreen.css";
 import "vue-toastification/dist/index.css";
 import "vue-search-select/dist/VueSearchSelect.css";
+import "nprogress/nprogress.css";
 
 import "./scripts/overrides.js";
 import "./scripts/chartjs-highlights.js";
@@ -101,6 +103,10 @@ Vue.component("scoped-style", {
 	render: function (createElement) {
 		return createElement("style", this.$slots.default);
 	},
+});
+
+NProgress.configure({
+	showSpinner: true,
 });
 
 // Create Vue.
