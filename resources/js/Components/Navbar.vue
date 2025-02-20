@@ -57,6 +57,7 @@
             <!-- Right side -->
             <div class="flex items-center space-x-4">
                 <p v-if="$page.discord && $page.discord.global_name" class="italic font-semibold drop-shadow" :title="$page.discord.username">{{ $page.discord.global_name }}</p>
+                <p v-else-if="$page.discord && $page.discord.sso" class="italic font-semibold drop-shadow">{{ $page.discord.username }}</p>
                 <p v-else-if="$page.discord" class="italic font-semibold drop-shadow">{{ $page.discord.username }}#{{ $page.discord.discriminator }}</p>
 
                 <div class="w-avatar relative flex-shrink-0" @contextmenu="showContext" v-click-outside="hideContext">
@@ -466,7 +467,8 @@ export default {
 
             const discord = this.$page.discord;
 
-            if (!discord || !discord.id) return '/images/discord.webp';
+            if (discord?.sso) return '/images/fivem.webp';
+            if (!discord?.id) return '/images/discord.webp';
 
             return `https://cdn.discordapp.com/avatars/${discord.id}/${discord.avatar}.${ext}`;
         },
