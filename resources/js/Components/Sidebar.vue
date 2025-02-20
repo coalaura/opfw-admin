@@ -74,300 +74,296 @@ export default {
         Icon,
     },
     data() {
-        const data = {
-            url: this.$page.url,
-            links: [
-                {
-                    label: 'home.title',
-                    icon: 'dashboard',
-                    url: '/',
-                },
-                {
-                    label: 'sidebar.lookup',
-                    icon: 'glasses',
-                    sub: [
-                        {
-                            label: 'steam.title',
-                            icon: 'steam',
-                            url: '/steam',
-                        },
-                        {
-                            label: 'discord.title',
-                            icon: 'discord',
-                            url: '/discord',
-                        }
-                    ]
-                },
-                {
-                    label: 'sidebar.community',
-                    icon: 'users',
-                    sub: [
-                        {
-                            label: 'players.title',
-                            icon: 'user',
-                            url: '/players',
-                        },
-                        {
-                            label: 'players.new.title',
-                            icon: 'kiwi',
-                            url: '/new_players',
-                        },
-                        {
-                            label: 'characters.title',
-                            icon: 'book',
-                            url: '/characters',
-                        },
-                        {
-                            label: 'stocks.title',
-                            icon: 'home',
-                            url: '/stocks/companies',
-                        },
-                        {
-                            label: 'containers.title',
-                            icon: 'warehouse',
-                            url: '/containers',
-                        },
-                        {
-                            label: 'twitter.title',
-                            icon: 'twitter',
-                            url: '/twitter',
-                        },
-                        {
-                            label: 'map.title',
-                            icon: 'map',
-                            url: '/map',
-                            hidden: !this.perm.check(this.perm.PERM_LIVEMAP) && !this.$page.auth.player.isDebugger,
-                        }
-                    ]
-                },
-                {
-                    label: 'sidebar.logs',
-                    icon: 'boxes',
-                    sub: [
-                        {
-                            label: 'logs.title',
-                            icon: 'printer',
-                            url: '/logs',
-                        },
-                        {
-                            label: 'logs.damage',
-                            icon: 'medkit',
-                            url: '/damage',
-                            hidden: !this.perm.check(this.perm.PERM_DAMAGE_LOGS),
-                        },
-                        {
-                            label: 'logs.money_title',
-                            icon: 'money',
-                            url: '/moneyLogs',
-                            hidden: !this.perm.check(this.perm.PERM_MONEY_LOGS),
-                        },
-                        {
-                            label: 'phone.title',
-                            icon: 'phone',
-                            url: '/phoneLogs',
-                            hidden: !this.perm.check(this.perm.PERM_PHONE_LOGS),
-                        },
-                        {
-                            label: 'logs.dark_chat',
-                            icon: 'mail',
-                            url: '/darkChat',
-                            hidden: !this.perm.check(this.perm.PERM_DARK_CHAT),
-                        },
-                        {
-                            label: 'casino.title',
-                            icon: 'chess',
-                            url: '/casino',
-                        },
-                        {
-                            label: 'panel_logs.title',
-                            icon: 'spell-check',
-                            url: '/panel',
-                        },
-                        {
-                            label: 'search_logs.title',
-                            icon: 'binoculars',
-                            url: '/searches',
-                            hidden: !this.perm.check(this.perm.PERM_ADVANCED),
-                        },
-                        {
-                            label: 'screenshot_logs.title',
-                            icon: 'portrait',
-                            url: '/screenshot_logs',
-                            hidden: !this.perm.check(this.perm.PERM_ADVANCED),
-                        }
-                    ]
-                },
-                {
-                    label: 'sidebar.bans',
-                    icon: 'user-slash',
-                    sub: [
-                        {
-                            label: 'sidebar.all_bans',
-                            icon: 'friends',
-                            url: '/bans',
-                        },
-                        {
-                            label: 'sidebar.my_bans',
-                            icon: 'user',
-                            url: '/my_bans',
-                        },
-                        {
-                            label: 'sidebar.system_bans',
-                            icon: 'kiwi',
-                            url: '/system_bans',
-                        }
-                    ]
-                },
-                {
-                    label: 'sidebar.administration',
-                    icon: 'tasks',
-                    sub: [
-                        {
-                            label: 'tokens.title',
-                            icon: 'key',
-                            hidden: !this.perm.check(this.perm.PERM_API_TOKENS),
-                            url: '/tokens',
-                        },
-                        {
-                            label: 'roles.title',
-                            icon: 'user-md',
-                            url: '/roles',
-                        },
-                        {
-                            label: 'blacklist.title',
-                            icon: 'shield',
-                            private: true,
-                            url: '/blacklist',
-                        },
-                        {
-                            label: 'loading_screen.sidebar',
-                            icon: 'spinner',
-                            hidden: !this.perm.check(this.perm.PERM_LOADING_SCREEN),
-                            url: '/loading_screen',
-                        },
-                        {
-                            label: 'screenshot.anti_cheat_title',
-                            icon: 'ghost',
-                            url: '/anti_cheat',
-                            hidden: !this.perm.check(this.perm.PERM_ANTI_CHEAT),
-                        }
-                    ]
-                },
-                {
-                    label: 'sidebar.data_stats',
-                    icon: 'server',
-                    sub: [
-                        {
-                            label: 'statistics.title',
-                            icon: 'statistics',
-                            url: '/statistics',
-                        },
-                        {
-                            label: 'points.title',
-                            icon: 'street-view',
-                            url: '/points',
-                        },
-                        {
-                            label: 'staff_statistics.title',
-                            icon: 'laptop-medical',
-                            url: '/staff',
-                        }
-                    ]
-                },
-                {
-                    label: 'sidebar.tools',
-                    icon: 'tools',
-                    sub: [
-                        {
-                            label: 'sidebar.overwatch',
-                            icon: 'camera',
-                            url: '/overwatch',
-                            hidden: !this.perm.check(this.perm.PERM_SCREENSHOT),
-                        },
-                        {
-                            label: 'overwatch.live',
-                            icon: 'video',
-                            url: '/live',
-                            hidden: !this.$page.overwatch,
-                        },
-                        {
-                            label: 'backstories.title',
-                            icon: 'box-open',
-                            url: '/backstories',
-                        },
-                        {
-                            label: 'weapons.title',
-                            icon: 'damage',
-                            url: '/weapons',
-                            hidden: !this.perm.check(this.perm.PERM_ADVANCED),
-                        },
-                        {
-                            label: 'vehicles.title',
-                            icon: 'crash',
-                            url: '/vehicles',
-                        },
-                        {
-                            label: 'tools.config.title',
-                            icon: 'cogs',
-                            url: '/tools/config'
-                        }
-                    ]
-                },
-                {
-                    label: 'sidebar.advanced',
-                    icon: 'cogs',
-                    sub: [
-                        {
-                            label: 'sidebar.advanced_search',
-                            icon: 'search',
-                            url: '/advanced',
-                            hidden: !this.perm.check(this.perm.PERM_ADVANCED),
-                        },
-                        {
-                            label: 'sidebar.suspicious',
-                            icon: 'heart',
-                            url: '/suspicious',
-                            hidden: !this.perm.check(this.perm.PERM_SUSPICIOUS),
-                        }
-                    ]
-                },
-                {
-                    label: 'sidebar.errors',
-                    icon: 'bug',
-                    hidden: !this.$page.auth.player.isSuperAdmin,
-                    sub: [
-                        {
-                            label: 'errors.client.title',
-                            icon: 'spider',
-                            url: '/errors/client?server_version=newest',
-                        },
-                        {
-                            label: 'errors.server.title',
-                            icon: 'virus',
-                            url: '/errors/server?server_version=newest'
-                        }
-                    ]
-                }
-            ],
-        };
+        let links = [
+            {
+                label: 'home.title',
+                icon: 'dashboard',
+                url: '/',
+            },
+            {
+                label: 'sidebar.lookup',
+                icon: 'glasses',
+                sub: [
+                    {
+                        label: 'steam.title',
+                        icon: 'steam',
+                        url: '/steam',
+                    },
+                    {
+                        label: 'discord.title',
+                        icon: 'discord',
+                        url: '/discord',
+                    }
+                ]
+            },
+            {
+                label: 'sidebar.community',
+                icon: 'users',
+                sub: [
+                    {
+                        label: 'players.title',
+                        icon: 'user',
+                        url: '/players',
+                    },
+                    {
+                        label: 'players.new.title',
+                        icon: 'kiwi',
+                        url: '/new_players',
+                    },
+                    {
+                        label: 'characters.title',
+                        icon: 'book',
+                        url: '/characters',
+                    },
+                    {
+                        label: 'stocks.title',
+                        icon: 'home',
+                        url: '/stocks/companies',
+                    },
+                    {
+                        label: 'containers.title',
+                        icon: 'warehouse',
+                        url: '/containers',
+                    },
+                    {
+                        label: 'twitter.title',
+                        icon: 'twitter',
+                        url: '/twitter',
+                    },
+                    {
+                        label: 'map.title',
+                        icon: 'map',
+                        url: '/map',
+                        hidden: !this.perm.check(this.perm.PERM_LIVEMAP) && !this.$page.auth.player.isDebugger,
+                    }
+                ]
+            },
+            {
+                label: 'sidebar.logs',
+                icon: 'boxes',
+                sub: [
+                    {
+                        label: 'logs.title',
+                        icon: 'printer',
+                        url: '/logs',
+                    },
+                    {
+                        label: 'logs.damage',
+                        icon: 'medkit',
+                        url: '/damage',
+                        hidden: !this.perm.check(this.perm.PERM_DAMAGE_LOGS),
+                    },
+                    {
+                        label: 'logs.money_title',
+                        icon: 'money',
+                        url: '/moneyLogs',
+                        hidden: !this.perm.check(this.perm.PERM_MONEY_LOGS),
+                    },
+                    {
+                        label: 'phone.title',
+                        icon: 'phone',
+                        url: '/phoneLogs',
+                        hidden: !this.perm.check(this.perm.PERM_PHONE_LOGS),
+                    },
+                    {
+                        label: 'logs.dark_chat',
+                        icon: 'mail',
+                        url: '/darkChat',
+                        hidden: !this.perm.check(this.perm.PERM_DARK_CHAT),
+                    },
+                    {
+                        label: 'casino.title',
+                        icon: 'chess',
+                        url: '/casino',
+                    },
+                    {
+                        label: 'panel_logs.title',
+                        icon: 'spell-check',
+                        url: '/panel',
+                    },
+                    {
+                        label: 'search_logs.title',
+                        icon: 'binoculars',
+                        url: '/searches',
+                        hidden: !this.perm.check(this.perm.PERM_ADVANCED),
+                    },
+                    {
+                        label: 'screenshot_logs.title',
+                        icon: 'portrait',
+                        url: '/screenshot_logs',
+                        hidden: !this.perm.check(this.perm.PERM_ADVANCED),
+                    }
+                ]
+            },
+            {
+                label: 'sidebar.bans',
+                icon: 'user-slash',
+                sub: [
+                    {
+                        label: 'sidebar.all_bans',
+                        icon: 'friends',
+                        url: '/bans',
+                    },
+                    {
+                        label: 'sidebar.my_bans',
+                        icon: 'user',
+                        url: '/my_bans',
+                    },
+                    {
+                        label: 'sidebar.system_bans',
+                        icon: 'kiwi',
+                        url: '/system_bans',
+                    }
+                ]
+            },
+            {
+                label: 'sidebar.administration',
+                icon: 'tasks',
+                sub: [
+                    {
+                        label: 'tokens.title',
+                        icon: 'key',
+                        hidden: !this.perm.check(this.perm.PERM_API_TOKENS),
+                        url: '/tokens',
+                    },
+                    {
+                        label: 'roles.title',
+                        icon: 'user-md',
+                        url: '/roles',
+                    },
+                    {
+                        label: 'blacklist.title',
+                        icon: 'shield',
+                        private: true,
+                        url: '/blacklist',
+                    },
+                    {
+                        label: 'loading_screen.sidebar',
+                        icon: 'spinner',
+                        hidden: !this.perm.check(this.perm.PERM_LOADING_SCREEN),
+                        url: '/loading_screen',
+                    },
+                    {
+                        label: 'screenshot.anti_cheat_title',
+                        icon: 'ghost',
+                        url: '/anti_cheat',
+                        hidden: !this.perm.check(this.perm.PERM_ANTI_CHEAT),
+                    }
+                ]
+            },
+            {
+                label: 'sidebar.data_stats',
+                icon: 'server',
+                sub: [
+                    {
+                        label: 'statistics.title',
+                        icon: 'statistics',
+                        url: '/statistics',
+                    },
+                    {
+                        label: 'points.title',
+                        icon: 'street-view',
+                        url: '/points',
+                    },
+                    {
+                        label: 'staff_statistics.title',
+                        icon: 'laptop-medical',
+                        url: '/staff',
+                    }
+                ]
+            },
+            {
+                label: 'sidebar.tools',
+                icon: 'tools',
+                sub: [
+                    {
+                        label: 'sidebar.overwatch',
+                        icon: 'camera',
+                        url: '/overwatch',
+                        hidden: !this.perm.check(this.perm.PERM_SCREENSHOT),
+                    },
+                    {
+                        label: 'overwatch.live',
+                        icon: 'video',
+                        url: '/live',
+                        hidden: !this.$page.overwatch,
+                    },
+                    {
+                        label: 'backstories.title',
+                        icon: 'box-open',
+                        url: '/backstories',
+                    },
+                    {
+                        label: 'weapons.title',
+                        icon: 'damage',
+                        url: '/weapons',
+                        hidden: !this.perm.check(this.perm.PERM_ADVANCED),
+                    },
+                    {
+                        label: 'vehicles.title',
+                        icon: 'crash',
+                        url: '/vehicles',
+                    },
+                    {
+                        label: 'tools.config.title',
+                        icon: 'cogs',
+                        url: '/tools/config'
+                    }
+                ]
+            },
+            {
+                label: 'sidebar.advanced',
+                icon: 'cogs',
+                sub: [
+                    {
+                        label: 'sidebar.advanced_search',
+                        icon: 'search',
+                        url: '/advanced',
+                        hidden: !this.perm.check(this.perm.PERM_ADVANCED),
+                    },
+                    {
+                        label: 'sidebar.suspicious',
+                        icon: 'heart',
+                        url: '/suspicious',
+                        hidden: !this.perm.check(this.perm.PERM_SUSPICIOUS),
+                    }
+                ]
+            },
+            {
+                label: 'sidebar.errors',
+                icon: 'bug',
+                hidden: !this.$page.auth.player.isSuperAdmin,
+                sub: [
+                    {
+                        label: 'errors.client.title',
+                        icon: 'spider',
+                        url: '/errors/client?server_version=newest',
+                    },
+                    {
+                        label: 'errors.server.title',
+                        icon: 'virus',
+                        url: '/errors/server?server_version=newest'
+                    }
+                ]
+            }
+        ]
 
         if (this.setting('expandSidenav')) {
-            const flattened = data.links.reduce((acc, val) => acc.concat(val.sub ? val.sub : val).map(v => ({
+            links = links.reduce((acc, val) => acc.concat(val.sub ? val.sub : val).map(v => ({
                 hidden: val.hidden,
                 ...v
             })), []);
-
-            data.links = flattened;
         }
 
-        data.collapsed = false;
-        data.search = "";
-
-        data.heights = {};
-
-        data.time = "";
-
-        return data;
+        return {
+            url: this.$page.url,
+            links: links,
+            collapsed: false,
+            search: "",
+            heights: {},
+            interval: false,
+            time: dayjs().format("h:mm A"),
+        };
     },
     watch: {
         '$page.url': function (url) {
@@ -386,7 +382,7 @@ export default {
 
             if (length === 0) return 'hidden';
 
-            return `side-close side-${length}`;
+            return `side-item side-${length}`;
         },
         isMobile() {
             return window.outerWidth <= 640;
@@ -409,28 +405,7 @@ export default {
     },
     mounted() {
         setInterval(() => {
-            const date = new Date();
-
-            const minutes = date.getMinutes().toString().padStart(2, '0'),
-                hours = date.getHours();
-
-            let ampm, hour;
-
-            if (hours === 0) {
-                hour = 12;
-                ampm = 'AM';
-            } else if (hours === 12) {
-                hour = 12;
-                ampm = 'PM';
-            } else if (hours > 12) {
-                hour = hours - 12;
-                ampm = 'PM';
-            } else {
-                hour = hours;
-                ampm = 'AM';
-            }
-
-            this.time = `${hour}:${minutes} ${ampm}`;
+            this.time = dayjs().format("h:mm A");
         }, 10000);
     },
     beforeMount() {
@@ -446,10 +421,10 @@ export default {
             }
         }
 
-        const styles = document.createElement('style');
+        const styles = document.createElement("style");
 
         // Closed
-        styles.innerHTML += ".side-close { height: 37px; }";
+        styles.innerHTML += ".side-item { height: 37px; transition: height 0.3s ease; will-change: height; }";
 
         for (let i = 1; i <= max; i++) {
             // 37px = height of closed sidebar item
