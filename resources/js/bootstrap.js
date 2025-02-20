@@ -22,12 +22,29 @@ import $ from "jquery-slim";
 window.$ = $;
 
 // Some fetch helpers
+window.get_data = data => {
+	const query = new URLSearchParams();
+
+	for (const key in data) {
+		const value = data[key];
+
+		if (value !== null) {
+			query.set(key, data[key]);
+		}
+	}
+
+	return query.toString();
+};
+
 window.post_data = data => {
-	console.log("post_data", data);
 	const body = new FormData();
 
 	for (const key in data) {
-		body.set(key, data[key]);
+		const value = data[key];
+
+		if (value !== null) {
+			body.set(key, data[key]);
+		}
 	}
 
 	return body;

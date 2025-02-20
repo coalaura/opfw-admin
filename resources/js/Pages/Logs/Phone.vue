@@ -202,10 +202,10 @@ export default {
 
             try {
                 const before = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : 0,
-                    params = new URLSearchParams({
+                    params = get_data({
                         before: before,
                         ...this.filters
-                    }).toString();
+                    });
 
                 const data = await fetch(`/phoneLogs/get?${params}`).then(response => response.json());
 
