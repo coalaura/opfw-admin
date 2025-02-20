@@ -32,6 +32,9 @@ function request(method) {
 	return async (url, data = null, asText = false) => {
 		const options = {
 			method: method,
+			headers: {
+				"X-Requested-With": "XMLHttpRequest",
+			}
 		};
 
 		if (data) {
@@ -46,9 +49,7 @@ function request(method) {
 			}
 
 			if (typeof data === "string") {
-				options.headers = {
-					"Content-Type": "application/json",
-				};
+				options.headers["Content-Type"] = "application/json";
 
 				options.body = data;
 			} else if (isQuery) {

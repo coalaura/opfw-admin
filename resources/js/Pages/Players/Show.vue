@@ -1070,7 +1070,7 @@
                     <i class="mr-1 fas fa-toilet-paper"></i>
                     {{ t('players.show.logs') }}
                 </inertia-link>
-                <a class="flex-1 block p-5 m-2 font-semibold text-white bg-steam rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" target="_blank" :href="player.steamProfileUrl" v-if="player.steamProfileUrl">
+                <a class="flex-1 block p-5 m-2 font-semibold text-white bg-steam rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" target="_blank" :href="player.steamProfileUrl" v-if="player.steamProfileUrl && !$page.discord.sso">
                     <i class="mr-1 fab fa-steam"></i>
                     {{ t('players.show.steam') }}
                 </a>

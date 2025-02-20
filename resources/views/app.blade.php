@@ -40,23 +40,49 @@
         // meow :)
         (function () {
         	const div = document.createElement("div");
-        
+
         	const height = window.innerHeight - 24;
         	const width = window.innerWidth - 34;
-        
+
         	div.style.top = (Math.random() * height) + "px";
         	div.style.left = (Math.random() * width) + "px";
-        
+
         	div.style.opacity = "0.03";
         	div.style.color = "white";
         	div.style.position = "absolute";
         	div.style.fontSize = "14px";
         	div.style.fontFamily = "Montserrat, sans-serif";
         	div.style.pointerEvents = "none";
-        
+
         	div.innerText = "meow";
-        
+
         	document.body.appendChild(div);
+        })();
+    </script>
+
+    <script>
+        function quit() {
+            if (window.self === window.top) {
+                return;
+            }
+
+            window.parent.postMessage({
+                close: true
+            }, "*");
+        };
+
+        (function () {
+            if (window.self === window.top) {
+                return;
+            }
+
+            window.addEventListener("keyup", e => {
+                if (e.key !== "Escape") {
+                    return;
+                }
+
+                quit();
+            });
         })();
     </script>
 </body>

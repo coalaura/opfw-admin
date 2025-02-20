@@ -234,8 +234,23 @@ class ServerAPI
 
         return self::do('PATCH', $url, [
             'targetLicense' => $targetLicense,
-            'enabled'       => $enabled ? 'true' : ''
+            'enabled'       => $enabled ? 'true' : '',
         ], 3, false);
+    }
+
+    /**
+     * /execute/validateAuthToken
+     */
+    public static function validateAuthToken(string $server, string $licenseIdentifier, string $token)
+    {
+        $url = Server::getServerURL($server);
+
+        $url .= 'execute/validateAuthToken';
+
+        return self::do('POST', $url, [
+            'licenseIdentifier' => $licenseIdentifier,
+            'token'             => $token,
+        ], 3, true);
     }
 
     /**

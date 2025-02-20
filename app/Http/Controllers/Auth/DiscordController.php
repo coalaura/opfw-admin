@@ -96,7 +96,7 @@ class DiscordController extends Controller
             'refresh' => $refreshToken,
         ]);
 
-        return redirect($session->get('returnTo') ?? '/');
+        return redirect($session->get('lastVisit') ?? '/');
     }
 
     public function refresh(Request $request)

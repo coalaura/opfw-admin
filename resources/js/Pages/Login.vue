@@ -36,6 +36,8 @@ export default {
     },
     beforeCreate() {
         this.loadLocale("en-US");
-    }
+
+        quit();
+    },
 };
 </script>

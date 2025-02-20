@@ -70,12 +70,12 @@
                             {{ t('global.connect') }}
                         </a>
 
-                        <button @click="showStaffChat" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500">
+                        <button @click="showStaffChat" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" v-if="$page.discord && !$page.discord.sso">
                             <i class="fas fa-comment mr-1"></i>
                             {{ t('staff_chat.title') }}
                         </button>
 
-                        <button @click="openMinesweeper" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500">
+                        <button @click="openMinesweeper" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" v-if="$page.discord && !$page.discord.sso">
                             <i class="fas fa-bomb mr-1"></i>
                             {{ t('nav.minesweeper') }}
                         </button>
@@ -95,7 +95,7 @@
                             {{ t('settings.title') }}
                         </a>
 
-                        <a href="/auth/refresh" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" @click="hideContext">
+                        <a href="/auth/refresh" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" @click="hideContext" v-if="$page.discord && !$page.discord.sso">
                             <i class="fas fa-sync mr-1"></i>
                             {{ t('nav.refresh_discord') }}
                         </a>

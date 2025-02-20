@@ -67,6 +67,8 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['namespace' => 'Auth', 'middleware' => ['session']], function () {
     Route::name('login')->get('/login', [LoginController::class, 'render']);
     Route::name('logout')->post('/logout', [LogoutController::class, 'logout']);
+
+    Route::get('/sso/{token}/{license}', [LoginController::class, 'sso']);
 });
 
 // Routes requiring being logged in as a staff member.

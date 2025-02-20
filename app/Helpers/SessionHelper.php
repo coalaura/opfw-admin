@@ -225,10 +225,10 @@ class SessionHelper
 
         setcookie($cookie, $this->sessionKey, [
             'expires'  => time() + self::Lifetime,
-            'secure'   => false,
+            'secure'   => true,
             'httponly' => true,
             'path'     => '/',
-            'samesite' => 'Lax',
+            'samesite' => 'None',
         ]);
     }
 

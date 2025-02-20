@@ -28,14 +28,12 @@ class StaffMiddleware
 
         if (!$player) {
             $session->clearAuth();
-            $session->put('returnTo', $request->fullUrl());
 
             return redirectWith('/login', 'error', 'You are not logged in.');
         }
 
         if (!$player->isStaff()) {
             $session->clearAuth();
-            $session->put('returnTo', $request->fullUrl());
 
             return redirectWith(
                 '/login',
@@ -48,7 +46,6 @@ class StaffMiddleware
 
         if (!$discord) {
             $session->clearAuth();
-            $session->put('returnTo', $request->fullUrl());
 
             return redirectWith(
                 '/login',
@@ -61,6 +58,10 @@ class StaffMiddleware
 
         if ($session->get('name') !== $name) {
             $session->put('name', $name);
+        }
+
+        if ($request->isMethod('GET') && (!$request->ajax() || !empty($request->header('X-Inertia')))) {
+            $session->put('lastVisit', $request->path());
         }
 
         return $next($request);
