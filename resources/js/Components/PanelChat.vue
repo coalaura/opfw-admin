@@ -378,10 +378,10 @@ export default {
 
         this.muted = !!localStorage.getItem("panel_chat_muted");
 
-        this.interval = setInterval(this.updateTimestamp, 2000);
+        this.interval = setInterval(this.updateTimestamp, 5000);
 
         // preload
-        fetch("/images/notification_pop3.ogg");
+        _get("/images/notification_pop3.ogg");
     },
     unmounted() {
         clearInterval(this.interval);

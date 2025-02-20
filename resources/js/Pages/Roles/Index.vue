@@ -192,10 +192,7 @@ export default {
             }
 
             try {
-                const data = await fetch(`/roles/${player.license}`, {
-                    method: "POST",
-                    body: post_data(overrides)
-                }).then(response => response.json());
+                const data = await _post(`/roles/${player.license}`, overrides);
 
                 if (data.status) {
                     for (const role in player.overrides) {
@@ -216,7 +213,7 @@ export default {
             this.isAdding = true;
 
             try {
-                const data = await fetch(`/roles/${this.adding}`).then(response => response.json());
+                const data = await _get(`/roles/${this.adding}`);
 
                 if (data.status) {
                     const player = data.data;

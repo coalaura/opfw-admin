@@ -383,13 +383,11 @@ export default {
             this.moneyLogAbort = new AbortController();
 
             try {
-                const data = await fetch('/statistics/money', {
-                    method: "POST",
-                    body: post_data({
-                        types: this.moneyLogTypes
-                    }),
-                    signal: this.moneyLogAbort.signal
-                }).then(response => response.json());
+                const data = await _post('/statistics/money', {
+                    _signal: this.moneyLogAbort.signal,
+
+                    types: this.moneyLogTypes
+                });
 
                 if (data.status) {
                     this.moneyLogData = data.data.chart;
@@ -420,7 +418,7 @@ export default {
             this.economyLoading = true;
 
             try {
-                const data = await fetch('/statistics/economy').then(response => response.json());
+                const data = await _get('/statistics/economy');
 
                 if (data.status) {
                     this.economy = data.data;
@@ -440,7 +438,7 @@ export default {
             this.playersLoading = true;
 
             try {
-                const data = await fetch('/statistics/players').then(response => response.json());
+                const data = await _get('/statistics/players');
 
                 if (data.status) {
                     this.players = data.data;
@@ -460,7 +458,7 @@ export default {
             this.fpsLoading = true;
 
             try {
-                const data = await fetch('/statistics/fps').then(response => response.json());
+                const data = await _get('/statistics/fps');
 
                 if (data.status) {
                     this.fps = data.data;

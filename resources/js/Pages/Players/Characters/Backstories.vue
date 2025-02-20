@@ -60,7 +60,7 @@ export default {
             this.isLoading = true;
 
             try {
-                const data = await fetch('/api/backstories').then(response => response.json());;
+                const data = await _get('/api/backstories');
 
                 if (data?.data) {
                     this.character = data.data;

@@ -178,7 +178,7 @@ export default {
             const weaponName = this.weaponName;
 
             try {
-                const data = await fetch(`/weapons/${hash}`).then(response => response.json());
+                const data = await _get(`/weapons/${hash}`);
 
                 if (data?.data && data.status) {
                     this.weaponData = data.data;

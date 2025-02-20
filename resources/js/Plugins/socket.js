@@ -25,7 +25,7 @@ const Socket = {
 			const url = `${host}/socket/${server}/${type}/${route}${query}`;
 
 			try {
-				const data = await fetch(url).then(response => response.json());
+				const data = await _get(url);
 
 				if (data?.status) {
 					return data.data;

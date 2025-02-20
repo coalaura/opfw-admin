@@ -338,7 +338,7 @@ export default {
             const slot = this.editingSlot;
 
             try {
-                const data = await fetch(`/inventory/attach_identity/${id}`).then(response => response.json());;
+                const data = await _get(`/inventory/attach_identity/${id}`);
 
                 if (data?.status && this.isEditing && slot === this.editingSlot) {
                     for (const [key, value] of Object.entries(data.data)) {

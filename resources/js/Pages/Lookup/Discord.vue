@@ -94,12 +94,9 @@ export default {
             this.isLoading = true;
 
             try {
-                const data = await fetch('/discord', {
-                    method: 'POST',
-                    body: post_data({
-                        search: this.search
-                    })
-                }).then(response => response.json());
+                const data = await _post('/discord', {
+                    search: this.search
+                });
 
                 if (data) {
                     this.result = data;

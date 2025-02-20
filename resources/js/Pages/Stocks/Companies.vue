@@ -254,7 +254,7 @@ export default {
             if (!key.cid) return;
 
             try {
-                const data = await fetch(`/api/character/${key.cid}`).then(response => response.json());
+                const data = await _get(`/api/character/${key.cid}`);
 
                 if (data?.status) {
                     key.name = `${data.data.first_name} ${data.data.last_name}`;

@@ -44,7 +44,7 @@
                     <span v-else>{{ $page.serverName }}</span>
                 </span>
 
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-green-700 bg-success rounded dark:bg-dark-success cursor-pointer" :class="{ 'shadow': banner }" :title="t('nav.world_time_desc', timezones.length)" @click="showingWorldTime = true" v-if="timezones.length > 0">
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-green-700 bg-success rounded dark:bg-dark-success cursor-pointer" :class="{ 'shadow': banner }" :title="t('nav.world_time_desc', timezones.length)" @click="showWorldTime" v-if="timezones.length > 0">
                     <i class="fas fa-globe"></i>
                 </span>
 
@@ -261,7 +261,7 @@
             </template>
 
             <template #actions>
-                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showingWorldTime = false">
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="hideWorldTime">
                     {{ t('global.close') }}
                 </button>
             </template>
@@ -354,6 +354,7 @@ export default {
             socketTime: false,
 
             showingWorldTime: false,
+            worldTimeInterval: false,
             timezones: timezones,
 
             gameTime: false,
@@ -405,6 +406,32 @@ export default {
         }
     },
     methods: {
+        updateWorldTime() {
+            this.now = Date.now();
+
+            this.timezones = this.timezones.map(timezone => {
+                return {
+                    ...timezone,
+                    time: this.getDateForTimezone(timezone)
+                };
+            });
+        },
+        hideWorldTime() {
+            clearInterval(this.worldTimeInterval);
+
+            this.showingWorldTime = false;
+        },
+        showWorldTime() {
+            this.showingWorldTime = true;
+
+            this.updateWorldTime();
+
+            clearInterval(this.worldTimeInterval);
+
+            this.worldTimeInterval = setInterval(() => {
+                this.updateWorldTime();
+            }, 1000);
+        },
         getDateForTimezone(pTimezone) {
             const date = new Date((new Date()).toLocaleString('en-US', { timeZone: pTimezone.tz_name }));
 
@@ -496,7 +523,7 @@ export default {
             try {
                 const start = Date.now();
 
-                const data = await fetch('/api/debug').then(response => response.json());
+                const data = await _get('/api/debug');
 
                 let time = Date.now() - start;
 
@@ -643,20 +670,6 @@ export default {
             this.updateServerStatus();
             this.updateStreamers();
         }, 500);
-
-        setInterval(() => {
-            this.timezones = this.timezones.map(timezone => {
-                timezone.time = this.getDateForTimezone(timezone);
-
-                return timezone;
-            });
-        }, 1000);
-
-        setInterval(() => {
-            if (!this.showingWorldTime) return;
-
-            this.now = Date.now();
-        }, Math.floor(1000 / 12));
 
         setTimeout(() => {
             this.renderAbbreviation();

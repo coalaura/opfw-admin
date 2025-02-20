@@ -342,7 +342,7 @@ export default {
                 this.isLoading = true;
 
                 try {
-                    const data = await fetch(`/api/config/${cluster}/job_overrides`).then(response => response.json());
+                    const data = await _get(`/api/config/${cluster}/job_overrides`);
 
                     if (!data?.status) {
                         throw new Error("Config not found");

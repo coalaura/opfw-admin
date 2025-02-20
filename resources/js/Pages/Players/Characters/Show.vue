@@ -1143,7 +1143,7 @@ export default {
             this.savingsLogs = [];
 
             try {
-                const data = await fetch(`/savings/${account.id}/logs`).then(response => response.json());
+                const data = await _get(`/savings/${account.id}/logs`);
 
                 if (data?.status) {
                     this.savingsLogs = data.data;
@@ -1322,10 +1322,7 @@ export default {
             this.vehicleForm.plate = this.vehicleForm.plate.toUpperCase().trim();
 
             try {
-                const response = await fetch(`/vehicles/edit/${this.vehicleForm.id}`, {
-                    method: "POST",
-                    body: post_data(this.vehicleForm)
-                }).then(response => response.json());
+                const response = await _post(`/vehicles/edit/${this.vehicleForm.id}`, this.vehicleForm);
 
                 if (response.status) {
                     $('.overflow-y-auto').scrollTop(0);

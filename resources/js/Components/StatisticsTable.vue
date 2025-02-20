@@ -188,7 +188,7 @@ export default {
             this.requested = true;
 
             try {
-                const data = await (this.resolve ? this.resolve(this.source) : fetch(`/statistics/${this.source}`).then(response => response.json()));
+                const data = await (this.resolve ? this.resolve(this.source) : _get(`/statistics/${this.source}`));
 
                 if (data?.status) {
                     this.data = data.data.data;

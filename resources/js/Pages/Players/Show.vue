@@ -1875,7 +1875,7 @@ export default {
             if (!marriedTo || !Number.isInteger(marriedTo)) return;
 
             try {
-                const response = await fetch(`/api/character/${marriedTo}`).then(response => response.json());
+                const response = await _get(`/api/character/${marriedTo}`);
 
                 if (response?.status) {
                     character.marriedTo = response.data;
@@ -1893,7 +1893,7 @@ export default {
             this.systemInfo = false;
 
             try {
-                const response = await fetch(`/players/${this.player.licenseIdentifier}/bans/${this.activeBan.id}/system`).then(response => response.json());;
+                const response = await _get(`/players/${this.player.licenseIdentifier}/bans/${this.activeBan.id}/system`);
 
                 if (response?.status) {
                     this.systemInfo = response.data;
@@ -1919,7 +1919,7 @@ export default {
             }));
         },
         resolveStaffStatistics(pSource) {
-            return fetch(`/players/${this.player.licenseIdentifier}/statistics/${pSource}`).then(response => response.json());
+            return _get(`/players/${this.player.licenseIdentifier}/statistics/${pSource}`);
         },
         showGlobalBans() {
             this.showingGlobalBans = true;
@@ -2057,9 +2057,9 @@ export default {
             try {
                 const url = `${global.replace(/\/?$/, '/')}bans/${this.player.licenseIdentifier}`;
 
-                const response = await fetch(url, {
-                    signal: AbortSignal.timeout(3000),
-                }).then(response => response.json());
+                const response = await _get(url, {
+                    _timeout: 3000
+                });
 
                 if (response.data && Array.isArray(response.data)) {
                     this.globalBans = response.data.filter(ban => !ban.serverId || !ban.serverId.startsWith(this.$page.auth.cluster));
@@ -2079,9 +2079,9 @@ export default {
             try {
                 const url = `${api.replace(/\/?$/, '/')}global/ban/${this.player.licenseIdentifier}`;
 
-                const response = await fetch(url, {
-                    signal: AbortSignal.timeout(3000),
-                }).then(response => response.json());
+                const response = await _get(url, {
+                    _timeout: 3000,
+                });
 
                 if (response?.banned) {
                     this.opfwBanned = response.ban;
@@ -2101,7 +2101,7 @@ export default {
         },
         async loadIPInfo() {
             try {
-                const data = await fetch(`/players/${this.player.licenseIdentifier}/ip`).then(response => response.json());
+                const data = await _get(`/players/${this.player.licenseIdentifier}/ip`);
 
                 if (data?.success) {
                     this.isUsingVPN = data.is_vpn;
@@ -2125,7 +2125,7 @@ export default {
             this.loadingHWIDLink = true;
 
             try {
-                const response = await fetch(`/players/${this.player.licenseIdentifier}/linked_hwid`).then(response => response.json());
+                const response = await _get(`/players/${this.player.licenseIdentifier}/linked_hwid`);
 
                 if (response?.status) {
                     const data = response.data;
@@ -2181,10 +2181,9 @@ export default {
             this.screenCaptureStatus = "capturing";
 
             try {
-                const result = await fetch(`/api/capture/${this.$page.serverName}/${this.status.source}/${this.captureData.duration}`, {
-                    method: 'post',
-                    signal: AbortSignal.timeout(this.captureData.duration + 20000)
-                }).then(response => response.json());
+                const result = await _post(`/api/capture/${this.$page.serverName}/${this.status.source}/${this.captureData.duration}`, {
+                    _timeout: this.captureData.duration + 20000
+                });
 
                 clearInterval(interval);
 
@@ -2260,9 +2259,7 @@ export default {
             this.screenshotFlags = null;
 
             try {
-                const result = await fetch(`/api/screenshot/${this.$page.serverName}/${this.status.source}${shortLifespan ? '?short=1' : ''}`, {
-                    method: "POST"
-                }).then(response => response.json());
+                const result = await _post(`/api/screenshot/${this.$page.serverName}/${this.status.source}${shortLifespan ? '?short=1' : ''}`);
 
                 this.isScreenshotLoading = false;
 
@@ -2299,7 +2296,7 @@ export default {
             this.discordAccounts = [];
 
             try {
-                const data = await fetch(`/players/${this.player.licenseIdentifier}/discord`).then(response => response.json());
+                const data = await _get(`/players/${this.player.licenseIdentifier}/discord`);
 
                 if (data?.status) {
                     const accounts = data.data;
@@ -2324,7 +2321,7 @@ export default {
             this.linkedAccounts.linked = [];
 
             try {
-                const data = await fetch(`/players/${this.player.licenseIdentifier}/linked`).then(response => response.json());
+                const data = await _get(`/players/${this.player.licenseIdentifier}/linked`);
 
                 if (data?.status) {
                     const linked = data.data;
@@ -2352,7 +2349,7 @@ export default {
             this.antiCheatEvents = [];
 
             try {
-                const data = await fetch(`/players/${this.player.licenseIdentifier}/antiCheat`).then(response => response.json());
+                const data = await _get(`/players/${this.player.licenseIdentifier}/antiCheat`);
 
                 if (data?.status) {
                     this.antiCheatEvents = data.data;
@@ -2764,12 +2761,9 @@ export default {
             this.isReacting[warning.id] = true;
 
             try {
-                const data = await fetch(`/players/${this.player.licenseIdentifier}/warnings/${warning.id}/react`, {
-                    method: "POST",
-                    body: post_data({
-                        emoji: emoji
-                    })
-                }).then(response => response.json());
+                const data = await _post(`/players/${this.player.licenseIdentifier}/warnings/${warning.id}/react`, {
+                    emoji: emoji
+                });
 
                 if (data?.status) {
                     warning.reactions = data.data;
@@ -2798,7 +2792,7 @@ export default {
             warning.hoverLoading = true;
             warning.hover = warning.hover || null;
 
-            fetch(`/players/${this.player.licenseIdentifier}/warnings/${warning.id}/react`).then(response => response.json()).then(data => {
+            _get(`/players/${this.player.licenseIdentifier}/warnings/${warning.id}/react`).then(data => {
                 if (!data.status || warning.hover === false) return;
 
                 warning.hover = data.data;
@@ -2852,7 +2846,7 @@ export default {
 
         setInterval(() => {
             this.updatePlayerTime();
-        }, 1000);
+        }, 10000);
 
         // Delay loading of character images since it blocks other resources from loading
         $(document).ready(() => {

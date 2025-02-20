@@ -191,9 +191,7 @@ export default {
             this.isLoading = true;
 
             try {
-                const result = await fetch(`/tokens/${id}`, {
-                    method: "DELETE"
-                }).then(response => response.json());
+                const result = await _delete(`/tokens/${id}`);
 
                 if (result?.status) {
                     this.list = this.list.filter(token => token.id !== id);
@@ -220,10 +218,7 @@ export default {
             };
 
             try {
-                const result = await fetch(`/tokens/${token.id}`, {
-                    method: "PUT",
-                    body: post_data(data)
-                }).then(response => response.json());
+                const result = await _put(`/tokens/${token.id}`, data);
 
                 if (result?.status) {
                     token.changed = false;
@@ -250,9 +245,7 @@ export default {
             this.isLoading = true;
 
             try {
-                const result = await fetch('/tokens', {
-                    method: "POST"
-                }).then(response => response.json());
+                const result = await _post('/tokens');
 
                 if (result?.status) {
                     this.list.push(result.data);
@@ -268,16 +261,14 @@ export default {
             this.isLoadingLogs = true;
 
             const lastId = this.logs.length ? this.logs[this.logs.length - 1].id : 0;
-            const query = [`id=${this.logTokenId}`];
-
-            if (lastId) {
-                query.push(`before=${lastId}`);
-            }
 
             try {
-                const result = await fetch(`/tokens/logs?${query.join('&')}`, {
-                    signal: this.controller.signal
-                }).then(response => response.json());
+                const result = await _get("/tokens/logs", {
+                    _signal: this.controller.signal,
+
+                    id: this.logTokenId,
+                    before: lastId || null,
+                });
 
                 if (result?.status) {
                     const logs = result.data;
@@ -293,9 +284,11 @@ export default {
         },
         async loadLogInfo() {
             try {
-                const result = await fetch(`/tokens/rps?id=${this.logTokenId}`, {
-                    signal: this.controller.signal
-                }).then(response => response.json());
+                const result = await _get("/tokens/rps", {
+                    _signal: this.controller.signal,
+
+                    id: this.logTokenId
+                });
 
                 if (result?.status) {
                     this.logInfo = result.data;

@@ -279,7 +279,7 @@ export default {
             this.chartData = false;
 
             try {
-                const data = await fetch('/anti_cheat/statistics').then(response => response.json());;
+                const data = await _get('/anti_cheat/statistics');
 
                 if (data?.status) {
                     this.chartData = data.data.data;

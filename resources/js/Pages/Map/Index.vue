@@ -455,7 +455,7 @@ export default {
         },
         async resolveHistoricLicenseDates() {
             try {
-                const data = await fetch(`/players/${this.form.historic_license}/ban`).then(response => response.json());;
+                const data = await _get(`/players/${this.form.historic_license}/ban`);
 
                 if (data?.data && data.status) {
                     // Round to next minute
@@ -774,7 +774,9 @@ export default {
         async loadHistory(server, license, from, till) {
             this.loadingScreenStatus = this.t('map.historic_fetch');
             try {
-                const result = await fetch(`${this.hostname(false)}/socket/${server}/history/${license}/${from}/${till}?token=${this.token}`).then(response => response.json());;
+                const result = await _get(`${this.hostname(false)}/socket/${server}/history/${license}/${from}/${till}`, {
+                    token: this.token
+                });
 
                 this.loadingScreenStatus = this.t('map.historic_parse');
 
@@ -813,12 +815,9 @@ export default {
         },
         async loadPlayerNames(licenses) {
             try {
-                const result = await fetch('/map/playerNames', {
-                    method: "POST",
-                    body: post_data({
-                        licenses: licenses
-                    })
-                }).then(response => response.json());
+                const result = await _post('/map/playerNames', {
+                    licenses: licenses
+                });
 
                 if (result?.status) {
                     return result.data;
@@ -956,7 +955,9 @@ export default {
         },
         async loadTimestamp(server, timestamp) {
             try {
-                const result = await fetch(`${this.hostname(false)}/socket/${server}/timestamp/${timestamp}?token=${this.token}`).then(response => response.json());
+                const result = await _get(`${this.hostname(false)}/socket/${server}/timestamp/${timestamp}`, {
+                    token: this.token
+                });
 
                 this.loadingScreenStatus = this.t('map.timestamp_parse');
                 if (result?.status) {
@@ -1155,12 +1156,9 @@ export default {
                             this.characters[id] = null;
                         }
 
-                        fetch('/api/characters', {
-                            method: "POST",
-                            body: post_data({
-                                ids: unknownCharacters
-                            })
-                        }).then(response => response.json()).then(result => {
+                        _post('/api/characters', {
+                            ids: unknownCharacters
+                        }).then(result => {
                             if (result?.status) {
                                 for (const ch of result.data) {
                                     this.characters[ch.character_id] = ch;
@@ -1333,10 +1331,6 @@ export default {
 
             window.location.hash = "";
         }
-
-        setInterval(() => {
-            this.lastFrame = Date.now() - (60 * 1000);
-        }, 250);
     }
 };
 </script>

@@ -30,7 +30,7 @@ const Localization = {
             const start = performance.now();
 
             try {
-                lang = await fetch(`../locales/${locale}.json`).then(response => response.json());
+                lang = await _get(`../locales/${locale}.json`);
                 activeLocale = locale;
 
                 console.info(`Loaded locale ${locale} in ${performance.now() - start}ms`);

@@ -431,7 +431,7 @@ export default {
             }
 
             this.time = `${hour}:${minutes} ${ampm}`;
-        }, 1000);
+        }, 10000);
     },
     beforeMount() {
         let max = 0;

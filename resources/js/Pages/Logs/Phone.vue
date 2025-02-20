@@ -201,13 +201,12 @@ export default {
             this.isLoading = true;
 
             try {
-                const before = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : 0,
-                    params = get_data({
-                        before: before,
-                        ...this.filters
-                    });
+                const before = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : 0;
 
-                const data = await fetch(`/phoneLogs/get?${params}`).then(response => response.json());
+                const data = await _get("/phoneLogs/get", {
+                    before: before,
+                    ...this.filters
+                });
 
                 if (data?.status) {
                     this.isLoading = false;

@@ -170,6 +170,32 @@ export default {
     components: {
         Modal
     },
+    props: {
+        quote: {
+            type: Object,
+            required: true,
+        },
+        bans: {
+            type: Array,
+            required: true,
+        },
+        staff: {
+            type: Array,
+            required: true,
+        },
+        characters: {
+            type: Array,
+            required: true,
+        },
+        playerMap: {
+            type: Object,
+            required: true,
+        },
+        daysWithout: {
+            type: String,
+            required: true,
+        },
+    },
     data() {
         const staffLocations = Object.keys(TPLocations).sort().reduce(
             (obj, key) => {
@@ -228,7 +254,7 @@ export default {
             if (!this.craftingRecipes) {
                 this.craftingRecipes = [];
 
-                const text = await fetch('/api/crafting').then(response => response.text());
+                const text = await _get('/api/crafting', null, true);
 
                 const rgx = /- - - Station (\d+) - - -\s+(.+?)(?=\s+- - -|$)/gs;
 
@@ -284,34 +310,8 @@ export default {
             }, 30 * 1000);
         }, 500);
     },
-    beforeDestroy() {
+    unmounted() {
         clearInterval(this.refreshInterval);
-    },
-    props: {
-        quote: {
-            type: Object,
-            required: true,
-        },
-        bans: {
-            type: Array,
-            required: true,
-        },
-        staff: {
-            type: Array,
-            required: true,
-        },
-        characters: {
-            type: Array,
-            required: true,
-        },
-        playerMap: {
-            type: Object,
-            required: true,
-        },
-        daysWithout: {
-            type: String,
-            required: true,
-        },
     }
 }
 </script>

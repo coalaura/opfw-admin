@@ -275,7 +275,7 @@ export default {
             this.isActionTimedOut = true;
 
             try {
-                await fetch(`/live/do/${this.spectator.license}/${action.name}`, { method: "PATCH" });
+                await _patch(`/live/do/${this.spectator.license}/${action.name}`);
             } catch {}
 
             this.isPerformingAction = false;
@@ -291,7 +291,7 @@ export default {
             this.isReplayTimeout = true;
 
             try {
-                const response = await fetch(`/live/replay/${this.spectator.license}`);
+                const response = await _get(`/live/replay/${this.spectator.license}`);
 
                 if (!response.ok) {
                     throw new Error("Failed to fetch replay.");
@@ -415,9 +415,7 @@ export default {
             this.isUpdating = true;
 
             try {
-                const data = await fetch(`/live/set/${this.spectator.license}/${this.newServerId}`, {
-                    method: "PATCH",
-                }).then(response => response.json());
+                const data = await _patch(`/live/set/${this.spectator.license}/${this.newServerId}`);
 
                 if (!data?.status) {
                     alert(data?.message || "Something went wrong.");

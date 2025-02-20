@@ -250,11 +250,8 @@ export default {
             });
 
             try {
-                await fetch('/chat', {
-                    method: "POST",
-                    body: post_data({
-                        message: text
-                    })
+                await _post('/chat', {
+                    message: text
                 });
             } catch (e) { }
 
