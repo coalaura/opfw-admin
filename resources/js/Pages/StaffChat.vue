@@ -99,6 +99,7 @@ body {
 
     .title {
         font-weight: 500;
+        padding-right: 0.4vh;
     }
 
     .emote {
