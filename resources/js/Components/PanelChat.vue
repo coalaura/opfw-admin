@@ -177,7 +177,7 @@ export default {
 
                 const isAlone = html.match(full);
 
-                html = html.replace(rgx, `<img src="${url}" title="${emote}" class="inline-block transition hover:transform hover:scale-150 ${isAlone ? "w-10 h-10" : "w-6 h-6"}" />`);
+                html = html.replace(rgx, `<img src="${url}" title="${emote}" class="inline-block object-contain ${isAlone ? "w-10 h-10" : "w-6 h-6"}" />`);
 
                 if (isAlone) {
                     return html;
