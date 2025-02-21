@@ -52,6 +52,7 @@ class Warning extends Model
         'bruh',
         'cat_chew',
         'cat_jam',
+        'do_something',
         'jigglin',
         'monkey_jam',
         'nodders',
