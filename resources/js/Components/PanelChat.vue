@@ -170,10 +170,21 @@ export default {
 
             // Emotes
             for (const emote in this.emotes) {
-                const url = this.emotes[emote];
+                const url = this.emotes[emote],
+                    str = emote.split("").map(c => `${c}+`).join(""),
+                    rgx = new RegExp(str, 'gi'),
+                    full = new RegExp(`^${str}$`, 'mis');
 
-                html = html.replace(new RegExp(emote, 'g'), `<img src="${url}" title="${emote}" class="inline-block w-6 h-6" />`);
+                const isAlone = html.match(full);
+
+                html = html.replace(rgx, `<img src="${url}" title="${emote}" class="inline-block transition hover:transform hover:scale-150 ${isAlone ? "w-10 h-10" : "w-6 h-6"}" />`);
+
+                if (isAlone) {
+                    return html;
+                }
             }
+
+            if (html.match())
 
             // Italic *text*
             html = html.replace(/\*([^\s][^*]+[^\s]|[^\s*]+)\*/g, '<i>$1</i>');

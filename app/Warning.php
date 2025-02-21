@@ -27,7 +27,9 @@ class Warning extends Model
 
     const Reactions = [
         'blinks',
+        'bored',
         'bruh',
+        'caught',
         'chair_stare',
         'confused_pika',
         'cool_cat',
@@ -37,6 +39,7 @@ class Warning extends Model
         'happy_cat',
         'hmmm',
         'kekw',
+        'pausechamp',
         'pepoo_clap',
         'pog',
         'shocked',
@@ -52,7 +55,6 @@ class Warning extends Model
         'bruh',
         'cat_chew',
         'cat_jam',
-        'do_something',
         'jigglin',
         'monkey_jam',
         'nodders',
