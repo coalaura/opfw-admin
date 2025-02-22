@@ -291,7 +291,7 @@ export default {
             this.isReplayTimeout = true;
 
             try {
-                const response = await _get(`/live/replay/${this.spectator.license}`);
+                const response = await fetch(`/live/replay/${this.spectator.license}`);
 
                 if (!response.ok) {
                     throw new Error("Failed to fetch replay.");
