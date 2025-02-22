@@ -369,7 +369,7 @@ export default {
 
             this.$refs.video.volume = this.volume;
 
-            localStorage.setItem("live_volume", this.volume);
+            this.pageStore.set("volume", this.volume);
         },
         destroyStream(full) {
             clearInterval(this.interval);
@@ -584,7 +584,7 @@ export default {
         window.removeEventListener("fullscreenchange", this.updateFullscreen);
     },
     mounted() {
-        this.volume = localStorage.getItem("live_volume") || 0.5;
+        this.volume = this.pageStore.get("volume", 0.5);
 
         this.setVolume();
 
