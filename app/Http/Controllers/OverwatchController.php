@@ -257,7 +257,7 @@ class OverwatchController extends Controller
         }
 
         if (!$player->isSpectatorModeEnabled()) {
-            ServerAPI::setSpectatorCamera($spectator['server'], $license, true);
+            ServerAPI::setSpectatorMode($spectator['server'], $license, true);
         }
 
         // Actually do the spectating
