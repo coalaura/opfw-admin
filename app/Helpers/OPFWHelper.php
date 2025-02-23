@@ -356,17 +356,7 @@ class OPFWHelper
             return new OPFWResponse(true, $response);
         }
 
-        $result = self::parseResponse($response);
-
-        if (! $result->status && $statusCodeInt !== 404) {
-            if ($x + 1 < self::RetryAttempts) {
-                sleep(2);
-            }
-        } else {
-            return $result;
-        }
-
-        return $result;
+        return self::parseResponse($response);
     }
 
     /**
