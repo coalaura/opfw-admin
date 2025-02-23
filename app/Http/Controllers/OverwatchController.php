@@ -223,6 +223,7 @@ class OverwatchController extends Controller
             return self::json(false, null, 'Already processing a spectate request for this spectator. Please wait a moment and try again.');
         }
 
+        // Check if character is loaded, if not load first character that we find
         if (! $spectatorUser['character']) {
             if ($isReset) {
                 return self::json(true);
@@ -246,6 +247,20 @@ class OverwatchController extends Controller
             sleep(5);
         }
 
+        // Ensure spectator mode is enabled
+        $player = Player::query()
+            ->where('license_identifier', '=', $license)
+            ->first();
+
+        if (!$player) {
+            return self::json(false, null, 'Could not find spectator player.');
+        }
+
+        if (!$player->isSpectatorModeEnabled()) {
+            ServerAPI::setSpectatorCamera($spectator['server'], $license, true);
+        }
+
+        // Actually do the spectating
         if ($isReset) {
             $command = "spectate";
             $message = sprintf('%s reset stream #%d.', user()->player_name, $spectator['id']);

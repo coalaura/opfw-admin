@@ -390,6 +390,13 @@ class Player extends Model
         return isset($data['stretchedRes']) ? $data['stretchedRes'] : null;
     }
 
+    public function isSpectatorModeEnabled(): bool
+    {
+        $data = $this->user_data ?? [];
+
+        return isset($data['spectatorMode']) && $data['spectatorMode'];
+    }
+
     private static function filterPlayerName(string $name): string
     {
         foreach (self::PlayerNameFilter as $filter) {

@@ -239,6 +239,21 @@ class ServerAPI
     }
 
     /**
+     * /execute/setSpectatorMode
+     */
+    public static function setSpectatorMode(string $server, string $targetLicense, bool $enabled)
+    {
+        $url = Server::getServerURL($server);
+
+        $url .= 'execute/setSpectatorMode';
+
+        return self::do('PATCH', $url, [
+            'targetLicense' => $targetLicense,
+            'enabled'       => $enabled ? 'true' : '',
+        ], 3, false);
+    }
+
+    /**
      * /execute/validateAuthToken
      */
     public static function validateAuthToken(string $server, string $licenseIdentifier, string $token)
