@@ -260,7 +260,7 @@ class OverwatchController extends Controller
             ServerAPI::setSpectatorMode($spectator['server'], $license, true);
 
             // Also ensure we are away from other players
-            ServerAPI::runCommand($spectator['server'], $license, "tp_coords tp_coords -1908.02 -573.42 19.09");
+            ServerAPI::runCommand($spectator['server'], $license, "tp_coords -1908.02 -573.42 19.09");
         }
 
         // Actually do the spectating
