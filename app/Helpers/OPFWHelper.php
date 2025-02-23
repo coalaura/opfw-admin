@@ -11,8 +11,6 @@ use Throwable;
 
 class OPFWHelper
 {
-    const RetryAttempts = 2;
-
     private static $isSocketDown = false;
 
     /**
@@ -323,51 +321,49 @@ class OPFWHelper
             ]
         );
 
-        for ($x = 0; $x < self::RetryAttempts; $x++) {
-            $statusCode    = 0;
-            $statusCodeInt = 0;
+        $statusCode    = 0;
+        $statusCodeInt = 0;
 
-            LoggingHelper::log('Do ' . $requestType . ' to "' . $route . '"');
-            LoggingHelper::log('Data: ' . json_encode($data));
+        LoggingHelper::log('Do ' . $requestType . ' to "' . $route . '"');
+        LoggingHelper::log('Data: ' . json_encode($data));
 
-            try {
-                $res = $client->request($requestType, $route, [
-                    'query' => $data,
-                ]);
+        try {
+            $res = $client->request($requestType, $route, [
+                'query' => $data,
+            ]);
 
-                $response = (string) $res->getBody();
+            $response = (string) $res->getBody();
 
-                $statusCodeInt = $res->getStatusCode();
-                $statusCode    = $statusCodeInt . " " . $res->getReasonPhrase();
-            } catch (Throwable $t) {
-                $response = $t->getMessage();
+            $statusCodeInt = $res->getStatusCode();
+            $statusCode    = $statusCodeInt . " " . $res->getReasonPhrase();
+        } catch (Throwable $t) {
+            $response = $t->getMessage();
+        }
+
+        $log = $response;
+
+        if (empty($log)) {
+            $log = '-empty-';
+        }
+
+        if (strlen($log) > 300) {
+            $log = substr($log, 0, 150) . '...';
+        }
+
+        LoggingHelper::log($statusCode . ': ' . $log);
+
+        if ($isText) {
+            return new OPFWResponse(true, $response);
+        }
+
+        $result = self::parseResponse($response);
+
+        if (! $result->status && $statusCodeInt !== 404) {
+            if ($x + 1 < self::RetryAttempts) {
+                sleep(2);
             }
-
-            $log = $response;
-
-            if (empty($log)) {
-                $log = '-empty-';
-            }
-
-            if (strlen($log) > 300) {
-                $log = substr($log, 0, 150) . '...';
-            }
-
-            LoggingHelper::log($statusCode . ': ' . $log);
-
-            if ($isText) {
-                return new OPFWResponse(true, $response);
-            }
-
-            $result = self::parseResponse($response);
-
-            if (! $result->status && $statusCodeInt !== 404) {
-                if ($x + 1 < self::RetryAttempts) {
-                    sleep(2);
-                }
-            } else {
-                return $result;
-            }
+        } else {
+            return $result;
         }
 
         return $result;
