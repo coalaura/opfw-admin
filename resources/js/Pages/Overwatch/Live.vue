@@ -436,6 +436,7 @@ export default {
         },
         createStream(source, element, onReady, onError) {
             const hls = new Hls({
+                liveSyncDuration: 1,
                 backBufferLength: 30
             });
 
