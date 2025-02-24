@@ -18,7 +18,7 @@
 		"BAD_PED_MESSAGE": "Attempted to create a possibly bad ped message: \"${DATA}\"",
 		"BAD_CHAT_MESSAGE": "Attempted to post a possibly bad message in the OOC chat: \"${DATA}\"",
 		"BAD_TWITTER_POST": "Attempted to create a possibly bad twitter post: \"${DATA}\"",
-		"BAD_PHONE_MESSAGE": "Attempted to create a possibly bad twitter post: \"${DATA}\"",
+		"BAD_PHONE_MESSAGE": "Attempted to create a possibly bad phone message: \"${DATA}\"",
 		"DISALLOWED_CHARACTER_NAME": "Attempted to create a character with a possibly bad name: \"${DATA}\"",
 		"BAD_CHARACTER_CREATION_WORDS": "Attempted to create a character with a possibly bad word in either the name or backstory: \"${DATA}\"",
 		"DISALLOWED_BIRTHDAY": "Attempted to create a character with a possibly bad birthday: \"${DATA}\""
