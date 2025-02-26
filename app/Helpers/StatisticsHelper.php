@@ -236,6 +236,12 @@ class StatisticsHelper
         return self::collectStatistics("SELECT COUNT(id) as count, SUM(-amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from money_logs WHERE details = 'ls-customs-purchase' GROUP BY date ORDER BY timestamp DESC");
     }
 
+    // Blackjack win chance
+    public static function collectBlackjackWinStatistics(): array
+    {
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM(IF(money_won > 0, 1, 0)) / COUNT(id) * 100 as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from casino_logs WHERE game = 'blackjack' GROUP BY date ORDER BY timestamp DESC");
+    }
+
     // Shots fired (by guns damage dealt)
     public static function collectShotsFiredStatistics(): array
     {

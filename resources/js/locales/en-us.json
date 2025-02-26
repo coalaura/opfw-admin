@@ -389,12 +389,14 @@
         "average_1_percent": "Average 1% FPS",
         "tag_money": "Money",
         "tag_amount": "Amount",
+        "tag_percentage": "Percentage",
         "search": "Search",
         "failed_load": "Failed to load statistics.",
         "no_economy_recorded": "No economy statistics recorded yet. (Recorded once every hour)",
         "no_players_recorded": "No players statistics recorded yet.",
         "timeouts_val": "Timeouts",
         "crashes_val": "Crashes",
+        "average_5_day": "Average over the last 5 days.",
 
         "casino": "Casino Revenue",
         "casino_details": "Combined revenue from all available games in the casino.",
@@ -469,7 +471,9 @@
         "player_stats": "Player Statistics",
         "player_stats_details": "Compare player statistics in a graph.",
         "fps_stats": "FPS Statistics",
-        "fps_stats_details": "Compare FPS statistics in a graph. FPS averages are calculated with at least 10 minutes of data. The minimum and maximum represent the minimum and maximum average FPS a player was experiencing at that time."
+        "fps_stats_details": "Compare FPS statistics in a graph. FPS averages are calculated with at least 10 minutes of data. The minimum and maximum represent the minimum and maximum average FPS a player was experiencing at that time.",
+        "blackjack": "Blackjack",
+        "blackjack_details": "Blackjack winning percentages."
     },
     "map": {
         "title": "Live-Map",

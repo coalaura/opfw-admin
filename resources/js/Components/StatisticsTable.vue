@@ -5,6 +5,7 @@
                 <div class="flex items-center" v-if="tag">
                     <span class="bg-lime-400 dark:bg-lime-700 py-0.5 px-2 text-xs rounded-sm shadow-sm" v-if="tag === 'money'">{{ t("statistics.tag_money") }}</span>
                     <span class="bg-teal-400 dark:bg-teal-700 py-0.5 px-2 text-xs rounded-sm shadow-sm" v-else-if="tag === 'amount'">{{ t("statistics.tag_amount") }}</span>
+                    <span class="bg-pink-400 dark:bg-pink-700 py-0.5 px-2 text-xs rounded-sm shadow-sm" v-else-if="tag === 'percentage'">{{ t("statistics.tag_percentage") }}</span>
                 </div>
 
                 <span>
@@ -34,7 +35,7 @@
                         <th class="font-semibold px-2 py-0.5 text-left" v-if="currency">{{ t('statistics.count') }}</th>
                         <th class="font-semibold px-2 py-0.5 text-left" v-for="(amount, index) in amounts">{{ t('statistics.' + locales[index]) }}</th>
                         <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.difference') }}</th>
-                        <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.average') }}</th>
+                        <th class="font-semibold px-2 py-0.5 text-left" :title="percentage ? t('statistics.average_5_day') : ''">{{ t('statistics.average') }}</th>
                         <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.trend') }}</th>
                     </tr>
 
@@ -48,13 +49,13 @@
                     </tr>
 
                     <tr class="border-t border-gray-500" v-else-if="loading">
-                        <td class="px-2 py-0.5 text-center" :colspan="(currency ? 5 : 4) + amounts.length">
+                        <td class="px-2 py-0.5 text-center" :colspan="(currency ? 5 : percentage ? 3 : 4) + amounts.length">
                             <i class="fas fa-spinner animate-spin"></i>
                         </td>
                     </tr>
 
                     <tr class="border-t border-gray-500" v-else-if="!data">
-                        <td class="px-2 py-0.5 text-center text-red-500 font-semibold" :colspan="(currency ? 5 : 4) + amounts.length">
+                        <td class="px-2 py-0.5 text-center text-red-500 font-semibold" :colspan="(currency ? 5 : percentage ? 3 : 4) + amounts.length">
                             {{ t("statistics.failed_load") }}
                         </td>
                     </tr>
@@ -62,9 +63,10 @@
                     <tr v-for="(entry, index) in data" :key="index" class="border-t border-gray-500" v-else>
                         <td class="italic text-gray-700 dark:text-gray-300 px-2 py-0.5">{{ entry.date }}</td>
                         <td class="px-2 py-0.5" v-if="currency">{{ numberFormat(entry.count, false, false) }}x</td>
-                        <td class="px-2 py-0.5" v-for="amount in amounts">{{ numberFormat(entry[amount], false, currency) }}</td>
+                        <td class="px-2 py-0.5" v-for="amount in amounts">{{ numberFormat(entry[amount], percentage ? 2 : false, currency, percentage ? 1 : false) }}{{ percentage ? "%" : "" }}</td>
                         <td class="px-2 py-0.5" v-html="previous(index, 'amount')"></td>
-                        <td class="px-2 py-0.5">{{ entry.count > 0 ? numberFormat(getEntryAmount(entry) / entry.count, false, currency) : '-' }}</td>
+                        <td class="px-2 py-0.5" v-if="!percentage">{{ entry.count > 0 ? numberFormat(getEntryAmount(entry) / entry.count, false, currency) : '-' }}</td>
+                        <td class="px-2 py-0.5" v-else>{{ get5DayAverage(index) }}</td>
                         <td class="px-2 py-0.5 font-semibold" v-html="trend(index, 'amount')"></td>
                     </tr>
                 </table>
@@ -92,6 +94,9 @@ export default {
             type: String,
         },
         currency: {
+            type: Boolean,
+        },
+        percentage: {
             type: Boolean,
         },
         resolve: {
@@ -141,7 +146,7 @@ export default {
                 return this.t(this.locale + this.source);
             }
 
-            return this.t('statistics.' + this.source);
+            return this.t(`statistics.${this.source}`);
         },
         chartLabels() {
             const labels = [];
@@ -171,6 +176,18 @@ export default {
             if (!this.collapsed && !this.data) {
                 this.loadData();
             }
+        },
+        get5DayAverage(index) {
+            let total = 0,
+                count = 0;
+
+            for (let x = index; x < this.data.length && x < index + 5; x++) {
+                count++;
+
+                total += this.getEntryAmount(this.data[x]);
+            }
+
+            return this.numberFormat(total / count, this.percentage ? 2 : false, false, this.percentage ? 1 : false) + (this.percentage ? "%" : "");
         },
         getEntryAmount(entry) {
             let total = 0;
@@ -220,8 +237,8 @@ export default {
 
             const format = this.numberFormat(diff, false, this.currency);
 
-            if (diff < 0) return `<span class="text-red-700 dark:text-red-300">${format}</span>`;
-            else if (diff > 0) return `<span class="text-green-700 dark:text-green-300">+${format}</span>`;
+            if (diff < 0) return `<span class="text-red-700 dark:text-red-300">${format}${this.percentage ? "%" : ""}</span>`;
+            else if (diff > 0) return `<span class="text-green-700 dark:text-green-300">+${format}${this.percentage ? "%" : ""}</span>`;
 
             return '-';
         },

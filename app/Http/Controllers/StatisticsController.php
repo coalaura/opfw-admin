@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 use App\Helpers\CacheHelper;
 use App\Helpers\StatisticsHelper;
 use App\Player;
-use DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\DB;
 
 class StatisticsController extends Controller
 {
@@ -33,7 +33,7 @@ class StatisticsController extends Controller
 
         $key = "statistics.{$source}";
 
-        if (CacheHelper::exists($key)) {
+        if (CacheHelper::exists($key) && CLUSTER !== "c1") {
             $result = CacheHelper::read($key) ?? false;
         }
 
@@ -140,6 +140,9 @@ class StatisticsController extends Controller
                     break;
                 case 'lucky_wheel':
                     $result = StatisticsHelper::collectLuckyWheelStatistics();
+                    break;
+                case 'blackjack':
+                    $result = StatisticsHelper::collectBlackjackWinStatistics();
                     break;
             }
 
