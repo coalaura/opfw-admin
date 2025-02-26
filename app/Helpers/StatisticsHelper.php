@@ -239,7 +239,7 @@ class StatisticsHelper
     // Blackjack win chance
     public static function collectBlackjackWinStatistics(): array
     {
-        return self::collectStatistics("SELECT COUNT(id) as count, SUM(IF(money_won > 0, 1, 0)) / COUNT(id) * 100 as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from casino_logs WHERE game = 'blackjack' GROUP BY date ORDER BY timestamp DESC");
+        return self::collectStatistics("SELECT COUNT(id) as count, SUM(IF(money_won > 0, 1, 0)) / COUNT(id) * 100 as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from casino_logs WHERE game = 'blackjack' GROUP BY date ORDER BY timestamp DESC", 30, false, [], true);
     }
 
     // Shots fired (by guns damage dealt)
@@ -326,7 +326,7 @@ class StatisticsHelper
         return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action IN ('{$action}') GROUP BY date ORDER BY timestamp DESC");
     }
 
-    public static function collectStatistics(string $query, int $days = 30, bool $showAll = false, $secondary = []): array
+    public static function collectStatistics(string $query, int $days = 30, bool $showAll = false, $secondary = [], bool $decimals = false): array
     {
         $start = microtime(true);
 
@@ -342,14 +342,16 @@ class StatisticsHelper
             $days = ceil((time() - $time) / 86400);
         }
 
+        $convert = $decimals ? 'floatval' : 'intval';
+
         for ($i = 0; $i <= $days; $i++) {
             $time = strtotime("-$i days");
             $date = date('n/d/Y', $time);
 
             $entry = self::findEntry($data, $date);
 
-            $amount = $entry && $entry->amount ? intval($entry->amount) : 0;
-            $count  = $entry && $entry->count ? intval($entry->count) : 0;
+            $amount = $entry && $entry->amount ? call_user_func($convert, $entry->amount) : 0;
+            $count  = $entry && $entry->count ? call_user_func($convert, $entry->count) : 0;
 
             $res = [
                 'date'   => date('jS F Y', $time),
@@ -358,7 +360,7 @@ class StatisticsHelper
             ];
 
             foreach ($secondary as $second) {
-                $val = $entry && isset($entry->{$second}) ? intval($entry->{$second}) : 0;
+                $val = $entry && isset($entry->{$second}) ? call_user_func($convert, $entry->{$second}) : 0;
 
                 $res[$second] = $val;
             }
