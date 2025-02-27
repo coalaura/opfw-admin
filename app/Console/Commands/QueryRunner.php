@@ -15,7 +15,7 @@ class QueryRunner extends Command
      *
      * @var string
      */
-    protected $signature = 'run:query {--skip}';
+    protected $signature = 'run:query {--skip} {--only=}';
 
     /**
      * The console command description.
@@ -42,6 +42,10 @@ class QueryRunner extends Command
     public function handle()
     {
         $skipFailed = $this->option("skip");
+        $only = $this->option("only");
+
+        $this->info("Skip Failed: " . ($skipFailed ? "on" : "off"));
+        $this->info("On Clusters: " . ($only ? "only " . $only : "all"));
 
         $query = trim($this->ask("SQL Query"));
 
@@ -64,7 +68,7 @@ class QueryRunner extends Command
 
             $path = $dir . "/" . $cluster;
 
-            if (empty($cluster) || !is_dir($path)) {
+            if (empty($cluster) || !is_dir($path) || ($only && $only === $cluster)) {
                 continue;
             }
 
