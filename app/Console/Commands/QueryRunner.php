@@ -68,7 +68,7 @@ class QueryRunner extends Command
 
             $path = $dir . "/" . $cluster;
 
-            if (empty($cluster) || !is_dir($path) || ($only && $only === $cluster)) {
+            if (empty($cluster) || !is_dir($path) || ($only && $only !== $cluster)) {
                 continue;
             }
 
