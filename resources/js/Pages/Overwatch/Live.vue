@@ -220,7 +220,7 @@ export default {
             return this.spectator?.spectating;
         },
         validServerId() {
-            const serverId = parseInt(this.newServerId);
+            const serverId = parseInt(this.newServerId.trim());
 
             if (!Number.isInteger(serverId)) return false;
 
@@ -410,14 +410,16 @@ export default {
                 return;
             }
 
-            if (!this.validServerId || (this.newServerId === this.target?.source)) {
+            const serverId = parseInt(this.newServerId?.trim());
+
+            if (!this.validServerId || (serverId === this.target?.source)) {
                 return;
             }
 
             this.isUpdating = true;
 
             try {
-                const data = await _patch(`/live/set/${this.spectator.license}/${this.newServerId}`);
+                const data = await _patch(`/live/set/${this.spectator.license}/${serverId}`);
 
                 if (!data?.status) {
                     alert(data?.message || "Something went wrong.");
