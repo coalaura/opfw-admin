@@ -1322,7 +1322,10 @@ export default {
             this.vehicleForm.plate = this.vehicleForm.plate.toUpperCase().trim();
 
             try {
-                const response = await _post(`/vehicles/edit/${this.vehicleForm.id}`, this.vehicleForm);
+                const response = await _post(`/vehicles/edit/${this.vehicleForm.id}`, {
+                    modifications: JSON.stringify(this.vehicleForm.modifications),
+                    ...this.vehicleForm
+                });
 
                 if (response.status) {
                     $('.overflow-y-auto').scrollTop(0);

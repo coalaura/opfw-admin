@@ -685,7 +685,7 @@ class PlayerCharacterController extends Controller
             return self::json(false, null, 'Invalid supporter value.');
         }
 
-        $invalidMod = $vehicle->parseModifications($request->post('modifications', []));
+        $invalidMod = $vehicle->parseModifications(json_decode($request->post('modifications')) ?? []);
         if ($invalidMod !== null) {
             return self::json(false, null, 'Invalid modifications ("' . $invalidMod . '") submitted, please try again.');
         }
