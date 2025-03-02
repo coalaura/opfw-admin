@@ -1317,15 +1317,12 @@ export default {
             if (this.isVehicleLoading) {
                 return;
             }
-            this.isVehicleLoading = true;
 
+            this.isVehicleLoading = true;
             this.vehicleForm.plate = this.vehicleForm.plate.toUpperCase().trim();
 
             try {
-                const response = await _post(`/vehicles/edit/${this.vehicleForm.id}`, {
-                    modifications: JSON.stringify(this.vehicleForm.modifications),
-                    ...this.vehicleForm
-                });
+                const response = await _post(`/vehicles/edit/${this.vehicleForm.id}`, this.vehicleForm);
 
                 if (response.status) {
                     $('.overflow-y-auto').scrollTop(0);

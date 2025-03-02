@@ -19,7 +19,11 @@ function form(data) {
 		const value = data[key];
 
 		if (value !== null) {
-			body.set(key, data[key]);
+			if (typeof value === "object") {
+				body.set(key, JSON.stringify(value));
+			} else {
+				body.set(key, value);
+			}
 		}
 	}
 
