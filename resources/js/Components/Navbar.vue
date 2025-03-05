@@ -438,6 +438,8 @@ export default {
             this.worldTimeInterval = setInterval(() => {
                 this.updateWorldTime();
             }, 1000);
+
+            this.hideContext();
         },
         getDateForTimezone(pTimezone) {
             const date = new Date((new Date()).toLocaleString('en-US', { timeZone: pTimezone.tz_name }));
