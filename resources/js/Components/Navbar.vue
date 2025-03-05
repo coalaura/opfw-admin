@@ -44,9 +44,10 @@
                     <span v-else>{{ $page.serverName }}</span>
                 </span>
 
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-green-700 bg-success rounded dark:bg-dark-success cursor-pointer" :class="{ 'shadow': banner }" :title="t('nav.world_time_desc', timezones.length)" @click="showWorldTime" v-if="timezones.length > 0">
-                    <i class="fas fa-globe"></i>
-                </span>
+                <inertia-link class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded bg-teal-500 border-teal-700" href="/live" :title="t('overwatch.live')" v-if="this.$page.overwatch">
+                    <i class="fas fa-video mr-1"></i>
+                    {{ t('global.live') }}
+                </inertia-link>
 
                 <button class="px-4 py-1 focus:outline-none font-semibold text-white text-sm rounded border-2 border-twitch-dark bg-twitch" :class="{ 'shadow': banner }" @click="showingStreamers = true" v-if="streamers">
                     <i class="fab fa-twitch"></i>
@@ -79,6 +80,11 @@
                         <button @click="openMinesweeper" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" v-if="$page.discord && !$page.discord.sso">
                             <i class="fas fa-bomb mr-1"></i>
                             {{ t('nav.minesweeper') }}
+                        </button>
+
+                        <button @click="showWorldTime" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" :title="t('nav.world_time_desc', timezones.length)" v-if="timezones.length > 0">
+                            <i class="fas fa-globe mr-1"></i>
+                            {{ t('nav.world_time') }}
                         </button>
 
                         <button @click="showDebugInfo" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" v-if="$page.auth.player.isRoot">

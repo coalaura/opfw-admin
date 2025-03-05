@@ -4,6 +4,7 @@
         "female": "Female",
         "none": "None",
         "any": "Any",
+        "live": "Live",
         "banned": "Banned",
         "not_banned": "Not banned",
         "by": "by {0}",
