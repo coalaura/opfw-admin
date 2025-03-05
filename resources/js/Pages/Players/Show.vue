@@ -1153,14 +1153,14 @@
                                         <tr class="border-t border-gray-500">
                                             <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.playtime_label') }}</th>
                                             <td class="px-2 py-0.5 italic w-full">
-                                                {{ character.playtime | formatSeconds }}
+                                                <span :title="formatSeconds(character.playtime, true)">{{ character.playtime | formatSeconds }}</span>
                                                 <i class="fas fa-signal ml-1 cursor-help" :title="t('players.characters.playtime_recent', formatSeconds(character.playtime_2w))"></i>
                                             </td>
                                         </tr>
 
                                         <tr class="border-t border-gray-500">
                                             <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.born') }}</th>
-                                            <td class="px-2 py-0.5 italic w-full">{{ character.dateOfBirth | formatTime }}</td>
+                                            <td class="px-2 py-0.5 italic w-full">{{ character.dateOfBirth | formatDate }}</td>
                                         </tr>
 
                                         <tr class="border-t border-gray-500" v-if="character.marriedTo">

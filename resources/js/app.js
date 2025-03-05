@@ -26,6 +26,7 @@ import Flags from "./Plugins/flags.js";
 import humanizeSeconds from "./Filters/humanizeSeconds.js";
 import formatSeconds from "./Filters/formatSeconds.js";
 import formatTime from "./Filters/formatTime.js";
+import formatDate from "./Filters/formatDate.js";
 import formatGender from "./Filters/formatGender.js";
 import linkify from "vue-linkify";
 
@@ -79,6 +80,7 @@ Vue.use(Toast, {
 Vue.filter("humanizeSeconds", humanizeSeconds);
 Vue.filter("formatSeconds", formatSeconds);
 Vue.filter("formatTime", formatTime);
+Vue.filter("formatDate", formatDate);
 Vue.filter("formatGender", formatGender);
 
 // For using filters as functions (add/remove as needed)
