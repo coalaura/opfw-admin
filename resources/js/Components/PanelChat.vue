@@ -392,7 +392,7 @@ export default {
         this.interval = setInterval(this.updateTimestamp, 5000);
 
         // preload
-        _get("/images/notification_pop3.ogg");
+        fetch("/images/notification_pop3.ogg");
     },
     unmounted() {
         clearInterval(this.interval);

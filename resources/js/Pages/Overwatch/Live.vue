@@ -22,7 +22,7 @@
                     </h3>
 
                     <div class="italic flex flex-col gap-1 h-full">
-                        <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 transition flex items-center justify-between" :class="getSpectatorListingClass(spectator)" v-for="(spectator, index) in spectators" :key="spectator.license" @click="setStream(spectator.stream)" v-if="spectators.length">
+                        <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 transition flex items-center justify-between" :class="getSpectatorListingClass(spectator)" v-for="(spectator, index) in spectators" :key="spectator.license" @click="setStream(index, spectator.stream)" v-if="spectators.length">
                             {{ t('overwatch.stream', index + 1) }}
 
                             <template v-if="spectator.stream === source">
@@ -194,6 +194,7 @@ export default {
             isPerformingAction: false,
 
             socket: false,
+            initial: true,
             spectators: [],
             newServerId: "",
 
@@ -494,7 +495,7 @@ export default {
                 }
             };
         },
-        setStream(source) {
+        setStream(index, source) {
             if (this.isLoading || this.isUpdating) {
                 return;
             }
@@ -512,6 +513,8 @@ export default {
                 this.isLoading = false;
 
                 this.setVolume();
+
+                window.location.hash = (index + 1).toString();
             }, this.setError);
         },
         setChatHeight() {
@@ -539,12 +542,28 @@ export default {
 
             image.src = url;
         },
+        selectPreviousStream() {
+            if (!this.initial) {
+                return;
+            }
+
+            this.initial = false;
+
+            const previous = parseInt(window.location.hash.substring(1)),
+                index = previous ? previous - 1 : false;
+
+            if (Number.isInteger(index) && index >= 0 && index < this.spectators.length) {
+                this.setStream(index, this.spectators[index].stream);
+            }
+        },
         init() {
             if (this.socket) return;
 
             this.socket = this.createSocket("spectators", {
                 onData: data => {
                     this.spectators = data;
+
+                    this.selectPreviousStream();
                 },
                 onDisconnect: () => {
                     this.socket = false;
