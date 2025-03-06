@@ -78,7 +78,7 @@
                         <div class="flex flex-col border-b border-gray-500 pb-3" v-if="target">
                             <inertia-link class="font-medium truncate" :href="`/players/${target.license}`" :title="target.name">[{{ target.source }}] {{ target.name }}</inertia-link>
 
-                            <div class="border-t border-gray-500 pt-2 mt-2 text.sm">
+                            <div class="border-t border-gray-500 pt-2 mt-2 text-sm">
                                 <div :title="character.name + '\n' + character.backstory" v-if="character">
                                     <inertia-link class="font-semibold text-lg truncate" :href="`/players/${target.license}/characters/${character.id}`">{{ character.name }}</inertia-link>
                                     <div class="italic text-muted dark:text-dark-muted text-xxs -mt-1 mb-0.5">{{ t('overwatch.born', dayjs(character.birthday).format('MMM Do YYYY')) }}</div>
