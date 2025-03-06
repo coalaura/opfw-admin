@@ -18,7 +18,7 @@ See [#contributing](#Contributing) for more details on how you can help shape th
 ## Note
 This admin panel **requires** an OP-Framework powered FiveM server. It will **NOT** work with any other server or framework (like ESX, QB-Core, etc.).
 
-*If you question the commit history, I invest my time into quick development and practical fixes. Since I (Laura) am the sole developer maintaining it, I do not see additional value in spending more of my time meticulously documenting every tiny change i commit.*
+*If you question the commit history, I invest my time into quick development and practical fixes instead of commit message writing. Since I (Laura) am the sole developer maintaining it, I do not see additional value in spending more of my time meticulously documenting every tiny change i commit.*
 
 ## Features
 * See and search various detailed server logs.
