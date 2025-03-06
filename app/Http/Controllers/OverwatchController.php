@@ -157,6 +157,14 @@ class OverwatchController extends Controller
                 ServerAPI::setGameplayCamera($spectator['server'], $license, 1000, 0, 180);
 
                 break;
+            case 'left':
+                ServerAPI::setGameplayCamera($spectator['server'], $license, 1000, 0, 270);
+
+                break;
+            case 'right':
+                ServerAPI::setGameplayCamera($spectator['server'], $license, 1000, 0, 90);
+
+                break;
             case 'camera':
                 ServerAPI::setSpectatorCamera($spectator['server'], $license, !$hasSpectatorCamera);
 

@@ -48,10 +48,24 @@
                             </div>
 
                             <div class="flex justify-between gap-1">
-                                <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center select-none" :class="getActionColor(action)" @click="performAction(action)" :title="t(`overwatch.${action.name}`)" v-for="action in actions">
-                                    <i class="fas fa-spinner animate-spin" v-if="isPerformingAction"></i>
-                                    <i :class="`fas fa-${action.icon}`" v-else></i>
-                                </div>
+                                <template v-for="action in actions">
+                                    <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center select-none relative group" :class="getActionColor(action)" v-if="action.sub">
+                                        <i class="fas fa-spinner animate-spin" v-if="isPerformingAction"></i>
+                                        <i :class="`fas fa-${action.icon}`" v-else></i>
+
+                                        <div class="p-1 opacity-0 pointer-events-none absolute duration-75" :class="sub.direction + (!isPerformingAction && !isActionTimedOut ? ' group-hover:pointer-events-auto group-hover:opacity-100' : '')" v-for="sub in action.sub">
+                                            <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center select-none backdrop-filter backdrop-blur-md shadow-md" :class="getActionColor(sub)" @click="performAction(sub)" :title="t(`overwatch.${sub.name}`)">
+                                                <i class="fas fa-spinner animate-spin" v-if="isPerformingAction"></i>
+                                                <i :class="`fas fa-${sub.icon}`" v-else></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 text-center select-none" :class="getActionColor(action)" @click="performAction(action)" :title="t(`overwatch.${action.name}`)" v-else>
+                                        <i class="fas fa-spinner animate-spin" v-if="isPerformingAction"></i>
+                                        <i :class="`fas fa-${action.icon}`" v-else></i>
+                                    </div>
+                                </template>
                             </div>
                         </div>
                     </div>
@@ -246,12 +260,29 @@ export default {
                     icon: 'medkit'
                 },
                 {
-                    name: 'center',
-                    icon: 'arrow-circle-up'
-                },
-                {
-                    name: 'backwards',
-                    icon: 'arrow-circle-down'
+                    icon: 'arrows-alt',
+                    sub: [
+                        {
+                            name: 'center',
+                            icon: 'arrow-circle-up',
+                            direction: 'bottom-full left-1/2 -translate-x-1/2'
+                        },
+                        {
+                            name: 'backwards',
+                            icon: 'arrow-circle-down',
+                            direction: 'top-full left-1/2 -translate-x-1/2'
+                        },
+                        {
+                            name: 'right',
+                            icon: 'arrow-circle-right',
+                            direction: 'left-full top-1/2 -translate-y-1/2'
+                        },
+                        {
+                            name: 'left',
+                            icon: 'arrow-circle-left',
+                            direction: 'right-full top-1/2 -translate-y-1/2'
+                        }
+                    ]
                 },
                 {
                     name: 'camera',
