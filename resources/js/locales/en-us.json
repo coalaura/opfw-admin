@@ -194,7 +194,9 @@
         "center": "Center the spectators camera to point forwards.",
         "backwards": "Center the spectators camera to point backwards.",
         "camera": "Toggle spectator camera (automatically centers camera when aiming, etc.)",
-        "new_player": "Pick a random new player to spectate."
+        "new_player": "Pick a random new player to spectate.",
+        "born": "Born {0}",
+        "no_character": "No character info."
     },
     "errors": {
         "client": {

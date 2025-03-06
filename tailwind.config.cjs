@@ -54,6 +54,7 @@ module.exports = {
             },
             lineHeight: {
                 "map-icon": "20px",
+                "5.5":      "1.4rem"
             },
             width: {
                 "item":               "140px",

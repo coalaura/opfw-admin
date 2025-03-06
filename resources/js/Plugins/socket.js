@@ -104,11 +104,19 @@ const Socket = {
             socket.on("reset", data => {
                 console.log(`[${type}] Received socket "reset" event (${data.byteLength || data.length} bytes).`);
 
+				console.log(type, data);
+
                 compressor.reset();
+
+				console.log("ok1");
 
                 data = compressor.decompressData(type, data);
 
+				console.log("ok2");
+
                 options?.onData?.(data);
+
+				console.log("ok3");
             });
 
             let received;

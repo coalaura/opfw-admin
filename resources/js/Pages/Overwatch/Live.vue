@@ -62,8 +62,17 @@
                         </div>
 
                         <div class="flex flex-col border-b border-gray-500 pb-3" v-if="target">
-                            <div class="font-semibold">{{ t('overwatch.watching') }}:</div>
-                            <a :href="`/players/${target.license}`" target="_blank" class="text-lime-600 dark:text-lime-400 no-underline italic">[{{ target.source }}] {{ target.name }}</a>
+                            <inertia-link class="font-medium truncate" :href="`/players/${target.license}`" :title="target.name">[{{ target.source }}] {{ target.name }}</inertia-link>
+
+                            <div class="border-t border-gray-500 pt-2 mt-2 text.sm">
+                                <div :title="character.name + '\n' + character.backstory" v-if="character">
+                                    <inertia-link class="font-semibold text-lg truncate" :href="`/players/${target.license}/characters/${character.id}`">{{ character.name }}</inertia-link>
+                                    <div class="italic text-muted dark:text-dark-muted text-xxs -mt-1 mb-0.5">{{ t('overwatch.born', dayjs(character.birthday).format('MMM Do YYYY')) }}</div>
+                                    <div class="italic text-muted dark:text-dark-muted leading-5.5">{{ truncate(character.backstory, 70) }}</div>
+                                </div>
+
+                                <div class="italic text-red-800 dark:text-red-200" v-else>{{ t('overwatch.no_character') }}</div>
+                            </div>
                         </div>
 
                         <div class="flex gap-3 items-center">
@@ -219,6 +228,9 @@ export default {
         },
         target() {
             return this.spectator?.spectating;
+        },
+        character() {
+            return this.target?.character;
         },
         validServerId() {
             const serverId = parseInt(this.newServerId.trim());
