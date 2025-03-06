@@ -33,7 +33,7 @@
                         </td>
 
                         <td class="italic px-4 py-1.5 w-24" v-if="!readonly">
-                            <button class="px-2 py-0.5 rounded bg-danger dark:bg-dark-danger" @click="resetOverrides(player)" :title="t('roles.reset')" :disabled="!player.hasOverrides">
+                            <button class="px-2 py-0.5 rounded bg-danger dark:bg-dark-danger mr-1" @click="resetOverrides(player)" :title="t('roles.reset')" :disabled="!player.hasOverrides">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
 
