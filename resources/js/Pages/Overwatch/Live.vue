@@ -657,6 +657,9 @@ export default {
         this.preload(this.$refs.video.poster, () => {
             setTimeout(this.setChatHeight, 250);
         });
+    },
+    beforeUnmount() {
+        this.destroyStream();
     }
 };
 </script>
