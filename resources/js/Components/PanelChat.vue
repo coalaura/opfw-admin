@@ -70,7 +70,8 @@ export default {
         dimensions: String,
         room: String | Boolean,
         height: String | Boolean,
-        emotes: Object | Array
+        emotes: Object | Array,
+        viewerCount: Number,
     },
     data() {
         return {
@@ -258,6 +259,8 @@ export default {
                 console.log(`Received socket "users" event.`);
 
                 this.users = unpack(compressed);
+
+                this.$emit('update:viewerCount', this.users.length);
             });
 
             this.socket.on("disconnect", () => {
