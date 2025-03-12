@@ -263,7 +263,10 @@ export default {
                 this.messages = unpack(compressed);
 
                 this.updateTimestamp();
-                this.scrollInstant(true);
+
+                setTimeout(() => {
+                    this.scrollInstant(true);
+                }, 500);
             });
 
             this.socket.on("users", compressed => {
