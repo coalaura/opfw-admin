@@ -1,5 +1,5 @@
 // Formatting seconds to string
-export default function (value, full = false) {
+export default function (value, allowed = "dhm", named = false) {
     if (value <= 0) {
         return "0s";
     } else if (value < 60) {
@@ -7,21 +7,35 @@ export default function (value, full = false) {
     }
 
     const multipliers = [
-        [31557600, "Y"],
-        [2629800, "M"],
-        [86400, "d"],
-        [3600, "h"],
-        [60, "m"],
+        [31557600, "Y", "year"],
+        [2629800, "M", "month"],
+        [86400, "d", "day"],
+        [3600, "h", "hour"],
+        [60, "m", "minute"],
     ];
 
-    const result = [],
-        current = full ? multipliers : multipliers.slice(2);
+    const result = [];
 
-    for (const multiplier of current) {
+    for (const multiplier of multipliers) {
+        if (allowed && !allowed.includes(multiplier[1])) {
+            continue;
+        }
+
         const amount = Math.floor(value / multiplier[0]);
 
         if (amount > 0) {
-            result.push(amount + multiplier[1]);
+            let label = named ? multiplier[2] : multiplier[1];
+
+            if (named) {
+                label = ` ${label}`;
+
+                if (amount > 1) {
+                    label += "s";
+                }
+            }
+
+            result.push(amount + label);
+
             value -= amount * multiplier[0];
         }
     }

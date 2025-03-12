@@ -512,12 +512,8 @@ export default {
 
             this.hideContext();
         },
-        formatUptime(pMilliseconds, pIncludeMinutes) {
-            if (pMilliseconds < 3600000) {
-                return dayjs.duration(pMilliseconds).format('m [minutes]');
-            }
-
-            return dayjs.duration(pMilliseconds).format(`H [hours]${pIncludeMinutes ? ', m [minutes]' : ''}`);
+        formatUptime(pMilliseconds, pFull) {
+            return this.formatSeconds(Math.round(pMilliseconds / 1000), pFull ? "YMdhm" : "dh", !pFull);
         },
         async showDebugInfo() {
             if (this.loadingDebug) return;
