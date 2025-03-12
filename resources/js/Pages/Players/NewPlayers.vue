@@ -66,7 +66,7 @@
                                 {{ player.playerName }}
                             </div>
                         </td>
-                        <td class="p-3 mobile:block">{{ player.playTime | formatSeconds }}</td>
+                        <td class="p-3 mobile:block" :title="formatSeconds(player.playTime, 'YMdhm')">{{ player.playTime | formatSeconds }}</td>
                         <td class="p-3 mobile:block">
                             <span v-if="player.character && player.character.danny !== false" :style="dannyColor(player.character.danny)">
                                 {{ (player.character.danny * 100).toFixed(1) }}% Default Danny

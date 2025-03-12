@@ -122,7 +122,7 @@
                         </td>
                         <td class="p-3 mobile:block">{{ player.licenseIdentifier }}</td>
                         <td class="p-3 mobile:block">{{ player.playerName }}</td>
-                        <td class="p-3 mobile:block">{{ player.playTime | humanizeSeconds }}</td>
+                        <td class="p-3 mobile:block" :title="formatSeconds(player.playTime, 'YMdhm')">{{ player.playTime | humanizeSeconds }}</td>
                         <td class="p-3 text-center mobile:block">
                             <span class="block px-4 py-2 text-white rounded bg-red-500 dark:bg-red-600" v-if="player.isBanned">
                                 {{ t('global.banned') }}

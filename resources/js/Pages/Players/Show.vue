@@ -66,7 +66,7 @@
                         </span>
                     </badge>
 
-                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary" :title="t('players.show.playtime', formatSeconds(player.playTime), formatSeconds(player.recentPlayTime))" v-html="local.played"></badge>
+                    <badge class="border-gray-200 bg-secondary dark:bg-dark-secondary" :title="t('players.show.playtime', formatSeconds(player.playTime, 'YMdhm'), formatSeconds(player.recentPlayTime, 'YMdhm'))" v-html="local.played"></badge>
 
                     <badge class="border-pink-300 bg-pink-200 dark:bg-pink-700" v-if="player.tag" :title="player.tag">
                         <span class="font-semibold">{{ player.tag.length > 20 ? player.tag.substring(0, 18) + '...' : player.tag }}</span>
