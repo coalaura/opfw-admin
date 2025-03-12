@@ -633,8 +633,6 @@ export default {
                 onData: data => {
                     this.spectators = data;
 
-                    console.log(this.spectators);
-
                     this.selectPreviousStream();
                 },
                 onDisconnect: () => {

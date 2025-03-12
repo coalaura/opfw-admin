@@ -109,6 +109,14 @@ export default {
             clearTimeout(this.debounce);
 
             this.debounce = setTimeout(this.scroll, 250);
+        },
+
+        room() {
+            if (!this.room || !this.connected) return;
+
+            this.updateViewerCount();
+
+            this.socket.emit("room", pack(this.room));
         }
     },
     computed: {
@@ -213,6 +221,9 @@ export default {
 
             input.focus();
         },
+        updateViewerCount() {
+            this.$emit("update:viewerCount", this.users.filter(user => user.room === this.room).length);
+        },
         connect() {
             clearTimeout(this.timeout);
 
@@ -260,7 +271,20 @@ export default {
 
                 this.users = unpack(compressed);
 
-                this.$emit('update:viewerCount', this.users.length);
+                this.updateViewerCount();
+            });
+
+            this.socket.on("room", compressed => {
+                console.log(`Received socket "room" event.`);
+
+                const update = unpack(compressed),
+                    user = this.users.find(user => user.id === update.id);
+
+                if (user) {
+                    user.room = update.room;
+
+                    this.updateViewerCount();
+                }
             });
 
             this.socket.on("disconnect", () => {
@@ -274,6 +298,10 @@ export default {
             this.socket.on("connect", () => {
                 this.connecting = false;
                 this.connected = true;
+
+                if (this.room) {
+                    this.socket.emit("room", pack(this.room));
+                }
             });
         },
 
@@ -286,12 +314,12 @@ export default {
         },
 
         disconnect() {
+            this.connecting = false;
+            this.connected = false;
+
             if (!this.socket) {
                 return;
             }
-
-            this.connecting = false;
-            this.connected = false;
 
             this.socket.close();
 
@@ -304,10 +332,7 @@ export default {
             if (!this.socket || !text) return;
 
             this.message = '';
-            this.socket.emit("chat", pack({
-                room: this.room || false,
-                text: text,
-            }));
+            this.socket.emit("chat", pack(text));
         },
 
         addMessage(message) {
