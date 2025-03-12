@@ -641,6 +641,7 @@
         "new_player": "Pick new player to watch.",
         "no_character": "No character info.",
         "no_streams": "No streams.",
+        "playtime": "has {0} played",
         "profile": "{0} - {1} (#{2})",
         "refresh": "Get new screenshot.",
         "replay": "Toggle replay",

@@ -198,7 +198,8 @@
         "camera": "Toggle spectator camera (automatically centers camera when aiming, etc.)",
         "new_player": "Pick a random new player to spectate.",
         "born": "Born {0}",
-        "no_character": "No character info."
+        "no_character": "No character info.",
+        "playtime": "has {0} played"
     },
     "errors": {
         "client": {

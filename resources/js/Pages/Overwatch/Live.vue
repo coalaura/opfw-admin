@@ -77,6 +77,9 @@
 
                         <div class="flex flex-col border-b border-gray-500 pb-3" v-if="target">
                             <inertia-link class="font-medium truncate" :href="`/players/${target.license}`" :title="target.name">[{{ target.source }}] {{ target.name }}</inertia-link>
+                            <div class="italic text-muted dark:text-dark-muted text-xxs -mt-1 mb-0.5" :title="formatSeconds(playtime(target), 'YMdhm', true)" v-if="'playtime' in target">
+                                {{ playtime(target, true) }}
+                            </div>
 
                             <div class="border-t border-gray-500 pt-2 mt-2 text-sm">
                                 <div :title="character.name + '\n' + character.backstory" v-if="character">
@@ -215,6 +218,9 @@ export default {
     },
     data() {
         return {
+            timestamp: Math.floor(Date.now() / 1000),
+            timestampLoop: false,
+
             isTimedOut: false,
             isUpdating: false,
             isLoading: false,
@@ -607,12 +613,27 @@ export default {
                 this.setStream(index, this.spectators[index].stream);
             }
         },
+        playtime(target, format) {
+            const now = this.timestamp,
+                playtime = target.playtime,
+                loaded = target.loaded;
+
+            const actual = playtime + (now - loaded);
+
+            if (format) {
+                return this.t("overwatch.playtime", this.$options.filters.humanizeSeconds(actual));
+            }
+
+            return actual;
+        },
         init() {
             if (this.socket) return;
 
             this.socket = this.createSocket("spectators", {
                 onData: data => {
                     this.spectators = data;
+
+                    console.log(this.spectators);
 
                     this.selectPreviousStream();
                 },
@@ -665,9 +686,15 @@ export default {
         this.preload(this.$refs.video.poster, () => {
             setTimeout(this.setChatHeight, 250);
         });
+
+        this.timestampLoop = setInterval(() => {
+            this.timestamp = Math.floor(Date.now() / 1000);
+        }, 10000);
     },
     beforeUnmount() {
         this.destroyStream();
+
+        clearInterval(this.timestampLoop);
     }
 };
 </script>

@@ -641,6 +641,7 @@
         "new_player": "Velg en tilfeldig ny spiller å se på.",
         "no_character": "Ingen karakterinformasjon.",
         "no_streams": "Ingen tilgjengelige strømmer.",
+        "playtime": "har {0} spilt",
         "profile": "{0} - {1} (#{2})",
         "refresh": "Få et nytt skjermbilde.",
         "replay": "Veksle umiddelbar avspilling",

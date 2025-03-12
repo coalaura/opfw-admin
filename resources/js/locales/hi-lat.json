@@ -641,6 +641,7 @@
         "new_player": "Kisi random naye khiladi ko dekhne ke liye chunen.",
         "no_character": "Koi character jankari nahi.",
         "no_streams": "Koi uplabdh streams nahi hain.",
+        "playtime": "kya {0} ne khela hai",
         "profile": "{0} - {1} (#{2})",
         "refresh": "Naya screenshot prapt karein.",
         "replay": "Turant Punaravriti ko Toggle karein",

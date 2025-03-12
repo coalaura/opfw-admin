@@ -50,9 +50,9 @@ export default defineConfig({
 		copyPublicDir: false,
 		emptyOutDir: true,
 		outDir: "public/build",
+		sourcemap: isDev,
 		rollupOptions: {
 			output: {
-				sourcemap: isDev,
 				entryFileNames: "assets/[hash].js",
 				chunkFileNames: "assets/[hash].js",
 				assetFileNames: "assets/[hash].[ext]",

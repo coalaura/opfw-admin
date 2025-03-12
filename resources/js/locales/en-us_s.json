@@ -641,6 +641,7 @@
         "new_player": "Pick yerself a random new player to watch.",
         "no_character": "Ain't got no character info.",
         "no_streams": "Ain't no streams available.",
+        "playtime": "has {0} done played",
         "profile": "{0} - {1} (#{2})",
         "refresh": "Get yourself a new screenshot.",
         "replay": "Toggle Instant Replay",
