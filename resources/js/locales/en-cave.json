@@ -569,6 +569,8 @@
         "debug_php_version": "PHP version",
         "debug_ping": "Ping ping",
         "debug_request_ip": "Request IP",
+        "debug_server_host": "FiveM Server Home",
+        "debug_server_version": "FiveM Server Type",
         "debug_system": "System info",
         "debug_system_uptime": "System uptime",
         "debug_user_agent": "User-agent",

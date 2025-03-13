@@ -569,6 +569,8 @@
         "debug_php_version": "PHP-versjon",
         "debug_ping": "Ping Ping",
         "debug_request_ip": "Forespør IP",
+        "debug_server_host": "FiveM Serververt",
+        "debug_server_version": "FiveM Serverversjon",
         "debug_system": "Systeminfo",
         "debug_system_uptime": "Systemoppetid",
         "debug_user_agent": "Brukeragent",

@@ -569,6 +569,8 @@
         "debug_php_version": "PHP Vewsion",
         "debug_ping": "Ping Ping",
         "debug_request_ip": "Wequest IP",
+        "debug_server_host": "FiveM Sewver Host",
+        "debug_server_version": "FiveM Sewver Vewsion",
         "debug_system": "System Info",
         "debug_system_uptime": "System Uptime",
         "debug_user_agent": "Usew-Agent",

@@ -72,6 +72,8 @@ class ApiController extends Controller
 
             ['database_check', $selectTime],
             ['api_variables', $serverTime],
+            ['server_version', $api ? $api['serverVersion'] : '-'],
+            ['server_host', $api ? $api['serverHost'] : '-'],
 
             [], // separator
 
