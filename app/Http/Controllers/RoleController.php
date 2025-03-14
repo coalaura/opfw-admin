@@ -64,6 +64,10 @@ class RoleController extends Controller
 
             $value = $request->get($role);
 
+            if ($value === "false" || $value === "" || $value === "0" || $value === 0) {
+                $value = false;
+            }
+
             if ($restricted && !$this->isRoot($request)) {
                 return $this->json(false, null, 'You do not have permission to edit this role.');
             }
