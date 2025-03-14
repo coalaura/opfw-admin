@@ -58,7 +58,7 @@ class HomeController extends Controller
                 ->orWhere('is_senior_staff', '=', 1)
                 ->orWhere('is_super_admin', '=', 1)
                 ->orWhereIn('license_identifier', GeneralHelper::getRootUsers());
-        })->whereIn('license_identifier', $players)->get();
+        })->whereIn('license_identifier', $players)->where('is_bot', '=', 0)->get();
 
         $characters = [];
 
