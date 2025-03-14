@@ -8,7 +8,7 @@ import vue from "@vitejs/plugin-vue2";
 function clearViewCachePlugin() {
 	return {
 		name: "clear-view-cache",
-		buildEnd() {
+		writeBundle() {
 			exec("php artisan view:clear", error => {
 				if (error) {
 					console.error("Error clearing view cache:", error);

@@ -3,7 +3,10 @@
     "type": "module",
     "scripts": {
         "watch": "IS_DEV=true vite build --watch",
-        "prod": "vite build"
+        "build": "vite build",
+
+        "dev": "bun run watch",
+        "prod": "bun run build"
     },
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^5.15.4",
