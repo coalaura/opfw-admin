@@ -71,7 +71,8 @@ export default {
         room: String | Boolean,
         height: String | Boolean,
         emotes: Object | Array,
-        viewers: Array,
+        activeViewers: Array,
+        inactiveViewers: Array,
     },
     data() {
         return {
@@ -218,30 +219,31 @@ export default {
             input.focus();
         },
         updateViewers() {
-            const viewers = {};
+            const active = {},
+                inactive = {};
 
             if (this.room) {
                 for (const user of this.users) {
                     const discord = user.discord;
 
-                    if (this.room === user.room && user.active) {
-                        viewers[discord] = (viewers[discord] || 0) + 1;
+                    if (this.room === user.room) {
+                        if (user.active) {
+                            active[discord] = (active[discord] || 0) + 1;
+                        } else {
+                            inactive[discord] = (inactive[discord] || 0) + 1;
+                        }
                     }
                 }
             }
 
-            const list = [];
+            const map = obj => Object.entries(obj).map(([discord, amount]) => {
+                const user = this.users.find(u => u.discord === discord);
 
-            for (const discord in viewers) {
-                const amount = viewers[discord],
-                    user = this.users.find(u => u.discord === discord);
+                return user.name + (amount > 1 ? ` x${amount}` : "");
+            }).filter(Boolean);
 
-                if (user) {
-                    list.push(user.name + (amount > 1 ? ` x${amount}` : ""))
-                }
-            }
-
-            this.$emit("update:viewers", list);
+            this.$emit("update:activeViewers", map(active));
+            this.$emit("update:inactiveViewers", map(inactive));
         },
         connect() {
             clearTimeout(this.timeout);
