@@ -76,7 +76,6 @@ export default {
     data() {
         return {
             socket: null,
-            sentRoom: false,
 
             showEmotes: false,
             scrollDisabled: false,
@@ -115,7 +114,7 @@ export default {
         room() {
             if (!this.connected) return;
 
-            this.updateRoom();
+            this.socket.emit("room", pack(room));
         }
     },
     computed: {
@@ -226,7 +225,7 @@ export default {
 
             if (this.room) {
                 for (const user of this.users) {
-                    if (this.room === user.room && !ids.includes(user.discord)) {
+                    if (this.room === user.room && user.active && !ids.includes(user.discord)) {
                         viewers.push(user.name);
                     }
                 }
@@ -287,16 +286,18 @@ export default {
                 this.updateViewers();
             });
 
-            this.socket.on("room", compressed => {
-                console.log(`Received socket "room" event.`);
+            this.socket.on("user", compressed => {
+                console.log(`Received socket "user" event.`);
 
                 const update = unpack(compressed),
                     user = this.users.find(user => user.id === update.id);
 
                 if (user) {
-                    user.room = update.room;
+                    user[update.key] = update.value;
 
                     this.updateViewers();
+                } else {
+                    console.warn(`User "${update.id}" not found, desynced?`);
                 }
             });
 
@@ -413,32 +414,20 @@ export default {
             this.timestamp = Date.now();
         },
 
-        updateRoom() {
-            let room = this.room;
-
-            if (document.visibilityState === "hidden") {
-                room = false;
-            }
-
-            if (this.sentRoom === room) return;
-
-            this.sentRoom = room;
-
-            this.socket.emit("room", pack(room || ""));
-
-            this.updateViewers();
+        visibilityStateChanged() {
+            this.socket.emit("active", pack(document.visibilityState !== "hidden"));
         },
     },
     created() {
         window.addEventListener("keyup", this.handleKeypress);
         window.addEventListener("focus", this.scrollInstant);
-        window.addEventListener("visibilitychange", this.updateRoom);
+        window.addEventListener("visibilitychange", this.visibilityStateChanged);
         window.addEventListener("fullscreenchange", this.scrollInstant);
     },
     destroyed() {
         window.removeEventListener("keyup", this.handleKeypress);
         window.removeEventListener("focus", this.scrollInstant);
-        window.removeEventListener("visibilitychange", this.updateRoom);
+        window.removeEventListener("visibilitychange", this.visibilityStateChanged);
         window.removeEventListener("fullscreenchange", this.scrollInstant);
     },
     mounted() {
