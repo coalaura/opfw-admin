@@ -317,6 +317,8 @@ export default {
             this.connecting = false;
             this.connected = false;
 
+            this.sentRoom = false;
+
             if (!this.socket) {
                 return;
             }
