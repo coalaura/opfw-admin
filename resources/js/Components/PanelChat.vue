@@ -221,7 +221,7 @@ export default {
             input.focus();
         },
         updateViewerCount() {
-            this.$emit("update:viewerCount", this.users.filter(user => user.room === this.room).length);
+            this.$emit("update:viewerCount", this.room ? this.users.filter(user => user.room === this.room).length : 0);
         },
         connect() {
             clearTimeout(this.timeout);
