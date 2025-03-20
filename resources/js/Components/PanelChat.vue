@@ -71,7 +71,7 @@ export default {
         room: String | Boolean,
         height: String | Boolean,
         emotes: Object | Array,
-        viewerCount: Number,
+        viewers: Array,
     },
     data() {
         return {
@@ -115,7 +115,7 @@ export default {
         room() {
             if (!this.connected) return;
 
-            this.updateRoom()
+            this.updateRoom();
         }
     },
     computed: {
@@ -220,8 +220,19 @@ export default {
 
             input.focus();
         },
-        updateViewerCount() {
-            this.$emit("update:viewerCount", this.room ? this.users.filter(user => user.room === this.room).length : 0);
+        updateViewers() {
+            const viewers = [],
+                ids = [];
+
+            if (this.room) {
+                for (const user of this.users) {
+                    if (this.room === user.room && !ids.includes(user.discord)) {
+                        viewers.push(user.name);
+                    }
+                }
+            }
+
+            this.$emit("update:viewers", viewers);
         },
         connect() {
             clearTimeout(this.timeout);
@@ -273,7 +284,7 @@ export default {
 
                 this.users = unpack(compressed);
 
-                this.updateViewerCount();
+                this.updateViewers();
             });
 
             this.socket.on("room", compressed => {
@@ -285,7 +296,7 @@ export default {
                 if (user) {
                     user.room = update.room;
 
-                    this.updateViewerCount();
+                    this.updateViewers();
                 }
             });
 
@@ -413,25 +424,21 @@ export default {
 
             this.sentRoom = room;
 
-            console.info(`Set room to "${room}".`)
-
             this.socket.emit("room", pack(room || ""));
 
-            this.updateViewerCount();
+            this.updateViewers();
         },
     },
     created() {
         window.addEventListener("keyup", this.handleKeypress);
         window.addEventListener("focus", this.scrollInstant);
-        window.addEventListener("focus", this.updateRoom);
-        window.addEventListener("blur", this.updateRoom);
+        window.addEventListener("visibilitychange", this.updateRoom);
         window.addEventListener("fullscreenchange", this.scrollInstant);
     },
     destroyed() {
         window.removeEventListener("keyup", this.handleKeypress);
         window.removeEventListener("focus", this.scrollInstant);
-        window.removeEventListener("focus", this.updateRoom);
-        window.removeEventListener("blur", this.updateRoom);
+        window.removeEventListener("visibilitychange", this.updateRoom);
         window.removeEventListener("fullscreenchange", this.scrollInstant);
     },
     mounted() {
