@@ -406,6 +406,8 @@ export default {
                 room = false;
             }
 
+            console.info(`Set room to "${room}".`)
+
             this.socket.emit("room", pack(room));
 
             this.updateViewerCount();
