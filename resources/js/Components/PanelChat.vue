@@ -112,11 +112,9 @@ export default {
         },
 
         room() {
-            if (!this.room || !this.connected) return;
+            if (!this.connected) return;
 
-            this.updateViewerCount();
-
-            this.socket.emit("room", pack(this.room));
+            this.updateRoom()
         }
     },
     computed: {
@@ -302,9 +300,7 @@ export default {
                 this.connecting = false;
                 this.connected = true;
 
-                if (this.room) {
-                    this.socket.emit("room", pack(this.room));
-                }
+                this.updateRoom();
             });
         },
 
@@ -401,16 +397,32 @@ export default {
 
         updateTimestamp() {
             this.timestamp = Date.now();
-        }
+        },
+
+        updateRoom() {
+            let room = this.room;
+
+            if (document.visibilityState === "hidden") {
+                room = false;
+            }
+
+            this.socket.emit("room", pack(room));
+
+            this.updateViewerCount();
+        },
     },
     created() {
         window.addEventListener("keyup", this.handleKeypress);
         window.addEventListener("focus", this.scrollInstant);
+        window.addEventListener("focus", this.updateRoom);
+        window.addEventListener("blur", this.updateRoom);
         window.addEventListener("fullscreenchange", this.scrollInstant);
     },
     destroyed() {
         window.removeEventListener("keyup", this.handleKeypress);
         window.removeEventListener("focus", this.scrollInstant);
+        window.removeEventListener("focus", this.updateRoom);
+        window.removeEventListener("blur", this.updateRoom);
         window.removeEventListener("fullscreenchange", this.scrollInstant);
     },
     mounted() {
