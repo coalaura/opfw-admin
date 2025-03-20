@@ -199,7 +199,9 @@
         "new_player": "Pick a random new player to spectate.",
         "born": "Born {0}",
         "no_character": "No character info.",
-        "playtime": "has {0} played"
+        "playtime": "has {0} played",
+        "active_viewers": "Active Viewers: {0}",
+        "inactive_viewers": "Inactive Viewers: {0}"
     },
     "errors": {
         "client": {

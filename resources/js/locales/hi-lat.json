@@ -629,6 +629,7 @@
         "world_time_use": "{0} khiladi dwara prayukt"
     },
     "overwatch": {
+        "active_viewers": "Sakriya Darshak: {0}",
         "attach": "Khiladiyon panel mein screenshot jodein.",
         "auto_refresh": "Swayam-taaza karne ko toggle karein.",
         "backwards": "Darsakon ki camera ko piche ki taraf point karne ke liye center karein.",
@@ -637,6 +638,7 @@
         "center": "Darsakon ke camera ko aage ki or point karne ke liye kendrit karein.",
         "clip": "Klip",
         "description": "Kisi bhi ajeeb cheez ko dhundhne ke liye random khiladiyon ke game renders dekhein.",
+        "inactive_viewers": "Niskriya Darshak: {0}",
         "left": "Darshakon ke camera ko beech mein karke baayein taraf point karein.",
         "live": "Overwatch - Live",
         "live_description": "Server mein khiladiyon ka live spectate.",

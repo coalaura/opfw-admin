@@ -119,15 +119,15 @@
                         <div class="italic">{{ error }}</div>
                     </div>
 
-                    <div class="absolute bottom-0.5 right-1 text-[#ff8280] font-semibold text-lg flex items-center leading-5 filter drop-shadow-md gap-1" v-if="source">
-                        <div class="flex gap-0.5" :title="activeViewers.join(', ')">
+                    <div class="absolute bottom-0.5 right-1 font-semibold text-lg flex items-center leading-5 filter drop-shadow-md gap-2" v-if="source">
+                        <div class="flex gap-0.5 text-[#ff8280]" :title="t('overwatch.active_viewers', activeViewers.join(', '))">
                             <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
                                 <path fill-rule="evenodd" fill="#ff8280" d="M5 7a5 5 0 1 1 6.192 4.857A2 2 0 0 0 13 13h1a3 3 0 0 1 3 3v2h-2v-2a1 1 0 0 0-1-1h-1a3.99 3.99 0 0 1-3-1.354A3.99 3.99 0 0 1 7 15H6a1 1 0 0 0-1 1v2H3v-2a3 3 0 0 1 3-3h1a2 2 0 0 0 1.808-1.143A5.002 5.002 0 0 1 5 7zm5 3a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" clip-rule="evenodd"></path>
                             </svg>
                             {{ activeViewers.length }}
                         </div>
 
-                        <div class="flex gap-0.5" :title="inactiveViewers.join(', ')" v-if="inactiveViewers.length > 0">
+                        <div class="flex gap-0.5 text-[#9ca3af]" :title="t('overwatch.inactive_viewers', inactiveViewers.join(', '))" v-if="inactiveViewers.length > 0">
                             <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
                                 <path fill-rule="evenodd" fill="#9ca3af" d="M2 10a8 8 0 1 1 16 0 8 8 0 0 1-16 0zm8 6a6 6 0 0 1-4.904-9.458l8.362 8.362A5.972 5.972 0 0 1 10 16zm4.878-2.505a6 6 0 0 0-8.372-8.372l8.372 8.372z" clip-rule="evenodd"></path>
                             </svg>

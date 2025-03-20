@@ -629,6 +629,7 @@
         "world_time_use": "Used by {0} pwayew(s)"
     },
     "overwatch": {
+        "active_viewers": "Actiwe Viewews: {0}",
         "attach": "Attach scweenie to pwayews panew.",
         "auto_refresh": "Toggwe the auto-wefwesh.",
         "backwards": "Centew the spectatows camewa to point backwawds.",
@@ -637,6 +638,7 @@
         "center": "Centew the spectatows camewa to point fowawds.",
         "clip": "Cwip",
         "description": "Wook thwough wandom pwayews' game wendews to see if you can find anything out of the owrdinawy",
+        "inactive_viewers": "Inactiwe Viewews: {0}",
         "left": "Centeh the spectatows camewa to point weft.",
         "live": "Ovewwatch - Wive",
         "live_description": "Wive spectate of pwayews in the sewvew.",

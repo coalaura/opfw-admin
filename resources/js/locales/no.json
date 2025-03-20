@@ -629,6 +629,7 @@
         "world_time_use": "Brukt av {0} spiller(e)"
     },
     "overwatch": {
+        "active_viewers": "Aktive seere: {0}",
         "attach": "Legg ved skjermbilde til spillerpanelet.",
         "auto_refresh": "Veksle auto-oppdatering.",
         "backwards": "Sentrum seerkameraet for å peke bakover.",
@@ -637,6 +638,7 @@
         "center": "Sentrer tilskuernes kamera for å peke fremover.",
         "clip": "Klipp",
         "description": "Se gjennom tilfeldige spilleres spillbilder for å se om du finner noe uvanlig",
+        "inactive_viewers": "Inaktive seere: {0}",
         "left": "Sentrer tilskuernes kamera til å peke til venstre.",
         "live": "Overwatch - Live",
         "live_description": "Live-overvåkning av spillere på serveren.",
