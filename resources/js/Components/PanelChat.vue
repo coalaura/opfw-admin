@@ -76,6 +76,7 @@ export default {
     data() {
         return {
             socket: null,
+            sentRoom: false,
 
             showEmotes: false,
             scrollDisabled: false,
@@ -406,9 +407,13 @@ export default {
                 room = false;
             }
 
+            if (this.sentRoom === room) return;
+
+            this.sentRoom = room;
+
             console.info(`Set room to "${room}".`)
 
-            this.socket.emit("room", pack(room));
+            this.socket.emit("room", pack(room || ""));
 
             this.updateViewerCount();
         },
