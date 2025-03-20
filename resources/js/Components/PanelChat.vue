@@ -133,7 +133,7 @@ export default {
             // Remove duplicate discord ids
             const unique = {};
 
-            return this.users.filter(user => !unique[user.discord] && (unique[user.discord] = true));
+            return this.users.filter(user => !unique[user.discord] && (unique[user.discord] = true)).map(user => user.name);
         },
         hasEmotes() {
             return this.emotes && Object.keys(this.emotes).length > 0;
