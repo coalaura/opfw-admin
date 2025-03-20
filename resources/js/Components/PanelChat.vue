@@ -114,7 +114,7 @@ export default {
         room() {
             if (!this.connected) return;
 
-            this.socket.emit("room", pack(room));
+            this.socket.emit("room", pack(this.room || ""));
         }
     },
     computed: {
@@ -313,7 +313,7 @@ export default {
                 this.connecting = false;
                 this.connected = true;
 
-                this.updateRoom();
+                this.socket.emit("room", pack(this.room || ""));
             });
         },
 
