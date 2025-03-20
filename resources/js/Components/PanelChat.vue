@@ -20,7 +20,7 @@
 
             <div class="absolute top-full left-0 right-0 text-xxs flex flex-wrap gap-1 items-center px-1 py-0.5 opacity-0 group-hover:opacity-100 pointer-events-none text-blue-700 dark:text-blue-300 bg-gray-400/20 dark:bg-gray-600/20 backdrop-filter backdrop-blur-md z-10">
                 <i class="fas fa-users"></i>
-                <span :class="{ 'opacity-50': !user.active }" v-for="(user, index) in names">{{ user.name + (index < names.length - 1 ? "," : "") }}</span>
+                {{ names.join(', ') }}
             </div>
         </div>
 
@@ -114,7 +114,7 @@ export default {
         room() {
             if (!this.connected) return;
 
-            this.socket.emit("room", pack(this.room || ""));
+            this.roomChanged();
         }
     },
     computed: {
@@ -133,27 +133,7 @@ export default {
             // Remove duplicate discord ids
             const unique = {};
 
-            for (const user of this.users) {
-                const id = user.id;
-
-                unique[id] = unique[id] || user.active;
-            }
-
-            const list = [];
-
-            for (const id in unique) {
-                const active = unique[id],
-                    user = this.users.find(u => u.id === id);
-
-                if (user) {
-                    list.push({
-                        name: user.name,
-                        active: active,
-                    });
-                }
-            }
-
-            return list;
+            return this.users.filter(user => !unique[user.discord] && (unique[user.discord] = true));
         },
         hasEmotes() {
             return this.emotes && Object.keys(this.emotes).length > 0;
@@ -343,7 +323,8 @@ export default {
                 this.connecting = false;
                 this.connected = true;
 
-                this.socket.emit("room", pack(this.room || ""));
+                this.roomChanged();
+                this.visibilityStateChanged();
             });
         },
 
@@ -444,7 +425,15 @@ export default {
             this.timestamp = Date.now();
         },
 
+        roomChanged() {
+            if (!this.connected) return;
+
+            this.socket.emit("room", pack(this.room || ""));
+        },
+
         visibilityStateChanged() {
+            if (!this.connected) return;
+
             this.socket.emit("active", pack(document.visibilityState !== "hidden"));
         },
     },
