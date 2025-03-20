@@ -222,19 +222,19 @@ export default {
 
             if (this.room) {
                 for (const user of this.users) {
-                    const id = user.id;
+                    const discord = user.discord;
 
                     if (this.room === user.room && user.active) {
-                        viewers[id] = (viewers[id] || 0) + 1;
+                        viewers[discord] = (viewers[discord] || 0) + 1;
                     }
                 }
             }
 
             const list = [];
 
-            for (const id in viewers) {
-                const amount = viewers[id],
-                    user = this.users.find(u => u.id === id);
+            for (const discord in viewers) {
+                const amount = viewers[discord],
+                    user = this.users.find(u => u.discord === discord);
 
                 if (user) {
                     list.push(user.name + (amount > 1 ? ` x${amount}` : ""))
