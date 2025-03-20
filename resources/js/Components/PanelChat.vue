@@ -20,7 +20,7 @@
 
             <div class="absolute top-full left-0 right-0 text-xxs flex flex-wrap gap-1 items-center px-1 py-0.5 opacity-0 group-hover:opacity-100 pointer-events-none text-blue-700 dark:text-blue-300 bg-gray-400/20 dark:bg-gray-600/20 backdrop-filter backdrop-blur-md z-10">
                 <i class="fas fa-users"></i>
-                {{ names.join(', ') }}
+                <span :class="{ 'opacity-50': !user.active }" v-for="(user, index) in names">{{ user.name + (index < names.length - 1 ? "," : "") }}</span>
             </div>
         </div>
 
@@ -133,7 +133,27 @@ export default {
             // Remove duplicate discord ids
             const unique = {};
 
-            return this.users.filter(user => !unique[user.discord] && (unique[user.discord] = true)).map(user => user.name);
+            for (const user of this.users) {
+                const id = user.id;
+
+                unique[id] = unique[id] || user.active;
+            }
+
+            const list = [];
+
+            for (const id in unique) {
+                const active = unique[id],
+                    user = this.users.find(u => u.id === id);
+
+                if (user) {
+                    list.push({
+                        name: user.name,
+                        active: active,
+                    });
+                }
+            }
+
+            return list;
         },
         hasEmotes() {
             return this.emotes && Object.keys(this.emotes).length > 0;
@@ -191,8 +211,6 @@ export default {
                 }
             }
 
-            if (html.match())
-
             // Italic *text*
             html = html.replace(/\*([^\s][^*]+[^\s]|[^\s*]+)\*/g, '<i>$1</i>');
 
@@ -220,18 +238,30 @@ export default {
             input.focus();
         },
         updateViewers() {
-            const viewers = [],
-                ids = [];
+            const viewers = {};
 
             if (this.room) {
                 for (const user of this.users) {
-                    if (this.room === user.room && user.active && !ids.includes(user.discord)) {
-                        viewers.push(user.name);
+                    const id = user.id;
+
+                    if (this.room === user.room && user.active) {
+                        viewers[id] = (viewers[id] || 0) + 1;
                     }
                 }
             }
 
-            this.$emit("update:viewers", viewers);
+            const list = [];
+
+            for (const id in viewers) {
+                const amount = viewers[id],
+                    user = this.users.find(u => u.id === id);
+
+                if (user) {
+                    list.push(user.name + (amount > 1 ? ` x${amount}` : ""))
+                }
+            }
+
+            this.$emit("update:viewers", list);
         },
         connect() {
             clearTimeout(this.timeout);
