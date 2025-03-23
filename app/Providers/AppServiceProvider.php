@@ -187,6 +187,8 @@ class AppServiceProvider extends ServiceProvider
                         return sprintf($url, trim($stream));
                     }, explode(',', env('OVERWATCH_STREAMS', '')));
 
+                    $streams = array_values(array_filter($streams));
+
                     if (! empty($streams)) {
                         return [
                             'streams' => $streams,
