@@ -25,6 +25,10 @@ class AntiCheatController extends Controller
         'suspicious_transfer'
     ];
 
+    const HiddenAntiCheatTypes = [
+        'attached_vehicle'
+    ];
+
     /**
      * All Anti-Cheat screenshots.
      *
@@ -39,9 +43,15 @@ class AntiCheatController extends Controller
 
         $page = Paginator::resolveCurrentPage('page');
 
+        $ignore = self::IgnoreAntiCheatTypes;
+
+        if (!$this->isRoot($request)) {
+            $ignore = array_merge($ignore, self::HiddenAntiCheatTypes);
+        }
+
         $whereNot = implode(' AND ', array_map(function ($type) {
             return "type != '$type'";
-        }, self::IgnoreAntiCheatTypes));
+        }, $ignore));
 
         $query = "SELECT id, player_name, users.license_identifier, users.player_aliases, url, details, metadata, timestamp, users.playtime FROM (" .
             "SELECT CONCAT('s_', id) as id, license_identifier, screenshot_url as url, type as details, metadata, timestamp FROM anti_cheat_events WHERE $whereNot" .
