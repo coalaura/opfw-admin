@@ -76,9 +76,11 @@ class DiscordController extends Controller
 
         if ($player) {
             if (!$player->isStaff()) {
+                $count = Player::query()->where('last_used_identifiers', 'LIKE', '%discord:' . $id . '%')->count();
+
                 LoggingHelper::log(sprintf('Player %s found for discord id %s, but is not staff', $player->license_identifier, $id));
 
-                return redirectWith('/login', 'error', "Player with last-used discord-id $id: \"" . $player->getSafePlayerName() . "\" is not a staff member.");
+                return redirectWith('/login', 'error', "Player with last-used discord-id $id: \"" . $player->getSafePlayerName() . "\" is not a staff member. " . ($count > 1 ? "Found more than 1 players linked to the specified discord account." : ""));
             }
         } else {
             LoggingHelper::log(sprintf('No player found for discord id %s', $id));
