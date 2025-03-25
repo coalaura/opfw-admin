@@ -4,7 +4,6 @@
     "scripts": {
         "watch": "IS_DEV=true vite build --watch",
         "build": "vite build",
-
         "dev": "bun run watch",
         "prod": "bun run build"
     },
@@ -22,7 +21,7 @@
         "sass": "^1.85.0",
         "sass-loader": "^16.0.5",
         "vite": "^6.1.1",
-        "vue": "^2.5.17",
+        "vue": "2.7.0",
         "vue-chartjs": "^3.5.1",
         "vue-loader": "^15.9.8",
         "vue-lottie": "^0.2.1",
