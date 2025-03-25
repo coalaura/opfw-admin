@@ -394,7 +394,7 @@ export default {
 	computed: {
 		selectedTimezone() {
 			if (this.logTimezone) {
-				return dayjs.tz(this.logTimezone).zoneName();
+				return dayjs().tz(this.logTimezone).format('z');
 			}
 
 			return dayjs.tz.guess();
