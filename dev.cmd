@@ -12,4 +12,4 @@ if EXIST ..\admin-panel-socket-js (
 
 start bun run dev
 
-localhost -r -c "..\.https\localhost.pem" -k "..\.https\localhost-key.pem"
+localhost -ro -c "..\.https\localhost.pem" -k "..\.https\localhost-key.pem"
