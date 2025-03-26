@@ -23,10 +23,10 @@ class AntiCheatController extends Controller
         'illegal_event',
         'illegal_server_event',
         'suspicious_transfer',
-        'attached_vehicle',
     ];
 
     const HiddenAntiCheatTypes = [
+        'attached_vehicle',
     ];
 
     /**
