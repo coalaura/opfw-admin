@@ -30,6 +30,7 @@ import formatDate from "./Filters/formatDate.js";
 import formatGender from "./Filters/formatGender.js";
 import linkify from "vue-linkify";
 
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import "leaflet/dist/leaflet.css";
 import "leaflet-gesture-handling/dist/leaflet-gesture-handling.css";
 import "leaflet-fullscreen/dist/leaflet.fullscreen.css";

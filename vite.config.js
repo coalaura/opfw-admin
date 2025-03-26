@@ -29,6 +29,7 @@ export default defineConfig({
 	plugins: [
 		laravel({
 			input: ["resources/js/app.js", "resources/css/app.pcss"],
+			hotFile: "public/hot",
 			refresh: true,
 		}),
 		vue({
@@ -38,6 +39,11 @@ export default defineConfig({
 		}),
 		clearViewCachePlugin(),
 	],
+	server: {
+		hmr: true,
+		host: "localhost",
+		port: 5173,
+	},
 	resolve: {
 		alias: {
 			"@": path.resolve(__dirname, "resources/js"),

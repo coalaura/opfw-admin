@@ -2,9 +2,9 @@
     "name": "op-fw_panel",
     "type": "module",
     "scripts": {
-        "watch": "IS_DEV=true vite build --watch",
+        "dev": "vite",
         "build": "vite build",
-        "dev": "bun run watch",
+        "watch": "IS_DEV=true vite build --watch",
         "prod": "bun run build"
     },
     "devDependencies": {

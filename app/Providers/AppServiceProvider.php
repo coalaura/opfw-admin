@@ -40,9 +40,17 @@ class AppServiceProvider extends ServiceProvider
         JsonResource::withoutWrapping();
 
         Blade::directive('vite', function () {
-            $base = 'build/';
+            if (app()->environment('local') && file_exists(public_path('hot'))) {
+                return '
+                    <script type="module" src="http://localhost:5173/@vite/client"></script>
+                    <script type="module" src="http://localhost:5173/resources/js/app.js"></script>
+                    <link rel="stylesheet" href="http://localhost:5173/resources/css/app.pcss" />
+                ';
+            }
 
+            $base = 'build/';
             $manifestPath = public_path($base . 'manifest.json');
+
             if (! file_exists($manifestPath)) {
                 return '<!-- manifest not found -->';
             }
