@@ -76,7 +76,7 @@ class DiscordController extends Controller
 
         if ($player) {
             if (!$player->isStaff()) {
-                $count = Player::query()->where('last_used_identifiers', 'LIKE', '%discord:' . $id . '%')->count();
+                $count = Player::query()->where('discord_id', '=', $id)->count();
 
                 LoggingHelper::log(sprintf('Player %s found for discord id %s, but is not staff', $player->license_identifier, $id));
 
