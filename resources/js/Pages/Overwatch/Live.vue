@@ -520,9 +520,11 @@ export default {
 
             hls.on("hlsError", (_, data) => {
                 if (RetryHlsErrorDetails.includes(data.details)) {
+                    const ms = Math.floor(Math.random(750)) + 250;
+
                     timeout = setTimeout(() => {
                         hls.loadSource(source);
-                    }, 500);
+                    }, ms);
 
                     return;
                 }
@@ -546,7 +548,7 @@ export default {
 
                         element.play();
                     }
-                }, 1000);
+                }, 2000);
 
                 onReady?.();
             });
