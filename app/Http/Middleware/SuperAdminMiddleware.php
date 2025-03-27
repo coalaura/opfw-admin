@@ -24,26 +24,15 @@ class SuperAdminMiddleware
     public function handle(Request $request, Closure $next)
     {
         // Check for super admin status.
-        if (!$this->isSuperAdmin($request)) {
+        $user = user();
+
+        if (!$user || !$user->isSuperAdmin()) {
             return backWith('error',
-                'You must be a Super Admin to do that! Contact a higher-up if you were shown this error by mistake.'
+                'You must be a super-admin to do that! Contact a higher-up if you were shown this error by mistake.'
             );
         }
 
         return $next($request);
-    }
-
-    /**
-     * Checks if the user that sent request is staff.
-     *
-     * @param Request $request
-     * @return bool
-     */
-    protected function isSuperAdmin(Request $request) : bool
-    {
-        $user = user();
-
-        return $user && $user->isSuperAdmin();
     }
 
 }

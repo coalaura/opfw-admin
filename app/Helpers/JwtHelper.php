@@ -27,6 +27,9 @@ class JwtHelper
         'name'        => 'nme',
         'tokens'      => 'tkn',
 
+        'error'       => 'rr',
+        'success'     => 'sc',
+
         'username'    => 'unm',
         'global_name' => 'gnm',
         'avatar'      => 'avt',
@@ -160,7 +163,7 @@ class JwtHelper
 
             $nonce = $token->headers()->get('nnc');
 
-            if (!$nonce || substr(sha1(CLUSTER), 0, 8) !== $nonce) {
+            if (! $nonce || substr(sha1(CLUSTER), 0, 8) !== $nonce) {
                 throw new \Exception('invalid nonce');
             }
 
