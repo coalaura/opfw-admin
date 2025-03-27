@@ -520,7 +520,7 @@ export default {
 
             hls.on("hlsError", (_, data) => {
                 if (RetryHlsErrorDetails.includes(data.details)) {
-                    const ms = Math.floor(Math.random(750)) + 250;
+                    const ms = Math.floor(Math.random(1000)) + 500;
 
                     timeout = setTimeout(() => {
                         hls.loadSource(source);
