@@ -70,7 +70,7 @@ class DiscordController extends Controller
         $id = $user['id'];
 
         $player = Player::query()
-            ->where('last_used_identifiers', 'LIKE', '%discord:' . $id . '%')
+            ->where('discord_id', '=', $id)
             ->orderBy('last_connection', 'DESC')
             ->first();
 

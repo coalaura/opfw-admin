@@ -259,7 +259,9 @@ class JwtHelper
     public static function logout()
     {
         self::$user   = null;
-        self::$claims = [];
+
+        unset(self::$claims['user']);
+        unset(self::$claims['discord']);
 
         self::$changed = true;
     }
