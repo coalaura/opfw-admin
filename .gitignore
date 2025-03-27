@@ -28,6 +28,7 @@
 /storage/cache
 /vendor
 envs/.env
+envs/.jwt
 deploy.env
 .env.backup
 .phpunit.result.cache

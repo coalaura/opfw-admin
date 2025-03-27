@@ -93,14 +93,14 @@ function extraHeader()
 
 function backWith(string $type, string $message)
 {
-    sessionHelper()->put('flash_' . $type, $message);
+    session_put('flash_' . $type, $message);
 
     return back();
 }
 
 function redirectWith(string $path, string $type, string $message)
 {
-    sessionHelper()->put('flash_' . $type, $message);
+    session_put('flash_' . $type, $message);
 
     return redirect($path);
 }

@@ -2,12 +2,12 @@
 namespace App\Providers;
 
 use App\Helpers\GeneralHelper;
+use App\Helpers\JwtHelper;
 use App\Helpers\PermissionHelper;
-use App\Helpers\SessionHelper;
 use App\Helpers\SocketAPI;
 use App\Http\Resources\LoggedInPlayerResource;
 use App\Server;
-use Blade;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
@@ -36,6 +36,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        // Ensure Jwt helper is initialized
+        JwtHelper::init();
+
         // Disable resource wrapping.
         JsonResource::withoutWrapping();
 
@@ -89,7 +92,7 @@ class AppServiceProvider extends ServiceProvider
 
         $canUseDB = ! app()->runningInConsole() && env('DB_CONNECTION');
 
-        $discord = $canUseDB ? SessionHelper::getInstance()->getDiscord() : null;
+        $discord = $canUseDB ? JwtHelper::get('discord') : null;
         $name    = $discord ? $discord['username'] : 'Guest';
 
         DB::listen(function ($query) use ($name) {
@@ -161,13 +164,11 @@ class AppServiceProvider extends ServiceProvider
 
             // Flash messages.
             'flash'      => function () {
-                $helper = sessionHelper();
+                $success = session_get('flash_success');
+                $error   = session_get('flash_error');
 
-                $success = $helper->get('flash_success');
-                $error   = $helper->get('flash_error');
-
-                $helper->forget('flash_success');
-                $helper->forget('flash_error');
+                session_forget('flash_success');
+                session_forget('flash_error');
 
                 return [
                     'success' => $success,
@@ -182,9 +183,7 @@ class AppServiceProvider extends ServiceProvider
             },
 
             'discord'    => function () {
-                $session = sessionHelper();
-
-                return $session->get('discord') ?: null;
+                return discord();
             },
 
             'overwatch'  => function () {
@@ -218,7 +217,7 @@ class AppServiceProvider extends ServiceProvider
                     'player'      => $player ? new LoggedInPlayerResource($player) : null,
                     'settings'    => $player ? $player->getPanelSettings() : null,
                     'permissions' => PermissionHelper::getFrontendPermissions(),
-                    'token'       => sessionKey(),
+                    'token'       => session_token(),
                     'cluster'     => CLUSTER,
                     'servers'     => Server::getOPFWServers("name"),
                     'socket'      => SocketAPI::isUp(),

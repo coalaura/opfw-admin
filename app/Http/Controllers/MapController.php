@@ -74,7 +74,7 @@ class MapController extends Controller
             }, $staff) : [],
             'staffMap'     => $staff,
             'blips'        => GeneralHelper::parseMapFile(__DIR__ . '/../../../helpers/markers.map') ?? [],
-            'token'        => sessionKey(),
+            'token'        => session_token(),
             'cluster'      => CLUSTER,
             'myself'       => license(),
             'marker'       => $marker,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\JwtHelper;
 use App\Helpers\LoggingHelper;
 use App\Helpers\ServerAPI;
 use App\Http\Controllers\Controller;
@@ -18,25 +19,15 @@ class LoginController extends Controller
 {
 
     /**
-     * Instantiate a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
-
-    /**
      * Renders the login view.
      */
     public function render()
     {
-        if (sessionHelper()->get('isLogout')) {
+        if (session_get('isLogout')) {
             LoggingHelper::log('Rendering login view while coming from logout');
 
-            sessionHelper()->forget('isLogout');
-            sessionHelper()->forget('error');
+            session_get('isLogout');
+            session_get('error');
         }
 
         if (license()) {
@@ -55,10 +46,8 @@ class LoginController extends Controller
      */
     public function sso(Request $request, string $token, string $licenseIdentifier)
     {
-        $session = sessionHelper();
-
         if (license()) {
-            return redirect($session->get('lastVisit') ?? '/');
+            return redirect(session_get('lastVisit') ?? '/');
         }
 
         if (strlen($token) !== 18) {
@@ -91,9 +80,7 @@ class LoginController extends Controller
             $name = substr($name, 0, 22) . '...';
         }
 
-        $session->put('user', $player->user_id);
-        $session->put('name', $name);
-        $session->put('discord', [
+        JwtHelper::login($player, [
             'username' => $name,
             'discriminator' => $request->query('ref') ?? 'ext',
             'sso' => true

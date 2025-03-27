@@ -65,6 +65,7 @@ class CreateUsersTable extends Migration
 			!in_array("average_fps_1_percent", $columns) && $table->integer("average_fps_1_percent")->nullable();
 			!in_array("media_devices", $columns) && $table->longText("media_devices")->nullable();
 			!in_array("user_statistics", $columns) && $table->longText("user_statistics")->nullable();
+			!in_array("refresh_tokens", $columns) && $table->longText("refresh_tokens")->nullable();
 
 			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
 			!in_array("player_name", $indexes) && $table->index("player_name");

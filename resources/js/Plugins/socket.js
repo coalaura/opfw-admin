@@ -96,7 +96,6 @@ const Socket = {
 					server: server,
 					token: token,
 					type: type,
-					license: this.$page.auth.player.licenseIdentifier,
 				},
 				path: "/io",
 			});

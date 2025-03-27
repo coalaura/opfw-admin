@@ -57,9 +57,8 @@
 
             <!-- Right side -->
             <div class="flex items-center space-x-4">
-                <p v-if="$page.discord && $page.discord.global_name" class="italic font-semibold drop-shadow" :title="$page.discord.username">{{ $page.discord.global_name }}</p>
-                <p v-else-if="$page.discord && $page.discord.sso" class="italic font-semibold drop-shadow">{{ $page.discord.username }}</p>
-                <p v-else-if="$page.discord" class="italic font-semibold drop-shadow">{{ $page.discord.username }}#{{ $page.discord.discriminator }}</p>
+                <p v-if="$page.discord && $page.discord.sso" class="italic font-semibold drop-shadow">{{ $page.discord.username }}</p>
+                <p v-else-if="$page.discord" class="italic font-semibold drop-shadow" :title="$page.discord.username">{{ $page.discord.global_name }}</p>
 
                 <div class="w-avatar relative flex-shrink-0" @contextmenu="showContext" v-click-outside="hideContext">
                     <inertia-link :href="'/players/' + $page.auth.player.licenseIdentifier">
@@ -107,10 +106,10 @@
                             {{ t('nav.refresh_discord') }}
                         </a>
 
-                        <inertia-link class="px-2 py-1 block w-full hover:bg-gray-600 border-t border-gray-500" method="POST" href="/logout" @click="hideContext">
+                        <a class="px-2 py-1 block w-full hover:bg-gray-600 border-t border-gray-500" href="/logout" @click="hideContext">
                             <i class="fas fa-sign-out-alt mr-1"></i>
                             {{ t("nav.logout") }}
-                        </inertia-link>
+                        </a>
                     </div>
                 </div>
             </div>

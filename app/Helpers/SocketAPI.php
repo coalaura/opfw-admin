@@ -67,7 +67,7 @@ class SocketAPI
             return null;
         }
 
-        $token = sessionKey();
+        $token = session_token();
 
         if (! $token) {
             LoggingHelper::log('No session key found.');

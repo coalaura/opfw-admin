@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\JwtHelper;
 use App\Helpers\LoggingHelper;
 use App\Http\Controllers\Controller;
 use App\Player;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 /**
  * A controller to authenticate with discord.
@@ -65,8 +67,6 @@ class DiscordController extends Controller
         }
 
         // Process the user data.
-        $session = sessionHelper();
-
         $id = $user['id'];
 
         $player = Player::query()
@@ -88,24 +88,29 @@ class DiscordController extends Controller
             return redirectWith('/login', 'error', "No player with last-used discord-id $id not found. Connect to the FiveM server with your discord linked first.");
         }
 
-        $session->put('user', $player->user_id);
-        $session->put('name', $player->getSafePlayerName());
-        $session->put('discord', $user);
-
-        $session->put('tokens', [
-            'expires' => $tokens['expires'],
-            'access'  => $accessToken,
-            'refresh' => $refreshToken,
+        $player->update([
+            'refresh_tokens' => Crypt::encryptString(json_encode([
+                'expires' => $tokens['expires'],
+                'access'  => $accessToken,
+                'refresh' => $refreshToken,
+            ]))
         ]);
 
-        return redirect($session->get('lastVisit') ?? '/');
+        JwtHelper::login($player, $user);
+
+        return redirect(JwtHelper::get('lastVisit') ?? '/');
     }
 
     public function refresh(Request $request)
     {
-        $session = sessionHelper();
+        $player = user();
 
-        $tokens = $session->get('tokens');
+        try {
+            $encrypted = $player->refresh_tokens;
+            $decrypted = Crypt::decryptString($encrypted);
+
+            $tokens = json_decode($decrypted, true);
+        } catch (\Throwable $t) {}
 
         if (!$tokens) {
             LoggingHelper::log('No tokens found in session, redirecting to login page');
@@ -136,8 +141,6 @@ class DiscordController extends Controller
             LoggingHelper::log('Refreshed access token with refresh token');
 
             $accessToken  = $tokens['access'];
-
-            $session->put('tokens', $tokens);
         }
 
         $user = $this->resolveUser($accessToken);
@@ -148,7 +151,15 @@ class DiscordController extends Controller
             return $this->login($request);
         }
 
-        $session->put('discord', $user);
+        $player->update([
+            'refresh_tokens' => Crypt::encryptString(json_encode([
+                'expires' => $tokens['expires'],
+                'access'  => $tokens['access'],
+                'refresh' => $tokens['refresh'],
+            ]))
+        ]);
+
+        session_put('discord', $user);
 
         LoggingHelper::log('Refreshed discord user with access token');
 

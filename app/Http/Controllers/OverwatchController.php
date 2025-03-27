@@ -140,7 +140,7 @@ class OverwatchController extends Controller
                 $player = $players[rand(0, sizeof($players) - 1)];
                 $status = StatusHelper::get($player->license_identifier);
 
-                sessionHelper()->put('isRandom', true);
+                session_put('isRandom', true);
 
                 return redirect()->action(
                     [OverwatchController::class, 'setSpectating'],
@@ -189,10 +189,10 @@ class OverwatchController extends Controller
         }
 
         $isReset = $source === 0;
-        $isRandom = sessionHelper()->get('isRandom');
+        $isRandom = session_get('isRandom');
 
         if ($isRandom) {
-            sessionHelper()->forget('isRandom');
+            session_forget('isRandom');
         }
 
         if ($source < 0 || $source > 65535) {

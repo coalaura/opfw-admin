@@ -78,6 +78,7 @@ class Player extends Model
         'staff_points',
         'user_data',
         'user_statistics',
+        'refresh_tokens',
     ];
 
     /**
@@ -217,6 +218,16 @@ class Player extends Model
         "~italic~",
         "~bold~",
     ];
+
+    public function getAuthIdentifierName()
+    {
+        return 'user_id';
+    }
+
+    public function getAuthIdentifier()
+    {
+        return $this->{$this->getAuthIdentifierName()};
+    }
 
     public function setPanelSetting(string $key, $value,  ? callable $progress = null)
     {

@@ -3,11 +3,10 @@
 namespace App\Http;
 
 use App\Http\Middleware\Authenticate;
-use App\Http\Middleware\StartSession;
+use App\Http\Middleware\JWTMiddleware;
 use App\Http\Middleware\CloudflareMiddleware;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\LogMiddleware;
-use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\StaffMiddleware;
 use App\Http\Middleware\SuperAdminMiddleware;
 use App\Http\Middleware\TrimStrings;
@@ -15,7 +14,6 @@ use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\UpdateMiddleware;
 use Illuminate\Auth\Middleware\AuthenticateWithBasicAuth;
 use Illuminate\Auth\Middleware\Authorize;
-use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
@@ -41,6 +39,7 @@ class Kernel extends HttpKernel
         CloudflareMiddleware::class,
         TrustProxies::class,
         ValidatePostSize::class,
+        JWTMiddleware::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
     ];
@@ -71,19 +70,15 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth'          => Authenticate::class,
         'staff'         => StaffMiddleware::class,
         'log'           => LogMiddleware::class,
         'super-admin'   => SuperAdminMiddleware::class,
         'auth.basic'    => AuthenticateWithBasicAuth::class,
         'bindings'      => SubstituteBindings::class,
         'cache.headers' => SetCacheHeaders::class,
-        'can'           => Authorize::class,
-        'guest'         => RedirectIfAuthenticated::class,
         'signed'        => ValidateSignature::class,
         'throttle'      => ThrottleRequests::class,
-        'verified'      => EnsureEmailIsVerified::class,
-        'session'       => StartSession::class,
+        'session'       => JWTMiddleware::class,
     ];
 
     /**
@@ -94,7 +89,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middlewarePriority = [
-        StartSession::class,
+        JWTMiddleware::class,
         Authenticate::class,
         StaffMiddleware::class,
         SubstituteBindings::class,

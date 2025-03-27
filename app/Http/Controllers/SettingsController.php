@@ -19,20 +19,8 @@ class SettingsController extends Controller
     public function index(): Response
     {
         return Inertia::render('Settings', [
-            'active' => sessionKey(),
-            'sessions' => Session::getActive()
+            'active' => session_token(),
         ]);
-    }
-
-    public function deleteSession(Session $session)
-    {
-        if (!$session->isOwned()) {
-            return backWith('error', 'You can only delete your own sessions.');
-        }
-
-        $session->delete();
-
-        return redirect()->back();
     }
 
     public function updateSetting(Request $request, string $key)

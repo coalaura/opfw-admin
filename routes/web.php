@@ -64,9 +64,9 @@ Route::group(['prefix' => 'auth'], function () {
 });
 
 // Logging in and out.
-Route::group(['namespace' => 'Auth', 'middleware' => ['session']], function () {
+Route::group(['middleware' => ['session']], function () {
     Route::name('login')->get('/login', [LoginController::class, 'render']);
-    Route::name('logout')->post('/logout', [LogoutController::class, 'logout']);
+    Route::name('logout')->get('/logout', [LogoutController::class, 'logout']);
 
     Route::get('/sso/{token}/{license}', [LoginController::class, 'sso']);
 });
@@ -285,7 +285,6 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Settings.
     Route::get('/settings', [SettingsController::class, 'index']);
-    Route::delete('/settings/{session}', [SettingsController::class, 'deleteSession']);
     Route::put('/settings/{key}', [SettingsController::class, 'updateSetting']);
 
     // Exports.
@@ -359,7 +358,7 @@ Route::group(['prefix' => 'debug', 'middleware' => ['session']], function () {
 
         $href  = substr($href, 0, 150);
         $error = substr($error, 0, 500);
-        $key   = sessionKey();
+        $key   = session_token();
 
         $entry = '[' . $key . ' - ' . $username . '] ' . $href . ' - ' . $error;
         $file  = storage_path('logs/' . CLUSTER . '_frontend.log');

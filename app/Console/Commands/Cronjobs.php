@@ -6,7 +6,6 @@ use App\Ban;
 use App\Helpers\CacheHelper;
 use App\Helpers\LoggingHelper;
 use App\Helpers\ServerAPI;
-use App\Helpers\SessionHelper;
 use App\PanelLog;
 use App\Server;
 use App\Warning;
@@ -83,12 +82,6 @@ class Cronjobs extends Command
         $start = microtime(true);
         echo " - Getting log actions...";
         CacheHelper::getLogActions(true);
-
-        echo $this->stopTime($start);
-
-        $start = microtime(true);
-        echo " - Cleaning up sessions...";
-        SessionHelper::cleanup();
 
         echo $this->stopTime($start);
 

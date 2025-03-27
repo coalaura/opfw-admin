@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\JwtHelper;
 use App\Helpers\LoggingHelper;
-use App\Helpers\SessionHelper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 
@@ -23,11 +23,11 @@ class LogoutController extends Controller
         LoggingHelper::log('Logout triggered, dropping session');
 
         // Logout the user.
-        SessionHelper::drop();
-        sessionHelper()->put('isLogout', true);
+        JwtHelper::logout();
 
-        // Redirect them to base path.
-        return redirect('/');
+        session_put('isLogout', true);
+
+        return redirect('/login');
     }
 
 }

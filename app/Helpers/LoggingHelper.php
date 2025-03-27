@@ -66,7 +66,7 @@ class LoggingHelper
      *
      * @param string $msg
      */
-    public static function log(string $msg, ?string $sessionKey = null)
+    public static function log(string $msg)
     {
         if (self::$disabled) {
             return;
@@ -76,10 +76,6 @@ class LoggingHelper
             echo $msg . PHP_EOL;
 
             return;
-        }
-
-        if (!$sessionKey) {
-            $sessionKey = sessionKey();
         }
 
         self::init();
@@ -108,7 +104,7 @@ class LoggingHelper
             $msg = substr($msg, 0, length: 300) . '...';
         }
 
-        $msg = [$classInfo, $time . $sessionKey . ' -> ' . $msg . PHP_EOL];
+        $msg = [$classInfo, $time . $msg . PHP_EOL];
 
         self::$entries[] = $msg;
     }

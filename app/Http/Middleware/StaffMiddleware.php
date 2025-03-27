@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Helpers\JwtHelper;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -21,19 +22,17 @@ class StaffMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $session = sessionHelper();
-
         // Check for staff status.
-        $player = $session->getPlayer();
+        $user = JwtHelper::user();
 
-        if (!$player) {
-            $session->clearAuth();
+        if (!$user) {
+            JwtHelper::logout();
 
             return redirectWith('/login', 'error', 'You are not logged in.');
         }
 
-        if (!$player->isStaff()) {
-            $session->clearAuth();
+        if (!$user->isStaff()) {
+            JwtHelper::logout();
 
             return redirectWith(
                 '/login',
@@ -42,26 +41,8 @@ class StaffMiddleware
             );
         }
 
-        $discord = $session->get('discord');
-
-        if (!$discord) {
-            $session->clearAuth();
-
-            return redirectWith(
-                '/login',
-                'error',
-                'Missing discord in session.'
-            );
-        }
-
-        $name = $player->getSafePlayerName();
-
-        if ($session->get('name') !== $name) {
-            $session->put('name', $name);
-        }
-
         if ($request->isMethod('GET') && (!$request->ajax() || !empty($request->header('X-Inertia')))) {
-            $session->put('lastVisit', $request->path());
+            session_put('lastVisit', $request->path());
         }
 
         return $next($request);
