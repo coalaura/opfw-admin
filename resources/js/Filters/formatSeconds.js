@@ -14,6 +14,10 @@ export default function (value, allowed = "dhm", named = false) {
         [60, "m", "minute"],
     ];
 
+    if (!allowed.includes("m") && value < 60*60) {
+        allowed += "m";
+    }
+
     const result = [];
 
     for (const multiplier of multipliers) {
