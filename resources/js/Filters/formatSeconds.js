@@ -14,7 +14,7 @@ export default function (value, allowed = "dhm", named = false) {
         [60, "m", "minute"],
     ];
 
-    if (!allowed.includes("m") && value < 60*60) {
+    if (allowed && !allowed.includes("m") && value < 60*60) {
         allowed += "m";
     }
 
