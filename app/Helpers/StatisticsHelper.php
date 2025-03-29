@@ -165,7 +165,7 @@ class StatisticsHelper
     // Game crashed (count)
     public static function collectGameCrashStatistics(): array
     {
-        return self::collectStatistics("SELECT 0 as count, SUM(IF(details LIKE '%`Server->client%', 1, 0)) as amount, SUM(IF(details LIKE '%`Game crashed:%', 1, 0)) as amount2, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action = 'User Disconnected' AND (details LIKE '%`Server->client%' OR details LIKE '%`Game crashed:%') GROUP BY date ORDER BY timestamp DESC", 30, false, ["amount2"]);
+        return self::collectStatistics("SELECT 0 as count, SUM(IF(details LIKE '%`Server->client%', 1, 0)) as amount, SUM(IF(details LIKE '%`Game crashed:%', 1, 0)) as amount2, DATE_FORMAT(timestamp, '%c/%d/%Y %H') as date FROM user_logs WHERE action = 'User Disconnected' AND (details LIKE '%`Server->client%' OR details LIKE '%`Game crashed:%') GROUP BY date ORDER BY timestamp DESC", 30, false, ["amount2"], false, true);
     }
 
     // Airlifts (count)
@@ -326,7 +326,7 @@ class StatisticsHelper
         return self::collectStatistics("SELECT 0 as count, COUNT(id) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date FROM user_logs WHERE action IN ('{$action}') GROUP BY date ORDER BY timestamp DESC");
     }
 
-    public static function collectStatistics(string $query, int $days = 30, bool $showAll = false, $secondary = [], bool $decimals = false): array
+    public static function collectStatistics(string $query, int $days = 30, bool $showAll = false, $secondary = [], bool $decimals = false, bool $hourly = false): array
     {
         $start = microtime(true);
 
@@ -342,11 +342,15 @@ class StatisticsHelper
             $days = ceil((time() - $time) / 86400);
         }
 
+        if ($hourly) {
+            $days *= 24;
+        }
+
         $convert = $decimals ? 'floatval' : 'intval';
 
         for ($i = 0; $i <= $days; $i++) {
-            $time = strtotime("-$i days");
-            $date = date('n/d/Y', $time);
+            $time = strtotime("-$i " . ($hourly ? "hours" : "days"));
+            $date = date('n/d/Y' . ($hourly ? ' H' : ''), $time);
 
             $entry = self::findEntry($data, $date);
 
@@ -354,7 +358,7 @@ class StatisticsHelper
             $count  = $entry && $entry->count ? call_user_func($convert, $entry->count) : 0;
 
             $res = [
-                'date'   => date('jS F Y', $time),
+                'date'   => date('jS F Y' . ($hourly ? ' g a' : ''), $time),
                 'amount' => $amount,
                 'count'  => $count,
             ];
