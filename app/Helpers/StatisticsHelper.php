@@ -286,7 +286,7 @@ class StatisticsHelper
     // General economy statistics
     public static function collectEconomyStatistics(): array
     {
-        return DB::select("SELECT date, cash, bank, stocks, savings, shared, bonds, richest, poorest FROM economy_statistics ORDER BY STR_TO_DATE(date, '%d.%m.%Y %H:%i') ASC");
+        return DB::select("SELECT DATE_FORMAT(STR_TO_DATE(date, '%d.%m.%Y %H:%i'), '%d.%m.%Y') as date, SUM(cash) / SUM(1) as cash, SUM(bank) / SUM(1) as bank, SUM(stocks) / SUM(1) as stocks, SUM(savings) / SUM(1) as savings, SUM(shared) / SUM(1) as shared, SUM(bonds) / SUM(1) as bonds, MAX(richest) as richest, MAX(poorest) as poorest FROM economy_statistics GROUP BY date ORDER BY STR_TO_DATE(date, '%d.%m.%Y %H:%i') ASC");
     }
 
     // General user statistics

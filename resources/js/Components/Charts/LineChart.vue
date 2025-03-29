@@ -11,6 +11,10 @@ export default {
         currency: {
             type: Boolean,
             default: false
+        },
+        reRender: {
+            type: Number,
+            default: 0
         }
     },
     data() {
@@ -143,6 +147,10 @@ export default {
     },
     watch: {
         chartData() {
+            this.chartDataUpdated();
+        },
+        reRender() {
+            console.log("rerendered")
             this.chartDataUpdated();
         }
     }

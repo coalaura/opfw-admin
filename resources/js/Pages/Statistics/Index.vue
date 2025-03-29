@@ -34,11 +34,20 @@
                     <i class="fas fa-plus"></i>
                 </button>
 
-                <div class="flex gap-6">
-                    <div class="overflow-y-auto max-h-statistics-long inline-block pr-2 flex-shrink-0">
+                <div class="flex gap-6 overflow-y-auto">
+                    <div v-if="!economyTableShow" class="bg-gray-300 dark:bg-gray-700 no-alpha border-2 border-gray-500 py-1.5 px-2">
+                        <i class="fas fa-expand-alt cursor-pointer" @click="toggleEconomyTable()"></i>
+                    </div>
+                    <div class="max-h-statistics-long inline-block pr-2 flex-shrink-0 w-max" v-else>
                         <table class="whitespace-nowrap">
                             <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.date') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">
+                                    <div class="flex gap-3 justify-between items-center">
+                                        {{ t('statistics.date') }}
+
+                                        <i class="fas fa-compress-alt cursor-pointer" @click="toggleEconomyTable()" v-if="!economyLoading && economy"></i>
+                                    </div>
+                                </th>
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 0)">{{ t('statistics.cash') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 1)">{{ t('statistics.bank') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(economy, 2)">{{ t('statistics.stocks') }}</th>
@@ -98,8 +107,8 @@
                         </table>
                     </div>
 
-                    <div v-if="!economyLoading && economy && economy.graph" class="w-full max-h-statistics-long overflow-hidden">
-                        <LineChart :chartData="economy.graph" class="h-full" :currency="true"></LineChart>
+                    <div v-if="!economyLoading && economy && economy.graph" class="w-full max-h-statistics-long min-w-chart overflow-hidden">
+                        <LineChart :chartData="economy.graph" class="h-full" :currency="true" :reRender="economyReRender"></LineChart>
                     </div>
                 </div>
             </div>
@@ -119,11 +128,20 @@
                     <i class="fas fa-plus"></i>
                 </button>
 
-                <div class="flex gap-6">
-                    <div class="overflow-y-auto max-h-statistics-long inline-block pr-2 flex-shrink-0">
+                <div class="flex gap-6 overflow-y-auto">
+                    <div v-if="!playersTableShow" class="bg-gray-300 dark:bg-gray-700 no-alpha border-2 border-gray-500 py-1.5 px-2">
+                        <i class="fas fa-expand-alt cursor-pointer" @click="togglePlayersTable()"></i>
+                    </div>
+                    <div class="max-h-statistics-long inline-block pr-2 flex-shrink-0 w-max" v-else>
                         <table class="whitespace-nowrap">
                             <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.date') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">
+                                    <div class="flex gap-3 justify-between items-center">
+                                        {{ t('statistics.date') }}
+
+                                        <i class="fas fa-compress-alt cursor-pointer" @click="togglePlayersTable()" v-if="!playersLoading && players"></i>
+                                    </div>
+                                </th>
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(players, 0)">{{ t('statistics.total_joins') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(players, 1)">{{ t('statistics.max_users') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(players, 2)">{{ t('statistics.max_queue') }}</th>
@@ -162,7 +180,7 @@
                     </div>
 
                     <div v-if="!playersLoading && players && players.graph" class="w-full max-h-statistics-long overflow-hidden">
-                        <LineChart :chartData="players.graph" class="h-full"></LineChart>
+                        <LineChart :chartData="players.graph" class="h-full" :reRender="playersReRender"></LineChart>
                     </div>
                 </div>
             </div>
@@ -182,11 +200,20 @@
                     <i class="fas fa-plus"></i>
                 </button>
 
-                <div class="flex gap-6">
-                    <div class="overflow-y-auto max-h-statistics-long inline-block pr-2 flex-shrink-0">
+                <div class="flex gap-6 overflow-y-auto">
+                    <div v-if="!fpsTableShow" class="bg-gray-300 dark:bg-gray-700 no-alpha border-2 border-gray-500 py-1.5 px-2">
+                        <i class="fas fa-expand-alt cursor-pointer" @click="toggleFpsTable()"></i>
+                    </div>
+                    <div class="max-h-statistics-long inline-block pr-2 flex-shrink-0 w-max" v-else>
                         <table class="whitespace-nowrap">
                             <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
-                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.date') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">
+                                    <div class="flex gap-3 justify-between items-center">
+                                        {{ t('statistics.date') }}
+
+                                        <i class="fas fa-compress-alt cursor-pointer" @click="toggleFpsTable()" v-if="!fpsLoading && fps"></i>
+                                    </div>
+                                </th>
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(fps, 0)">{{ t('statistics.minimum_fps') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(fps, 1)">{{ t('statistics.maximum_fps') }}</th>
                                 <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(fps, 2)">{{ t('statistics.average_fps') }}</th>
@@ -225,7 +252,7 @@
                     </div>
 
                     <div v-if="!fpsLoading && fps && fps.graph" class="w-full max-h-statistics-long overflow-hidden">
-                        <LineChart :chartData="fps.graph" class="h-full"></LineChart>
+                        <LineChart :chartData="fps.graph" class="h-full" :reRender="fpsReRender"></LineChart>
                     </div>
                 </div>
             </div>
@@ -319,12 +346,18 @@ export default {
             search: "",
 
             economyLoading: false,
+            economyTableShow: true,
+            economyReRender: 0,
             economy: false,
 
             playersLoading: false,
+            playersTableShow: true,
+            playersReRender: 0,
             players: false,
 
             fpsLoading: false,
+            fpsTableShow: true,
+            fpsReRender: 0,
             fps: false,
 
             moneyLogType: "",
@@ -351,6 +384,21 @@ export default {
             const search = this.search.toLowerCase().trim();
 
             return !search || title.includes(search);
+        },
+        toggleEconomyTable() {
+            this.economyTableShow = !this.economyTableShow;
+
+            this.economyReRender++;
+        },
+        togglePlayersTable() {
+            this.playersTableShow = !this.playersTableShow;
+
+            this.playersReRender++;
+        },
+        toggleFpsTable() {
+            this.fpsTableShow = !this.fpsTableShow;
+
+            this.fpsReRender++;
         },
         addMoneyLogType() {
             const type = this.moneyLogType;

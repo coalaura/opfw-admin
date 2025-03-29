@@ -90,7 +90,8 @@ module.exports = {
                 "box":     "350px",
                 "input":   "200px",
                 "context": "150px",
-                "base":    "24px"
+                "base":    "24px",
+                "chart":   "25%"
             },
             minHeight: {
                 "50": "50px",

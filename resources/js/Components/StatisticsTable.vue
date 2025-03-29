@@ -31,7 +31,9 @@
             <div class="overflow-y-auto max-h-statistics inline-block pr-2 flex-shrink-0" ref="table">
                 <table class="whitespace-nowrap">
                     <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
-                        <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.date') }}</th>
+                        <th class="font-semibold px-2 py-0.5 text-left">
+                            {{ t('statistics.date') }}
+                        </th>
                         <th class="font-semibold px-2 py-0.5 text-left" v-if="currency">{{ t('statistics.count') }}</th>
                         <th class="font-semibold px-2 py-0.5 text-left" v-for="(amount, index) in amounts">{{ t('statistics.' + locales[index]) }}</th>
                         <th class="font-semibold px-2 py-0.5 text-left">{{ t('statistics.difference') }}</th>
