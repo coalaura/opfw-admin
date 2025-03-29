@@ -41,7 +41,7 @@ export default {
 
             if (max === 0) return 0;
 
-            const log = Math.pow(10, Math.floor(Math.log10(max)));
+            const log = 10 ** Math.floor(Math.log10(max));
 
             return Math.ceil(max / log) * log;
         },
@@ -52,7 +52,7 @@ export default {
 
             if (min >= 0) return 0;
 
-            const log = Math.pow(10, Math.floor(Math.log10(Math.abs(min))));
+            const log = 10 ** Math.floor(Math.log10(Math.abs(min)));
 
             return Math.floor(Math.abs(min) / log) * log * -1;
         },
@@ -126,7 +126,7 @@ export default {
                     ctx.lineTo(x, yi);
                 }
 
-                ctx.lineWidth = 2;
+                ctx.lineWidth = 1;
                 ctx.strokeStyle = this.color(amount);
 
                 ctx.stroke();

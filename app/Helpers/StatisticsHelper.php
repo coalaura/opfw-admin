@@ -358,7 +358,7 @@ class StatisticsHelper
             $count  = $entry && $entry->count ? call_user_func($convert, $entry->count) : 0;
 
             $res = [
-                'date'   => date('jS F Y' . ($hourly ? ' g a' : ''), $time),
+                'date'   => date('jS F Y' . ($hourly ? ' - H:00' : ''), $time),
                 'amount' => $amount,
                 'count'  => $count,
             ];

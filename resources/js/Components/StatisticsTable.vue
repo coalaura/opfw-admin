@@ -72,7 +72,7 @@
                 </table>
             </div>
 
-            <SimpleChart :data="data" v-if="!collapsed && data" :amounts="amounts" :labels="chartLabels" />
+            <SimpleChart :data="data" v-if="!collapsed && data" :lines="lines" :amounts="amounts" :labels="chartLabels" />
         </div>
     </div>
 </template>
@@ -98,6 +98,10 @@ export default {
         },
         percentage: {
             type: Boolean,
+        },
+        lines: {
+            type: Boolean,
+            default: true,
         },
         resolve: {
             type: Function,
