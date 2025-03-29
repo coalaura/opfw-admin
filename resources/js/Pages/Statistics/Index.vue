@@ -268,7 +268,8 @@
             <StatisticsTable source="blackjack" tag="percentage" :percentage="true" :search="search" />
             <StatisticsTable source="bus_revenue" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="casino" tag="money" :currency="true" :search="search" />
-            <StatisticsTable source="crashes" tag="amount" :lines="false" :amounts="['amount', 'amount2']" :locales="['timeouts_val', 'crashes_val']" :currency="false" :search="search" />
+            <StatisticsTable source="crashes_hourly" tag="amount" :lines="false" :amounts="['amount', 'amount2']" :locales="['timeouts_val', 'crashes_val']" :currency="false" :search="search" />
+            <StatisticsTable source="crashes_daily" tag="amount" :amounts="['amount', 'amount2']" :locales="['timeouts_val', 'crashes_val']" :currency="false" :search="search" />
             <StatisticsTable source="daily_refresh" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="daily_tasks" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="deaths" tag="amount" :currency="false" :search="search" />
