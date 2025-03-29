@@ -165,7 +165,7 @@ class StatisticsHelper
     // Game crashed (count)
     public static function collectGameCrashStatistics(): array
     {
-        return self::collectStatistics("SELECT 0 as count, SUM(IF(details LIKE '%`Server->client%', 1, 0)) as amount, SUM(IF(details LIKE '%`Game crashed:%', 1, 0)) as amount2, DATE_FORMAT(timestamp, '%c/%d/%Y %H') as date FROM user_logs WHERE action = 'User Disconnected' AND (details LIKE '%`Server->client%' OR details LIKE '%`Game crashed:%') GROUP BY date ORDER BY timestamp DESC", 30, false, ["amount2"], false, true);
+        return self::collectStatistics("SELECT 0 as count, SUM(IF(details LIKE '%`Server->client%', 1, 0)) as amount, SUM(IF(details LIKE '%`Game crashed:%', 1, 0)) as amount2, DATE_FORMAT(timestamp, '%c/%d/%Y %H') as date FROM user_logs WHERE action = 'User Disconnected' AND (details LIKE '%`Server->client%' OR details LIKE '%`Game crashed:%') GROUP BY date ORDER BY timestamp DESC", 10, false, ["amount2"], false, true);
     }
 
     // Airlifts (count)
