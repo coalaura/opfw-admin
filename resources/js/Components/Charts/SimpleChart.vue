@@ -30,6 +30,7 @@ export default {
     },
     data() {
         return {
+            timeout: false,
             colors: {}
         };
     },
@@ -158,16 +159,28 @@ export default {
                 ctx.moveTo(0, y0);
                 ctx.lineTo(canvas.width, y0);
 
-                ctx.lineWidth = 1;
+                ctx.lineWidth = 2;
                 ctx.strokeStyle = this.themeColor('gray-400', 0.4);
 
                 ctx.stroke();
                 ctx.closePath();
             }
+        },
+        resized() {
+            clearTimeout(this.timeout);
+
+            this.timeout = setTimeout(() => {
+                this.render();
+            }, 250);
         }
     },
     mounted() {
         this.render();
+
+        window.addEventListener("resize", this.resized);
+    },
+    unmounted() {
+        window.removeEventListener("resize", this.resized);
     }
 }
 </script>
