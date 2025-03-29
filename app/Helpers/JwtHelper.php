@@ -76,6 +76,10 @@ class JwtHelper
             return;
         }
 
+        if (! file_exists(dirname($secret))) {
+            return;
+        }
+
         $fp = fopen($secret, 'x');
 
         if (! $fp) {
@@ -137,6 +141,10 @@ class JwtHelper
      */
     private static function read()
     {
+        if (! self::$secret) {
+            return;
+        }
+
         $jwt = request()->cookie(self::Cookie);
 
         if (empty($jwt)) {
@@ -258,7 +266,7 @@ class JwtHelper
 
     public static function logout()
     {
-        self::$user   = null;
+        self::$user = null;
 
         unset(self::$claims['user']);
         unset(self::$claims['discord']);
@@ -268,7 +276,7 @@ class JwtHelper
 
     public static function shutdown()
     {
-        if (self::$claims === null || ! self::$changed) {
+        if (! self::$secret || self::$claims === null || ! self::$changed) {
             return;
         }
 
@@ -289,7 +297,7 @@ class JwtHelper
 
     public static function token(): ?string
     {
-        if (! self::$claims || ! self::$user) {
+        if (! self::$secret || ! self::$claims || ! self::$user) {
             return null;
         }
 
