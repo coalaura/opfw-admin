@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Ban;
@@ -37,15 +36,16 @@ class AntiCheatController extends Controller
      */
     public function render(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_ANTI_CHEAT)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_ANTI_CHEAT)) {
             abort(401);
         }
 
         $page = Paginator::resolveCurrentPage('page');
 
-        $ignore = self::IgnoreAntiCheatTypes;
+        $showAll = $request->exists('all');
+        $ignore  = self::IgnoreAntiCheatTypes;
 
-        if (!$this->isRoot($request)) {
+        if (! $this->isRoot($request) || ! $showAll) {
             $ignore = array_merge($ignore, self::HiddenAntiCheatTypes);
         }
 
@@ -91,6 +91,7 @@ class AntiCheatController extends Controller
                 'MODDING'   => $reasons['MODDING'],
                 'INJECTION' => $reasons['INJECTION'],
             ],
+            'all'         => $showAll,
         ]);
     }
 
@@ -101,7 +102,7 @@ class AntiCheatController extends Controller
      */
     public function statistics(Request $request)
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_ANTI_CHEAT)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_ANTI_CHEAT)) {
             abort(401);
         }
 

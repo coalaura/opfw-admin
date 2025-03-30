@@ -224,6 +224,10 @@ export default {
         page: {
             type: Number,
             required: true,
+        },
+        all: {
+            type: Boolean,
+            required: true
         }
     },
     data() {
@@ -265,7 +269,7 @@ export default {
             this.isLoading = true;
 
             try {
-                await this.$inertia.replace('/anti_cheat', {
+                await this.$inertia.replace(`/anti_cheat${this.all ? '?all' : ''}`, {
                     preserveState: true,
                     preserveScroll: true,
                     only: ['screenshots', 'banMap', 'links', 'page'],
