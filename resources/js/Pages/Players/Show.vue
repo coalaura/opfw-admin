@@ -1178,6 +1178,8 @@
 
                                                     <i class="fas fa-user-astronaut ml-1 cursor-pointer" @click="loadMarriedTo(character)" :title="t('players.characters.who_married')"></i>
                                                 </template>
+
+                                                <i class="fas fa-ring ml-2 cursor-pointer text-red-600 dark:text-red-400" :title="t('players.characters.divorce')" @click="divorceCharacter(character.id)" v-if="$page.auth.player.isSuperAdmin"></i>
                                             </td>
                                         </tr>
                                     </table>
@@ -1881,6 +1883,18 @@ export default {
                     character.marriedTo = response.data;
                 }
             } catch (e) { }
+        },
+        async divorceCharacter(characterId) {
+            if (this.isLoading || !confirm(this.t('players.characters.divorce_confirm'))) {
+                return;
+            }
+
+            this.isLoading = true;
+
+            // Send request.
+            await this.$inertia.delete(`/players/${this.player.licenseIdentifier}/characters/${characterId}/divorce`);
+
+            this.isLoading = false;
         },
         async showSystemInfo() {
             if (this.isSystemInfoLoading || !this.isModdingBan()) {

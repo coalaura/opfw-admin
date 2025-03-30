@@ -423,6 +423,52 @@ class PlayerCharacterController extends Controller
     }
 
     /**
+     * Divorces 2 characters
+     *
+     * @param Player $player
+     * @param Character $character
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function divorce(Player $player, Character $character, Request $request): RedirectResponse
+    {
+        if (!$this->isSuperAdmin($request)) {
+            return backWith('error', 'Only super admins can divorce characters.');
+        }
+
+        $user = user();
+
+        $marriedTo = $character->married_to;
+
+        if (!$marriedTo) {
+            return backWith('error', 'Character is not married.');
+        }
+
+        $character->update([
+            'married_to' => null,
+        ]);
+
+        $marriedCharacter = Character::query()
+            ->where('character_id', '=', $marriedTo)
+            ->where('married_to', '=', $character->character_id)
+            ->get()->first();
+
+        if ($marriedCharacter) {
+            $marriedCharacter->update([
+                'married_to' => null,
+            ]);
+        }
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Reset Spawn",
+            sprintf("%s divorced %s (#%d) from #%s.", $user->consoleName(), $player->consoleName(), $character->character_id, $marriedTo),
+        );
+
+        return backWith('success', 'Spawn was reset successfully.');
+    }
+
+    /**
      * Edits a characters balance
      *
      * @param Player $player

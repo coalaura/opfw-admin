@@ -24,6 +24,8 @@ function clearViewCachePlugin() {
 
 const isDev = process.env.IS_DEV === "true";
 
+exec("php artisan view:clear");
+
 export default defineConfig({
 	publicDir: "public",
 	plugins: [

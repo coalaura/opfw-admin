@@ -77,6 +77,7 @@ class Character extends Model
         'coords',
         'character_data',
         'email_address',
+        'married_to',
     ];
 
     /**

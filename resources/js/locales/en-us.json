@@ -1191,6 +1191,8 @@
             "no_mugshot": "No mugshot available",
             "married_to": "Married to",
             "who_married": "New phon, who dis?",
+            "divorce": "Divorce characters",
+            "divorce_confirm": "Are you sure you want to divorce these 2 characters? You cannot undo this change from the panel.",
             "inventory_logs": "Inventory Logs",
             "zone": {
                 "all": "All",

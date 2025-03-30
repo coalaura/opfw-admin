@@ -733,6 +733,8 @@
             "created_at": "Make",
             "delete": "Remove",
             "deleted_at": "Removed",
+            "divorce": "Split characters",
+            "divorce_confirm": "You sure want split these 2 characters? No undo from panel.",
             "edit_bank": "Bank money",
             "edit_cash": "Cash money",
             "edit_stocks": "Stock money",

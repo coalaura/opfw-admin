@@ -733,6 +733,8 @@
             "created_at": "Made",
             "delete": "Get rid of",
             "deleted_at": "Gone",
+            "divorce": "Split 'em up",
+            "divorce_confirm": "Y'all sure ya wanna split these two up? Ain't no goin' back once ya do it from the panel.",
             "edit_bank": "Bank money",
             "edit_cash": "Cash money",
             "edit_stocks": "Stocks money",

@@ -733,6 +733,8 @@
             "created_at": "Opprettet",
             "delete": "Slett",
             "deleted_at": "Slettet",
+            "divorce": "Skilsmisse tegn",
+            "divorce_confirm": "Er du sikker på at du vil skille disse 2 tegnene? Du kan ikke angre denne endringen fra panelet.",
             "edit_bank": "Bankbalanse",
             "edit_cash": "Kontantbalanse",
             "edit_stocks": "Aksjebalanse",

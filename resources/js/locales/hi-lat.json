@@ -733,6 +733,8 @@
             "created_at": "Banaya gaya",
             "delete": "Mita do",
             "deleted_at": "Mita diya gaya",
+            "divorce": "Talak patr",
+            "divorce_confirm": "Kya aap pakka in 2 patr ko talak dena chahte hain? Aap is badlaav ko panel se wapas nahi le sakte.",
             "edit_bank": "Bank balance",
             "edit_cash": "Cash balance",
             "edit_stocks": "Stocks balance",
