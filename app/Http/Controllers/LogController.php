@@ -506,7 +506,7 @@ class LogController extends Controller
 
         // Filtering by weapon.
         if ($weapon = $request->input('weapon')) {
-            $hash = WeaponDamageEvent::getWeaponHash($weapon);
+            $hash = is_numeric($weapon) ? $weapon : WeaponDamageEvent::getWeaponHash($weapon);
 
             if ($hash) {
                 if ($hash < 0) {
