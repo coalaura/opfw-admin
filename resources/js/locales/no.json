@@ -158,6 +158,7 @@
         }
     },
     "global": {
+        "ai_generated": "Mest sannsynlig AI-generert.",
         "all": "Alle",
         "any": "Hvilken som helst",
         "apply": "Søk",

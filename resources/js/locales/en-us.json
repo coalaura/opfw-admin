@@ -54,6 +54,7 @@
         "server_offline": "Server seems to be offline.",
         "server_online": "Server has been online since {0}.",
         "permission": "Your current permission level",
+        "ai_generated": "Most likely AI generated.",
         "status": {
             "online": "Online",
             "afk": "AFK",

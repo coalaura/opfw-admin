@@ -158,6 +158,7 @@
         }
     },
     "global": {
+        "ai_generated": "Most likely this here's AI generated.",
         "all": "All",
         "any": "Any",
         "apply": "Apply",

@@ -85,7 +85,10 @@
                                 <div :title="character.name + '\n' + character.backstory" v-if="character">
                                     <inertia-link class="font-semibold text-lg truncate" :href="`/players/${target.license}/characters/${character.id}`">{{ character.name }}</inertia-link>
                                     <div class="italic text-muted dark:text-dark-muted text-xxs -mt-1 mb-0.5">{{ t('overwatch.born', dayjs(character.birthday).format('MMM Do YYYY')) }}</div>
-                                    <div class="italic text-muted dark:text-dark-muted leading-5 break-words">{{ truncate(character.backstory, 70) }}</div>
+                                    <div class="italic text-muted dark:text-dark-muted leading-5 break-words">
+                                        {{ truncate(character.backstory, 70) }}
+                                        <i class="fas fa-brain cursor-help" :title="t('global.ai_generated')" v-if="isAIGenerated(character.backstory)"></i>
+                                    </div>
                                 </div>
 
                                 <div class="italic text-red-800 dark:text-red-200" v-else>{{ t('overwatch.no_character') }}</div>

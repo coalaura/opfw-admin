@@ -158,6 +158,7 @@
         }
     },
     "global": {
+        "ai_generated": "AI make this.",
         "all": "All",
         "any": "Any",
         "apply": "Use",

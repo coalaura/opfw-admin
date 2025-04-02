@@ -25,3 +25,17 @@ window.$ = $;
 
 // Mini HTTP API
 import "./scripts/fetch.js";
+
+// AI text detector
+Vue.prototype.isAIGenerated = text => {
+	const aiThings = [
+		/[—…’“”]/, // AI tends to love these
+		/, (or|and)[^\n,.]+,/, // [...]Whether it was leading high-stakes heists, smuggling operations, or turf wars, Chadwick[...]
+
+		// Less common, still useful
+		/By the time (he|she) was \d+/i, // [...]By the time he was 18, Vladislove had[...]
+		/(?:Growing up|Raised) (?:in|on) .*, (he|she) (?:learned|saw|witnessed)/i, // [...]raised in the shadow of a broken city, one that was never truly safe for anyone[...]
+	];
+
+	return !!aiThings.find(thing => thing.test(text));
+};

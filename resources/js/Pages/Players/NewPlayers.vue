@@ -157,7 +157,7 @@ export default {
                     const backstory = this.truncate(this.escapeHTML(player.character.backstory), 100);
                     const highlighted = this.highlightText(backstory, player.character.danny);
 
-                    player.info = `<b>${player.character.name}</b><br>${highlighted.text}`;
+                    player.info = `<b>${player.character.name}</b><br>${highlighted.text}${this.isAIGenerated(player.character.backstory) ? `<i class="fas fa-brain cursor-help" title="${this.t('global.ai_generated')}"></i>` : ''}`;
 
                     player.prediction = `<span class="text-${highlighted.color}-700 dark:text-${highlighted.color}-300" title="${highlighted.reason}">${this.t("players.new.prediction_label", highlighted.prediction)}</span>`;
                     player.sortPrediction = highlighted.prediction === "positive" ? 1 : (highlighted.prediction === "neutral" ? 2 : 3);
