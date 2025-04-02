@@ -87,7 +87,7 @@
                                     <div class="italic text-muted dark:text-dark-muted text-xxs -mt-1 mb-0.5">{{ t('overwatch.born', dayjs(character.birthday).format('MMM Do YYYY')) }}</div>
                                     <div class="italic text-muted dark:text-dark-muted leading-5 break-words">
                                         {{ truncate(character.backstory, 70) }}
-                                        <i class="fas fa-brain cursor-help text-teal-600 dark:text-teal-400 ml-1" :title="t('global.ai_generated')" v-if="isAIGenerated(character.backstory)"></i>
+                                        <i class="fas fa-brain cursor-help text-teal-500 dark:text-teal-400 ml-1" :title="t('global.ai_generated')" v-if="isAIGenerated(character.backstory)"></i>
                                     </div>
                                 </div>
 
