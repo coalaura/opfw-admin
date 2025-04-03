@@ -21,18 +21,19 @@ class JwtHelper
     const Cookie = 'op_jwt';
 
     const Mappings = [
-        'user'        => 'usr',
-        'license'     => 'lcs',
-        'discord'     => 'dsc',
-        'name'        => 'nme',
-        'tokens'      => 'tkn',
+        'user'          => 'usr',
+        'license'       => 'lcs',
+        'discord'       => 'dsc',
+        'name'          => 'nme',
+        'tokens'        => 'tkn',
 
-        'error'       => 'rr',
-        'success'     => 'sc',
+        'error'         => 'rr',
+        'success'       => 'sc',
 
-        'username'    => 'unm',
-        'global_name' => 'gnm',
-        'avatar'      => 'avt',
+        'username'      => 'unm',
+        'global_name'   => 'gnm',
+        'avatar'        => 'avt',
+        'discriminator' => 'dcr',
     ];
 
     /**
@@ -104,6 +105,10 @@ class JwtHelper
         $mapped = [];
 
         foreach ($unmapped as $key => $val) {
+            if (! $val) {
+                continue;
+            }
+
             $mp = self::Mappings[$key] ?? $key;
 
             if (is_array($val)) {
@@ -124,6 +129,10 @@ class JwtHelper
         $unmapped = [];
 
         foreach ($mapped as $mp => $val) {
+            if (! $val) {
+                continue;
+            }
+
             $key = array_search($mp, self::Mappings) ?: $mp;
 
             if (is_array($val)) {
@@ -254,10 +263,12 @@ class JwtHelper
         self::$claims = [
             'user'    => $user->user_id,
             'discord' => [
-                'id'          => $discord['id'],
-                'username'    => $discord['username'],
-                'global_name' => $discord['global_name'],
-                'avatar'      => $discord['avatar'],
+                'id'            => $discord['id'] ?? false,
+                'username'      => $discord['username'] ?? false,
+                'global_name'   => $discord['global_name'] ?? false,
+                'discriminator' => $discord['discriminator'] ?? false,
+                'avatar'        => $discord['avatar'] ?? false,
+                'sso'           => $discord['sso'] ?? false,
             ],
         ];
 
@@ -306,7 +317,7 @@ class JwtHelper
         $name    = self::$user->getSafePlayerName();
 
         return self::build([
-            'lic'     => $license,
+            'license' => $license,
             'discord' => $discord,
             'name'    => $name,
         ], '4 hours');

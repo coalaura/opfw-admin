@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Helpers\JwtHelper;
@@ -8,9 +7,9 @@ use App\Helpers\ServerAPI;
 use App\Http\Controllers\Controller;
 use App\Player;
 use App\Server;
-use Inertia\Inertia;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Inertia\Inertia;
 
 /**
  * @package App\Http\Controllers\Auth
@@ -56,13 +55,13 @@ class LoginController extends Controller
 
         $server = Server::getFirstServer('name');
 
-        if (!$server || !Str::startsWith($licenseIdentifier, "license:")) {
+        if (! $server || ! Str::startsWith($licenseIdentifier, "license:")) {
             abort(400);
         }
 
         $result = ServerAPI::validateAuthToken($server, $licenseIdentifier, $token);
 
-        if (!$result || !is_array($result) || !$result['valid']) {
+        if (! $result || ! is_array($result) || ! $result['valid']) {
             abort(401);
         }
 
@@ -70,7 +69,7 @@ class LoginController extends Controller
             ->where('license_identifier', '=', $licenseIdentifier)
             ->first();
 
-        if (!$player || !$player->isStaff()) {
+        if (! $player || ! $player->isStaff()) {
             abort(401);
         }
 
@@ -81,9 +80,10 @@ class LoginController extends Controller
         }
 
         JwtHelper::login($player, [
-            'username' => $name,
+            'id'            => $player->user_id,
+            'username'      => $name,
             'discriminator' => $request->query('ref') ?? 'ext',
-            'sso' => true
+            'sso'           => true,
         ]);
 
         return redirect('/');
