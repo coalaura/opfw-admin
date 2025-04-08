@@ -12,13 +12,24 @@ use Illuminate\Support\Facades\DB;
 class PlayerDataController extends Controller
 {
     const EnablableCommands = [
+        "advanced_metagame",
+        "auto_drive",
+        "brighter_nights",
         "cam_clear",
         "cam_play",
         "cam_point",
-        "disable_idle_cam",
+        "cpr",
+        "fortnite",
         "freecam",
+        "live_map",
+        "minecraft",
         "orbitcam",
         "player_stats",
+        "reflect",
+        "register_weapon",
+        "stable_cam",
+        "super_jump",
+        "watermark",
     ];
 
     /**
