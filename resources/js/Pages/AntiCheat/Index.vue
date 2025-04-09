@@ -494,6 +494,13 @@ export default {
 
                     return `*${fields}*`;
                 }
+                case 'high_distance_damage': {
+                    if (!metadata.event) return false;
+
+                    const { weaponDamage, weaponHash, distance } = metadata.event;
+
+                    return `--${weaponHash}-- - **${dmg}** (${distance.toFixed(2)}m)`;
+                }
             }
 
             return false;
