@@ -10,7 +10,7 @@ export default {
         isHash(str) {
             const num = parseInt(str);
 
-            if (isNaN(num)) return false;
+            if (Number.isNaN(num)) return false;
 
             // These may be "valid", but there is no model with such a hash, these are more commonly server-ids or similar
             if ([0, -1].includes(num) || (num > 0 && num < 9000)) return false;

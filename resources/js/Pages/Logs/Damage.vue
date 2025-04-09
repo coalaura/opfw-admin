@@ -57,7 +57,7 @@
 							<label class="block mb-2" for="weapon">
 								{{ t('logs.weapon') }}
 							</label>
-							<input class="block w-full px-4 py-3 bg-lime-500 !bg-opacity-10 border focus:border-lime-500 border-lime-500 rounded outline-none" :class="weapon && weapon.match(/^-?\d+$/m) ? '!bg-orange-500 !border-orange-500' : !isWeaponValid() ? '!bg-red-500 !border-red-500' : ''" id="weapon" placeholder="weapon_pistol" v-model="filters.weapon">
+							<input class="block w-full px-4 py-3 bg-lime-500 !bg-opacity-10 border focus:border-lime-500 border-lime-500 rounded outline-none" :class="filters.weapon && filters.weapon.match(/^-?\d+$/m) ? '!bg-orange-500 !border-orange-500' : !isWeaponValid() ? '!bg-red-500 !border-red-500' : ''" id="weapon" placeholder="weapon_pistol" v-model="filters.weapon">
 						</div>
 
 						<!-- Entity Type -->
@@ -177,7 +177,7 @@
 								{{ t('logs.vehicle') }} #{{ log.hitGlobalId }}
 
 								<i v-if="Number.isInteger(log.tireIndex)" :title="t('logs.hit_tire', log.tireIndex)" class="fas fa-truck-monster ml-2 cursor-help"></i>
-								<i v-if="Number.isInteger(log.suspensionIndex)" :title="t('logs.hit_suspension', log.suspensionIndex)"  class="fas fa-car-crash ml-2 cursor-help"></i>
+								<i v-if="Number.isInteger(log.suspensionIndex)" :title="t('logs.hit_suspension', log.suspensionIndex)" class="fas fa-car-crash ml-2 cursor-help"></i>
 							</span>
 							<span class="italic" v-else-if="log.hitEntityType === 3">
 								{{ t('logs.object') }} #{{ log.hitGlobalId }}
@@ -186,7 +186,7 @@
 						<td class="p-3 mobile:block">
 							{{ log.hitHealth ? log.hitHealth + "hp" : "N/A" }}
 						</td>
-						<td class="p-3 mobile:block" :title="t('logs.damage_flags', getDamageFlags(log.flags))">
+						<td class="p-3 mobile:block" :title="t('logs.damage_flags', getDamageFlags(log.flags))" :style="{ color: getDamageColor(log.damage) }">
 							{{ log.damage }}hp
 
 							<i v-if="log.bonusDamage" :title="t('logs.bonus_damage')">+{{ log.bonusDamage }}hp</i>
@@ -197,9 +197,7 @@
 						<td class="p-3 mobile:block">
 							{{ log.hitComponent }}
 						</td>
-						<td class="p-3 mobile:block">
-							{{ log.weapon }}
-						</td>
+						<td class="p-3 mobile:block" :class="{ 'italic cursor-help': log.weapon.match(/^-?\d+$/m) && !(log.weapon in resolvedHashes) }" @click="resolveWeaponHash(log.weapon)" v-html="resolvedWeaponHash(log.weapon)"></td>
 						<td class="p-3 mobile:block whitespace-nowrap" v-if="showLogTimeDifference" :title="t('logs.diff_label')">
 							<span v-if="index + 1 < logs.length">
 								{{ formatMilliSecondDiff(log.timestamp - logs[index + 1].timestamp) }}
@@ -251,12 +249,16 @@
 import Layout from './../../Layouts/App.vue';
 import VSection from './../../Components/Section.vue';
 import Pagination from './../../Components/Pagination.vue';
+import HashResolver from './../../Components/HashResolver.vue';
+
+import Vue from 'vue';
 
 export default {
 	layout: Layout,
 	components: {
 		Pagination,
 		VSection,
+		HashResolver
 	},
 	props: {
 		logs: {
@@ -294,8 +296,8 @@ export default {
 	data() {
 		return {
 			isLoading: false,
-
-			showLogTimeDifference: false
+			showLogTimeDifference: false,
+			resolvedHashes: {}
 		};
 	},
 	methods: {
@@ -408,6 +410,35 @@ export default {
 			bitmask & 2 ** 24 && flags.push('DontAssertOnNullInflictor');
 
 			return flags.join(' | ');
+		},
+		getDamageColor(damage) {
+			const percentage = Math.max(1, Math.min(0, 1 - (140 / (damage - 80))));
+
+			return `hsl(${percentage * 100}, ${this.isDarkMode() ? "100%, 75%" : "75%, 25%"})`;
+		},
+		resolvedWeaponHash(hash) {
+			const resolved = this.resolvedHashes[hash] || false;
+
+			if (resolved) {
+				if (resolved === true) {
+					return '<i class="fas fa-spinner fa-spin"></i>';
+				}
+
+				return resolved;
+			}
+
+			return hash;
+		},
+		async resolveWeaponHash(hash) {
+			if (hash in this.resolvedHashes || !hash?.match(/^-?\d+$/m)) return;
+
+			Vue.set(this.resolvedHashes, hash, true);
+
+			const result = await this.resolveHash(hash);
+
+			Vue.set(this.resolvedHashes, hash, result ? result.name : false);
+
+			//this.$forceUpdate();
 		}
 	},
 	mounted() {

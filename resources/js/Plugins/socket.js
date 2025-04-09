@@ -4,7 +4,8 @@ import { io } from "socket.io-client";
 
 const Socket = {
 	async install(Vue, options) {
-		const isDev = window.location.hostname === "localhost";
+		const isDev = window.location.hostname === "localhost",
+			hashCache = {};
 
 		async function executeRequest(vue, type, route, throwError) {
 			if (!vue.$page.auth.socket) {
@@ -53,19 +54,29 @@ const Socket = {
 
 			if (Number.isNaN(int)) return false;
 
+			if (hash in hashCache) {
+				return hashCache[hash];
+			}
+
 			try {
 				const response = await _post("https://joaat.sh/j/reverse", JSON.stringify([int]));
 
 				if (!response || !Array.isArray(response)) return false;
 
+				let result = false;
+
 				const names = response[0];
 
-				if (!names || !Array.isArray(names)) return false;
+				if (names && Array.isArray(names) && names.length) {
+					result = {
+						name: names[0],
+						hash: `0x${int.toString(16)}`,
+					};
+				}
 
-				return {
-					name: names[0],
-					hash: `0x${int.toString(16)}`,
-				};
+				hashCache[hash] = result;
+
+				return result;
 			} catch (e) {
 				return false;
 			}

@@ -89,17 +89,15 @@ class WeaponDamageEvent extends Model
     {
         $list = self::getWeaponList();
 
+        if ($hash > 2147483647) {
+            $hash -= 4294967296;
+        }
+
         if (isset($list[$hash])) {
             return $list[$hash]['name'];
         }
 
-        $signed = $hash - 4294967296;
-
-        if (isset($list[$signed])) {
-            return $list[$signed]['name'];
-        }
-
-        return "$hash/$signed";
+        return "$hash";
     }
 
     public static function getWeaponHash(string $name)

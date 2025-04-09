@@ -15,7 +15,7 @@ const Theme = {
 			}
 		};
 
-		Vue.prototype.toggleTheme = function () {
+		Vue.prototype.toggleTheme = () => {
 			if (darkMode) {
 				localStorage.setItem('theme', 'light');
 			} else {
