@@ -499,7 +499,7 @@ export default {
 
                     const { weaponDamage, weaponHash, distance } = metadata.event;
 
-                    return `--${weaponHash}-- - **${dmg}** (${distance.toFixed(2)}m)`;
+                    return `--${weaponHash}-- - **${weaponDamage}hp** (${distance.toFixed(2)}m)`;
                 }
             }
 
