@@ -57,7 +57,7 @@
 							<label class="block mb-2" for="weapon">
 								{{ t('logs.weapon') }}
 							</label>
-							<input class="block w-full px-4 py-3 bg-lime-500 !bg-opacity-10 border focus:border-lime-500 border-lime-500 rounded outline-none" :class="weapon.match(/^-?\d+$/m) ? '!bg-orange-500 !border-orange-500' : !isWeaponValid() ? '!bg-red-500 !border-red-500' : ''" id="weapon" placeholder="weapon_pistol" v-model="filters.weapon">
+							<input class="block w-full px-4 py-3 bg-lime-500 !bg-opacity-10 border focus:border-lime-500 border-lime-500 rounded outline-none" :class="weapon && weapon.match(/^-?\d+$/m) ? '!bg-orange-500 !border-orange-500' : !isWeaponValid() ? '!bg-red-500 !border-red-500' : ''" id="weapon" placeholder="weapon_pistol" v-model="filters.weapon">
 						</div>
 
 						<!-- Entity Type -->
