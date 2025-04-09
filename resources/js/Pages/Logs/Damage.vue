@@ -33,7 +33,7 @@
 
 					<div class="flex flex-wrap mb-4">
 						<!-- Attacker -->
-						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
+						<div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2" for="attacker">
 								{{ t('logs.attacker') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
@@ -41,7 +41,7 @@
 						</div>
 
 						<!-- Victim -->
-						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
+						<div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2" for="victim">
 								{{ t('logs.victim') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
@@ -52,12 +52,24 @@
 							</div>
 						</div>
 
+						<!-- Damage -->
+						<div class="w-1/6 px-3 mobile:w-full mobile:mb-3">
+							<label class="block mb-2" for="damage">
+								{{ t('logs.damage') }}
+							</label>
+							<input class="block w-full px-4 py-3 !bg-opacity-10 border rounded outline-none" :class="damageColor" id="damage" placeholder=">20" v-model="filters.damage">
+
+							<div class="w-full mt-1 italic">
+								<small class="text-muted dark:text-dark-muted leading-4 block" v-html="t('logs.damage_hint')"></small>
+							</div>
+						</div>
+
 						<!-- Weapon -->
 						<div class="w-1/6 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2" for="weapon">
 								{{ t('logs.weapon') }}
 							</label>
-							<input class="block w-full px-4 py-3 bg-lime-500 !bg-opacity-10 border focus:border-lime-500 border-lime-500 rounded outline-none" :class="filters.weapon && filters.weapon.match(/^-?\d+$/m) ? '!bg-orange-500 !border-orange-500' : !isWeaponValid() ? '!bg-red-500 !border-red-500' : ''" id="weapon" placeholder="weapon_pistol" v-model="filters.weapon">
+							<input class="block w-full px-4 py-3 !bg-opacity-10 border rounded outline-none" :class="weaponColor" id="weapon" placeholder="weapon_pistol" v-model="filters.weapon">
 						</div>
 
 						<!-- Entity Type -->
@@ -268,6 +280,7 @@ export default {
 		filters: {
 			attacker: String,
 			victim: String,
+			damage: String,
 			weapon: String,
 			entity: String,
 			before: Number,
@@ -300,14 +313,33 @@ export default {
 			resolvedHashes: {}
 		};
 	},
-	methods: {
-		isWeaponValid() {
+	computed: {
+		weaponColor() {
 			const weapon = this.filters.weapon?.trim()?.toLowerCase();
 
-			if (!weapon) return true;
+			if (!weapon) {
+				return "bg-gray-200 dark:bg-gray-600";
+			} else if (this.weapons.includes(weapon)) {
+				return "bg-lime-500 focus:border-lime-500 border-lime-500";
+			} else if (weapon.match(/^-?\d+$/m)) {
+				return "bg-orange-500 focus:border-orange-500 border-orange-500";
+			}
 
-			return this.weapons.includes(weapon);
+			return "bg-red-500 focus:border-red-500 border-red-500";
 		},
+		damageColor() {
+			const damage = this.filters.damage?.trim();
+
+			if (!damage) {
+				return "bg-gray-200 dark:bg-gray-600";
+			} else if (damage.match(/^[<=>]\d+$/m)) {
+				return "bg-lime-500 focus:border-lime-500 border-lime-500";
+			}
+
+			return "bg-red-500 focus:border-red-500 border-red-500";
+		}
+	},
+	methods: {
 		formatMilliSecondDiff(ms) {
 			if (ms <= 5000) {
 				const seconds = Math.floor(ms / 1000);

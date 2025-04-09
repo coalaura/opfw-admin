@@ -348,6 +348,7 @@
         "damage_dealt": "Skade påført",
         "damage_description": "På denne siden kan du se og filtrere skadelogger.",
         "damage_flags": "Skadeflagg: {0}",
+        "damage_hint": "<b>Tips:</b> >, = eller < etterfulgt av beløpet.",
         "dark_chat": "Mørk chat",
         "dark_chat_description": "På denne siden kan du se og filtrere meldinger fra mørk chat.",
         "description": "På denne siden kan du se og filtrere serverloggene.",

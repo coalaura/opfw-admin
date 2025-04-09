@@ -1,13 +1,12 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Helpers\CacheHelper;
 use App\Helpers\GeneralHelper;
 use App\Helpers\PermissionHelper;
 use App\Http\Resources\LogResource;
-use App\Http\Resources\WeaponDamageEventResource;
 use App\Http\Resources\MoneyLogResource;
+use App\Http\Resources\WeaponDamageEventResource;
 use App\Log;
 use App\MoneyLog;
 use App\Player;
@@ -28,7 +27,7 @@ class LogController extends Controller
         "Oxy Run Ended",
         "Oxy Run Failed",
         "Jim's Gun Shop",
-        "Crafted Gun"
+        "Crafted Gun",
     ];
 
     /**
@@ -48,14 +47,14 @@ class LogController extends Controller
         if (env('RESTRICT_DRUG_LOGS', false)) {
             $player = user();
 
-            if (!$player->panel_drug_department && !$player->isSuperAdmin()) {
+            if (! $player->panel_drug_department && ! $player->isSuperAdmin()) {
                 $canSearchDrugs = false;
             }
         }
 
         $query = Log::query()->orderByDesc('timestamp');
 
-        if (!$canSearchDrugs) {
+        if (! $canSearchDrugs) {
             $query->whereNotIn('action', self::DRUG_LOGS);
 
             $skipped = ['action is "' . implode('", "', self::DRUG_LOGS) . '"'];
@@ -162,7 +161,7 @@ class LogController extends Controller
      */
     public function moneyLogs(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_MONEY_LOGS)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_MONEY_LOGS)) {
             abort(403);
         }
 
@@ -230,7 +229,7 @@ class LogController extends Controller
 
     public function darkChat(Request $request)
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_DARK_CHAT)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_DARK_CHAT)) {
             abort(403);
         }
 
@@ -280,7 +279,7 @@ class LogController extends Controller
      */
     public function phoneLogs(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_PHONE_LOGS)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_PHONE_LOGS)) {
             abort(403);
         }
 
@@ -300,7 +299,7 @@ class LogController extends Controller
      */
     public function phoneLogsData(Request $request)
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_PHONE_LOGS)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_PHONE_LOGS)) {
             abort(403);
         }
 
@@ -352,7 +351,7 @@ class LogController extends Controller
 
     public function searches(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_ADVANCED)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_ADVANCED)) {
             abort(401);
         }
 
@@ -396,7 +395,7 @@ class LogController extends Controller
 
     public function screenshotLogs(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_ADVANCED)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_ADVANCED)) {
             abort(401);
         }
 
@@ -488,7 +487,7 @@ class LogController extends Controller
 
     public function damageLogs(Request $request)
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_DAMAGE_LOGS)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_DAMAGE_LOGS)) {
             abort(401);
         }
 
@@ -503,6 +502,13 @@ class LogController extends Controller
 
         // Filtering by victim identifier.
         $this->searchQuery($request, $query, 'victim', 'hit_player');
+
+        // Filtering by damage.
+        $damage = $request->input('damage');
+
+        if ($damage && preg_match('/^[<=>]\d+$/m', $damage)) {
+            $query->where('weapon_damage', $damage[0], substr($damage, 1));
+        }
 
         // Filtering by weapon.
         if ($weapon = $request->input('weapon')) {
@@ -559,6 +565,7 @@ class LogController extends Controller
             'filters'   => $request->all(
                 'attacker',
                 'victim',
+                'damage',
                 'weapon',
                 'entity',
                 'after',
@@ -574,7 +581,7 @@ class LogController extends Controller
 
     private function multiValues(?string $val): ?array
     {
-        if (!$val) {
+        if (! $val) {
             return null;
         }
 

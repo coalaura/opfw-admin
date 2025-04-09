@@ -1479,6 +1479,7 @@
         "attacker": "Attacker",
         "victim": "Victim",
         "victim_hint": "<b>Hint:</b> Can be a license identifier or a network id.",
+        "damage_hint": "<b>Hint:</b> >, = or < followed by the amount.",
         "weapon": "Weapon",
         "entity": "Entity",
         "peds": "Peds",

@@ -348,6 +348,7 @@
         "damage_dealt": "Hurt Given",
         "damage_description": "Here see and sort hurt logs.",
         "damage_flags": "Hurt Flags: {0}",
+        "damage_hint": "Hint: >, = eller < med mengde.",
         "dark_chat": "Dark Talk",
         "dark_chat_description": "Here see and sort dark talk messages.",
         "description": "Here see and sort server logs.",

@@ -348,6 +348,7 @@
         "damage_dealt": "Damage Dealt",
         "damage_description": "On this here page, y'all can view and filter the damage logs.",
         "damage_flags": "Damage Flags: {0}",
+        "damage_hint": "<b>Hint:</b> >, = or < followed by the amount, y'all.",
         "dark_chat": "Dark Chat",
         "dark_chat_description": "On this here page, y'all can view and filter dark chat messages.",
         "description": "On this here page, y'all can view and filter the server logs.",

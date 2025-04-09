@@ -348,6 +348,7 @@
         "damage_dealt": "Nuksan Diya",
         "damage_description": "Is page par aap nuksan logs dekh aur chhan sakte hain.",
         "damage_flags": "Nuksan Flags: {0}",
+        "damage_hint": "<b>Soochna:</b> >, = ya < ke baad rakam.",
         "dark_chat": "Dark Chat",
         "dark_chat_description": "Is page par aap dark chat messages dekh aur chhan sakte hain.",
         "description": "Is page par aap server logs dekh aur chhan sakte hain.",
