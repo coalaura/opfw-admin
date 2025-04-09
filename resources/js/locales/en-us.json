@@ -55,6 +55,7 @@
         "server_online": "Server has been online since {0}.",
         "permission": "Your current permission level",
         "ai_generated": "Most likely AI generated.",
+        "read_out_loud": "Read text out loud via TTS.",
         "status": {
             "online": "Online",
             "afk": "AFK",
@@ -1499,7 +1500,8 @@
         "silenced": "Silenced",
         "hit_tire": "Hit tire with index {0}.",
         "hit_suspension": "Hit suspension with index {0}.",
-        "damage_flags": "Damage Flags: {0}"
+        "damage_flags": "Damage Flags: {0}",
+        "hashes_docs": "What does the number mean?"
     },
     "panel_logs": {
         "title": "Panel Logs",

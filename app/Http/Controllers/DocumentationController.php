@@ -11,6 +11,7 @@ class DocumentationController extends Controller
         'damage_modifier'    => 'DamageModifier',
         'disconnect_reasons' => 'DisconnectReasons',
         'markdown'           => 'Markdown',
+        'hashes'             => 'Hashes',
     ];
 
     /**

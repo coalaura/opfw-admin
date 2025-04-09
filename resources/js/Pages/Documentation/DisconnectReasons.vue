@@ -6,8 +6,10 @@
 
         <v-section class="overflow-x-auto" :noFooter="true" :noHeader="true">
             <div class="w-full flex flex-wrap max-w-screen-md m-auto text-justify">
-                <h1 class="dark:text-white mb-5">
+                <h1 class="dark:text-white mb-5 flex justify-between w-full">
                     Server-Logs: Disconnect reasons
+
+                    <TextToSpeech source="/tts/docs/disconnect_reasons.mp3" />
                 </h1>
 
                 <p>
@@ -102,17 +104,25 @@
                 </p>
             </div>
         </v-section>
+
+        <scoped-style>
+            header {
+                display: none !important;
+            }
+        </scoped-style>
     </div>
 </template>
 
 <script>
 import Layout from './../../Layouts/App.vue';
 import VSection from './../../Components/Section.vue';
+import TextToSpeech from './../../Components/TextToSpeech.vue';
 
 export default {
     layout: Layout,
     components: {
         VSection,
+        TextToSpeech,
     },
 }
 </script>

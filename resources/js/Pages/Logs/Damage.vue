@@ -209,7 +209,12 @@
 						<td class="p-3 mobile:block">
 							{{ log.hitComponent }}
 						</td>
-						<td class="p-3 mobile:block" :class="{ 'italic cursor-help': log.weapon.match(/^-?\d+$/m) && !(log.weapon in resolvedHashes) }" @click="resolveWeaponHash(log.weapon)" v-html="resolvedWeaponHash(log.weapon)"></td>
+						<td class="p-3 mobile:block">
+							<div class="flex items-center gap-1">
+								<span :class="{ 'italic cursor-help': log.weapon.match(/^-?\d+$/m) && !(log.weapon in resolvedHashes) }" @click="resolveWeaponHash(log.weapon)" v-html="resolvedWeaponHash(log.weapon)"></span>
+								<a href="/docs/hashes" target="_blank" class="text-blue-600 dark:text-blue-400" :title="t('logs.hashes_docs')" v-if="log.weapon.match(/^-?\d+$/m)">[?]</a>
+							</div>
+						</td>
 						<td class="p-3 mobile:block whitespace-nowrap" v-if="showLogTimeDifference" :title="t('logs.diff_label')">
 							<span v-if="index + 1 < logs.length">
 								{{ formatMilliSecondDiff(log.timestamp - logs[index + 1].timestamp) }}

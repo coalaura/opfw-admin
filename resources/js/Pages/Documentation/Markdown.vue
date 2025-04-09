@@ -6,8 +6,10 @@
 
         <v-section class="overflow-x-auto" :noFooter="true" :noHeader="true">
             <div class="w-full flex flex-wrap max-w-screen-md m-auto text-justify">
-                <h1 class="dark:text-white mb-5">
+                <h1 class="dark:text-white mb-5 flex justify-between w-full">
                     Markdown Support
+
+                    <TextToSpeech source="/tts/docs/markdown.mp3" />
                 </h1>
 
                 <p class="mb-3">
@@ -94,11 +96,13 @@ multiple lines
 <script>
 import Layout from './../../Layouts/App.vue';
 import VSection from './../../Components/Section.vue';
+import TextToSpeech from './../../Components/TextToSpeech.vue';
 
 export default {
     layout: Layout,
     components: {
         VSection,
+        TextToSpeech,
     },
 }
 </script>
