@@ -444,7 +444,7 @@ export default {
 			return flags.join(' | ');
 		},
 		getDamageColor(damage) {
-			const percentage = Math.max(1, Math.min(0, 1 - (140 / (damage - 80))));
+			const percentage = 1 - Math.min(1, Math.max(0, (damage - 80) / 60));
 
 			return `hsl(${percentage * 100}, ${this.isDarkMode() ? "100%, 75%" : "75%, 25%"})`;
 		},
@@ -469,8 +469,6 @@ export default {
 			const result = await this.resolveHash(hash);
 
 			Vue.set(this.resolvedHashes, hash, result ? result.name : false);
-
-			//this.$forceUpdate();
 		}
 	},
 	mounted() {
