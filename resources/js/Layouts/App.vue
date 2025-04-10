@@ -3,7 +3,7 @@
 
         <div class="flex flex-col h-screen">
             <!-- Navbar -->
-            <navbar />
+            <navbar :showChat.sync="showChat" />
 
             <!-- Modals -->
             <portal-target name="modals" />
@@ -54,6 +54,8 @@
                     <!-- Footer -->
                     <foot />
                 </div>
+
+                <PanelChat v-if="showChat" :active="showChat" group="general" dimensions="w-72 h-full px-2 py-1 border-l-4 border-gray-300 dark:border-gray-900 bg-gray-200 dark:bg-gray-850 dark:text-white" :emotes="$page.emotes" />
             </div>
         </div>
 
@@ -65,6 +67,7 @@ import FlashMessage from './../Components/FlashMessage.vue';
 import Navbar from './../Components/Navbar.vue';
 import Sidebar from './../Components/Sidebar.vue';
 import Foot from './../Components/Footer.vue';
+import PanelChat from './../Components/PanelChat.vue';
 
 export default {
     components: {
@@ -72,10 +75,12 @@ export default {
         Foot,
         Sidebar,
         Navbar,
+        PanelChat,
     },
     data() {
         return {
             scrolled: false,
+            showChat: false,
             headerClosed: !!this.pageStore.get("header_closed")
         };
     },

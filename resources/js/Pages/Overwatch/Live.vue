@@ -139,7 +139,7 @@
                     </div>
                 </div>
 
-                <PanelChat :active="true" :height="height" :room="chatRoom" :activeViewers.sync="activeViewers" :inactiveViewers.sync="inactiveViewers" :dimensions="fullscreen ? 'w-chat-full px-2 py-1 border-l-4 border-lightbd dark:border-darkbd bg-lightbg dark:bg-darkbg' : 'w-96'" :emotes="emotes" />
+                <PanelChat :active="true" :height="height" :room="chatRoom" :activeViewers.sync="activeViewers" :inactiveViewers.sync="inactiveViewers" :dimensions="fullscreen ? 'w-chat-full px-2 py-1 border-l-4 border-lightbd dark:border-darkbd bg-lightbg dark:bg-darkbg' : 'w-96'" :emotes="$page.emotes" />
             </div>
         </v-section>
 
@@ -219,10 +219,6 @@ export default {
         PanelChat,
     },
     props: {
-        emotes: {
-            type: Object | Array,
-            required: true
-        },
         replay: {
             type: Boolean,
             required: true

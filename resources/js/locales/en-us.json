@@ -632,6 +632,7 @@
         "debug_server_host": "FiveM Server Host",
         "debug_request_ip": "Request IP",
         "debug_user_agent": "User-Agent",
+        "toggle_chat": "Toggle the panel general chat.",
         "permissions": "Permissions",
         "perm": "Permission",
         "perm_level": "Level",

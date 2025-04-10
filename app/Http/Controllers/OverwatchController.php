@@ -51,7 +51,6 @@ class OverwatchController extends Controller
 
         return Inertia::render('Overwatch/Live', [
             'replay' => HttpHelper::isPortInUse(4644),
-            'emotes' => Warning::getAllReactions(),
         ]);
     }
 

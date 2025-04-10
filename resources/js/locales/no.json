@@ -626,6 +626,7 @@
         "streamer": "Kjeder du deg? Sjekk ut denne streamer!",
         "streamer_many": "Kjeder du deg? Sjekk ut disse {0} streamere!",
         "streamer_title": "Aktive streamere",
+        "toggle_chat": "Veksle panelet for generell chat.",
         "update": "Oppdatering tilgjengelig",
         "world_time": "Verdens tid",
         "world_time_also": "Samme som: {0}",

@@ -69,6 +69,7 @@ export default {
         active: Boolean,
         dimensions: String,
         room: String | Boolean,
+        group: String,
         height: String | Boolean,
         emotes: Object | Array,
         activeViewers: Array,
@@ -267,7 +268,8 @@ export default {
                 query: {
                     token: this.$page.auth.token,
                     server: this.$page.serverName,
-                    license: this.$page.auth.player.licenseIdentifier
+                    license: this.$page.auth.player.licenseIdentifier,
+                    group: this.group || "",
                 }
             });
 

@@ -626,6 +626,7 @@
         "streamer": "Bored? Why don’t ya check out this here streamer!",
         "streamer_many": "Bored? Why don’t ya check out these {0} streamers!",
         "streamer_title": "Active Streamers",
+        "toggle_chat": "Go on and flip that there panel for the general chit-chat.",
         "update": "Update's ready for ya",
         "world_time": "World Time",
         "world_time_also": "Same as: {0}",

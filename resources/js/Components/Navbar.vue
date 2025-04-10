@@ -113,6 +113,8 @@
                     </div>
                 </div>
             </div>
+
+            <i class="dark:text-white absolute top-1.5 right-2 shadow-sm cursor-pointer !transition-opacity opacity-50 hover:opacity-100" :class="showChat ? 'fas fa-comment-slash' : 'fas fa-comment'" :title="t('nav.toggle_chat')" @click="toggleChat"></i>
         </nav>
 
         <modal :show.sync="showingPermissions">
@@ -319,6 +321,9 @@ export default {
         Icon,
         Modal
     },
+    props: {
+        showChat: Boolean
+    },
     data() {
         const timezones = this.$page.timezones.map(timezone => {
             timezone.time = this.getDateForTimezone(timezone);
@@ -412,6 +417,9 @@ export default {
         }
     },
     methods: {
+        toggleChat() {
+            this.$emit("update:showChat", !this.showChat);
+        },
         updateWorldTime() {
             this.now = Date.now();
 

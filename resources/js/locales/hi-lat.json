@@ -626,6 +626,7 @@
         "streamer": "Bore ho? Is streamer ko dekho!",
         "streamer_many": "Bore ho? In {0} streamers ko dekho!",
         "streamer_title": "Sakriya Streamers",
+        "toggle_chat": "Panel general chat ko toggle karein.",
         "update": "Update uplabdh",
         "world_time": "Vishwa Samay",
         "world_time_also": "Jaisa ki: {0}",

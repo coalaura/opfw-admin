@@ -7,6 +7,7 @@ use App\Helpers\PermissionHelper;
 use App\Helpers\SocketAPI;
 use App\Http\Resources\LoggedInPlayerResource;
 use App\Server;
+use App\Warning;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
@@ -205,6 +206,8 @@ class AppServiceProvider extends ServiceProvider
 
                 return false;
             },
+
+            'emotes' => Warning::getAllReactions(),
 
             'global'     => env('GLOBAL_SERVER', 'https://global.op-framework.com/'),
             'api'        => env('API_SERVER', 'https://op-framework.com/api'),
