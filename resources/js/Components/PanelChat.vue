@@ -149,9 +149,9 @@ export default {
             this.muted = !this.muted;
 
             if (this.muted) {
-                localStorage.setItem('panel_chat_muted', 'yes');
+                localStorage.setItem(`panel_chat_muted_${this.group || ""}`, true);
             } else {
-                localStorage.removeItem('panel_chat_muted');
+                localStorage.removeItem(`panel_chat_muted_${this.group || ""}`);
             }
         },
 		escapeHtml(unsafe) {
