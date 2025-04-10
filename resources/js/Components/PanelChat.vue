@@ -77,6 +77,7 @@ export default {
     },
     data() {
         return {
+            master: false,
             socket: null,
 
             showEmotes: false,
@@ -253,6 +254,10 @@ export default {
                 return;
             }
 
+            this.openMasterTab(`chat_${this.group}`, isMaster => {
+                this.master = isMaster;
+            });
+
             this.messages = [];
             this.users = [];
 
@@ -350,6 +355,8 @@ export default {
                 return;
             }
 
+            this.closeMasterTab();
+
             this.socket.close();
 
             this.socket = null;
@@ -407,7 +414,7 @@ export default {
         },
 
         notify() {
-            if (this.muted) return;
+            if (this.muted || !this.master) return;
 
             const audio = new Audio("/images/notification_pop3.ogg");
 
@@ -438,8 +445,10 @@ export default {
         visibilityStateChanged() {
             if (!this.connected) return;
 
+            this.visible = document.visibilityState !== "hidden";
+
             this.socket.emit("active", pack(document.visibilityState !== "hidden"));
-        },
+        }
     },
     created() {
         window.addEventListener("focus", this.scrollInstant);

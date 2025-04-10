@@ -7,6 +7,7 @@ import Toast from "vue-toastification";
 import NProgress from "nprogress";
 
 import Localization from "./Plugins/localization.js";
+import MasterTab from "./Plugins/master-tab.js";
 import Theme from "./Plugins/theme.js";
 import Markdown from "./Plugins/markdown.js";
 import Chunked from "./Plugins/chunked.js";
@@ -56,6 +57,7 @@ Vue.use(InertiaApp);
 Vue.use(Interceptor);
 Vue.use(Theme);
 Vue.use(PortalVue);
+Vue.use(MasterTab);
 Vue.use(Localization);
 Vue.use(Storage);
 Vue.use(Spreadsheet);
