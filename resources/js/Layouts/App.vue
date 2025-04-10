@@ -55,7 +55,7 @@
                     <foot />
                 </div>
 
-                <PanelChat v-if="showChat" :active="showChat" group="general" dimensions="w-72 h-full px-2 py-1 border-l-4 border-gray-300 dark:border-gray-900 bg-gray-200 dark:bg-gray-850 dark:text-white" :emotes="$page.emotes" />
+                <PanelChat v-if="showChat" :active="showChat" group="general" dimensions="flex-shrink-0 w-72 h-full px-2 py-1 border-l-4 border-gray-300 dark:border-gray-900 bg-gray-200 dark:bg-gray-850 dark:text-white" :emotes="$page.emotes" />
             </div>
         </div>
 
@@ -80,9 +80,18 @@ export default {
     data() {
         return {
             scrolled: false,
-            showChat: false,
+            showChat: !!localStorage.getItem("show_chat"),
             headerClosed: !!this.pageStore.get("header_closed")
         };
+    },
+    watch: {
+        showChat() {
+            if (this.showChat) {
+                localStorage.setItem("show_chat", true);
+            } else {
+                localStorage.removeItem("show_chat");
+            }
+        }
     },
     computed: {
         canHideHeader() {

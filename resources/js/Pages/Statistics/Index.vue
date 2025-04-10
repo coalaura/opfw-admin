@@ -370,7 +370,13 @@ export default {
     },
     watch: {
         search() {
-            localStorage.setItem('statistics_search', this.search);
+            const search = this.search?.trim();
+
+            if (search) {
+                localStorage.setItem('statistics_search', search);
+            } else {
+                localStorage.removeItem('statistics_search');
+            }
         }
     },
     mounted() {
