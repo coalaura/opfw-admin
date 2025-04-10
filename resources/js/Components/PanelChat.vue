@@ -89,7 +89,7 @@ export default {
             timeout: false,
             connecting: false,
             connected: false,
-            muted: false,
+            muted: !!localStorage.getItem(`panel_chat_muted_${this.group || ""}`),
 
             message: '',
             messages: [],
@@ -464,8 +464,6 @@ export default {
         if (this.active) {
             this.connect();
         }
-
-        this.muted = !!localStorage.getItem(`panel_chat_muted_${this.group || ""}`);
 
         this.interval = setInterval(this.updateTimestamp, 5000);
 
