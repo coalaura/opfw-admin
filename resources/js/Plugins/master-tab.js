@@ -77,13 +77,14 @@ const MasterTab = {
 		const negotiators = {};
 
 		Vue.prototype.openMasterTab = (name, callback) => {
-			const negotiator = negotiators[name];
-
-			if (negotiator) {
-				negotiator.close();
+			if (negotiators[name]) {
+				negotiators[name].close();
 			}
 
-			negotiators[name] = open(name, callback);
+			const negotiator = new Negotiator();
+			negotiator.open(name, callback);
+
+			negotiators[name] = negotiator;
 		};
 
 		Vue.prototype.closeMasterTab = () => {
