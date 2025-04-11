@@ -2,14 +2,15 @@ class Negotiator {
 	constructor() {
 		this.id = Math.floor(Math.random() * 1000 * 1000);
 
-		this.tabs = [id];
-		this.master = false;
-		this.channel = false;
+		this.channel = null;
 		this.timeout = false;
 	}
 
 	open(name, callback) {
 		if (this.channel) return;
+
+		this.master = false;
+		this.tabs = [this.id];
 
 		this.channel = new BroadcastChannel(name);
 
@@ -51,7 +52,7 @@ class Negotiator {
 
 			this.master = Math.max(...tabs);
 
-			callback(this.master === id);
+			callback(this.master === this.id);
 		});
 	}
 
@@ -62,7 +63,7 @@ class Negotiator {
 
 		this.channel.postMessage({
 			type: "goodbye",
-			tab: id,
+			tab: this.id,
 		});
 
 		this.channel.close();
