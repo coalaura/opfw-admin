@@ -94,7 +94,7 @@ const MasterTab = {
 			negotiators[name] = Negotiator.create(name, callback);
 		};
 
-		Vue.prototype.closeMasterTab = () => {
+		Vue.prototype.closeMasterTab = (name) => {
 			const negotiator = negotiators[name];
 
 			if (!negotiator) {
