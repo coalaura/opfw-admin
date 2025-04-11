@@ -89,6 +89,7 @@ export default {
             timeout: false,
             connecting: false,
             connected: false,
+            reconnect: true,
             muted: !!localStorage.getItem(`panel_chat_muted_${this.group || ""}`),
 
             message: '',
@@ -247,10 +248,42 @@ export default {
             this.$emit("update:activeViewers", map(active));
             this.$emit("update:inactiveViewers", map(inactive));
         },
-        connect() {
+        async resolveToken() {
+            const token = this.$page.auth.token,
+                expires = this.$page.auth.expires;
+
+            if (Date.now()/1000 < expires - 60) {
+                return token;
+            }
+
+            try {
+                const data = await _get("/api/chat_token");
+
+                if (!data?.status) {
+                    throw new Error("failed to retrieve token");
+                }
+
+                return data.data
+            } catch (e) {
+                console.error(e);
+            }
+
+            return false;
+        },
+        async connect() {
             clearTimeout(this.timeout);
 
-            if (this.socket) {
+            if (this.socket || this.connecting) {
+                return;
+            }
+
+            this.connecting = true;
+
+            const token = await this.resolveToken();
+
+            if (!token) {
+                this.connecting = false;
+
                 return;
             }
 
@@ -261,7 +294,6 @@ export default {
             this.messages = [];
             this.users = [];
 
-            this.connecting = true;
             this.connected = false;
 
             const isDev = window.location.hostname === 'localhost',
@@ -271,7 +303,7 @@ export default {
                 reconnectionDelayMax: 5000,
                 path: "/panel_chat",
                 query: {
-                    token: this.$page.auth.token,
+                    token: token,
                     server: this.$page.serverName,
                     license: this.$page.auth.player.licenseIdentifier,
                     group: this.group || "",
@@ -325,7 +357,9 @@ export default {
 
                 this.disconnect();
 
-                this.timeout = setTimeout(() => this.connect(), 2500);
+                if (this.active && this.reconnect) {
+                    this.timeout = setTimeout(() => this.connect(), 2500);
+                }
             });
 
             this.socket.on("connect", () => {
@@ -349,6 +383,9 @@ export default {
             this.connecting = false;
             this.connected = false;
 
+            this.messages = [];
+            this.users = [];
+
             this.sentRoom = false;
 
             if (!this.socket) {
@@ -357,7 +394,7 @@ export default {
 
             this.closeMasterTab();
 
-            this.socket.close();
+            this.socket.disconnect();
 
             this.socket = null;
         },
@@ -460,7 +497,14 @@ export default {
         window.removeEventListener("visibilitychange", this.visibilityStateChanged);
         window.removeEventListener("fullscreenchange", this.scrollInstant);
     },
-    mounted() {
+    beforeDestroy() {
+        this.reconnect = false;
+
+        this.disconnect();
+
+        clearInterval(this.interval);
+    },
+    beforeMount() {
         if (this.active) {
             this.connect();
         }
@@ -469,9 +513,6 @@ export default {
 
         // preload
         fetch("/images/notification_pop3.ogg");
-    },
-    unmounted() {
-        clearInterval(this.interval);
     }
 }
 </script>

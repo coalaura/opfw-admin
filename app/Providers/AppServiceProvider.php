@@ -8,8 +8,8 @@ use App\Helpers\SocketAPI;
 use App\Http\Resources\LoggedInPlayerResource;
 use App\Server;
 use App\Warning;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -52,7 +52,7 @@ class AppServiceProvider extends ServiceProvider
                 ';
             }
 
-            $base = 'build/';
+            $base         = 'build/';
             $manifestPath = public_path($base . 'manifest.json');
 
             if (! file_exists($manifestPath)) {
@@ -60,7 +60,7 @@ class AppServiceProvider extends ServiceProvider
             }
 
             $manifest = json_decode(file_get_contents($manifestPath), true);
-            if (!$manifest || !is_array($manifest)) {
+            if (! $manifest || ! is_array($manifest)) {
                 return '<!-- manifest unreadable -->';
             }
 
@@ -207,7 +207,7 @@ class AppServiceProvider extends ServiceProvider
                 return false;
             },
 
-            'emotes' => Warning::getAllReactions(),
+            'emotes'     => Warning::getAllReactions(),
 
             'global'     => env('GLOBAL_SERVER', 'https://global.op-framework.com/'),
             'api'        => env('API_SERVER', 'https://op-framework.com/api'),
@@ -221,6 +221,7 @@ class AppServiceProvider extends ServiceProvider
                     'settings'    => $player ? $player->getPanelSettings() : null,
                     'permissions' => PermissionHelper::getFrontendPermissions(),
                     'token'       => session_token(),
+                    'expires'     => time() + (4 * 60 * 60),
                     'cluster'     => CLUSTER,
                     'servers'     => Server::getOPFWServers("name"),
                     'socket'      => SocketAPI::isUp(),

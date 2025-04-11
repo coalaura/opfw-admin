@@ -116,4 +116,9 @@ class ApiController extends Controller
 
         return $this->json(true, $result);
     }
+
+    public function chatToken()
+    {
+        return $this->json(true, session_token());
+    }
 }
