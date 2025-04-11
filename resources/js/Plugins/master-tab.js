@@ -1,84 +1,106 @@
-const MasterTab = {
-	async install(Vue, options) {
-		const id = Math.floor(Math.random() * 1000 * 1000);
+class Negotiator
+{
+	constructor() {
+		this.id = Math.floor(Math.random() * 1000 * 1000);
 
-		let tabs = [id],
-			master = false,
-			channel = false,
-			timeout = false;
+		this.tabs = [id];
+		this.master = false;
+		this.channel = false;
+		this.timeout = false;
+	}
 
-		function open(name, callback) {
-			if (channel) return;
 
-			channel = new BroadcastChannel(name);
+	open(name, callback) {
+		if (this.channel) return;
 
-			channel.postMessage({
-				type: "hello",
-				tab: id,
-			});
+		this.channel = new BroadcastChannel(name);
 
-			timeout = setTimeout(() => {
-				if (master) return;
+		this.channel.postMessage({
+			type: "hello",
+			tab: this.id,
+		});
 
-				master = id;
+		this.timeout = setTimeout(() => {
+			if (this.master) return;
 
-				callback(true);
-			}, 200);
+			this.master = this.id;
 
-			channel.addEventListener("message", event => {
-				const type = event.data.type,
-					tab = event.data.tab;
+			callback(true);
+		}, 200);
 
-				if (tab === id) return;
+		this.channel.addEventListener("message", event => {
+			const type = event.data.type,
+				tab = event.data.tab;
 
-				clearTimeout(timeout);
+			if (tab === this.id) return;
 
-				if (type === "hello" || type === "hi") {
-					if (!tabs.includes(tab)) {
-						tabs.push(tab);
-					}
+			clearTimeout(this.timeout);
 
-					if (type === "hello") {
-						channel.postMessage({
-							type: "hi",
-							tab: id,
-						});
-					}
-				} else if (type === "goodbye") {
-					tabs = tabs.filter(tb => tb !== tab);
+			if (type === "hello" || type === "hi") {
+				if (!this.tabs.includes(tab)) {
+					this.tabs.push(tab);
 				}
 
-				master = Math.max(...tabs);
+				if (type === "hello") {
+					this.channel.postMessage({
+						type: "hi",
+						tab: this.id,
+					});
+				}
+			} else if (type === "goodbye") {
+				this.tabs = this.tabs.filter(tb => tb !== tab);
+			}
 
-				callback(master === id);
-			});
-		}
+			this.master = Math.max(...tabs);
 
-		function close() {
-			if (!channel) return;
+			callback(this.master === id);
+		});
+	}
 
-			clearTimeout(timeout);
+	close() {
+		if (!this.channel) return;
 
-			channel.postMessage({
-				type: "goodbye",
-				tab: id,
-			});
+		clearTimeout(this.timeout);
 
-			channel.close();
+		this.channel.postMessage({
+			type: "goodbye",
+			tab: id,
+		});
 
-			channel = false;
-		}
+		this.channel.close();
+
+		this.channel = null;
+	}
+}
+
+const MasterTab = {
+	async install(Vue, options) {
+		const negotiators = {};
 
 		Vue.prototype.openMasterTab = (name, callback) => {
-			open(name, callback);
+			const negotiator = negotiators[name];
+
+			if (negotiator) {
+				negotiator.close();
+			}
+
+			negotiators[name] = open(name, callback);
 		};
 
 		Vue.prototype.closeMasterTab = () => {
-			close();
+			const negotiator = negotiators[name];
+
+			if (!negotiator) {
+				return;
+			}
+
+			negotiator.close();
 		};
 
 		window.addEventListener("beforeunload", () => {
-			close();
+			for (const negotiator of Object.values(negotiators)) {
+				negotiator.close();
+			}
 		});
 	},
 }

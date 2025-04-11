@@ -392,7 +392,7 @@ export default {
                 return;
             }
 
-            this.closeMasterTab();
+            this.closeMasterTab(`chat_${this.group}`);
 
             this.socket.disconnect();
 
