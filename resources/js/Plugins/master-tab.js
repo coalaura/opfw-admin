@@ -1,4 +1,12 @@
 class Negotiator {
+	static create(name, callback) {
+		const negotiator = new Negotiator();
+
+		negotiator.open(name, callback);
+
+		return negotiator;
+	}
+
 	constructor() {
 		this.id = Math.floor(Math.random() * 1000 * 1000);
 
@@ -77,14 +85,13 @@ const MasterTab = {
 		const negotiators = {};
 
 		Vue.prototype.openMasterTab = (name, callback) => {
-			if (negotiators[name]) {
-				negotiators[name].close();
+			const negotiator = negotiators[name];
+
+			if (negotiator) {
+				negotiator.close();
 			}
 
-			const negotiator = new Negotiator();
-			negotiator.open(name, callback);
-
-			negotiators[name] = negotiator;
+			negotiators[name] = Negotiator.create(name, callback);
 		};
 
 		Vue.prototype.closeMasterTab = () => {
