@@ -84,6 +84,8 @@ class DeviceHelper
 
     private static function has(string $device): bool
     {
+        $device = sprintf('_%s_', $device);
+
         foreach (self::Wordlist as $word) {
             if (Str::contains($device, $word)) {
                 return true;
