@@ -1105,6 +1105,7 @@
             "streamer_exception": "Ban-Exception",
             "streamer_exception_title": "Player can play while streaming on `{0}`.",
             "stretch_res": "Player use {0} ratio on {1} resolution. (Stretched-Resolution)",
+            "suspicious_devices": "Strange device names seen. Maybe cheater or ban dodger use.",
             "system_caption": "Players seen by detection. Green banned, red not.",
             "system_details": "<b>{0}</b> detection hit <b>{1}</b> times last 6 months, hit <b>{2}</b> players (about <b>{3}</b>x per player). <b>{4}</b> still banned, <b>{5}</b> not. Accuracy about <b>{6}%</b>.",
             "system_info": "System Ban Info",

@@ -863,6 +863,38 @@ class Player extends Model
     }
 
     /**
+     * Check if the media devices all have ranomized names, usually signs of a spoofer.
+     */
+    public function areMediaDevicesSuspicious(): bool
+    {
+        $devices = $this->media_devices;
+
+        if ($devices === null) {
+            return false; // not yet collected
+        }
+
+        // strip "videoinput_", "audioinput_", etc.
+        $devices = array_values(array_filter(array_map(function($device) {
+            return preg_replace('/^(video|audio)(in|out)put_/m', '', $device);
+        }, $devices)));
+
+        if (empty($devices)) {
+            return true; // very unusual
+        }
+
+        $suspicious = 0;
+
+        foreach ($devices as $device) {
+            // hex characters only like "audiooutput_caeaeae_bccacc_caaaeec_cce0_0_abbbb_0b05_1a52"
+            if (preg_match('/^(([a-f0-9]+|bluetooth)_?)+$/m', $device)) {
+                $suspicious++;
+            }
+        }
+
+        return $suspicious >= 2;
+    }
+
+    /**
      * Gets the matching user variables. Like screen resolution, timezone, etc.
      */
     public function getMatchingVariables(array $variables): array

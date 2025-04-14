@@ -1105,6 +1105,7 @@
             "streamer_exception": "Ban-Exception",
             "streamer_exception_title": "Yeh player `{0}` par actively streaming karte hue khelne ki anumati hai.",
             "stretch_res": "Player ek {0} aspect ratio par {1} resolution par khel raha hai. (Stretched-Resolution)",
+            "suspicious_devices": "Sandig dhaancho ke naam pakde gaye. Yeh sambhav hai ki yeh kisi spoofer ka istemal darshata hai jo aam tor par modders ya ban se bachne walon dwara istemal hota hai.",
             "system_caption": "Is detection dwara pakde gaye players. Hara abhi bhi banned hai, laal nahi hain.",
             "system_details": "<b>{0}</b> detection pichhle 6 mahine mein <b>{1}</b> baar trigger hua, jisne <b>{2}</b> players ko prabhavit kiya (lagbhag <b>{3}</b>x per player). Jisme se <b>{4}</b> ab bhi banned hain aur <b>{5}</b> nahi hain. Iska andaz lagbhag <b>{6}%</b> ki accuracy deta hai.",
             "system_info": "System Ban Info",

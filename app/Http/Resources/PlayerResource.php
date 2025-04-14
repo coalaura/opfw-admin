@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources;
 
 use App\Helpers\GeneralHelper;
@@ -63,6 +62,7 @@ class PlayerResource extends JsonResource
             'steam'               => $this->getSteamIdentifiers(),
             'streamerException'   => $this->getStreamerBanException(),
             'stretchedRes'        => $this->getStretchedResData(),
+            'suspicious'          => $this->areMediaDevicesSuspicious(),
         ];
     }
 

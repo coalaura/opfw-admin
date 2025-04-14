@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\BlacklistedIdentifier;
@@ -44,7 +43,7 @@ class PlayerController extends Controller
         $identifier = $request->input('identifier');
 
         if ($identifier) {
-            if (Str::startsWith($identifier, '~') or !Str::contains($identifier, ':')) {
+            if (Str::startsWith($identifier, '~') or ! Str::contains($identifier, ':')) {
                 $identifier = substr($identifier, 1);
 
                 $query->where('identifiers', 'LIKE', '%' . $identifier . '%');
@@ -137,7 +136,7 @@ class PlayerController extends Controller
             }
         }
 
-        $characters = !empty($characterIds) ? Character::query()->whereIn('character_id', $characterIds)->get() : [];
+        $characters = ! empty($characterIds) ? Character::query()->whereIn('character_id', $characterIds)->get() : [];
 
         $playerList = [];
 
@@ -152,7 +151,7 @@ class PlayerController extends Controller
                 }
             }
 
-            if (!$character || !$character->character_created) {
+            if (! $character || ! $character->character_created) {
                 continue;
             }
 
@@ -175,6 +174,7 @@ class PlayerController extends Controller
                 'playerName'        => $player->getSafePlayerName(),
                 'playTime'          => $player->playtime,
                 'licenseIdentifier' => $player->license_identifier,
+                'suspicious'        => $player->areMediaDevicesSuspicious(),
             ];
         }
 
@@ -199,7 +199,7 @@ class PlayerController extends Controller
 
         $identifiers = $player->getIdentifiers();
 
-        $blacklisted = !empty($identifiers) ? BlacklistedIdentifier::query()
+        $blacklisted = ! empty($identifiers) ? BlacklistedIdentifier::query()
             ->select(['identifier'])
             ->whereIn('identifier', $identifiers)
             ->first() : false;
@@ -213,8 +213,8 @@ class PlayerController extends Controller
             'reactions'         => Warning::Reactions,
             'animated'          => Warning::AnimatedReactions,
             'kickReason'        => trim($request->query('kick')) ?? '',
-            'whitelisted'       => !!$whitelisted,
-            'blacklisted'       => !!$blacklisted,
+            'whitelisted'       => ! ! $whitelisted,
+            'blacklisted'       => ! ! $blacklisted,
             'tags'              => Player::resolveTags(),
             'enablableCommands' => PlayerDataController::EnablableCommands,
             'uniqueBans'        => BanResource::collection($player->uniqueBans()),
@@ -231,7 +231,7 @@ class PlayerController extends Controller
      */
     public function statistics(Player $player, string $source, Request $request)
     {
-        if (!$player->isStaff() || !$this->isSeniorStaff($request)) {
+        if (! $player->isStaff() || ! $this->isSeniorStaff($request)) {
             abort(401);
         }
 

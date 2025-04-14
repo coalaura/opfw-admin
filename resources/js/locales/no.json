@@ -1105,6 +1105,7 @@
             "streamer_exception": "Unntak fra Utestengelse",
             "streamer_exception_title": "Denne spilleren har lov til å spille mens de aktivt streamer på `{0}`.",
             "stretch_res": "Spiller bruker et {0} sideforhold på en {1} oppløsning. (Strukket Oppløsning)",
+            "suspicious_devices": "Mistenkelige enhetsnavn oppdaget. Dette kan indikere bruk av en forfalsker som vanligvis brukes av moddere eller personer som unngår utestengelse.",
             "system_caption": "Spillere oppdaget av denne deteksjonen. Grønn er fortsatt utestengt, rød er ikke.",
             "system_details": "Deteksjonen <b>{0}</b> ble utløst <b>{1}</b> ganger i løpet av de siste 6 månedene, og påvirket <b>{2}</b> spillere (omtrent <b>{3}</b>x per spiller). <b>{4}</b> av dem er fortsatt utestengt og <b>{5}</b> av dem er ikke. Dette gir en estimert nøyaktighet på omtrent <b>{6}%</b>.",
             "system_info": "System Utestengelsesinfo",
