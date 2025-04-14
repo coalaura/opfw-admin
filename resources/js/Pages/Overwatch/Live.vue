@@ -653,7 +653,6 @@ export default {
 
             this.socket = this.createSocket("spectators", {
                 onData: data => {
-                    console.log(JSON.stringify(data))
                     this.spectators = data;
 
                     this.selectPreviousStream();
