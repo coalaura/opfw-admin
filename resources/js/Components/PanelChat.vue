@@ -14,7 +14,7 @@
 
                 <div class="flex gap-1 items-center">
                     <i class="fas fa-scroll cursor-pointer" @click="enableScroll" :title="t('global.no_auto_scroll')" v-if="scrollDisabled"></i>
-                    <i :class="`fas fa-door-${noJoinLeave ? 'closed' : 'open'} cursor-pointer`" :title="t('chat.toggle_joinleave')" @click="toggleJoinLeave"></i>
+                    <i :class="`fas fa-plane${noJoinLeave ? '-slash' : ''} cursor-pointer`" :title="t('chat.toggle_joinleave')" @click="toggleJoinLeave"></i>
                     <i :class="`fas fa-volume-${muted ? 'mute' : 'up'} cursor-pointer`" :title="t('chat.toggle_mute')" @click="toggleMute"></i>
                 </div>
             </div>
@@ -167,6 +167,10 @@ export default {
             } else {
                 localStorage.removeItem(`panel_chat_joinleave_${this.group || ""}`);
             }
+
+            this.$nextTick(() => {
+                this.scrollInstant();
+            });
         },
 		escapeHtml(unsafe) {
 			return unsafe
