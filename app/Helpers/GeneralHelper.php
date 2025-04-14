@@ -455,6 +455,16 @@ class GeneralHelper
         if (empty($cluster)) {
             return null;
         } else if ($cluster === 'localhost') {
+            $fallback = base_path('.localhost');
+
+            if (file_exists($fallback)) {
+                $cluster = trim(file_get_contents($fallback) ?? "");
+
+                if (!empty($cluster)) {
+                    return $cluster;
+                }
+            }
+
             return 'c1';
         } else {
             return $cluster;

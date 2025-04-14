@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Exceptions;
 
 use Exception;
@@ -42,38 +41,65 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
+        $this->dump($exception);
+
         if ($this->shouldIgnoreException($exception)) {
             parent::report($exception);
 
             return;
         }
 
-        $log       = storage_path('logs/' . CLUSTER . '_error-' . date('Y-m-d') . '.log');
-        $timestamp = date(\DateTimeInterface::RFC3339);
-        $trace     = $exception->getTrace();
-        $stack     = [];
+        parent::report($exception);
+    }
+
+    /**
+     * Dump an exception into the exception log.
+     * @param Throwable $exception
+     */
+    private function dump(Throwable $exception)
+    {
+        $log = storage_path(CLUSTER ? sprintf('logs/%s_error_%s.log', CLUSTER, date('Y-m-d')) : sprintf('logs/exceptions/%s.log', date('Y-m-d')));
+        $dir = dirname($log);
+
+        if (! file_exists($dir)) {
+            mkdir($dir);
+        }
+
+        put_contents($log, $this->format($exception, true), FILE_APPEND);
+    }
+
+    /**
+     * Format an exception.
+     * @param Throwable $exception
+     * @return string
+     */
+    private function format(Throwable $exception, bool $skipCleanup = false): string
+    {
+        $trace = $exception->getTrace();
 
         $base = realpath(__DIR__ . '/../../');
+
         foreach ($trace as $index => $item) {
             $index = (sizeof($trace) - 1) - $index;
 
-            if (!isset($item['file'])) {
+            if (! isset($item['file'])) {
                 $item['file'] = 'internal';
             }
-            if (!isset($item['line'])) {
+            if (! isset($item['line'])) {
                 $item['line'] = 'internal';
             }
 
             $item['file'] = str_replace($base, '', $item['file']);
 
-            if (Str::startsWith($item['file'], '/vendor/') || Str::startsWith($item['file'], '\\vendor\\')) {
+            if (!$skipCleanup && (Str::startsWith($item['file'], '/vendor/') || Str::startsWith($item['file'], '\\vendor\\'))) {
                 if (empty($stack) || $stack[sizeof($stack) - 1] !== '[...]') {
                     $stack[] = '[...]';
                 }
+
                 continue;
             }
 
-            $args = !empty($item['args']) ? array_map(function ($arg) {
+            $args = ! empty($item['args']) ? array_map(function ($arg) {
                 $type = gettype($arg);
                 switch ($type) {
                     case 'object' :
@@ -105,13 +131,18 @@ class Handler extends ExceptionHandler
             $stack[] = $line;
         }
 
-        $stack = get_class($exception) . ': ' . $exception->getMessage() . PHP_EOL . '        ' . implode(PHP_EOL . '        ', array_reverse($stack));
-        $path  = explode('?', isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '*')[0];
+        $timestamp = date(\DateTimeInterface::RFC3339);
+        $path      = explode('?', isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '*')[0];
 
-        put_contents($log, '[' . $timestamp . '] ' . $path . PHP_EOL .
-            '    ' . $stack . PHP_EOL . PHP_EOL, FILE_APPEND);
-
-        parent::report($exception);
+        return sprintf(
+            "[%s] %s - %s\n\t%s: %s\n\t\t%s\n\n",
+            $timestamp,
+            CLUSTER,
+            $path,
+            get_class($exception),
+            $exception->getMessage(),
+            implode(PHP_EOL . "\t\t", array_reverse($stack))
+        );
     }
 
     /**
@@ -141,7 +172,7 @@ class Handler extends ExceptionHandler
 
         if ($error) {
             return response()->view('errors.db', [
-                'message' => $error
+                'message' => $error,
             ], 503);
         }
 

@@ -23,16 +23,14 @@ $app = new Illuminate\Foundation\Application(
 /*
  * This all for multi-instance support
  */
-
 if (!defined('CLUSTER')) {
     define('CLUSTER', GeneralHelper::getCluster());
 }
 
 $envDir = realpath(__DIR__ . '/../envs/' . CLUSTER);
+
 if (file_exists($envDir) && CLUSTER !== null) {
     $app->useEnvironmentPath($envDir);
-
-    $app->loadEnvironmentFrom('.env');
 } else if (php_sapi_name() !== 'cli') {
     die('Invalid cluster "' . CLUSTER . '"');
 }

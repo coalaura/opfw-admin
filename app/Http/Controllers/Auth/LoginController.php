@@ -25,13 +25,13 @@ class LoginController extends Controller
         if (session_get('isLogout')) {
             LoggingHelper::log('Rendering login view while coming from logout');
 
-            session_get('isLogout');
-            session_get('error');
+            session_forget('isLogout');
+            session_forget('flash_error');
         }
 
         if (license()) {
             // Huh, tf you doin here?
-            return redirect('/');
+            return redirect(session_get('lastVisit') ?? '/');
         }
 
         return Inertia::render('Login');

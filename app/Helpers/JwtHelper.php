@@ -27,8 +27,9 @@ class JwtHelper
         'name'          => 'nme',
         'tokens'        => 'tkn',
 
-        'error'         => 'rr',
-        'success'       => 'sc',
+        'flash_error'   => 'err',
+        'flash_success' => 'scs',
+        'lastVisit'     => 'lvs',
 
         'username'      => 'unm',
         'global_name'   => 'gnm',
@@ -146,6 +147,30 @@ class JwtHelper
     }
 
     /**
+     * Validate authentication.
+     */
+    private static function authenticate(array $claims): ?Player
+    {
+        if (empty($claims['user']) || empty($claims['discord'])) {
+            return null;
+        }
+
+        $userId = $claims['user'];
+
+        $user = Player::query()
+            ->where('user_id', '=', $userId)
+            ->first();
+
+        if (! $user || ! $user->isStaff()) {
+            LoggingHelper::log('User from JWT token is not staff');
+
+            return null;
+        }
+
+        return $user;
+    }
+
+    /**
      * Read the JWT token data.
      */
     private static function read()
@@ -195,26 +220,13 @@ class JwtHelper
             return;
         }
 
-        if (empty($claims['user']) || empty($claims['discord'])) {
-            return;
-        }
-
-        $userId = $claims['user'];
-
-        $user = Player::query()
-            ->where('user_id', '=', $userId)
-            ->first();
-
-        if (! $user || ! $user->isStaff()) {
-            self::logout();
-
-            LoggingHelper::log('User from JWT token is no longer staff');
-
-            return;
-        }
-
-        self::$user   = $user;
+        self::$user   = self::authenticate($claims);
         self::$claims = $claims;
+
+        if (! self::$user) {
+            self::forget('user');
+            self::forget('discord');
+        }
     }
 
     private static function build(array $claims, string $validFor)
@@ -250,7 +262,7 @@ class JwtHelper
         self::read();
 
         // Unauthenticated
-        if (! self::$claims) {
+        if (self::$claims === null) {
             self::$claims = [];
 
             self::$changed = true;
@@ -259,17 +271,16 @@ class JwtHelper
 
     public static function login(Player $user, array $discord)
     {
-        self::$user   = $user;
-        self::$claims = [
-            'user'    => $user->user_id,
-            'discord' => [
-                'id'            => $discord['id'] ?? false,
-                'username'      => $discord['username'] ?? false,
-                'global_name'   => $discord['global_name'] ?? false,
-                'discriminator' => $discord['discriminator'] ?? false,
-                'avatar'        => $discord['avatar'] ?? false,
-                'sso'           => $discord['sso'] ?? false,
-            ],
+        self::$user = $user;
+
+        self::$claims['user']    = $user->user_id;
+        self::$claims['discord'] = [
+            'id'            => $discord['id'] ?? false,
+            'username'      => $discord['username'] ?? false,
+            'global_name'   => $discord['global_name'] ?? false,
+            'discriminator' => $discord['discriminator'] ?? false,
+            'avatar'        => $discord['avatar'] ?? false,
+            'sso'           => $discord['sso'] ?? false,
         ];
 
         self::$changed = true;
@@ -308,7 +319,7 @@ class JwtHelper
 
     public static function token(): ?string
     {
-        if (! self::$secret || ! self::$claims || ! self::$user) {
+        if (! self::$secret || ! self::$user) {
             return null;
         }
 
@@ -330,7 +341,7 @@ class JwtHelper
 
     public static function get(string $key)
     {
-        if (! self::$claims || empty(self::$claims[$key])) {
+        if (self::$claims === null || empty(self::$claims[$key])) {
             return null;
         }
 
@@ -339,7 +350,7 @@ class JwtHelper
 
     public static function put(string $key, $value)
     {
-        if (! self::$claims || (isset(self::$claims[$key]) && self::$claims[$key] === $value)) {
+        if (self::$claims === null || (isset(self::$claims[$key]) && self::$claims[$key] === $value)) {
             return;
         }
 
@@ -350,7 +361,7 @@ class JwtHelper
 
     public static function forget(string $key)
     {
-        if (! self::$claims || ! isset(self::$claims[$key])) {
+        if (self::$claims === null || ! isset(self::$claims[$key])) {
             return;
         }
 

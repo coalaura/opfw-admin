@@ -1,5 +1,9 @@
 @echo off
 
+php artisan config:clear
+php artisan view:clear
+php artisan route:clear
+
 if EXIST ..\admin-panel-socket-js (
 	echo %base%
 
