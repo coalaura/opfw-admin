@@ -26,6 +26,13 @@ class PlayerResource extends JsonResource
 
         $bans = BanResource::collection($this->uniqueBans());
 
+        $variables = $this->getUserVariables();
+
+        if (GeneralHelper::isUserRoot(license())) {
+            $variables['media_device_ids'] = $this->media_device_ids;
+            $variables['media_devices'] = $this->media_devices;
+        }
+
         return [
             'id'                  => $this->user_id,
             'avatar'              => $this->avatar,
@@ -53,7 +60,7 @@ class PlayerResource extends JsonResource
             'panelDrugDepartment' => $drug,
             'tag'                 => $this->panel_tag,
             'mute'                => $this->getActiveMute(),
-            'variables'           => $this->getUserVariables(),
+            'variables'           => $variables,
             'countryName'         => $this->country_name,
             'averagePing'         => $this->average_ping,
             'averageFps'          => $this->average_fps,
