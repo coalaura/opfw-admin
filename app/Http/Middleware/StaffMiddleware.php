@@ -22,6 +22,10 @@ class StaffMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        if ($request->isMethod('GET') && (!$request->ajax() || !empty($request->header('X-Inertia')))) {
+            session_put('lastVisit', $request->path());
+        }
+
         // Check for staff status.
         $user = JwtHelper::user();
 
@@ -39,10 +43,6 @@ class StaffMiddleware
                 'error',
                 'Your staff status has changed, please log in again.'
             );
-        }
-
-        if ($request->isMethod('GET') && (!$request->ajax() || !empty($request->header('X-Inertia')))) {
-            session_put('lastVisit', $request->path());
         }
 
         return $next($request);
