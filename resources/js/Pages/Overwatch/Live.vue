@@ -22,18 +22,22 @@
                     </h3>
 
                     <div class="italic flex flex-col gap-1 h-full">
-                        <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 transition flex items-center justify-between" :class="getSpectatorListingClass(spectator)" v-for="(spectator, index) in spectators" :key="spectator.license" @click="setStream(index, spectator.stream)" v-if="spectators.length">
-                            {{ t('overwatch.stream', index + 1) }}
+                        <div class="font-semibold cursor-pointer py-1 px-2 bg-black/20 border border-gray-500 transition flex flex-col" :class="getSpectatorListingClass(spectator)" v-for="(spectator, index) in spectators" :key="spectator.license" @click="setStream(index, spectator.stream)" v-if="spectators.length">
+                            <div class="flex items-center justify-between">
+                                {{ t('overwatch.stream', index + 1) }}
 
-                            <template v-if="spectator.stream === source">
-                                <i class="fas fa-spinner animate-spin" v-if="isLoading"></i>
-                                <i class="fas fa-exclamation-triangle" v-else-if="error"></i>
-                                <i class="fas fa-video" v-else></i>
-                            </template>
+                                <template v-if="spectator.stream === source">
+                                    <i class="fas fa-spinner animate-spin" v-if="isLoading"></i>
+                                    <i class="fas fa-exclamation-triangle" v-else-if="error"></i>
+                                    <i class="fas fa-video" v-else></i>
+                                </template>
 
-                            <template v-else-if="spectator.spectating">
-                                <span class="italic">{{ spectator.spectating.source }}</span>
-                            </template>
+                                <template v-else-if="spectator.spectating">
+                                    <span class="italic">{{ spectator.spectating.source }}</span>
+                                </template>
+                            </div>
+
+                            <div class="text-gray-600 dark:text-gray-400 text-xxs font-medium italic -mt-1" v-if="spectator.stream === source && uptime">{{ uptime }}</div>
                         </div>
 
                         <div class="italic" v-else>{{ t('overwatch.no_streams') }}</div>
@@ -262,6 +266,13 @@ export default {
             if (!this.source) return null;
 
             return this.spectators.find(spectator => spectator.stream === this.source);
+        },
+        uptime() {
+            const spectator = this.spectator;
+
+            if (!spectator || !spectator.session) return "";
+
+            return this.t('overwatch.uptime', this.formatSeconds(this.timestamp - spectator.session));
         },
         target() {
             return this.spectator?.spectating;
@@ -495,7 +506,7 @@ export default {
 
                     setTimeout(() => {
                         this.isTimedOut = false;
-                    }, 10000);
+                    }, 6000);
                 }
             } catch(e) {
                 console.error(e);
@@ -642,6 +653,7 @@ export default {
 
             this.socket = this.createSocket("spectators", {
                 onData: data => {
+                    console.log(JSON.stringify(data))
                     this.spectators = data;
 
                     this.selectPreviousStream();

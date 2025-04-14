@@ -664,6 +664,7 @@
         "stream_timeout": "Safaltaapoorvak spectate target update kiya. Kripya stream update hone ke liye ek kshan prateeksha karein.",
         "streams": "Streams",
         "title": "Overwatch",
+        "uptime": "Vartamaan uptime hai {0}",
         "watching": "Dekhte hue"
     },
     "pagination": {

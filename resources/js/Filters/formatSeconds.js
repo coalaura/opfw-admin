@@ -3,7 +3,7 @@ export default function (value, allowed = "dhm", named = false) {
     if (value <= 0) {
         return "0s";
     } else if (value < 60) {
-        return "less than a minute"
+        return `${value}s`;
     }
 
     const multipliers = [

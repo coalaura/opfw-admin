@@ -664,6 +664,7 @@
         "stream_timeout": "Mål for tilskuerfunksjonen ble oppdatert. Vennligst vent et øyeblikk mens strømmen oppdateres.",
         "streams": "Strømmer",
         "title": "Overwatch",
+        "uptime": "Nåværende oppetid er {0}",
         "watching": "Ser på"
     },
     "pagination": {

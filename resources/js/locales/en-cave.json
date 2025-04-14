@@ -664,6 +664,7 @@
         "stream_timeout": "Change watch target good. Wait little for stream fix.",
         "streams": "Streams",
         "title": "Overwatch",
+        "uptime": "Uptime now {0}",
         "watching": "Watch"
     },
     "pagination": {

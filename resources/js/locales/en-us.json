@@ -187,6 +187,7 @@
         "stream": "Stream #{0}",
         "stream_error": "Stream Error",
         "stream_timeout": "Success! Please wait a moment for the stream to update.",
+        "uptime": "Current uptime is {0}",
         "watching": "Watching",
         "replay": "Toggle Instant Replay",
         "save_replay": "Save the last 30 seconds as a clip.",
