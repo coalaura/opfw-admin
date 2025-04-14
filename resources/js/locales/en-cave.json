@@ -119,6 +119,10 @@
         "search": "Find characters",
         "title": "Characters"
     },
+    "chat": {
+        "toggle_joinleave": "Turn on/off join-leave message.",
+        "toggle_mute": "Turn on/off sound alert."
+    },
     "containers": {
         "container": "Box",
         "container_id": "Box ID",

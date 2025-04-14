@@ -14,7 +14,8 @@
 
                 <div class="flex gap-1 items-center">
                     <i class="fas fa-scroll cursor-pointer" @click="enableScroll" :title="t('global.no_auto_scroll')" v-if="scrollDisabled"></i>
-                    <i :class="`fas fa-volume-${muted ? 'mute' : 'up'} cursor-pointer`" @click="toggleMute"></i>
+                    <i :class="`fas fa-door-${noJoinLeave ? 'closed' : 'open'} cursor-pointer`" :title="t('chat.toggle_joinleave')" @click="toggleJoinLeave"></i>
+                    <i :class="`fas fa-volume-${muted ? 'mute' : 'up'} cursor-pointer`" :title="t('chat.toggle_mute')" @click="toggleMute"></i>
                 </div>
             </div>
 
@@ -30,7 +31,7 @@
         </div>
 
         <div class="w-full h-full overflow-y-auto" ref="chat" @chat-image-loaded="scrollInstant" @wheel="onScrollWheel">
-            <div v-for="message in messages" :key="message.id" class="relative group dark:odd:bg-gray-500/10 px-1 py-0.5" :class="{ 'italic text-xs py-1': message.system }">
+            <div v-for="message in messages" :key="message.id" class="relative group dark:odd:bg-gray-500/10 px-1 py-0.5" :class="{ 'italic text-xs py-1': message.system }" v-if="!shouldIgnoreMessage(message)">
                 <div class="font-semibold max-w-40 truncate inline pr-1" :title="message.name" v-if="!message.system">
                     {{ message.name }}
                     <sup v-if="message.room">{{ message.room }}</sup>
@@ -90,7 +91,9 @@ export default {
             connecting: false,
             connected: false,
             reconnect: true,
+
             muted: !!localStorage.getItem(`panel_chat_muted_${this.group || ""}`),
+            noJoinLeave: !!localStorage.getItem(`panel_chat_joinleave_${this.group || ""}`),
 
             message: '',
             messages: [],
@@ -154,6 +157,15 @@ export default {
                 localStorage.setItem(`panel_chat_muted_${this.group || ""}`, true);
             } else {
                 localStorage.removeItem(`panel_chat_muted_${this.group || ""}`);
+            }
+        },
+        toggleJoinLeave() {
+            this.noJoinLeave = !this.noJoinLeave;
+
+            if (this.noJoinLeave) {
+                localStorage.setItem(`panel_chat_joinleave_${this.group || ""}`, true);
+            } else {
+                localStorage.removeItem(`panel_chat_joinleave_${this.group || ""}`);
             }
         },
 		escapeHtml(unsafe) {
@@ -408,15 +420,26 @@ export default {
             this.socket.emit("chat", pack(text));
         },
 
+        shouldIgnoreMessage(message) {
+            if (!this.noJoinLeave || !message.system || !message.text) {
+                return false;
+            }
+
+            return message.text.endsWith(" left") || message.text.endsWith(" joined");
+        },
+
         addMessage(message) {
             this.messages.push(message);
 
-            if (this.messages.length > 100) {
+            if (this.messages.length > 1024) {
                 this.messages.shift();
             }
 
             this.scroll();
-            this.notify();
+
+            if (!this.shouldIgnoreMessage(message)) {
+                this.notify();
+            }
         },
 
         enableScroll() {

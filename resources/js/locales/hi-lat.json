@@ -119,6 +119,10 @@
         "search": "Characters khoje",
         "title": "Characters"
     },
+    "chat": {
+        "toggle_joinleave": "Join/leave system sandesh toggle karein.",
+        "toggle_mute": "Soochna dhwaniyon ko toggle karein."
+    },
     "containers": {
         "container": "Container",
         "container_id": "Container ID",

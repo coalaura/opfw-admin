@@ -119,6 +119,10 @@
         "search": "Søk etter tegn",
         "title": "Tegn"
     },
+    "chat": {
+        "toggle_joinleave": "Veksle systemmeldinger for å bli med/forlate.",
+        "toggle_mute": "Veksle varslingslyder."
+    },
     "containers": {
         "container": "Beholder",
         "container_id": "Beholder-ID",

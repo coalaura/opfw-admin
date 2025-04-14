@@ -119,6 +119,10 @@
         "search": "Search characters",
         "title": "Characters"
     },
+    "chat": {
+        "toggle_joinleave": "Flip on or off them joinin'/leavin' system messages.",
+        "toggle_mute": "Turn on or off them notification sounds."
+    },
     "containers": {
         "container": "Container",
         "container_id": "Container ID",

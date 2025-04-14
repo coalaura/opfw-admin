@@ -85,6 +85,10 @@
         "support_markdown": "Most basic markdown syntax is supported. Click to learn more.",
         "opfw_abbreviation": "What the OP-FW abbreviation really stands for."
     },
+    "chat": {
+        "toggle_mute": "Toggle notification sounds.",
+        "toggle_joinleave": "Toggle join/leave system messages."
+    },
     "steam": {
         "title": "Steam",
         "description": "Lookup players using their steam account.",

@@ -119,6 +119,10 @@
         "search": "Seawch chawactews",
         "title": "Chawactews"
     },
+    "chat": {
+        "toggle_joinleave": "Toggwe join/weave system messages.",
+        "toggle_mute": "Toggwe nyotification sounds."
+    },
     "containers": {
         "container": "Containew",
         "container_id": "Containew ID",
