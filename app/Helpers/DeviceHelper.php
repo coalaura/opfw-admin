@@ -63,7 +63,7 @@ class DeviceHelper
         $devices = array_values(array_filter(array_map(function ($device) {
             return preg_replace('/^(video|audio)(in|out)put/m', '', $device);
         }, $devices), function ($device) {
-            return $device && strlen($device) >= 5;
+            return $device && strlen($device) >= 5 && !Str::startsWith($device, "gpu_");
         }));
 
         if (empty($devices)) {
