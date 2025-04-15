@@ -193,7 +193,7 @@ export default {
                         value = CustomFormatters[key](value);
                     }
 
-                    if (typeof value === "object" && value !== null) {
+                    if (typeof value === "object") {
                         const label = key + (Array.isArray(value) ? ` (${value.length})` : "");
 
                         metadataJSON.push({
@@ -269,6 +269,8 @@ export default {
         highlightJSON(object) {
             if (typeof object !== "object") {
                 return object;
+            } else if (object === null) {
+                return `<span class="font-semibold hljs-number">null</span>`;
             }
 
             const isArray = Array.isArray(object),
@@ -296,6 +298,8 @@ export default {
                     } else {
                         value += `<span class="text-gray-400 ml-0.5">${type}</span>`;
                     }
+                } else if (raw === null) {
+                    value = `<span class="font-semibold hljs-number">null</span>`;
                 } else if (typeof raw === 'object' && 'before' in raw && 'after' in raw) {
                     const before = JSON.stringify(raw.before),
                         after = JSON.stringify(raw.after);
