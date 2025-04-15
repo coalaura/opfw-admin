@@ -193,7 +193,7 @@ export default {
                         value = CustomFormatters[key](value);
                     }
 
-                    if (typeof value === "object") {
+                    if (typeof value === "object" && value !== null) {
                         const label = key + (Array.isArray(value) ? ` (${value.length})` : "");
 
                         metadataJSON.push({
