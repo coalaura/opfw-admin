@@ -91,7 +91,7 @@ class DeviceHelper
             }
         }
 
-        return $count >= 2;
+        return $count >= 3;
     }
 
     private static function has(string $device): bool
