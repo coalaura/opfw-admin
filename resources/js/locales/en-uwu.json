@@ -1105,7 +1105,7 @@
             "streamer_exception": "Ban-Exception",
             "streamer_exception_title": "This pwayew is awwowed to pway whiwe activewy stweaming on `{0}`.",
             "stretch_res": "Pwayew is pwaying a {0} aspect watio on a {1} wesowution. (Stwetched-Wesowution)",
-            "suspicious_devices": "Suspicious device nyames detected. This may indicate the use of a spoofew commonwy used by moddews ow ban evadews. UwU",
+            "suspicious_spoof": "Most wikewy using a spoofew. These kind of spoofews awe often used by moddews and ban evadews.",
             "system_caption": "Pwayews detected by this detection. Gween awe stiww banned, wed awe nyot.",
             "system_details": "The <b>{0}</b> detection was twiggewed <b>{1}</b> times in the wast 6 months, affecting <b>{2}</b> pwayews (about <b>{3}</b>x pew pwayew). <b>{4}</b> of which awe stiww banned and <b>{5}</b> of which awe nyot. This wesuwts an estimated accuwacy of about <b>{6}%</b>.",
             "system_info": "System Ban Info",

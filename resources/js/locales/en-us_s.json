@@ -1105,7 +1105,7 @@
             "streamer_exception": "Ban-Exception",
             "streamer_exception_title": "This here player is allowed to play while they're streamin' on `{0}`.",
             "stretch_res": "Player is playin' a {0} aspect ratio on a {1} resolution. (Stretched-Resolution)",
-            "suspicious_devices": "Looks like we got some fishy device names showin' up. This might mean someone's usin' a spoofer like them modders or folks tryin' to dodge a ban.",
+            "suspicious_spoof": "Most likely usin' a spoofer. These kinda spoofers are often used by modders and folks tryin' to dodge bans.",
             "system_caption": "Players caught by this detection. Green ones are still banned, red ain't.",
             "system_details": "The <b>{0}</b> detection got triggered <b>{1}</b> times in the last 6 months, affectin' <b>{2}</b> players (about <b>{3}</b>x per player). <b>{4}</b> of 'em are still banned and <b>{5}</b> ain't. This here results in an estimated accuracy of about <b>{6}%</b>.",
             "system_info": "System Ban Info",

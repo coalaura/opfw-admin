@@ -65,7 +65,7 @@
                                 <CountryFlag :country="flagFromTZ(player.timezone)" :title="player.timezone" class="rounded-sm small-flag" v-if="player.timezone" />
                                 {{ player.playerName }}
 
-                                <i class="fas fa-user-ninja ml-1 text-orange-500 dark:text-orange-400" :title="t('players.show.suspicious_devices')" v-if="player.suspicious"></i>
+                                <i class="fas fa-user-ninja ml-1 text-orange-500 dark:text-orange-400" :title="t('players.show.suspicious_spoof')" v-if="player.suspicious"></i>
                             </div>
                         </td>
                         <td class="p-3 mobile:block" :title="formatSeconds(player.playTime, 'YMdhm')">{{ player.playTime | formatSeconds }}</td>

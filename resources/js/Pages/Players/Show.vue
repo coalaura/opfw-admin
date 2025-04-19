@@ -136,7 +136,7 @@
                 </badge>
 
                 <!-- Suspicious Media Devices -->
-                <badge class="border-gray-200 overflow-hidden bg-center bg-cover w-16 cursor-help relative" style="background-image: url('/images/sus.webp')" v-if="player.suspicious" :title="t('players.show.suspicious_devices')">
+                <badge class="border-gray-200 overflow-hidden bg-center bg-cover w-16 cursor-help relative" style="background-image: url('/images/sus.webp')" v-if="player.suspicious" :title="t('players.show.suspicious_spoof')">
                     <div class="absolute top-0.5 left-px text-[10px] leading-none text-black font-bold">SUS</div>
                 </badge>
 
