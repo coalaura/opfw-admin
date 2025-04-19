@@ -875,7 +875,7 @@ class PlayerBanController extends Controller
         $counts = '<span style="color:#ff5b5b">Tokens</span> / <span style="color:#5bc2ff">IPs</span> / <span style="color:#65d54e">Identifiers</span> / <span style="color:#f0c622">Media Devices</span>';
 
         return $this->fakeText(200, sprintf(
-            `Found: <b>%d</b> Accounts for <a href="/players/%s" target="_blank">%s</a> using %s %s\n\n<i style="color:#c68dbf">[%s] - Last Connection - Player Name</i>\n\n<i style="color:#a3ff9b">- Not Banned</i>\n%s\n\n<i style="color:#ff8e8e">- Banned</i>\n%s`,
+            "Found: <b>%d</b> Accounts for <a href=\"/players/%s\" target=\"_blank\">%s</a> using %s %s\n\n<i style=\"color:#c68dbf\">[%s] - Last Connection - Player Name</i>\n\n<i style=\"color:#a3ff9b\">- Not Banned</i>\n%s\n\n<i style=\"color:#ff8e8e\">- Banned</i>\n%s",
             $allowFresh ? sprintf('<a href="?fresh" %s>[Fresh]</a>', request()->has('fresh') ? 'id="fresh"' : '') : '',
             sizeof($raw),
             $license,
