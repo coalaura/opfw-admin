@@ -79,7 +79,11 @@ class PlayerController extends Controller
         // Get ban info
         $query->leftJoin('user_bans', 'identifier', '=', 'license_identifier');
 
-        $query->orderBy("player_name");
+        if ($request->has('new')) {
+            $query->orderByDesc('user_id');
+        } else {
+            $query->orderBy("player_name");
+        }
 
         $query->select([
             'license_identifier', 'player_name', 'playtime', 'identifiers', 'player_aliases', 'ban_hash',
