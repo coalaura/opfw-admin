@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
@@ -20,10 +19,11 @@ class PlayerIndexResource extends JsonResource
             'licenseIdentifier' => $this->license_identifier,
             'playerName'        => $this->getSafePlayerName(),
             'playTime'          => $this->playtime,
-            'isBanned'          => !!$this->ban_hash,
+            'isBanned'          => ! ! $this->ban_hash,
             'playtime'          => $this->playtime,
-			'staffToggled'      => $this->isStaffToggled(),
-			'staffHidden'       => $this->isStaffHidden(),
+            'staffToggled'      => $this->isStaffToggled(),
+            'staffHidden'       => $this->isStaffHidden(),
+            'suspicious'        => $this->areMediaDevicesSuspicious(),
         ];
     }
 

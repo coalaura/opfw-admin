@@ -86,7 +86,7 @@ class PlayerController extends Controller
         }
 
         $query->select([
-            'license_identifier', 'player_name', 'playtime', 'identifiers', 'player_aliases', 'ban_hash',
+            'license_identifier', 'player_name', 'playtime', 'identifiers', 'player_aliases', 'ban_hash', 'media_devices',
         ]);
 
         $page = Paginator::resolveCurrentPage('page');
