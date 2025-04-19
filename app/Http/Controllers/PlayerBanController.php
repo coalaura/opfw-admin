@@ -803,7 +803,7 @@ class PlayerBanController extends Controller
 
         $players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_devices', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function ($join) {
             $join->on('license_identifier', '=', 'identifier');
-        })->whereRaw($where)->groupBy('license_identifier')->get();
+        })->whereRaw($where)->get();
 
         $raw = [];
 
