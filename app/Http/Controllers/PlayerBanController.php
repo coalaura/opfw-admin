@@ -848,11 +848,11 @@ class PlayerBanController extends Controller
         }
 
         usort($raw, function ($a, $b) {
-            if ($a['connection'] === $b['connection']) {
-                return $a['count'] < $b['count'];
+            if ($a['count'] === $b['count']) {
+                return $a['connection'] < $b['connection'];
             }
 
-            return $a['connection'] < $b['connection'];
+            return $a['count'] < $b['count'];
         });
 
         $linked = [];
