@@ -876,11 +876,11 @@ class PlayerBanController extends Controller
 
         return $this->fakeText(200, sprintf(
             "Found: <b>%d</b> Accounts for <a href=\"/players/%s\" target=\"_blank\">%s</a> using %s %s\n\n<i style=\"color:#c68dbf\">[%s] - Last Connection - Player Name</i>\n\n<i style=\"color:#a3ff9b\">- Not Banned</i>\n%s\n\n<i style=\"color:#ff8e8e\">- Banned</i>\n%s",
-            $allowFresh ? sprintf('<a href="?fresh" %s>[Fresh]</a>', request()->has('fresh') ? 'id="fresh"' : '') : '',
             sizeof($raw),
             $license,
             $player->player_name,
             $title,
+            $allowFresh ? sprintf('<a href="?fresh" %s>[Fresh]</a>', request()->has('fresh') ? 'id="fresh"' : '') : '',
             $counts,
             implode("\n", $linked),
             implode("\n", $banned)),
