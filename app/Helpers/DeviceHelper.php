@@ -60,6 +60,13 @@ class DeviceHelper
         "_acer_",
         "_douwan_",
         "_capture_",
+        "_creative_",
+        "_user_facing_",
+        "_cam_link_",
+        "_obs_camera",
+        "_anker_",
+        "_warudocam",
+        "_prism_",
     ];
 
     public static function check(array $devices): bool
@@ -68,7 +75,7 @@ class DeviceHelper
         $devices = array_values(array_filter(array_map(function ($device) {
             return preg_replace('/^(video|audio)(in|out)put/m', '', $device);
         }, $devices), function ($device) {
-            return $device && strlen($device) >= 5 && !Str::startsWith($device, "gpu_");
+            return $device && strlen($device) >= 5 && ! Str::startsWith($device, "gpu_");
         }));
 
         if (empty($devices)) {
