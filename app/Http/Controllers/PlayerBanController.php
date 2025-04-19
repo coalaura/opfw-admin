@@ -729,7 +729,7 @@ class PlayerBanController extends Controller
             return 'JSON_CONTAINS(ips, \'"' . $ip . '"\', \'$\')';
         }, $ips));
 
-        return $this->drawLinked("IPs", $player, $where, $ips, true);
+        return $this->drawLinked("IPs", $player, $where, $ips);
     }
 
     public function linkedTokens(Request $request, string $license): \Illuminate\Http\Response
@@ -748,7 +748,7 @@ class PlayerBanController extends Controller
 
         $where = "JSON_OVERLAPS(player_tokens, '" . json_encode($player->getTokens()) . "') = 1";
 
-        return $this->drawLinked("Tokens", $player, $where, $tokens, true);
+        return $this->drawLinked("Tokens", $player, $where, $tokens);
     }
 
     public function linkedIdentifiers(Request $request, string $license): \Illuminate\Http\Response
@@ -767,7 +767,7 @@ class PlayerBanController extends Controller
 
         $where = "JSON_OVERLAPS(identifiers, '" . json_encode($player->getBannableIdentifiers()) . "') = 1";
 
-        return $this->drawLinked("Identifiers", $player, $where, $identifiers, true);
+        return $this->drawLinked("Identifiers", $player, $where, $identifiers);
     }
 
     public function linkedDevices(Request $request, string $license): \Illuminate\Http\Response
@@ -786,10 +786,10 @@ class PlayerBanController extends Controller
 
         $where = "JSON_OVERLAPS(media_devices, '" . json_encode($mediaDevices) . "') = 1";
 
-        return $this->drawLinked('Media Devices', $player, $where, $mediaDevices, false);
+        return $this->drawLinked('Media Devices', $player, $where, $mediaDevices);
     }
 
-    protected function drawLinked(string $title, Player $player, string $where, array $values, bool $allowFresh)
+    protected function drawLinked(string $title, Player $player, string $where, array $values)
     {
         $request = request();
 
@@ -882,7 +882,7 @@ class PlayerBanController extends Controller
             $license,
             $player->player_name,
             $title,
-            $allowFresh ? sprintf('<a href="?fresh" class="sup" %s>[Fresh]</a>', $request->has('fresh') ? 'id="fresh"' : '') : '',
+            sprintf('<a href="?fresh" class="sup" %s>[Fresh]</a>', $request->has('fresh') ? 'id="fresh"' : ''),
             $counts,
             implode("\n", $linked),
             implode("\n", $banned),
