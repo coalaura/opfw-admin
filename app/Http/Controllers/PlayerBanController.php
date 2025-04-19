@@ -886,7 +886,7 @@ class PlayerBanController extends Controller
             $counts,
             implode("\n", $linked),
             implode("\n", $banned),
-            $this->isRoot($request) ? sprintf("<div style=\"color:#b0b0b0\"><i>- Values</i>\n%s", implode("\n", $values)) : '',
+            $this->isRoot($request) ? sprintf("<div style=\"color:#b0b0b0;font-style:italic\">- Values\n%s", implode("\n", $values)) : '',
             '<script>(()=>{const a=document.getElementById("fresh");if(a){function b(){return c-=1,a.innerText=`${c}s`,0>=c?void window.location.reload():void setTimeout(b,1e3)}let c=60;b()}})()</script>'
         ));
     }
