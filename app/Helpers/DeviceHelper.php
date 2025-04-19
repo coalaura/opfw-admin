@@ -55,6 +55,11 @@ class DeviceHelper
         "_yeti_",
         "_classic_",
         "_video_",
+
+        // obscure ones (found in legacy india)
+        "_acer_",
+        "_douwan_",
+        "_capture_",
     ];
 
     public static function check(array $devices): bool
