@@ -883,8 +883,8 @@ class PlayerBanController extends Controller
             $allowFresh ? sprintf('<a href="?fresh" %s>[Fresh]</a>', request()->has('fresh') ? 'id="fresh"' : '') : '',
             $counts,
             implode("\n", $linked),
-            implode("\n", $banned)),
+            implode("\n", $banned),
             '<script>const fresh=document.getElementById("fresh");if(fresh){function a(){b-=1,fresh.innerText=`${b}s`,0>=b&&window.location.reload()}let b=60;a()}</script>'
-        );
+        ));
     }
 }
