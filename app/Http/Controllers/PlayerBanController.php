@@ -729,7 +729,7 @@ class PlayerBanController extends Controller
             return 'JSON_CONTAINS(ips, \'"' . $ip . '"\', \'$\')';
         }, $ips));
 
-        return $this->drawLinked("IPs", $player, $where);
+        return $this->drawLinked("IPs", $player, $where, true);
     }
 
     public function linkedTokens(Request $request, string $license): \Illuminate\Http\Response
@@ -748,7 +748,7 @@ class PlayerBanController extends Controller
 
         $where = "JSON_OVERLAPS(player_tokens, '" . json_encode($player->getTokens()) . "') = 1";
 
-        return $this->drawLinked("Tokens", $player, $where);
+        return $this->drawLinked("Tokens", $player, $where, true);
     }
 
     public function linkedIdentifiers(Request $request, string $license): \Illuminate\Http\Response
@@ -767,7 +767,7 @@ class PlayerBanController extends Controller
 
         $where = "JSON_OVERLAPS(identifiers, '" . json_encode($player->getBannableIdentifiers()) . "') = 1";
 
-        return $this->drawLinked("Identifiers", $player, $where);
+        return $this->drawLinked("Identifiers", $player, $where, true);
     }
 
     public function linkedDevices(Request $request, string $license): \Illuminate\Http\Response
@@ -786,10 +786,10 @@ class PlayerBanController extends Controller
 
         $where = "JSON_OVERLAPS(media_devices, '" . json_encode($mediaDevices) . "') = 1";
 
-        return $this->drawLinked('Media Devices', $player, $where);
+        return $this->drawLinked('Media Devices', $player, $where, false);
     }
 
-    protected function drawLinked(string $title, Player $player, string $where)
+    protected function drawLinked(string $title, Player $player, string $where, bool $allowFresh)
     {
         $license = $player->license_identifier;
 
@@ -824,10 +824,17 @@ class PlayerBanController extends Controller
 
                 $total = $count + $countIps + $countIdentifiers + $devicesOverlap + ($gpuOverlap ? 1 : 0);
 
-                $counts = '<span style="color:#ff5b5b">' . $count . '</span>/<span style="color:#5bc2ff">' . $countIps . '</span>/<span style="color:#65d54e">' . $countIdentifiers . '</span>/<span style="color:#f0c622" title="' . implode("\n", $matchingDevices) . '">' . $devicesOverlap . '</span>';
+                $counts = sprintf(
+                    '<span style="color:#ff5b5b">%d</span>/<span style="color:#5bc2ff">%d</span>/<span style="color:#65d54e">%d</span>/<span style="color:#f0c622" title="%s">%d</span>',
+                    $count,
+                    $countIps,
+                    $countIdentifiers,
+                    implode("\n", $matchingDevices),
+                    $devicesOverlap
+                );
 
                 $playtime = "Playtime is about " . GeneralHelper::formatSeconds($found->playtime);
-                $webgl    = $gpuOverlap ? '<span style="color:#8fe17f" title="WebGL fingerprint matches exactly: ' . $gpuMediaDevice . '">webgl</span>' : '<span style="color:#e17f7f;text-decoration:line-through" title="WebGL fingerprint does not match">webgl</span>';
+                $webgl    = $gpuOverlap ? sprintf('<span style="color:#8fe17f" title="WebGL fingerprint matches exactly: %s">webgl</span>', $gpuMediaDevice) : '<span style="color:#e17f7f;text-decoration:line-through" title="WebGL fingerprint does not match">webgl</span>';
 
                 $raw[] = [
                     'label'      => sprintf('[%s] %s - %s - <a href="/players/%s" target="_blank" title="%s">%s</a>', $counts, $webgl, GeneralHelper::formatTimestamp($found->last_connection), $found->license_identifier, $playtime, $found->player_name),
@@ -867,6 +874,17 @@ class PlayerBanController extends Controller
 
         $counts = '<span style="color:#ff5b5b">Tokens</span> / <span style="color:#5bc2ff">IPs</span> / <span style="color:#65d54e">Identifiers</span> / <span style="color:#f0c622">Media Devices</span>';
 
-        return $this->fakeText(200, "Found: <b>" . sizeof($raw) . "</b> Accounts for <a href='/players/" . $license . "' target='_blank'>" . $player->player_name . "</a> using " . $title . "\n\n<i style='color:#c68dbf'>[" . $counts . "] - Last Connection - Player Name</i>\n\n<i style='color:#a3ff9b'>- Not Banned</i>\n" . implode("\n", $linked) . "\n\n<i style='color:#ff8e8e'>- Banned</i>\n" . implode("\n", $banned));
+        return $this->fakeText(200, sprintf(
+            'Found: <b>%d</b> Accounts for <a href="/players/%s" target="_blank">%s</a> using %s %s\n\n<i style="color:#c68dbf">[%s] - Last Connection - Player Name</i>\n\n<i style="color:#a3ff9b">- Not Banned</i>\n%s\n\n<i style="color:#ff8e8e">- Banned</i>\n%s',
+            $allowFresh ? sprintf('<a href="?fresh" %s>[Fresh]</a>', request()->has('fresh') ? 'id="fresh"' : '') : '',
+            sizeof($raw),
+            $license,
+            $player->player_name,
+            $title,
+            $counts,
+            implode("\n", $linked),
+            implode("\n", $banned)),
+            '<script>const fresh=document.getElementById("fresh");if(fresh){function a(){b-=1,fresh.innerText=`${b}s`,0>=b&&window.location.reload()}let b=60;a()}</script>'
+        );
     }
 }
