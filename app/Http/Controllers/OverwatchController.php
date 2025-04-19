@@ -273,10 +273,10 @@ class OverwatchController extends Controller
         // Actually do the spectating
         if ($isReset) {
             $command = "spectate";
-            $message = sprintf('%s reset #%d.', user()->player_name, $spectator['id']);
+            $message = sprintf('%s reset #%d', user()->player_name, $spectator['id']);
         } else {
             $command = sprintf("spectate %d", $source);
-            $message = sprintf('%s set #%d to %d%s.', user()->player_name, $spectator['id'], $source, $isRandom ? ' - rng' : '');
+            $message = sprintf('%s set #%d to %d%s', user()->player_name, $spectator['id'], $source, $isRandom ? ' - rng' : '');
         }
 
         $response = ServerAPI::runCommand($spectator['server'], $license, $command);
