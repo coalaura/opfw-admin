@@ -880,7 +880,7 @@ class PlayerBanController extends Controller
             $license,
             $player->player_name,
             $title,
-            $allowFresh ? sprintf('<a href="?fresh" %s>[Fresh]</a>', request()->has('fresh') ? 'id="fresh"' : '') : '',
+            $allowFresh ? sprintf('<a href="?fresh" class="sup" %s>[Fresh]</a>', request()->has('fresh') ? 'id="fresh"' : '') : '',
             $counts,
             implode("\n", $linked),
             implode("\n", $banned),
