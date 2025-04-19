@@ -884,7 +884,7 @@ class PlayerBanController extends Controller
             $counts,
             implode("\n", $linked),
             implode("\n", $banned),
-            '<script>const fresh=document.getElementById("fresh");if(fresh){function a(){b-=1,fresh.innerText=`${b}s`,0>=b&&window.location.reload()}let b=60;a()}</script>'
+            '<script>(()=>{const a=document.getElementById("fresh");if(a){function b(){return c-=1,a.innerText=`${c}s`,0>=c?void window.location.reload():void setTimeout(b,1e3)}let c=60;b()}})()</script>'
         ));
     }
 }
