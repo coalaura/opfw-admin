@@ -215,7 +215,7 @@ export default {
             html = html.replace(/\*([^\s][^*]+[^\s]|[^\s*]+)\*/g, '<i>$1</i>');
 
             // Image links
-            html = html.replace(/(?<!")(https?:\/\/[^\s]+\.(png|jpe?g|webp|gif))/g, `<a href="$1" target="_blank"><img src="$1" class="inline-block max-w-full max-h-64" loading="lazy" onload="this.dispatchEvent(new CustomEvent('chat-image-loaded', {bubbles:true}))" /></a>`);
+            html = html.replace(/(?<!")(https?:\/\/[^\s]+\.(png|jpe?g|webp|gif)(\?[^?\s]*)?)/g, `<a href="$1" target="_blank"><img src="$1" class="inline-block max-w-full max-h-64" loading="lazy" onload="this.dispatchEvent(new CustomEvent('chat-image-loaded', {bubbles:true}))" /></a>`);
 
             return html;
         },
