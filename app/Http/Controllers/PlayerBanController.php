@@ -304,7 +304,7 @@ class PlayerBanController extends Controller
         // Automatically log the ban update as a warning.
         $player->warnings()->create([
             'issuer_id' => $user->user_id,
-            'message'   => 'I removed this players ban.',
+            'message'   => 'I removed this players ban.' . ($ban->isSystem() ? ' (System ban)' : ''),
         ]);
 
         return backWith('success', 'The player has successfully been unbanned.');

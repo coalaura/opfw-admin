@@ -272,6 +272,11 @@ class Ban extends Model
         return $this->belongsTo(Player::class, 'creator_name', 'player_name');
     }
 
+    public function isSystem(): bool
+    {
+        return empty($this->creator_name) && empty($this->creator_identifier);
+    }
+
     public static function resolveAutomatedReason(?string $originalReason): array
     {
         if ($originalReason) {
