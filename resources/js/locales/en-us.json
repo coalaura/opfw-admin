@@ -207,6 +207,7 @@
         "born": "Born {0}",
         "no_character": "No character info.",
         "playtime": "has {0} played",
+        "no_playtime": "missing playtime",
         "active_viewers": "Active Viewers: {0}",
         "inactive_viewers": "Inactive Viewers: {0}"
     },

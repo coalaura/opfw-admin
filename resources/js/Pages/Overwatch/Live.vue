@@ -640,6 +640,10 @@ export default {
                 playtime = target.playtime,
                 loaded = target.loaded;
 
+            if (!playtime || !loaded) {
+                return this.t("overwatch.no_playtime");
+            }
+
             const actual = playtime + (now - loaded);
 
             if (format) {

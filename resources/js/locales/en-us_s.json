@@ -653,6 +653,7 @@
         "live_description": "Watchin' players do their thing on the server, live.",
         "new_player": "Pick yerself a random new player to watch.",
         "no_character": "Ain't got no character info.",
+        "no_playtime": "missin' playtime",
         "no_streams": "Ain't no streams available.",
         "playtime": "has {0} done played",
         "profile": "{0} - {1} (#{2})",
