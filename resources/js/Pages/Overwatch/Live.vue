@@ -637,14 +637,13 @@ export default {
         },
         playtime(target, format) {
             const now = this.timestamp,
-                playtime = target.playtime,
-                loaded = target.loaded;
+                session = target.session;
 
             if (!playtime || !loaded) {
                 return this.t("overwatch.no_playtime");
             }
 
-            const actual = playtime + (now - loaded);
+            const actual = now - session;
 
             if (format) {
                 return this.t("overwatch.playtime", this.$options.filters.humanizeSeconds(actual));
