@@ -81,7 +81,7 @@
 
                         <div class="flex flex-col border-b border-gray-500 pb-3" v-if="target">
                             <inertia-link class="font-medium truncate" :href="`/players/${target.license}`" :title="target.name">[{{ target.source }}] {{ target.name }}</inertia-link>
-                            <div class="italic text-muted dark:text-dark-muted text-xxs -mt-1 mb-0.5" :title="formatSeconds(playtime(target), 'YMdhm', true)" v-if="'playtime' in target">
+                            <div class="italic text-muted dark:text-dark-muted text-xxs -mt-1 mb-0.5" :title="formatSeconds(playtime(target), 'YMdhm', true)" v-if="'session' in target">
                                 {{ playtime(target, true) }}
                             </div>
 
@@ -637,7 +637,9 @@ export default {
         },
         playtime(target, format) {
             const now = this.timestamp,
-                session = target.session;
+                session = this.target?.session;
+
+            console.log(this.target);
 
             if (!session) {
                 return this.t("overwatch.no_playtime");
