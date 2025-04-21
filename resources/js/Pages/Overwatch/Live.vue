@@ -639,8 +639,6 @@ export default {
             const now = this.timestamp,
                 session = this.target?.session;
 
-            console.log(this.target);
-
             if (!session) {
                 return this.t("overwatch.no_playtime");
             }
