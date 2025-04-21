@@ -639,7 +639,7 @@ export default {
             const now = this.timestamp,
                 session = target.session;
 
-            if (!playtime || !loaded) {
+            if (!session) {
                 return this.t("overwatch.no_playtime");
             }
 
