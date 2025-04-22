@@ -85,7 +85,7 @@ module.exports = {
                 "max":             "calc(100vh - (210px + 120px))",
                 "box":             "15px",
                 "twitter-img":     "250px",
-                "modal-content":   "560px",
+                "outfit":          "500px",
             },
             minWidth: {
                 "box":     "350px",
