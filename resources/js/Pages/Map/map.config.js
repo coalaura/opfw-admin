@@ -20,7 +20,6 @@ export default {
             max: {x: 198.2265625, y: -206.970703125}
         }
     },
-    version: "v2.1",
 
     calibrating: false
 };
