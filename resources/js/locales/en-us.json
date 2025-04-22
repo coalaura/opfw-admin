@@ -1204,6 +1204,8 @@
             "divorce": "Divorce characters",
             "divorce_confirm": "Are you sure you want to divorce these 2 characters? You cannot undo this change from the panel.",
             "inventory_logs": "Inventory Logs",
+            "has_outfits": "This character has {0} saved outfit(s).",
+            "outfits": "Outfits",
             "zone": {
                 "all": "All",
                 "head": "Head",
@@ -1340,7 +1342,6 @@
             "job": "Job",
             "phone": "Phone Number",
             "email": "E-Mail Address",
-            "outfits": "This character has {0} saved outfit(s).",
             "gender": "Gender"
         }
     },

@@ -50,7 +50,7 @@ class CharacterResource extends JsonResource
             'licenses'                   => $this->getLicenses(),
             'creationTime'               => $this->character_creation_time,
             'pedModelHash'               => $this->ped_model_hash ? intval($this->ped_model_hash) : null,
-            'outfits'                    => $isView ? Character::getOutfits($this->character_id) : 0,
+            'outfits'                    => $isView ? Character::getOutfits($this->character_id, user()->isSeniorStaff()) : [],
             'danny'                      => GeneralHelper::isDefaultDanny(intval($this->ped_model_hash), $this->ped_model_data),
             'mugshot'                    => $this->mugshot_url ?? null,
             'playtime'                   => $this->playtime,

@@ -18,18 +18,20 @@ class PropertyResource extends JsonResource
     {
 		$keys = [];
 
-		$sharedKeys = $this->shared_keys ? explode(';', $this->shared_keys) : [];
+        if (user()->isSeniorStaff()) {
+            $sharedKeys = $this->shared_keys ? explode(';', $this->shared_keys) : [];
 
-		foreach ($sharedKeys as $key) {
-			$data = explode('-', $key);
+            foreach ($sharedKeys as $key) {
+                $data = explode('-', $key);
 
-			if (sizeof($data) >= 3) {
-				$level = intval($data[1]);
-				$cid = intval($data[2]);
+                if (sizeof($data) >= 3) {
+                    $level = intval($data[1]);
+                    $cid = intval($data[2]);
 
-				$keys["c_" . $cid] = $level;
-			}
-		}
+                    $keys["c_" . $cid] = $level;
+                }
+            }
+        }
 
         return [
             'property_id'         => $this->property_id,

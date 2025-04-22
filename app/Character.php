@@ -138,9 +138,19 @@ class Character extends Model
         ];
     }
 
-    public static function getOutfits(int $characterId): int
+    public static function getOutfits(int $characterId, bool $includePreviews = false): array
     {
-        return DB::table('outfits')->where('character_id', '=', $characterId)->count();
+        $fields = ['name'];
+
+        if ($includePreviews) {
+            $fields[] = 'showcase_url';
+        }
+
+        return DB::table('outfits')
+            ->select($fields)
+            ->where('character_id', '=', $characterId)
+            ->get()
+            ->toArray();
     }
 
     /**

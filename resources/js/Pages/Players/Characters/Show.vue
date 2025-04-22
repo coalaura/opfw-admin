@@ -199,7 +199,10 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="italic p-2 font-normal" colspan="2">{{ t('players.edit.outfits', character.outfits) }}</th>
+                                    <th class="italic p-2 font-normal" colspan="2">
+                                        {{ t('players.characters.has_outfits', character.outfits.length) }}
+                                        <span class="cursor-pointer dark:text-blue-300 text-blue-500" @click="viewOutfits()" v-if="$page.auth.player.isSeniorStaff && character.outfits.length > 0">{{ t('global.view') }}</span>
+                                    </th>
                                 </tr>
                             </table>
                         </div>
@@ -616,6 +619,34 @@
             </template>
         </modal>
 
+        <!-- View Outfits -->
+        <modal :show.sync="isViewingOutfits">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.characters.outfits') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="flex gap-3 items-center justify-between">
+                    <i class="fas fa-arrow-left cursor-pointer text-3xl" @click="previousOutfit()"></i>
+
+                    <div class="h-modal-content flex flex-col gap-3">
+                        <img :src="viewingOutfit.showcase_url" class="h-full" />
+                        <div class="flex-shrink-0 text-xl font-medium italic text-center">{{ outfitIndex + 1 }} - {{ viewingOutfit.name }}</div>
+                    </div>
+
+                    <i class="fas fa-arrow-right cursor-pointer text-3xl" @click="nextOutfit()"></i>
+                </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isViewingOutfits = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
+
         <!-- Vehicles -->
         <v-section :noFooter="true">
             <template #header>
@@ -937,7 +968,7 @@ export default {
             required: true,
         },
         vehicles: {
-            type: Object,
+            type: Object | Array,
             required: true,
         },
         horns: {
@@ -945,7 +976,7 @@ export default {
             required: true,
         },
         jobs: {
-            type: Object,
+            type: Object | Array,
             required: true,
         },
         motelMap: {
@@ -1094,6 +1125,10 @@ export default {
             isOffline: false,
             isRefreshingEmail: false,
 
+            preloadedOutfits: false,
+            isViewingOutfits: false,
+            outfitIndex: 0,
+
             isShowingSavingsLogs: false,
             isLoadingSavingsLogs: false,
             savingsLogs: []
@@ -1124,9 +1159,41 @@ export default {
         },
         vehicleAddModelValid() {
             return this.vehicles.includes(this.vehicleAddModel);
+        },
+        viewingOutfit() {
+            return this.character.outfits[this.outfitIndex];
         }
     },
     methods: {
+        previousOutfit() {
+            this.outfitIndex--;
+
+            if (this.outfitIndex < 0) {
+                this.outfitIndex += this.character.outfits.length;
+            }
+        },
+        nextOutfit() {
+            this.outfitIndex = (this.outfitIndex + 1) % this.character.outfits.length;
+        },
+        viewOutfits() {
+            if (!this.preloadedOutfits) {
+                this.preloadedOutfits = true;
+
+                for (const outfit of this.character.outfits) {
+                    const { showcase_url } = outfit;
+
+                    if (!showcase_url) {
+                        outfit.showcase_url = "/images/no_image_ped.webp";
+
+                        continue;
+                    }
+
+                    (new Image()).src = showcase_url;
+                }
+            }
+
+            this.isViewingOutfits = true;
+        },
         pedModel(hash) {
             if (!hash) {
                 return 'unknown';

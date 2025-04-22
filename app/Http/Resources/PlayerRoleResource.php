@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
@@ -17,14 +16,14 @@ class PlayerRoleResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'license' => $this->license_identifier,
-            'name'        => $this->getSafePlayerName(),
+            'license'         => $this->license_identifier,
+            'name'            => $this->getSafePlayerName(),
 
-            'is_super_admin' => $this->is_super_admin,
+            'is_super_admin'  => $this->is_super_admin,
             'is_senior_staff' => $this->is_senior_staff,
-            'is_staff' => $this->is_staff,
-            'is_trusted' => $this->is_trusted,
-            'is_debugger' => $this->is_debugger,
+            'is_staff'        => $this->is_staff,
+            'is_trusted'      => $this->is_trusted,
+            'is_debugger'     => $this->is_debugger,
         ];
     }
 
