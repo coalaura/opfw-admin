@@ -632,7 +632,7 @@
                     <i class="fas fa-arrow-left cursor-pointer text-3xl" @click="previousOutfit()"></i>
 
                     <div class="h-outfit flex flex-col gap-3">
-                        <img :src="viewingOutfit.showcase_url" class="h-full" />
+                        <img :src="viewingOutfit.showcase_url" class="h-full object-contain" />
                         <div class="flex-shrink-0 text-xl font-medium italic text-center">{{ outfitIndex + 1 }} - {{ viewingOutfit.name }}</div>
                     </div>
 
