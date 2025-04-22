@@ -445,7 +445,7 @@ export default {
                 case 'illegal_vehicle_spawn':
                     if (!metadata.entity) return false;
 
-                    return `${metadata.script ? `${metadata.script}:` : ''} --${metadata.entity.model}-- ${metadata.distance ? `(${metadata.distance.toFixed(2)}m)` : ""}${metadata.isAddon ? ' (**addon**)' : ''}`;
+                    return `${metadata.script ? `${metadata.script}:` : ''} --${metadata.entity.model || metadata.entity.modelHash}-- ${metadata.distance ? `(${metadata.distance.toFixed(2)}m)` : ""}${metadata.isAddon ? ' (**addon**)' : ''}`;
                 case 'illegal_local_vehicle':
                     if (!metadata.model) return false;
 
