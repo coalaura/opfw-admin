@@ -19,7 +19,7 @@ use Inertia\Response;
 
 class LogController extends Controller
 {
-    const DRUG_LOGS = [
+    const DrugLogs = [
         "Gun Run",
         "Gun Run Drop",
         "Cocaine Run",
@@ -28,6 +28,10 @@ class LogController extends Controller
         "Oxy Run Failed",
         "Jim's Gun Shop",
         "Crafted Gun",
+    ];
+
+    const RestrictedLogs = [
+        "Changed Frequency"
     ];
 
     /**
@@ -44,7 +48,7 @@ class LogController extends Controller
 
         $skipped = [];
 
-        if (env('RESTRICT_DRUG_LOGS', false)) {
+        if (env('RESTRICT_DrugLogs', false)) {
             $player = user();
 
             if (! $player->panel_drug_department && ! $player->isSuperAdmin()) {
@@ -55,9 +59,15 @@ class LogController extends Controller
         $query = Log::query()->orderByDesc('timestamp');
 
         if (! $canSearchDrugs) {
-            $query->whereNotIn('action', self::DRUG_LOGS);
+            $query->whereNotIn('action', self::DrugLogs);
 
-            $skipped = ['action is "' . implode('", "', self::DRUG_LOGS) . '"'];
+            $skipped = ['action is "' . implode('", "', self::DrugLogs) . '"'];
+        }
+
+        if (!$this->isSeniorStaff($request)) {
+            $query->whereNotIn('action', self::RestrictedLogs);
+
+            $skipped = ['action is "' . implode('", "', self::RestrictedLogs) . '"'];
         }
 
         // Filtering by identifier.
@@ -146,7 +156,7 @@ class LogController extends Controller
             'time'           => $end - $start,
             'playerMap'      => Player::fetchLicensePlayerNameMap($logs->toArray($request), 'licenseIdentifier'),
             'page'           => $page,
-            'drugActions'    => self::DRUG_LOGS,
+            'drugActions'    => self::DrugLogs,
             'canSearchDrugs' => $canSearchDrugs,
             'actions'        => CacheHelper::getLogActions(),
             'skipped'        => $skipped,
