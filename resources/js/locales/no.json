@@ -305,6 +305,10 @@
             "item_name": "Elementnavn",
             "key": "Nøkkel",
             "metadata": "Elementmetadata",
+            "move": "Flytt",
+            "move_from": "Flytt <i>{0}</i> fra",
+            "move_item_slot": "Flytt alle gjenstander i denne plassen.",
+            "moving_slot": "Flytter plass #{0}",
             "save": "Lagre endringer",
             "value": "Verdi"
         },

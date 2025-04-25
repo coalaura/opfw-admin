@@ -305,6 +305,10 @@
             "item_name": "Stuff name",
             "key": "Key",
             "metadata": "Stuff data",
+            "move": "Move",
+            "move_from": "Move <i>{0}</i> from",
+            "move_item_slot": "Move all things here.",
+            "moving_slot": "Move slot #{0}",
             "save": "Save changes",
             "value": "Value"
         },

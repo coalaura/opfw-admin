@@ -305,6 +305,10 @@
             "item_name": "Item Ka Naam",
             "key": "Key",
             "metadata": "Item Metadata",
+            "move": "Le jao",
+            "move_from": "Le jao <i>{0}</i> se",
+            "move_item_slot": "Is slot mein sabhi items le jao.",
+            "moving_slot": "Slot #{0} le ja rahe hain",
             "save": "Badlaav Sanrakshit Karein",
             "value": "Muly"
         },

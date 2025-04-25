@@ -305,6 +305,10 @@
             "item_name": "Item Nyame",
             "key": "Keyuwu",
             "metadata": "Item Metadatauwu",
+            "move": "Mowve",
+            "move_from": "Mowve <i>{0}</i> fwom",
+            "move_item_slot": "Mowve aww items in this swot.",
+            "moving_slot": "Mowving swot #{0}",
             "save": "Save Changesuwu",
             "value": "Vawue"
         },

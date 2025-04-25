@@ -305,6 +305,10 @@
             "item_name": "Item Name",
             "key": "Key",
             "metadata": "Item Metadata",
+            "move": "Move on over",
+            "move_from": "Move <i>{0}</i> from yonder",
+            "move_item_slot": "Move all them items in this here slot.",
+            "moving_slot": "Movin' slot #{0}",
             "save": "Save Changes",
             "value": "Value"
         },
