@@ -133,7 +133,7 @@
 
             <template #default>
                 <div class="flex gap-5 items-center">
-                    <div class="flex-shrink-0" v-html="t('inventories.show.move_from', getItemLabelForSlot(movingSlot))"></div>
+                    <div class="flex-shrink-0" v-html="t('inventories.show.move_from', getItemLabelForSlot(movingSlot, true))"></div>
 
                     <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" :value="name" disabled />
                     <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" :class="{ 'border-red-500': !movingTargetValid }" minlength="3" maxlength="255" v-model="movingTarget" :placeholder="name" />
