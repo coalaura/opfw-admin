@@ -830,9 +830,11 @@
             "description": "{0} items weighing {1}su in total.",
             "delete_item_slot": "Delete all items in this slot.",
             "edit_item_slot": "Edit all items in this slot.",
+            "move_item_slot": "Move all items in this slot.",
             "add_item_slot": "Add items to this slot.",
             "delete_confirm": "Are you sure you want to delete all items from this slot?",
             "editing_slot": "Editing slot #{0}",
+            "moving_slot": "Moving slot #{0}",
             "amount": "Amount",
             "item_name": "Item Name",
             "infos": "Item Infos",
@@ -841,7 +843,9 @@
             "attach_identity": "Attach Identity",
             "key": "Key",
             "value": "Value",
-            "save": "Save Changes"
+            "save": "Save Changes",
+            "move_from": "Move <i>{0}</i> from",
+            "move": "Move"
         }
     },
     "twitter": {

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Character;
@@ -47,13 +46,13 @@ class InventoryController extends Controller
     const AttachableJobs = [
         "Law Enforcement",
         "Medical",
-        "Government"
+        "Government",
     ];
 
     const StringMetadataKeys = [
         "nameOverride",
         "firstName",
-        "lastName"
+        "lastName",
     ];
 
     /**
@@ -89,7 +88,7 @@ class InventoryController extends Controller
                 $metadata = json_decode($item->item_metadata, true) ?? [];
                 $slot     = $item->inventory_slot;
 
-                if (!isset($contents[$slot])) {
+                if (! isset($contents[$slot])) {
                     $contents[$slot] = [];
                 }
 
@@ -105,7 +104,7 @@ class InventoryController extends Controller
             }
 
             for ($slot = 1; $slot <= $slots; $slot++) {
-                if (!isset($contents[$slot])) {
+                if (! isset($contents[$slot])) {
                     $contents[$slot] = [];
                 }
             }
@@ -139,7 +138,7 @@ class InventoryController extends Controller
         $type = $inventoryParams[0];
         $id   = intval($inventoryParams[1]);
 
-        if (!$id || $id <= 0) {
+        if (! $id || $id <= 0) {
             abort(404);
         }
 
@@ -158,7 +157,7 @@ class InventoryController extends Controller
 
         $item = $query->first();
 
-        if (!$item) {
+        if (! $item) {
             abort(404);
         }
 
@@ -174,7 +173,7 @@ class InventoryController extends Controller
     {
         $class = $vehicle->getVehicleClass();
 
-        if (!$class) {
+        if (! $class) {
             abort(404);
         }
 
@@ -258,7 +257,7 @@ class InventoryController extends Controller
      */
     public function update(string $inventory, int $slot, Request $request)
     {
-        if (!$this->isSuperAdmin($request)) {
+        if (! $this->isSuperAdmin($request)) {
             abort(403);
         }
 
@@ -266,22 +265,22 @@ class InventoryController extends Controller
         $amount   = intval($request->input('amount'));
         $metadata = $request->input('metadata');
 
-        if (!$this->isValidItem($name) || !$amount || $amount <= 0 || $amount > 255) {
+        if (! $this->isValidItem($name) || ! $amount || $amount <= 0 || $amount > 255) {
             abort(400);
         }
 
         $decoded = json_decode($metadata, true);
 
-        if (!is_array($decoded)) {
+        if (! is_array($decoded)) {
             abort(400);
         }
 
-        if (!$decoded) {
+        if (! $decoded) {
             $decoded = [];
         }
 
-        foreach($decoded as $key => $value) {
-            if (!$value) {
+        foreach ($decoded as $key => $value) {
+            if (! $value) {
                 unset($decoded[$key]);
             } else if (in_array($key, self::StringMetadataKeys)) {
                 $decoded[$key] = strval($value);
@@ -334,6 +333,56 @@ class InventoryController extends Controller
     }
 
     /**
+     * Moves all items in a certain inventory slot.
+     *
+     * @param string $inventory
+     * @param int $slot
+     * @param Request $request
+     * @return Response
+     */
+    public function move(string $inventory, int $slot, Request $request)
+    {
+        if (! $this->isSuperAdmin($request)) {
+            abort(403);
+        }
+
+        $target = strtolower(trim($request->input('target')));
+
+        if (! $target || ! preg_match('/^\w+-.+/m', $target)) {
+            abort(400);
+        }
+
+        $usedSlots = DB::table('inventories')
+            ->select('inventory_slot')
+            ->where('inventory_name', '=', $target)
+            ->groupBy('inventory_slot')
+            ->orderBy('inventory_slot')
+            ->get()->toArray();
+
+        $usedSlots = array_values(array_map(function($slot) {
+            return $slot->inventory_slot;
+        }, $usedSlots));
+
+        $availableSlot = 1;
+
+        while (in_array($availableSlot, $usedSlots)) {
+            $availableSlot++;
+        }
+
+        LoggingHelper::log(consoleName() . ' moved all items in ' . $inventory . ' (slot ' . $slot . ') to ' . $target . ' (slot ' . $availableSlot . ').');
+
+        DB::table('inventories')->where('inventory_name', '=', $inventory)->where('inventory_slot', '=', $slot)->update([
+            'inventory_name' => $target,
+            'inventory_slot' => $availableSlot,
+        ]);
+
+        $this->refresh($inventory);
+        $this->refresh($target);
+
+        return redirect('/inventory/' . $inventory);
+    }
+
+    /**
      * Deletes all items from a certain inventory slot.
      *
      * @param string $inventory
@@ -343,7 +392,7 @@ class InventoryController extends Controller
      */
     public function delete(string $inventory, int $slot, Request $request)
     {
-        if (!$this->isSuperAdmin($request)) {
+        if (! $this->isSuperAdmin($request)) {
             abort(403);
         }
 
@@ -358,7 +407,7 @@ class InventoryController extends Controller
 
     public function attachIdentity(Request $request, Character $character)
     {
-        if (!$this->isSuperAdmin($request)) {
+        if (! $this->isSuperAdmin($request)) {
             abort(403);
         }
 
@@ -383,7 +432,7 @@ class InventoryController extends Controller
     {
         $serverUrl = Server::getFirstServer("url");
 
-        if (!$serverUrl) {
+        if (! $serverUrl) {
             return;
         }
 

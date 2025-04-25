@@ -30,6 +30,10 @@
                                 <i class="fas fa-wrench"></i>
                             </button>
 
+                            <button v-if="canEditItems" class="bg-transparent absolute top-0.5 left-11 text-teal-500 dark:text-teal-400 font-semibold text-sm cursor-pointer" :title="t('inventories.show.move_item_slot')" @click="moveItemSlot(slot)">
+                                <i class="fas fa-people-carry"></i>
+                            </button>
+
                             <img :src="`/images/icons/items/${items[0].name}.png`" class="w-full h-32 object-contain crisp" />
                         </template>
 
@@ -41,7 +45,7 @@
                             <div class="h-32">&nbsp;</div>
                         </template>
 
-                        <div class="px-1 py-0.5 text-center truncate text-sm bg-black bg-opacity-10" v-html="getFirstItemName(items)"></div>
+                        <div class="px-1 py-0.5 justify-center truncate text-sm bg-black bg-opacity-10 flex gap-1" v-html="getItemLabelForSlot(slot)"></div>
                     </div>
                 </div>
             </template>
@@ -120,6 +124,32 @@
             </template>
         </modal>
 
+        <modal :show="isMoving">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('inventories.show.moving_slot', movingSlot) }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="flex gap-5 items-center">
+                    <div class="flex-shrink-0" v-html="t('inventories.show.move_from', getItemLabelForSlot(movingSlot))"></div>
+
+                    <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" :value="name" disabled />
+                    <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" :class="{ 'border-red-500': !movingTargetValid }" minlength="3" maxlength="255" v-model="movingTarget" :placeholder="name" />
+                </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500" @click="isMoving = false">
+                    {{ t('global.close') }}
+                </button>
+                <button type="button" class="px-5 py-2 rounded bg-lime-200 hover:bg-lime-300 dark:bg-lime-600 dark:hover:bg-lime-500" @click="saveMove()" v-if="movingTargetValid">
+                    {{ t('inventories.show.move') }}
+                </button>
+            </template>
+        </modal>
+
     </div>
 </template>
 
@@ -185,6 +215,13 @@ export default {
             const item = this.items[this.editingItem];
 
             return item?.stackable;
+        },
+        movingTargetValid() {
+            if (!this.movingTarget) return false;
+
+            const trimmed = this.movingTarget.trim().toLowerCase();
+
+            return trimmed.match(/^\w+-.+/m) && this.name !== trimmed;
         }
     },
     data() {
@@ -197,18 +234,42 @@ export default {
             editingAmount: 1,
             editingMetadata: [],
 
+            isMoving: false,
+            movingSlot: false,
+            movingTarget: false,
+
             attachCharacterId: '',
             attachCharacterLoading: false
         };
     },
     methods: {
-        getFirstItemName(items) {
+        getItemLabelForSlot(slot) {
+            const items = this.contents[slot];
+
             if (!items.length) return "&nbsp;";
 
-            const name = items[0].name;
-            const item = this.items[name] || {};
+            const item = items[0],
+                itemName = item.name,
+                itemMetadata = item.metadata,
+                itemData = this.items[itemName];
 
-            return item.label || name;
+            let label = itemData?.label || name;
+
+            if (itemMetadata?.battleRoyaleOnly) {
+                label = `<span class="font-semibold">BR</span> ${label}`;
+            } else if (itemMetadata?.jobName === "Law Enforcement") {
+                label = `<span class="font-semibold">PD</span> ${label}`;
+            } else if (itemMetadata?.jobName === "Medical") {
+                label = `<span class="font-semibold">EMS</span> ${label}`;
+            } else if (itemMetadata?.jobName === "Government") {
+                label = `<span class="font-semibold">Gov</span> ${label}`;
+            } else if (itemMetadata?.jobName === "Green Wonderland") {
+                label = `<span class="font-semibold">WL</span> ${label}`;
+            } else if (itemMetadata?.jobName === "Mechanic") {
+                label = `<span class="font-semibold">Mech</span> ${label}`;
+            }
+
+            return label;
         },
         changedItemName() {
             if (this.editedItemStackable) return;
@@ -216,7 +277,7 @@ export default {
             this.editingAmount = 1;
         },
         async deleteItemSlot(slot) {
-            if (this.isLoading || !confirm(this.t('inventories.show.delete_confirm'))) {
+            if (this.isLoading || this.isEditing || this.isMoving || !confirm(this.t('inventories.show.delete_confirm'))) {
                 return;
             }
 
@@ -285,8 +346,22 @@ export default {
             this.isLoading = false;
             this.isEditing = false;
         },
+        async saveMove() {
+            if (this.isLoading || !this.isMoving || !this.movingTargetValid) return;
+
+            this.isLoading = true;
+
+            this.movingTarget = this.movingTarget.trim().toLowerCase();
+
+            await this.$inertia.patch(`/inventory/${this.name}/items/${this.movingSlot}`, {
+                target: this.movingTarget
+            });
+
+            this.isLoading = false;
+            this.isMoving = false;
+        },
         editItemSlot(slot, items) {
-            if (this.isLoading || this.isEditing) return;
+            if (this.isLoading || this.isEditing || this.isMoving) return;
 
             this.isEditing = true;
 
@@ -314,6 +389,13 @@ export default {
                 this.editingItem = "";
                 this.editingAmount = 1;
             }
+        },
+        moveItemSlot(slot) {
+            if (this.isLoading || this.isEditing || this.isMoving) return;
+
+            this.isMoving = true;
+            this.movingSlot = slot;
+            this.movingTarget = "";
         },
         removeMetadataKey(key) {
             if (this.isLoading || !this.isEditing) return;
