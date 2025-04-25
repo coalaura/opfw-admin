@@ -243,7 +243,7 @@ export default {
         };
     },
     methods: {
-        getItemLabelForSlot(slot) {
+        getItemLabelForSlot(slot, withAmount = false) {
             const items = this.contents[slot];
 
             if (!items.length) return "&nbsp;";
@@ -267,6 +267,10 @@ export default {
                 label = `<span class="font-semibold">WL</span> ${label}`;
             } else if (itemMetadata?.jobName === "Mechanic") {
                 label = `<span class="font-semibold">Mech</span> ${label}`;
+            }
+
+            if (withAmount) {
+                label = `${items.length}x ${label}`;
             }
 
             return label;
