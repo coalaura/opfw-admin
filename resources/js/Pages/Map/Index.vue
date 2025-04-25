@@ -33,11 +33,9 @@
         <portal to="actions">
             <div class="flex gap-2">
                 <!-- Show Timestamp -->
-                <!-- This shit breaks all the time idk if i cba to fix it or just remove it permanently
-                    <button class="p-2 w-11 text-center font-semibold text-white rounded bg-blue-600 dark:bg-blue-500" :title="t('map.timestamp_title')" @click="isTimestamp = true" v-if="this.perm.check(this.perm.PERM_ADVANCED)">
-                        <i class="fas fa-vial"></i>
-                    </button>
-                -->
+                <button class="p-2 w-11 text-center font-semibold text-white rounded bg-blue-600 dark:bg-blue-500" :title="t('map.timestamp_title')" @click="isTimestamp = true" v-if="this.perm.check(this.perm.PERM_ADVANCED)">
+                    <i class="fas fa-vial"></i>
+                </button>
 
                 <!-- Show Historic -->
                 <button class="p-2 w-11 text-center font-semibold text-white rounded bg-blue-600 dark:bg-blue-500" :title="t('map.historic_title')" @click="showHistoric()" v-if="this.perm.check(this.perm.PERM_ADVANCED)">
