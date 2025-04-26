@@ -771,6 +771,7 @@ export default {
         },
         async loadHistory(server, license, from, till) {
             this.loadingScreenStatus = this.t('map.historic_fetch');
+
             try {
                 const result = await _get(`${this.hostname(false)}/socket/${server}/history/${license}/${from}/${till}`, {
                     token: this.token
@@ -973,7 +974,7 @@ export default {
                         players.push({
                             license: `license:${license}`,
                             cid: coords._,
-                            heading: coords.h,
+                            heading: coords.w,
                             speed: coords.s,
                             x: coords.x,
                             y: coords.y,
