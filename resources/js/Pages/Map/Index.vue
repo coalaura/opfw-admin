@@ -813,9 +813,9 @@ export default {
         },
         async loadPlayerNames(licenses) {
             try {
-                const result = await _post('/map/playerNames', {
+                const result = await _post('/map/playerNames', JSON.stringify({
                     licenses: licenses
-                });
+                }));
 
                 if (result?.status) {
                     return result.data;
@@ -870,7 +870,10 @@ export default {
                 this.loadingScreenStatus = this.t('map.timestamp_load_names');
 
                 const licenses = players.map(player => player.license);
-                const playerInfos = (await this.loadPlayerNames(licenses)) || {};
+                const playerInfos = (await this.loadPlayerNames(licenses)) || {
+                    players: [],
+                    characters: [],
+                };
 
                 this.loadingScreenStatus = this.t('map.timestamp_render');
 
@@ -958,6 +961,7 @@ export default {
                 });
 
                 this.loadingScreenStatus = this.t('map.timestamp_parse');
+
                 if (result?.status) {
                     const players = [];
 
@@ -967,7 +971,7 @@ export default {
                         const coords = result.data[license];
 
                         players.push({
-                            license: `license:${license.replace(".csv", "")}`,
+                            license: `license:${license}`,
                             cid: coords._,
                             heading: coords.h,
                             speed: coords.s,
