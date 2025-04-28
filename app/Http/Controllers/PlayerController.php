@@ -196,6 +196,13 @@ class PlayerController extends Controller
      */
     public function show(Request $request, Player $player)
     {
+        if (!$player->license_identifier) {
+            return $this->text(200, sprintf(
+                'Player %s has no license identifier.',
+                $player->getSafePlayerName(),
+            ));
+        }
+
         $whitelisted = DB::table('user_whitelist')
             ->select(['license_identifier'])
             ->where('license_identifier', '=', $player->license_identifier)
