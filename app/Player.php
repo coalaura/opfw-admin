@@ -420,7 +420,7 @@ class Player extends Model
         return trim($name);
     }
 
-    public static function getFilteredPlayerName(string $name, $aliases, string $license): string
+    public static function getFilteredPlayerName(string $name, $aliases, ?string $license): string
     {
         $name    = self::filterPlayerName($name);
         $aliases = $aliases ?? [];
@@ -445,7 +445,7 @@ class Player extends Model
             }
         }
 
-        return substr($license, 8, 10);
+        return $license ? substr($license, 8, 10) : "unknown";
     }
 
     public function getSafePlayerName(): string
