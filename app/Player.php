@@ -521,8 +521,10 @@ class Player extends Model
     public function resolveRouteBinding($value, $field = null)
     {
         // Steam Identifier
-        if (Str::startsWith($value, 'steam:')) {
-            return Player::query()->where('identifiers', 'LIKE', "%\"" . $value . "\"%")->get();
+        if (preg_match('/^steam:[a-z0-9]+$/mi', $value)) {
+            $id = '"' . $value . '"';
+
+            return Player::query()->where(DB::raw("JSON_CONTAINS(identifiers, '$id')"), '=', '1')->get();
         }
 
         // License Identifier
