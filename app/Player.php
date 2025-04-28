@@ -528,7 +528,7 @@ class Player extends Model
         }
 
         // License Identifier
-        if (Str::startsWith($value, 'license:')) {
+        if (preg_match('/^license:[a-z0-9]+$/mi', $value)) {
             return Player::query()->select()->where('license_identifier', '=', $value)->first();
         }
 
