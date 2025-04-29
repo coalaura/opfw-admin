@@ -53,6 +53,7 @@ class DeviceHelper
         "_yeti_",
         "_classic_",
         "_video_",
+        "_hdmi_",
 
         // obscure ones (found in legacy india)
         "_acer_",
@@ -70,6 +71,18 @@ class DeviceHelper
         "_bose_",
         "virtualcamera",
         "_micusb",
+        "_driver_",
+        "_dell_",
+        "_monitor_",
+        "_brio_",
+        "_stream_",
+        "_mic_",
+        "_wecam_",
+        "_unitycam_",
+        "_e2esoft_",
+        "_interface_",
+        "_communications_",
+        "_jbl_",
     ];
 
     public static function check(array $devices): bool
@@ -113,7 +126,6 @@ class DeviceHelper
 
 /*
 $test = <<<EOF
-"audioinput_steelseries_sonar_microphone_steelseries_sonar_virtual_audio_device""audioinput_kopfh_rer_bose_qc35_ii_j_bluetooth""audioinput_mikrofon_micusb1_4c4a_4155""videoinput_prprlivevirtualcameradx""videoinput_obs_virtual_camera""audiooutput_steelseries_sonar_gaming_steelseries_sonar_virtual_audio_device""audiooutput_steelseries_sonar_chat_steelseries_sonar_virtual_audio_device""audiooutput_steelseries_sonar_microphone_steelseries_sonar_virtual_audio_device""audiooutput_lautsprecher_steam_streaming_speakers""audiooutput_27g2wg3_nvidia_high_definition_audio""audiooutput_lautsprecher_micusb1_4c4a_4155""audiooutput_kopfh_rer_bose_qc35_ii_j_bluetooth""audiooutput_steelseries_sonar_aux_steelseries_sonar_virtual_audio_device""audiooutput_steelseries_sonar_media_steelseries_sonar_virtual_audio_device"
 EOF;
 
 $devices = json_decode("[" . str_replace('""', '", "', $test) . "]", true);
