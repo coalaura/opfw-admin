@@ -88,7 +88,13 @@ class PlayerCharacterController extends Controller
             $query->where(DB::raw("JSON_CONTAINS(character_data, '$license', '$.licenses')"), '=', '1');
         }
 
-        $query->orderBy('first_name');
+        // Sort query
+        $sorting = $this->sortQuery($request, $query, 'name', [
+            'id'       => 'character_id',
+            'name'     => DB::raw('CONCAT(first_name, last_name)'),
+            'playtime' => 'playtime',
+            'last'     => 'last_seen',
+        ]);
 
         $query->select([
             'character_id', 'license_identifier', 'first_name', 'last_name', 'gender', 'job_name',
@@ -104,7 +110,7 @@ class PlayerCharacterController extends Controller
 
         return Inertia::render('Characters/Index', [
             'characters' => $characters,
-            'filters'    => [
+            'filters'    => array_merge($sorting, [
                 'character_id'  => $request->input('character_id'),
                 'name'          => $request->input('name'),
                 'vehicle_plate' => $request->input('vehicle_plate'),
@@ -113,7 +119,7 @@ class PlayerCharacterController extends Controller
                 'dob'           => $request->input('dob'),
                 'job'           => $request->input('job'),
                 'license'       => $request->input('license') ?? '',
-            ],
+            ]),
             'links'     => $this->getPageUrls($page),
             'page'      => $page,
             'time'       => $end - $start,

@@ -225,6 +225,15 @@
         "server_online": "Server's been online since {0}.",
         "server_timeout": "Server ID is cached fer 5 minutes",
         "soon_tm": "Soon™",
+        "sort": {
+            "default": "Default",
+            "id": "ID (incr)",
+            "last": "Last Seen",
+            "name": "Name",
+            "playtime": "Playtime"
+        },
+        "sort_by": "Sort by",
+        "sort_order": "ASCendin' or DESCendin'",
         "staff": "Staff Member",
         "staff_title": "Staff Members can use all staff commands.",
         "status": {

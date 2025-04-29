@@ -225,6 +225,15 @@
         "server_online": "Server {0} se online hai.",
         "server_timeout": "Server ID 5 minute ke liye cached hai",
         "soon_tm": "Jaldi™",
+        "sort": {
+            "default": "Pehle se",
+            "id": "ID (badhti kram mein)",
+            "last": "Aakhri baar dekha",
+            "name": "Naam",
+            "playtime": "Khelne ka samay"
+        },
+        "sort_by": "Kram se chunein",
+        "sort_order": "Chadhta ya Ghatta kram",
         "staff": "Staff Sadasya",
         "staff_title": "Staff Sadasyon ko sabhi staff commands ka access hai.",
         "status": {

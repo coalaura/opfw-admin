@@ -79,11 +79,13 @@ class PlayerController extends Controller
         // Get ban info
         $query->leftJoin('user_bans', 'identifier', '=', 'license_identifier');
 
-        if ($request->has('new')) {
-            $query->orderByDesc('user_id');
-        } else {
-            $query->orderBy("player_name");
-        }
+        // Sort query
+        $sorting = $this->sortQuery($request, $query, 'playtime', [
+            'id'       => 'user_id',
+            'name'     => 'player_name',
+            'playtime' => 'playtime',
+            'last'     => 'last_seen',
+        ]);
 
         $query->select([
             'license_identifier', 'player_name', 'playtime', 'identifiers', 'player_aliases', 'ban_hash', 'media_devices',
@@ -104,14 +106,14 @@ class PlayerController extends Controller
 
         return Inertia::render('Players/Index', [
             'players'   => PlayerIndexResource::collection($players),
-            'filters'   => [
+            'filters'   => array_merge($sorting, [
                 'name'               => $request->input('name'),
                 'license'            => $request->input('license'),
                 'server'             => $request->input('server'),
                 'identifier'         => $request->input('identifier'),
                 'streamer_exception' => $request->input('streamer_exception') ?? '',
                 'enablable'          => $request->input('enablable') ?? '',
-            ],
+            ]),
             'links'     => $this->getPageUrls($page),
             'page'      => $page,
             'time'      => $end - $start,
@@ -196,7 +198,7 @@ class PlayerController extends Controller
      */
     public function show(Request $request, Player $player)
     {
-        if (!$player->license_identifier) {
+        if (! $player->license_identifier) {
             return $this->text(200, sprintf(
                 'Player %s has no license identifier.',
                 $player->getSafePlayerName(),

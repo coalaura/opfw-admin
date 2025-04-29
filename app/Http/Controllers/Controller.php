@@ -331,6 +331,31 @@ class Controller extends BaseController
         });
     }
 
+    /**
+     * Sorts a query given allowed columns, sortby and sortorder
+     */
+    protected function sortQuery(Request $request, &$query, string $default, array $allowed): array
+    {
+        $sort = $request->query('sort');
+        $order = $request->query('order');
+
+        $name = isset($allowed[$sort]) ? $sort : $default;
+        $column = $allowed[$name];
+
+        if ($order === 'desc') {
+            $query->orderByDesc($column);
+        } else {
+            $order = '';
+
+            $query->orderBy($column);
+        }
+
+        return [
+            'sort' => $name,
+            'order' => $order,
+        ];
+    }
+
     protected function isFullLicenseIdentifier(string $identifier): bool
     {
         return preg_match('/^(license2?:)[a-z0-9]{40}$/i', $identifier) === 1;

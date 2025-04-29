@@ -83,7 +83,16 @@
         "restricted_to_root": "Restricted to root users only.",
         "not_restricted": "Not restricted.",
         "support_markdown": "Most basic markdown syntax is supported. Click to learn more.",
-        "opfw_abbreviation": "What the OP-FW abbreviation really stands for."
+        "opfw_abbreviation": "What the OP-FW abbreviation really stands for.",
+        "sort_by": "Sort by",
+        "sort_order": "ASCending or DESCending",
+        "sort": {
+            "default": "Default",
+            "id": "ID (incr)",
+            "name": "Name",
+            "playtime": "Playtime",
+            "last": "Last Seen"
+        }
     },
     "chat": {
         "toggle_mute": "Toggle notification sounds.",

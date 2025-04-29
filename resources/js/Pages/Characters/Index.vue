@@ -20,6 +20,20 @@
 
             <template>
                 <form @submit.prevent>
+                    <div class="absolute top-2 right-2 flex gap-2">
+                        <select class="block w-32 px-2 py-1 bg-gray-200 dark:bg-gray-600 border rounded text-sm" id="sort" name="sort" v-model="filters.sort" :title="t('global.sort_by')">
+                            <option value="id">{{ t('global.sort.id') }}</option>
+                            <option value="name">{{ t('global.sort.name') }}</option>
+                            <option value="playtime">{{ t('global.sort.playtime') }}</option>
+                            <option value="last">{{ t('global.sort.last') }}</option>
+                        </select>
+
+                        <select class="block w-20 px-2 py-1 bg-gray-200 dark:bg-gray-600 border rounded text-sm" id="order" name="order" v-model="filters.order" :title="t('global.sort_order')">
+                            <option value="">ASC</option>
+                            <option value="desc">DESC</option>
+                        </select>
+                    </div>
+
                     <div class="flex flex-wrap mb-4">
                         <!-- Character ID -->
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
@@ -200,6 +214,9 @@ export default {
             required: true,
         },
         filters: {
+            sort: String,
+            order: String,
+
             character_id: Number,
             name: String,
             vehicle_plate: String,

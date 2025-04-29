@@ -225,6 +225,15 @@
         "server_online": "Sewvew has been onwine since {0}.",
         "server_timeout": "Sewvew ID is cached fow 5 minutes",
         "soon_tm": "Sewn™",
+        "sort": {
+            "default": "Defauwt",
+            "id": "ID (incw)",
+            "last": "Wast Seen",
+            "name": "Nyame",
+            "playtime": "Pwaytime"
+        },
+        "sort_by": "Sowt by",
+        "sort_order": "ASCending ow DESCending",
         "staff": "Staff Membew",
         "staff_title": "Staff Membews have access to aww staff commands.",
         "status": {

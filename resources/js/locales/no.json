@@ -225,6 +225,15 @@
         "server_online": "Serveren har vært online siden {0}.",
         "server_timeout": "Server-ID er hurtiglagret i 5 minutter",
         "soon_tm": "Kommer snart™",
+        "sort": {
+            "default": "Standard",
+            "id": "ID (økende)",
+            "last": "Sist sett",
+            "name": "Navn",
+            "playtime": "Spilletid"
+        },
+        "sort_by": "Sorter etter",
+        "sort_order": "Stigende eller synkende",
         "staff": "Ansatt",
         "staff_title": "Ansatte har tilgang til alle ansattkommandoer.",
         "status": {

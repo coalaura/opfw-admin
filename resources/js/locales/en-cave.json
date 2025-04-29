@@ -225,6 +225,15 @@
         "server_online": "Server working since {0}.",
         "server_timeout": "Server ID saved for 5 minutes",
         "soon_tm": "Soon",
+        "sort": {
+            "default": "Default",
+            "id": "ID grow",
+            "last": "Last see",
+            "name": "Name",
+            "playtime": "Play time"
+        },
+        "sort_by": "Sort",
+        "sort_order": "Up or down",
         "staff": "Staff",
         "staff_title": "Staff can use all staff commands.",
         "status": {
