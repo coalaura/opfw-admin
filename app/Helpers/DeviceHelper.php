@@ -1,8 +1,6 @@
 <?php
 namespace App\Helpers;
 
-use Illuminate\Support\Str;
-
 class DeviceHelper
 {
     const Wordlist = [
@@ -67,6 +65,9 @@ class DeviceHelper
         "_anker_",
         "_warudocam",
         "_prism_",
+        "_bose_",
+        "virtualcamera",
+        "_micusb",
     ];
 
     public static function check(array $devices): bool
@@ -75,23 +76,23 @@ class DeviceHelper
         $devices = array_values(array_filter(array_map(function ($device) {
             return preg_replace('/^(video|audio)(in|out)put/m', '', $device);
         }, $devices), function ($device) {
-            return $device && strlen($device) >= 5 && ! Str::startsWith($device, "gpu_");
+            return $device && strlen($device) >= 5 && ! substr($device, 0, 4) !== "gpu_";
         }));
 
         if (empty($devices)) {
             return true; // very unusual
         }
 
-        $count = 0;
+        $filtered = self::filter($devices);
 
-        foreach ($devices as $device) {
-            // like "audiooutput_caeaeae_bccacc_caaaeec_cce0_0_abbbb_0b05_1a52"
-            if (! self::has($device)) {
-                $count++;
-            }
-        }
+        return sizeof($filtered) >= 3;
+    }
 
-        return $count >= 3;
+    public static function filter(array $devices): array
+    {
+        return array_values(array_filter($devices, function($device) {
+            return ! self::has($device);
+        }));
     }
 
     private static function has(string $device): bool
@@ -99,7 +100,7 @@ class DeviceHelper
         $device = sprintf('_%s_', $device);
 
         foreach (self::Wordlist as $word) {
-            if (Str::contains($device, $word)) {
+            if (mb_strpos($device, $word) !== false) {
                 return true;
             }
         }
@@ -107,3 +108,13 @@ class DeviceHelper
         return false;
     }
 }
+
+/*
+$test = <<<EOF
+"audioinput_steelseries_sonar_microphone_steelseries_sonar_virtual_audio_device""audioinput_kopfh_rer_bose_qc35_ii_j_bluetooth""audioinput_mikrofon_micusb1_4c4a_4155""videoinput_prprlivevirtualcameradx""videoinput_obs_virtual_camera""audiooutput_steelseries_sonar_gaming_steelseries_sonar_virtual_audio_device""audiooutput_steelseries_sonar_chat_steelseries_sonar_virtual_audio_device""audiooutput_steelseries_sonar_microphone_steelseries_sonar_virtual_audio_device""audiooutput_lautsprecher_steam_streaming_speakers""audiooutput_27g2wg3_nvidia_high_definition_audio""audiooutput_lautsprecher_micusb1_4c4a_4155""audiooutput_kopfh_rer_bose_qc35_ii_j_bluetooth""audiooutput_steelseries_sonar_aux_steelseries_sonar_virtual_audio_device""audiooutput_steelseries_sonar_media_steelseries_sonar_virtual_audio_device"
+EOF;
+
+$devices = json_decode("[" . str_replace('""', '", "', $test) . "]", true);
+
+var_dump(DeviceHelper::filter($devices));
+//*/
