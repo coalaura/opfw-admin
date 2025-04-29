@@ -65,6 +65,8 @@ class DeviceHelper
         "_anker_",
         "_warudocam",
         "_prism_",
+
+        // other ones (found over time)
         "_bose_",
         "virtualcamera",
         "_micusb",
