@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGcphoneAppChatTable extends Migration
+class CreateLoadingScreenTipsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,25 +17,16 @@ class CreateGcphoneAppChatTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("gcphone_app_chat");
+		$tableExists = Schema::hasTable("loading_screen_tips");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("gcphone_app_chat", function (Blueprint $table) use ($columns, $indexes) {
+		Schema::$func("loading_screen_tips", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement(); // primary key
-			!in_array("license_identifier", $columns) && $table->string("license_identifier", 50)->nullable();
-			!in_array("character_id", $columns) && $table->integer("character_id")->nullable();
-			!in_array("channel", $columns) && $table->string("channel", 20)->nullable();
-			!in_array("message", $columns) && $table->string("message", 255)->nullable();
-			!in_array("time", $columns) && $table->timestamp("time")->useCurrent();
-
-			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
-			!in_array("character_id", $indexes) && $table->index("character_id");
-			!in_array("channel", $indexes) && $table->index("channel");
-			!in_array("time", $indexes) && $table->index("time");
+			!in_array("tip", $columns) && $table->string("tip", 255)->nullable();
 		});
 	}
 
@@ -46,7 +37,7 @@ class CreateGcphoneAppChatTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("gcphone_app_chat");
+		Schema::dropIfExists("loading_screen_tips");
 	}
 
 	/**
@@ -56,7 +47,7 @@ class CreateGcphoneAppChatTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `gcphone_app_chat`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `loading_screen_tips`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -70,7 +61,7 @@ class CreateGcphoneAppChatTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `gcphone_app_chat` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `loading_screen_tips` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

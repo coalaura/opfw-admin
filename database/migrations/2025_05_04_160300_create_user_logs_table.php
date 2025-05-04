@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMoneyLogsTable extends Migration
+class CreateUserLogsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,28 +17,26 @@ class CreateMoneyLogsTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("money_logs");
+		$tableExists = Schema::hasTable("user_logs");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("money_logs", function (Blueprint $table) use ($columns, $indexes) {
+		Schema::$func("user_logs", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement(); // primary key
-			!in_array("type", $columns) && $table->string("type", 50);
-			!in_array("license_identifier", $columns) && $table->string("license_identifier", 50);
-			!in_array("character_id", $columns) && $table->integer("character_id");
-			!in_array("amount", $columns) && $table->integer("amount");
-			!in_array("balance_after", $columns) && $table->integer("balance_after");
-			!in_array("details", $columns) && $table->string("details", 50)->nullable();
+			!in_array("identifier", $columns) && $table->string("identifier", 50)->nullable();
+			!in_array("action", $columns) && $table->string("action", 50)->nullable();
+			!in_array("details", $columns) && $table->longText("details")->nullable();
+			!in_array("metadata", $columns) && $table->longText("metadata")->nullable();
 			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->useCurrent();
 
-			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
-			!in_array("character_id", $indexes) && $table->index("character_id");
-			!in_array("type", $indexes) && $table->index("type");
+			!in_array("identifier", $indexes) && $table->index("identifier");
+			!in_array("action", $indexes) && $table->index("action");
 			!in_array("timestamp", $indexes) && $table->index("timestamp");
 			!in_array("details", $indexes) && $table->index("details");
+			!in_array("metadata", $indexes) && $table->index("metadata");
 		});
 	}
 
@@ -49,7 +47,7 @@ class CreateMoneyLogsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("money_logs");
+		Schema::dropIfExists("user_logs");
 	}
 
 	/**
@@ -59,7 +57,7 @@ class CreateMoneyLogsTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `money_logs`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `user_logs`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -73,7 +71,7 @@ class CreateMoneyLogsTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `money_logs` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `user_logs` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

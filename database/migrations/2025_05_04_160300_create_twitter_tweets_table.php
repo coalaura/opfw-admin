@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInventoriesTable extends Migration
+class CreateTwitterTweetsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,24 +17,27 @@ class CreateInventoriesTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("inventories");
+		$tableExists = Schema::hasTable("twitter_tweets");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("inventories", function (Blueprint $table) use ($columns, $indexes) {
+		Schema::$func("twitter_tweets", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement(); // primary key
-			!in_array("item_name", $columns) && $table->string("item_name", 50)->nullable();
-			!in_array("item_metadata", $columns) && $table->longText("item_metadata")->nullable();
-			!in_array("inventory_name", $columns) && $table->string("inventory_name", 50)->nullable();
-			!in_array("inventory_slot", $columns) && $table->integer("inventory_slot")->nullable();
+			!in_array("authorId", $columns) && $table->integer("authorId")->nullable();
+			!in_array("realUser", $columns) && $table->string("realUser", 50)->nullable();
+			!in_array("message", $columns) && $table->text("message")->nullable();
+			!in_array("time", $columns) && $table->timestamp("time")->useCurrent();
+			!in_array("likes", $columns) && $table->integer("likes")->nullable()->default("0");
+			!in_array("is_deleted", $columns) && $table->tinyInteger("is_deleted")->nullable()->default("0");
 
 			!in_array("id", $indexes) && $table->index("id");
-			!in_array("item_name", $indexes) && $table->index("item_name");
-			!in_array("item_metadata", $indexes) && $table->index("item_metadata");
-			!in_array("inventory_name", $indexes) && $table->index("inventory_name");
+			!in_array("message", $indexes) && $table->index("message");
+			!in_array("time", $indexes) && $table->index("time");
+			!in_array("authorId", $indexes) && $table->index("authorId");
+			!in_array("is_deleted", $indexes) && $table->index("is_deleted");
 		});
 	}
 
@@ -45,7 +48,7 @@ class CreateInventoriesTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("inventories");
+		Schema::dropIfExists("twitter_tweets");
 	}
 
 	/**
@@ -55,7 +58,7 @@ class CreateInventoriesTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `inventories`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `twitter_tweets`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -69,7 +72,7 @@ class CreateInventoriesTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `inventories` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `twitter_tweets` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

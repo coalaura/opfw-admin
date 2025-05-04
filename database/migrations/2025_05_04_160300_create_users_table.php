@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
 
 		Schema::$func("users", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("user_id", $columns) && $table->integer("user_id")->autoIncrement(); // primary key
+			!in_array("discord_id", $columns) && $table->string("discord_id", 32)->nullable();
 			!in_array("license_identifier", $columns) && $table->string("license_identifier", 50)->nullable();
 			!in_array("player_name", $columns) && $table->string("player_name", 255)->nullable();
 			!in_array("player_aliases", $columns) && $table->longText("player_aliases")->nullable();
@@ -38,7 +39,7 @@ class CreateUsersTable extends Migration
 			!in_array("is_senior_staff", $columns) && $table->tinyInteger("is_senior_staff")->nullable()->default("0");
 			!in_array("is_super_admin", $columns) && $table->tinyInteger("is_super_admin")->nullable()->default("0");
 			!in_array("is_debugger", $columns) && $table->tinyInteger("is_debugger")->nullable()->default("0");
-			!in_array("is_soft_banned", $columns) && $table->tinyInteger("is_soft_banned")->nullable()->default("0");
+			!in_array("is_bot", $columns) && $table->tinyInteger("is_bot")->nullable()->default("0");
 			!in_array("enabled_commands", $columns) && $table->longText("enabled_commands")->nullable();
 			!in_array("playtime", $columns) && $table->integer("playtime")->nullable()->default("0");
 			!in_array("last_connection", $columns) && $table->integer("last_connection")->nullable();
@@ -48,7 +49,10 @@ class CreateUsersTable extends Migration
 			!in_array("instant_join", $columns) && $table->tinyInteger("instant_join")->nullable()->default("0");
 			!in_array("average_ping", $columns) && $table->integer("average_ping")->nullable();
 			!in_array("average_fps", $columns) && $table->integer("average_fps")->nullable();
+			!in_array("average_fps_1_percent", $columns) && $table->integer("average_fps_1_percent")->nullable();
+			!in_array("average_lag_spikes", $columns) && $table->integer("average_lag_spikes")->nullable();
 			!in_array("country_name", $columns) && $table->string("country_name", 120)->nullable();
+			!in_array("media_devices", $columns) && $table->longText("media_devices")->nullable();
 			!in_array("user_settings", $columns) && $table->longText("user_settings")->nullable();
 			!in_array("user_data", $columns) && $table->longText("user_data")->nullable();
 			!in_array("admin_features", $columns) && $table->longText("admin_features")->nullable();
@@ -56,26 +60,17 @@ class CreateUsersTable extends Migration
 			!in_array("weekly_playtime", $columns) && $table->longText("weekly_playtime")->nullable();
 			!in_array("last_ip_identifier", $columns) && $table->string("last_ip_identifier", 50)->nullable();
 			!in_array("activity_points", $columns) && $table->longText("activity_points")->nullable();
-			!in_array("panel_drug_department", $columns) && $table->tinyInteger("panel_drug_department")->default("0");
-			!in_array("panel_tag", $columns) && $table->string("panel_tag", 255)->nullable();
-			!in_array("panel_settings", $columns) && $table->string("panel_settings", 255)->nullable();
-			!in_array("last_cached_assets", $columns) && $table->integer("last_cached_assets")->nullable();
-			!in_array("average_lag_spikes", $columns) && $table->integer("average_lag_spikes")->nullable();
-			!in_array("discord_id", $columns) && $table->string("discord_id", 32)->nullable();
-			!in_array("average_fps_1_percent", $columns) && $table->integer("average_fps_1_percent")->nullable();
-			!in_array("media_devices", $columns) && $table->longText("media_devices")->nullable();
-			!in_array("user_statistics", $columns) && $table->longText("user_statistics")->nullable();
-			!in_array("refresh_tokens", $columns) && $table->longText("refresh_tokens")->nullable();
 
+			!in_array("discord_id", $indexes) && $table->index("discord_id");
 			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
 			!in_array("player_name", $indexes) && $table->index("player_name");
-			!in_array("identifiers", $indexes) && $table->index("identifiers");
 			!in_array("is_staff", $indexes) && $table->index("is_staff");
 			!in_array("is_senior_staff", $indexes) && $table->index("is_senior_staff");
 			!in_array("is_super_admin", $indexes) && $table->index("is_super_admin");
 			!in_array("playtime", $indexes) && $table->index("playtime");
+			!in_array("identifiers", $indexes) && $table->index("identifiers");
+			!in_array("media_devices", $indexes) && $table->index("media_devices");
 			!in_array("user_data", $indexes) && $table->index("user_data");
-			!in_array("discord_id", $indexes) && $table->index("discord_id");
 		});
 	}
 

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFpsStatisticsTable extends Migration
+class CreateGiveWeaponEventsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,21 +17,20 @@ class CreateFpsStatisticsTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("fps_statistics");
+		$tableExists = Schema::hasTable("give_weapon_events");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("fps_statistics", function (Blueprint $table) use ($columns, $indexes) {
-			!in_array("date", $columns) && $table->string("date", 50)->primary(); // primary key
-			!in_array("minimum", $columns) && $table->integer("minimum")->nullable();
-			!in_array("maximum", $columns) && $table->integer("maximum")->nullable();
-			!in_array("average", $columns) && $table->integer("average")->nullable();
-			!in_array("count", $columns) && $table->integer("count")->nullable()->default("0");
-			!in_array("lag_spikes", $columns) && $table->integer("lag_spikes")->nullable();
-			!in_array("average_1_percent", $columns) && $table->integer("average_1_percent")->nullable();
+		Schema::$func("give_weapon_events", function (Blueprint $table) use ($columns, $indexes) {
+			!in_array("id", $columns) && $table->integer("id")->autoIncrement(); // primary key
+			!in_array("license_identifier", $columns) && $table->string("license_identifier", 50)->nullable();
+			!in_array("timestamp", $columns) && $table->bigInteger("timestamp")->nullable();
+			!in_array("weapon_hash", $columns) && $table->bigInteger("weapon_hash")->nullable();
+			!in_array("ammo_count", $columns) && $table->integer("ammo_count")->nullable();
+			!in_array("is_hidden", $columns) && $table->tinyInteger("is_hidden")->nullable();
 		});
 	}
 
@@ -42,7 +41,7 @@ class CreateFpsStatisticsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("fps_statistics");
+		Schema::dropIfExists("give_weapon_events");
 	}
 
 	/**
@@ -52,7 +51,7 @@ class CreateFpsStatisticsTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `fps_statistics`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `give_weapon_events`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -66,7 +65,7 @@ class CreateFpsStatisticsTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `fps_statistics` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `give_weapon_events` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

@@ -33,6 +33,7 @@ class CreateCharacterVehiclesTable extends Migration
 			!in_array("oil_mileage_after", $columns) && $table->integer("oil_mileage_after")->nullable();
 			!in_array("garage_identifier", $columns) && $table->string("garage_identifier", 120)->nullable();
 			!in_array("last_garage_identifier", $columns) && $table->string("last_garage_identifier", 120)->nullable();
+			!in_array("shared_garage", $columns) && $table->string("shared_garage", 50)->nullable();
 			!in_array("garage_state", $columns) && $table->integer("garage_state")->nullable()->default("0");
 			!in_array("garage_impound", $columns) && $table->integer("garage_impound")->nullable()->default("0");
 			!in_array("vehicle_deleted", $columns) && $table->tinyInteger("vehicle_deleted")->nullable()->default("0");
@@ -46,12 +47,12 @@ class CreateCharacterVehiclesTable extends Migration
 			!in_array("deprecated_modifications", $columns) && $table->longText("deprecated_modifications")->nullable();
 			!in_array("deprecated_fuel", $columns) && $table->double("deprecated_fuel")->nullable()->default("100");
 			!in_array("deprecated_supporter", $columns) && $table->tinyInteger("deprecated_supporter")->nullable()->default("0");
-			!in_array("shared_garage", $columns) && $table->string("shared_garage", 50)->nullable();
 
 			!in_array("vehicle_id", $indexes) && $table->index("vehicle_id");
 			!in_array("owner_cid", $indexes) && $table->index("owner_cid");
 			!in_array("plate", $indexes) && $table->index("plate");
 			!in_array("garage_identifier", $indexes) && $table->index("garage_identifier");
+			!in_array("shared_garage", $indexes) && $table->index("shared_garage");
 			!in_array("garage_state", $indexes) && $table->index("garage_state");
 			!in_array("garage_impound", $indexes) && $table->index("garage_impound");
 			!in_array("vehicle_deleted", $indexes) && $table->index("vehicle_deleted");
@@ -59,7 +60,6 @@ class CreateCharacterVehiclesTable extends Migration
 			!in_array("was_boosted", $indexes) && $table->index("was_boosted");
 			!in_array("police_impound_expire", $indexes) && $table->index("police_impound_expire");
 			!in_array("emergency_type", $indexes) && $table->index("emergency_type");
-			!in_array("shared_garage", $indexes) && $table->index("shared_garage");
 		});
 	}
 

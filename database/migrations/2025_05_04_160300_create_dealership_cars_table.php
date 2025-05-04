@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSpecialImportsRotationTable extends Migration
+class CreateDealershipCarsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,18 +17,22 @@ class CreateSpecialImportsRotationTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("special_imports_rotation");
+		$tableExists = Schema::hasTable("dealership_cars");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("special_imports_rotation", function (Blueprint $table) use ($columns, $indexes) {
-			!in_array("vehicle_id", $columns) && $table->integer("vehicle_id")->autoIncrement(); // primary key
-			!in_array("model_name", $columns) && $table->longText("model_name")->nullable();
-			!in_array("rotation_day", $columns) && $table->integer("rotation_day")->nullable();
-			!in_array("remaining_stock", $columns) && $table->integer("remaining_stock")->nullable()->default("0");
+		Schema::$func("dealership_cars", function (Blueprint $table) use ($columns, $indexes) {
+			!in_array("id", $columns) && $table->integer("id")->autoIncrement(); // primary key
+			!in_array("slot", $columns) && $table->integer("slot")->nullable()->default("-1");
+			!in_array("commission", $columns) && $table->integer("commission")->nullable()->default("0");
+			!in_array("commission_cid", $columns) && $table->integer("commission_cid")->nullable();
+			!in_array("category_id", $columns) && $table->integer("category_id")->nullable();
+			!in_array("category", $columns) && $table->string("category", 50)->nullable();
+
+			!in_array("slot", $indexes) && $table->index("slot");
 		});
 	}
 
@@ -39,7 +43,7 @@ class CreateSpecialImportsRotationTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("special_imports_rotation");
+		Schema::dropIfExists("dealership_cars");
 	}
 
 	/**
@@ -49,7 +53,7 @@ class CreateSpecialImportsRotationTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `special_imports_rotation`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `dealership_cars`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -63,7 +67,7 @@ class CreateSpecialImportsRotationTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `special_imports_rotation` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `dealership_cars` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

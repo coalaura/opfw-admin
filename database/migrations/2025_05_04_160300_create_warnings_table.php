@@ -33,12 +33,11 @@ class CreateWarningsTable extends Migration
 			!in_array("updated_at", $columns) && $table->timestamp("updated_at")->useCurrent();
 			!in_array("warning_type", $columns) && $table->enum("warning_type", ["note", "warning", "strike", "system", "hidden"])->default("note");
 			!in_array("can_be_deleted", $columns) && $table->tinyInteger("can_be_deleted")->default("1");
-			!in_array("reactions", $columns) && $table->longText("reactions")->nullable();
 
 			!in_array("player_id", $indexes) && $table->index("player_id");
 			!in_array("issuer_id", $indexes) && $table->index("issuer_id");
-			!in_array("warning_type", $indexes) && $table->index("warning_type");
 			!in_array("created_at", $indexes) && $table->index("created_at");
+			!in_array("warning_type", $indexes) && $table->index("warning_type");
 		});
 	}
 

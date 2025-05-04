@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePingsTable extends Migration
+class CreateStaffStatisticsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,22 +17,23 @@ class CreatePingsTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("pings");
+		$tableExists = Schema::hasTable("staff_statistics");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("pings", function (Blueprint $table) use ($columns, $indexes) {
+		Schema::$func("staff_statistics", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement(); // primary key
-			!in_array("timestamp", $columns) && $table->integer("timestamp")->nullable();
-			!in_array("raw_data", $columns) && $table->longText("raw_data")->nullable();
-			!in_array("ideal_location", $columns) && $table->string("ideal_location", 120)->nullable();
-			!in_array("ideal_total_clients", $columns) && $table->integer("ideal_total_clients")->nullable();
-			!in_array("ideal_average_ping", $columns) && $table->double("ideal_average_ping")->nullable();
-			!in_array("ideal_average_ping_low", $columns) && $table->double("ideal_average_ping_low")->nullable();
-			!in_array("ideal_average_ping_high", $columns) && $table->double("ideal_average_ping_high")->nullable();
+			!in_array("identifier", $columns) && $table->string("identifier", 50);
+			!in_array("action", $columns) && $table->string("action", 50);
+			!in_array("metadata", $columns) && $table->longText("metadata")->nullable();
+			!in_array("timestamp", $columns) && $table->integer("timestamp");
+
+			!in_array("identifier", $indexes) && $table->index("identifier");
+			!in_array("action", $indexes) && $table->index("action");
+			!in_array("timestamp", $indexes) && $table->index("timestamp");
 		});
 	}
 
@@ -43,7 +44,7 @@ class CreatePingsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("pings");
+		Schema::dropIfExists("staff_statistics");
 	}
 
 	/**
@@ -53,7 +54,7 @@ class CreatePingsTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `pings`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `staff_statistics`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -67,7 +68,7 @@ class CreatePingsTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `pings` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `staff_statistics` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

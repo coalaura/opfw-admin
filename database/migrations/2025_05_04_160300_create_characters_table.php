@@ -48,14 +48,15 @@ class CreateCharactersTable extends Migration
 			!in_array("is_one_life", $columns) && $table->tinyInteger("is_one_life")->nullable()->default("0");
 			!in_array("has_ever_been_loaded", $columns) && $table->tinyInteger("has_ever_been_loaded")->nullable()->default("0");
 			!in_array("on_duty_time", $columns) && $table->longText("on_duty_time")->nullable();
-			!in_array("last_loaded", $columns) && $table->integer("last_loaded")->nullable();
+			!in_array("last_spawn_time", $columns) && $table->integer("last_spawn_time")->nullable();
+			!in_array("last_seen", $columns) && $table->integer("last_seen")->nullable();
 			!in_array("character_creation_time", $columns) && $table->integer("character_creation_time")->nullable();
 			!in_array("playtime", $columns) && $table->integer("playtime")->nullable()->default("0");
 			!in_array("weekly_playtime", $columns) && $table->longText("weekly_playtime")->nullable();
 			!in_array("mugshot_url", $columns) && $table->string("mugshot_url", 255)->nullable();
 			!in_array("email_address", $columns) && $table->string("email_address", 120)->nullable();
 			!in_array("email_password", $columns) && $table->string("email_password", 120)->nullable();
-			!in_array("ped_model_hash", $columns) && $table->integer("ped_model_hash")->nullable();
+			!in_array("ped_model_hash", $columns) && $table->bigInteger("ped_model_hash")->nullable();
 			!in_array("ped_model_data", $columns) && $table->longText("ped_model_data")->nullable();
 			!in_array("job_name", $columns) && $table->string("job_name", 120)->nullable();
 			!in_array("department_name", $columns) && $table->string("department_name", 120)->nullable();
@@ -68,24 +69,20 @@ class CreateCharactersTable extends Migration
 			!in_array("jail", $columns) && $table->integer("jail")->nullable();
 			!in_array("gcphone_config", $columns) && $table->longText("gcphone_config")->nullable();
 			!in_array("apartment", $columns) && $table->string("apartment", 120)->nullable();
-			!in_array("last_seen", $columns) && $table->integer("last_seen")->nullable();
-			!in_array("last_spawn_time", $columns) && $table->integer("last_spawn_time")->nullable();
-			!in_array("taxes_paid_since_last_seen", $columns) && $table->integer("taxes_paid_since_last_seen")->nullable()->default("0");
 
 			!in_array("character_id", $indexes) && $table->index("character_id");
-			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
 			!in_array("character_slot", $indexes) && $table->index("character_slot");
 			!in_array("character_created", $indexes) && $table->index("character_created");
+			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
 			!in_array("character_deleted", $indexes) && $table->index("character_deleted");
-			!in_array("first_name", $indexes) && $table->index("first_name");
 			!in_array("last_name", $indexes) && $table->index("last_name");
-			!in_array("character_data", $indexes) && $table->index("character_data");
+			!in_array("first_name", $indexes) && $table->index("first_name");
+			!in_array("last_spawn_time", $indexes) && $table->index("last_spawn_time");
 			!in_array("email_address", $indexes) && $table->index("email_address");
-			!in_array("phone_number", $indexes) && $table->index("phone_number");
-			!in_array("last_loaded", $indexes) && $table->index("last_loaded");
 			!in_array("ped_model_hash", $indexes) && $table->index("ped_model_hash");
 			!in_array("playtime", $indexes) && $table->index("playtime");
-			!in_array("last_spawn_time", $indexes) && $table->index("last_spawn_time");
+			!in_array("phone_number", $indexes) && $table->index("phone_number");
+			!in_array("character_data", $indexes) && $table->index("character_data");
 		});
 	}
 

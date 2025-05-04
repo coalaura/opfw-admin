@@ -33,8 +33,8 @@ class CreateStocksCompanyEmployeesTable extends Migration
 			!in_array("salary", $columns) && $table->integer("salary")->nullable()->default("0");
 			!in_array("permissions", $columns) && $table->integer("permissions")->nullable()->default("0");
 
-			!in_array("company_id", $indexes) && $table->index("company_id");
 			!in_array("employee_cid", $indexes) && $table->index("employee_cid");
+			!in_array("company_id", $indexes) && $table->index("company_id");
 			!in_array("permissions", $indexes) && $table->index("permissions");
 		});
 	}

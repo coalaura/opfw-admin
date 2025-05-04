@@ -30,10 +30,10 @@ class CreateEconomyStatisticsTable extends Migration
 			!in_array("bank", $columns) && $table->bigInteger("bank")->nullable()->default("0");
 			!in_array("savings", $columns) && $table->bigInteger("savings")->nullable()->default("0");
 			!in_array("stocks", $columns) && $table->bigInteger("stocks")->nullable()->default("0");
-			!in_array("poorest", $columns) && $table->integer("poorest")->nullable()->default("0");
-			!in_array("richest", $columns) && $table->integer("richest")->nullable()->default("0");
 			!in_array("shared", $columns) && $table->bigInteger("shared")->nullable()->default("0");
 			!in_array("bonds", $columns) && $table->bigInteger("bonds")->nullable()->default("0");
+			!in_array("poorest", $columns) && $table->integer("poorest")->nullable()->default("0");
+			!in_array("richest", $columns) && $table->integer("richest")->nullable()->default("0");
 		});
 	}
 

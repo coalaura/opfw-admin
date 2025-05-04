@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCommandStatisticsTable extends Migration
+class CreateFpsStatisticsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,16 +17,21 @@ class CreateCommandStatisticsTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("command_statistics");
+		$tableExists = Schema::hasTable("fps_statistics");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("command_statistics", function (Blueprint $table) use ($columns, $indexes) {
+		Schema::$func("fps_statistics", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("date", $columns) && $table->string("date", 50)->primary(); // primary key
-			!in_array("usage", $columns) && $table->longText("usage")->nullable();
+			!in_array("minimum", $columns) && $table->integer("minimum")->nullable();
+			!in_array("maximum", $columns) && $table->integer("maximum")->nullable();
+			!in_array("average", $columns) && $table->integer("average")->nullable();
+			!in_array("average_1_percent", $columns) && $table->integer("average_1_percent")->nullable();
+			!in_array("lag_spikes", $columns) && $table->integer("lag_spikes")->nullable();
+			!in_array("count", $columns) && $table->integer("count")->nullable()->default("0");
 		});
 	}
 
@@ -37,7 +42,7 @@ class CreateCommandStatisticsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("command_statistics");
+		Schema::dropIfExists("fps_statistics");
 	}
 
 	/**
@@ -47,7 +52,7 @@ class CreateCommandStatisticsTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `command_statistics`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `fps_statistics`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -61,7 +66,7 @@ class CreateCommandStatisticsTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `command_statistics` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `fps_statistics` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

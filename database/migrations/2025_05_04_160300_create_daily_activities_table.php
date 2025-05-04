@@ -36,8 +36,8 @@ class CreateDailyActivitiesTable extends Migration
 			!in_array("task_completed", $columns) && $table->tinyInteger("task_completed")->nullable()->default("0");
 			!in_array("task_claimed", $columns) && $table->tinyInteger("task_claimed")->nullable()->default("0");
 
-			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
 			!in_array("tasks_identifier", $indexes) && $table->index("tasks_identifier");
+			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
 			!in_array("task_id", $indexes) && $table->index("task_id");
 		});
 	}

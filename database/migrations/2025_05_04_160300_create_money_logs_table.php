@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHighscoresTable extends Migration
+class CreateMoneyLogsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,23 +17,28 @@ class CreateHighscoresTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("highscores");
+		$tableExists = Schema::hasTable("money_logs");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("highscores", function (Blueprint $table) use ($columns, $indexes) {
+		Schema::$func("money_logs", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement(); // primary key
+			!in_array("type", $columns) && $table->string("type", 50);
+			!in_array("license_identifier", $columns) && $table->string("license_identifier", 50);
 			!in_array("character_id", $columns) && $table->integer("character_id");
-			!in_array("game", $columns) && $table->string("game", 50);
-			!in_array("score", $columns) && $table->integer("score");
-			!in_array("timestamp", $columns) && $table->integer("timestamp");
+			!in_array("amount", $columns) && $table->integer("amount");
+			!in_array("balance_after", $columns) && $table->integer("balance_after");
+			!in_array("details", $columns) && $table->string("details", 50)->nullable();
+			!in_array("timestamp", $columns) && $table->timestamp("timestamp")->useCurrent();
 
+			!in_array("type", $indexes) && $table->index("type");
+			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
 			!in_array("character_id", $indexes) && $table->index("character_id");
-			!in_array("game", $indexes) && $table->index("game");
-			!in_array("score", $indexes) && $table->index("score");
+			!in_array("details", $indexes) && $table->index("details");
+			!in_array("timestamp", $indexes) && $table->index("timestamp");
 		});
 	}
 
@@ -44,7 +49,7 @@ class CreateHighscoresTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("highscores");
+		Schema::dropIfExists("money_logs");
 	}
 
 	/**
@@ -54,7 +59,7 @@ class CreateHighscoresTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `highscores`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `money_logs`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -68,7 +73,7 @@ class CreateHighscoresTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `highscores` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `money_logs` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

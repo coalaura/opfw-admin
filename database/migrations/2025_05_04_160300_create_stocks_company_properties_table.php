@@ -43,10 +43,10 @@ class CreateStocksCompanyPropertiesTable extends Migration
 			!in_array("terminate", $columns) && $table->integer("terminate")->nullable();
 
 			!in_array("company_id", $indexes) && $table->index("company_id");
-			!in_array("block_id", $indexes) && $table->index("block_id");
-			!in_array("property_id", $indexes) && $table->index("property_id");
 			!in_array("property_renter", $indexes) && $table->index("property_renter");
+			!in_array("property_id", $indexes) && $table->index("property_id");
 			!in_array("property_renter_cid", $indexes) && $table->index("property_renter_cid");
+			!in_array("block_id", $indexes) && $table->index("block_id");
 			!in_array("property_last_pay", $indexes) && $table->index("property_last_pay");
 			!in_array("shared_keys", $indexes) && $table->index("shared_keys");
 		});

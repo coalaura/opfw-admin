@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCinemaBlacklistTable extends Migration
+class CreateLuckyWheelSpinsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,18 +17,22 @@ class CreateCinemaBlacklistTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("cinema_blacklist");
+		$tableExists = Schema::hasTable("lucky_wheel_spins");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("cinema_blacklist", function (Blueprint $table) use ($columns, $indexes) {
+		Schema::$func("lucky_wheel_spins", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement(); // primary key
-			!in_array("video_key", $columns) && $table->string("video_key", 50)->nullable();
+			!in_array("license_identifier", $columns) && $table->string("license_identifier", 50)->nullable();
+			!in_array("paid_spin", $columns) && $table->tinyInteger("paid_spin")->nullable()->default("0");
+			!in_array("timestamp", $columns) && $table->integer("timestamp")->nullable();
 
-			!in_array("video_key", $indexes) && $table->index("video_key");
+			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
+			!in_array("paid_spin", $indexes) && $table->index("paid_spin");
+			!in_array("timestamp", $indexes) && $table->index("timestamp");
 		});
 	}
 
@@ -39,7 +43,7 @@ class CreateCinemaBlacklistTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("cinema_blacklist");
+		Schema::dropIfExists("lucky_wheel_spins");
 	}
 
 	/**
@@ -49,7 +53,7 @@ class CreateCinemaBlacklistTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `cinema_blacklist`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `lucky_wheel_spins`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -63,7 +67,7 @@ class CreateCinemaBlacklistTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `cinema_blacklist` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `lucky_wheel_spins` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

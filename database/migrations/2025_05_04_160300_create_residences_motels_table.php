@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExclusiveDealershipRotationTable extends Migration
+class CreateResidencesMotelsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,20 +17,23 @@ class CreateExclusiveDealershipRotationTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("exclusive_dealership_rotation");
+		$tableExists = Schema::hasTable("residences_motels");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("exclusive_dealership_rotation", function (Blueprint $table) use ($columns, $indexes) {
-			!in_array("vehicle_id", $columns) && $table->integer("vehicle_id")->autoIncrement(); // primary key
-			!in_array("model_name", $columns) && $table->longText("model_name")->nullable();
-			!in_array("package_name", $columns) && $table->longText("package_name")->nullable();
-			!in_array("rotation_day", $columns) && $table->integer("rotation_day")->nullable();
+		Schema::$func("residences_motels", function (Blueprint $table) use ($columns, $indexes) {
+			!in_array("id", $columns) && $table->integer("id")->autoIncrement(); // primary key
+			!in_array("motel", $columns) && $table->string("motel", 120)->nullable();
+			!in_array("room_id", $columns) && $table->integer("room_id")->nullable();
+			!in_array("cid", $columns) && $table->integer("cid")->nullable();
+			!in_array("expire", $columns) && $table->integer("expire")->nullable();
 
-			!in_array("rotation_day", $indexes) && $table->index("rotation_day");
+			!in_array("motel", $indexes) && $table->index("motel");
+			!in_array("room_id", $indexes) && $table->index("room_id");
+			!in_array("cid", $indexes) && $table->index("cid");
 		});
 	}
 
@@ -41,7 +44,7 @@ class CreateExclusiveDealershipRotationTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("exclusive_dealership_rotation");
+		Schema::dropIfExists("residences_motels");
 	}
 
 	/**
@@ -51,7 +54,7 @@ class CreateExclusiveDealershipRotationTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `exclusive_dealership_rotation`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `residences_motels`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -65,7 +68,7 @@ class CreateExclusiveDealershipRotationTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `exclusive_dealership_rotation` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `residences_motels` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

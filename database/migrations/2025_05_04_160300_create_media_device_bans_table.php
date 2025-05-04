@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNewspapersTable extends Migration
+class CreateMediaDeviceBansTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,16 +17,22 @@ class CreateNewspapersTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("newspapers");
+		$tableExists = Schema::hasTable("media_device_bans");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("newspapers", function (Blueprint $table) use ($columns, $indexes) {
-			!in_array("issue_id", $columns) && $table->integer("issue_id")->autoIncrement(); // primary key
-			!in_array("newspaper", $columns) && $table->longText("newspaper")->nullable();
+		Schema::$func("media_device_bans", function (Blueprint $table) use ($columns, $indexes) {
+			!in_array("ban_id", $columns) && $table->integer("ban_id")->autoIncrement(); // primary key
+			!in_array("media_devices", $columns) && $table->longText("media_devices")->nullable();
+			!in_array("reason", $columns) && $table->longText("reason")->nullable();
+			!in_array("note", $columns) && $table->longText("note")->nullable();
+			!in_array("random_delay", $columns) && $table->tinyInteger("random_delay")->nullable()->default("0");
+			!in_array("created_at", $columns) && $table->integer("created_at")->nullable()->default("0");
+
+			!in_array("media_devices", $indexes) && $table->index("media_devices");
 		});
 	}
 
@@ -37,7 +43,7 @@ class CreateNewspapersTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("newspapers");
+		Schema::dropIfExists("media_device_bans");
 	}
 
 	/**
@@ -47,7 +53,7 @@ class CreateNewspapersTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `newspapers`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `media_device_bans`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -61,7 +67,7 @@ class CreateNewspapersTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `newspapers` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `media_device_bans` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

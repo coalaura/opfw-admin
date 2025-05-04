@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBlackjackMoneyChangeTable extends Migration
+class CreatePedScriptedTaskEventsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,22 +17,20 @@ class CreateBlackjackMoneyChangeTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("blackjack_money_change");
+		$tableExists = Schema::hasTable("ped_scripted_task_events");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("blackjack_money_change", function (Blueprint $table) use ($columns, $indexes) {
+		Schema::$func("ped_scripted_task_events", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement(); // primary key
-			!in_array("date_identifier", $columns) && $table->string("date_identifier", 50)->nullable();
-			!in_array("server_id", $columns) && $table->integer("server_id")->nullable();
-			!in_array("money_taken", $columns) && $table->integer("money_taken")->nullable()->default("0");
-			!in_array("money_given", $columns) && $table->integer("money_given")->nullable()->default("0");
-			!in_array("money_change", $columns) && $table->integer("money_change")->nullable()->default("0");
-
-			!in_array("date_identifier", $indexes) && $table->index("date_identifier");
+			!in_array("license_identifier", $columns) && $table->string("license_identifier", 50)->nullable();
+			!in_array("timestamp", $columns) && $table->bigInteger("timestamp")->nullable();
+			!in_array("ped_global_id", $columns) && $table->integer("ped_global_id")->nullable();
+			!in_array("task_sequence", $columns) && $table->text("task_sequence")->nullable();
+			!in_array("repeat_count", $columns) && $table->integer("repeat_count")->nullable();
 		});
 	}
 
@@ -43,7 +41,7 @@ class CreateBlackjackMoneyChangeTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("blackjack_money_change");
+		Schema::dropIfExists("ped_scripted_task_events");
 	}
 
 	/**
@@ -53,7 +51,7 @@ class CreateBlackjackMoneyChangeTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `blackjack_money_change`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `ped_scripted_task_events`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -67,7 +65,7 @@ class CreateBlackjackMoneyChangeTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `blackjack_money_change` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `ped_scripted_task_events` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

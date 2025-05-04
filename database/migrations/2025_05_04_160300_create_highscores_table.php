@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDealershipCarsTable extends Migration
+class CreateHighscoresTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,22 +17,23 @@ class CreateDealershipCarsTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("dealership_cars");
+		$tableExists = Schema::hasTable("highscores");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("dealership_cars", function (Blueprint $table) use ($columns, $indexes) {
+		Schema::$func("highscores", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement(); // primary key
-			!in_array("slot", $columns) && $table->integer("slot")->nullable()->default("-1");
-			!in_array("commission", $columns) && $table->integer("commission")->nullable()->default("0");
-			!in_array("commission_cid", $columns) && $table->integer("commission_cid")->nullable();
-			!in_array("category", $columns) && $table->string("category", 50)->nullable();
-			!in_array("category_id", $columns) && $table->integer("category_id")->nullable();
+			!in_array("character_id", $columns) && $table->integer("character_id");
+			!in_array("game", $columns) && $table->string("game", 50);
+			!in_array("score", $columns) && $table->integer("score");
+			!in_array("timestamp", $columns) && $table->integer("timestamp");
 
-			!in_array("slot", $indexes) && $table->index("slot");
+			!in_array("score", $indexes) && $table->index("score");
+			!in_array("character_id", $indexes) && $table->index("character_id");
+			!in_array("game", $indexes) && $table->index("game");
 		});
 	}
 
@@ -43,7 +44,7 @@ class CreateDealershipCarsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("dealership_cars");
+		Schema::dropIfExists("highscores");
 	}
 
 	/**
@@ -53,7 +54,7 @@ class CreateDealershipCarsTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `dealership_cars`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `highscores`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -67,7 +68,7 @@ class CreateDealershipCarsTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `dealership_cars` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `highscores` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;

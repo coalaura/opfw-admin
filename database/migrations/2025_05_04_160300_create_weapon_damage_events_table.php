@@ -28,6 +28,7 @@ class CreateWeaponDamageEventsTable extends Migration
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement(); // primary key
 			!in_array("license_identifier", $columns) && $table->string("license_identifier", 50)->nullable();
 			!in_array("timestamp", $columns) && $table->bigInteger("timestamp")->nullable();
+			!in_array("parent_type", $columns) && $table->string("parent_type", 20)->nullable();
 			!in_array("hit_player", $columns) && $table->string("hit_player", 50)->nullable();
 			!in_array("hit_health", $columns) && $table->integer("hit_health")->nullable();
 			!in_array("hit_entity_type", $columns) && $table->integer("hit_entity_type")->nullable();
@@ -37,6 +38,7 @@ class CreateWeaponDamageEventsTable extends Migration
 			!in_array("world_pos_x", $columns) && $table->double("world_pos_x")->nullable();
 			!in_array("world_pos_y", $columns) && $table->double("world_pos_y")->nullable();
 			!in_array("world_pos_z", $columns) && $table->double("world_pos_z")->nullable();
+			!in_array("vehicle_id", $columns) && $table->integer("vehicle_id")->nullable();
 			!in_array("damage_type", $columns) && $table->integer("damage_type")->nullable();
 			!in_array("weapon_type", $columns) && $table->bigInteger("weapon_type")->nullable();
 			!in_array("override_default_damage", $columns) && $table->tinyInteger("override_default_damage")->nullable();
@@ -69,16 +71,16 @@ class CreateWeaponDamageEventsTable extends Migration
 			!in_array("impact_dir_y", $columns) && $table->double("impact_dir_y")->nullable();
 			!in_array("impact_dir_z", $columns) && $table->double("impact_dir_z")->nullable();
 			!in_array("unk_f120", $columns) && $table->integer("unk_f120")->nullable();
-			!in_array("parent_type", $columns) && $table->string("parent_type", 20)->nullable();
 
 			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
 			!in_array("timestamp", $indexes) && $table->index("timestamp");
+			!in_array("hit_player", $indexes) && $table->index("hit_player");
 			!in_array("hit_entity_type", $indexes) && $table->index("hit_entity_type");
 			!in_array("distance", $indexes) && $table->index("distance");
+			!in_array("vehicle_id", $indexes) && $table->index("vehicle_id");
 			!in_array("is_parent_self", $indexes) && $table->index("is_parent_self");
 			!in_array("weapon_type", $indexes) && $table->index("weapon_type");
 			!in_array("hit_global_id", $indexes) && $table->index("hit_global_id");
-			!in_array("hit_player", $indexes) && $table->index("hit_player");
 		});
 	}
 

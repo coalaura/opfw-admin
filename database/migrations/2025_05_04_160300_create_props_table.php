@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLuckyWheelSpinsTable extends Migration
+class CreatePropsTable extends Migration
 {
 	/**
 	 * Run the migrations.
@@ -17,22 +17,21 @@ class CreateLuckyWheelSpinsTable extends Migration
 		// Make enums work pre laravel 10
 		Schema::getConnection()->getDoctrineConnection()->getDatabasePlatform()->registerDoctrineTypeMapping("enum", "string");
 
-		$tableExists = Schema::hasTable("lucky_wheel_spins");
+		$tableExists = Schema::hasTable("props");
 
 		$indexes = $tableExists ? $this->getIndexedColumns() : [];
 		$columns = $tableExists ? $this->getColumns() : [];
 
 		$func = $tableExists ? "table" : "create";
 
-		Schema::$func("lucky_wheel_spins", function (Blueprint $table) use ($columns, $indexes) {
+		Schema::$func("props", function (Blueprint $table) use ($columns, $indexes) {
 			!in_array("id", $columns) && $table->integer("id")->autoIncrement(); // primary key
 			!in_array("license_identifier", $columns) && $table->string("license_identifier", 50)->nullable();
-			!in_array("paid_spin", $columns) && $table->tinyInteger("paid_spin")->nullable()->default("0");
+			!in_array("model_name", $columns) && $table->string("model_name", 120)->nullable();
+			!in_array("coords", $columns) && $table->string("coords", 120)->nullable();
+			!in_array("rotation", $columns) && $table->string("rotation", 120)->nullable();
+			!in_array("culling", $columns) && $table->integer("culling")->nullable();
 			!in_array("timestamp", $columns) && $table->integer("timestamp")->nullable();
-
-			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
-			!in_array("timestamp", $indexes) && $table->index("timestamp");
-			!in_array("paid_spin", $indexes) && $table->index("paid_spin");
 		});
 	}
 
@@ -43,7 +42,7 @@ class CreateLuckyWheelSpinsTable extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("lucky_wheel_spins");
+		Schema::dropIfExists("props");
 	}
 
 	/**
@@ -53,7 +52,7 @@ class CreateLuckyWheelSpinsTable extends Migration
 	 */
 	private function getColumns(): array
 	{
-		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `lucky_wheel_spins`");
+		$columns = Schema::getConnection()->select("SHOW COLUMNS FROM `props`");
 
 		return array_map(function ($column) {
 			return $column->Field;
@@ -67,7 +66,7 @@ class CreateLuckyWheelSpinsTable extends Migration
 	 */
 	private function getIndexedColumns(): array
 	{
-		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `lucky_wheel_spins` WHERE Key_name != 'PRIMARY'");
+		$indexes = Schema::getConnection()->select("SHOW INDEXES FROM `props` WHERE Key_name != 'PRIMARY'");
 
 		return array_map(function ($index) {
 			return $index->Column_name;
