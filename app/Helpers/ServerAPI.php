@@ -78,6 +78,14 @@ class ServerAPI
     }
 
     /**
+     * /config.json
+     */
+    public static function getConfig(): array
+    {
+        return self::fresh('GET', '/config.json') ?? [];
+    }
+
+    /**
      * /crafting.txt
      */
     public static function getCrafting(bool $refresh = false): string

@@ -1637,7 +1637,7 @@
             "remove_override": "Remove Override",
             "import": "Import",
             "position_exists": "Same as the default job.",
-            "read_from_cluster": "Import current job overrides for cluster:",
+            "read_current": "Import current job overrides.",
             "or_read_text": "Or read job overrides from text:",
             "clear_overrides": "Clear Overrides",
             "job_override": "Job Overrides",

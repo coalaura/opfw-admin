@@ -1592,7 +1592,7 @@
             "position_exists": "Samme som standardjobben.",
             "positions": "Stillinger",
             "read_config": "Les konfigurasjon",
-            "read_from_cluster": "Importer gjeldende jobboverstyringer for klynge:",
+            "read_current": "Importer gjeldende jobboverstyringer.",
             "remove_override": "Fjern overstyring",
             "store_name": "Butikknavn",
             "store_override": "Butikkoverstyringer",

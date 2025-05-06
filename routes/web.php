@@ -321,7 +321,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/api/crafting', [ApiController::class, 'crafting']);
     Route::get('/api/character/{character}', [ApiController::class, 'character']);
     Route::get('/api/debug', [ApiController::class, 'debug']);
-    Route::get('/api/config/{cluster}/{key}', [ApiController::class, 'config']);
+    Route::get('/api/config/{key}', [ApiController::class, 'config']);
     Route::get('/api/chat_token', [ApiController::class, 'chatToken']);
 
     // Data routes.

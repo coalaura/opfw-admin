@@ -22,8 +22,8 @@
                 </select>
             </div>
 
-            <JobOverrides :jobs="jobs" v-if="type === 'job_override'" />
-            <StoreOverrides :items="items" v-if="type === 'store_override'" />
+            <JobOverrides :jobs="jobs" v-if="type === 'JobOverride'" />
+            <StoreOverrides :items="items" v-if="type === 'StoreOverride'" />
         </div>
 
     </div>
@@ -52,7 +52,7 @@ export default {
     },
     data() {
         return {
-            type: "job_override"
+            type: "JobOverride"
         };
     },
 }

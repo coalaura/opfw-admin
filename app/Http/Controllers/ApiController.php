@@ -87,34 +87,17 @@ class ApiController extends Controller
         ]);
     }
 
-    public function config(int $cluster, string $key)
+    public function config(string $key)
     {
-        if (!$cluster || $cluster < 1 || $cluster > 100) {
-            abort(404);
-        }
-
-        $data = HttpHelper::get("https://raw.githubusercontent.com/InZidiuZ/op-framework-public/refs/heads/master/configs/cluster$cluster.cfg");
+        $data = ServerAPI::getConfig();
 
         if (!$data) {
             abort(404);
         }
 
-        $result = "";
-        $lines = explode("\n", $data);
+        $setting = $data[$key] ?? false;
 
-        foreach($lines as $line) {
-            $line = trim($line);
-
-            if (!$line || !Str::startsWith($line, $key)) {
-                continue;
-            }
-
-            $result = $line;
-
-            break;
-        }
-
-        return $this->json(true, $result);
+        return $this->json(true, $setting);
     }
 
     public function chatToken()

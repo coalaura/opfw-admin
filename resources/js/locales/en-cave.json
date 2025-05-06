@@ -1592,7 +1592,7 @@
             "position_exists": "Same job.",
             "positions": "Positions",
             "read_config": "Read Config",
-            "read_from_cluster": "Import job for group:",
+            "read_current": "Bring job rules.",
             "remove_override": "Remove Override",
             "store_name": "Store Name",
             "store_override": "Store Override",

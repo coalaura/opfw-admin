@@ -1592,7 +1592,7 @@
             "position_exists": "Same as the default job, y'all.",
             "positions": "Positions",
             "read_config": "Read Config",
-            "read_from_cluster": "Import them current job overrides for the cluster:",
+            "read_current": "Import them current job overrides, y’all.",
             "remove_override": "Remove Override",
             "store_name": "Store Name",
             "store_override": "Store Overrides",

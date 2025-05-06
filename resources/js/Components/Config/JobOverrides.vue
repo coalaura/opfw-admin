@@ -131,10 +131,9 @@
             </template>
 
             <template #default>
-                <label class="block mb-1 font-semibold" for="cluster">{{ t('tools.config.read_from_cluster') }}</label>
-                <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" v-model="cluster" id="cluster" type="number" min="1" max="100" placeholder="3" />
+                <div class="block mb-1 font-semibold">{{ t('tools.config.read_current') }}</div>
 
-                <label class="block mb-1 font-semibold mt-5 pt-5 border-t-2 border-dashed border-gray-500" for="cluster">{{ t('tools.config.or_read_text') }}</label>
+                <label class="block mb-1 font-semibold mt-5 pt-5 border-t-2 border-dashed border-gray-500" for="reading">{{ t('tools.config.or_read_text') }}</label>
                 <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" v-model="reading" id="reading" placeholder="Law Enforcement/SASP=Cadet:70,Probationary Officer:80,Officer:90" />
             </template>
 
@@ -142,7 +141,7 @@
                 <button type="button" class="px-5 py-2 rounded bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500" @click="isReadingConfig = false">
                     {{ t('global.close') }}
                 </button>
-                <button type="button" class="px-5 py-2 rounded bg-lime-200 hover:bg-lime-300 dark:bg-lime-600 dark:hover:bg-lime-500" @click="readConfig()" v-if="reading || cluster">
+                <button type="button" class="px-5 py-2 rounded bg-lime-200 hover:bg-lime-300 dark:bg-lime-600 dark:hover:bg-lime-500" @click="readConfig()">
                     {{ t('tools.config.import') }}
                 </button>
             </template>
@@ -178,9 +177,7 @@ export default {
                 position: ""
             },
 
-            cluster: "",
             reading: "",
-
             overrides: []
         };
     },
@@ -331,18 +328,15 @@ export default {
 
             this.isReadingConfig = false;
 
-            const cluster = parseInt(this.cluster);
-
             let reading = this.reading.trim();
 
-            this.cluster = "";
             this.reading = "";
 
-            if (cluster) {
+            if (!reading) {
                 this.isLoading = true;
 
                 try {
-                    const data = await _get(`/api/config/${cluster}/job_overrides`);
+                    const data = await _get("/api/config/JobOverrides");
 
                     if (!data?.status) {
                         throw new Error("Config not found");

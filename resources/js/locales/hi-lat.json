@@ -1592,7 +1592,7 @@
             "position_exists": "Default naukri ke jaise.",
             "positions": "Pad",
             "read_config": "Config padho",
-            "read_from_cluster": "Cluster ke liye vartamaan job overrides import karein:",
+            "read_current": "Vartamaan kaam ke overrides import karein.",
             "remove_override": "Override hatao",
             "store_name": "Store Naam",
             "store_override": "Store Overrides",
