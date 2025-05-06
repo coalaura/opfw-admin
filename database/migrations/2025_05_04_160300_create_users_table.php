@@ -60,6 +60,7 @@ class CreateUsersTable extends Migration
 			!in_array("weekly_playtime", $columns) && $table->longText("weekly_playtime")->nullable();
 			!in_array("last_ip_identifier", $columns) && $table->string("last_ip_identifier", 50)->nullable();
 			!in_array("activity_points", $columns) && $table->longText("activity_points")->nullable();
+			!in_array("refresh_tokens", $columns) && $table->longText("refresh_tokens")->nullable();
 
 			!in_array("discord_id", $indexes) && $table->index("discord_id");
 			!in_array("license_identifier", $indexes) && $table->index("license_identifier");
