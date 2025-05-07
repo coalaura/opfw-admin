@@ -159,13 +159,7 @@ module.exports = {
 
                 ...colors,
 
-                // Extra dark color variants
-                "red-950": "rgb(69, 10, 10)",
-                "yellow-950": "rgb(69, 26, 3)",
-                "green-950": "rgb(5, 46, 22)",
-                "teal-950": "rgb(4, 47, 46)",
-                "gray-950": "rgb(18, 22, 33)",
-
+                // Special color variants
                 "gray-850": "rgb(24 34 47)",
 
                 // Specialty colors
@@ -178,34 +172,34 @@ module.exports = {
                 "input": "#6b7280",
 
                 // Theme colors.
-                "primary":   defaultTheme.colors.indigo["600"],
-                "secondary": defaultTheme.colors.gray["100"],
-                "danger":    defaultTheme.colors.red["500"],
-                "warning":   defaultTheme.colors.yellow["500"],
-                "success":   defaultTheme.colors.green["500"],
-                "muted":     defaultTheme.colors.gray["700"],
+                "primary":   colors.indigo[600],
+                "secondary": colors.gray[100],
+                "danger":    colors.red[500],
+                "warning":   colors.yellow[500],
+                "success":   colors.green[500],
+                "muted":     colors.gray[700],
 
                 // Theme pale colors.
-                "primary-pale":   defaultTheme.colors.indigo["100"],
-                "secondary-pale": defaultTheme.colors.gray["50"],
-                "danger-pale":    defaultTheme.colors.red["100"],
-                "warning-pale":   defaultTheme.colors.yellow["100"],
-                "success-pale":   defaultTheme.colors.green["100"],
+                "primary-pale":   colors.indigo[100],
+                "secondary-pale": colors.gray[50],
+                "danger-pale":    colors.red[100],
+                "warning-pale":   colors.yellow[100],
+                "success-pale":   colors.green[100],
 
                 // Theme colors (dark mode)
-                "dark-primary":   defaultTheme.colors.indigo["400"],
-                "dark-secondary": defaultTheme.colors.gray["700"],
-                "dark-danger":    defaultTheme.colors.red["500"],
-                "dark-warning":   defaultTheme.colors.yellow["500"],
-                "dark-success":   defaultTheme.colors.green["500"],
-                "dark-muted":     defaultTheme.colors.gray["300"],
+                "dark-primary":   colors.indigo[400],
+                "dark-secondary": colors.gray[700],
+                "dark-danger":    colors.red[500],
+                "dark-warning":   colors.yellow[500],
+                "dark-success":   colors.green[500],
+                "dark-muted":     colors.gray[300],
 
                 // Theme pale colors (dark mode)
-                "dark-primary-pale":   defaultTheme.colors.indigo["700"],
-                "dark-secondary-pale": defaultTheme.colors.gray["700"],
-                "dark-danger-pale":    defaultTheme.colors.red["700"],
-                "dark-warning-pale":   defaultTheme.colors.yellow["700"],
-                "dark-success-pale":   defaultTheme.colors.green["700"],
+                "dark-primary-pale":   colors.indigo[700],
+                "dark-secondary-pale": colors.gray[700],
+                "dark-danger-pale":    colors.red[700],
+                "dark-warning-pale":   colors.yellow[700],
+                "dark-success-pale":   colors.green[700],
 
                 "code-background": "#161b22",
                 "code-base": "#ecf2f8",
