@@ -25,7 +25,13 @@ class ToolController extends Controller
         $parameters = [];
 
         foreach ($config as $key => $value) {
-            if (!is_array($value) || empty($value['type']) || !(Str::startsWith($value['type'], 'array') || Str::startsWith($value['type'], 'map'))) {
+            $type = null;
+
+            if (is_array($value)) {
+                $type = $value['type'] ?? $value['Type'];
+            }
+
+            if (!$type || (!Str::startsWith($type, 'array') && !Str::startsWith($type, 'map'))) {
                 continue;
             }
 
