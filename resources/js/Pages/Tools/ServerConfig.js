@@ -1,72 +1,3 @@
-function parseLine(pLine) {
-	pLine = pLine.trim();
-
-	if (pLine === "") {
-		return null;
-	}
-
-	let isKey = true,
-		isQuoted = false,
-		isEscaped = false;
-
-	let key = "",
-		value = "";
-
-	for (const char of pLine) {
-		if (isKey) {
-			if (char === "#") {
-				return null; // comment
-			} else if (char === "=") {
-				isKey = false;
-
-				key = key.trim();
-				value = "";
-			} else if (char !== " " && char !== "\t") {
-				key += char;
-			}
-		} else {
-			if (isEscaped) {
-				isEscaped = false;
-
-				value += char;
-			} else if (char === "\\") {
-				isEscaped = true;
-			} else if (char === '"') {
-				if (isQuoted) {
-					break; // end of string
-				}
-
-				isQuoted = true;
-			} else if (isQuoted) {
-				value += char;
-			} else if (char === "#") {
-				break; // comment
-			} else {
-				value += char;
-			}
-		}
-	}
-
-	if (isKey) {
-		return null; // no key found
-	}
-
-	value = value.trim();
-
-	// not a string, parse as boolean or number
-	if (!isQuoted) {
-		if (value === "true") {
-			value = true;
-		} else if (value === "false") {
-			value = false;
-		} else {
-			value = Number(value);
-		}
-	}
-
-	return value;
-}
-
 function parseArray(pRaw, pSeparator, pCast = false) {
 	if (!pRaw) {
 		return [];
@@ -137,14 +68,8 @@ function asString(value) {
 export default class ServerConfig {
 	#value;
 
-	constructor(pLine) {
-		const value = parseLine(pLine);
-
-		if (value === null) {
-			throw new Error(`Invalid server config line: "${pLine}"`);
-		}
-
-		this.#value = value;
+	constructor(pLine = "") {
+		this.#value = String(pLine);
 	}
 
 	/**
@@ -156,8 +81,8 @@ export default class ServerConfig {
 		return parseArray(this.#value, ";");
 	}
 
-    asArray(data, formatter = asString) {
-        return data.map(value => formatter(value)).join(";");
+    asArray(data, join = ";", formatter = asString) {
+        return data.map(value => formatter(value)).join(join);
     }
 
 	/**
@@ -169,8 +94,8 @@ export default class ServerConfig {
 		return parseMap(this.#value, ";", "=");
 	}
 
-    asMap(data, formatter = asString) {
-        return Object.entries(data).map(([key, value]) => `${key}=${formatter(value)}`).join(";");
+    asMap(data, assign = "=", join = ";", formatter = asString) {
+        return Object.entries(data).map(([key, value]) => `${key}${assign}${formatter(value)}`).join(join);
     }
 
 	/**
@@ -184,7 +109,7 @@ export default class ServerConfig {
 	}
 
     asArrayMap(data) {
-        return this.asArray(data, this.asMap);
+        return this.asArray(data, ";", sub => this.asMap(sub, ":", ","));
     }
 
 	/**
@@ -198,7 +123,7 @@ export default class ServerConfig {
 	}
 
     asMapArray(data) {
-        return this.asMap(data, this.asArray);
+        return this.asMap(data, "=", ";", sub => this.asArray(sub, ","));
     }
 
 	/**
@@ -212,7 +137,7 @@ export default class ServerConfig {
 	}
 
     asArrayArray(data) {
-        return this.asArray(data, this.asArray);
+        return this.asArray(data, ";", sub => this.asArray(sub, ","));
     }
 
 	/**
@@ -228,7 +153,7 @@ export default class ServerConfig {
 	}
 
     asMapMap(data) {
-        return this.asMap(data, this.asMap);
+        return this.asMap(data, "=", ";", sub => this.asMap(sub, ":", ","));
     }
 
 	/**
@@ -246,6 +171,6 @@ export default class ServerConfig {
 	}
 
     asMapArrayMap(data) {
-        return this.asMap(data, sub => this.asArray(sub, this.asMap));
+        return this.asMap(data, "=", ";", sub1 => this.asArray(sub1, ",", sub2 => this.asMap(sub2, ":", "|")));
     }
 }

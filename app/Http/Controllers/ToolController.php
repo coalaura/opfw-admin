@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Helpers\CacheHelper;
@@ -10,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Str;
 
 class ToolController extends Controller
 {
@@ -20,12 +20,22 @@ class ToolController extends Controller
      */
     public function config()
     {
-        $jobs  = ServerAPI::getDefaultJobs();
-        $items = ServerAPI::getItems();
+        $config = ServerAPI::getConfig();
+
+        $parameters = [];
+
+        foreach ($config as $key => $value) {
+            if (!is_array($value) || empty($value['type']) || !(Str::startsWith($value['type'], 'array') || Str::startsWith($value['type'], 'map'))) {
+                continue;
+            }
+
+            $parameters[] = $key;
+        }
+
+        sort($parameters);
 
         return Inertia::render('Tools/Config', [
-            'jobs'  => $jobs['jobs'] ?? [],
-            'items' => $items ?? [],
+            'parameters' => $parameters,
         ]);
     }
 
@@ -51,7 +61,7 @@ class ToolController extends Controller
      */
     public function weapons(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_ADVANCED)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_ADVANCED)) {
             abort(401);
         }
 
@@ -60,7 +70,7 @@ class ToolController extends Controller
         // Collect usages
         $usages = CacheHelper::read('weapon_usages');
 
-        if (!$usages) {
+        if (! $usages) {
             $data = DB::table('inventories')
                 ->select(DB::raw('COUNT(item_name) as count'), 'item_name')
                 ->where('inventory_name', 'like', 'character-%')
@@ -80,7 +90,9 @@ class ToolController extends Controller
 
                 $type = WeaponDamageEvent::getWeaponType($weapon);
 
-                if (!$type || $type === "throwable" || $type === "misc" || $type === "melee") continue;
+                if (! $type || $type === "throwable" || $type === "misc" || $type === "melee") {
+                    continue;
+                }
 
                 $usage[] = [
                     'weapon' => $weapon,
@@ -141,13 +153,13 @@ class ToolController extends Controller
      */
     public function searchWeapons(Request $request, int $hash)
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_ADVANCED)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_ADVANCED)) {
             abort(401);
         }
 
         $weapons = WeaponDamageEvent::getWeaponListFlat();
 
-        if (!isset($weapons[$hash])) {
+        if (! isset($weapons[$hash])) {
             abort(404);
         }
 

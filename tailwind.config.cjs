@@ -1,4 +1,5 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
+const defaultTheme = require("tailwindcss/defaultTheme"),
+    colors = require("./tailwind.colors.cjs");
 
 module.exports = {
     mode: "jit",
@@ -156,49 +157,7 @@ module.exports = {
                 "map-ems":       "#FF5959",
                 "map-highlight": "#FF6400",
 
-                // Rose
-                "rose-100": "rgb(255, 228, 230)",
-                "rose-200": "rgb(254, 205, 211)",
-                "rose-300": "rgb(253, 164, 175)",
-                "rose-400": "rgb(251, 113, 133)",
-                "rose-500": "rgb(244, 63, 94)",
-                "rose-600": "rgb(225, 29, 72)",
-                "rose-700": "rgb(190, 18, 60)",
-                "rose-800": "rgb(159, 18, 57)",
-                "rose-900": "rgb(136, 19, 55)",
-
-                // Lime
-                "lime-100": "rgb(236, 252, 203)",
-                "lime-200": "rgb(217, 249, 157)",
-                "lime-300": "rgb(190, 242, 100)",
-                "lime-400": "rgb(163, 230, 53)",
-                "lime-500": "rgb(132, 204, 22)",
-                "lime-600": "rgb(101, 163, 13)",
-                "lime-700": "rgb(77, 124, 15)",
-                "lime-800": "rgb(63, 98, 18)",
-                "lime-900": "rgb(54, 83, 20)",
-
-                // Teal
-                "teal-100": "rgb(204, 251, 241)",
-                "teal-200": "rgb(153, 246, 228)",
-                "teal-300": "rgb(94, 234, 212)",
-                "teal-400": "rgb(45, 212, 191)",
-                "teal-500": "rgb(20, 184, 166)",
-                "teal-600": "rgb(13, 148, 136)",
-                "teal-700": "rgb(15, 118, 110)",
-                "teal-800": "rgb(17, 94, 89)",
-                "teal-900": "rgb(19, 78, 74)",
-
-                // Orange
-                "orange-100": "rgb(255, 237, 213)",
-                "orange-200": "rgb(254, 215, 170)",
-                "orange-300": "rgb(253, 186, 116)",
-                "orange-400": "rgb(251, 146, 60)",
-                "orange-500": "rgb(249, 115, 22)",
-                "orange-600": "rgb(234, 88, 12)",
-                "orange-700": "rgb(194, 65, 12)",
-                "orange-800": "rgb(154, 52, 18)",
-                "orange-900": "rgb(124, 45, 18)",
+                ...colors,
 
                 // Extra dark color variants
                 "red-950": "rgb(69, 10, 10)",

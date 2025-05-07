@@ -1,23 +1,19 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Character;
 use App\Helpers\GeneralHelper;
-use App\Helpers\HttpHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\ServerAPI;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-
 
 class ApiController extends Controller
 {
     public function crafting(Request $request): Response
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_CRAFTING)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_CRAFTING)) {
             abort(401);
         }
 
@@ -41,7 +37,7 @@ class ApiController extends Controller
     {
         $debugStart = microtime(true);
 
-        if (!$this->isRoot($request)) {
+        if (! $this->isRoot($request)) {
             abort(401);
         }
 
@@ -50,7 +46,7 @@ class ApiController extends Controller
         $one        = DB::select(DB::raw("SELECT 1 as one"));
         $selectTime = GeneralHelper::formatMilliseconds(round((microtime(true) - $start) * 1000));
 
-        if (!$one || $one[0]->one !== 1) {
+        if (! $one || $one[0]->one !== 1) {
             $selectTime = false;
         }
 
@@ -59,7 +55,7 @@ class ApiController extends Controller
         $api        = ServerAPI::getVariables();
         $serverTime = GeneralHelper::formatMilliseconds(round((microtime(true) - $start) * 1000));
 
-        if (!$api) {
+        if (! $api) {
             $serverTime = false;
         }
 
@@ -89,15 +85,22 @@ class ApiController extends Controller
 
     public function config(string $key)
     {
-        $data = ServerAPI::getConfig();
+        $data = ServerAPI::getConfigFresh();
 
-        if (!$data) {
+        if (! $data) {
             abort(404);
         }
 
         $setting = $data[$key] ?? false;
 
-        return $this->json(true, $setting);
+        if (! $setting) {
+            return $this->json(false);
+        }
+
+        return $this->json(true, [
+            'type'  => $setting['type'] ?: '',
+            'value' => $setting['value'] ?: '',
+        ]);
     }
 
     public function chatToken()

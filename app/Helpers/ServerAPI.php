@@ -80,7 +80,15 @@ class ServerAPI
     /**
      * /config.json
      */
-    public static function getConfig(): array
+    public static function getConfig(bool $refresh = false): array
+    {
+        return self::cached('/config.json', $refresh, self::ShortCacheTime) ?? [];
+    }
+
+    /**
+     * /config.json
+     */
+    public static function getConfigFresh(): array
     {
         return self::fresh('GET', '/config.json') ?? [];
     }
