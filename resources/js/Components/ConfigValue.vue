@@ -100,10 +100,10 @@ export default {
 				"text-orange-400",
 			],
 			borders: [
-				"border-sky-400",
-				"border-green-400",
-				"border-purple-400",
-				"border-orange-400",
+				"!border-sky-400",
+				"!border-green-400",
+				"!border-purple-400",
+				"!border-orange-400",
 			],
 			levels: [
 				"border-2 bg-sky-100 border-sky-300 dark:bg-sky-800 dark:border-sky-600",
