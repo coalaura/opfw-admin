@@ -31,7 +31,7 @@ class ToolController extends Controller
                 $type = $value['type'] ?? $value['Type'];
             }
 
-            if (!$type || (!Str::startsWith($type, 'array') && !Str::startsWith($type, 'map'))) {
+            if (!$type || !(Str::startsWith($type, 'array') || Str::startsWith($type, 'map'))) {
                 continue;
             }
 
