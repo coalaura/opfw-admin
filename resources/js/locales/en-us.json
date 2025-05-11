@@ -159,19 +159,22 @@
     "sidebar": {
         "logs": "Logs",
         "community": "Community",
-        "lookup": "Lookup",
         "administration": "Administration",
+        "advanced_search": "Advanced Search",
+        "lookup": "Lookup",
         "advanced": "Advanced",
-        "advanced_search": "Search",
         "suspicious": "Suspicious",
-        "data_stats": "Data & Stats",
         "tools": "Tools",
         "overwatch": "Overwatch",
-        "errors": "Errors",
         "bans": "Bans",
         "all_bans": "Staff bans",
         "my_bans": "My bans",
-        "system_bans": "System bans"
+        "system_bans": "System bans",
+        "search": "Search",
+        "assets": "Assets",
+        "live_ops": "Live Ops",
+        "analytics": "Analytics",
+        "diagnostics": "Diagnostics"
     },
     "staff_chat": {
         "title": "Staff Chat",

@@ -290,13 +290,12 @@ export default {
             }
         ];
 
-        const defaultOrder = [
+        const order = [
             {
                 children: [
                     "/",
                 ],
             },
-
             {
                 label: "sidebar.lookup",
                 icon: "fas fa-search",
@@ -312,26 +311,34 @@ export default {
                     "/players",
                     "/new_players",
                     "/characters",
-                    "/stocks/companies",
-                    "/containers",
+                    "/backstories",
                     "/twitter",
-                    "/map",
-                ]
+                ],
+            },
+            {
+                label: "sidebar.assets",
+                icon: "fas fa-boxes",
+                children: [
+                    "/containers",
+                    "/stocks/companies",
+                    "/vehicles",
+                    "/weapons",
+                ],
             },
             {
                 label: "sidebar.logs",
-                icon: "fas fa-scroll",
+                icon: "fas fa-clipboard-list",
                 children: [
                     "/logs",
                     "/damage",
                     "/moneyLogs",
                     "/phoneLogs",
                     "/darkChat",
+                    "/screenshot_logs",
                     "/casino",
                     "/panel",
                     "/searches",
-                    "/screenshot_logs",
-                ]
+                ],
             },
             {
                 label: "sidebar.bans",
@@ -340,60 +347,57 @@ export default {
                     "/bans",
                     "/my_bans",
                     "/system_bans",
-                ]
+                ],
             },
             {
                 label: "sidebar.administration",
-                icon: "fas fa-tools",
+                icon: "fas fa-cogs",
                 children: [
                     "/tokens",
                     "/roles",
                     "/blacklist",
                     "/loading_screen",
                     "/anti_cheat",
-                ]
+                    "/tools/config",
+                ],
             },
             {
-                label: "sidebar.data_stats",
-                icon: "fas fa-chart-line",
+                label: "sidebar.analytics",
+                icon: "fas fa-chart-bar",
                 children: [
                     "/statistics",
                     "/points",
                     "/staff",
-                ]
+                ],
             },
             {
                 label: "sidebar.tools",
                 icon: "fas fa-toolbox",
                 children: [
+                    "/map",
                     "/overwatch",
                     "/live",
-                    "/backstories",
-                    "/weapons",
-                    "/vehicles",
-                    "/tools/config",
-                ]
+                ],
             },
             {
                 label: "sidebar.advanced",
-                icon: "fas fa-flask",
+                icon: "fas fa-search-plus",
                 children: [
                     "/advanced",
                     "/suspicious",
-                ]
+                ],
             },
             {
-                label: "sidebar.errors",
-                icon: "fas fa-exclamation-triangle",
+                label: "sidebar.diagnostics",
+                icon: "fas fa-bug",
                 children: [
                     "/errors/client?server_version=newest",
                     "/errors/server?server_version=newest",
-                ]
-            }
+                ],
+            },
         ];
 
         const expand = this.setting("expandSidenav"),
-            order = defaultOrder,
             links = [];
 
         for (const link of order) {
