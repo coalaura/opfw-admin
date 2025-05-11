@@ -311,14 +311,12 @@
 </template>
 
 <script>
-import Icon from './Icon.vue';
 import Modal from './Modal.vue';
 
 import Abbreviations from '../data/abbreviations.json';
 
 export default {
     components: {
-        Icon,
         Modal
     },
     props: {
