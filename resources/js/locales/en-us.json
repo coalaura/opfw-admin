@@ -1612,7 +1612,7 @@
         "per_second": "{0} requests per second. {1} in the last 5 minutes."
     },
     "roles": {
-        "title": "Roles",
+        "title": "Staff Roles",
         "description": "Player role management.",
         "readonly": "Read Only Mode",
 
