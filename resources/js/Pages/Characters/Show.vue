@@ -1287,7 +1287,7 @@ export default {
                 this.form.department_name = false;
                 this.form.position_name = false;
 
-                this.paycheck = 0;
+                this.paycheck = 18;
 
                 return;
             }
