@@ -288,7 +288,7 @@
                             <option :value="job.name" v-for="job in formattedJobs">{{ job.name || t('global.none') }}</option>
                         </select>
                     </div>
-                    <div class="w-1/4 px-3 mobile:w-full mobile:mb-3" v-if="form.job_name === job.name" v-for="job in formattedJobs">
+                    <div class="w-1/4 px-3 mobile:w-full mobile:mb-3" v-if="form.job_name ===  || !job.name" v-for="job in formattedJobs">
                         <label class="block mb-3">
                             {{ t('players.job.department') }}
                         </label>
@@ -301,12 +301,12 @@
                         </select>
                     </div>
                     <template v-if="form.job_name === job.name" v-for="job in formattedJobs">
-                        <div class="w-1/4 px-3 mobile:w-full mobile:mb-3" v-if="form.department_name === department.name" v-for="department in job.departments">
+                        <div class="w-1/4 px-3 mobile:w-full mobile:mb-3" v-if="form.department_name === department.name || !job.name" v-for="department in job.departments">
                             <label class="block mb-3">
                                 {{ t('players.job.position') }}
                             </label>
                             <select class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="position" v-model="form.position_name" @change="setPayCheck">
-                                <option :value="null" v-if="!form.job_name">Unemployed</option>
+                                <option :value="false" v-if="!form.job_name">Unemployed</option>
 
                                 <option :value="position" v-for="position in department.positions">
                                     {{ position || t('global.none') }}
