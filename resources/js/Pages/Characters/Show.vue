@@ -288,7 +288,7 @@
                             <option :value="job.name" v-for="job in formattedJobs">{{ job.name || t('global.none') }}</option>
                         </select>
                     </div>
-                    <div class="w-1/4 px-3 mobile:w-full mobile:mb-3" v-if="form.job_name ===  || !job.name" v-for="job in formattedJobs">
+                    <div class="w-1/4 px-3 mobile:w-full mobile:mb-3" v-if="form.job_name === job.name || !job.name" v-for="job in formattedJobs">
                         <label class="block mb-3">
                             {{ t('players.job.department') }}
                         </label>
