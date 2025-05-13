@@ -935,16 +935,16 @@
 </template>
 
 <script>
-import Layout from './../../../Layouts/App.vue';
-import VSection from './../../../Components/Section.vue';
-import Card from './../../../Components/Card.vue';
-import Badge from './../../../Components/Badge.vue';
-import Modal from "../../../Components/Modal.vue";
-import MultiSelector from '../../../Components/MultiSelector.vue';
+import Layout from './../../Layouts/App.vue';
+import VSection from './../../Components/Section.vue';
+import Card from './../../Components/Card.vue';
+import Badge from './../../Components/Badge.vue';
+import Modal from "../../Components/Modal.vue";
+import MultiSelector from '../../Components/MultiSelector.vue';
 
 import { ModelSelect } from 'vue-search-select';
 
-import models from "../../../data/ped_models.json";
+import models from "../../data/ped_models.json";
 
 let jobsObject = [];
 

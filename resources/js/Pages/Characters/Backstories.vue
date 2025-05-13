@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import Layout from '../../../Layouts/App.vue';
+import Layout from '../../Layouts/App.vue';
 
 export default {
     layout: Layout,
