@@ -151,7 +151,7 @@ class PlayerCharacterController extends Controller
         $jobs     = ServerAPI::getJobs();
         $vehicles = Vehicle::getVehicleModels();
 
-        return Inertia::render('Players/Characters/Show', [
+        return Inertia::render('Characters/Show', [
             'player'          => new PlayerResource($player),
             'character'       => new CharacterResource($character),
             'motels'          => $motels->toArray(),
@@ -167,7 +167,7 @@ class PlayerCharacterController extends Controller
 
     public function backstories(): Response
     {
-        return Inertia::render('Players/Characters/Backstories');
+        return Inertia::render('Characters/Backstories');
     }
 
     public function backstoriesApi(Request $request): \Illuminate\Http\Response
