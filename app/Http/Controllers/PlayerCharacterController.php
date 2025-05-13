@@ -230,7 +230,7 @@ class PlayerCharacterController extends Controller
         }
 
         if (!$data['job_name'] || $data['job_name'] === 'Unemployed') {
-            $data['job_name']        = "Unemployed";
+            $data['job_name']        = null;
             $data['department_name'] = null;
             $data['position_name']   = null;
         }

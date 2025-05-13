@@ -283,7 +283,7 @@
                             {{ t('players.job.name') }}
                         </label>
                         <select class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="job" v-model="form.job_name" @change="setPayCheck">
-                            <option value="Unemployed">Unemployed</option>
+                            <option :value="false">Unemployed</option>
 
                             <option :value="job.name" v-for="job in formattedJobs">{{ job.name || t('global.none') }}</option>
                         </select>
@@ -293,7 +293,7 @@
                             {{ t('players.job.department') }}
                         </label>
                         <select class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="department" v-model="form.department_name" @change="setPayCheck">
-                            <option :value="null" v-if="form.job_name === 'Unemployed'">{{ t('global.none') }}</option>
+                            <option :value="false" v-if="!form.job_name">Unemployed</option>
 
                             <option :value="department.name" v-for="department in job.departments">
                                 {{ department.name || t('global.none') }}
@@ -306,7 +306,7 @@
                                 {{ t('players.job.position') }}
                             </label>
                             <select class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="position" v-model="form.position_name" @change="setPayCheck">
-                                <option :value="null" v-if="form.job_name === 'Unemployed'">{{ t('global.none') }}</option>
+                                <option :value="null" v-if="!form.job_name">Unemployed</option>
 
                                 <option :value="position" v-for="position in department.positions">
                                     {{ position || t('global.none') }}
@@ -1062,6 +1062,16 @@ export default {
 
         const money = this.getMoneyLocals();
 
+        let jobName = this.character.jobName,
+            departmentName = this.character.departmentName,
+            positionName = this.character.positionName;
+
+        if (!jobName || jobName === "Unemployed") {
+            jobName = false;
+            departmentName = false;
+            positionName = false;
+        }
+
         return {
             local: {
                 cash: money.cash,
@@ -1075,9 +1085,9 @@ export default {
                 date_of_birth: this.character.dateOfBirth,
                 gender: this.character.gender,
                 backstory: this.character.backstory,
-                job_name: this.character.jobName,
-                department_name: this.character.departmentName,
-                position_name: this.character.positionName,
+                job_name: jobName,
+                department_name: departmentName,
+                position_name: positionName,
             },
             vehicleAddModel: '',
             location: window.location.href,
@@ -1272,9 +1282,10 @@ export default {
                 });
         },
         setPayCheck() {
-            if (this.form.job_name === "Unemployed") {
-                this.form.department_name = null;
-                this.form.position_name = null;
+            if (!this.form.job_name) {
+                this.form.job_name = false;
+                this.form.department_name = false;
+                this.form.position_name = false;
 
                 this.paycheck = 0;
 
@@ -1300,7 +1311,9 @@ export default {
         },
         submit(isJobUpdate) {
             const form = this.form;
+
             let query = '';
+
             if (isJobUpdate) {
                 form.first_name = this.character.firstName;
                 form.last_name = this.character.lastName;
