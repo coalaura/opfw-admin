@@ -80,7 +80,7 @@
 
                         <div class="flex flex-col border-b border-gray-500 pb-3" v-if="target">
                             <inertia-link class="font-medium truncate" :href="`/players/${target.license}`" :title="target.name">[{{ target.source }}] {{ target.name }}</inertia-link>
-                            <div class="italic text-muted dark:text-dark-muted text-xxs -mt-1 mb-0.5" :title="formatSeconds(playtime(target), 'YMdhm', true)" v-if="'session' in target">
+                            <div class="italic text-muted dark:text-dark-muted text-xxs -mt-1 mb-0.5" :title="formatSeconds(playtime(target, false), 'YMdhm', true)" v-if="'session' in target">
                                 {{ playtime(target, true) }}
                             </div>
 
@@ -633,12 +633,12 @@ export default {
                 this.setStream(index, this.spectators[index].stream);
             }
         },
-        playtime(target, format) {
+        playtime(target, format = false) {
             const now = this.timestamp,
                 session = this.target?.session;
 
             if (!session) {
-                return this.t("overwatch.no_playtime");
+                return format ? this.t("overwatch.no_playtime") : 0;
             }
 
             const actual = now - session;
