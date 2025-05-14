@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <portal to="title">
             <h1 class="dark:text-white">
                 <i class="mr-3 fas fa-unlock-alt" :title="perm.restriction(perm.PERM_SCREENSHOT)"></i>
@@ -146,7 +145,6 @@
                 <PanelChat :active="true" :height="height" :room="chatRoom" :activeViewers.sync="activeViewers" :inactiveViewers.sync="inactiveViewers" :dimensions="fullscreen ? 'w-chat-full px-2 py-1 border-l-4 border-lightbd dark:border-darkbd bg-lightbg dark:bg-darkbg' : 'w-96'" :emotes="$page.emotes" />
             </div>
         </v-section>
-
     </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="p-8 mb-10 rounded-lg shadow mobile:p-4 mobile:py-2 relative max-w-full" :class="{'bg-gray-300 dark:bg-gray-600 scale-105': bright, 'bg-secondary dark:bg-dark-secondary': !bright, 'resizing': isResizing}" ref="section">
+    <div class="p-8 mb-10 rounded-lg shadow mobile:p-4 mobile:py-2 relative max-w-full v-section" :class="{'bg-gray-300 dark:bg-gray-600 scale-105': bright, 'bg-secondary dark:bg-dark-secondary': !bright, 'resizing': isResizing}" ref="section">
         <!-- Header -->
         <header :class="{ 'mb-8': !collapsed }" v-if="!noHeader">
             <slot name="header" />
