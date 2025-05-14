@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Http\Rules\NullableStringRule;
 
 class CharacterUpdateRequest extends FormRequest
 {
@@ -21,9 +22,9 @@ class CharacterUpdateRequest extends FormRequest
             'date_of_birth' => ['string', 'required'],
             'gender' => [Rule::in([0, 1]), 'required'],
             'backstory' => ['string', 'required'],
-            'job_name' => ['nullable', 'string'],
-            'department_name' => ['nullable', 'string'],
-            'position_name' => ['nullable', 'string'],
+            'job_name' => [new NullableStringRule()],
+            'department_name' => [new NullableStringRule()],
+            'position_name' => [new NullableStringRule()],
         ];
     }
 
