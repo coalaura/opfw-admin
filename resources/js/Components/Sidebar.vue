@@ -305,6 +305,15 @@ export default {
                 ],
             },
             {
+                label: "sidebar.tools",
+                icon: "fas fa-toolbox",
+                children: [
+                    "/map",
+                    "/overwatch",
+                    "/live",
+                ],
+            },
+            {
                 label: "sidebar.community",
                 icon: "fas fa-users",
                 children: [
@@ -313,16 +322,6 @@ export default {
                     "/characters",
                     "/backstories",
                     "/twitter",
-                ],
-            },
-            {
-                label: "sidebar.assets",
-                icon: "fas fa-boxes",
-                children: [
-                    "/containers",
-                    "/stocks/companies",
-                    "/vehicles",
-                    "/weapons",
                 ],
             },
             {
@@ -338,6 +337,16 @@ export default {
                     "/casino",
                     "/panel",
                     "/searches",
+                ],
+            },
+            {
+                label: "sidebar.assets",
+                icon: "fas fa-boxes",
+                children: [
+                    "/containers",
+                    "/stocks/companies",
+                    "/vehicles",
+                    "/weapons",
                 ],
             },
             {
@@ -368,15 +377,6 @@ export default {
                     "/statistics",
                     "/points",
                     "/staff",
-                ],
-            },
-            {
-                label: "sidebar.tools",
-                icon: "fas fa-toolbox",
-                children: [
-                    "/map",
-                    "/overwatch",
-                    "/live",
                 ],
             },
             {
