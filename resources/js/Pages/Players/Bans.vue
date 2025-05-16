@@ -91,7 +91,7 @@
                         <th class="w-24 px-6 py-4"></th>
                     </tr>
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="player in players" v-bind:key="player.user_id">
-                        <td class="px-6 py-3 border-t text-xs font-mono mobile:block">{{ player.license_identifier }}</td>
+                        <td class="px-6 py-3 border-t mobile:block">{{ player.license_identifier }}</td>
                         <td class="px-6 py-3 border-t mobile:block">
                             {{ player.player_name }}
 
