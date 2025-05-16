@@ -61,7 +61,7 @@ class DeviceHelper
         "_capture_",
         "_creative_",
         "_user_facing_",
-        "_cam_link_",
+        "_cam_",
         "_obs_camera",
         "_anker_",
         "_warudocam",
@@ -86,30 +86,33 @@ class DeviceHelper
         "_camo_",
         "studiocam_",
         "_etronvideo_",
+        "_smartcam_",
+        "_yamaha_",
+        "_pro_",
+        "_hoofdtelefoon_",
+        "_display_",
+        "_avid_mbox_",
+        "_minifuse_",
     ];
 
     public static function check(array $devices): bool
     {
-        // strip "videoinput_", "audioinput_", etc.
-        $devices = array_values(array_filter(array_map(function ($device) {
-            return preg_replace('/^(video|audio)(in|out)put/m', '', $device);
-        }, $devices), function ($device) {
-            return $device && strlen($device) >= 5 && ! substr($device, 0, 4) !== "gpu_";
-        }));
-
-        if (empty($devices)) {
-            return true; // very unusual
-        }
-
         $filtered = self::filter($devices);
 
-        return sizeof($filtered) >= 3;
+        return sizeof($filtered) >= 2;
     }
 
     public static function filter(array $devices): array
     {
+        // strip "videoinput_", "audioinput_", etc.
+        $devices = array_values(array_filter(array_map(function ($device) {
+            return preg_replace('/^(video|audio)(in|out)put_?/m', '', $device);
+        }, $devices), function ($device) {
+            return $device && strlen($device) >= 5 && ! substr($device, 0, 4) !== "gpu_";
+        }));
+
         return array_values(array_filter($devices, function ($device) {
-            return ! self::has($device);
+            return strlen($device) >= 5 && ! self::has($device);
         }));
     }
 
