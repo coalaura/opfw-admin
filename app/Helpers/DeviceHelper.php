@@ -83,6 +83,9 @@ class DeviceHelper
         "_interface_",
         "_communications_",
         "_jbl_",
+        "_camo_",
+        "studiocam_",
+        "_etronvideo_",
     ];
 
     public static function check(array $devices): bool
@@ -105,7 +108,7 @@ class DeviceHelper
 
     public static function filter(array $devices): array
     {
-        return array_values(array_filter($devices, function($device) {
+        return array_values(array_filter($devices, function ($device) {
             return ! self::has($device);
         }));
     }
