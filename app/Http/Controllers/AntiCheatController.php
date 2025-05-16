@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Ban;
+use App\Helpers\DeviceHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\StatisticsHelper;
 use App\Player;
@@ -53,7 +54,7 @@ class AntiCheatController extends Controller
             return "type != '$type'";
         }, $ignore));
 
-        $query = "SELECT id, player_name, users.license_identifier, users.player_aliases, url, details, metadata, timestamp, users.playtime FROM (" .
+        $query = "SELECT id, player_name, users.license_identifier, users.player_aliases, url, details, metadata, timestamp, users.playtime, users.media_devices FROM (" .
             "SELECT CONCAT('s_', id) as id, license_identifier, screenshot_url as url, type as details, metadata, timestamp FROM anti_cheat_events WHERE $whereNot" .
             " UNION " .
             "SELECT CONCAT('b_', id) as id, identifier, ban_hash, reason, null as metadata, MAX(timestamp) FROM user_bans WHERE SUBSTRING_INDEX(identifier, ':', 1) = 'license' AND SUBSTRING_INDEX(reason, '-', 1) IN ('MODDING', 'INJECTION', 'NO_PERMISSIONS', 'ILLEGAL_VALUES', 'TIMEOUT_BYPASS') AND smurf_account IS NULL GROUP BY identifier" .
@@ -74,6 +75,10 @@ class AntiCheatController extends Controller
             }
 
             $entry->player_name = Player::getFilteredPlayerName($entry->player_name ?? "", $entry->player_aliases, $entry->license_identifier ?? "");
+
+            $mediaDevices = $entry->media_devices ? json_decode($entry->media_devices, true) : false;
+
+            $entry->suspicious = $mediaDevices && is_array($mediaDevices) ? DeviceHelper::check($mediaDevices): false;
 
             $entry->metadata = json_decode($entry->metadata, true);
 

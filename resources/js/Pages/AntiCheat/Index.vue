@@ -61,6 +61,8 @@
                                 <td class="p-3 py-2 pl-8 text-center mobile:block max-w-56">
                                     <inertia-link class="block px-2 py-1 truncate font-semibold text-center text-sm text-white bg-red-600 rounded dark:bg-red-400" :href="'/players/' + screenshot.license_identifier">
                                         {{ screenshot.player_name }}
+
+                                        <i class="fas fa-user-ninja ml-1 text-orange-500 dark:text-orange-400" :title="t('players.show.suspicious_spoof')" v-if="screenshot.suspicious"></i>
                                     </inertia-link>
                                 </td>
                                 <td class="p-3 py-2 mobile:block italic text-gray-600 dark:text-gray-400 text-xs" colspan="4">
