@@ -35,7 +35,7 @@
                             <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="reason" name="reason" placeholder="L Bozo" v-model="filters.reason">
                         </div>
 
-                        <div class="w-1/4 px-3 mobile:w-full mobile:mb-3" v-if="$page.auth.player.isSeniorStaff">
+                        <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-4 font-semibold" for="creator">
                                 {{ t('players.ban.creator') }}
                             </label>
