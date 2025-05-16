@@ -214,7 +214,6 @@
         "backwards": "Center the spectators camera to point backwards.",
         "left": "Center the spectators camera to point left.",
         "right": "Center the spectators camera to point right.",
-        "camera": "Toggle spectator camera (automatically centers camera when aiming, etc.)",
         "new_player": "Pick a random new player to spectate.",
         "born": "Born {0}",
         "no_character": "No character info.",

@@ -656,7 +656,6 @@
         "auto_refresh": "Toggle the auto-refresh, y'all.",
         "backwards": "Center thar spectators camera to point back'ards.",
         "born": "Born {0}",
-        "camera": "Toggle spectator camera (it'll automatically center up when ya aim, an' such.)",
         "center": "Center the spectators' camera to point forwards, y'all.",
         "clip": "Clip",
         "description": "Look through random players' game renders to see if ya can find anything outta the ordinary",

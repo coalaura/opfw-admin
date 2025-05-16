@@ -164,10 +164,6 @@ class OverwatchController extends Controller
                 ServerAPI::setGameplayCamera($spectator['server'], $license, 2500, 0, -90);
 
                 break;
-            case 'camera':
-                ServerAPI::setSpectatorCamera($spectator['server'], $license, !$hasSpectatorCamera);
-
-                break;
             default:
                 return self::json(false, null, 'Invalid action.');
         }
@@ -202,6 +198,12 @@ class OverwatchController extends Controller
 
         if (! $spectator) {
             return;
+        }
+
+        $hasSpectatorCamera = isset($spectator['data']) && isset($spectator['data']['spectatorCamera']);
+
+        if (!$hasSpectatorCamera) {
+            ServerAPI::setSpectatorCamera($spectator['server'], $license, true);
         }
 
         if ($isReset && ! $spectator['spectating']) {
