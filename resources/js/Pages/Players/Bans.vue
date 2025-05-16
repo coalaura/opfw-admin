@@ -39,7 +39,7 @@
                             <label class="block mb-4 font-semibold" for="creator">
                                 {{ t('players.ban.creator') }}
                             </label>
-                            <select class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" :class="{ 'opacity-75 cursor-not-allowed': !canFilterCreator }" id="creator" name="creator" v-model="filters.creator" :disabled="!canFilterCreator">
+                            <select class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" :class="{ 'opacity-50 cursor-not-allowed': !canFilterCreator }" id="creator" name="creator" v-model="filters.creator" :disabled="!canFilterCreator">
                                 <option :value="null">{{ t(`global.${isSystemBans ? "system" : "all"}`) }}</option>
                                 <option v-for="member in staff" :key="member.license_identifier" :value="member.license_identifier">
                                     {{ member.player_name }}
