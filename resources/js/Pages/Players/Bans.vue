@@ -39,8 +39,8 @@
                             <label class="block mb-4 font-semibold" for="creator">
                                 {{ t('players.ban.creator') }}
                             </label>
-                            <select class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="creator" name="creator" v-model="filters.creator">
-                                <option :value="null">{{ t('global.all') }}</option>
+                            <select class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="creator" name="creator" v-model="filters.creator" :disabled="!canFilterCreator">
+                                <option :value="null">{{ t(`global.${isSystemBans ? "system" : "all"}`) }}</option>
                                 <option v-for="member in staff" :key="member.license_identifier" :value="member.license_identifier">
                                     {{ member.player_name }}
                                 </option>
@@ -181,6 +181,14 @@ export default {
             isLoading: false
         };
     },
+    computed: {
+        canFilterCreator() {
+            return window.location.pathname === "/bans";
+        },
+        isSystemBans() {
+            return window.location.pathname === "/system_bans";
+        }
+    },
     methods: {
         refresh: async function () {
             if (this.isLoading) {
@@ -218,6 +226,13 @@ export default {
             }
 
             return creator;
+        }
+    },
+    mounted() {
+        if (this.isSystemBans) {
+            this.filters.creator = null;
+        } else if (!this.canFilterCreator) {
+            this.filters.creator = this.$page.auth.player.licenseIdentifier;
         }
     }
 }
