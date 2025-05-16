@@ -162,9 +162,9 @@ class PlayerBanController extends Controller
         $query->limit(15)->offset(($page - 1) * 15);
 
         $players = array_map(function($player) {
-            $mediaDevices = $player->media_devices ? json_decode($player->media_devices, true) : false;
+            $mediaDevices = !empty($player['media_devices']) ? json_decode($player['media_devices'], true) : false;
 
-            $player->suspicious = $mediaDevices && is_array($mediaDevices) ? DeviceHelper::check($mediaDevices): false;
+            $player['suspicious'] = $mediaDevices && is_array($mediaDevices) ? DeviceHelper::check($mediaDevices): false;
 
             return $player;
         }, $query->get()->toArray());
