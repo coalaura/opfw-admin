@@ -135,19 +135,19 @@ export default {
             {
                 label: "logs.money_title",
                 icon: "fas fa-money-bill-wave",
-                url: "/moneyLogs",
+                url: "/money_logs",
                 hidden: !this.perm.check(this.perm.PERM_MONEY_LOGS),
             },
             {
                 label: "phone.title",
                 icon: "fas fa-phone",
-                url: "/phoneLogs",
+                url: "/phone_logs",
                 hidden: !this.perm.check(this.perm.PERM_PHONE_LOGS),
             },
             {
                 label: "logs.dark_chat",
                 icon: "fas fa-user-secret",
-                url: "/darkChat",
+                url: "/dark_chat",
                 hidden: !this.perm.check(this.perm.PERM_DARK_CHAT),
             },
             {
@@ -330,9 +330,9 @@ export default {
                 children: [
                     "/logs",
                     "/damage",
-                    "/moneyLogs",
-                    "/phoneLogs",
-                    "/darkChat",
+                    "/money_logs",
+                    "/phone_logs",
+                    "/dark_chat",
                     "/screenshot_logs",
                     "/casino",
                     "/panel",
@@ -362,11 +362,11 @@ export default {
                 label: "sidebar.administration",
                 icon: "fas fa-cogs",
                 children: [
+                    "/anti_cheat",
                     "/tokens",
                     "/roles",
                     "/blacklist",
                     "/loading_screen",
-                    "/anti_cheat",
                     "/tools/config",
                 ],
             },

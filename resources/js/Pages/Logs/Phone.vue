@@ -203,7 +203,7 @@ export default {
             try {
                 const before = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : 0;
 
-                const data = await _get("/phoneLogs/get", {
+                const data = await _get("/phone_logs/get", {
                     before: before,
                     ...this.filters
                 });

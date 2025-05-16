@@ -97,7 +97,7 @@ export default {
             this.isLoading = true;
 
             try {
-                const data = await _get('/api/randomScreenshot');
+                const data = await _get('/api/random_screenshot');
 
                 if (data?.status) {
                     this.screenshot = data.data;

@@ -294,7 +294,7 @@ export default {
 					}
 				}
 
-				await this.$inertia.replace('/moneyLogs', {
+				await this.$inertia.replace('/money_logs', {
 					data: this.filters,
 					preserveState: true,
 					preserveScroll: true,

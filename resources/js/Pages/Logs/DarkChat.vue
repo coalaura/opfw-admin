@@ -208,7 +208,7 @@ export default {
 			this.isLoading = true;
 
 			try {
-				await this.$inertia.replace('/darkChat', {
+				await this.$inertia.replace('/dark_chat', {
 					data: this.filters,
 					preserveState: true,
 					preserveScroll: true,

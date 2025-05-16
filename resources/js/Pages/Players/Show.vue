@@ -2019,7 +2019,7 @@ export default {
             this.isLoading = true;
 
             // Send request.
-            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/updateEnabledCommands`, {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/update_commands`, {
                 enabledCommands: this.enabledCommands,
             });
 
@@ -2368,7 +2368,7 @@ export default {
             this.antiCheatEvents = [];
 
             try {
-                const data = await _get(`/players/${this.player.licenseIdentifier}/antiCheat`);
+                const data = await _get(`/players/${this.player.licenseIdentifier}/anti_cheat`);
 
                 if (data?.status) {
                     this.antiCheatEvents = data.data;
@@ -2411,7 +2411,7 @@ export default {
         },
         async pmPlayer() {
             // Send request.
-            await this.$inertia.post(`/players/${this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier}/staffPM`, this.form.pm, { preserveScroll: true });
+            await this.$inertia.post(`/players/${this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier}/staff_pm`, this.form.pm, { preserveScroll: true });
 
             // Reset.
             this.isStaffPM = false;
@@ -2427,7 +2427,7 @@ export default {
             this.updatingBanException = true;
 
             // Send request.
-            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/updateBanExceptionStatus`, {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/update_ban_exception`, {
                 twitch: false
             }, { preserveScroll: true });
 
@@ -2457,7 +2457,7 @@ export default {
             this.updatingBanException = true;
 
             // Send request.
-            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/updateBanExceptionStatus`, {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/update_ban_exception`, {
                 twitch: twitch
             }, { preserveScroll: true });
 
@@ -2479,7 +2479,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/updateWhitelistStatus`, {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/update_whitelist`, {
                 status: status
             }, { preserveScroll: true });
         },
@@ -2489,7 +2489,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/updateMuteStatus`, {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/update_mute`, {
                 status: false
             }, { preserveScroll: true });
         },
@@ -2498,7 +2498,7 @@ export default {
 
             // Send request.
 
-            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/updateTag`, {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/update_tag`, {
                 tag: false
             }, { preserveScroll: true });
         },
@@ -2513,7 +2513,7 @@ export default {
 
             // Send request.
 
-            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/updateTag`, {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/update_tag`, {
                 tag: tag
             }, { preserveScroll: true });
         },
@@ -2536,7 +2536,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post(`/players/${this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier}/revivePlayer`, { preserveScroll: true });
+            await this.$inertia.post(`/players/${this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier}/revive`, { preserveScroll: true });
         },
         async unloadCharacter() {
             if (!confirm(this.t('players.show.unload_confirm'))) {
@@ -2544,7 +2544,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post(`/players/${this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier}/unloadCharacter`, this.form.unload, { preserveScroll: true });
+            await this.$inertia.post(`/players/${this.player.overrideLicense ? this.player.overrideLicense : this.player.licenseIdentifier}/unload_character`, this.form.unload, { preserveScroll: true });
 
             this.form.unload.message = this.t('players.show.unload_default');
             this.form.unload.character = null;

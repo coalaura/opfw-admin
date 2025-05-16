@@ -1345,7 +1345,7 @@ export default {
             }
 
             // Send request.
-            await this.$inertia.post(`/vehicles/resetGarage/${vehicleId}/${fullReset ? 'true' : 'false'}`, {}, { preserveScroll: true });
+            await this.$inertia.delete(`/vehicles/garage/${vehicleId}/${fullReset ? 'true' : 'false'}`, {}, { preserveScroll: true });
         },
         sortJobs(array, type) {
             switch (type) {
@@ -1376,7 +1376,7 @@ export default {
         },
         async removeTattoos() {
             // Send request.
-            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/removeTattoos`, {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/remove_tattoos`, {
                 zone: $('#zone').val(),
             }, { preserveScroll: true });
 
@@ -1385,7 +1385,7 @@ export default {
         },
         async resetSpawn() {
             // Send request.
-            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/resetSpawn`, {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/reset_spawn`, {
                 spawn: $('#spawn').val(),
             }, { preserveScroll: true });
 
@@ -1420,7 +1420,7 @@ export default {
         },
         async addVehicle() {
             // Send request.
-            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/addVehicle`, {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/add_vehicle`, {
                 model: this.vehicleAddModel
             }, { preserveScroll: true });
 
@@ -1430,7 +1430,7 @@ export default {
         },
         async updateLicenses() {
             // Send request.
-            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/updateLicenses`, {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/update_licenses`, {
                 licenses: this.licenseForm.licenses
             }, { preserveScroll: true });
 
@@ -1447,7 +1447,7 @@ export default {
             this.isRefreshingEmail = true;
 
             // Send request.
-            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/refreshEmail`, {}, {
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/refresh_email`, {}, {
                 preserveScroll: true
             });
 
@@ -1455,7 +1455,7 @@ export default {
         },
         async editBalance() {
             // Send request.
-            await this.$inertia.put(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/editBalance`, this.balanceForm, { preserveScroll: true });
+            await this.$inertia.put(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/edit_balance`, this.balanceForm, { preserveScroll: true });
 
             const money = this.getMoneyLocals();
 

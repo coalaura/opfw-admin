@@ -814,7 +814,7 @@ export default {
         },
         async loadPlayerNames(licenses) {
             try {
-                const result = await _post('/map/playerNames', JSON.stringify({
+                const result = await _post('/map/names', JSON.stringify({
                     licenses: licenses
                 }));
 

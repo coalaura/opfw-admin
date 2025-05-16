@@ -115,21 +115,4 @@ class MapController extends Controller
         ]);
     }
 
-    public function noclipBans(Request $request): \Illuminate\Http\Response
-    {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_LIVEMAP)) {
-            return self::json(false, null, 'You can not use the livemap functionality');
-        }
-
-        $data = Ban::query()
-            ->select(["identifier", "timestamp"])
-            ->where("identifier", "LIKE", "license:%")
-            ->whereIn("reason", ["MODDING-ILLEGAL_FREEZE"])
-            ->where("timestamp", ">", strtotime("-10 days"))
-            ->orderByDesc("timestamp")
-            ->get()->toArray();
-
-        return self::json(true, $data);
-    }
-
 }

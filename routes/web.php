@@ -89,8 +89,6 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/chat', [StaffChatController::class, 'chat']);
     Route::post('/chat', [StaffChatController::class, 'sendChat']);
 
-    Route::get('/staffChat', [StaffChatController::class, 'staffChat']);
-
     // Players.
     Route::get('/players', [PlayerController::class, 'index']);
     Route::get('/players/{player}', [PlayerController::class, 'show']);
@@ -109,23 +107,23 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/players/{player}/linked', [PlayerRouteController::class, 'linkedAccounts']);
     Route::get('/players/{player}/linked_hwid', [PlayerRouteController::class, 'linkedHWID']);
     Route::get('/players/{player}/discord', [PlayerRouteController::class, 'discordAccounts']);
-    Route::get('/players/{player}/antiCheat', [PlayerRouteController::class, 'antiCheat']);
+    Route::get('/players/{player}/anti_cheat', [PlayerRouteController::class, 'antiCheat']);
     Route::get('/players/{player}/ip', [PlayerRouteController::class, 'playerIPInfo']);
     Route::get('/players/{player}/ban', [PlayerRouteController::class, 'ban']);
     Route::get('/players/{player}/bans/{ban}/system', [PlayerBanController::class, 'systemInfo']);
 
     // Player actions.
     Route::post('/players/{player}/kick', [PlayerRouteController::class, 'kick']);
-    Route::post('/players/{player}/staffPM', [PlayerRouteController::class, 'staffPM']);
-    Route::post('/players/{player}/unloadCharacter', [PlayerRouteController::class, 'unloadCharacter']);
-    Route::post('/players/{player}/revivePlayer', [PlayerRouteController::class, 'revivePlayer']);
+    Route::post('/players/{player}/staff_pm', [PlayerRouteController::class, 'staffPM']);
+    Route::post('/players/{player}/unload_character', [PlayerRouteController::class, 'unloadCharacter']);
+    Route::post('/players/{player}/revive', [PlayerRouteController::class, 'revivePlayer']);
 
     // Update player data.
-    Route::post('/players/{player}/updateEnabledCommands', [PlayerDataController::class, 'updateEnabledCommands']);
-    Route::post('/players/{player}/updateBanExceptionStatus', [PlayerDataController::class, 'updateBanExceptionStatus']);
-    Route::post('/players/{player}/updateWhitelistStatus', [PlayerDataController::class, 'updateWhitelistStatus']);
-    Route::post('/players/{player}/updateMuteStatus', [PlayerDataController::class, 'updateMuteStatus']);
-    Route::post('/players/{player}/updateTag', [PlayerDataController::class, 'updateTag']);
+    Route::post('/players/{player}/update_commands', [PlayerDataController::class, 'updateEnabledCommands']);
+    Route::post('/players/{player}/update_ban_exception', [PlayerDataController::class, 'updateBanExceptionStatus']);
+    Route::post('/players/{player}/update_whitelist', [PlayerDataController::class, 'updateWhitelistStatus']);
+    Route::post('/players/{player}/update_mute', [PlayerDataController::class, 'updateMuteStatus']);
+    Route::post('/players/{player}/update_tag', [PlayerDataController::class, 'updateTag']);
 
     // Ban actions.
     Route::get('/smurf/{hash}', [PlayerBanController::class, 'smurfBan']);
@@ -202,13 +200,13 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Logs.
     Route::resource('logs', LogController::class);
-    Route::get('/moneyLogs', [LogController::class, 'moneyLogs']);
-    Route::get('/darkChat', [LogController::class, 'darkChat']);
+    Route::get('/money_logs', [LogController::class, 'moneyLogs']);
+    Route::get('/dark_chat', [LogController::class, 'darkChat']);
     Route::get('/searches', [LogController::class, 'searches']);
     Route::get('/screenshot_logs', [LogController::class, 'screenshotLogs']);
     Route::get('/damage', [LogController::class, 'damageLogs']);
-    Route::get('/phoneLogs', [LogController::class, 'phoneLogs']);
-    Route::get('/phoneLogs/get', [LogController::class, 'phoneLogsData']);
+    Route::get('/phone_logs', [LogController::class, 'phoneLogs']);
+    Route::get('/phone_logs/get', [LogController::class, 'phoneLogsData']);
 
     // Casino Logs.
     Route::resource('casino', CasinoLogController::class);
@@ -220,13 +218,13 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::resource('characters', PlayerCharacterController::class);
     Route::post('vehicles/delete/{vehicle}', [PlayerCharacterController::class, 'deleteVehicle']);
     Route::post('vehicles/edit/{vehicle}', [PlayerCharacterController::class, 'editVehicle']);
-    Route::post('vehicles/resetGarage/{vehicle}/{fullReset}', [PlayerCharacterController::class, 'resetGarage']);
-    Route::post('/players/{player}/characters/{character}/removeTattoos', [PlayerCharacterController::class, 'removeTattoos']);
-    Route::post('/players/{player}/characters/{character}/resetSpawn', [PlayerCharacterController::class, 'resetSpawn']);
-    Route::put('/players/{player}/characters/{character}/editBalance', [PlayerCharacterController::class, 'editBalance']);
-    Route::post('/players/{player}/characters/{character}/addVehicle', [PlayerCharacterController::class, 'addVehicle']);
-    Route::post('/players/{player}/characters/{character}/updateLicenses', [PlayerCharacterController::class, 'updateLicenses']);
-    Route::post('/players/{player}/characters/{character}/refreshEmail', [PlayerCharacterController::class, 'refreshEmail']);
+    Route::delete('vehicles/garage/{vehicle}/{fullReset}', [PlayerCharacterController::class, 'resetGarage']);
+    Route::post('/players/{player}/characters/{character}/remove_tattoos', [PlayerCharacterController::class, 'removeTattoos']);
+    Route::post('/players/{player}/characters/{character}/reset_spawn', [PlayerCharacterController::class, 'resetSpawn']);
+    Route::put('/players/{player}/characters/{character}/edit_balance', [PlayerCharacterController::class, 'editBalance']);
+    Route::post('/players/{player}/characters/{character}/add_vehicle', [PlayerCharacterController::class, 'addVehicle']);
+    Route::post('/players/{player}/characters/{character}/update_licenses', [PlayerCharacterController::class, 'updateLicenses']);
+    Route::post('/players/{player}/characters/{character}/refresh_email', [PlayerCharacterController::class, 'refreshEmail']);
     Route::delete('/players/{player}/characters/{character}/divorce', [PlayerCharacterController::class, 'divorce']);
 
     // Savings Accounts.
@@ -241,8 +239,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Map.
     Route::get('/map/{server?}', [MapController::class, 'index']);
-    Route::post('/map/playerNames', [MapController::class, 'playerNames']);
-    Route::get('/map/noclipBans', [MapController::class, 'noclipBans']);
+    Route::post('/map/names', [MapController::class, 'playerNames']);
 
     // Statistics.
     Route::get('/statistics', [StatisticsController::class, 'render']);
@@ -340,7 +337,7 @@ Route::group(['middleware' => ['staff', 'session'], 'prefix' => 'api'], function
     Route::post('capture/{server}/{id}/{duration}', [PlayerRouteController::class, 'capture']);
 
     // Overwatch.
-    Route::get('randomScreenshot', [OverwatchController::class, 'getRandomScreenshot']);
+    Route::get('random_screenshot', [OverwatchController::class, 'getRandomScreenshot']);
 });
 
 Route::group(['prefix' => 'debug', 'middleware' => ['session']], function () {
