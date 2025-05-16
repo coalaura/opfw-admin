@@ -91,8 +91,12 @@
                         <th class="w-24 px-6 py-4"></th>
                     </tr>
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="player in players" v-bind:key="player.user_id">
-                        <td class="px-6 py-3 border-t mobile:block">{{ player.license_identifier }}</td>
-                        <td class="px-6 py-3 border-t mobile:block">{{ player.player_name }}</td>
+                        <td class="px-6 py-3 border-t font-mono mobile:block">{{ player.license_identifier }}</td>
+                        <td class="px-6 py-3 border-t mobile:block">
+                            {{ player.player_name }}
+
+                            <i class="fas fa-user-ninja ml-1 text-red-500 dark:text-red-400" :title="t('players.show.suspicious_spoof')" v-if="player.suspicious"></i>
+                        </td>
                         <td class="px-6 py-3 border-t mobile:block">{{ localizeBan(player) }}</td>
                         <td class="px-6 py-3 border-t mobile:block text-xs font-mono" :title="player.reason ? player.reason : t('players.ban.no_reason')">
                             {{ player.reason ? cutText(player.reason) : t('players.ban.no_reason') }}
