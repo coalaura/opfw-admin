@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Ban;
+use App\Helpers\DeviceHelper;
 use App\Helpers\DiscordAttachmentHelper;
 use App\Helpers\GeneralHelper;
 use App\Helpers\OPFWHelper;
@@ -115,6 +116,7 @@ class PlayerBanController extends Controller
             'expire',
             'creator_name',
             'creator_identifier',
+            'media_devices',
         ]);
 
         // Filtering by ban hash.
@@ -159,12 +161,18 @@ class PlayerBanController extends Controller
         $page = Paginator::resolveCurrentPage('page');
         $query->limit(15)->offset(($page - 1) * 15);
 
-        $players = $query->get();
+        $players = array_map(function($player) {
+            $mediaDevices = $player->media_devices ? json_decode($player->media_devices, true) : false;
+
+            $player->suspicious = $mediaDevices && is_array($mediaDevices) ? DeviceHelper::check($mediaDevices): false;
+
+            return $player;
+        }, $query->get()->toArray());
 
         $staff = GeneralHelper::getAllStaff();
 
         return Inertia::render('Players/Bans', [
-            'players' => $players->toArray(),
+            'players' => $players,
             'staff'   => $staff,
             'links'   => $this->getPageUrls($page),
             'page'    => $page,
@@ -815,7 +823,7 @@ class PlayerBanController extends Controller
                 $foundGPUMediaDevice = $found->getGPUMediaDevice();
                 $foundMediaDevices   = $found->getComparableMediaDevices();
 
-                $matchingDevices   = array_intersect($mediaDevices, $foundMediaDevices);
+                $matchingDevices = array_intersect($mediaDevices, $foundMediaDevices);
 
                 $devicesOverlap = sizeof($matchingDevices);
                 $gpuOverlap     = $gpuMediaDevice && $gpuMediaDevice === $foundGPUMediaDevice;
