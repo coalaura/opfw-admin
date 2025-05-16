@@ -137,7 +137,7 @@
                         <td class="p-3 mobile:block">{{ player.licenseIdentifier }}</td>
                         <td class="p-3 mobile:block">
                             {{ player.playerName }}
-                            <i class="fas fa-user-ninja ml-1 text-orange-500 dark:text-orange-400" :title="t('players.show.suspicious_spoof')" v-if="player.suspicious"></i>
+                            <i class="fas fa-user-ninja ml-1 text-red-500 dark:text-red-400" :title="t('players.show.suspicious_spoof')" v-if="player.suspicious"></i>
                         </td>
                         <td class="p-3 mobile:block" :title="formatSeconds(player.playTime, 'YMdhm')">{{ player.playTime | humanizeSeconds }}</td>
                         <td class="p-3 text-center mobile:block">
