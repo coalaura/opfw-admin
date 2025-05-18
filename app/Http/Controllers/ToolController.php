@@ -224,7 +224,7 @@ class ToolController extends Controller
 
         foreach ($rawData as $entry) {
             $damage = intval($entry['weapon_damage']);
-            $capped = min($damage, 400);
+            $capped = min($damage, 200);
 
             if ($count < $entry['count']) {
                 $count = $entry['count'];

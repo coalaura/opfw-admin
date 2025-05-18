@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="w-full relative mt-6">
-                    <BarChart :data="weaponData.raw" :colors="['55, 114, 234']" :title="t('weapons.raw_damages')" class="w-full"></BarChart>
+                    <LineChart :data="weaponData.raw" :colors="['55, 114, 234']" :title="t('weapons.raw_damages')" class="w-full"></LineChart>
                 </div>
             </template>
         </v-section>
@@ -81,12 +81,14 @@
 import Layout from './../../Layouts/App.vue';
 import VSection from './../../Components/Section.vue';
 import BarChart from './../../Components/Charts/BarChart.vue';
+import LineChart from './../../Components/Charts/LineChart.vue';
 
 export default {
     layout: Layout,
     components: {
         VSection,
         BarChart,
+        LineChart,
     },
     props: {
         weapons: {
