@@ -120,8 +120,8 @@ export default {
         },
 
         damageDescription() {
-            const avg = `<i class="text-lime-500">${this.weaponData.damages.avg}hp</i>`;
-            const max = `<i class="text-rose-500">${this.weaponData.damages.max}hp</i>`;
+            const avg = `<i class="text-lime-500">${this.weaponData.damages.avg}hp</i>`,
+                max = `<i class="text-rose-500">${this.weaponData.damages.max}hp</i>`;
 
             return this.t('weapons.damage_description', this.weaponData.name, avg, max);
         }

@@ -220,27 +220,32 @@ class ToolController extends Controller
             }
         }
 
+        $actual = [];
+
         foreach ($rawData as $entry) {
             $damage = intval($entry['weapon_damage']);
             $capped = min($damage, 200);
 
-            if ($count < $entry['count']) {
-                $count = $entry['count'];
-                $avg   = $damage;
-            }
-
-            if ($entry['count'] >= 5) {
-                $max = $damage;
-            }
-
             $dmgRaw[$capped] = ($dmgRaw[$capped] ?? 0) + $entry['count'];
+            $actual[$damage] = ($actual[$damage] ?? 0) + $entry['count'];
 
             if ($capped > $maxRaw) {
                 $maxRaw = $capped;
             }
         }
 
-        $max = $this->closest(array_keys($dmgRaw), $max * 1.5);
+        foreach ($actual as $damage => $amount) {
+            if ($amount >= 5) {
+                $max = $damage;
+            }
+
+            if ($count < $amount) {
+                $count = $amount;
+                $avg   = $damage;
+            }
+        }
+
+        $max = min($this->closest(array_keys($actual), $max * 1.5), 200);
 
         $damages = [
             'data'   => [
