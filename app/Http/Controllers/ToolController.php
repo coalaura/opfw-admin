@@ -234,7 +234,13 @@ class ToolController extends Controller
             }
         }
 
-        foreach ($actual as $damage => $amount) {
+        $keys = array_keys($actual);
+
+        sort($keys);
+
+        foreach ($keys as $damage) {
+            $amount = $actual[$damage];
+
             if ($amount >= 5) {
                 $max = $damage;
             }
@@ -245,7 +251,7 @@ class ToolController extends Controller
             }
         }
 
-        $max = min($this->closest(array_keys($actual), $max * 1.5), 200);
+        $max = min($this->closest($keys, $max * 1.5), 200);
 
         $damages = [
             'data'   => [
