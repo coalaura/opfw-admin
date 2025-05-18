@@ -35,12 +35,16 @@ class CreateUserBansTable extends Migration
 			!in_array("expire", $columns) && $table->integer("expire")->nullable();
 			!in_array("creator_identifier", $columns) && $table->string("creator_identifier", 50)->default("");
 			!in_array("creation_reason", $columns) && $table->string("creation_reason", 50)->nullable();
+			!in_array("scheduled_unban", $columns) && $table->integer("scheduled_unban")->nullable();
+			!in_array("locked", $columns) && $table->tinyInteger("locked")->nullable()->default("0");
 
 			!in_array("ban_hash", $indexes) && $table->index("ban_hash");
 			!in_array("identifier", $indexes) && $table->index("identifier");
 			!in_array("smurf_account", $indexes) && $table->index("smurf_account");
 			!in_array("timestamp", $indexes) && $table->index("timestamp");
 			!in_array("expire", $indexes) && $table->index("expire");
+			!in_array("scheduled_unban", $indexes) && $table->index("scheduled_unban");
+			!in_array("locked", $indexes) && $table->index("locked");
 		});
 	}
 
