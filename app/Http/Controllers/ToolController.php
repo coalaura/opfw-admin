@@ -231,7 +231,7 @@ class ToolController extends Controller
             }
         }
 
-        $max = $this->closest(array_keys($dmgRaw), $avg * 1.8);
+        $max = $this->closest(array_keys($dmgRaw), $max * 1.8);
 
         $damages = [
             'data'   => [
