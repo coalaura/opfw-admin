@@ -251,13 +251,16 @@ class ToolController extends Controller
         ];
 
         $raw = [
-            'data'   => [
-                [],
+            "datasets" => [
+                [
+                    "label"           => "Raw Distribution",
+                    "data"            => [],
+                    "backgroundColor" => 'rgba(55, 114, 234, 0.3)',
+                    "borderColor"     => 'rgba(55, 114, 234, 1)',
+                    "pointRadius"     => 0,
+                ]
             ],
             'labels' => [],
-            'names'  => ['weapons.damage_raw'],
-            'avg'    => $avg,
-            'max'    => $max[1],
         ];
 
         for ($x = 0; $x <= $maxDamage; $x++) {
@@ -279,7 +282,7 @@ class ToolController extends Controller
 
             $raw['labels'][] = $x === 400 ? '400+ hp' : $x . 'hp';
 
-            $raw['data'][0][] = $rawDmg;
+            $raw['datasets'][0]['data'][0][] = $rawDmg;
         }
 
         return $this->json(true, [

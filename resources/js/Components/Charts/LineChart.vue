@@ -4,6 +4,9 @@ import { Line } from 'vue-chartjs'
 export default {
     extends: Line,
     props: {
+        title: {
+            type: String,
+        },
         chartData: {
             type: Object,
             required: true
@@ -126,6 +129,12 @@ export default {
                 },
                 legend: {
                     display: false
+                },
+                title: {
+                    display: !!this.title,
+                    text: this.title,
+                    fontSize: 13,
+                    fontColor: textColor
                 },
                 responsive: true,
                 maintainAspectRatio: false
