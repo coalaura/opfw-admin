@@ -217,8 +217,8 @@ class ToolController extends Controller
                 }
             }
 
-            if ($damage > $maxDamage) {
-                $maxDamage = $damage;
+            if ($capped > $maxDamage) {
+                $maxDamage = $capped;
             }
         }
 
@@ -233,8 +233,8 @@ class ToolController extends Controller
 
             $dmgRaw[$capped] = ($dmgRaw[$capped] ?? 0) + $entry['count'];
 
-            if ($damage > $maxRaw) {
-                $maxRaw = $damage;
+            if ($capped > $maxRaw) {
+                $maxRaw = $capped;
             }
         }
 
