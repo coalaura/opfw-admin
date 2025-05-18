@@ -56,7 +56,7 @@
                     <div class="absolute bg-opacity-10" :class="highlight.color" :style="highlight" v-for="highlight in damageHighlights"></div>
                 </div>
 
-                <div class="w-full relative mt-6">
+                <div class="w-full relative mt-6 pt-6 border-t-2 border-dashed border-gray-500">
                     <LineChart :chartData="weaponData.raw" :title="t('weapons.raw_damages')" class="w-full"></LineChart>
                 </div>
             </template>

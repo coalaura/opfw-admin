@@ -282,7 +282,7 @@ class ToolController extends Controller
 
             $raw['labels'][] = $x === 400 ? '400+ hp' : $x . 'hp';
 
-            $raw['datasets'][0]['data'][0][] = $rawDmg;
+            $raw['datasets'][0]['data'][] = $rawDmg;
         }
 
         return $this->json(true, [
