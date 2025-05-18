@@ -213,10 +213,6 @@ class ToolController extends Controller
                 $dmgBanned[$capped] = ($dmgBanned[$capped] ?? 0) + $entry['count'];
             } else {
                 $dmgNormal[$capped] = ($dmgNormal[$capped] ?? 0) + $entry['count'];
-
-                if ($entry['count'] >= 4) {
-                    $max = $damage;
-                }
             }
 
             if ($capped > $maxDamage) {
@@ -231,6 +227,10 @@ class ToolController extends Controller
             if ($count < $entry['count']) {
                 $count = $entry['count'];
                 $avg   = $damage;
+            }
+
+            if ($entry['count'] > 5) {
+                $max = $damage;
             }
 
             $dmgRaw[$capped] = ($dmgRaw[$capped] ?? 0) + $entry['count'];
