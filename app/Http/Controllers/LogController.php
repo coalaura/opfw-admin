@@ -517,11 +517,11 @@ class LogController extends Controller
 
             if (Str::startsWith($victim, 'license:')) {
                 $query->where('hit_player', $victim);
-            } else if (Str::startsWith($victim, 'v#')) {
-                $query->where('vehicle_id', $victim);
+            } else if (Str::startsWith($victim, 'v')) {
+                $query->where('vehicle_id', substr($victim, 1));
             } else {
-                if (Str::startsWith($victim, 'n#')) {
-                    $victim = substr($victim, 2);
+                if (Str::startsWith($victim, 'n')) {
+                    $victim = substr($victim, 1);
                 }
 
                 $query->where('hit_global_id', $victim);

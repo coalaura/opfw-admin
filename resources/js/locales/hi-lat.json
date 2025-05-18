@@ -463,7 +463,7 @@
         "vehicle_id": "Vehicle ID",
         "vehicles": "Gaadiyan",
         "victim": "Peedit",
-        "victim_hint": "<b>Sanket:</b> Yeh ek license, network-id (\"N#...\") ya vehicle-id (\"V#...\") ho sakta hai.",
+        "victim_hint": "<b>Hint:</b> Yeh license, network-id \"N123\" ya vehicle-id \"V123\" ho sakta hai.",
         "weapon": "Hathiyaar"
     },
     "map": {

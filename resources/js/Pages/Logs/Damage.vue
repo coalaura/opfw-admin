@@ -196,7 +196,7 @@
 								{{ t('logs.object') }}
 							</span>
 						</td>
-						<td class="p-3 mobile:block max-w-40">
+						<td class="p-3 mobile:block max-w-40 whitespace-nowrap">
 							<div :title="t('logs.vehicle_id')" v-if="log.hitVehicleId">
 								<i class="fas fa-truck-pickup mr-1"></i>
 								{{ log.hitVehicleId }}
@@ -209,7 +209,7 @@
 						<td class="p-3 mobile:block">
 							{{ log.hitHealth ? log.hitHealth + "hp" : "N/A" }}
 						</td>
-						<td class="p-3 mobile:block" :title="t('logs.damage_flags', getDamageFlags(log.flags))" :style="{ color: getDamageColor(log.damage) }">
+						<td class="p-3 mobile:block whitespace-nowrap" :title="t('logs.damage_flags', getDamageFlags(log.flags))" :style="{ color: getDamageColor(log.damage) }">
 							{{ log.damage }}hp
 
 							<i v-if="log.bonusDamage" :title="t('logs.bonus_damage')">+{{ log.bonusDamage }}hp</i>
@@ -235,7 +235,7 @@
 						</td>
 						<td class="p-3 pr-8 mobile:block whitespace-nowrap" v-else>
 							{{ log.timestamp | formatTime(true) }}
-							<i class="block text-xs leading-1 whitespace-nowrap text-yellow-600 dark:text-yellow-400">{{ Math.floor(log.timestamp / 1000) }}</i>
+							<i class="block text-xs leading-1 whitespace-nowrap text-yellow-600 dark:text-yellow-400">{{ Math.round(log.timestamp / 1000) }}</i>
 						</td>
 					</tr>
 					<tr v-if="logs.length === 0" class="border-t border-gray-300 dark:border-gray-500">

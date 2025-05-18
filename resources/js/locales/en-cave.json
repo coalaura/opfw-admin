@@ -463,7 +463,7 @@
         "vehicle_id": "Vehicle ID",
         "vehicles": "Rides",
         "victim": "Hurt",
-        "victim_hint": "Hint: Be license, network-id (\"N#...\") or vehicle-id (\"V#...\").",
+        "victim_hint": "<b>Hint:</b> Be license, network-id \"N123\" or vehicle-id \"V123\".",
         "weapon": "Weapon"
     },
     "map": {

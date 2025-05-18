@@ -463,7 +463,7 @@
         "vehicle_id": "Vehicwe ID",
         "vehicles": "Vehicwes",
         "victim": "Victim",
-        "victim_hint": "<b>Hint:</b> Can be a wicense, nyetwowk-id (\"N#...\") ow vehicwe-id (\"V#...\").",
+        "victim_hint": "<b>Hint:</b> Can be a wicense, nyetwork-id \"N123\" ow vehicwe-id \"V123\".",
         "weapon": "Weapon"
     },
     "map": {

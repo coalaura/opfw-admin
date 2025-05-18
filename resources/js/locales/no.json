@@ -463,7 +463,7 @@
         "vehicle_id": "Kjøretøy-ID",
         "vehicles": "Kjøretøy",
         "victim": "Offer",
-        "victim_hint": "<b>Tips:</b> Kan være en lisens, nettverks-ID (\"N#...\") eller kjøretøy-ID (\"V#...\").",
+        "victim_hint": "<b>Tips:</b> Kan være en lisens, nettverks-id \"N123\" eller kjøretøy-id \"V123\".",
         "weapon": "Våpen"
     },
     "map": {
