@@ -260,7 +260,6 @@ class ToolController extends Controller
                     "backgroundColor" => 'rgba(100, 235, 55, 0.3)',
                     "borderColor"     => 'rgba(100, 235, 55, 1)',
                     "pointRadius"     => 0,
-                    "fill"            => true,
                 ],
             ],
             'labels'   => [],
