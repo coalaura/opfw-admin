@@ -260,7 +260,7 @@ class ToolController extends Controller
         $raw = [
             "datasets" => [
                 [
-                    "label"           => "Raw Distribution",
+                    "label"           => "Raw",
                     "data"            => [],
                     "backgroundColor" => 'rgba(100, 235, 55, 0.3)',
                     "borderColor"     => 'rgba(100, 235, 55, 1)',
