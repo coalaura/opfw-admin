@@ -199,6 +199,9 @@ class ToolController extends Controller
         $dmgNormal = [];
         $dmgRaw    = [];
 
+        $actualRaw    = [];
+        $actualNormal = [];
+
         $count     = 0;
         $avg       = 0;
         $max       = 0;
@@ -212,7 +215,8 @@ class ToolController extends Controller
             if ($entry['ban_hash']) {
                 $dmgBanned[$capped] = ($dmgBanned[$capped] ?? 0) + $entry['count'];
             } else {
-                $dmgNormal[$capped] = ($dmgNormal[$capped] ?? 0) + $entry['count'];
+                $dmgNormal[$capped]    = ($dmgNormal[$capped] ?? 0) + $entry['count'];
+                $actualNormal[$damage] = ($actualNormal[$damage] ?? 0) + $entry['count'];
             }
 
             if ($capped > $maxDamage) {
@@ -220,28 +224,27 @@ class ToolController extends Controller
             }
         }
 
-        $actual = [];
-
         foreach ($rawData as $entry) {
             $damage = intval($entry['weapon_damage']);
             $capped = min($damage, 200);
 
-            $dmgRaw[$capped] = ($dmgRaw[$capped] ?? 0) + $entry['count'];
-            $actual[$damage] = ($actual[$damage] ?? 0) + $entry['count'];
+            $dmgRaw[$capped]    = ($dmgRaw[$capped] ?? 0) + $entry['count'];
+            $actualRaw[$damage] = ($actualRaw[$damage] ?? 0) + $entry['count'];
 
             if ($capped > $maxRaw) {
                 $maxRaw = $capped;
             }
         }
 
-        $keys = array_keys($actual);
+        $keys = array_keys($actualRaw);
 
         sort($keys);
 
         foreach ($keys as $damage) {
-            $amount = $actual[$damage];
+            $amount  = $actualRaw[$damage];
+            $players = $actualNormal[$damage] ?? 0;
 
-            if ($amount >= 10) {
+            if ($amount >= 10 && $players >= 2) {
                 $max = $damage;
             }
 
