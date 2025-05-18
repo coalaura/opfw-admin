@@ -229,7 +229,7 @@ class ToolController extends Controller
                 $avg   = $damage;
             }
 
-            if ($entry['count'] > 5) {
+            if ($entry['count'] >= 5) {
                 $max = $damage;
             }
 
@@ -240,7 +240,7 @@ class ToolController extends Controller
             }
         }
 
-        $max = $this->closest(array_keys($dmgRaw), $max * 1.8);
+        $max = $this->closest(array_keys($dmgRaw), $max * 1.5);
 
         $damages = [
             'data'   => [
