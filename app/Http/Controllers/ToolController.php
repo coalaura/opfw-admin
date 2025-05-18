@@ -251,8 +251,6 @@ class ToolController extends Controller
             }
         }
 
-        $max = min($this->closest($keys, $max * 1.5), 200);
-
         $damages = [
             'data'   => [
                 [], [],
@@ -260,7 +258,7 @@ class ToolController extends Controller
             'labels' => [],
             'names'  => ['weapons.damage_normal', 'weapons.damage_banned'],
             'avg'    => $avg,
-            'max'    => $max,
+            'max'    => $max * 1.5,
         ];
 
         $raw = [
