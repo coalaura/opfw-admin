@@ -404,6 +404,8 @@
         "headshot": "Hodeskudd",
         "health_before": "Helse (før)",
         "high_damage": "Høy skade (eksplosjoner, etc.)",
+        "hit_id": "Hit-ID",
+        "hit_id_hint": "Enten nettverket eller kjøretøy-ID, avhengig av hva som er tilgjengelig.",
         "hit_suspension": "Treff fjæring med indeks {0}.",
         "hit_tire": "Treff dekk med indeks {0}.",
         "identifier": "Spiller Identifikator",

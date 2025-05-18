@@ -404,6 +404,8 @@
         "headshot": "Headshot",
         "health_before": "Health before",
         "high_damage": "Big damage (Boom, etc.)",
+        "hit_id": "Hit-ID",
+        "hit_id_hint": "Network or vehicle id, whichever here.",
         "hit_suspension": "Hit suspension index {0}.",
         "hit_tire": "Hit rock with stick {0}.",
         "identifier": "Player Name",

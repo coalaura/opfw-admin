@@ -404,6 +404,8 @@
         "headshot": "Headshot",
         "health_before": "Health (Pehle)",
         "high_damage": "High Damage (Explosions, etc.)",
+        "hit_id": "Hit-ID",
+        "hit_id_hint": "Yaa to network ya vehicle id, yeh depend karta hai kaunsa uplabdh hai.",
         "hit_suspension": "Hit suspension with index {0}.",
         "hit_tire": "Pahiye ko index {0} se maaro.",
         "identifier": "Khilaadi Pehchaan",

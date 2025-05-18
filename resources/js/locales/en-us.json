@@ -1505,6 +1505,8 @@
         "damage_description": "On this page you can view and filter the damage logs.",
         "attacker": "Attacker",
         "victim": "Victim",
+        "hit_id": "Hit-ID",
+        "hit_id_hint": "Either the network or vehicle id, depending on which is available.",
         "victim_hint": "<b>Hint:</b> Can be a license, network-id (\"N#...\") or vehicle-id (\"V#...\").",
         "damage_hint": "<b>Hint:</b> >, = or < followed by the amount.",
         "weapon": "Weapon",

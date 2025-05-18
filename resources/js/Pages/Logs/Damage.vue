@@ -156,7 +156,8 @@
 				<table class="w-full">
 					<tr class="font-semibold text-left mobile:hidden">
 						<th class="p-3 pl-8 max-w-56">{{ t('logs.attacker') }}</th>
-						<th class="p-3 max-w-56">{{ t('logs.victim') }}</th>
+						<th class="p-3 max-w-40">{{ t('logs.victim') }}</th>
+						<th class="p-3 max-w-40" :title="t('logs.hit_id_hint')">{{ t('logs.hit_id') }}</th>
 						<th class="p-3">{{ t('logs.health_before') }}</th>
 						<th class="p-3">{{ t('logs.damage_dealt') }}</th>
 						<th class="p-3">{{ t('logs.distance') }}</th>
@@ -177,27 +178,27 @@
 								{{ playerName(log.licenseIdentifier) }}
 							</inertia-link>
 						</td>
-						<td class="p-3 mobile:block max-w-56">
+						<td class="p-3 mobile:block max-w-40">
 							<inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.hitLicense" v-if="log.hitLicense">
 								{{ playerName(log.hitLicense) }}
 							</inertia-link>
 
 							<span class="italic" v-else-if="log.hitEntityType === 1">
 								{{ t('logs.npc') }}
-								<span :title="t('logs.network_id')">N#{{ log.hitGlobalId }}</span>
 							</span>
 							<span class="italic whitespace-nowrap" v-else-if="log.hitEntityType === 2">
 								{{ t('logs.vehicle') }}
-								<span :title="t('logs.vehicle_id')" v-if="log.hitVehicleId">V#{{ log.hitVehicleId }}</span>
-								<span :title="t('logs.network_id')" v-else>N#{{ log.hitGlobalId }}</span>
 
 								<i v-if="Number.isInteger(log.tireIndex)" :title="t('logs.hit_tire', log.tireIndex)" class="fas fa-truck-monster ml-2 cursor-help"></i>
 								<i v-if="Number.isInteger(log.suspensionIndex)" :title="t('logs.hit_suspension', log.suspensionIndex)" class="fas fa-car-crash ml-2 cursor-help"></i>
 							</span>
 							<span class="italic" v-else-if="log.hitEntityType === 3">
 								{{ t('logs.object') }}
-								<span :title="t('logs.network_id')">N#{{ log.hitGlobalId }}</span>
 							</span>
+						</td>
+						<td class="p-3 mobile:block max-w-40">
+							<span :title="t('logs.vehicle_id')" v-if="log.hitVehicleId">V#{{ log.hitVehicleId }}</span>
+							<span :title="t('logs.network_id')" v-else>N#{{ log.hitGlobalId }}</span>
 						</td>
 						<td class="p-3 mobile:block">
 							{{ log.hitHealth ? log.hitHealth + "hp" : "N/A" }}
