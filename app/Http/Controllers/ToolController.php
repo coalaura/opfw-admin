@@ -270,9 +270,9 @@ class ToolController extends Controller
         for ($x = 0; $x <= $maxDamage; $x++) {
             $rawDmg = $dmgRaw[$x] ?? 0;
 
-            $damages['labels'][] = $x === 999 ? '999+ hp' : $x . 'hp';
+            $raw['labels'][] = $x === 999 ? '999+ hp' : $x . 'hp';
 
-            $damages['data'][0][] = $rawDmg;
+            $raw['data'][0][] = $rawDmg;
         }
 
         return $this->json(true, [
