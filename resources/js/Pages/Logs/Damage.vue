@@ -198,11 +198,11 @@
 						</td>
 						<td class="p-3 mobile:block max-w-40">
 							<div :title="t('logs.vehicle_id')" v-if="log.hitVehicleId">
-								<i class="fas fa-truck-pickup"></i>
+								<i class="fas fa-truck-pickup mr-1"></i>
 								{{ log.hitVehicleId }}
 							</div>
 							<div :title="t('logs.network_id')" v-else>
-								<i class="fas fa-network-wired"></i>
+								<i class="fas fa-network-wired mr-1"></i>
 								{{ log.hitGlobalId }}
 							</div>
 						</td>
