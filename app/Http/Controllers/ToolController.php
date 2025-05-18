@@ -185,8 +185,7 @@ class ToolController extends Controller
 
         $rawData = WeaponDamageEvent::query()
             ->select([DB::raw('COUNT(id) as count'), 'weapon_damage'])
-            ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
-            ->where('weapon_damage_events.timestamp', '>', time() - 60 * 60 * 24 * 120 * 1000)
+            ->where('timestamp', '>', time() - 60 * 60 * 24 * 120 * 1000)
             ->where('is_parent_self', '=', '1')
             ->whereIn('weapon_type', [$hash, $unsigned])
             ->whereNotNull('hit_player')
