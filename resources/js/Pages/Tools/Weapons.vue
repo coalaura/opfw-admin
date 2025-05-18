@@ -57,7 +57,7 @@
                 </div>
 
                 <div class="w-full relative mt-6">
-                    <LineChart :data="weaponData.raw" :colors="['55, 114, 234']" :title="t('weapons.raw_damages')" class="w-full"></LineChart>
+                    <LineChart :chartData="weaponData.raw" :colors="['55, 114, 234']" :title="t('weapons.raw_damages')" class="w-full"></LineChart>
                 </div>
             </template>
         </v-section>
