@@ -241,7 +241,7 @@ class ToolController extends Controller
         foreach ($keys as $damage) {
             $amount = $actual[$damage];
 
-            if ($amount >= 5) {
+            if ($amount >= 10) {
                 $max = $damage;
             }
 
