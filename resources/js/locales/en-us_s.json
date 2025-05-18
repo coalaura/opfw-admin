@@ -461,7 +461,7 @@
         "vehicle_id": "Vehicle ID",
         "vehicles": "Vehicles",
         "victim": "Victim",
-        "victim_hint": "<b>Hint:</b> Could be a license identifier or a network id.",
+        "victim_hint": "<b>Hint:</b> Could be a license, network-id (\"N#...\") or vehicle-id (\"V#...\").",
         "weapon": "Weapon"
     },
     "map": {

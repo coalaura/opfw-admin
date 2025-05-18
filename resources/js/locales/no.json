@@ -461,7 +461,7 @@
         "vehicle_id": "Kjøretøy-ID",
         "vehicles": "Kjøretøy",
         "victim": "Offer",
-        "victim_hint": "<b>Tips:</b> Kan være en lisensidentifikator eller et nettverks-id.",
+        "victim_hint": "<b>Tips:</b> Kan være en lisens, nettverks-ID (\"N#...\") eller kjøretøy-ID (\"V#...\").",
         "weapon": "Våpen"
     },
     "map": {

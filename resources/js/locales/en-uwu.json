@@ -461,7 +461,7 @@
         "vehicle_id": "Vehicwe ID",
         "vehicles": "Vehicwes",
         "victim": "Victim",
-        "victim_hint": "<b>Hint:</b> Can be a wicense identifiew ow a netwowk id.",
+        "victim_hint": "<b>Hint:</b> Can be a wicense, nyetwowk-id (\"N#...\") ow vehicwe-id (\"V#...\").",
         "weapon": "Weapon"
     },
     "map": {

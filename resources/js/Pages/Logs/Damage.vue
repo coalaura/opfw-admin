@@ -43,7 +43,7 @@
 						<!-- Victim -->
 						<div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2" for="victim">
-								{{ t('logs.victim') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+								{{ t('logs.victim') }}
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="victim" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.victim">
 

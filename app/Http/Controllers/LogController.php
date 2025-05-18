@@ -16,6 +16,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Str;
 
 class LogController extends Controller
 {
@@ -511,7 +512,21 @@ class LogController extends Controller
         $this->searchQuery($request, $query, 'attacker', 'license_identifier');
 
         // Filtering by victim identifier.
-        $this->searchQuery($request, $query, 'victim', 'hit_player');
+        if ($victim = $request->input('victim')) {
+            $victim = strtolower(trim($victim));
+
+            if (Str::startsWith($victim, 'license:')) {
+                $query->where('hit_player', $victim);
+            } else if (Str::startsWith($victim, 'v#')) {
+                $query->where('vehicle_id', $victim);
+            } else {
+                if (Str::startsWith($victim, 'n#')) {
+                    $victim = substr($victim, 2);
+                }
+
+                $query->where('hit_global_id', $victim);
+            }
+        }
 
         // Filtering by damage.
         $damage = $request->input('damage');
