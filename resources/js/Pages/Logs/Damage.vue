@@ -179,12 +179,14 @@
 							</inertia-link>
 						</td>
 						<td class="p-3 mobile:block max-w-40">
-							<inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.hitLicense" v-if="log.hitLicense">
-								{{ playerName(log.hitLicense) }}
-							</inertia-link>
+							<span class="italic" v-if="log.hitEntityType === 1">
+								<inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.hitLicense" v-if="log.hitLicense">
+									{{ playerName(log.hitLicense) }}
+								</inertia-link>
 
-							<span class="italic" v-else-if="log.hitEntityType === 1">
-								{{ t('logs.npc') }}
+								<span v-else>
+									{{ t('logs.npc') }}
+								</span>
 							</span>
 							<span class="italic whitespace-nowrap" v-else-if="log.hitEntityType === 2">
 								{{ t('logs.vehicle') }}
