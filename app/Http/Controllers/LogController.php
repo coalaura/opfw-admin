@@ -517,10 +517,10 @@ class LogController extends Controller
 
             if (Str::startsWith($victim, 'license:')) {
                 $query->where('hit_player', $victim);
-            } else if (Str::startsWith($victim, 'v')) {
-                $query->where('vehicle_id', substr($victim, 1));
+            //} else if (Str::startsWith($victim, 'v')) {
+            //    $query->where('hit_vehicle_id', substr($victim, 1));
             } else {
-                if (Str::startsWith($victim, 'n')) {
+                if (!preg_match('/^\d/m', $victim)) {
                     $victim = substr($victim, 1);
                 }
 
@@ -579,7 +579,7 @@ class LogController extends Controller
         $page = Paginator::resolveCurrentPage('page');
         $query->limit(30)->offset(($page - 1) * 30);
 
-        $query->select(['id', 'license_identifier', 'timestamp', 'hit_player', 'hit_health', 'distance', 'hit_global_id', 'vehicle_id', 'hit_entity_type', 'hit_component', 'damage_flags', 'silenced', 'tyre_index', 'suspension_index', 'weapon_damage', 'weapon_type', 'bonus_damage']);
+        $query->select(['id', 'license_identifier', 'timestamp', 'hit_player', 'hit_health', 'distance', 'hit_global_id', 'hit_entity_type', 'hit_component', 'damage_flags', 'silenced', 'tyre_index', 'suspension_index', 'weapon_damage', 'weapon_type', 'bonus_damage']);
 
         $logs = WeaponDamageEventResource::collection($query->get());
 
