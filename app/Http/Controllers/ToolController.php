@@ -261,7 +261,7 @@ class ToolController extends Controller
             'labels' => [],
             'names'  => ['weapons.damage_normal', 'weapons.damage_banned'],
             'avg'    => $avg,
-            'max'    => $max * 1.5,
+            'max'    => $max + 2,
         ];
 
         $raw = [
