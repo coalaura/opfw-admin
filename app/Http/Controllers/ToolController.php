@@ -245,7 +245,7 @@ class ToolController extends Controller
 
         $raw = [
             'data'   => [
-                [], [], [],
+                [],
             ],
             'labels' => [],
             'names'  => ['weapons.damage_raw'],
@@ -272,7 +272,7 @@ class ToolController extends Controller
 
             $damages['labels'][] = $x === 999 ? '999+ hp' : $x . 'hp';
 
-            $damages['data'][2][] = $rawDmg;
+            $damages['data'][0][] = $rawDmg;
         }
 
         return $this->json(true, [
