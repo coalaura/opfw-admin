@@ -429,6 +429,7 @@
         "money_description": "On this here page, y'all can view and filter the money logs.",
         "money_search": "Money-Logs",
         "money_title": "Money Logs",
+        "network_id": "Network ID",
         "no_logs": "No logged actions were found.",
         "no_messages": "No messages found.",
         "not_available": "Not available",
@@ -457,6 +458,7 @@
             "cash": "Cash"
         },
         "vehicle": "Vehicle",
+        "vehicle_id": "Vehicle ID",
         "vehicles": "Vehicles",
         "victim": "Victim",
         "victim_hint": "<b>Hint:</b> Could be a license identifier or a network id.",

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources;
 
 use App\WeaponDamageEvent;
@@ -26,6 +25,7 @@ class WeaponDamageEventResource extends JsonResource
             'distance'          => $this->distance,
             'hitGlobalId'       => $this->hit_global_id,
             'hitEntityType'     => $this->hit_entity_type,
+            'hitVehicleId'      => $this->vehicle_id,
             'hitComponent'      => WeaponDamageEvent::getHitComponent($this->hit_component),
             'damage'            => $this->weapon_damage,
             'weapon'            => WeaponDamageEvent::getDamageWeapon($this->weapon_type),

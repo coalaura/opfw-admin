@@ -1527,7 +1527,9 @@
         "hit_tire": "Hit tire with index {0}.",
         "hit_suspension": "Hit suspension with index {0}.",
         "damage_flags": "Damage Flags: {0}",
-        "hashes_docs": "What does the number mean?"
+        "hashes_docs": "What does the number mean?",
+        "network_id": "Network ID",
+        "vehicle_id": "Vehicle ID"
     },
     "panel_logs": {
         "title": "Panel Logs",

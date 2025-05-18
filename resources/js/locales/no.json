@@ -429,6 +429,7 @@
         "money_description": "På denne siden kan du se og filtrere pengelogger.",
         "money_search": "Penge-Logger",
         "money_title": "Penge Logger",
+        "network_id": "Nettverks-ID",
         "no_logs": "Ingen loggede handlinger ble funnet.",
         "no_messages": "Ingen meldinger funnet.",
         "not_available": "Ikke tilgjengelig",
@@ -457,6 +458,7 @@
             "cash": "Kontanter"
         },
         "vehicle": "Kjøretøy",
+        "vehicle_id": "Kjøretøy-ID",
         "vehicles": "Kjøretøy",
         "victim": "Offer",
         "victim_hint": "<b>Tips:</b> Kan være en lisensidentifikator eller et nettverks-id.",

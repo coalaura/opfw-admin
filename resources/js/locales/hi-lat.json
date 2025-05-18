@@ -429,6 +429,7 @@
         "money_description": "Is page par aap paison ke logs dekh aur filter kar sakte hain.",
         "money_search": "Paise-Logs",
         "money_title": "Paise Logs",
+        "network_id": "Network ID",
         "no_logs": "Koi logged actions nahi mile.",
         "no_messages": "Koi sandesh nahi mila.",
         "not_available": "Upalabdh nahi",
@@ -457,6 +458,7 @@
             "cash": "Cash"
         },
         "vehicle": "Gaadi",
+        "vehicle_id": "Vehicle ID",
         "vehicles": "Gaadiyan",
         "victim": "Peedhit",
         "victim_hint": "<b>Sanket:</b> Yeh ek license pehchaan ya network id ho sakta hai.",

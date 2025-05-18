@@ -429,6 +429,7 @@
         "money_description": "On this page you can view and fiwtew the money wogs.",
         "money_search": "Money-Wogs",
         "money_title": "Money Wogs",
+        "network_id": "Netwowk ID",
         "no_logs": "No wogged actions wewe found.",
         "no_messages": "No messages found.",
         "not_available": "Not avaiwabwe",
@@ -457,6 +458,7 @@
             "cash": "Cash"
         },
         "vehicle": "Vehicwe",
+        "vehicle_id": "Vehicwe ID",
         "vehicles": "Vehicwes",
         "victim": "Victim",
         "victim_hint": "<b>Hint:</b> Can be a wicense identifiew ow a netwowk id.",

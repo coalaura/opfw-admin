@@ -429,6 +429,7 @@
         "money_description": "See money marks here.",
         "money_search": "Money-Marks",
         "money_title": "Money Marks",
+        "network_id": "Network ID",
         "no_logs": "No marks found.",
         "no_messages": "No words found.",
         "not_available": "Not here",
@@ -457,6 +458,7 @@
             "cash": "Money"
         },
         "vehicle": "Ride",
+        "vehicle_id": "Vehicle ID",
         "vehicles": "Rides",
         "victim": "Hurt",
         "victim_hint": "<b>Hint:</b> Can be name of paper or network number.",

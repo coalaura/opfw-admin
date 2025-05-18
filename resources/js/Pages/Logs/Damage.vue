@@ -183,16 +183,20 @@
 							</inertia-link>
 
 							<span class="italic" v-else-if="log.hitEntityType === 1">
-								{{ t('logs.npc') }} #{{ log.hitGlobalId }}
+								{{ t('logs.npc') }}
+								<span :title="t('logs.network_id')">N#{{ log.hitGlobalId }}</span>
 							</span>
 							<span class="italic whitespace-nowrap" v-else-if="log.hitEntityType === 2">
-								{{ t('logs.vehicle') }} #{{ log.hitGlobalId }}
+								{{ t('logs.vehicle') }}
+								<span :title="t('logs.vehicle_id')" v-if="log.hitVehicleId">V#{{ log.hitVehicleId }}</span>
+								<span :title="t('logs.network_id')" v-else>N#{{ log.hitGlobalId }}</span>
 
 								<i v-if="Number.isInteger(log.tireIndex)" :title="t('logs.hit_tire', log.tireIndex)" class="fas fa-truck-monster ml-2 cursor-help"></i>
 								<i v-if="Number.isInteger(log.suspensionIndex)" :title="t('logs.hit_suspension', log.suspensionIndex)" class="fas fa-car-crash ml-2 cursor-help"></i>
 							</span>
 							<span class="italic" v-else-if="log.hitEntityType === 3">
-								{{ t('logs.object') }} #{{ log.hitGlobalId }}
+								{{ t('logs.object') }}
+								<span :title="t('logs.network_id')">N#{{ log.hitGlobalId }}</span>
 							</span>
 						</td>
 						<td class="p-3 mobile:block">
