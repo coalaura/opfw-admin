@@ -1636,9 +1636,11 @@
         "damage_banned": "Utestengt",
         "damage_description": "<i>{0}</i> gjør vanligvis omtrent {1} og ikke mer enn omtrent {2} skade.",
         "damage_normal": "Normal",
+        "damage_raw": "Rå",
         "damages": "Skadefordeling",
         "description": "Søk etter våpen og deres statistikk.",
         "items_in_use": "Elementer i bruk",
+        "raw_damages": "Rå skadefordeling",
         "search": "Søk",
         "title": "Våpeninformasjon",
         "usage": "Våpenbruk"

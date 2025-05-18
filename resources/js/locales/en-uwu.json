@@ -1636,9 +1636,11 @@
         "damage_banned": "Banned",
         "damage_description": "<i>{0}</i> usuawwy does about {1} and not mowe than about {2} damage.",
         "damage_normal": "Nowmal",
+        "damage_raw": "Waw",
         "damages": "Damage Distwibution",
         "description": "Wookup weapons and theiw stats.",
         "items_in_use": "Items in use",
+        "raw_damages": "Waw Damage Distwibution",
         "search": "Sewarch",
         "title": "Weapon Info",
         "usage": "Weapon Usage"

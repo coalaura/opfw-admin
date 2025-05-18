@@ -55,10 +55,12 @@
 
                     <div class="absolute bg-opacity-10" :class="highlight.color" :style="highlight" v-for="highlight in damageHighlights"></div>
                 </div>
+
+                <div class="w-full relative mt-6">
+                    <BarChart :data="weaponData.raw" :colors="['55, 114, 234']" :title="t('weapons.raw_damages')" class="w-full"></BarChart>
+                </div>
             </template>
         </v-section>
-
-        <hr class="border-gray-200 dark:border-gray-600">
 
         <v-section class="overflow-x-auto" :noFooter="true">
             <template #header>

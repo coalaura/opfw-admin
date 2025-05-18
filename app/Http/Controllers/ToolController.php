@@ -5,11 +5,10 @@ use App\Helpers\CacheHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\ServerAPI;
 use App\WeaponDamageEvent;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Str;
 
 class ToolController extends Controller
 {
@@ -31,7 +30,7 @@ class ToolController extends Controller
                 $type = $value['type'] ?? $value['Type'];
             }
 
-            if (!$type || !(Str::startsWith($type, 'array') || Str::startsWith($type, 'map'))) {
+            if (! $type || ! (Str::startsWith($type, 'array') || Str::startsWith($type, 'map'))) {
                 continue;
             }
 
@@ -62,10 +61,9 @@ class ToolController extends Controller
     /**
      * Weapons search.
      *
-     * @param Request $request
      * @return Response
      */
-    public function weapons(Request $request): Response
+    public function weapons(): Response
     {
         if (! PermissionHelper::hasPermission(PermissionHelper::PERM_ADVANCED)) {
             abort(401);
@@ -154,10 +152,9 @@ class ToolController extends Controller
     /**
      * Weapons search API.
      *
-     * @param Request $request
      * @param int $hash
      */
-    public function searchWeapons(Request $request, int $hash)
+    public function searchWeapons(int $hash)
     {
         if (! PermissionHelper::hasPermission(PermissionHelper::PERM_ADVANCED)) {
             abort(401);
@@ -179,7 +176,6 @@ class ToolController extends Controller
             ->whereIn('weapon_type', [$hash, $unsigned])
             ->whereNotNull('hit_player')
             ->where('hit_player', '!=', '')
-            ->whereNotIn('hit_component', [19, 20]) // Neck and head shots
             ->groupBy(['weapon_damage', 'ban_hash'])
             ->get()->toArray();
 
@@ -187,11 +183,24 @@ class ToolController extends Controller
             return $this->json(false, null, 'No data');
         }
 
+        $rawData = WeaponDamageEvent::query()
+            ->select([DB::raw('COUNT(id) as count'), 'weapon_damage'])
+            ->leftJoin('user_bans', 'identifier', '=', 'license_identifier')
+            ->where('weapon_damage_events.timestamp', '>', time() - 60 * 60 * 24 * 120 * 1000)
+            ->where('is_parent_self', '=', '1')
+            ->whereIn('weapon_type', [$hash, $unsigned])
+            ->whereNotNull('hit_player')
+            ->where('hit_player', '!=', '')
+            ->groupBy('weapon_damage')
+            ->get()->toArray();
+
         $dmgBanned = [];
         $dmgNormal = [];
+        $dmgRaw    = [];
 
         $count     = 0;
         $avg       = 0;
+        $max       = 0;
         $maxDamage = 0;
 
         foreach ($data as $entry) {
@@ -202,9 +211,8 @@ class ToolController extends Controller
             } else {
                 $dmgNormal[$damage] = $entry['count'];
 
-                if ($count < $entry['count']) {
-                    $count = $entry['count'];
-                    $avg   = $damage;
+                if ($entry['count'] >= 4) {
+                    $max = $damage;
                 }
             }
 
@@ -213,7 +221,18 @@ class ToolController extends Controller
             }
         }
 
-        $max = $this->closest(array_keys($dmgNormal), $avg * 5);
+        foreach ($rawData as $entry) {
+            $damage = intval($entry['weapon_damage']);
+
+            $dmgRaw[$damage] = $entry['count'];
+
+            if ($count < $entry['count']) {
+                $count = $entry['count'];
+                $avg   = $damage;
+            }
+        }
+
+        $max = $this->closest(array_keys($dmgRaw), $avg * 1.8);
 
         $damages = [
             'data'   => [
@@ -221,6 +240,16 @@ class ToolController extends Controller
             ],
             'labels' => [],
             'names'  => ['weapons.damage_normal', 'weapons.damage_banned'],
+            'avg'    => $avg,
+            'max'    => $max[1],
+        ];
+
+        $raw = [
+            'data'   => [
+                [], [], [],
+            ],
+            'labels' => [],
+            'names'  => ['weapons.damage_raw'],
             'avg'    => $avg,
             'max'    => $max[1],
         ];
@@ -239,8 +268,17 @@ class ToolController extends Controller
             $damages['data'][1][] = $banned;
         }
 
+        for ($x = 0; $x <= $maxDamage; $x++) {
+            $rawDmg = $dmgRaw[$x] ?? 0;
+
+            $damages['labels'][] = $x === 999 ? '999+ hp' : $x . 'hp';
+
+            $damages['data'][2][] = $rawDmg;
+        }
+
         return $this->json(true, [
             'damages' => $damages,
+            'raw'     => $raw,
             'hashes'  => [$hash, $unsigned],
         ]);
     }

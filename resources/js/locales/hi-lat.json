@@ -1636,9 +1636,11 @@
         "damage_banned": "Banned",
         "damage_description": "<i>{0}</i> aam taur par lagbhag {1} aur {2} se zyada nuksaaan nahi karta.",
         "damage_normal": "Normal",
+        "damage_raw": "Kaccha",
         "damages": "Nuksaaan Vitran",
         "description": "Hathiyaaron aur unke stats ko dekhein.",
         "items_in_use": "Istemaal mein items",
+        "raw_damages": "Kacha Nuksan Vitran",
         "search": "Khoj",
         "title": "Hathiyaar Jankari",
         "usage": "Hathiyaar ka Istemaal"

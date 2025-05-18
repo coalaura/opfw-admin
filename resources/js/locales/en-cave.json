@@ -1636,9 +1636,11 @@
         "damage_banned": "Banned",
         "damage_description": "<i>{0}</i> do about {1} damage, not more than {2}.",
         "damage_normal": "Normal",
+        "damage_raw": "Meat",
         "damages": "Damage Spread",
         "description": "Find weapons and stats.",
         "items_in_use": "Things in use",
+        "raw_damages": "Raw Damage Spread",
         "search": "Find",
         "title": "Weapon Info",
         "usage": "Weapon Use"

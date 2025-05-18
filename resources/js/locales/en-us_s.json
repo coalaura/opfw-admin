@@ -1636,9 +1636,11 @@
         "damage_banned": "Banned",
         "damage_description": "<i>{0}</i> usually does 'bout {1} and not more than 'bout {2} damage.",
         "damage_normal": "Normal",
+        "damage_raw": "Raw",
         "damages": "Damage Distribution",
         "description": "Lookup weapons and their stats.",
         "items_in_use": "Items in use",
+        "raw_damages": "Raw Damage Distribution, y'all",
         "search": "Search",
         "title": "Weapon Info",
         "usage": "Weapon Usage"
