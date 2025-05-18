@@ -201,14 +201,16 @@ class ToolController extends Controller
         $avg       = 0;
         $max       = 0;
         $maxDamage = 0;
+        $maxRaw    = 0;
 
         foreach ($data as $entry) {
             $damage = intval($entry['weapon_damage']);
+            $capped = min($damage, 400);
 
             if ($entry['ban_hash']) {
-                $dmgBanned[$damage] = $entry['count'];
+                $dmgBanned[$capped] = ($dmgBanned[$capped] ?? 0) + $entry['count'];
             } else {
-                $dmgNormal[$damage] = $entry['count'];
+                $dmgNormal[$capped] = ($dmgNormal[$capped] ?? 0) + $entry['count'];
 
                 if ($entry['count'] >= 4) {
                     $max = $damage;
@@ -222,17 +224,21 @@ class ToolController extends Controller
 
         foreach ($rawData as $entry) {
             $damage = intval($entry['weapon_damage']);
-
-            $dmgRaw[$damage] = $entry['count'];
+            $capped = min($damage, 400);
 
             if ($count < $entry['count']) {
                 $count = $entry['count'];
                 $avg   = $damage;
             }
+
+            $dmgRaw[$capped] = ($dmgRaw[$capped] ?? 0) + $entry['count'];
+
+            if ($damage > $maxRaw) {
+                $maxRaw = $damage;
+            }
         }
 
-        $max       = $this->closest(array_keys($dmgRaw), $max * 1.8);
-        $maxDamage = min($maxDamage, 999);
+        $max = $this->closest(array_keys($dmgRaw), $max * 1.8);
 
         $damages = [
             'data'   => [
@@ -268,10 +274,10 @@ class ToolController extends Controller
             $damages['data'][1][] = $banned;
         }
 
-        for ($x = 0; $x <= $maxDamage; $x++) {
+        for ($x = 0; $x <= $maxRaw; $x++) {
             $rawDmg = $dmgRaw[$x] ?? 0;
 
-            $raw['labels'][] = $x === 999 ? '999+ hp' : $x . 'hp';
+            $raw['labels'][] = $x === 400 ? '400+ hp' : $x . 'hp';
 
             $raw['data'][0][] = $rawDmg;
         }
