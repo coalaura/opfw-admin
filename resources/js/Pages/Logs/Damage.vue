@@ -197,8 +197,14 @@
 							</span>
 						</td>
 						<td class="p-3 mobile:block max-w-40">
-							<span :title="t('logs.vehicle_id')" v-if="log.hitVehicleId">V#{{ log.hitVehicleId }}</span>
-							<span :title="t('logs.network_id')" v-else>N#{{ log.hitGlobalId }}</span>
+							<div :title="t('logs.vehicle_id')" v-if="log.hitVehicleId">
+								<i class="fas fa-truck-pickup"></i>
+								{{ log.hitVehicleId }}
+							</div>
+							<div :title="t('logs.network_id')" v-else>
+								<i class="fas fa-network-wired"></i>
+								{{ log.hitGlobalId }}
+							</div>
 						</td>
 						<td class="p-3 mobile:block">
 							{{ log.hitHealth ? log.hitHealth + "hp" : "N/A" }}
