@@ -145,11 +145,6 @@
                     <i class="fas fa-toolbox"></i>
                 </badge>
 
-                <!-- Panel drug department -->
-                <badge class="border-green-200 bg-success-pale dark:bg-dark-success-pale" :title="t('players.show.drug_department_title')" v-if="$page.auth.player.isSuperAdmin && player.panelDrugDepartment" square>
-                    <i class="fas fa-tablets"></i>
-                </badge>
-
                 <!-- Blacklisted -->
                 <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale" :title="t('global.blacklisted')" v-if="blacklisted" square>
                     <i class="fas fa-hand-paper"></i>

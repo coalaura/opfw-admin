@@ -22,8 +22,6 @@ class PlayerResource extends JsonResource
         $identifiers     = is_array($this->player_aliases) ? $this->player_aliases : json_decode($this->player_aliases, true);
         $enabledCommands = is_array($this->enabled_commands) ? $this->enabled_commands : json_decode($this->enabled_commands, true);
 
-        $drug = (isset($this->panel_drug_department) && $this->panel_drug_department) || ($this->license_identifier && GeneralHelper::isUserRoot($this->license_identifier));
-
         $bans = BanResource::collection($this->uniqueBans());
 
         $variables = $this->getUserVariables();
@@ -57,11 +55,9 @@ class PlayerResource extends JsonResource
                 return $e !== $this->player_name && str_replace('?', '', $e) !== '';
             }))) : [],
             'enabledCommands'     => $enabledCommands ?? [],
-            'panelDrugDepartment' => $drug,
             'tag'                 => $this->panel_tag,
             'mute'                => $this->getActiveMute(),
             'variables'           => $variables,
-            'countryName'         => $this->country_name,
             'averagePing'         => $this->average_ping,
             'averageFps'          => $this->average_fps,
             'staffToggled'        => $this->isStaffToggled(),

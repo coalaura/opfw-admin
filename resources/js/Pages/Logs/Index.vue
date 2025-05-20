@@ -125,11 +125,6 @@
 							</span>
 						</button>
 
-						<button class="px-5 py-2 ml-5 font-semibold text-white bg-yellow-600 dark:bg-yellow-500 rounded hover:shadow-lg" @click="showDrugLogs" v-if="canSearchDrugs">
-							<i class="fas fa-capsules mr-1"></i>
-							{{ t('logs.drug_search') }}
-						</button>
-
 						<button class="px-5 py-2 ml-5 font-semibold text-white bg-teal-600 dark:bg-teal-500 rounded hover:shadow-lg" @click="showMoneyLogs">
 							<i class="fas fa-money-bill-wave mr-1"></i>
 							{{ t('logs.money_search') }}
@@ -331,10 +326,6 @@ export default {
 			type: Array,
 			required: true,
 		},
-		drugActions: {
-			type: Array,
-			required: true,
-		},
 		filters: {
 			identifier: String,
 			action: String,
@@ -358,10 +349,6 @@ export default {
 		},
 		time: {
 			type: Number,
-			required: true,
-		},
-		canSearchDrugs: {
-			type: Boolean,
 			required: true,
 		},
 		actions: {
@@ -444,11 +431,6 @@ export default {
 			this.searchableActions = actions;
 			this.searchingActions = true;
 		},
-		showDrugLogs() {
-			this.filters.action = this.drugActions.map(e => `=${e}`).join('|');
-
-			this.refresh();
-		},
 		showMoneyLogs() {
 			this.filters.action = MoneyTransferActions.map(action => `=${action}`).join('|');
 
@@ -471,13 +453,11 @@ export default {
 
 				if (minigames.length > 0) {
 					return 'bg-purple-500 !bg-opacity-20 hover:!bg-opacity-40';
-				}if (MoneyTransferActions.includes(action)) {
+				} else if (MoneyTransferActions.includes(action)) {
 					return 'bg-teal-500 !bg-opacity-20 hover:!bg-opacity-40';
-				}if (this.drugActions.includes(action)) {
-					return 'bg-yellow-500 !bg-opacity-20 hover:!bg-opacity-40';
-				}if (DisconnectActions.includes(action)) {
+				} else if (DisconnectActions.includes(action)) {
 					return 'bg-rose-500 !bg-opacity-20 hover:!bg-opacity-40';
-				}if (ConnectActions.includes(action)) {
+				} else if (ConnectActions.includes(action)) {
 					return 'bg-lime-500 !bg-opacity-20 hover:!bg-opacity-40';
 				}
 			}
@@ -491,13 +471,11 @@ export default {
 
 			if (minigames.length > 0) {
 				return `<i class="text-purple-800 dark:text-purple-200 fas fa-gamepad" title="${minigames.join(', ')}"></i>`;
-			}if (MoneyTransferActions.includes(action)) {
+			} else if (MoneyTransferActions.includes(action)) {
 				return `<i class="text-teal-800 dark:text-teal-200 fas fa-money-bill-wave" title="money transfer"></i>`;
-			}if (this.drugActions.includes(action)) {
-				return `<i class="text-yellow-800 dark:text-yellow-200 fas fa-tablets" title="drugs"></i>`;
-			}if (DisconnectActions.includes(action)) {
+			} else if (DisconnectActions.includes(action)) {
 				return `<i class="text-rose-800 dark:text-rose-200 fas fa-door-open" title="exit/disconnect/unload"></i>`;
-			}if (ConnectActions.includes(action)) {
+			} else if (ConnectActions.includes(action)) {
 				return `<i class="text-lime-800 dark:text-lime-200 fas fa-person-booth" title="connect/join/load"></i>`;
 			}
 

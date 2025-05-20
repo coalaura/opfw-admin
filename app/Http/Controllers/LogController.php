@@ -20,17 +20,6 @@ use Illuminate\Support\Str;
 
 class LogController extends Controller
 {
-    const DrugLogs = [
-        "Gun Run",
-        "Gun Run Drop",
-        "Cocaine Run",
-        "Oxy Run Started",
-        "Oxy Run Ended",
-        "Oxy Run Failed",
-        "Jim's Gun Shop",
-        "Crafted Gun",
-    ];
-
     const RestrictedLogs = [
         "Changed Frequency"
     ];
@@ -45,25 +34,9 @@ class LogController extends Controller
     {
         $start = round(microtime(true) * 1000);
 
-        $canSearchDrugs = true;
-
         $skipped = [];
 
-        if (env('RESTRICT_DrugLogs', false)) {
-            $player = user();
-
-            if (! $player->panel_drug_department && ! $player->isSuperAdmin()) {
-                $canSearchDrugs = false;
-            }
-        }
-
         $query = Log::query()->orderByDesc('timestamp');
-
-        if (! $canSearchDrugs) {
-            $query->whereNotIn('action', self::DrugLogs);
-
-            $skipped = ['action is "' . implode('", "', self::DrugLogs) . '"'];
-        }
 
         if (!$this->isSeniorStaff($request)) {
             $query->whereNotIn('action', self::RestrictedLogs);
@@ -157,8 +130,6 @@ class LogController extends Controller
             'time'           => $end - $start,
             'playerMap'      => Player::fetchLicensePlayerNameMap($logs->toArray($request), 'licenseIdentifier'),
             'page'           => $page,
-            'drugActions'    => self::DrugLogs,
-            'canSearchDrugs' => $canSearchDrugs,
             'actions'        => CacheHelper::getLogActions(),
             'skipped'        => $skipped,
         ]);

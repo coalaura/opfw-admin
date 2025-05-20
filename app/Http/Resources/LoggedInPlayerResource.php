@@ -18,8 +18,6 @@ class LoggedInPlayerResource extends JsonResource
      */
     public function toArray($request): array
     {
-        $drug = (isset($this->panel_drug_department) && $this->panel_drug_department) || ($this->license_identifier && GeneralHelper::isUserRoot($this->license_identifier));
-
         return [
             'id'                  => $this->user_id,
             'avatar'              => $this->avatar,
@@ -32,7 +30,6 @@ class LoggedInPlayerResource extends JsonResource
             'isSeniorStaff'       => $this->isSeniorStaff(),
             'isSuperAdmin'        => $this->isSuperAdmin(),
             'isRoot'              => $this->isRoot(),
-            'panelDrugDepartment' => $drug,
             'tag'                 => $this->panel_tag,
             'staffToggled'        => $this->isStaffToggled(),
             'staffHidden'         => $this->isStaffHidden(),
