@@ -222,7 +222,7 @@
         "senior_staff_title": "Senior Staff ko sabhi staff commands aur kuch super admin commands jaise /advanced_metagame ka access hai.",
         "server_id": "Server ID",
         "server_offline": "Server offline lag raha hai.",
-        "server_online": "Server {0} se online hai.",
+        "server_online": "Server {0} se online hai aur {1} khiladi khel rahe hain.",
         "server_timeout": "Server ID 5 minute ke liye cached hai",
         "soon_tm": "Jaldi™",
         "sort": {

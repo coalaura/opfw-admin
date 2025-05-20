@@ -33,6 +33,9 @@ class DataCompressor {
 				}
 
 				break;
+			default:
+				isValid = true;
+				result = data;
 		}
 
 		if (!isValid || !result) {

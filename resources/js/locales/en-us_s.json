@@ -222,7 +222,7 @@
         "senior_staff_title": "Senior Staff can use all staff commands and some super admin commands like /advanced_metagame.",
         "server_id": "Server ID",
         "server_offline": "Server seems to be offline.",
-        "server_online": "Server's been online since {0}.",
+        "server_online": "The server's been up and runnin' since {0} with {1} folks playin'.",
         "server_timeout": "Server ID is cached fer 5 minutes",
         "soon_tm": "Soon™",
         "sort": {

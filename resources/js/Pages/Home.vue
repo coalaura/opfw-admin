@@ -218,8 +218,6 @@ export default {
             isServerAnnouncement: false,
             announcementMessage: '',
 
-            refreshInterval: false,
-
             showingCrafting: false,
             craftingRecipes: false
         };
@@ -282,15 +280,6 @@ export default {
                 $(e.target).removeClass('dark:!text-green-400 !text-green-600');
             }, 750);
         },
-        refresh: async function () {
-            const players = await this.requestStatic("/count");
-
-            if (typeof players === "number") {
-                this.playerCount = this.t('home.player_count', players);
-            } else {
-                this.playerCount = false;
-            }
-        },
         banTime(ban) {
             return ban.expireAt ? this.$options.filters.humanizeSeconds(dayjs(ban.expireAt).unix() - dayjs(ban.timestamp).unix()) : this.t('players.ban.forever_edit');
         },
@@ -299,19 +288,18 @@ export default {
         }
     },
     mounted() {
-        clearInterval(this.refreshInterval);
+        this.subscribeMisc("home", data => {
+            const count = data?.status?.players;
 
-        // Delay loading of extra data since it blocks other resources from loading
-        setTimeout(() => {
-            this.refresh();
-
-            this.refreshInterval = setInterval(() => {
-                this.refresh();
-            }, 30 * 1000);
-        }, 500);
+            if (typeof count === "number") {
+                this.playerCount = this.t('home.player_count', count);
+            } else {
+                this.playerCount = false;
+            }
+        });
     },
     unmounted() {
-        clearInterval(this.refreshInterval);
+        this.unsubscribeMisc("home");
     }
 }
 </script>

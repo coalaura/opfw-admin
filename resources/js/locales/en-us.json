@@ -52,7 +52,7 @@
         "whitelisted": "On Whitelist",
         "blacklisted": "Is Blacklisted",
         "server_offline": "Server seems to be offline.",
-        "server_online": "Server has been online since {0}.",
+        "server_online": "Server has been online since {0} with {1} players playing.",
         "permission": "Your current permission level",
         "ai_generated": "Most likely AI generated.",
         "read_out_loud": "Read text out loud via TTS.",

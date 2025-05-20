@@ -90,10 +90,6 @@ const Socket = {
 			return await executeRequest(this, "static", route, throwError);
 		};
 
-		Vue.prototype.requestMisc = async function (route, throwError = false) {
-			return await executeRequest(this, "misc", route, throwError);
-		};
-
 		Vue.prototype.createSocket = function (type, options = {}) {
 			const socketUrl = isDev ? 'ws://localhost:9999' : `wss://${window.location.host}`,
                 token = this.$page.auth.token,

@@ -222,7 +222,7 @@
         "senior_staff_title": "Senioransatte har tilgang til alle ansattkommandoer og visse superadministrator-kommandoer som /advanced_metagame.",
         "server_id": "Server-ID",
         "server_offline": "Serveren ser ut til å være offline.",
-        "server_online": "Serveren har vært online siden {0}.",
+        "server_online": "Serveren har vært online siden {0} med {1} spillere som spiller.",
         "server_timeout": "Server-ID er hurtiglagret i 5 minutter",
         "soon_tm": "Kommer snart™",
         "sort": {

@@ -36,11 +36,11 @@
                     <span v-else>{{ t('global.staff') }}</span>
                 </span>
 
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded" :class="{ 'shadow': banner, 'bg-gray-500 border-gray-700': serverStatusLoading, 'bg-green-500 border-green-700': !serverStatusLoading && serverUptime, 'bg-red-500 border-red-700': !serverStatusLoading && !serverUptime }" :title="!serverStatusLoading ? (!serverUptime ? t('global.server_offline') : t('global.server_online', serverUptimeDetail)) : ''">
-                    <i class="fas fa-sync-alt mr-1" v-if="serverStatusLoading"></i>
-                    <i class="fas fa-server mr-1" v-else></i>
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 rounded" :class="{ 'shadow': banner, 'bg-gray-500 border-gray-700': !serverStatusLoaded, 'bg-green-500 border-green-700': serverStatusLoaded && serverUptime, 'bg-red-500 border-red-700': serverStatusLoaded && !serverUptime }" :title="serverStatusLoaded ? (!serverUptime ? t('global.server_offline') : t('global.server_online', serverUptimeDetail, playerCount)) : ''">
+                    <i class="fas fa-server mr-1" v-if="serverStatusLoaded"></i>
+                    <i class="fas fa-sync-alt mr-1" v-else></i>
 
-                    <span v-if="serverUptime">{{ serverUptime }}</span>
+                    <span v-if="serverUptime">{{ serverUptime }} <sup>{{ playerCount }}</sup></span>
                     <span v-else>{{ $page.serverName }}</span>
                 </span>
 
@@ -346,11 +346,12 @@ export default {
 
             failedAvatarLoad: false,
 
-            serverStatusLoading: false,
+            serverStatusLoaded: false,
             serverUptime: false,
             serverUptimeDetail: false,
             serverName: false,
             serverLogo: false,
+            playerCount: false,
 
             loadingDebug: false,
             showingDebugInfo: false,
@@ -593,55 +594,6 @@ export default {
 
             this.loadingSocket = false;
         },
-        async updateServerStatus() {
-            this.serverStatusLoading = true;
-
-            const info = await this.requestStatic("/server");
-
-            if (info?.uptime) {
-                this.serverUptime = this.formatUptime(info.uptime, false);
-                this.serverUptimeDetail = this.formatUptime(info.uptime, true);
-            } else {
-                this.serverUptime = false;
-                this.serverUptimeDetail = false;
-            }
-
-            if (info?.name) {
-                this.serverName = info.name;
-            } else {
-                this.serverName = false;
-            }
-
-            if (info?.logo) {
-                this.serverLogo = info.logo;
-            } else {
-                this.serverLogo = false;
-            }
-
-            if (info && 'baseTime' in info) {
-                this.gameTime = info.baseTime;
-                this.gameTimeUpdated = Date.now();
-            }
-
-            this.serverStatusLoading = false;
-
-            setTimeout(() => {
-                this.updateServerStatus();
-            }, 20000);
-        },
-        async updateStreamers() {
-            const streamers = await this.requestMisc("/twitch");
-
-            if (streamers && streamers.length > 0) {
-                this.streamers = streamers;
-            } else {
-                this.streamers = false;
-            }
-
-            setTimeout(() => {
-                this.updateStreamers();
-            }, 20000);
-        },
         async renderAbbreviation() {
             const title = this.$refs.opfw_abbr;
 
@@ -676,11 +628,31 @@ export default {
         }
     },
     async mounted() {
-        // Delay loading of extra data since it blocks other resources from loading
-        setTimeout(() => {
-            this.updateServerStatus();
-            this.updateStreamers();
-        }, 500);
+        this.subscribeMisc("navbar", data => {
+            const twitch = data?.twitch,
+                status = data?.status;
+
+            this.streamers = twitch;
+
+            this.serverStatusLoaded = true;
+
+            this.serverName = status?.name;
+            this.serverLogo = status?.logo;
+            this.playerCount = status?.players || 0;
+
+            if (typeof status?.baseTime === "number") {
+                this.gameTime = status.baseTime;
+                this.gameTimeUpdated = Date.now();
+            }
+
+            if (status?.uptime) {
+                this.serverUptime = this.formatUptime(status.uptime, false);
+                this.serverUptimeDetail = this.formatUptime(status.uptime, true);
+            } else {
+                this.serverUptime = false;
+                this.serverUptimeDetail = false;
+            }
+        });
 
         setTimeout(() => {
             this.renderAbbreviation();
@@ -691,6 +663,9 @@ export default {
         this.$bus.$on('settingsUpdated', async () => {
             this.banner = await this.refreshStyle();
         });
+    },
+    unmounted() {
+        this.unsubscribeMisc("navbar");
     }
 }
 </script>
