@@ -17,7 +17,22 @@ status() {
 	echo $1 > update
 }
 
-trap 'rm -f .done update' EXIT
+join_by() {
+	local IFS="$1"
+	shift
+	echo "$*"
+}
+
+write_done() {
+	(
+		flock 200
+		echo $1 >> .done
+	) 200>.done.lock
+}
+
+trap 'rm -f .done .done.lock update' EXIT
+
+rm -f .done .done.lock
 
 status "pulling"
 
@@ -26,6 +41,8 @@ git pull
 
 status "migrating"
 
+clusters=()
+
 total=0
 completed=0
 failures=0
@@ -33,14 +50,16 @@ failures=0
 for directory in ./envs/c*/; do
     [ -L "${directory%/}" ] && continue
 
-    total=$((total + 1))
     cluster="$(basename -- "$directory")"
+
+    total=$((total + 1))
+	clusters+=("$cluster")
 
     (
         if php artisan migrate --cluster="$cluster" --force > /dev/null 2>&1; then
-            echo "success $cluster" >> .done
+            write_done "success $cluster"
         else
-            echo "fail $cluster" >> .done
+            write_done "fail $cluster"
         fi
     ) &
 done
@@ -48,9 +67,23 @@ done
 while (( completed < total )); do
     sleep 0.2
 
-    completed=$(grep -c '^' .done 2>/dev/null || echo 0)
+    mapfile -t done_lines < .done 2>/dev/null || done_lines=()
 
-    echo -ne "Progress: $completed/$total migrations complete\r"
+    completed=${#done_lines[@]}
+
+    pending_clusters=("${clusters[@]}")
+
+    for line in "${done_lines[@]}"; do
+        read -r _ cluster_name <<< "$line"
+
+        for i in "${!pending_clusters[@]}"; do
+            if [[ "${pending_clusters[i]}" == "$cluster_name" ]]; then
+                unset 'pending_clusters[i]'
+            fi
+        done
+    done
+
+    printf "\rCompleted: %d/%d - [%s]$(tput el)" "$completed" "$total" "$(join_by ', ' "${pending_clusters[@]}")"
 done
 
 echo
