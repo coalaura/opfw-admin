@@ -103,6 +103,14 @@ while (( completed < total )); do
         done
     done
 
+	tmp=()
+
+	for c in "${pending_clusters[@]}"; do
+		[[ -n "$c" ]] && tmp+=("$c")
+	done
+
+	pending_clusters=("${tmp[@]}")
+
     printf "\rCompleted: %d/%d - [%s] - %ds$(tput el)" "$completed" "$total" "$(join_by ', ' "${pending_clusters[@]}")", "$timer"
 done
 
