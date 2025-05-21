@@ -18,9 +18,21 @@ status() {
 }
 
 join_by() {
-	local IFS="$1"
-	shift
-	echo "$*"
+    local d="$1"
+
+    shift
+
+    local first=1
+
+    for arg; do
+        if (( first )); then
+            printf "%s" "$arg"
+
+            first=0
+        else
+            printf "%s%s" "$d" "$arg"
+        fi
+    done
 }
 
 write_done() {
@@ -65,6 +77,8 @@ for directory in ./envs/c*/; do
         fi
     ) &
 done
+
+clusters=( $(printf "%s\n" "${clusters[@]}" | sort -V) )
 
 timer=45
 
