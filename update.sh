@@ -46,7 +46,7 @@ write_done() {
 
 run_migration_timeout() {
     local cluster="$1"
-    local migration_timeout="45"
+    local migration_timeout="20"
 
     if (( can_expect )); then
         expect -c "
@@ -107,12 +107,8 @@ done
 
 clusters=( $(printf "%s\n" "${clusters[@]}" | sort -V) )
 
-timer=45
-
 while (( completed < total )); do
-    sleep 1
-
-	timer=$((timer - 1))
+    sleep 0.5
 
     mapfile -t done_lines < .done 2>/dev/null || done_lines=()
 
@@ -138,7 +134,7 @@ while (( completed < total )); do
 
 	pending_clusters=("${tmp[@]}")
 
-    printf "\rCompleted: %d/%d - [%s] - %ds$(tput el)" "$completed" "$total" "$(join_by ', ' "${pending_clusters[@]}")", "$timer"
+    printf "\rCompleted: %d/%d - [%s]$(tput el)" "$completed" "$total" "$(join_by ', ' "${pending_clusters[@]}")"
 done
 
 echo
