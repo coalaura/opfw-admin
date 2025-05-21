@@ -1,5 +1,18 @@
 #!/bin/bash
 
+set -e
+
+quiet=0
+
+for arg in "$@"; do
+    case $arg in
+        --quiet)
+            quiet=1
+            shift
+            ;;
+    esac
+done
+
 status() {
 	echo $1 > update
 }
@@ -40,6 +53,8 @@ while (( completed < total )); do
     echo -ne "Progress: $completed/$total migrations complete\r"
 done
 
+echo
+
 while read -r result cluster; do
     if [[ $result == "fail" ]]; then
         failures=$((failures + 1))
@@ -50,7 +65,10 @@ done < .done
 
 if (( failures > 0 )); then
     echo "$failures migrations failed."
-    exit 1
+
+    if (( quiet == 0 )); then
+        exit 1
+    fi
 else
     echo "All migrations completed successfully."
 fi
