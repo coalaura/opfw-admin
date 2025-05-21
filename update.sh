@@ -13,6 +13,8 @@ for arg in "$@"; do
     esac
 done
 
+can_expect=0; command -v expect >/dev/null 2>&1 && can_expect=1
+
 status() {
 	echo $1 > update
 }
@@ -40,6 +42,25 @@ write_done() {
 		flock 200
 		echo $1 >> .done
 	) 200>.done.lock
+}
+
+run_migration_timeout() {
+    local cluster="$1"
+    local migration_timeout="45"
+
+    if (( can_expect )); then
+        expect -c "
+            log_user 0
+            set timeout $migration_timeout
+            spawn php artisan migrate --cluster=\"$cluster\" --force
+            expect {
+                eof { exit 0 }
+                timeout { exit 124 }
+            }
+        " > /dev/null 2>&1
+    else
+        timeout "$migration_timeout" php artisan migrate --cluster="$cluster" --force > /dev/null 2>&1
+    fi
 }
 
 trap 'rm -f .done .done.lock update' EXIT
@@ -70,12 +91,18 @@ for directory in ./envs/c*/; do
 	clusters+=("$cluster")
 
     (
-        if timeout "45s" php artisan migrate --cluster="$cluster" --force > /dev/null 2>&1; then
-            write_done "success $cluster"
-        else
-            write_done "fail $cluster"
-        fi
-    ) &
+		if run_migration_timeout "$cluster"; then
+			write_done "success $cluster"
+		else
+			code=$?
+
+			if [[ $code -eq 124 ]]; then
+				write_done "timeout $cluster"
+			else
+				write_done "fail $cluster"
+			fi
+		fi
+	) &
 done
 
 clusters=( $(printf "%s\n" "${clusters[@]}" | sort -V) )
@@ -117,11 +144,18 @@ done
 echo
 
 while read -r result cluster; do
-    if [[ $result == "fail" ]]; then
-        failures=$((failures + 1))
+    case "$result" in
+        fail)
+            failures=$((failures + 1))
 
-        echo "Migration failed for $cluster"
-    fi
+            echo "Migration failed for $cluster"
+            ;;
+        timeout)
+            failures=$((failures + 1))
+
+            echo "Migration timed out for $cluster"
+            ;;
+    esac
 done < .done
 
 if (( failures > 0 )); then
