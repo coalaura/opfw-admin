@@ -66,8 +66,12 @@ for directory in ./envs/c*/; do
     ) &
 done
 
+timer=45
+
 while (( completed < total )); do
-    sleep 0.2
+    sleep 1
+
+	timer=$((timer - 1))
 
     mapfile -t done_lines < .done 2>/dev/null || done_lines=()
 
@@ -85,7 +89,7 @@ while (( completed < total )); do
         done
     done
 
-    printf "\rCompleted: %d/%d - [%s]$(tput el)" "$completed" "$total" "$(join_by ', ' "${pending_clusters[@]}")"
+    printf "\rCompleted: %d/%d - [%s] - %ds$(tput el)" "$completed" "$total" "$(join_by ', ' "${pending_clusters[@]}")", "$timer"
 done
 
 echo
