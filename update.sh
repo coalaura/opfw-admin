@@ -47,6 +47,8 @@ total=0
 completed=0
 failures=0
 
+touch .done
+
 for directory in ./envs/c*/; do
     [ -L "${directory%/}" ] && continue
 
@@ -56,7 +58,7 @@ for directory in ./envs/c*/; do
 	clusters+=("$cluster")
 
     (
-        if php artisan migrate --cluster="$cluster" --force > /dev/null 2>&1; then
+        if timeout "45s" php artisan migrate --cluster="$cluster" --force > /dev/null 2>&1; then
             write_done "success $cluster"
         else
             write_done "fail $cluster"
