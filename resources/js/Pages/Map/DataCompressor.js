@@ -4,7 +4,17 @@ class DataCompressor {
 	#data = {};
 
 	decompressData(type, compressed) {
-		const data = this.#update(unpack(compressed));
+		let decompressed;
+
+		try {
+			decompressed = unpack(compressed);
+		} catch(e) {
+			console.error(`Failed to decompress packet: ${e.message}`);
+
+			return false;
+		}
+
+		const data = this.#update(decompressed);
 
 		let isValid;
 		let result;
