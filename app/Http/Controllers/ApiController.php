@@ -103,8 +103,11 @@ class ApiController extends Controller
         ]);
     }
 
-    public function chatToken()
+    public function token()
     {
-        return $this->json(true, session_token());
+        return $this->json(true, [
+            "token"   => session_token(),
+            "expires" => time() + (4 * 60 * 60),
+        ]);
     }
 }

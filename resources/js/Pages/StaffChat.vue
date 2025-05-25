@@ -317,14 +317,21 @@ export default {
 
             return "";
         },
-        init() {
-            if (this.socket) return;
+        async init() {
+            if (this.socket || this.isLoading) return;
 
             this.isLoading = true;
             this.initialScroll = true;
 
+            const token = await this.grabToken();
+
+            if (!token) {
+                this.isLoading = false;
+
+                return;
+            }
+
             const isDev = window.location.hostname === 'localhost';
-            const token = this.$page.auth.token;
             const server = this.$page.serverName;
             const socketUrl = isDev ? 'ws://localhost:9999' : `wss://${window.location.host}`;
 

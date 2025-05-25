@@ -264,28 +264,6 @@ export default {
             this.$emit("update:activeViewers", map(active));
             this.$emit("update:inactiveViewers", map(inactive));
         },
-        async resolveToken() {
-            const token = this.$page.auth.token,
-                expires = this.$page.auth.expires;
-
-            if (Date.now()/1000 < expires - 60) {
-                return token;
-            }
-
-            try {
-                const data = await _get("/api/chat_token");
-
-                if (!data?.status) {
-                    throw new Error("failed to retrieve token");
-                }
-
-                return data.data
-            } catch (e) {
-                console.error(e);
-            }
-
-            return false;
-        },
         async connect() {
             clearTimeout(this.timeout);
 
@@ -295,7 +273,7 @@ export default {
 
             this.connecting = true;
 
-            const token = await this.resolveToken();
+            const token = await this.grabToken();
 
             if (!token) {
                 this.connecting = false;

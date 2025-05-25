@@ -90,12 +90,48 @@ const Socket = {
 			return await executeRequest(this, "static", route, throwError);
 		};
 
-		Vue.prototype.createSocket = function (type, options = {}) {
-			const socketUrl = isDev ? 'ws://localhost:9999' : `wss://${window.location.host}`,
-                token = this.$page.auth.token,
+		const cache = {
+			grabbing: false,
+			expires: false,
+			token: false,
+		};
+
+		Vue.prototype.grabToken = async () => {
+			if (cache.token && Date.now() < cache.expires) {
+				return cache.token;
+			}
+
+			if (!cache.grabbing) {
+				cache.grabbing = _get("/api/token").then(data => {
+					if (!data?.status) {
+						throw new Error("failed to retrieve token");
+					}
+
+					cache.token = data.data.token;
+					cache.expires = (data.data.expires - 60) * 1000;
+				}).catch(err => {
+					console.error(err);
+				}).finally(() => {
+					cache.grabbing = false;
+				})
+			}
+
+			await cache.grabbing;
+
+			return cache.token;
+		};
+
+		Vue.prototype.createSocket = async function (type, options = {}) {
+			const token = await this.grabToken();
+
+			if (!token) {
+				return false;
+			}
+
+			const socketUrl = isDev ? "ws://localhost:9999" : `wss://${window.location.host}`,
 				server = this.$page.serverName;
 
-            const compressor = new DataCompressor();
+			const compressor = new DataCompressor();
 
 			const socket = io(socketUrl, {
 				reconnectionDelayMax: 5000,
@@ -107,52 +143,52 @@ const Socket = {
 				path: "/io",
 			});
 
-            socket.on("reset", data => {
-                console.log(`[${type}] Received socket "reset" event (${data.byteLength || data.length} bytes).`);
+			socket.on("reset", data => {
+				console.log(`[${type}] Received socket "reset" event (${data.byteLength || data.length} bytes).`);
 
-                compressor.reset();
+				compressor.reset();
 
-                data = compressor.decompressData(type, data);
+				data = compressor.decompressData(type, data);
 
-                options?.onData?.(data);
-            });
+				options?.onData?.(data);
+			});
 
-            let received;
+			let received;
 
-            socket.on("message", data => {
-                if (!received) {
-                    received = true;
+			socket.on("message", data => {
+				if (!received) {
+					received = true;
 
-                    console.log(`[${type}] Received first socket "message" event (${data.byteLength || data.length} bytes).`);
-                }
+					console.log(`[${type}] Received first socket "message" event (${data.byteLength || data.length} bytes).`);
+				}
 
-                data = compressor.decompressData(type, data);
+				data = compressor.decompressData(type, data);
 
-                options?.onData?.(data);
-            });
+				options?.onData?.(data);
+			});
 
-            socket.on("no_data", () => {
-                console.log(`[${type}] Received socket "no_data" event.`);
+			socket.on("no_data", () => {
+				console.log(`[${type}] Received socket "no_data" event.`);
 
-                options?.onNoData?.();
-            });
+				options?.onNoData?.();
+			});
 
-            socket.on("connect", () => {
-                console.log(`[${type}] Received socket "connect" event.`);
+			socket.on("connect", () => {
+				console.log(`[${type}] Received socket "connect" event.`);
 
-                options?.onConnect?.();
-            });
+				options?.onConnect?.();
+			});
 
-            socket.on("disconnect", () => {
-                console.log(`[${type}] Received socket "disconnect" event.`);
+			socket.on("disconnect", () => {
+				console.log(`[${type}] Received socket "disconnect" event.`);
 
-                compressor.reset();
-                socket.close();
+				compressor.reset();
+				socket.close();
 
-                options?.onDisconnect?.();
-            });
+				options?.onDisconnect?.();
+			});
 
-            return socket;
+			return socket;
 		};
 	},
 };

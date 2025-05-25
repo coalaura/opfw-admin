@@ -319,7 +319,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/api/character/{character}', [ApiController::class, 'character']);
     Route::get('/api/debug', [ApiController::class, 'debug']);
     Route::get('/api/config/{key}', [ApiController::class, 'config']);
-    Route::get('/api/chat_token', [ApiController::class, 'chatToken']);
+    Route::get('/api/token', [ApiController::class, 'token']);
 
     // Data routes.
     Route::get('/__data/ban_exceptions', [DataController::class, 'banExceptions']);

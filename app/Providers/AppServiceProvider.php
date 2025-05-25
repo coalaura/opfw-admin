@@ -220,10 +220,7 @@ class AppServiceProvider extends ServiceProvider
                     'player'      => $player ? new LoggedInPlayerResource($player) : null,
                     'settings'    => $player ? $player->getPanelSettings() : null,
                     'permissions' => PermissionHelper::getFrontendPermissions(),
-                    'token'       => session_token(),
-                    'expires'     => time() + (4 * 60 * 60),
                     'cluster'     => CLUSTER,
-                    'servers'     => Server::getOPFWServers("name"),
                     'socket'      => SocketAPI::isUp(),
                 ];
             },
