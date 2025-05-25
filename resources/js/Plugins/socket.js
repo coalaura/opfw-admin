@@ -102,18 +102,21 @@ const Socket = {
 			}
 
 			if (!cache.grabbing) {
-				cache.grabbing = _get("/api/token").then(data => {
-					if (!data?.status) {
-						throw new Error("failed to retrieve token");
-					}
+				cache.grabbing = _get("/api/token")
+					.then(data => {
+						if (!data?.status) {
+							throw new Error("failed to retrieve token");
+						}
 
-					cache.token = data.data.token;
-					cache.expires = (data.data.expires - 60) * 1000;
-				}).catch(err => {
-					console.error(err);
-				}).finally(() => {
-					cache.grabbing = false;
-				})
+						cache.token = data.data.token;
+						cache.expires = (data.data.expires - 60) * 1000;
+					})
+					.catch(err => {
+						console.error(err);
+					})
+					.finally(() => {
+						cache.grabbing = false;
+					});
 			}
 
 			await cache.grabbing;
@@ -134,6 +137,7 @@ const Socket = {
 			const compressor = new DataCompressor();
 
 			const socket = io(socketUrl, {
+				transports: ["websocket"],
 				reconnectionDelayMax: 5000,
 				query: {
 					server: server,
