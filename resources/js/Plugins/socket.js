@@ -18,8 +18,13 @@ const Socket = {
 
 			route = route.replace(/^\/|\/$/, "");
 
-			const token = vue.$page.auth.token,
-				server = vue.$page.serverName,
+			const token = await this.grabToken();
+
+			if (!token) {
+				return false;
+			}
+
+			const server = vue.$page.serverName,
 				host = isDev ? "http://localhost:9999" : `https://${window.location.host}`,
 				query = type === "data" ? `?token=${token}` : "";
 
