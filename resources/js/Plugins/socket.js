@@ -18,7 +18,7 @@ const Socket = {
 
 			route = route.replace(/^\/|\/$/, "");
 
-			const token = await this.grabToken();
+			const token = await vue.grabToken();
 
 			if (!token) {
 				return false;
