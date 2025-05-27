@@ -106,38 +106,6 @@ Vue.directive("click-outside", {
 	},
 });
 
-const colors = {};
-
-Vue.directive("accent", {
-	bind: (el, binding, vnode) => {
-		const key = JSON.stringify(binding.value);
-
-		if (!colors[key]) {
-			let distance = 0.0,
-				furthest = false;
-
-			for (let attempt = 0; attempt < 10; attempt++) {
-				const hue = Math.random() * 360;
-
-				let current = Infinity;
-
-				for (const h of Object.entries(colors)) {
-					current = Math.min(current, Math.abs(hue - h));
-				}
-
-				if (current > distance) {
-					distance = current;
-					furthest = hue;
-				}
-			}
-
-			colors[key] = furthest;
-		}
-
-		el.style.backgroundColor = `oklch(70% 0.179 ${colors[key]} / .1)`;
-	},
-});
-
 Vue.component("scoped-style", {
 	render: function (createElement) {
 		return createElement("style", this.$slots.default);
