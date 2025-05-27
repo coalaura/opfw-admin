@@ -34,7 +34,7 @@
                                 <i class="fas fa-people-carry"></i>
                             </button>
 
-                            <img :src="`/images/icons/items/${items[0].name}.png`" class="w-full h-32 object-contain crisp" />
+                            <img :src="getItemIcon(items[0])" class="w-full h-32 object-contain crisp" />
                         </template>
 
                         <template v-else>
@@ -243,6 +243,20 @@ export default {
         };
     },
     methods: {
+        getItemIcon(item) {
+            const metadata = item.metadata,
+                iconUrl = metadata?.iconUrl;
+
+            if (iconUrl) {
+                if (iconUrl.startsWith("/variations")) {
+                    return `/images/icons${iconUrl}`;
+                } else if (iconUrl.startsWith("https://")) {
+                    return iconUrl;
+                }
+            }
+
+            return `/images/icons/items/${item.name}.png`;
+        },
         getItemLabelForSlot(slot, withAmount = false) {
             const items = this.contents[slot];
 
