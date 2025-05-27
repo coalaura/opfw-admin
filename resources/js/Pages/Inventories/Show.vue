@@ -249,7 +249,7 @@ export default {
 
             if (iconUrl) {
                 if (iconUrl.startsWith("/variations")) {
-                    return `/images/icons${iconUrl}`;
+                    return `/images/icons/items${iconUrl}`;
                 } else if (iconUrl.startsWith("https://")) {
                     return iconUrl;
                 }
