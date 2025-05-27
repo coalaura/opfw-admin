@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Character;
@@ -30,7 +29,7 @@ class PlayerCharacterController extends Controller
     ];
 
     const Licenses = [
-        "heli", "fw", "cfi", "hw", "hwh", "perf", "management", "military", "utility", "commercial", "special", "passenger", "hunting", "fishing", "weapon", "mining", "boat", "driver", "press"
+        "heli", "fw", "cfi", "hw", "hwh", "perf", "management", "military", "utility", "commercial", "special", "passenger", "hunting", "fishing", "weapon", "mining", "boat", "driver", "press",
     ];
 
     /**
@@ -63,7 +62,7 @@ class PlayerCharacterController extends Controller
         $this->searchQuery($request, $query, 'job', DB::raw("CONCAT(job_name, ' ', department_name, ' ', position_name)"));
 
         // Filtering by Vehicle Plate or ID.
-        $vehicleID = $request->input('vehicle_id');
+        $vehicleID    = $request->input('vehicle_id');
         $vehiclePlate = $request->input('vehicle_plate');
 
         if ($vehiclePlate || $vehicleID) {
@@ -120,8 +119,8 @@ class PlayerCharacterController extends Controller
                 'job'           => $request->input('job'),
                 'license'       => $request->input('license') ?? '',
             ]),
-            'links'     => $this->getPageUrls($page),
-            'page'      => $page,
+            'links'      => $this->getPageUrls($page),
+            'page'       => $page,
             'time'       => $end - $start,
             'playerMap'  => Player::fetchLicensePlayerNameMap($characters->toArray($request), 'licenseIdentifier'),
             'licenses'   => self::Licenses,
@@ -192,7 +191,7 @@ class PlayerCharacterController extends Controller
     {
         $character = Character::query()->select(['license_identifier', 'character_id'])->where('character_id', '=', $cid)->get()->first();
 
-        if (!$character) {
+        if (! $character) {
             abort(404);
         }
 
@@ -220,16 +219,16 @@ class PlayerCharacterController extends Controller
             return strtoupper($matches[0]);
         }, $data['last_name']);
 
-        if (!empty($data['date_of_birth'])) {
+        if (! empty($data['date_of_birth'])) {
             $time = strtotime($data['date_of_birth']);
-            if (!$time) {
+            if (! $time) {
                 return backWith('error', 'Invalid date of birth');
             }
 
             $data['date_of_birth'] = date('Y-m-d', $time);
         }
 
-        if (!$data['job_name'] || $data['job_name'] === 'Unemployed') {
+        if (! $data['job_name'] || $data['job_name'] === 'Unemployed') {
             $data['job_name']        = null;
             $data['department_name'] = null;
             $data['position_name']   = null;
@@ -267,7 +266,7 @@ class PlayerCharacterController extends Controller
     {
         $before = $character->email_address;
 
-        if (!$character->refreshEmailAddress()) {
+        if (! $character->refreshEmailAddress()) {
             return backWith('error', 'Failed to update email address.');
         }
 
@@ -279,7 +278,7 @@ class PlayerCharacterController extends Controller
             sprintf("%s refreshed the email address of %s (#%d).", $user->consoleName(), $player->consoleName(), $character->character_id),
             [
                 'before' => $before,
-                'after' => $character->email_address,
+                'after'  => $character->email_address,
             ]
         );
 
@@ -296,7 +295,7 @@ class PlayerCharacterController extends Controller
      */
     public function destroy(Request $request, Player $player, Character $character): RedirectResponse
     {
-        if (!$this->isSuperAdmin($request)) {
+        if (! $this->isSuperAdmin($request)) {
             return backWith('error', 'Only super admins can delete characters.');
         }
 
@@ -335,11 +334,11 @@ class PlayerCharacterController extends Controller
         $json = json_decode($character->tattoos_data, true);
         $map  = json_decode(file_get_contents(__DIR__ . '/../../../helpers/tattoo-map.json'), true);
 
-        if (!$map || !is_array($map)) {
+        if (! $map || ! is_array($map)) {
             return backWith('error', 'Failed to load zone map');
         }
 
-        if (!$zone || !in_array($zone, self::ValidTattooZones)) {
+        if (! $zone || ! in_array($zone, self::ValidTattooZones)) {
             return backWith('error', 'Invalid or no zone provided');
         }
 
@@ -354,14 +353,14 @@ class PlayerCharacterController extends Controller
         } else if (is_array($json)) {
             $result = [];
             foreach ($json as $tattoo) {
-                if (!isset($tattoo['overlay'])) {
+                if (! isset($tattoo['overlay'])) {
                     continue;
                 }
 
                 $key = strtolower($tattoo['overlay']);
                 $z   = isset($cleanedMap[$key]) ? $cleanedMap[$key]['zone'] : null;
 
-                if (!$z || $z !== $zone) {
+                if (! $z || $z !== $zone) {
                     $result[] = $tattoo;
                 }
             }
@@ -405,11 +404,11 @@ class PlayerCharacterController extends Controller
         $spawn       = $request->get('spawn');
         $resetCoords = json_decode(file_get_contents(__DIR__ . '/../../../helpers/coords_reset.json'), true);
 
-        if (!$resetCoords || !is_array($resetCoords)) {
+        if (! $resetCoords || ! is_array($resetCoords)) {
             return backWith('error', 'Failed to load spawn points');
         }
 
-        if (!$spawn || (!isset($resetCoords[$spawn]) && $spawn !== "staff")) {
+        if (! $spawn || (! isset($resetCoords[$spawn]) && $spawn !== "staff")) {
             return backWith('error', 'Invalid or no spawn provided');
         }
 
@@ -438,7 +437,7 @@ class PlayerCharacterController extends Controller
      */
     public function divorce(Player $player, Character $character, Request $request): RedirectResponse
     {
-        if (!$this->isSuperAdmin($request)) {
+        if (! $this->isSuperAdmin($request)) {
             return backWith('error', 'Only super admins can divorce characters.');
         }
 
@@ -446,7 +445,7 @@ class PlayerCharacterController extends Controller
 
         $marriedTo = $character->married_to;
 
-        if (!$marriedTo) {
+        if (! $marriedTo) {
             return backWith('error', 'Character is not married.');
         }
 
@@ -490,7 +489,7 @@ class PlayerCharacterController extends Controller
         $bank   = intval($request->post("bank"));
         $stocks = intval($request->post("stocks"));
 
-        if (!$this->isSuperAdmin($request)) {
+        if (! $this->isSuperAdmin($request)) {
             return backWith('error', 'Only super admins can edit a characters balance.');
         }
 
@@ -525,7 +524,7 @@ class PlayerCharacterController extends Controller
      */
     public function deleteVehicle(Request $request, Vehicle $vehicle): RedirectResponse
     {
-        if (!$this->isSuperAdmin($request)) {
+        if (! $this->isSuperAdmin($request)) {
             return backWith('error', 'Only super admins can delete vehicles.');
         }
 
@@ -556,7 +555,7 @@ class PlayerCharacterController extends Controller
     {
         $model = $request->post('model');
 
-        if (!$this->isSuperAdmin($request)) {
+        if (! $this->isSuperAdmin($request)) {
             return backWith('error', 'Only super admins can add vehicles.');
         }
 
@@ -584,7 +583,7 @@ class PlayerCharacterController extends Controller
             $tries++;
 
             $exists = Vehicle::query()->where('plate', '=', $plate)->count(['vehicle_id']) > 0;
-            if (!$exists) {
+            if (! $exists) {
                 break;
             }
 
@@ -627,10 +626,10 @@ class PlayerCharacterController extends Controller
      */
     public function updateLicenses(Request $request, Player $player, Character $character): RedirectResponse
     {
-        $user = user();
+        $user     = user();
         $licenses = $request->post('licenses');
 
-        if (!is_array($licenses)) {
+        if (! is_array($licenses)) {
             return backWith('error', 'Invalid licenses.');
         }
 
@@ -674,7 +673,7 @@ class PlayerCharacterController extends Controller
      */
     public function resetGarage(Request $request, Vehicle $vehicle, bool $fullReset): RedirectResponse
     {
-        if (!$this->isSuperAdmin($request)) {
+        if (! $this->isSuperAdmin($request)) {
             return backWith('error', 'Only super admins can reset vehicles garages.');
         }
 
@@ -706,7 +705,7 @@ class PlayerCharacterController extends Controller
      */
     public function editVehicle(Request $request, Vehicle $vehicle): \Illuminate\Http\Response
     {
-        if (!$this->isSuperAdmin($request)) {
+        if (! $this->isSuperAdmin($request)) {
             return self::json(false, null, 'Only super admins can edit vehicles.');
         }
 
@@ -728,7 +727,7 @@ class PlayerCharacterController extends Controller
         $owner = $request->post('owner_cid');
 
         $character = Character::query()->where('character_id', '=', $owner)->first(['character_id', 'license_identifier']);
-        if (!$character) {
+        if (! $character) {
             return self::json(false, null, 'Invalid character id.');
         }
 
@@ -738,7 +737,7 @@ class PlayerCharacterController extends Controller
         }
 
         $modifications = json_decode($request->post('modifications'), true) ?? [];
-        $invalidMod = $vehicle->parseModifications($modifications);
+        $invalidMod    = $vehicle->parseModifications($modifications);
         if ($invalidMod !== null) {
             return self::json(false, null, 'Invalid modifications ("' . $invalidMod . '") submitted, please try again.');
         }
@@ -787,7 +786,7 @@ class PlayerCharacterController extends Controller
     public function getCharacters(Request $request): \Illuminate\Http\Response
     {
         $ids = $request->post('ids', []);
-        if (empty($ids) || !is_array($ids)) {
+        if (empty($ids) || ! is_array($ids)) {
             return (new \Illuminate\Http\Response([
                 'status' => false,
             ], 200))->header('Content-Type', 'application/json');
@@ -853,15 +852,34 @@ class PlayerCharacterController extends Controller
         return self::text(200, implode(PHP_EOL, $export));
     }
 
-    public function savingsLogs(Request $request, int $id)
+    public function savingsData(int $id)
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_SAVINGS_LOGS)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_SAVINGS_LOGS)) {
             abort(401);
         }
 
-        if (!$id || $id < 1) {
+        if (! $id || $id < 1) {
             return $this->json(false, null, 'Invalid ID');
         }
+
+        $account = DB::table('savings_accounts')
+            ->select('id', 'character_id', 'name', 'access')
+            ->where('id', '=', $id)
+            ->first();
+
+        if (! $account) {
+            return $this->json(false, null, 'Invalid ID');
+        }
+
+        $access   = json_decode($account->access, true) ?? [];
+        $access[] = $account->character_id;
+
+        unset($account->access);
+
+        $access = Character::select(["player_name", DB::raw("CONCAT(first_name, ' ', last_name) as full_name"), "character_id", "characters.license_identifier"])
+            ->leftJoin("users", "characters.license_identifier", "=", "users.license_identifier")
+            ->whereIn("character_id", $access)
+            ->get()->toArray();
 
         $logs = DB::table('savings_accounts_logs')
             ->select(DB::raw('characters.license_identifier as license, characters.character_id, CONCAT(first_name, " ", last_name) as name, action, amount, reason, timestamp'))
@@ -870,7 +888,11 @@ class PlayerCharacterController extends Controller
             ->orderByDesc('timestamp')
             ->get()->toArray();
 
-        return $this->json(true, $logs);
+        return $this->json(true, [
+            "account" => $account,
+            "access"  => $access,
+            "logs"    => $logs,
+        ]);
     }
 
 }

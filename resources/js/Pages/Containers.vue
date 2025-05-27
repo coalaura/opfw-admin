@@ -55,7 +55,7 @@
         <modal :show="viewingContainer">
             <template #header>
                 <h1 class="dark:text-white">
-                    {{ t('containers.access') }}
+                    {{ t('containers.container') }} #{{ viewingContainer }}
                 </h1>
             </template>
 
@@ -66,34 +66,36 @@
                 <div class="flex justify-center p-4" v-else-if="!containerAccess">
                     {{ t('containers.failed_load') }}
                 </div>
-                <div class="flex justify-center p-4" v-else-if="containerAccess.length === 0">
-                    {{ t('containers.no_access') }}
-                </div>
                 <div v-else>
                     <table class="whitespace-nowrap w-full">
                         <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
                             <th class="font-semibold px-2 py-0.5 text-left">{{ t('containers.player') }}</th>
                             <th class="font-semibold px-2 py-0.5 text-left">{{ t('containers.character_id') }}</th>
                             <th class="font-semibold px-2 py-0.5 text-left">{{ t('containers.name') }}</th>
+                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('containers.access') }}</th>
                             <th class="font-semibold px-2 py-0.5 text-left">&nbsp;</th>
                         </tr>
 
-                        <tr class="border-t border-gray-500" v-for="(log, index) in containerAccess" :key="index">
+                        <tr class="border-t border-gray-500" v-for="(access, index) in containerAccess.access" :key="index">
                             <td class="px-2 py-0.5">
                                 <div class="truncate max-w-xs">
-                                    <a :href="'/players/' + log.license_identifier" class="text-blue-800 dark:text-blue-200">
-                                        {{ log.player_name }}
+                                    <a :href="'/players/' + access.license_identifier" class="text-blue-800 dark:text-blue-200">
+                                        {{ access.player_name }}
                                     </a>
                                 </div>
                             </td>
                             <td class="px-2 py-0.5">
-                                #{{ log.character_id }}
+                                #{{ access.character_id }}
                             </td>
                             <td class="px-2 py-0.5">
-                                {{ log.full_name }}
+                                {{ access.full_name }}
+                            </td>
+                            <td class="px-2 py-0.5 italic">
+                                <span v-if="containerAccess.owner === access.character_id">{{ t('containers.owner') }}</span>
+                                <span v-else>{{ t('containers.access') }}</span>
                             </td>
                             <td class="px-2 py-0.5">
-                                <a :href="'/players/' + log.license_identifier + '/characters/' + log.character_id" class="text-blue-800 dark:text-blue-200">
+                                <a :href="'/players/' + access.license_identifier + '/characters/' + access.character_id" class="text-blue-800 dark:text-blue-200">
                                     <i class="fas fa-chevron-right"></i>
                                 </a>
                             </td>

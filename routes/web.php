@@ -228,7 +228,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::delete('/players/{player}/characters/{character}/divorce', [PlayerCharacterController::class, 'divorce']);
 
     // Savings Accounts.
-    Route::get('/savings/{id}/logs', [PlayerCharacterController::class, 'savingsLogs']);
+    Route::get('/savings/{id}', [PlayerCharacterController::class, 'savingsData']);
 
     // Stocks Companies (realty).
     Route::get('/stocks/companies', [StocksController::class, 'companies']);

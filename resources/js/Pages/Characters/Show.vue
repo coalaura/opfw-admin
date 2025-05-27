@@ -867,9 +867,9 @@
                                 {{ t('players.savings.access') }}
                             </div>
 
-                            <button class="absolute top-1 right-1.5 text-yellow-600 dark:text-yellow-400 text-sm font-semibold" @click="showSavingsLogs(account)" v-if="perm.check(perm.PERM_SAVINGS_LOGS)">
+                            <button class="absolute top-1 right-1.5 text-yellow-600 dark:text-yellow-400 text-sm font-semibold" @click="showSavingsAccount(account)" v-if="perm.check(perm.PERM_SAVINGS_LOGS)">
                                 <i class="fas fa-clipboard-list"></i>
-                                {{ t('players.savings.logs') }}
+                                {{ t('players.savings.show') }}
                             </button>
                         </template>
                     </card>
@@ -880,52 +880,97 @@
             </template>
         </v-section>
 
-        <modal :show="isShowingSavingsLogs">
+        <modal :show="isShowingSavings">
             <template #header>
-                <h1 class="dark:text-white">
-                    {{ t('players.savings.logs') }}
+                <h1 class="dark:text-white" v-if="savingsData && savingsData.account">
+                    {{ savingsData.account.name }} #{{ savingsData.account.id }}
+                </h1>
+                <h1 class="dark:text-white" v-else>
+                    {{ t('players.savings.account') }}
                 </h1>
             </template>
 
             <template #default>
-                <div class="flex justify-center p-4" v-if="isLoadingSavingsLogs">
+                <div class="flex justify-center p-4" v-if="isLoadingSavings">
                     <i class="fas fa-spinner animate-spin"></i>
                 </div>
-                <div class="flex justify-center p-4" v-else-if="savingsLogs.length === 0">
-                    {{ t('players.savings.logs_none') }}
+                <div class="flex justify-center p-4" v-else-if="!savingsData">
+                    {{ t('players.savings.failed_load') }}
                 </div>
-                <div v-else>
+                <template v-else>
                     <table class="whitespace-nowrap w-full">
                         <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
-                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.character') }}</th>
-                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.action') }}</th>
-                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.amount') }}</th>
-                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.timestamp') }}</th>
+                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.player') }}</th>
+                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.character_id') }}</th>
+                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.name') }}</th>
+                            <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.access') }}</th>
+                            <th class="font-semibold px-2 py-0.5 text-left">&nbsp;</th>
                         </tr>
 
-                        <tr class="border-t border-gray-500" v-for="(log, index) in savingsLogs" :key="index">
+                        <tr class="border-t border-gray-500" v-for="(access, index) in savingsData.access" :key="index">
                             <td class="px-2 py-0.5">
-                                {{ log.name }}
-                                <a :href="'/players/' + log.license + '/characters/' + log.character_id" class="text-blue-800 dark:text-blue-200">#{{ log.character_id }}</a>
+                                <div class="truncate max-w-xs">
+                                    <a :href="'/players/' + access.license_identifier" class="text-blue-800 dark:text-blue-200">
+                                        {{ access.player_name }}
+                                    </a>
+                                </div>
                             </td>
-                            <td class="px-2 py-0.5">{{ log.action }}</td>
                             <td class="px-2 py-0.5">
-                                <span class="text-red-800 dark:text-red-200" v-if="log.action === 'withdraw'">
-                                    -{{ numberFormat(log.amount, 0, true) }}
-                                </span>
-
-                                <span class="text-green-800 dark:text-green-200" v-else>
-                                    +{{ numberFormat(log.amount, 0, true) }}
-                                </span>
+                                #{{ access.character_id }}
                             </td>
-                            <td class="px-2 py-0.5">{{ log.timestamp * 1000 | formatTime(true) }}</td>
+                            <td class="px-2 py-0.5">
+                                {{ access.full_name }}
+                            </td>
+                            <td class="px-2 py-0.5 italic">
+                                <span v-if="savingsData.account.character_id === access.character_id">{{ t('players.savings.owner') }}</span>
+                                <span v-else>{{ t('players.savings.access') }}</span>
+                            </td>
+                            <td class="px-2 py-0.5">
+                                <a :href="'/players/' + access.license_identifier + '/characters/' + access.character_id" class="text-blue-800 dark:text-blue-200">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </td>
                         </tr>
                     </table>
-                </div>
+
+                    <div class="my-6 border-t-2 border-dashed border-gray-500"></div>
+
+                    <div class="flex justify-center p-4" v-if="savingsData.logs.length === 0">
+                        {{ t('players.savings.logs_none') }}
+                    </div>
+                    <div v-else>
+                        <table class="whitespace-nowrap w-full">
+                            <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.character') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.action') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.amount') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.timestamp') }}</th>
+                            </tr>
+
+                            <tr class="border-t border-gray-500" v-for="(log, index) in savingsData.logs" :key="index">
+                                <td class="px-2 py-0.5">
+                                    {{ log.name }}
+                                    <a :href="'/players/' + log.license + '/characters/' + log.character_id" class="text-blue-800 dark:text-blue-200">#{{ log.character_id }}</a>
+                                </td>
+                                <td class="px-2 py-0.5">{{ log.action }}</td>
+                                <td class="px-2 py-0.5">
+                                    <span class="text-red-800 dark:text-red-200" v-if="log.action === 'withdraw'">
+                                        -{{ numberFormat(log.amount, 0, true) }}
+                                    </span>
+
+                                    <span class="text-green-800 dark:text-green-200" v-else>
+                                        +{{ numberFormat(log.amount, 0, true) }}
+                                    </span>
+                                </td>
+                                <td class="px-2 py-0.5">{{ log.timestamp * 1000 | formatTime(true) }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </template>
             </template>
 
             <template #actions>
-                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingSavingsLogs = false">
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingSavings = false">
                     {{ t('global.close') }}
                 </button>
             </template>
@@ -1139,9 +1184,9 @@ export default {
             isViewingOutfits: false,
             outfitIndex: 0,
 
-            isShowingSavingsLogs: false,
-            isLoadingSavingsLogs: false,
-            savingsLogs: []
+            isShowingSavings: false,
+            isLoadingSavings: false,
+            savingsData: false
         };
     },
     computed: {
@@ -1211,23 +1256,23 @@ export default {
 
             return models[hash] || hash;
         },
-        async showSavingsLogs(account) {
-            if (this.isShowingSavingsLogs) return;
+        async showSavingsAccount(account) {
+            if (this.isShowingSavings) return;
 
-            this.isShowingSavingsLogs = true;
-            this.isLoadingSavingsLogs = true;
-            this.savingsLogs = [];
+            this.isShowingSavings = true;
+            this.isLoadingSavings = true;
+            this.savingsData = [];
 
             try {
-                const data = await _get(`/savings/${account.id}/logs`);
+                const data = await _get(`/savings/${account.id}`);
 
                 if (data?.status) {
-                    this.savingsLogs = data.data;
+                    this.savingsData = data.data;
                 }
             } catch (e) {
             }
 
-            this.isLoadingSavingsLogs = false;
+            this.isLoadingSavings = false;
         },
         getResetCoords() {
             return this.resetCoords

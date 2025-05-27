@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Container;
@@ -27,10 +26,13 @@ class ContainerController extends Controller
 
     public function access(Request $request, Container $container)
     {
-        if (!$this->isSeniorStaff($request)) {
+        if (! $this->isSeniorStaff($request)) {
             abort(401);
         }
 
-        return $this->json(true, $container->access());
+        return $this->json(true, [
+            "owner"  => $container->character_id,
+            "access" => $container->access(),
+        ]);
     }
 }
