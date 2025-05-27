@@ -267,7 +267,11 @@ export default {
                 itemMetadata = item.metadata,
                 itemData = this.items[itemName];
 
-            let label = itemData?.label || name;
+            let label = itemData?.label || itemName;
+
+            if (itemMetadata?.nameOverride) {
+                label = itemMetadata.nameOverride;
+            }
 
             if (itemMetadata?.battleRoyaleOnly) {
                 label = `<span class="font-semibold">BR</span> ${label}`;
