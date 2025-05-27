@@ -119,10 +119,10 @@ Vue.directive("accent", {
 			for (let attempt = 0; attempt < 10; attempt++) {
 				const hue = Math.random() * 360;
 
-				let current = 0.0;
+				let current = Infinity;
 
 				for (const h of Object.entries(colors)) {
-					current = Math.max(current, Math.abs(hue - h));
+					current = Math.min(current, Math.abs(hue - h));
 				}
 
 				if (current > distance) {
