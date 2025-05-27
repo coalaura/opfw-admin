@@ -45,7 +45,7 @@
                             <div class="h-32">&nbsp;</div>
                         </template>
 
-                        <div class="px-1 py-0.5 text-center truncate text-sm bg-black bg-opacity-10" v-html="getItemLabelForSlot(slot)"></div>
+                        <div class="px-1 py-0.5 text-center truncate text-sm bg-black bg-opacity-10" v-html="getItemLabelForSlot(slot)" :title="getItemLabelForSlot(slot, true, true)"></div>
                     </div>
                 </div>
             </template>
@@ -260,7 +260,7 @@ export default {
 
             return `/images/icons/items/${item.name}.png`;
         },
-        getItemLabelForSlot(slot, withAmount = false) {
+        getItemLabelForSlot(slot, withAmount = false, noHtml = false) {
             const items = this.contents[slot];
 
             if (!items.length) return "&nbsp;";
@@ -292,6 +292,10 @@ export default {
 
             if (withAmount) {
                 label = `${items.length}x ${label}`;
+            }
+
+            if (noHtml) {
+                label = label.replace(`<span class="font-semibold">`, "").replace("</span>", "");
             }
 
             return label;
