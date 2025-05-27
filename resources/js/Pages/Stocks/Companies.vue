@@ -128,7 +128,7 @@
 
                     <tr class="border-t border-gray-500" v-for="(access, index) in propertyData.access" :key="index">
                         <td class="px-2 py-0.5">
-                            <div class="truncate max-w-xs">
+                            <div class="truncate max-w-56">
                                 <a :href="'/players/' + access.license_identifier" class="text-blue-800 dark:text-blue-200">
                                     {{ access.player_name }}
                                 </a>

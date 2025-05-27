@@ -103,7 +103,7 @@ const Markdown = {
             }
 
             // Stored Transcript URLs (deprecated)
-            const hostTr = window.location.origin + "/_transcripts/";
+            const hostTr = `${window.location.origin}/_transcripts/`;
 
             if (url.startsWith(hostTr)) {
                 const ticket = find(/_transcripts\/(\d+(-[a-f0-9]+)?)\.html/m, url);
@@ -117,7 +117,7 @@ const Markdown = {
             }
 
             // Stored Attachments URLs (deprecated)
-            const host = window.location.origin + "/_discord_attachments/";
+            const host = `${window.location.origin}/_discord_attachments/`;
 
             if (url.startsWith(host)) {
                 const name = find(/_discord_attachments\/\d+-([\w._-]+)/m, url);
@@ -179,7 +179,7 @@ const Markdown = {
                     image: !isVideo,
                     video: isVideo,
                     classes: "!text-discord",
-                    icon: "fab fa-discord " + (expired ? "text-red-500" : "text-green-500")
+                    icon: `fab fa-discord ${expired ? "text-red-500" : "text-green-500"}`
                 };
             }
 
@@ -216,7 +216,7 @@ const Markdown = {
                 const channel = find(/channels\/\d+\/(\d+)$/m, url),
                     message = find(/channels\/\d+\/\d+\/(\d+)$/m, url);
 
-                const text = message ? "discord.com/msg/" + message : "discord.com/chn/" + channel;
+                const text = message ? `discord.com/msg/${message}` : `discord.com/chn/${channel}`;
 
                 return {
                     text: text,
@@ -241,7 +241,7 @@ const Markdown = {
             return `<a href="${url}" target="_blank" class="text-indigo-600 dark:text-indigo-400 a-link">${url}</a>`;
         }
 
-        Vue.prototype.markdown = function (text, escapeHTML = false) {
+        Vue.prototype.markdown = (text, escapeHTML = false) => {
             if (!text) return false;
 
             if (escapeHTML) {
