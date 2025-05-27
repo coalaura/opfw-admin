@@ -124,16 +124,24 @@
         "toggle_mute": "Soochna dhwaniyon ko toggle karein."
     },
     "containers": {
+        "access": "Pravesh",
+        "character_id": "Patra ID",
         "container": "Container",
         "container_id": "Container ID",
         "copy_loc": "Coordinates ko clipboard par copy karein",
         "description": "Sabhi kiraye par liye gaye storage containers ka overview.",
         "empty": "Koi kiraye par liya container nahi mila.",
+        "failed_load": "Pravesh jankari load karne mein asafal.",
         "items": "Items",
+        "name": "Pura Naam",
+        "no_access": "Kisi ko chhodkar is container/warehouse ka access nahi hai.",
+        "owner": "Maalik",
         "paid_until": "Paid Tak",
+        "player": "Khiladi",
         "rented_containers": "Kiraye par liye gaye Containers",
         "renter": "Kirayedaar",
-        "title": "Storage Containers"
+        "title": "Storage Containers",
+        "view_access": "Un patraon ko dikhayein jinko pravesh hai."
     },
     "discord": {
         "description": "Players ko unke discord account se khoje.",
@@ -983,14 +991,19 @@
         },
         "savings": {
             "access": "Access hai",
+            "account": "Bachat Khata",
             "accounts": "Bachat khate",
             "action": "Karya",
             "amount": "Rashi",
             "character": "Character",
-            "logs": "Transaction logs",
+            "character_id": "Patra ID",
+            "failed_load": "Bachat khata jankari load karne mein asafal.",
             "logs_none": "Koi transaction logs nahi mila.",
+            "name": "Pura Naam",
             "none": "Is character ke paas khud ka ya kisi bachat khate ka access nahi hai.",
             "owner": "Account malik",
+            "player": "Khiladi",
+            "show": "Khata dikhayein",
             "timestamp": "Samay"
         },
         "search": "Khoj",

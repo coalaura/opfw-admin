@@ -124,16 +124,24 @@
         "toggle_mute": "Toggwe nyotification sounds."
     },
     "containers": {
+        "access": "Access",
+        "character_id": "Chawactew ID",
         "container": "Containew",
         "container_id": "Containew ID",
         "copy_loc": "Copy coowdinates to cwipboawd",
         "description": "An ovewview of aww wented stowage containews.",
         "empty": "No wented containews found.",
+        "failed_load": "Faiwed to woad access infowmation.",
         "items": "Items",
+        "name": "Fuww Name",
+        "no_access": "Nobwody except the ownyew has access to this containyew/wawehouse.",
+        "owner": "Ownyew",
         "paid_until": "Paid Untiw",
+        "player": "Pwayew",
         "rented_containers": "Wented Containews",
         "renter": "Wentewew",
-        "title": "Stowage Containews"
+        "title": "Stowage Containews",
+        "view_access": "Show chawactews who have access."
     },
     "discord": {
         "description": "Wookup pwayews using theiw discowd account.",
@@ -983,14 +991,19 @@
         },
         "savings": {
             "access": "Has Access",
+            "account": "Savings Account",
             "accounts": "Savings Accounts",
             "action": "Action",
             "amount": "Amount",
             "character": "Chawactew",
-            "logs": "Twansaction Wogs",
+            "character_id": "Chawactew ID",
+            "failed_load": "Faiwed to woad savings account info.",
             "logs_none": "Nyow twansaction wogs found.",
+            "name": "Fuww Name",
             "none": "This chawactew does nyot own ow has access any savings accounts.",
             "owner": "Account Ownew",
+            "player": "Pwayew",
+            "show": "Show Account",
             "timestamp": "Time"
         },
         "search": "Seawch",

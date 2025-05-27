@@ -124,16 +124,24 @@
         "toggle_mute": "Veksle varslingslyder."
     },
     "containers": {
+        "access": "Tilgang",
+        "character_id": "Karakter-ID",
         "container": "Beholder",
         "container_id": "Beholder-ID",
         "copy_loc": "Kopier koordinater til utklippstavlen",
         "description": "En oversikt over alle leide lagringsbeholdere.",
         "empty": "Ingen leide beholdere funnet.",
+        "failed_load": "Kunne ikke laste inn tilgangsinformasjon.",
         "items": "Gjenstander",
+        "name": "Fullt navn",
+        "no_access": "Ingen unntatt eieren har tilgang til denne containeren/lageret.",
+        "owner": "Eier",
         "paid_until": "Betalt til",
+        "player": "Spiller",
         "rented_containers": "Leide Beholdere",
         "renter": "Leietaker",
-        "title": "Lagringsbeholdere"
+        "title": "Lagringsbeholdere",
+        "view_access": "Vis karakterer som har tilgang."
     },
     "discord": {
         "description": "Søk spillere ved hjelp av deres discord-konto.",
@@ -983,14 +991,19 @@
         },
         "savings": {
             "access": "Har Tilgang",
+            "account": "Sparekonto",
             "accounts": "Sparekontoer",
             "action": "Handling",
             "amount": "Beløp",
             "character": "Karakter",
-            "logs": "Transaksjonslogger",
+            "character_id": "Karakter-ID",
+            "failed_load": "Kunne ikke laste inn sparekontoinformasjon.",
             "logs_none": "Ingen transaksjonslogger funnet.",
+            "name": "Fullt navn",
             "none": "Denne karakteren eier ikke eller har tilgang til noen sparekontoer.",
             "owner": "Kontoeier",
+            "player": "Spiller",
+            "show": "Vis konto",
             "timestamp": "Tid"
         },
         "search": "Søk",

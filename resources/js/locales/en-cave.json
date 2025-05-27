@@ -124,16 +124,24 @@
         "toggle_mute": "Turn on/off sound alert."
     },
     "containers": {
+        "access": "Get in",
+        "character_id": "Person ID",
         "container": "Box",
         "container_id": "Box ID",
         "copy_loc": "Copy place to clipboard",
         "description": "Look at all rented boxes.",
         "empty": "No boxes rented.",
+        "failed_load": "Fail to get in info.",
         "items": "Things",
+        "name": "Name",
+        "no_access": "No one but owner get in box/house.",
+        "owner": "Owner",
         "paid_until": "Paid Till",
+        "player": "Player",
         "rented_containers": "Rented Boxes",
         "renter": "Renter",
-        "title": "Storage Boxes"
+        "title": "Storage Boxes",
+        "view_access": "Show people who get in."
     },
     "discord": {
         "description": "Find players with discord.",
@@ -983,14 +991,19 @@
         },
         "savings": {
             "access": "Have Access",
+            "account": "Money Place",
             "accounts": "Save Money",
             "action": "Move",
             "amount": "Amount",
             "character": "Person",
-            "logs": "Move Logs",
+            "character_id": "Person ID",
+            "failed_load": "Fail to get money place info.",
             "logs_none": "No move logs found.",
+            "name": "Name",
             "none": "This person no own or access save money.",
             "owner": "Money Owner",
+            "player": "Player",
+            "show": "Show Money Place",
             "timestamp": "Time"
         },
         "search": "Find",

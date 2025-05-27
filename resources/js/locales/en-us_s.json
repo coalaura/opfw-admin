@@ -124,16 +124,24 @@
         "toggle_mute": "Turn on or off them notification sounds."
     },
     "containers": {
+        "access": "Access",
+        "character_id": "Character ID",
         "container": "Container",
         "container_id": "Container ID",
         "copy_loc": "Copy them coordinates to clipboard",
         "description": "A rundown of all them rented storage containers.",
         "empty": "Ain't no rented containers found.",
+        "failed_load": "Failed to load access information.",
         "items": "Items",
+        "name": "Full Name",
+        "no_access": "Ain't nobody but the owner got access to this here container/warehouse.",
+        "owner": "Owner",
         "paid_until": "Paid Till",
+        "player": "Player",
         "rented_containers": "Rented Containers",
         "renter": "Renter",
-        "title": "Storage Containers"
+        "title": "Storage Containers",
+        "view_access": "Show characters who got access."
     },
     "discord": {
         "description": "Look up players usin' their discord account.",
@@ -983,14 +991,19 @@
         },
         "savings": {
             "access": "Has Access",
+            "account": "Savings Account",
             "accounts": "Savings Accounts",
             "action": "Action",
             "amount": "Amount",
             "character": "Character",
-            "logs": "Transaction Logs",
+            "character_id": "Character ID",
+            "failed_load": "Failed to load savings account info.",
             "logs_none": "No transaction logs found.",
+            "name": "Full Name",
             "none": "This character don't own or have access to any savings accounts.",
             "owner": "Account Owner",
+            "player": "Player",
+            "show": "Show Account",
             "timestamp": "Time"
         },
         "search": "Search",
