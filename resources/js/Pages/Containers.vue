@@ -75,7 +75,7 @@
                             <th class="font-semibold px-2 py-0.5 text-left">{{ t('containers.access') }}</th>
                         </tr>
 
-                        <tr class="border-t border-gray-500" v-for="(access, index) in containerAccess.access" :key="index">
+                        <tr class="border-t border-gray-500" v-for="(access, index) in containerAccess.access" :key="index" v-accent="containerAccess.owner === access.character_id ? 1 : 0">
                             <td class="px-2 py-0.5">
                                 <div class="truncate max-w-56">
                                     <a :href="'/players/' + access.license_identifier" class="text-blue-800 dark:text-blue-200">

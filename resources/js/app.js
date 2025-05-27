@@ -106,6 +106,20 @@ Vue.directive("click-outside", {
 	},
 });
 
+const colors = {};
+
+Vue.directive("accent", {
+	bind: (el, binding, vnode) => {
+		const key = JSON.stringify(binding.value);
+
+		if (!colors[key]) {
+			colors[key] = `oklch(70% 0.179 ${Math.random() * 360} / .08)`;
+		}
+
+		el.style.backgroundColor = colors[key];
+	},
+});
+
 Vue.component("scoped-style", {
 	render: function (createElement) {
 		return createElement("style", this.$slots.default);
