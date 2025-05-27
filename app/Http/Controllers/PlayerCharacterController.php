@@ -879,6 +879,7 @@ class PlayerCharacterController extends Controller
         $access = Character::select(["player_name", DB::raw("CONCAT(first_name, ' ', last_name) as full_name"), "character_id", "characters.license_identifier"])
             ->leftJoin("users", "characters.license_identifier", "=", "users.license_identifier")
             ->whereIn("character_id", $access)
+            ->orderBy("full_name")
             ->get()->toArray();
 
         $logs = DB::table('savings_accounts_logs')
