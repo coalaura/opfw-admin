@@ -34,7 +34,7 @@
                                 <i class="fas fa-people-carry"></i>
                             </button>
 
-                            <img :src="getItemIcon(items[0])" class="w-full h-32 object-contain crisp" />
+                            <img :src="getItemIcon(items[0])" @error="iconFailed($event)" class="w-full h-32 object-contain crisp" />
                         </template>
 
                         <template v-else>
@@ -243,6 +243,9 @@ export default {
         };
     },
     methods: {
+        iconFailed(event) {
+            event.target.src = "/images/icons/items/other/unknown.png";
+        },
         getItemIcon(item) {
             const metadata = item.metadata,
                 iconUrl = metadata?.iconUrl;
