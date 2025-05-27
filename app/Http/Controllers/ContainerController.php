@@ -24,4 +24,13 @@ class ContainerController extends Controller
             'items'      => $items,
         ]);
     }
+
+    public function access(Request $request, Container $container)
+    {
+        if (!$this->isSeniorStaff($request)) {
+            abort(401);
+        }
+
+        return $this->json(true, $container->access());
+    }
 }

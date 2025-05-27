@@ -236,6 +236,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Storage Containers.
     Route::get('/containers', [ContainerController::class, 'containers']);
+    Route::get('/containers/{container}/access', [ContainerController::class, 'access']);
 
     // Map.
     Route::get('/map/{server?}', [MapController::class, 'index']);

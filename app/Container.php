@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -50,15 +49,16 @@ class Container extends Model
     protected $casts = [
         'character_id' => 'integer',
         'paid_until'   => 'integer',
+        'access'       => 'array',
     ];
 
-    public static function all($columns = [])
+    public static function all($_ = [])
     {
         return Container::query()
             ->select(['container_id', 'paid_until', 'containers.character_id', 'first_name', 'last_name', 'license_identifier'])
             ->leftJoin('characters', 'characters.character_id', '=', 'containers.character_id')
             ->orderBy('container_id', 'asc')
-            ->get($columns);
+            ->get();
     }
 
     public static function items()
@@ -68,5 +68,15 @@ class Container extends Model
             ->where(DB::raw("SUBSTR(inventory_name, 1, 9)"), "=", "container")
             ->groupBy("inventory_name")
             ->get();
+    }
+
+    public function access()
+    {
+        $access = $this->access ?? [];
+
+        return Character::select(["player_name", DB::raw("CONCAT(first_name, ' ', last_name) as full_name"), "character_id", "characters.license_identifier"])
+            ->leftJoin("users", "characters.license_identifier", "=", "users.license_identifier")
+            ->whereIn("character_id", $access)
+            ->get()->toArray();
     }
 }

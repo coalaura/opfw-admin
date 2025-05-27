@@ -1555,7 +1555,14 @@
         "paid_until": "Paid Until",
         "items": "Items",
         "copy_loc": "Copy coordinates to clipboard",
-        "empty": "No rented containers found."
+        "view_access": "Show characters who have access.",
+        "empty": "No rented containers found.",
+        "access": "Container Access",
+        "failed_load": "Failed to load access information.",
+        "no_access": "Nobody except the owner has access to this container/warehouse.",
+        "character_id": "Character ID",
+        "name": "Full Name",
+        "player": "Player"
     },
     "stocks": {
         "title": "Realty Companies",
