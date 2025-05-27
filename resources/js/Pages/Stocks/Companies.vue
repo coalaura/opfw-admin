@@ -60,9 +60,9 @@
                 <div class="max-h-48 overflow-y-auto">
                     <table class="w-full bg-gray-300 dark:bg-gray-600 text-sm">
                         <tr class="border-b-2 border-gray-500 text-left">
-                            <th class="px-1 pl-3" v-if="canEdit">&nbsp;</th>
+                            <th class="px-1 pl-3" v-if="hasActions">&nbsp;</th>
 
-                            <th class="px-1 py-1" :class="{ 'pl-3': !canEdit }">{{ t('stocks.interior') }}</th>
+                            <th class="px-1 py-1" :class="{ 'pl-3': !hasActions }">{{ t('stocks.interior') }}</th>
                             <th class="px-1 py-1">{{ t('stocks.address') }}</th>
                             <th class="px-2 py-1">{{ t('stocks.renter') }}</th>
                             <th class="px-2 py-1">{{ t('stocks.rent') }}</th>
@@ -70,11 +70,14 @@
                         </tr>
 
                         <tr v-for="(property, id) in company.properties" :key="id" class="border-t border-gray-500" :class="{ 'text-lime-800 dark:text-lime-200': !property.renter }">
-                            <th class="px-1 pl-3" v-if="canEdit">
-                                <i class="fas fa-tools cursor-pointer" @click="editProperty(id, property)"></i>
+                            <th class="px-1 pl-3" v-if="hasActions">
+                                <div class="flex gap-2">
+                                    <i class="fas fa-key cursor-pointer" @click="showProperty(id)" v-if="$page.auth.player.isSeniorStaff"></i>
+                                    <i class="fas fa-tools cursor-pointer" @click="editProperty(id, property)" v-if="canEdit"></i>
+                                </div>
                             </th>
 
-                            <td class="px-1 py-1" :class="{ 'pl-3': !canEdit }">{{ t('stocks.type_' + property.type) }}</td>
+                            <td class="px-1 py-1" :class="{ 'pl-3': !hasActions }">{{ t('stocks.type_' + property.type) }}</td>
                             <td class="px-1 py-1">{{ property.address }}</td>
 
                             <template v-if="property.renter">
@@ -90,12 +93,72 @@
                         </tr>
 
                         <tr v-if="Object.keys(company.properties).length === 0" class="text-center">
-                            <td class="px-3 py-1 italic" :colspan="canEdit ? 6 : 5">{{ t('stocks.empty') }}</td>
+                            <td class="px-3 py-1 italic" :colspan="hasActions ? 6 : 5">{{ t('stocks.empty') }}</td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
+
+        <modal :show="isShowingProperty">
+            <template #header>
+                <h1 class="dark:text-white" v-if="propertyData">
+                    {{ propertyData.address }} #{{ propertyData.id }}
+                </h1>
+                <h1 class="dark:text-white" v-else>
+                    {{ t('players.properties.property') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="flex justify-center p-4" v-if="isLoadingProperty">
+                    <i class="fas fa-spinner animate-spin"></i>
+                </div>
+                <div class="flex justify-center p-4" v-else-if="!propertyData">
+                    {{ t('players.properties.failed_load') }}
+                </div>
+                <table class="whitespace-nowrap w-full" v-else>
+                    <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
+                        <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.properties.player') }}</th>
+                        <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.properties.character_id') }}</th>
+                        <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.properties.name') }}</th>
+                        <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.properties.access') }}</th>
+                        <th class="font-semibold px-2 py-0.5 text-left">&nbsp;</th>
+                    </tr>
+
+                    <tr class="border-t border-gray-500" v-for="(access, index) in propertyData.access" :key="index">
+                        <td class="px-2 py-0.5">
+                            <div class="truncate max-w-xs">
+                                <a :href="'/players/' + access.license_identifier" class="text-blue-800 dark:text-blue-200">
+                                    {{ access.player_name }}
+                                </a>
+                            </div>
+                        </td>
+                        <td class="px-2 py-0.5">
+                            #{{ access.character_id }}
+                        </td>
+                        <td class="px-2 py-0.5">
+                            {{ access.full_name }}
+                        </td>
+                        <td class="px-2 py-0.5 italic">
+                            <span v-if="propertyData.renter === access.character_id">{{ t('players.properties.owner') }}</span>
+                            <span v-else>{{ t('players.properties.level', access.level) }}</span>
+                        </td>
+                        <td class="px-2 py-0.5">
+                            <a :href="'/players/' + access.license_identifier + '/characters/' + access.character_id" class="text-blue-800 dark:text-blue-200">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingProperty = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
 
         <modal :show.sync="isEditingProperty">
             <template #header>
@@ -202,6 +265,10 @@ export default {
 
         maxDate() {
             return dayjs().add(1, 'year').format('YYYY-MM-DD');
+        },
+
+        hasActions() {
+            return this.canEdit || this.$page.auth.player.isSeniorStaff;
         }
     },
     data() {
@@ -211,7 +278,11 @@ export default {
             isEditingProperty: false,
             editingPropertyId: false,
             editingProperty: false,
-            editingPropertyMinDate: false
+            editingPropertyMinDate: false,
+
+            isShowingProperty: false,
+            isLoadingProperty: false,
+            propertyData: false
         };
     },
     methods: {
@@ -230,6 +301,24 @@ export default {
             this.editingPropertyMinDate = lastPay;
 
             this.addSharedKey();
+        },
+        async showProperty(propertyId) {
+            if (this.isShowingProperty) return;
+
+            this.isShowingProperty = true;
+            this.isLoadingProperty = true;
+            this.propertyData = false;
+
+            try {
+                const data = await _get(`/stocks/property/${propertyId}`);
+
+                if (data?.status) {
+                    this.propertyData = data.data;
+                }
+            } catch (e) {
+            }
+
+            this.isLoadingProperty = false;
         },
         addSharedKey() {
             if (!this.editingProperty) return;
