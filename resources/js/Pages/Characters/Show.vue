@@ -915,7 +915,6 @@
                         <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.properties.character_id') }}</th>
                         <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.properties.name') }}</th>
                         <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.properties.access') }}</th>
-                        <th class="font-semibold px-2 py-0.5 text-left">&nbsp;</th>
                     </tr>
 
                     <tr class="border-t border-gray-500" v-for="(access, index) in propertyData.access" :key="index">
@@ -926,20 +925,17 @@
                                 </a>
                             </div>
                         </td>
-                        <td class="px-2 py-0.5">
-                            #{{ access.character_id }}
-                        </td>
+                            <td class="px-2 py-0.5">
+                                <a :href="'/players/' + access.license_identifier + '/characters/' + access.character_id" class="text-blue-800 dark:text-blue-200">
+                                    #{{ access.character_id }}
+                                </a>
+                            </td>
                         <td class="px-2 py-0.5">
                             {{ access.full_name }}
                         </td>
                         <td class="px-2 py-0.5 italic">
                             <span v-if="propertyData.renter === access.character_id">{{ t('players.properties.owner') }}</span>
                             <span v-else>{{ t('players.properties.level', access.level) }}</span>
-                        </td>
-                        <td class="px-2 py-0.5">
-                            <a :href="'/players/' + access.license_identifier + '/characters/' + access.character_id" class="text-blue-800 dark:text-blue-200">
-                                <i class="fas fa-chevron-right"></i>
-                            </a>
                         </td>
                     </tr>
                 </table>
@@ -976,7 +972,6 @@
                             <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.character_id') }}</th>
                             <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.name') }}</th>
                             <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.access') }}</th>
-                            <th class="font-semibold px-2 py-0.5 text-left">&nbsp;</th>
                         </tr>
 
                         <tr class="border-t border-gray-500" v-for="(access, index) in savingsData.access" :key="index">
@@ -988,7 +983,9 @@
                                 </div>
                             </td>
                             <td class="px-2 py-0.5">
-                                #{{ access.character_id }}
+                                <a :href="'/players/' + access.license_identifier + '/characters/' + access.character_id" class="text-blue-800 dark:text-blue-200">
+                                    #{{ access.character_id }}
+                                </a>
                             </td>
                             <td class="px-2 py-0.5">
                                 {{ access.full_name }}
@@ -996,11 +993,6 @@
                             <td class="px-2 py-0.5 italic">
                                 <span v-if="savingsData.account.character_id === access.character_id">{{ t('players.savings.owner') }}</span>
                                 <span v-else>{{ t('players.savings.access') }}</span>
-                            </td>
-                            <td class="px-2 py-0.5">
-                                <a :href="'/players/' + access.license_identifier + '/characters/' + access.character_id" class="text-blue-800 dark:text-blue-200">
-                                    <i class="fas fa-chevron-right"></i>
-                                </a>
                             </td>
                         </tr>
                     </table>
