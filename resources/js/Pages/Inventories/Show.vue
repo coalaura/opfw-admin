@@ -255,6 +255,8 @@ export default {
                     return `/images/icons/items${iconUrl}`;
                 } else if (iconUrl.startsWith("https://")) {
                     return iconUrl;
+                } else if (iconUrl.startsWith("nui://op-framework/files/resources")) {
+                    return `/images/icons/items${iconUrl.replace("nui://op-framework/", "")}`;
                 }
             }
 
