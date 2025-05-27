@@ -113,10 +113,28 @@ Vue.directive("accent", {
 		const key = JSON.stringify(binding.value);
 
 		if (!colors[key]) {
-			colors[key] = `oklch(70% 0.179 ${Math.random() * 360} / .08)`;
+			let distance = 0.0,
+				furthest = false;
+
+			for (let attempt = 0; attempt < 10; attempt++) {
+				const hue = Math.random() * 360;
+
+				let current = 0.0;
+
+				for (const h of Object.entries(colors)) {
+					current = Math.max(current, Math.abs(hue - h));
+				}
+
+				if (current > distance) {
+					distance = current;
+					furthest = hue;
+				}
+			}
+
+			colors[key] = furthest;
 		}
 
-		el.style.backgroundColor = colors[key];
+		el.style.backgroundColor = `oklch(70% 0.179 ${colors[key]} / .1)`;
 	},
 });
 
