@@ -980,14 +980,23 @@
         },
         "none": "Nyow pwayews wewe found.",
         "properties": {
+            "access": "Access",
             "access_level": "Access Wevew",
+            "character_id": "Chawactew ID",
             "cost": "Maintenance Cost",
+            "failed_load": "Faiwed to woad pwopewty info.",
+            "level": "Levew {0}",
+            "name": "Fuww Nyame",
             "none": "This chawactew does nyot have access to any pwopewties.",
             "none_access": "This chawactew does nyot have shawed access to any pwopewties.",
+            "owner": "Ownew",
             "paid_till": "Went paid tiww",
+            "player": "Pwayew",
             "properties": "Pwopewties",
             "properties_shared": "Shawed Pwopewties",
-            "rent": "Went"
+            "property": "Pwopewty",
+            "rent": "Went",
+            "show": "Show Pwopewty"
         },
         "savings": {
             "access": "Has Access",

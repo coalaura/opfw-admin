@@ -980,14 +980,23 @@
         },
         "none": "No people found.",
         "properties": {
+            "access": "Enter",
             "access_level": "Access Level",
+            "character_id": "Person ID",
             "cost": "Fix Cost",
+            "failed_load": "No load info.",
+            "level": "Level {0}",
+            "name": "Name",
             "none": "This person no access place.",
             "none_access": "This person no share access place.",
+            "owner": "Boss",
             "paid_till": "Rent pay till",
+            "player": "Player",
             "properties": "Places",
             "properties_shared": "Share Places",
-            "rent": "Rent"
+            "property": "Place",
+            "rent": "Rent",
+            "show": "Show Place"
         },
         "savings": {
             "access": "Have Access",

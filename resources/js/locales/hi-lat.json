@@ -980,14 +980,23 @@
         },
         "none": "Koi khiladi nahi mila.",
         "properties": {
+            "access": "Pahunch",
             "access_level": "Access star",
+            "character_id": "Patra ID",
             "cost": "Maintenance lagat",
+            "failed_load": "Property jaankari load karne mein asafal.",
+            "level": "Star {0}",
+            "name": "Pura Naam",
             "none": "Is character ko kisi bhi sampatti ka access nahi hai.",
             "none_access": "Is character ko kisi bhi sampatti ka saanjha access nahi hai.",
+            "owner": "Maalik",
             "paid_till": "Kiraya bhara gaya till",
+            "player": "Khiladi",
             "properties": "Sampattiyaan",
             "properties_shared": "Saanjha sampattiyaan",
-            "rent": "Kiraya"
+            "property": "Property",
+            "rent": "Kiraya",
+            "show": "Property dikhayein"
         },
         "savings": {
             "access": "Access hai",

@@ -763,10 +763,16 @@
                         </template>
 
                         <template #footer>
-                            <inertia-link class="block px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/resolve/property-' + property.property_id">
-                                <i class="fas fa-briefcase mr-1"></i>
-                                {{ t('inventories.show_inv') }}
-                            </inertia-link>
+                            <div class="flex gap-3">
+                                <inertia-link class="block px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/resolve/property-' + property.property_id" :class="$page.auth.player.isSeniorStaff ? 'w-1/2' : 'w-full'">
+                                    <i class="fas fa-briefcase mr-1"></i>
+                                    {{ t('inventories.show_inv') }}
+                                </inertia-link>
+                                <button class="block w-1/2 px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" @click="showProperty(property.property_id)" v-if="$page.auth.player.isSeniorStaff">
+                                    <i class="fas fa-home mr-1"></i>
+                                    {{ t('players.properties.show') }}
+                                </button>
+                            </div>
                         </template>
                     </card>
                 </div>
@@ -794,10 +800,16 @@
                         </template>
 
                         <template #footer>
-                            <inertia-link class="block px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/resolve/property-' + property.property_id">
-                                <i class="fas fa-briefcase mr-1"></i>
-                                {{ t('inventories.show_inv') }}
-                            </inertia-link>
+                            <div class="flex gap-3">
+                                <inertia-link class="block px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/resolve/property-' + property.property_id" :class="$page.auth.player.isSeniorStaff ? 'w-1/2' : 'w-full'">
+                                    <i class="fas fa-briefcase mr-1"></i>
+                                    {{ t('inventories.show_inv') }}
+                                </inertia-link>
+                                <button class="block w-1/2 px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" @click="showProperty(property.property_id)" v-if="$page.auth.player.isSeniorStaff">
+                                    <i class="fas fa-home mr-1"></i>
+                                    {{ t('players.properties.show') }}
+                                </button>
+                            </div>
                         </template>
                     </card>
                 </div>
@@ -879,6 +891,66 @@
                 </p>
             </template>
         </v-section>
+
+        <modal :show="isShowingProperty">
+            <template #header>
+                <h1 class="dark:text-white" v-if="propertyData">
+                    {{ propertyData.address }} #{{ propertyData.id }}
+                </h1>
+                <h1 class="dark:text-white" v-else>
+                    {{ t('players.properties.property') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="flex justify-center p-4" v-if="isLoadingProperty">
+                    <i class="fas fa-spinner animate-spin"></i>
+                </div>
+                <div class="flex justify-center p-4" v-else-if="!propertyData">
+                    {{ t('players.properties.failed_load') }}
+                </div>
+                <table class="whitespace-nowrap w-full" v-else>
+                    <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
+                        <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.properties.player') }}</th>
+                        <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.properties.character_id') }}</th>
+                        <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.properties.name') }}</th>
+                        <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.properties.access') }}</th>
+                        <th class="font-semibold px-2 py-0.5 text-left">&nbsp;</th>
+                    </tr>
+
+                    <tr class="border-t border-gray-500" v-for="(access, index) in propertyData.access" :key="index">
+                        <td class="px-2 py-0.5">
+                            <div class="truncate max-w-xs">
+                                <a :href="'/players/' + access.license_identifier" class="text-blue-800 dark:text-blue-200">
+                                    {{ access.player_name }}
+                                </a>
+                            </div>
+                        </td>
+                        <td class="px-2 py-0.5">
+                            #{{ access.character_id }}
+                        </td>
+                        <td class="px-2 py-0.5">
+                            {{ access.full_name }}
+                        </td>
+                        <td class="px-2 py-0.5 italic">
+                            <span v-if="propertyData.renter === access.character_id">{{ t('players.properties.owner') }}</span>
+                            <span v-else>{{ t('players.properties.level', access.level) }}</span>
+                        </td>
+                        <td class="px-2 py-0.5">
+                            <a :href="'/players/' + access.license_identifier + '/characters/' + access.character_id" class="text-blue-800 dark:text-blue-200">
+                                <i class="fas fa-chevron-right"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingProperty = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
 
         <modal :show="isShowingSavings">
             <template #header>
@@ -1186,7 +1258,11 @@ export default {
 
             isShowingSavings: false,
             isLoadingSavings: false,
-            savingsData: false
+            savingsData: false,
+
+            isShowingProperty: false,
+            isLoadingProperty: false,
+            propertyData: false
         };
     },
     computed: {
@@ -1256,12 +1332,30 @@ export default {
 
             return models[hash] || hash;
         },
+        async showProperty(propertyId) {
+            if (this.isShowingProperty) return;
+
+            this.isShowingProperty = true;
+            this.isLoadingProperty = true;
+            this.propertyData = false;
+
+            try {
+                const data = await _get(`/stocks/property/${propertyId}`);
+
+                if (data?.status) {
+                    this.propertyData = data.data;
+                }
+            } catch (e) {
+            }
+
+            this.isLoadingProperty = false;
+        },
         async showSavingsAccount(account) {
             if (this.isShowingSavings) return;
 
             this.isShowingSavings = true;
             this.isLoadingSavings = true;
-            this.savingsData = [];
+            this.savingsData = false;
 
             try {
                 const data = await _get(`/savings/${account.id}`);

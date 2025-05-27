@@ -232,6 +232,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Stocks Companies (realty).
     Route::get('/stocks/companies', [StocksController::class, 'companies']);
+    Route::get('/stocks/property/{propertyId}', [StocksController::class, 'property']);
     Route::post('/stocks/property/{propertyId}', [StocksController::class, 'updateProperty']);
 
     // Storage Containers.

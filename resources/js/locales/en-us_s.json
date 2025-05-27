@@ -980,14 +980,23 @@
         },
         "none": "No folks were found.",
         "properties": {
+            "access": "Access",
             "access_level": "Access Level",
+            "character_id": "Character ID",
             "cost": "Maintenance Cost",
+            "failed_load": "Couldn't load property info.",
+            "level": "Level {0}",
+            "name": "Full Name",
             "none": "This character ain't got access to any properties.",
             "none_access": "This character ain't got shared access to any properties.",
+            "owner": "Owner",
             "paid_till": "Rent paid till",
+            "player": "Player",
             "properties": "Properties",
             "properties_shared": "Shared Properties",
-            "rent": "Rent"
+            "property": "Property",
+            "rent": "Rent",
+            "show": "Show Property"
         },
         "savings": {
             "access": "Has Access",

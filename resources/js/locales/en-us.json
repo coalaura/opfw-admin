@@ -1168,13 +1168,22 @@
         },
         "properties": {
             "properties": "Properties",
+            "property": "Property",
             "properties_shared": "Shared Properties",
             "none": "This character does not have access to any properties.",
             "none_access": "This character does not have shared access to any properties.",
             "cost": "Maintenance Cost",
             "rent": "Rent",
             "paid_till": "Rent paid till",
-            "access_level": "Access Level"
+            "access_level": "Access Level",
+            "show": "Show Property",
+            "failed_load": "Failed to load property info.",
+            "player": "Player",
+            "character_id": "Character ID",
+            "name": "Full Name",
+            "access": "Access",
+            "owner": "Owner",
+            "level": "Level {0}"
         },
         "motels": {
             "motels": "Motels",

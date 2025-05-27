@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Character;
@@ -45,7 +44,7 @@ class StocksController extends Controller
             $companyId  = $property->company_id;
             $propertyId = $property->property_id;
 
-            if (!isset($companies[$companyId])) {
+            if (! isset($companies[$companyId])) {
                 continue;
             }
 
@@ -86,7 +85,7 @@ class StocksController extends Controller
         foreach ($dbEmployees as $employee) {
             $companyId = $employee->company_id;
 
-            if (!isset($companies[$companyId])) {
+            if (! isset($companies[$companyId])) {
                 continue;
             }
 
@@ -103,15 +102,73 @@ class StocksController extends Controller
         ]);
     }
 
-    public function updateProperty(Request $request, int $propertyId)
+    public function property(Request $request, int $propertyId)
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_REALTY_EDIT)) {
+        if (! $this->isSeniorStaff($request)) {
             abort(401);
         }
 
         $property = DB::table('stocks_company_properties')->where('property_id', $propertyId)->first();
 
-        if (!$property) {
+        if (! $property) {
+            return $this->json(false, null, "property not found");
+        }
+
+        $renter = $property->property_renter_cid;
+
+        if (! $renter) {
+            return $this->json(false, null, "property not rented");
+        }
+
+        $sharedKeys = explode(";", $property->shared_keys ?? "");
+
+        $access = [$renter];
+        $levels = [];
+
+        foreach ($sharedKeys as $key) {
+            $part = explode("-", $key);
+
+            if (sizeof($part) !== 3) {
+                continue;
+            }
+
+            $cid   = intval($part[2]);
+            $level = intval($part[1]);
+
+            if ($cid) {
+                $levels[$cid] = $level;
+                $access[]     = $cid;
+            }
+        }
+
+        $access = Character::select(["player_name", DB::raw("CONCAT(first_name, ' ', last_name) as full_name"), "character_id", "characters.license_identifier"])
+            ->leftJoin("users", "characters.license_identifier", "=", "users.license_identifier")
+            ->whereIn("character_id", $access)
+            ->get()->toArray();
+
+        $access = array_map(function ($entry) use ($levels) {
+            $entry['level'] = $levels[$entry['character_id']] ?? -1;
+
+            return $entry;
+        }, $access);
+
+        return $this->json(true, [
+            'id'      => $property->property_id,
+            'address' => $property->property_address,
+            'renter'  => $renter,
+            'access'  => $access,
+        ]);
+    }
+
+    public function updateProperty(Request $request, int $propertyId)
+    {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_REALTY_EDIT)) {
+            abort(401);
+        }
+
+        $property = DB::table('stocks_company_properties')->where('property_id', $propertyId)->first();
+
+        if (! $property) {
             return backWith('error', 'Property not found');
         }
 
@@ -122,7 +179,7 @@ class StocksController extends Controller
         $lastPay = strtotime($request->input('last_pay'));
         $keys    = $request->input('keys');
 
-        if (!$lastPay || $lastPay < $propertyLastPay) {
+        if (! $lastPay || $lastPay < $propertyLastPay) {
             return backWith('error', 'Invalid last pay date');
         }
 
@@ -130,13 +187,13 @@ class StocksController extends Controller
             return backWith('error', 'Invalid rent amount');
         }
 
-        if (!$keys || !is_array($keys)) {
+        if (! $keys || ! is_array($keys)) {
             return backWith('error', 'Invalid shared keys');
         }
 
         $character = Character::find($renter);
 
-        if (!$character) {
+        if (! $character) {
             return backWith('error', 'Property Renter CID is invalid');
         }
 
@@ -147,19 +204,19 @@ class StocksController extends Controller
             $level = intval($key['level']);
 
             // Invalid cid
-            if (!$cid || $cid <= 0) {
+            if (! $cid || $cid <= 0) {
                 return backWith('error', 'Invalid shared key (cid)');
             }
 
             // Invalid level
-            if (!$level || !in_array($level, [1, 2, 3])) {
+            if (! $level || ! in_array($level, [1, 2, 3])) {
                 return backWith('error', 'Invalid shared key (level)');
             }
 
             $keyCharacter = Character::find($cid);
 
             // Invalid character
-            if (!$keyCharacter) {
+            if (! $keyCharacter) {
                 return backWith('error', 'Invalid shared key (character not found)');
             }
 

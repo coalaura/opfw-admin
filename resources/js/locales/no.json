@@ -980,14 +980,23 @@
         },
         "none": "Ingen spillere ble funnet.",
         "properties": {
+            "access": "Tilgang",
             "access_level": "Tilgangsnivå",
+            "character_id": "Karakter-ID",
             "cost": "Vedlikeholdskostnad",
+            "failed_load": "Kunne ikke laste inn eiendomsinformasjon.",
+            "level": "Nivå {0}",
+            "name": "Fullt navn",
             "none": "Denne karakteren har ikke tilgang til noen eiendommer.",
             "none_access": "Denne karakteren har ikke delt tilgang til noen eiendommer.",
+            "owner": "Eier",
             "paid_till": "Husleie betalt til",
+            "player": "Spiller",
             "properties": "Eiendommer",
             "properties_shared": "Delte Eiendommer",
-            "rent": "Husleie"
+            "property": "Eiendom",
+            "rent": "Husleie",
+            "show": "Vis eiendom"
         },
         "savings": {
             "access": "Har Tilgang",
