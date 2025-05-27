@@ -34,7 +34,7 @@
                                 <i class="fas fa-people-carry"></i>
                             </button>
 
-                            <img :src="getItemIcon(items[0])" @error="iconFailed($event)" class="w-full h-32 object-contain crisp" />
+                            <img :src="getItemIcon(items[0])" @error="iconFailed($event)" class="w-full h-32 p-3 object-contain crisp" />
                         </template>
 
                         <template v-else>
