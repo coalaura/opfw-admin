@@ -45,7 +45,7 @@
                             <div class="h-32">&nbsp;</div>
                         </template>
 
-                        <div class="px-1 py-0.5 justify-center truncate text-sm bg-black bg-opacity-10 flex gap-1" v-html="getItemLabelForSlot(slot)"></div>
+                        <div class="px-1 py-0.5 text-center truncate text-sm bg-black bg-opacity-10" v-html="getItemLabelForSlot(slot)"></div>
                     </div>
                 </div>
             </template>
