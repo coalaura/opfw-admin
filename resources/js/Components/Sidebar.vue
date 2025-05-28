@@ -279,13 +279,13 @@ export default {
             {
                 label: "errors.client.title",
                 icon: "fas fa-laptop-code",
-                url: "/errors/client?server_version=newest",
+                url: "/errors/client",
                 hidden: !this.$page.auth.player.isSuperAdmin,
             },
             {
                 label: "errors.server.title",
                 icon: "fas fa-server",
-                url: "/errors/server?server_version=newest",
+                url: "/errors/server",
                 hidden: !this.$page.auth.player.isSuperAdmin,
             }
         ];
@@ -309,8 +309,8 @@ export default {
                 icon: "fas fa-toolbox",
                 children: [
                     "/map",
-                    "/overwatch",
                     "/live",
+                    "/overwatch",
                 ],
             },
             {
@@ -330,13 +330,13 @@ export default {
                 children: [
                     "/logs",
                     "/damage",
-                    "/money_logs",
                     "/phone_logs",
-                    "/dark_chat",
-                    "/screenshot_logs",
-                    "/casino",
+                    "/money_logs",
                     "/panel",
                     "/searches",
+                    "/screenshot_logs",
+                    "/casino",
+                    "/dark_chat",
                 ],
             },
             {
@@ -391,8 +391,8 @@ export default {
                 label: "sidebar.diagnostics",
                 icon: "fas fa-bug",
                 children: [
-                    "/errors/client?server_version=newest",
-                    "/errors/server?server_version=newest",
+                    "/errors/client",
+                    "/errors/server",
                 ],
             },
         ];
