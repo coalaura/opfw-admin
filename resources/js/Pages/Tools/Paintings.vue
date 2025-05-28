@@ -21,14 +21,12 @@
                 <div v-else-if="painting">
                     <img :src="painting.source" />
 
-                    <div class="flex justify-between">
+                    <div class="flex justify-between mt-3">
                         <inertia-link :href="'/inventory/' + painting.inventory" class="text-indigo-600 text-xs !no-underline dark:text-indigo-300 hover:text-yellow-500 dark:hover:text-yellow-300">
                             {{ painting.inventory }}
                         </inertia-link>
 
-                        <span>-</span>
-
-                        <inertia-link :href="'/players/' + painting.artist.license + '/characters/' + painting.artist.id" class="text-indigo-600 text-xs !no-underline dark:text-indigo-300 hover:text-yellow-500 dark:hover:text-yellow-300" v-if="painting.artist">
+                        <inertia-link :href="'/players/' + painting.artist.license + '/characters/' + painting.artist.id" class="text-indigo-600 text-xs truncate max-w-56 !no-underline dark:text-indigo-300 hover:text-yellow-500 dark:hover:text-yellow-300" v-if="painting.artist">
                             {{ painting.artist.name }}
                         </inertia-link>
                         <span v-else>N/A</span>

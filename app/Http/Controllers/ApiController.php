@@ -115,7 +115,7 @@ class ApiController extends Controller
     {
         $painting = DB::table('inventories')
             ->where('item_name', '=', 'picture')
-            ->whereRaw("JSON_EXTRACT(item_metadata, '$.authorId') IS NOT NULL")
+            ->whereRaw("JSON_EXTRACT(item_metadata, '$.artistId') IS NOT NULL")
             ->inRandomOrder()
             ->first();
 
@@ -123,14 +123,14 @@ class ApiController extends Controller
             return $this->json(false, null, "no painting found");
         }
 
-        $metadata = json_decode($painting->item_metadata, true);
+        $metadata = json_decode($painting->item_metadata);
 
         $artist = Character::query()
             ->where('character_id', '=', $metadata->artistId)
             ->first();
 
         return $this->json(true, [
-            'source'    => $metadata->pictureUrl,
+            'source'    => $metadata->pictureURL,
             'inventory' => $painting->inventory_name,
             'artist'    => $artist ? [
                 'id'      => $artist->character_id,
