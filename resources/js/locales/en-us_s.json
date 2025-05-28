@@ -700,6 +700,11 @@
         "page": "Page {0}",
         "previous": "Previous"
     },
+    "paintings": {
+        "description": "Some random fella done made some paintin's.",
+        "failed": "Couldn't get that paintin' to load.",
+        "title": "Paintin's"
+    },
     "panel_logs": {
         "action": "Action",
         "description": "On this here page, y'all can view and filter the panel logs.",

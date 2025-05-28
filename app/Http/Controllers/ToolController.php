@@ -12,6 +12,11 @@ use Inertia\Response;
 
 class ToolController extends Controller
 {
+    public function paintings()
+    {
+        return Inertia::render('Tools/Paintings');
+    }
+
     /**
      * Config generator.
      *
@@ -304,20 +309,5 @@ class ToolController extends Controller
             'raw'     => $raw,
             'hashes'  => [$hash, $unsigned],
         ]);
-    }
-
-    private function closest(array $array, int $number): array
-    {
-        $last = 0;
-
-        foreach ($array as $index => $item) {
-            if ($item > $number) {
-                return [$index - 1, $last];
-            }
-
-            $last = $item;
-        }
-
-        return [sizeof($array) - 1, $last];
     }
 }

@@ -156,6 +156,11 @@
         "description": "Random character backstories.",
         "failed": "Failed to load backstory."
     },
+    "paintings": {
+        "title": "Paintings",
+        "description": "Random player made paintings.",
+        "failed": "Failed to load painting."
+    },
     "sidebar": {
         "logs": "Logs",
         "community": "Community",

@@ -700,6 +700,11 @@
         "page": "Page {0}",
         "previous": "Pwevious"
     },
+    "paintings": {
+        "description": "Wandom pwayew made paintings.",
+        "failed": "Faiwed to woad painting.",
+        "title": "Paintings"
+    },
     "panel_logs": {
         "action": "Action",
         "description": "On this page you can view and fiwtew the panew wogs.",

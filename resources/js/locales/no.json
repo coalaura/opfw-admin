@@ -700,6 +700,11 @@
         "page": "Side {0}",
         "previous": "Forrige"
     },
+    "paintings": {
+        "description": "Tilfeldig spiller laget malerier.",
+        "failed": "Kunne ikke laste inn maleri.",
+        "title": "Malerier"
+    },
     "panel_logs": {
         "action": "Handling",
         "description": "På denne siden kan du se og filtrere panel-loggene.",

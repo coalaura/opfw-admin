@@ -700,6 +700,11 @@
         "page": "Prishth {0}",
         "previous": "Pichhla"
     },
+    "paintings": {
+        "description": "Kisi khiladi ne paintings banayi.",
+        "failed": "Painting load karne mein asafal.",
+        "title": "Paintings"
+    },
     "panel_logs": {
         "action": "Kriya",
         "description": "Is prishth par aap panel logs ko dekh aur filter kar sakte hain.",

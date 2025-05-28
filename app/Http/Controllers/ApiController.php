@@ -110,4 +110,33 @@ class ApiController extends Controller
             "expires" => time() + (4 * 60 * 60),
         ]);
     }
+
+    public function painting()
+    {
+        $painting = DB::table('inventories')
+            ->where('item_name', '=', 'picture')
+            ->whereRaw("JSON_EXTRACT(item_metadata, '$.authorId') IS NOT NULL")
+            ->inRandomOrder()
+            ->first();
+
+        if (! $painting) {
+            return $this->json(false, null, "no painting found");
+        }
+
+        $metadata = json_decode($painting->item_metadata, true);
+
+        $artist = Character::query()
+            ->where('character_id', '=', $metadata->artistId)
+            ->first();
+
+        return $this->json(true, [
+            'source'    => $metadata->pictureUrl,
+            'inventory' => $painting->inventory_name,
+            'artist'    => $artist ? [
+                'id'      => $artist->character_id,
+                'name'    => sprintf('%s %s', $artist->first_name, $artist->last_name),
+                'license' => $artist->license_identifier,
+            ] : null,
+        ]);
+    }
 }

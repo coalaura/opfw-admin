@@ -700,6 +700,11 @@
         "page": "Page {0}",
         "previous": "Back"
     },
+    "paintings": {
+        "description": "Random player make picture.",
+        "failed": "Fail load picture.",
+        "title": "Pictures"
+    },
     "panel_logs": {
         "action": "Action",
         "description": "Here, see and sort panel logs.",

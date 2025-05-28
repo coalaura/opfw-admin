@@ -293,6 +293,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Tools
     Route::get('/tools/config', [ToolController::class, 'config']);
+    Route::get('/paintings', [ToolController::class, 'paintings']);
     Route::get('/vehicles', [ToolController::class, 'vehicles']);
     Route::get('/weapons', [ToolController::class, 'weapons']);
     Route::get('/weapons/{hash}', [ToolController::class, 'searchWeapons']);
@@ -318,6 +319,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // API.
     Route::get('/api/crafting', [ApiController::class, 'crafting']);
+    Route::get('/api/painting', [ApiController::class, 'painting']);
     Route::get('/api/character/{character}', [ApiController::class, 'character']);
     Route::get('/api/debug', [ApiController::class, 'debug']);
     Route::get('/api/config/{key}', [ApiController::class, 'config']);

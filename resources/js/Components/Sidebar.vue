@@ -244,6 +244,11 @@ export default {
                 hidden: !this.$page.overwatch,
             },
             {
+                label: "paintings.title",
+                icon: "fas fa-palette",
+                url: "/paintings",
+            },
+            {
                 label: "backstories.title",
                 icon: "fas fa-book-open",
                 url: "/backstories",
@@ -320,8 +325,9 @@ export default {
                     "/players",
                     "/new_players",
                     "/characters",
-                    "/backstories",
                     "/twitter",
+                    "/paintings",
+                    "/backstories",
                 ],
             },
             {

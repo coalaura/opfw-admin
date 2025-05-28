@@ -359,7 +359,7 @@ class InventoryController extends Controller
             ->orderBy('inventory_slot')
             ->get()->toArray();
 
-        $usedSlots = array_values(array_map(function($slot) {
+        $usedSlots = array_values(array_map(function ($slot) {
             return $slot->inventory_slot;
         }, $usedSlots));
 
