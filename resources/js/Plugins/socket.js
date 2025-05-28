@@ -188,6 +188,13 @@ const Socket = {
 				options?.onConnect?.();
 			});
 
+			socket.on("rejection", err => {
+                console.log(`[${type}] Received socket "rejection" event.`);
+                console.warn(err);
+
+                socket.disconnect();
+            });
+
 			socket.on("disconnect", () => {
 				console.log(`[${type}] Received socket "disconnect" event.`);
 

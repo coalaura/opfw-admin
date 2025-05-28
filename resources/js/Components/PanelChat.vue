@@ -346,6 +346,15 @@ export default {
                 }
             });
 
+            this.socket.on("rejection", err => {
+                console.log(`Received socket "rejection" event.`);
+                console.warn(err);
+
+                this.reconnect = false;
+
+                this.disconnect();
+            });
+
             this.socket.on("disconnect", () => {
                 console.log(`Received socket "disconnect" event.`);
 
