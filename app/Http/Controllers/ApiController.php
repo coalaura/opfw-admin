@@ -130,6 +130,7 @@ class ApiController extends Controller
             ->first();
 
         return $this->json(true, [
+            'name'      => $metadata->nameOverride ?? 'Painting',
             'source'    => $metadata->pictureURL,
             'inventory' => $painting->inventory_name,
             'artist'    => $artist ? [
