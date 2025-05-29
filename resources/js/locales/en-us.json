@@ -159,7 +159,9 @@
     "paintings": {
         "title": "Paintings",
         "description": "Random player made paintings.",
-        "failed": "Failed to load painting."
+        "failed": "Failed to load painting.",
+        "created_by": "Created by {0}.",
+        "currently_in": "Currently in the {0} inventory."
     },
     "sidebar": {
         "logs": "Logs",

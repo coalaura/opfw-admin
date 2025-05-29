@@ -701,6 +701,8 @@
         "previous": "Back"
     },
     "paintings": {
+        "created_by": "Made by {0}.",
+        "currently_in": "Now in {0} pile.",
         "description": "Random player make picture.",
         "failed": "Fail load picture.",
         "title": "Pictures"

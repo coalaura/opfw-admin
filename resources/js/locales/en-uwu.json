@@ -701,6 +701,8 @@
         "previous": "Pwevious"
     },
     "paintings": {
+        "created_by": "Cweated by {0}.",
+        "currently_in": "Cuwwently in the {0} inventowy.",
         "description": "Wandom pwayew made paintings.",
         "failed": "Faiwed to woad painting.",
         "title": "Paintings"

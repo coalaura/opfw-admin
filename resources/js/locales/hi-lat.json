@@ -701,6 +701,8 @@
         "previous": "Pichhla"
     },
     "paintings": {
+        "created_by": "Banaaya gaya {0} dwara.",
+        "currently_in": "Filhaal {0} suchi mein hai.",
         "description": "Kisi khiladi ne paintings banayi.",
         "failed": "Painting load karne mein asafal.",
         "title": "Paintings"

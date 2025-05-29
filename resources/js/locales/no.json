@@ -701,6 +701,8 @@
         "previous": "Forrige"
     },
     "paintings": {
+        "created_by": "Opprettet av {0}.",
+        "currently_in": "For tiden i {0} lager.",
         "description": "Tilfeldig spiller laget malerier.",
         "failed": "Kunne ikke laste inn maleri.",
         "title": "Malerier"

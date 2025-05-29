@@ -701,6 +701,8 @@
         "previous": "Previous"
     },
     "paintings": {
+        "created_by": "Made by {0}, y'all.",
+        "currently_in": "Right now in the {0} inventory, it is.",
         "description": "Some random fella done made some paintin's.",
         "failed": "Couldn't get that paintin' to load.",
         "title": "Paintin's"
