@@ -19,7 +19,7 @@
                     <i class="mr-1 fa fa-redo-alt animate-spin font-normal text-xl"></i>
                 </div>
                 <div v-else-if="painting">
-                    <div class="text-lg truncate font-semibold italic mb-2">{{ painting.name }}</div>
+                    <div class="text-lg truncate font-semibold italic mb-2 text-center">{{ painting.name }}</div>
 
                     <img :src="painting.source" />
 
