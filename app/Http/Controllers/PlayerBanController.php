@@ -684,7 +684,7 @@ class PlayerBanController extends Controller
             return false;
         }
 
-        $player = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_devices'])->where('license_identifier', '=', $license)->get()->first();
+        $player = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'identifiers', 'last_used_identifiers', 'identifiers', 'media_devices'])->where('license_identifier', '=', $license)->get()->first();
 
         if (! $player) {
             return false;
@@ -734,7 +734,7 @@ class PlayerBanController extends Controller
         }
 
         $where = implode(' OR ', array_map(function ($ip) {
-            return 'JSON_CONTAINS(ips, \'"' . $ip . '"\', \'$\')';
+            return 'JSON_CONTAINS(identifiers, \'"ip:' . $ip . '"\', \'$\')';
         }, $ips));
 
         return $this->drawLinked("IPs", $player, $where, $ips);
@@ -809,7 +809,7 @@ class PlayerBanController extends Controller
         $gpuMediaDevice = $player->getGPUMediaDevice();
         $mediaDevices   = $player->getComparableMediaDevices();
 
-        $players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'ips', 'identifiers', 'media_devices', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function ($join) {
+        $players = Player::query()->select(['player_name', 'license_identifier', 'player_tokens', 'identifiers', 'last_used_identifiers', 'identifiers', 'media_devices', 'last_connection', 'ban_hash', 'playtime'])->leftJoin('user_bans', function ($join) {
             $join->on('license_identifier', '=', 'identifier');
         })->whereRaw($where)->get();
 
