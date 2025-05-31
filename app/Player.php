@@ -59,7 +59,6 @@ class Player extends Model
         'player_aliases',
         'identifiers',
         'last_used_identifiers',
-        'ips',
         'player_tokens',
         'is_staff',
         'is_senior_staff',
@@ -90,7 +89,6 @@ class Player extends Model
         'identifiers'           => 'array',
         'last_used_identifiers' => 'array',
         'player_tokens'         => 'array',
-        'ips'                   => 'array',
         'player_aliases'        => 'array',
         'enabled_commands'      => 'array',
         'user_data'             => 'array',
@@ -751,11 +749,43 @@ class Player extends Model
      */
     public function getIps(): array
     {
-        $ips = $this->ips ?? [];
+        $identifiers = $this->identifiers ?? [];
 
         return array_values(
             array_unique(
-                $ips
+                array_filter(
+                    array_map(function ($identifier) {
+                        if (Str::startsWith($identifier, "ip:")) {
+                            return substr($identifier, 3);
+                        }
+
+                        return false;
+                    }, $identifiers)
+                )
+            )
+        );
+    }
+
+    /**
+     * Gets the last used ips.
+     *
+     * @return array
+     */
+    public function getLastIps(): array
+    {
+        $identifiers = $this->last_used_identifiers ?? [];
+
+        return array_values(
+            array_unique(
+                array_filter(
+                    array_map(function ($identifier) {
+                        if (Str::startsWith($identifier, "ip:")) {
+                            return substr($identifier, 3);
+                        }
+
+                        return false;
+                    }, $identifiers)
+                )
             )
         );
     }
