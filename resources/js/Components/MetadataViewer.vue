@@ -16,7 +16,7 @@
                 <template #default>
                     <div class="mt-4 relative" v-for="meta in metadataJSON">
                         <i class="fas fa-copy absolute right-1 top-0.5 cursor-pointer text-sm z-10" @click="copyMetadata(meta.raw)"></i>
-                        <i class="fas fa-map-marked-alt absolute right-2.5 top-0.5 cursor-pointer text-sm z-10" @click="viewVectors(meta.value)" v-if="findVectors(meta.value)"></i>
+                        <i class="fas fa-map-marked-alt absolute right-6 top-0.5 cursor-pointer text-sm z-10" @click="viewVectors(meta.value)" v-if="findVectors(meta.value)"></i>
 
                         <p class="font-semibold mb-1 font-mono cursor-pointer relative" @click="meta.open = !meta.open">
                             <i class="fas fa-caret-right" v-if="!meta.open"></i>
