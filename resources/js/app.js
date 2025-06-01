@@ -13,6 +13,7 @@ import Markdown from "./Plugins/markdown.js";
 import Chunked from "./Plugins/chunked.js";
 import Identifiers from "./Plugins/identifiers.js";
 import Copy from "./Plugins/copy-text.js";
+import MapEncoder from "./Plugins/map-encoder.js";
 import Wait from "./Plugins/wait.js";
 import Interceptor from "./Plugins/interceptor.js";
 import Socket from "./Plugins/socket.js";
@@ -25,11 +26,13 @@ import Storage from "./Plugins/storage.js";
 import Spreadsheet from "./Plugins/spreadsheet.js";
 import Style from "./Plugins/style.js";
 import Flags from "./Plugins/flags.js";
+
 import humanizeSeconds from "./Filters/humanizeSeconds.js";
 import formatSeconds from "./Filters/formatSeconds.js";
 import formatTime from "./Filters/formatTime.js";
 import formatDate from "./Filters/formatDate.js";
 import formatGender from "./Filters/formatGender.js";
+
 import linkify from "vue-linkify";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -63,6 +66,7 @@ Vue.use(Localization);
 Vue.use(Storage);
 Vue.use(Spreadsheet);
 Vue.use(Copy);
+Vue.use(MapEncoder);
 Vue.use(Wait);
 Vue.use(Chunked);
 Vue.use(Socket);
