@@ -34,6 +34,7 @@
         "colorthief": "^2.6.0",
         "countries-and-timezones": "^3.7.2",
         "dayjs": "^1.11.13",
+        "es-arraybuffer-base64": "^1.1.2",
         "fast-levenshtein": "^3.0.0",
         "highlight.js": "^11.11.1",
         "hls.js": "^1.5.20",

@@ -14,7 +14,7 @@
 
             <hashResolver>
                 <template #default>
-                    <div class="mt-4 relative" v-for="meta in metadataJSON">
+                    <div class="mt-4 relative" v-for="meta in metadataJSON" @click="click">
                         <i class="fas fa-copy absolute right-1 top-0.5 cursor-pointer text-sm z-10" @click="copyMetadata(meta.raw)"></i>
 
                         <p class="font-semibold mb-1 font-mono cursor-pointer relative" @click="meta.open = !meta.open">
@@ -128,7 +128,7 @@ const CustomFormatters = {
 };
 
 export default {
-    name: 'MetadataViewer',
+    name: "MetadataViewer",
     props: {
         title: String,
         image: [String, Boolean],
@@ -158,6 +158,27 @@ export default {
     methods: {
         copyMetadata(text) {
             this.copyToClipboard(text);
+        },
+        async click(e) {
+            if (!e.target || e.target.classList.contains('vector')) return;
+
+            const match = e.target.innerText.match(/(?<=vector\d\()(-?\d+(\.\d+)?), (-?\d+(\.\d+)?)/);
+
+            if (!match || match.length < 4) return;
+
+            e.stopPropagation();
+
+            const xVal = parseFloat(match[1]),
+                yVal = parseFloat(match[3]),
+                name = e.target.dataset.name || "";
+
+            window.open(this.buildMapUrl([
+                {
+                    x: x,
+                    y: y,
+                    label: name,
+                }
+            ]));
         },
         updateMetadata() {
             // Reset images
@@ -283,9 +304,9 @@ export default {
                     raw = object[key];
 
                 let value = JSON.stringify(raw)
-                    .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?)}/gm, 'vector2($1, $3)') // vector2
-                    .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?), ?"z": ?(-?\d+(\.\d+)?)}/gm, 'vector3($1, $3, $5)') // vector3
-                    .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?), ?"z": ?(-?\d+(\.\d+)?), ?"w": ?(-?\d+(\.\d+)?)}/gm, 'vector4($1, $3, $5, $7)') // vector4
+                    .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?)}/gm, `<span class="vector" data-name="${key}">vector2($1, $3)</span>`) // vector2
+                    .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?), ?"z": ?(-?\d+(\.\d+)?)}/gm, `<span class="vector" data-name="${key}">vector3($1, $3, $5)</span>`) // vector3
+                    .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?), ?"z": ?(-?\d+(\.\d+)?), ?"w": ?(-?\d+(\.\d+)?)}/gm, `<span class="vector" data-name="${key}">vector4($1, $3, $5, $7)</span>`) // vector4
                     .replace(/(?<="):(?! |$)|,(?=")/gm, '$& ');
 
                 value = hljs.highlight(value, { language: 'json' }).value;

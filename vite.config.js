@@ -51,6 +51,9 @@ export default defineConfig({
 			"@": path.resolve(__dirname, "resources/js"),
 		},
 	},
+	define: {
+		global: "window",
+	},
 	build: {
 		chunkSizeWarningLimit: 1024,
 		manifest: "manifest.json",
