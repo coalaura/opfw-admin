@@ -16,14 +16,13 @@
                 <template #default>
                     <div class="mt-4 relative" v-for="meta in metadataJSON">
                         <i class="fas fa-copy absolute right-1 top-0.5 cursor-pointer text-sm z-10" @click="copyMetadata(meta.raw)"></i>
+                        <i class="fas fa-map-marked-alt absolute right-2.5 top-0.5 cursor-pointer text-sm z-10" @click="viewVectors(meta.value)" v-if="findVectors(meta.value)"></i>
 
                         <p class="font-semibold mb-1 font-mono cursor-pointer relative" @click="meta.open = !meta.open">
                             <i class="fas fa-caret-right" v-if="!meta.open"></i>
                             <i class="fas fa-caret-down" v-else></i>
 
                             {{ meta.key }}
-
-                            <i class="fas fa-map-marked-alt cursor-pointer ml-2" @click="viewVectors(meta.value)" v-if="findVectors(meta.value)"></i>
                         </p>
 
                         <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm hljs cursor-pointer" @click="meta.open = true" v-if="!meta.open"><span class="hljs-number">...</span></pre>
@@ -170,7 +169,7 @@ export default {
             let m;
 
             while ((m = rgx.exec(text)) !== null) {
-                if (m.index === regex.lastIndex) regex.lastIndex++;
+                if (m.index === rgx.lastIndex) rgx.lastIndex++;
 
                 const name = m[1],
                     x = parseFloat(m[2]),
