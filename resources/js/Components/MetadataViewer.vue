@@ -191,7 +191,7 @@ export default {
 
             if (!vectors) return;
 
-            window.open(this.buildMapUrl(vectors));
+            window.open(this.buildMapUrl(true, vectors));
         },
         updateMetadata() {
             // Reset images
