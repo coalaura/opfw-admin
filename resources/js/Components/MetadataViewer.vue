@@ -14,7 +14,7 @@
 
             <hashResolver>
                 <template #default>
-                    <div class="mt-4 relative" v-for="meta in metadataJSON" @click="click">
+                    <div class="mt-4 relative" v-for="meta in metadataJSON">
                         <i class="fas fa-copy absolute right-1 top-0.5 cursor-pointer text-sm z-10" @click="copyMetadata(meta.raw)"></i>
 
                         <p class="font-semibold mb-1 font-mono cursor-pointer relative" @click="meta.open = !meta.open">
@@ -22,6 +22,8 @@
                             <i class="fas fa-caret-down" v-else></i>
 
                             {{ meta.key }}
+
+                            <i class="fas fa-map-marked-alt cursor-pointer ml-2" @click="viewVectors(meta.value)" v-if="findVectors(meta.value)"></i>
                         </p>
 
                         <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm hljs cursor-pointer" @click="meta.open = true" v-if="!meta.open"><span class="hljs-number">...</span></pre>
@@ -159,26 +161,36 @@ export default {
         copyMetadata(text) {
             this.copyToClipboard(text);
         },
-        async click(e) {
-            if (!e.target || e.target.classList.contains('vector')) return;
+        findVectors(value) {
+            const rgx = /(\w+)\s*: vector\d\((-?\d+(\.\d+)?), (-?\d+(\.\d+)?)/g,
+                vectors = [];
 
-            const match = e.target.innerText.match(/(?<=vector\d\()(-?\d+(\.\d+)?), (-?\d+(\.\d+)?)/);
+            let m;
 
-            if (!match || match.length < 4) return;
+            while ((m = rgx.exec(value)) !== null) {
+                if (m.index === regex.lastIndex) regex.lastIndex++;
 
-            e.stopPropagation();
+                const name = m[1],
+                    x = parseFloat(m[2]),
+                    y = parseFloat(m[4]);
 
-            const xVal = parseFloat(match[1]),
-                yVal = parseFloat(match[3]),
-                name = e.target.dataset.name || "";
-
-            window.open(this.buildMapUrl([
-                {
+                vectors.push({
                     x: x,
                     y: y,
                     label: name,
-                }
-            ]));
+                });
+            }
+
+            if (!vectors.length) return false;
+
+            return vectors;
+        },
+        viewVectors(value) {
+            const vectors = this.findVectors(value);
+
+            if (!vectors) return;
+
+            window.open(this.buildMapUrl(vectors));
         },
         updateMetadata() {
             // Reset images
@@ -304,9 +316,9 @@ export default {
                     raw = object[key];
 
                 let value = JSON.stringify(raw)
-                    .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?)}/gm, `<span class="vector" data-name="${key}">vector2($1, $3)</span>`) // vector2
-                    .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?), ?"z": ?(-?\d+(\.\d+)?)}/gm, `<span class="vector" data-name="${key}">vector3($1, $3, $5)</span>`) // vector3
-                    .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?), ?"z": ?(-?\d+(\.\d+)?), ?"w": ?(-?\d+(\.\d+)?)}/gm, `<span class="vector" data-name="${key}">vector4($1, $3, $5, $7)</span>`) // vector4
+                    .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?)}/gm, "vector2($1, $3)") // vector2
+                    .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?), ?"z": ?(-?\d+(\.\d+)?)}/gm, "vector3($1, $3, $5)") // vector3
+                    .replace(/{"x": ?(-?\d+(\.\d+)?), ?"y": ?(-?\d+(\.\d+)?), ?"z": ?(-?\d+(\.\d+)?), ?"w": ?(-?\d+(\.\d+)?)}/gm, "vector4($1, $3, $5, $7)") // vector4
                     .replace(/(?<="):(?! |$)|,(?=")/gm, '$& ');
 
                 value = hljs.highlight(value, { language: 'json' }).value;
