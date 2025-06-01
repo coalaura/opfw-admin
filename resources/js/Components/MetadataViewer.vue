@@ -162,12 +162,14 @@ export default {
             this.copyToClipboard(text);
         },
         findVectors(value) {
+            const text = value.replace(/(<([^>]+)>)/gi, "");
+
             const rgx = /(\w+)\s*: vector\d\((-?\d+(\.\d+)?), (-?\d+(\.\d+)?)/g,
                 vectors = [];
 
             let m;
 
-            while ((m = rgx.exec(value)) !== null) {
+            while ((m = rgx.exec(text)) !== null) {
                 if (m.index === regex.lastIndex) regex.lastIndex++;
 
                 const name = m[1],
