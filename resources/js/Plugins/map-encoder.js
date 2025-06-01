@@ -20,8 +20,8 @@ function writeString(buf, value) {
 
 const MapEncoder = {
 	async install(Vue, options) {
-		Vue.prototype.buildMapUrl = points => {
-			const buffer = [];
+		Vue.prototype.buildMapUrl = (connect, points) => {
+			const buffer = [connect ? 1 : 0];
 
 			for (let i = 0; i < points.length; i++) {
 				const point = points[i];
