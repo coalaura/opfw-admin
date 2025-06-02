@@ -148,14 +148,14 @@
         "all_time": "ovew aww wecowded damage histowy",
         "and": "and",
         "before": "Befowe",
-        "description": "View damage hit distwibution fow pwayews.",
+        "description": "See whewe pwayews wand theiw shots most often wif a visuaw bweakdown of avewage damage distwibution acwoss the body. Onwy incwudes damage done by buwwets (no mewee, etc).",
         "details_after": "aftew",
         "details_before": "befowe",
         "details_for": "Damage distwibution fow",
         "everyone": "evewyone",
         "license": "Wicense Identifiew",
         "search": "Sewch",
-        "title": "Damage Distwibution"
+        "title": "Damage Anawysis"
     },
     "discord": {
         "description": "Wookup pwayews using theiw discowd account.",

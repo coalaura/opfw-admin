@@ -174,6 +174,7 @@ class ToolController extends Controller
         ];
 
         $query = WeaponDamageEvent::query()
+            ->where('damage_type', '=', '3') // 3 = BULLET
             ->where('is_parent_self', '=', '1')
             ->whereNotNull('hit_player');
 

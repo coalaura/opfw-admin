@@ -148,14 +148,14 @@
         "all_time": "over all registrert skadehistorikk",
         "and": "og",
         "before": "Før",
-        "description": "Vis skadefordeling for spillere.",
+        "description": "Se hvor spillere oftest treffer med skuddene sine med en visuell oversikt over gjennomsnittlig skadedistribusjon på kroppen. Inkluderer kun skade gjort av kuler (ikke nærkamp, etc).",
         "details_after": "etter",
         "details_before": "før",
         "details_for": "Skadefordeling for",
         "everyone": "alle",
         "license": "Lisensidentifikator",
         "search": "Søk",
-        "title": "Skadefordeling"
+        "title": "Skadeanalyse"
     },
     "discord": {
         "description": "Søk spillere ved hjelp av deres discord-konto.",

@@ -761,8 +761,8 @@
         "damage_raw": "Raw"
     },
     "damages": {
-        "title": "Damage Distribution",
-        "description": "View damage hit distribution for players.",
+        "title": "Damage Analysis",
+        "description": "See where players land their shots most often with a visual breakdown of average damage distribution across the body. Only includes damage done by bullets (no melee, etc).",
         "license": "License Identifier",
         "before": "Before",
         "after": "After",

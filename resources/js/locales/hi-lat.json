@@ -148,14 +148,14 @@
         "all_time": "sabhi darj ki gayi nuksan itihas par",
         "and": "aur",
         "before": "Pehle",
-        "description": "Khiladiyon ke liye nuksan hit vitran dekhein.",
+        "description": "Dekhiye kahan khiladi apne shots sabse zyada maarte hain ek drishyam breakdown ke saath jo sharir ke across average damage distribution ko dikhata hai. Sirf bullets dwara kiye gaye damage ko shamil kiya gaya hai (koi melee, etc nahi).",
         "details_after": "baad mein",
         "details_before": "pehle",
         "details_for": "ke liye nuksan vitran",
         "everyone": "sabhi",
         "license": "License Pahchan",
         "search": "Khoj",
-        "title": "Nuksan Vitran"
+        "title": "Damage Vishleshan"
     },
     "discord": {
         "description": "Players ko unke discord account se khoje.",

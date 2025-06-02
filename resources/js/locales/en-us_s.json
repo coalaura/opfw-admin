@@ -148,14 +148,14 @@
         "all_time": "ova' all recorded damage history",
         "and": "an'",
         "before": "Befo'",
-        "description": "View damage hit distribution for y'all players.",
+        "description": "See where folks land their shots most often with a visual breakdown of average damage spread across the body. Only countin' damage done by bullets, none of that melee stuff.",
         "details_after": "aftah",
         "details_before": "befo'",
         "details_for": "Damage distribution fo'",
         "everyone": "ever'body",
         "license": "License Identifiah",
         "search": "Search",
-        "title": "Damage Distribution"
+        "title": "Damage Check-up"
     },
     "discord": {
         "description": "Look up players usin' their discord account.",

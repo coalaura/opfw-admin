@@ -66,7 +66,9 @@
 					<a class="font-semibold" :href="`/players/${details.target.license}`" target="_blank" v-if="details.target">
 						{{ details.target.name }}
 					</a>
-					<span class="font-semibold" v-else>{{ t("damages.everyone") }}</span>
+					<span class="font-semibold" v-else>
+						{{ t("damages.everyone") }}
+					</span>
 
 					<template v-if="!details.before && !details.after">{{ t("damages.all_time") }}.</template>
 
