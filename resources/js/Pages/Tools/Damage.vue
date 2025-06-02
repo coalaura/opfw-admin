@@ -283,7 +283,9 @@ export default {
 					only: ['damages', 'details'],
 				});
 
-				this.render();
+				this.$nextTick(() => {
+					this.render();
+				});
 			} catch (e) {
 			}
 
