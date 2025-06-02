@@ -143,6 +143,20 @@
         "title": "Storage Containers",
         "view_access": "Show characters who got access."
     },
+    "damages": {
+        "after": "Afta'",
+        "all_time": "ova' all recorded damage history",
+        "and": "an'",
+        "before": "Befo'",
+        "description": "View damage hit distribution for y'all players.",
+        "details_after": "aftah",
+        "details_before": "befo'",
+        "details_for": "Damage distribution fo'",
+        "everyone": "ever'body",
+        "license": "License Identifiah",
+        "search": "Search",
+        "title": "Damage Distribution"
+    },
     "discord": {
         "description": "Look up players usin' their discord account.",
         "linked_players": "Linked Players",

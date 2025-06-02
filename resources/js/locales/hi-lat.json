@@ -143,6 +143,20 @@
         "title": "Storage Containers",
         "view_access": "Un patraon ko dikhayein jinko pravesh hai."
     },
+    "damages": {
+        "after": "Baad mein",
+        "all_time": "sabhi darj ki gayi nuksan itihas par",
+        "and": "aur",
+        "before": "Pehle",
+        "description": "Khiladiyon ke liye nuksan hit vitran dekhein.",
+        "details_after": "baad mein",
+        "details_before": "pehle",
+        "details_for": "ke liye nuksan vitran",
+        "everyone": "sabhi",
+        "license": "License Pahchan",
+        "search": "Khoj",
+        "title": "Nuksan Vitran"
+    },
     "discord": {
         "description": "Players ko unke discord account se khoje.",
         "linked_players": "Linked Players",

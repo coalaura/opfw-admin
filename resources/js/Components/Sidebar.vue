@@ -133,6 +133,12 @@ export default {
                 hidden: !this.perm.check(this.perm.PERM_DAMAGE_LOGS),
             },
             {
+                label: "damages.title",
+                icon: "fas fa-user-injured",
+                url: "/damages",
+                hidden: !this.perm.check(this.perm.PERM_DAMAGE_LOGS),
+            },
+            {
                 label: "logs.money_title",
                 icon: "fas fa-money-bill-wave",
                 url: "/money_logs",
@@ -316,6 +322,7 @@ export default {
                     "/map",
                     "/live",
                     "/overwatch",
+                    "/damages",
                 ],
             },
             {

@@ -143,6 +143,20 @@
         "title": "Storage Boxes",
         "view_access": "Show people who get in."
     },
+    "damages": {
+        "after": "After",
+        "all_time": "look all hit history",
+        "and": "and",
+        "before": "Before",
+        "description": "See hit spread for players.",
+        "details_after": "after",
+        "details_before": "before",
+        "details_for": "Hit spread for",
+        "everyone": "all",
+        "license": "License Mark",
+        "search": "Find",
+        "title": "Hit Spread"
+    },
     "discord": {
         "description": "Find players with discord.",
         "linked_players": "Linked Players",

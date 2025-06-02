@@ -29,6 +29,9 @@ module.exports = {
             "wide": "2100px"
         },
         extend: {
+            transitionProperty: {
+                "position": "top, left, bottom, right"
+            },
             spacing: {
                 "17":   "4.25rem",
                 "18":   "4.5rem",
@@ -216,6 +219,6 @@ module.exports = {
     },
     plugins: [
         require("@tailwindcss/typography"),
-        require("./resources/js/scripts/tailwind-forms.cjs")
+        require("./resources/js/scripts/tailwind-forms.cjs"),
     ]
 }

@@ -760,6 +760,20 @@
         "damage_banned": "Banned",
         "damage_raw": "Raw"
     },
+    "damages": {
+        "title": "Damage Distribution",
+        "description": "View damage hit distribution for players.",
+        "license": "License Identifier",
+        "before": "Before",
+        "after": "After",
+        "search": "Search",
+        "details_for": "Damage distribution for",
+        "everyone": "everyone",
+        "all_time": "over all recorded damage history",
+        "details_before": "before",
+        "details_after": "after",
+        "and": "and"
+    },
     "advanced": {
         "title": "Advanced Search",
         "description": "Advanced search for different tables",

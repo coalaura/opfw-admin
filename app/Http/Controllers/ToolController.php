@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 use App\Helpers\CacheHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\ServerAPI;
+use App\Player;
 use App\WeaponDamageEvent;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -151,6 +153,90 @@ class ToolController extends Controller
         return Inertia::render('Tools/Weapons', [
             'weapons' => $weapons,
             'usages'  => $usages,
+        ]);
+    }
+
+    /**
+     * Damage distribution.
+     *
+     * @return Response
+     */
+    public function damages(Request $request): Response
+    {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_DAMAGE_LOGS)) {
+            abort(401);
+        }
+
+        $details = [
+            "target" => null,
+            "before" => null,
+            "after"  => null,
+        ];
+
+        $query = WeaponDamageEvent::query()
+            ->where('is_parent_self', '=', '1')
+            ->whereNotNull('hit_player');
+
+        if ($license = $request->input("license")) {
+            $query->where("license_identifier", "=", $license);
+
+            $player = Player::where('license_identifier', '=', $license)->first();
+
+            $details["target"] = [
+                "license" => $license,
+                "name"    => $player ? $player->getSafePlayerName() : "Unknown",
+            ];
+        }
+
+        if ($before = $request->input("before")) {
+            $time = strtotime($before . " 00:00:00");
+
+            if ($time) {
+                $query->where("timestamp", "<", $time * 1000);
+
+                $details["before"] = date("m/d/Y h:i A", $time);
+            }
+        }
+
+        if ($after = $request->input("after")) {
+            $time = strtotime($after . " 23:59:59");
+
+            if ($time) {
+                $query->where("timestamp", ">", $time * 1000);
+
+                $details["after"] = date("m/d/Y h:i A", $time);
+            }
+        }
+
+        $query->select(DB::raw("hit_component, SUM(1) as amount"))->groupBy("hit_component");
+
+        $data = $query->get();
+
+        $max     = 0;
+        $damages = [];
+
+        foreach (WeaponDamageEvent::HitComponents as $component => $_) {
+            $damages[$component] = 0;
+        }
+
+        foreach ($data as $entry) {
+            $component = intval($entry->hit_component);
+            $amount    = intval($entry->amount);
+
+            $damages[$component] = $amount;
+
+            $max = max($max, $amount);
+        }
+
+        return Inertia::render('Tools/Damage', [
+            'filters' => [
+                'license' => $request->input('license'),
+                'before'  => $request->input('before'),
+                'after'   => $request->input('after'),
+            ],
+            'details' => $details,
+            'damages' => $damages,
+            'names'   => WeaponDamageEvent::HitComponents,
         ]);
     }
 

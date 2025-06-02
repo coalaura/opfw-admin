@@ -143,6 +143,20 @@
         "title": "Stowage Containews",
         "view_access": "Show chawactews who have access."
     },
+    "damages": {
+        "after": "Aftew",
+        "all_time": "ovew aww wecowded damage histowy",
+        "and": "and",
+        "before": "Befowe",
+        "description": "View damage hit distwibution fow pwayews.",
+        "details_after": "aftew",
+        "details_before": "befowe",
+        "details_for": "Damage distwibution fow",
+        "everyone": "evewyone",
+        "license": "Wicense Identifiew",
+        "search": "Sewch",
+        "title": "Damage Distwibution"
+    },
     "discord": {
         "description": "Wookup pwayews using theiw discowd account.",
         "linked_players": "Winked Pwayews",

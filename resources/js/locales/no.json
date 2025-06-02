@@ -143,6 +143,20 @@
         "title": "Lagringsbeholdere",
         "view_access": "Vis karakterer som har tilgang."
     },
+    "damages": {
+        "after": "Etter",
+        "all_time": "over all registrert skadehistorikk",
+        "and": "og",
+        "before": "Før",
+        "description": "Vis skadefordeling for spillere.",
+        "details_after": "etter",
+        "details_before": "før",
+        "details_for": "Skadefordeling for",
+        "everyone": "alle",
+        "license": "Lisensidentifikator",
+        "search": "Søk",
+        "title": "Skadefordeling"
+    },
     "discord": {
         "description": "Søk spillere ved hjelp av deres discord-konto.",
         "linked_players": "Koblede Spillere",

@@ -297,6 +297,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/vehicles', [ToolController::class, 'vehicles']);
     Route::get('/weapons', [ToolController::class, 'weapons']);
     Route::get('/weapons/{hash}', [ToolController::class, 'searchWeapons']);
+    Route::get('/damages', [ToolController::class, 'damages']);
 
     // Test.
     Route::get('/test/logs/{action}', [TestController::class, 'logs']);
