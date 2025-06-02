@@ -325,7 +325,9 @@ export default {
 			if (done + failed === textures.length) {
 				this.loadedTextures = true;
 
-				this.render();
+				this.$nextUpdate(() => {
+					this.render();
+				});
 			}
 		};
 
