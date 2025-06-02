@@ -146,6 +146,11 @@ export default {
 			return Math.max(...this.damages);
 		}
 	},
+	watch: {
+		damages() {
+			this.render();
+		}
+	},
     data() {
         return {
             isLoading: false,
@@ -281,10 +286,6 @@ export default {
 					preserveState: true,
 					preserveScroll: true,
 					only: ['damages', 'details'],
-				});
-
-				this.$nextTick(() => {
-					this.render();
 				});
 			} catch (e) {
 			}
