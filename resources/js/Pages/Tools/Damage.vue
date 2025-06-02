@@ -244,6 +244,8 @@ export default {
 				const amount = this.damages[component],
 					texture = this.textures[component];
 
+				if (!texture) continue;
+
 				this.updateComponent(component, texture, amount);
 
 				if (!amount) continue;
