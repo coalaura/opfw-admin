@@ -153,7 +153,9 @@
         "details_before": "before",
         "details_for": "Hit spread for",
         "everyone": "all",
+        "failed_textures": "Textures not load.",
         "license": "License Mark",
+        "loading_textures": "Loading textures...",
         "search": "Find",
         "title": "Hit Spread"
     },

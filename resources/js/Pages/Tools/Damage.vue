@@ -86,7 +86,13 @@
 					</template>
 				</div>
 
-				<div class="w-max relative">
+				<div class="w-max relative" v-if="!loadedTextures">
+					{{ t("damages.loading_textures") }}
+				</div>
+				<div class="w-max relative" v-else-if="failedTextures">
+					{{ t("damages.failed_textures") }}
+				</div>
+				<div class="w-max relative" v-else>
 					<canvas ref="canvas"></canvas>
 
 					<div class="absolute cursor-pointer transition-colors hover:bg-black/10 font-mono flex justify-center items-center" :style="data.style" @click="toggleComponent(component)" v-for="(data, component) in components" :key="component">

@@ -772,7 +772,9 @@
         "all_time": "over all recorded damage history",
         "details_before": "before",
         "details_after": "after",
-        "and": "and"
+        "and": "and",
+        "loading_textures": "Loading textures...",
+        "failed_textures": "Failed loading textures."
     },
     "advanced": {
         "title": "Advanced Search",

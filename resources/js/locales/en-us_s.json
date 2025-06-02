@@ -153,7 +153,9 @@
         "details_before": "befo'",
         "details_for": "Damage distribution fo'",
         "everyone": "ever'body",
+        "failed_textures": "Couldn't load them textures.",
         "license": "License Identifiah",
+        "loading_textures": "Loadin' them textures...",
         "search": "Search",
         "title": "Damage Check-up"
     },

@@ -153,7 +153,9 @@
         "details_before": "før",
         "details_for": "Skadefordeling for",
         "everyone": "alle",
+        "failed_textures": "Kunne ikke laste inn teksturer.",
         "license": "Lisensidentifikator",
+        "loading_textures": "Laster inn teksturer...",
         "search": "Søk",
         "title": "Skadeanalyse"
     },

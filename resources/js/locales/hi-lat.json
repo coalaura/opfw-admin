@@ -153,7 +153,9 @@
         "details_before": "pehle",
         "details_for": "ke liye nuksan vitran",
         "everyone": "sabhi",
+        "failed_textures": "Texture load karne mein asafal.",
         "license": "License Pahchan",
+        "loading_textures": "Texture load ho raha hai...",
         "search": "Khoj",
         "title": "Damage Vishleshan"
     },
