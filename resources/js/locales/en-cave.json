@@ -141,7 +141,8 @@
         "rented_containers": "Rented Boxes",
         "renter": "Renter",
         "title": "Storage Boxes",
-        "view_access": "Show people who get in."
+        "view_access": "Show people who get in.",
+        "warehouse": "Big hut"
     },
     "damages": {
         "after": "After",

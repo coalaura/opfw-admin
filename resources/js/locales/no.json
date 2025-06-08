@@ -141,7 +141,8 @@
         "rented_containers": "Leide Beholdere",
         "renter": "Leietaker",
         "title": "Lagringsbeholdere",
-        "view_access": "Vis karakterer som har tilgang."
+        "view_access": "Vis karakterer som har tilgang.",
+        "warehouse": "Lager"
     },
     "damages": {
         "after": "Etter",

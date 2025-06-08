@@ -141,7 +141,8 @@
         "rented_containers": "Rented Containers",
         "renter": "Renter",
         "title": "Storage Containers",
-        "view_access": "Show characters who got access."
+        "view_access": "Show characters who got access.",
+        "warehouse": "Wahrhouse"
     },
     "damages": {
         "after": "Afta'",

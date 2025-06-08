@@ -55,7 +55,7 @@ class Container extends Model
     public static function all($_ = [])
     {
         return Container::query()
-            ->select(['container_id', 'paid_until', 'containers.character_id', 'first_name', 'last_name', 'license_identifier'])
+            ->select(['container_id', 'paid_until', 'containers.character_id', 'first_name', 'last_name', 'license_identifier', DB::raw('IF(container_id > 735, 1, 0) as is_warehouse')])
             ->leftJoin('characters', 'characters.character_id', '=', 'containers.character_id')
             ->orderBy('container_id', 'asc')
             ->get();
@@ -66,6 +66,7 @@ class Container extends Model
         return DB::table("inventories")
             ->select(DB::raw("COUNT(inventory_name) as count"), "inventory_name")
             ->where(DB::raw("SUBSTR(inventory_name, 1, 9)"), "=", "container")
+            ->orWhere(DB::raw("SUBSTR(inventory_name, 1, 9)"), "=", "warehouse")
             ->groupBy("inventory_name")
             ->get();
     }

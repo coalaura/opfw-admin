@@ -141,7 +141,8 @@
         "rented_containers": "Kiraye par liye gaye Containers",
         "renter": "Kirayedaar",
         "title": "Storage Containers",
-        "view_access": "Un patraon ko dikhayein jinko pravesh hai."
+        "view_access": "Un patraon ko dikhayein jinko pravesh hai.",
+        "warehouse": "Godaam"
     },
     "damages": {
         "after": "Baad mein",

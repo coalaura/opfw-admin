@@ -23,10 +23,10 @@
 
                 <tr v-for="(container, id) in containers" :key="id" class="border-t border-gray-500">
                     <td class="px-1 py-1 pl-3">
-                        <a :href="'/inventory/container-' + container.container_id" target="_blank" class="text-indigo-700 dark:text-indigo-200 text-sm mr-1" :title="t('inventories.show_inv')">
+                        <a :href="'/inventory/' + (container.is_warehouse ? 'warehouse' : 'container') + '-' + container.container_id" target="_blank" class="text-indigo-700 dark:text-indigo-200 text-sm mr-1" :title="t('inventories.show_inv')">
                             <i class="fas fa-dolly-flatbed"></i>
                         </a>
-                        {{ t('containers.container') }} #{{ container.container_id }}
+                        {{ t('containers.' + (container.is_warehouse ? 'warehouse' : 'container')) }} #{{ container.container_id }}
                     </td>
                     <td class="px-2 py-1">
                         <a :href="'/players/' + container.license_identifier + '/characters/' + container.character_id" target="_blank" class="text-indigo-700 dark:text-indigo-200">
@@ -35,12 +35,12 @@
                         </a>
                     </td>
                     <td class="px-2 py-1" :title="dayjs.utc(container.paid_until * 1000).fromNow()">{{ container.paid_until * 1000 | formatTime(false) }}</td>
-                    <td class="px-2 py-1">x{{ containerItems(container.container_id) }}</td>
+                    <td class="px-2 py-1">x{{ containerItems(container) }}</td>
                     <td class="px-2 py-1 pr-3">
                         <a href="#" @click.prevent="copyLocation(container.container_id)" class="text-indigo-700 dark:text-indigo-200" :title="t('containers.copy_loc')">
                             <i class="fas fa-map-marked-alt"></i>
                         </a>
-                        <a href="#" @click.prevent="viewContainer(container.container_id)" class="text-indigo-700 dark:text-indigo-200 ml-2" :title="t('containers.view_access')" v-if="$page.auth.player.isSeniorStaff">
+                        <a href="#" @click.prevent="viewContainer(container)" class="text-indigo-700 dark:text-indigo-200 ml-2" :title="t('containers.view_access')" v-if="$page.auth.player.isSeniorStaff">
                             <i class="fas fa-key"></i>
                         </a>
                     </td>
@@ -55,7 +55,7 @@
         <modal :show="viewingContainer">
             <template #header>
                 <h1 class="dark:text-white">
-                    {{ t('containers.container') }} #{{ viewingContainer }}
+                    {{ t('containers.' + (viewingContainer.is_warehouse ? 'warehouse' : 'container')) }} #{{ viewingContainer.container_id }}
                 </h1>
             </template>
 
@@ -141,8 +141,8 @@ export default {
         };
     },
     methods: {
-        containerItems(id) {
-            const inventoryName = `container-${id}`;
+        containerItems(container) {
+            const inventoryName = `${container.is_warehouse ? 'warehouse' : 'container'}-${container.container_id}`;
 
             return this.items.find(count => count.inventory_name === inventoryName)?.count || 0;
         },
@@ -151,14 +151,14 @@ export default {
 
             this.copyToClipboard(`/tp_coords ${location[0]} ${location[1]} ${location[2]}`);
         },
-        async viewContainer(id) {
+        async viewContainer(container) {
             if (this.isLoading) return;
 
             this.isLoading = true;
-            this.viewingContainer = id;
+            this.viewingContainer = container;
             this.containerAccess = false;
 
-            const data = await _get(`/containers/${id}/access`);
+            const data = await _get(`/containers/${container.container_id}/access`);
 
             if (data?.status) {
                 this.containerAccess = data.data;

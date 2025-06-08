@@ -1587,6 +1587,7 @@
         "description": "An overview of all rented storage containers.",
         "rented_containers": "Rented Containers",
         "container": "Container",
+        "warehouse": "Warehouse",
         "container_id": "Container ID",
         "renter": "Renter",
         "paid_until": "Paid Until",
