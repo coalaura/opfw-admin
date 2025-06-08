@@ -149,7 +149,7 @@ export default {
         copyLocation(id) {
             const location = locations[id - 1]; // -1 cause lua has 1 based indexing 🤓
 
-            this.copyToClipboard(`/tp_coords ${location[0]} ${location[1]} ${location[2]}`);
+            this.copyToClipboard(`/tp_coords ${location[0].toFixed(2)} ${location[1].toFixed(2)} ${location[2].toFixed(2)}`);
         },
         async viewContainer(container) {
             if (this.isLoading) return;
