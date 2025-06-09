@@ -1463,6 +1463,7 @@
         "impounds_details": "Kombinert inntekt fra kjøretøy inndratt.",
         "joins": "Brukere som har blitt med",
         "joins_details": "Antall brukere som har blitt med på serveren.",
+        "lag_spikes": "Forsinkelser",
         "ls_customs": "LS Customs-kjøp",
         "ls_customs_details": "Kombinert inntekt fra alle LS Customs-kjøp.",
         "lucky_wheel": "Lykkespinn på hjulet",

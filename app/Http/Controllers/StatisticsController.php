@@ -5,9 +5,9 @@ use App\Helpers\CacheHelper;
 use App\Helpers\StatisticsHelper;
 use App\Player;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Facades\DB;
 
 class StatisticsController extends Controller
 {
@@ -470,7 +470,7 @@ class StatisticsController extends Controller
 
     public function fpsStatistics()
     {
-        $datasets = 4;
+        $datasets = 5;
 
         $statistics = [
             "data"  => [],
@@ -504,6 +504,13 @@ class StatisticsController extends Controller
                         "borderColor"     => $this->color(3, $datasets, 1),
                         "pointRadius"     => 0,
                     ],
+                    [
+                        "label"           => "Average Lag Spikes",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(4, $datasets, 0.3),
+                        "borderColor"     => $this->color(4, $datasets, 1),
+                        "pointRadius"     => 0,
+                    ],
                 ],
                 "labels"   => [],
             ],
@@ -525,6 +532,7 @@ class StatisticsController extends Controller
                     "maximum"           => $entry->maximum,
                     "average"           => $entry->average,
                     "average_1_percent" => $entry->average_1_percent,
+                    "lag_spikes"        => $entry->lag_spikes,
                 ];
             }
 
@@ -534,6 +542,7 @@ class StatisticsController extends Controller
             $statistics["graph"]["datasets"][1]["data"][] = $entry->maximum;
             $statistics["graph"]["datasets"][2]["data"][] = $entry->average;
             $statistics["graph"]["datasets"][3]["data"][] = $entry->average_1_percent;
+            $statistics["graph"]["datasets"][4]["data"][] = $entry->lag_spikes;
         }
 
         $statistics["data"] = array_reverse(array_values($statistics["data"]));

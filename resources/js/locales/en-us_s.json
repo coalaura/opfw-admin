@@ -1463,6 +1463,7 @@
         "impounds_details": "Combined revenue from vehicles impounded.",
         "joins": "User Joins",
         "joins_details": "Amount of folks that joined the server.",
+        "lag_spikes": "Lag Spikes, y'all",
         "ls_customs": "LS Customs Purchases",
         "ls_customs_details": "Combined revenue from all them LS Customs purchases.",
         "lucky_wheel": "Lucky Wheel Spins",

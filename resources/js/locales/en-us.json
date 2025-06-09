@@ -421,6 +421,7 @@
         "maximum_fps": "Maximum FPS",
         "average_fps": "Average FPS",
         "average_1_percent": "Average 1% FPS",
+        "lag_spikes": "Lag Spikes",
         "tag_money": "Money",
         "tag_amount": "Amount",
         "tag_percentage": "Percentage",
