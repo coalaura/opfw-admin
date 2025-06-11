@@ -18,7 +18,7 @@
         <v-section class="overflow-x-auto w-inventory" :noHeader="true" :noFooter="true">
             <template>
                 <div class="grid grid-cols-5 gap-3 w-max">
-                    <div v-for="(items, slot) in contents" :key="slot" class="bg-black bg-opacity-10 rounded-sm border border-gray-500 w-item relative pt-2 text-white">
+                    <div v-for="(items, slot) in contents" :key="slot" class="bg-black bg-opacity-10 border border-gray-500 w-item relative pt-2 text-white rounded-sm">
                         <template v-if="items.length > 0">
                             <div class="text-sm absolute top-0.5 right-1.5 select-none">x{{ items.length }}</div>
 
@@ -45,7 +45,11 @@
                             <div class="h-32">&nbsp;</div>
                         </template>
 
-                        <div class="px-1 py-0.5 text-center truncate text-sm bg-black bg-opacity-10" v-html="getItemLabelForSlot(slot)" :title="getItemLabelForSlot(slot, true, true)"></div>
+                        <div class="px-1 py-0.5 text-center truncate text-sm" :style="getDurabilityBackground(items)" v-html="getItemLabelForSlot(slot)" :title="getItemLabelForSlot(slot, true, true)"></div>
+
+                        <div class="h-full w-1 bg-black bg-opacity-10 absolute top-0 right-0 cursor-help" v-if="hasDurability(items)" :title="`${items[0].durability}%`">
+                            <div class="w-full absolute bottom-0 left-0" :style="getDurabilityStyle(items[0].durability)"></div>
+                        </div>
                     </div>
                 </div>
             </template>
@@ -245,6 +249,30 @@ export default {
     methods: {
         iconFailed(event) {
             event.target.src = "/images/icons/items/other/unknown.png";
+        },
+        hasDurability(items) {
+            return items.length > 0 && typeof items[0].durability === "number";
+        },
+        getDurabilityBackground(items) {
+            if (!this.hasDurability(items)) {
+                return null;
+            }
+
+            const percentage = 1 - (items[0].durability / 100);
+
+            console.log(`hsla(0 100% ${percentage * 50}% / 0.1)`);
+
+            return {
+                backgroundColor: `hsla(0 100% ${percentage * 50}% / ${0.1 + percentage * 0.1})`,
+            };
+        },
+        getDurabilityStyle(durability) {
+            const eased = durability >= 100 || durability <= 0 ? Math.min(100, Math.max(0, durability)) / 100.0 : -Math.sqrt(-((durability / 100.0) ** 2) + 1.0) + 1.0;
+
+            return {
+                height: `${durability}%`,
+                backgroundColor: `oklch(${80 + (eased * 10)}% 0.196 ${24 + (eased * 116)})`,
+            };
         },
         getItemIcon(item) {
             const metadata = item.metadata,
@@ -535,6 +563,6 @@ export default {
             // Other fields are not validated
             return true;
         }
-    }
+    },
 };
 </script>

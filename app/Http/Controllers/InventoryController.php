@@ -59,9 +59,8 @@ class InventoryController extends Controller
      * Display a certain inventory.
      *
      * @param string $inventory
-     * @param Request $request
      */
-    public function show(string $inventory, Request $request)
+    public function show(string $inventory)
     {
         if (Str::contains($inventory, ':')) {
             $inventory = explode(':', $inventory)[0];
@@ -75,7 +74,7 @@ class InventoryController extends Controller
             abort(400);
         }
 
-        $itemList = ServerAPI::getItems();
+        $itemList = ServerAPI::getItems(true);
         $slots    = self::MinInventorySlots[$inventoryParams[0]] ?? 5;
         $contents = [];
 
@@ -93,9 +92,10 @@ class InventoryController extends Controller
                 }
 
                 $contents[$slot][] = [
-                    'id'       => $id,
-                    'name'     => $itemName,
-                    'metadata' => $metadata,
+                    'id'         => $id,
+                    'name'       => $itemName,
+                    'metadata'   => $metadata,
+                    'durability' => $this->calculateDurability($itemName, $metadata, $itemList),
                 ];
 
                 if ($slot > $slots) {
@@ -446,5 +446,47 @@ class InventoryController extends Controller
         $list = ServerAPI::getItems();
 
         return isset($list[$name]);
+    }
+
+    private function calculateDurability(string $itemName, ?array $itemMetadata, array $itemList)
+    {
+        $itemData = $itemList[$itemName] ?? null;
+
+        if (! $itemData || ($itemMetadata && ! empty($itemMetadata['noDurability']))) {
+            return false;
+        }
+
+        if ($itemMetadata && isset($itemMetadata['durabilityPercent'])) {
+            return min(100, max(0, $itemMetadata['durabilityPercent']));
+        }
+
+        $degradeAfterTime = ! empty($itemData['degradeAfter']) ? $itemData['degradeAfter']['time'] : null;
+
+        if (! $degradeAfterTime) {
+            return false;
+        }
+
+        $timestamp = round(time());
+
+        $degradesAt = ($itemMetadata && isset($itemMetadata['degradesAt'])) ? $itemMetadata['degradesAt'] : null;
+
+        if (! $degradesAt || ! is_int($degradesAt)) {
+            return 100;
+        }
+
+        if ($timestamp >= $degradesAt) {
+            return 0;
+        }
+
+        $degradationStartsAt = $degradesAt - $degradeAfterTime;
+
+        if ($timestamp <= $degradationStartsAt) {
+            return 100;
+        }
+
+        $timeElapsed = $timestamp - $degradationStartsAt;
+        $durabilityPercent = 100 - (($timeElapsed / $degradeAfterTime) * 100);
+
+        return round(min(100, max(0, $durabilityPercent)), 2);
     }
 }

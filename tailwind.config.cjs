@@ -90,6 +90,7 @@ module.exports = {
                 "box":             "15px",
                 "twitter-img":     "250px",
                 "outfit":          "500px",
+                "full2px":         "calc(100% + 2px)",
             },
             minWidth: {
                 "box":     "350px",
