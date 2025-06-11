@@ -329,6 +329,7 @@
             "add_item_slot": "Is slot mein items jodhen.",
             "amount": "Rakam",
             "attach_identity": "Pehchaan Jodein",
+            "broken": "Puri tarah se kharab",
             "delete_confirm": "Kya aap sach mein is slot se sabhi items mitana chahte hain?",
             "delete_item_slot": "Is slot ke sabhi items mitayein.",
             "description": "{0} items ka kul wajan {1}su hai.",

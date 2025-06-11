@@ -18,7 +18,7 @@
         <v-section class="overflow-x-auto w-inventory" :noHeader="true" :noFooter="true">
             <template>
                 <div class="grid grid-cols-5 gap-3 w-max">
-                    <div v-for="(items, slot) in contents" :key="slot" class="bg-black bg-opacity-10 border border-gray-500 w-item relative pt-2 text-white rounded-sm">
+                    <div v-for="(items, slot) in contents" :key="slot" class="bg-black bg-opacity-10 border border-gray-500 w-item relative pt-2 text-white rounded-sm z-1">
                         <template v-if="items.length > 0">
                             <div class="text-sm absolute top-0.5 right-1.5 select-none">x{{ items.length }}</div>
 
@@ -45,11 +45,13 @@
                             <div class="h-32">&nbsp;</div>
                         </template>
 
-                        <div class="px-1 py-0.5 text-center truncate text-sm" :style="getDurabilityBackground(items)" v-html="getItemLabelForSlot(slot)" :title="getItemLabelForSlot(slot, true, true)"></div>
+                        <div class="px-1 py-0.5 text-center text-sm relative" :class="{ 'italic line-through': isFullyBroken(items) }" :style="getDurabilityBackground(items)" v-html="getItemLabelForSlot(slot)" :title="getItemLabelForSlot(slot, true, true)"></div>
 
                         <div class="h-full w-1 bg-black bg-opacity-10 absolute top-0 right-0 cursor-help" v-if="hasDurability(items)" :title="`${items[0].durability}%`">
                             <div class="w-full absolute bottom-0 left-0" :style="getDurabilityStyle(items[0].durability)"></div>
                         </div>
+
+                        <div class="durability" :style="{ opacity: `${(100 - items[0].durability) * 0.4}%` }" v-if="hasDurability(items)"></div>
                     </div>
                 </div>
             </template>
@@ -253,14 +255,19 @@ export default {
         hasDurability(items) {
             return items.length > 0 && typeof items[0].durability === "number";
         },
+        isFullyBroken(items) {
+            if (!this.hasDurability(items)) {
+                return false;
+            }
+
+            return items[0].durability <= 0;
+        },
         getDurabilityBackground(items) {
             if (!this.hasDurability(items)) {
                 return null;
             }
 
             const percentage = 1 - (items[0].durability / 100);
-
-            console.log(`hsla(0 100% ${percentage * 50}% / 0.1)`);
 
             return {
                 backgroundColor: `hsla(0 100% ${percentage * 50}% / ${0.1 + percentage * 0.1})`,
@@ -324,8 +331,18 @@ export default {
                 label = `${items.length}x ${label}`;
             }
 
+            label = `<div class="truncate">${label}</div>`;
+
             if (noHtml) {
-                label = label.replace(`<span class="font-semibold">`, "").replace("</span>", "");
+                label = label.replace(/(<([^>]+)>)/gi, "");
+            }
+
+            if (this.isFullyBroken(items)) {
+                if (noHtml) {
+                    label += ` ${this.t('inventories.show.broken')}`;
+                } else {
+                    label += `<div class="absolute bottom-full left-1 font-mono text-xxs leading-1">${this.t('inventories.show.broken')}</div>`;
+                }
             }
 
             return label;

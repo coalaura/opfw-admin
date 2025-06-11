@@ -329,6 +329,7 @@
             "add_item_slot": "Add some items to this here slot.",
             "amount": "Amount",
             "attach_identity": "Attach Identity",
+            "broken": "Plumb wore out",
             "delete_confirm": "Y'all sure ya wanna delete all them items from this slot?",
             "delete_item_slot": "Delete all them items in this slot.",
             "description": "{0} items weighin' {1}su in total.",

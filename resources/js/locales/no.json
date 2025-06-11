@@ -329,6 +329,7 @@
             "add_item_slot": "Legg til elementer i denne slotten.",
             "amount": "Antall",
             "attach_identity": "Legg ved identitet",
+            "broken": "Fullstendig forringet",
             "delete_confirm": "Er du sikker på at du vil slette alle elementer fra denne slotten?",
             "delete_item_slot": "Slett alle elementer i denne slotten.",
             "description": "{0} elementer som veier totalt {1}su.",

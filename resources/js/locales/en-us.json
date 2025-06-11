@@ -882,7 +882,8 @@
             "value": "Value",
             "save": "Save Changes",
             "move_from": "Move <i>{0}</i> from",
-            "move": "Move"
+            "move": "Move",
+            "broken": "Fully degraded"
         }
     },
     "twitter": {

@@ -329,6 +329,7 @@
             "add_item_slot": "Add stuff here.",
             "amount": "How much",
             "attach_identity": "Put name",
+            "broken": "All gone bad",
             "delete_confirm": "Sure delete all stuff here?",
             "delete_item_slot": "Delete all stuff here.",
             "description": "{0} stuff weigh {1} total.",
