@@ -835,7 +835,7 @@
             "none": "Is player ne ab tak koi character nahi banaya hai.",
             "outfits": "Outfits",
             "playtime_label": "Playtime",
-            "playtime_recent": "{0} ne pichle 2 hafton mein khela.",
+            "playtime_recent": "{0} ne pichle 2 hafton mein khela, {1} ne pichle 4 hafton mein.",
             "remove_tattoo": "Tattoos hatao",
             "reset_spawn": "Spawn reset karo",
             "save_changes": "Parivartan sanrakshit karein",

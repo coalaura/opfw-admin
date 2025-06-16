@@ -55,6 +55,7 @@ class CharacterResource extends JsonResource
             'mugshot'                    => $this->mugshot_url ?? null,
             'playtime'                   => $this->playtime,
             'playtime_2w'                => $this->getRecentPlaytime(2),
+            'playtime_4w'                => $this->getRecentPlaytime(4),
             'lastLoaded'                 => $this->last_loaded,
             'coords'                     => json_decode($this->coords, true),
             'marriedTo'                  => $this->married_to,

@@ -835,7 +835,7 @@
             "none": "This player ain't made any characters yet.",
             "outfits": "Outfits",
             "playtime_label": "Playtime",
-            "playtime_recent": "{0} done played in the last couple weeks.",
+            "playtime_recent": "{0} played in th' last 2 weeks, {1} in th' last 4 weeks.",
             "remove_tattoo": "Take off Tattoos",
             "reset_spawn": "Reset Start",
             "save_changes": "Save them changes",

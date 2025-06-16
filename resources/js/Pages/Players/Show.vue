@@ -1154,7 +1154,7 @@
                                             <th class="px-2 py-0.5 font-semibold">{{ t('players.characters.playtime_label') }}</th>
                                             <td class="px-2 py-0.5 italic w-full">
                                                 <span :title="formatSeconds(character.playtime, false)">{{ character.playtime | formatSeconds }}</span>
-                                                <i class="fas fa-signal ml-1 cursor-help" :title="t('players.characters.playtime_recent', formatSeconds(character.playtime_2w))"></i>
+                                                <i class="fas fa-signal ml-1 cursor-help" :title="t('players.characters.playtime_recent', formatSeconds(character.playtime_2w), formatSeconds(character.playtime_4w))"></i>
                                             </td>
                                         </tr>
 

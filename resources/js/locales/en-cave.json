@@ -835,7 +835,7 @@
             "none": "Player no make character yet.",
             "outfits": "Clothes",
             "playtime_label": "Play time",
-            "playtime_recent": "{0} play last 2 week.",
+            "playtime_recent": "{0} play last 2 week, {1} last 4 week.",
             "remove_tattoo": "Remove skin mark",
             "reset_spawn": "Start place new",
             "save_changes": "Keep changes",

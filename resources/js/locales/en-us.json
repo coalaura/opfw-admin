@@ -1250,7 +1250,7 @@
             "is_male": "This character is male.",
             "born": "Born",
             "playtime_label": "Playtime",
-            "playtime_recent": "{0} played in the last 2 weeks.",
+            "playtime_recent": "{0} played in the last 2 weeks, {1} in the last 4 weeks.",
             "last_loaded": "Last Loaded:",
             "no_mugshot": "No mugshot available",
             "married_to": "Married to",

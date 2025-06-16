@@ -835,7 +835,7 @@
             "none": "Denne spilleren har ikke opprettet noen karakterer ennå.",
             "outfits": "Antrekk",
             "playtime_label": "Spilletid",
-            "playtime_recent": "{0} spilte i løpet av de siste 2 ukene.",
+            "playtime_recent": "{0} spilte i løpet av de siste 2 ukene, {1} i løpet av de siste 4 ukene.",
             "remove_tattoo": "Fjern tatoveringer",
             "reset_spawn": "Tilbakestill startpunkt",
             "save_changes": "Lagre endringer",

@@ -835,7 +835,7 @@
             "none": "This pwayew has not cweated any chawactews yet.",
             "outfits": "Outfitsies",
             "playtime_label": "Pwaytime",
-            "playtime_recent": "{0} pwayed in the wast 2 weeks, uwu.",
+            "playtime_recent": "{0} pwayed in the wast 2 weeks, {1} in the wast 4 weeks. uwu",
             "remove_tattoo": "Wemove Tattoos",
             "reset_spawn": "Weset Spawn",
             "save_changes": "Save changes",
