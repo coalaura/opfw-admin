@@ -161,10 +161,10 @@ class PlayerBanController extends Controller
         $page = Paginator::resolveCurrentPage('page');
         $query->limit(15)->offset(($page - 1) * 15);
 
-        $players = array_map(function($player) {
-            $mediaDevices = !empty($player['media_devices']) ? $player['media_devices'] : false;
+        $players = array_map(function ($player) {
+            $mediaDevices = ! empty($player['media_devices']) ? $player['media_devices'] : false;
 
-            $player['suspicious'] = $mediaDevices && is_array($mediaDevices) ? DeviceHelper::check($mediaDevices): false;
+            $player['suspicious'] = $mediaDevices && is_array($mediaDevices) ? DeviceHelper::check($mediaDevices) : false;
 
             return $player;
         }, $query->get()->toArray());

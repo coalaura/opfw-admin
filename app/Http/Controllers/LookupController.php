@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\DB;
 use SteamID;
 
 class LookupController extends Controller
@@ -179,6 +180,7 @@ class LookupController extends Controller
 
             $data['players'] = Player::query()
                 ->select(['license_identifier', 'player_name'])
+                ->where(DB::raw(sprintf("JSON_CONTAINS(identifiers, '\"%s\"')", $user['id'])), '=', '1')
                 ->where('identifiers', 'LIKE', "%\"discord:" . $user['id'] . "\"%")
                 ->get()->toArray();
         }
