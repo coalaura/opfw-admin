@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Helpers\CoreLogHelper;
 use App\Helpers\LoggingHelper;
 use Closure;
 use Illuminate\Http\Request;
@@ -23,6 +24,8 @@ class LogMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
+        CoreLogHelper::access($request);
+
         $player = user();
         $name = "N/A";
 
