@@ -28,7 +28,7 @@ class CoreLogHelper
         }
 
         $cluster = (defined("CLUSTER") ? CLUSTER : "core") ?? "core";
-        $path    = realpath(sprintf("%s/../storage/base/%s.log", __DIR__, $cluster));
+        $path    = storage_path(sprintf("base/%s.log", $cluster));
 
         $directory = dirname($path);
 
@@ -68,23 +68,25 @@ class CoreLogHelper
         }
 
         return sprintf(
-            "[%s] %s - %s",
-            date("Y-m-d H:i:s"),
-            self::license(),
+            "[%s] %s %s",
+            date("Y-m-d\TH:i:s.v"),
+            self::user(),
             $message,
         );
     }
 
-    private static function license(): string
+    private static function user(): string
     {
         if (php_sapi_name() === "cli") {
             return "cli";
         }
 
-        if (! function_exists("license")) {
+        if (! function_exists("user")) {
             return "unk";
         }
 
-        return substr(license(), 8);
+        $user = user();
+
+        return $user ? dechex($user->user_id) : "unk";
     }
 }

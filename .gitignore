@@ -26,6 +26,7 @@
 /storage/sessions
 /storage/locks
 /storage/cache
+/storage/base
 /vendor
 envs/.env
 envs/.jwt
