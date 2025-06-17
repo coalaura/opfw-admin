@@ -52,8 +52,9 @@ class CoreLogHelper
         self::register();
 
         self::$logs[] = self::format(sprintf(
-            "%s %s",
+            "%s (%d) %s",
             $method,
+            $request->header("Content-Length", 0),
             $request->getPathInfo(),
         ));
     }
