@@ -33,7 +33,7 @@ class CoreLogHelper
         $directory = dirname($path);
 
         if (! file_exists($directory)) {
-            mkdir($directory, 0644, true);
+            mkdir($directory, 0775, true);
         }
 
         $payload = sprintf("%s\n", implode("\n", self::$logs));
