@@ -43,11 +43,17 @@ class CoreLogHelper
 
     public static function access(Request $request)
     {
+        $method = $request->getMethod();
+
+        if ($method === "GET" && $request->isXmlHttpRequest()) {
+            return;
+        }
+
         self::register();
 
         self::$logs[] = self::format(sprintf(
             "%s %s",
-            $request->getMethod(),
+            $method,
             $request->getPathInfo(),
         ));
     }
@@ -61,6 +67,7 @@ class CoreLogHelper
 
     private static function format(string $format, ...$data): string
     {
+        $date    = date("Y-m-d\TH:i:s.v");
         $message = $format;
 
         if (! empty($data)) {
@@ -69,7 +76,7 @@ class CoreLogHelper
 
         return sprintf(
             "[%s] %s %s",
-            date("Y-m-d\TH:i:s.v"),
+            $date,
             self::user(),
             $message,
         );
