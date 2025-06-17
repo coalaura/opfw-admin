@@ -51,10 +51,15 @@ class CoreLogHelper
 
         self::register();
 
+        $length = $request->header("Content-Length", 0);
+
+        if ($length && $length > 0) {
+            $method = sprintf("%s (%d)", $method, $length);
+        }
+
         self::$logs[] = self::format(sprintf(
-            "%s (%d) %s",
+            "%s %s",
             $method,
-            $request->header("Content-Length", 0),
             $request->getPathInfo(),
         ));
     }
