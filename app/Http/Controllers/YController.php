@@ -39,7 +39,7 @@ class YController extends Controller
         $query->leftJoin('y_accounts', 'y_accounts.id', '=', 'authorId');
 
         if (intval($request->input('top', '0')) === 1) {
-            // y_yells.TIME > CURRENT_TIMESTAMP() - INTERVAL '15' DAY
+            // y_tweets.TIME > CURRENT_TIMESTAMP() - INTERVAL '15' DAY
             $query->where('time', '>', date('Y-m-d H:i:s', strtotime('-15 days')));
 
             $query->orderByDesc('likes');
@@ -49,7 +49,7 @@ class YController extends Controller
 
         $page = Paginator::resolveCurrentPage('page');
 
-        $query->select(['y_yells.id', 'authorId', 'realUser', 'message', 'time', 'likes', 'username', 'is_verified', 'avatar_url']);
+        $query->select(['y_tweets.id', 'authorId', 'realUser', 'message', 'time', 'likes', 'username', 'is_verified', 'avatar_url']);
         $query->limit(30)->offset(($page - 1) * 30);
 
         $posts = YPostResource::collection($query->get());
