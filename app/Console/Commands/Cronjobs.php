@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Console\Commands;
 
 use App\Ban;
@@ -10,9 +9,9 @@ use App\PanelLog;
 use App\Server;
 use App\Warning;
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class Cronjobs extends Command
 {
@@ -109,12 +108,13 @@ class Cronjobs extends Command
             ->whereNotNull("ban_hash")
             ->get();
 
+        $logs        = [];
         $toBeDeleted = [];
 
         foreach ($bans as $ban) {
             $id = $ban->user_id;
 
-            if (!empty($id)) {
+            if (! empty($id)) {
                 Warning::query()->create([
                     'player_id'      => $id,
                     'warning_type'   => 'system',
@@ -123,11 +123,16 @@ class Cronjobs extends Command
                 ]);
             }
 
+            $reason = preg_replace('/\s+/', ' ', $ban->reason);
+            $logs[] = sprintf('[%s] %s: %s - "%s"', date('Y-m-d H:i:s'), $ban->ban_hash, $ban->identifier, $reason);
+
             $toBeDeleted[] = $ban->ban_hash;
         }
 
-        if (!empty($toBeDeleted)) {
+        if (! empty($toBeDeleted)) {
             Ban::query()->whereIn("ban_hash", $toBeDeleted)->delete();
+
+            $this->dumpBanLogs("bans", "sch", $logs);
         }
 
         echo $this->stopTime($start);
@@ -157,24 +162,15 @@ class Cronjobs extends Command
                     $logs[] = sprintf('[%s] %s: %s - "%s"', date('Y-m-d H:i:s'), $hash, $identifier, $reason);
                 }
 
-                if (!in_array($hash, $toBeDeleted)) {
+                if (! in_array($hash, $toBeDeleted)) {
                     $toBeDeleted[] = $hash;
                 }
             }
 
-            if (!empty($toBeDeleted)) {
+            if (! empty($toBeDeleted)) {
                 Ban::query()->whereIn("ban_hash", $toBeDeleted)->delete();
 
-                if (!empty($logs)) {
-                    $path = storage_path('bans/' . CLUSTER . '.log');
-                    $dir  = dirname($path);
-
-                    if (!is_dir($dir)) {
-                        mkdir($dir, 0775, true);
-                    }
-
-                    file_put_contents($path, implode("\n", $logs) . "\n", FILE_APPEND);
-                }
+                $this->dumpBanLogs("bans", "exp", $logs);
             }
 
             echo $this->stopTime($start);
@@ -184,7 +180,7 @@ class Cronjobs extends Command
         $start = microtime(true);
         echo " - Checking if FiveM server is reachable...";
 
-        $reachable = !empty(ServerAPI::getVariables());
+        $reachable = ! empty(ServerAPI::getVariables());
 
         echo $this->stopTime($start);
 
@@ -198,7 +194,7 @@ class Cronjobs extends Command
 
                 $result = call_user_func($api);
 
-                if (!$result || empty($result)) {
+                if (! $result || empty($result)) {
                     $this->warn(sprintf(" - Failed to refresh %s (empty)", $api[1]));
                 } else {
                     $taken = round(microtime(true) * 1000 - $start);
@@ -211,6 +207,22 @@ class Cronjobs extends Command
         } else {
             echo " - FiveM server is not reachable, skipping static json API refresh." . PHP_EOL;
         }
+    }
+
+    private function dumpBanLogs(string $category, string $type, array $logs)
+    {
+        if (empty($logs)) {
+            return;
+        }
+
+        $path = storage_path(sprintf("%s/%s_%s.log", $category, CLUSTER, $type));
+        $dir  = dirname($path);
+
+        if (! is_dir($dir)) {
+            mkdir($dir, 0775, true);
+        }
+
+        file_put_contents($path, implode("\n", $logs) . "\n", FILE_APPEND);
     }
 
     private function stopTime($time): string
