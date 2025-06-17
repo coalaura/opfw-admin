@@ -103,7 +103,7 @@ class Cronjobs extends Command
 
         $bans = Ban::query()
             ->where('scheduled_unban', '<=', $time)
-            ->select(["user_id", "ban_hash"])
+            ->select(["user_id", "ban_hash", "identifier", "reason"])
             ->leftJoin("users", "license_identifier", "=", "identifier")
             ->whereNotNull("ban_hash")
             ->get();
