@@ -111,9 +111,9 @@ export default {
                 url: "/containers",
             },
             {
-                label: "twitter.title",
+                label: "y.title",
                 icon: "fab fa-twitter",
-                url: "/twitter",
+                url: "/y",
             },
             {
                 label: "map.title",
@@ -332,7 +332,7 @@ export default {
                     "/players",
                     "/new_players",
                     "/characters",
-                    "/twitter",
+                    "/y",
                     "/paintings",
                     "/backstories",
                 ],

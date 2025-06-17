@@ -2,11 +2,11 @@
 
 namespace App\Http\Resources;
 
-use App\TwitterUser;
+use App\YUser;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TwitterPostResource extends JsonResource
+class YPostResource extends JsonResource
 {
 
     /**
@@ -28,7 +28,7 @@ class TwitterPostResource extends JsonResource
             // User data if used in a left join
             'username'    => $this->username ?? false,
             'is_verified' => $this->is_verified ?? false,
-            'avatar_url'  => TwitterUser::cleanupAvatar($this->avatar_url ?? false),
+            'avatar_url'  => YUser::cleanupAvatar($this->avatar_url ?? false),
         ];
     }
 

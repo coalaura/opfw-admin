@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use App\Character;
 use App\Helpers\PermissionHelper;
 use App\Http\Resources\CharacterResource;
-use App\Http\Resources\TwitterPostResource;
-use App\Http\Resources\TwitterUserResource;
-use App\TwitterPost;
-use App\TwitterUser;
+use App\Http\Resources\YPostResource;
+use App\Http\Resources\YUserResource;
+use App\YPost;
+use App\YUser;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Inertia\Inertia;
 use Inertia\Response;
 
-class TwitterController extends Controller
+class YController extends Controller
 {
 
     /**
@@ -28,7 +28,7 @@ class TwitterController extends Controller
     {
         $start = round(microtime(true) * 1000);
 
-        $query = TwitterPost::query()->where('is_deleted', '=', '0');
+        $query = YPost::query()->where('is_deleted', '=', '0');
 
         // Filtering by username.
         $this->searchQuery($request, $query, 'username', 'username');
@@ -36,10 +36,10 @@ class TwitterController extends Controller
         // Filtering by message.
         $this->searchQuery($request, $query, 'message', 'message');
 
-        $query->leftJoin('twitter_accounts', 'twitter_accounts.id', '=', 'authorId');
+        $query->leftJoin('y_accounts', 'y_accounts.id', '=', 'authorId');
 
         if (intval($request->input('top', '0')) === 1) {
-            // twitter_tweets.TIME > CURRENT_TIMESTAMP() - INTERVAL '15' DAY
+            // y_yells.TIME > CURRENT_TIMESTAMP() - INTERVAL '15' DAY
             $query->where('time', '>', date('Y-m-d H:i:s', strtotime('-15 days')));
 
             $query->orderByDesc('likes');
@@ -49,14 +49,14 @@ class TwitterController extends Controller
 
         $page = Paginator::resolveCurrentPage('page');
 
-        $query->select(['twitter_tweets.id', 'authorId', 'realUser', 'message', 'time', 'likes', 'username', 'is_verified', 'avatar_url']);
+        $query->select(['y_yells.id', 'authorId', 'realUser', 'message', 'time', 'likes', 'username', 'is_verified', 'avatar_url']);
         $query->limit(30)->offset(($page - 1) * 30);
 
-        $posts = TwitterPostResource::collection($query->get());
+        $posts = YPostResource::collection($query->get());
 
         $end = round(microtime(true) * 1000);
 
-        return Inertia::render('Twitter/Index', [
+        return Inertia::render('Y/Index', [
             'posts'   => $posts,
             'filters' => $request->all(
                 'message',
@@ -70,16 +70,16 @@ class TwitterController extends Controller
     }
 
     /**
-     * Shows a certain user and their tweets
+     * Shows a certain user and their yells
      *
-     * @param TwitterUser $user
+     * @param YUser $user
      * @return Response
      */
-    public function user(TwitterUser $user): Response
+    public function user(YUser $user): Response
     {
         $page = Paginator::resolveCurrentPage('page');
 
-        $tweets = TwitterPost::query()
+        $yells = YPost::query()
             ->where('authorId', '=', $user->id)
             ->where('is_deleted', '=', '0')
             ->select(['id', 'authorId', 'realUser', 'message', 'time', 'likes'])
@@ -90,9 +90,9 @@ class TwitterController extends Controller
         $creatorCid = $user->creator_cid;
 
         if (!$creatorCid) {
-            $tweet = $tweets->first();
+            $yell = $yells->first();
 
-            $creatorCid = $tweet ? $tweet->realUser : null;
+            $creatorCid = $yell ? $yell->realUser : null;
         }
 
         /**
@@ -102,10 +102,10 @@ class TwitterController extends Controller
             ->where('character_id', '=', $creatorCid)
             ->get()->first() : null;
 
-        return Inertia::render('Twitter/User', [
-            'tweets'    => TwitterPostResource::collection($tweets),
+        return Inertia::render('Y/User', [
+            'yells'    => YPostResource::collection($yells),
             'character' => $character ? new CharacterResource($character) : null,
-            'user'      => new TwitterUserResource($user),
+            'user'      => new YUserResource($user),
             'links'     => $this->getPageUrls($page),
             'page'      => $page,
         ]);
@@ -117,9 +117,9 @@ class TwitterController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function editTweet(Request $request, TwitterPost $post): RedirectResponse
+    public function editYell(Request $request, YPost $post): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_TWITTER_EDIT)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_Y_EDIT)) {
             abort(401);
         }
 
@@ -139,7 +139,7 @@ class TwitterController extends Controller
 
         $post->update($update);
 
-        return backWith('success', 'Successfully edited tweet');
+        return backWith('success', 'Successfully edited yell');
     }
 
     /**
@@ -148,21 +148,21 @@ class TwitterController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function deleteTweets(Request $request): RedirectResponse
+    public function deleteYells(Request $request): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_TWITTER)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_Y)) {
             abort(401);
         }
 
         $ids = $request->input('ids');
 
         if (empty($ids)) {
-            return backWith('error', 'No tweets selected');
+            return backWith('error', 'No yells selected');
         }
 
-        TwitterPost::query()->whereIn('id', $ids)->delete();
+        YPost::query()->whereIn('id', $ids)->delete();
 
-        return backWith('success', 'Successfully deleted tweets');
+        return backWith('success', 'Successfully deleted yells');
     }
 
     /**
@@ -171,9 +171,9 @@ class TwitterController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function verify(Request $request, TwitterUser $user): RedirectResponse
+    public function verify(Request $request, YUser $user): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_TWITTER_VERIFY)) {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_Y_VERIFY)) {
             abort(401);
         }
 

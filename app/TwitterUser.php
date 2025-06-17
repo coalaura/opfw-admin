@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 /**
  * @package App
  */
-class TwitterUser extends Authenticatable
+class YUser extends Authenticatable
 {
     use HasFactory;
     use Notifiable;
@@ -20,7 +20,7 @@ class TwitterUser extends Authenticatable
      *
      * @var string
      */
-    protected $table = 'twitter_accounts';
+    protected $table = 'y_accounts';
 
     /**
      * Whether to use timestamps.
@@ -66,7 +66,7 @@ class TwitterUser extends Authenticatable
     }
 
     /**
-     * Returns a map of twitter_userid->twitter_user
+     * Returns a map of y_userid->y_user
      * This is used instead of a left join as it appears to be a lot faster
      *
      * @param array $source

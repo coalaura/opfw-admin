@@ -6,7 +6,7 @@
                 <i class="fas fa-heart text-red-800 dark:text-red-500"></i> {{ post.likes }}
             </span>
         </div>
-        <inertia-link class="block mr-2 flex-shrink-0" :href="'/twitter/' + post.authorId" v-else>
+        <inertia-link class="block mr-2 flex-shrink-0" :href="'/y/' + post.authorId" v-else>
             <img class="block w-12 h-12 rounded-full object-cover" :src="user.avatar_url" @error="avatarError" />
             <span class="block text-xs text-center mt-2 text-gray-500 dark:text-gray-400">
                 <i class="fas fa-heart text-red-600 dark:text-red-500"></i> {{ post.likes }}
@@ -19,7 +19,7 @@
                 <span class="verified" v-if="user.is_verified">&nbsp;</span>
                 <span :title="post.time | formatTime(true)" class="text-gray-400 dark:text-gray-500 font-normal">- {{ formatDate(post.time) }}</span>
             </div>
-            <inertia-link :href="'/twitter/' + post.authorId" class="block mb-2 font-bold" v-else>
+            <inertia-link :href="'/y/' + post.authorId" class="block mb-2 font-bold" v-else>
                 <span class="hover:underline">{{ user.username }}</span>
                 <span class="verified" v-if="user.is_verified">&nbsp;</span>
                 <span :title="post.time | formatTime(true)" class="text-gray-400 dark:text-gray-500 font-normal">- {{ formatDate(post.time) }}</span>
@@ -29,28 +29,28 @@
         </div>
 
         <div class="absolute top-1 right-1 flex gap-1 items-center">
-            <button class="text-red-500 dark:text-red-400 no-underline drop-shadow-sm leading-none" @click="deletePost()" v-if="canSeeDelete()" :title="t('twitter.delete_quick')">
+            <button class="text-red-500 dark:text-red-400 no-underline drop-shadow-sm leading-none" @click="deletePost()" v-if="canSeeDelete()" :title="t('y.delete_quick')">
                 <i class="fas fa-trash-alt"></i>
             </button>
 
-            <button class="text-yellow-500 dark:text-yellow-400 no-underline drop-shadow-sm leading-none" @click="editingPost = true" v-if="canSeeEdit()" :title="t('twitter.edit_post_title')">
+            <button class="text-yellow-500 dark:text-yellow-400 no-underline drop-shadow-sm leading-none" @click="editingPost = true" v-if="canSeeEdit()" :title="t('y.edit_post_title')">
                 <i class="fas fa-pen-square"></i>
             </button>
 
-            <input type="checkbox" class="!outline-none drop-shadow-sm" @change="selectionChange($event, post.id)" v-if="selectionChange && canSeeDelete()" :title="t('twitter.delete_mark')" />
+            <input type="checkbox" class="!outline-none drop-shadow-sm" @change="selectionChange($event, post.id)" v-if="selectionChange && canSeeDelete()" :title="t('y.delete_mark')" />
         </div>
 
         <modal :show="editingPost">
             <template #header>
                 <h1 class="dark:text-white">
-                    {{ t('twitter.edit_post') }}
+                    {{ t('y.edit_post') }}
                 </h1>
             </template>
 
             <template #default>
                 <div class="w-full p-3 flex justify-between px-0">
                     <label class="mr-4 block w-1/4 pt-2 font-bold">
-                        {{ t('twitter.likes') }}
+                        {{ t('y.likes') }}
                         <span v-if="hasEdited('likes')">*</span>
                     </label>
                     <input class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border-2 border-gray-500 rounded" :class="{ 'border-lime-500': hasEdited('likes') }" id="likes" type="number" step="1" min="0" max="10000000" v-model="edit.likes" />
@@ -58,7 +58,7 @@
 
                 <div class="w-full p-3 flex justify-between px-0">
                     <label class="mr-4 block w-1/4 pt-2 font-bold">
-                        {{ t('twitter.message') }}
+                        {{ t('y.message') }}
                         <span v-if="hasEdited('message')">*</span>
                     </label>
                     <textarea class="block w-3/4 py-2 bg-gray-200 dark:bg-gray-600 border-2 border-gray-500 rounded" :class="{ 'border-lime-500': hasEdited('message') }" id="message" placeholder="meow :)" rows="4" v-model="edit.message"></textarea>
@@ -67,7 +67,7 @@
 
             <template #actions>
                 <button type="button" class="px-5 py-2 rounded hover:bg-blue-200 dark:bg-blue-600 dark:hover:bg-blue-400" @click="updatePost()">
-                    {{ t('twitter.save') }}
+                    {{ t('y.save') }}
                 </button>
 
                 <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="editingPost = false">
@@ -82,7 +82,7 @@
 import Modal from './Modal.vue';
 
 export default {
-    name: 'TwitterPost',
+    name: 'YPost',
     components: {
         Modal
     },
@@ -116,22 +116,22 @@ export default {
     },
     methods: {
         canSeeEdit() {
-            return this.perm.check(this.perm.PERM_TWITTER_EDIT);
+            return this.perm.check(this.perm.PERM_Y_EDIT);
         },
         canSeeDelete() {
-            return this.perm.check(this.perm.PERM_TWITTER);
+            return this.perm.check(this.perm.PERM_Y);
         },
         hasEdited(field) {
-            return this.edit[field] != this.post[field];
+            return this.edit[field] !== this.post[field];
         },
         async deletePost() {
-            if (!confirm(this.t('twitter.delete_confirm'))) return;
+            if (!confirm(this.t('y.delete_confirm'))) return;
 
             if (this.isLoading) return;
 
             this.isLoading = true;
 
-            await this.$inertia.post('/tweets/delete', {
+            await this.$inertia.post('/yells/delete', {
                 ids: [this.post.id],
             }, {
                 preserveState: true,
@@ -159,7 +159,7 @@ export default {
             this.isLoading = true;
             this.editingPost = false;
 
-            await this.$inertia.post('/tweets/edit/' + this.post.id, data, {
+            await this.$inertia.post(`/yells/edit/${this.post.id}`, data, {
                 preserveState: true,
                 preserveScroll: true
             });
@@ -174,9 +174,9 @@ export default {
                 time = d.format('h:mm A');
 
             if (day === today) {
-                return 'Today at ' + time;
+                return `Today at ${time}`;
             } else if (day === yesterday) {
-                return 'Yesterday at ' + time;
+                return `Yesterday at ${time}`;
             }
 
             return d.format('MM/DD/YYYY');
@@ -189,7 +189,7 @@ export default {
             body = body.trim();
 
             if (body.match(/^https?:\/\/[^\s]+?\.(png|jpe?g|gif|bmp|webp)(\?[^\s]*)?$/i)) {
-                return '<a href="' + body + '" target="_blank" class="block max-w-full w-twitter-img h-twitter-img overflow-hidden rounded-xl border border-gray-500"><img src="' + body + '" class="block w-full h-full object-cover translate hover:scale-105" /></a>';
+                return `<a href="${body}" target="_blank" class="block max-w-full w-y-img h-y-img overflow-hidden rounded-xl border border-gray-500"><img src="${body}" class="block w-full h-full object-cover translate hover:scale-105" /></a>`;
             }
 
             return body;

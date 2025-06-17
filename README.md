@@ -25,7 +25,7 @@ This admin panel **requires** an OP-Framework powered FiveM server. It will **NO
 * See, search, manage and edit players and characters.
 * Warn and ban players, also temporarily.
 * Watch players on the live-map.
-* Keep up-to-date with, edit and delete twitter posts.
+* Keep up-to-date with, edit and delete y posts.
 * Check all kinds of server statistics.
 * And many, many more features...
 * [*... open issue to request a feature.*](https://github.com/coalaura/opfw-admin/issues/new/choose)

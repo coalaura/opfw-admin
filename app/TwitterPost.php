@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  *
  * @package App
  */
-class TwitterPost extends Model
+class YPost extends Model
 {
     use HasFactory;
 
@@ -27,7 +27,7 @@ class TwitterPost extends Model
      *
      * @var string
      */
-    protected $table = 'twitter_tweets';
+    protected $table = 'y_tweets';
 
     /**
      * The attributes that are mass assignable.
@@ -59,9 +59,9 @@ class TwitterPost extends Model
      *
      * @return BelongsTo
      */
-    public function twitterUser(): BelongsTo
+    public function yUser(): BelongsTo
     {
-        return $this->belongsTo(TwitterUser::class, 'id', 'authorId');
+        return $this->belongsTo(YUser::class, 'id', 'authorId');
     }
 
     /**

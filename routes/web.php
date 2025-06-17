@@ -46,7 +46,7 @@ use App\Http\Controllers\LookupController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SuspiciousController;
 use App\Http\Controllers\TestController;
-use App\Http\Controllers\TwitterController;
+use App\Http\Controllers\YController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\ToolController;
 use Illuminate\Http\Request;
@@ -191,12 +191,12 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     // Suspicious.
     Route::get('/suspicious', [SuspiciousController::class, 'index']);
 
-    // Twitter.
-    Route::get('twitter', [TwitterController::class, 'index']);
-    Route::get('twitter/{user}', [TwitterController::class, 'user']);
-    Route::post('twitter/{user}/verify', [TwitterController::class, 'verify']);
-    Route::post('tweets/delete', [TwitterController::class, 'deleteTweets']);
-    Route::post('tweets/edit/{post}', [TwitterController::class, 'editTweet']);
+    // Y.
+    Route::get('y', [YController::class, 'index']);
+    Route::get('y/{user}', [YController::class, 'user']);
+    Route::post('y/{user}/verify', [YController::class, 'verify']);
+    Route::post('yells/delete', [YController::class, 'deleteYells']);
+    Route::post('yells/edit/{post}', [YController::class, 'editYell']);
 
     // Logs.
     Route::resource('logs', LogController::class);

@@ -1,8 +1,5 @@
 <?php
-
 namespace App\Helpers;
-
-use Illuminate\Http\Request;
 
 class PermissionHelper
 {
@@ -15,9 +12,9 @@ class PermissionHelper
         self::PERM_EDIT_TAG       => ['edit_tag', self::LEVEL_ROOT],
         self::PERM_LOADING_SCREEN => ['loading_screen', self::LEVEL_SUPERADMIN],
         self::PERM_VIEW_QUEUE     => ['view_queue', self::LEVEL_SENIOR],
-        self::PERM_TWITTER        => ['twitter', self::LEVEL_SUPERADMIN],
-        self::PERM_TWITTER_VERIFY => ['twitter_verify', self::LEVEL_SUPERADMIN],
-        self::PERM_TWITTER_EDIT   => ['twitter_edit', self::LEVEL_SUPERADMIN],
+        self::PERM_Y              => ['y', self::LEVEL_SUPERADMIN],
+        self::PERM_Y_VERIFY       => ['y_verify', self::LEVEL_SUPERADMIN],
+        self::PERM_Y_EDIT         => ['y_edit', self::LEVEL_SUPERADMIN],
         self::PERM_LINKED         => ['linked', self::LEVEL_ROOT],
         self::PERM_ANNOUNCEMENT   => ['announcement', self::LEVEL_SUPERADMIN],
         self::PERM_DAMAGE_LOGS    => ['damage_logs', self::LEVEL_SENIOR],
@@ -43,9 +40,9 @@ class PermissionHelper
     const PERM_EDIT_TAG       = 'P_EDIT_TAG';
     const PERM_LOADING_SCREEN = 'P_LOADING_SCREEN';
     const PERM_VIEW_QUEUE     = 'P_VIEW_QUEUE';
-    const PERM_TWITTER        = 'P_TWITTER';
-    const PERM_TWITTER_VERIFY = 'P_TWITTER_VERIFY';
-    const PERM_TWITTER_EDIT   = 'P_TWITTER_EDIT';
+    const PERM_Y              = 'P_Y';
+    const PERM_Y_VERIFY       = 'P_Y_VERIFY';
+    const PERM_Y_EDIT         = 'P_Y_EDIT';
     const PERM_LINKED         = 'P_LINKED';
     const PERM_ANNOUNCEMENT   = 'P_ANNOUNCEMENT';
     const PERM_DAMAGE_LOGS    = 'P_DAMAGE_LOGS';
@@ -104,11 +101,11 @@ class PermissionHelper
     public static function hasPermission(string $key): bool
     {
         $player = user();
-        if (!$player) {
+        if (! $player) {
             return false;
         }
 
-        if (!isset(self::PERMISSIONS[$key])) {
+        if (! isset(self::PERMISSIONS[$key])) {
             return true;
         }
 

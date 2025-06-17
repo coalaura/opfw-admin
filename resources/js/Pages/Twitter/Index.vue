@@ -3,10 +3,10 @@
 
         <portal to="title">
             <h1 class="dark:text-white">
-                {{ t('twitter.title') }}
+                {{ t('y.title') }}
             </h1>
             <p>
-                {{ t('twitter.description') }}
+                {{ t('y.description') }}
             </p>
         </portal>
 
@@ -27,7 +27,7 @@
         <v-section :noFooter="true">
             <template #header>
                 <h2>
-                    {{ t('twitter.filter') }}
+                    {{ t('y.filter') }}
                 </h2>
             </template>
 
@@ -37,21 +37,21 @@
                         <!-- Details -->
                         <div class="w-3/12 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-3" for="username">
-                                {{ t('twitter.account') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+                                {{ t('y.account') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="username" :placeholder="t('twitter.placeholder_username')" v-model="filters.username">
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="username" :placeholder="t('y.placeholder_username')" v-model="filters.username">
                         </div>
                         <!-- Details -->
                         <div class="w-7/12 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-3" for="message">
-                                {{ t('twitter.message') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+                                {{ t('y.message') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" :placeholder="t('twitter.placeholder_message')" v-model="filters.message">
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" :placeholder="t('y.placeholder_message')" v-model="filters.message">
                         </div>
-                        <!-- Top Tweets -->
+                        <!-- Top Yells -->
                         <div class="w-2/12 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-3" for="top">
-                                {{ t('twitter.top') }}
+                                {{ t('y.top') }}
                             </label>
                             <select class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="top" v-model="filters.top">
                                 <option :value="null">{{ t('global.no') }}</option>
@@ -68,7 +68,7 @@
                         <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg" @click="refresh">
                             <span v-if="!isLoading">
                                 <i class="fas fa-search"></i>
-                                {{ t('twitter.search') }}
+                                {{ t('y.search') }}
                             </span>
                             <span v-else>
                                 <i class="fas fa-cog animate-spin"></i>
@@ -81,15 +81,15 @@
         </v-section>
 
         <template>
-            <h2 class="mb-4 max-w-2xl m-auto text-2xl">{{ t('twitter.title') }}</h2>
+            <h2 class="mb-4 max-w-2xl m-auto text-2xl">{{ t('y.title') }}</h2>
 
             <div class="w-full flex flex-wrap max-w-2xl m-auto">
-                <TwitterPost v-for="post in posts" :key="post.id" :post="post" :user="post" :selectionChange="selectPost" />
+                <YPost v-for="post in posts" :key="post.id" :post="post" :user="post" :selectionChange="selectPost" />
 
                 <div class="mt-3" v-if="selectedPosts.length > 0">
                     <button class="px-5 py-2 font-semibold text-white bg-danger dark:bg-dark-danger rounded hover:shadow-lg" @click="deleteSelected">
                         <i class="fas fa-trash"></i>
-                        {{ t('twitter.delete_selected') }}
+                        {{ t('y.delete_selected') }}
                     </button>
                 </div>
             </div>
@@ -123,14 +123,14 @@
 import Layout from './../../Layouts/App.vue';
 import VSection from './../../Components/Section.vue';
 import Pagination from "../../Components/Pagination.vue";
-import TwitterPost from "../../Components/TwitterPost.vue";
+import YPost from "../../Components/YPost.vue";
 
 export default {
     layout: Layout,
     components: {
         VSection,
         Pagination,
-        TwitterPost,
+        YPost,
     },
     props: {
         posts: {
@@ -175,14 +175,14 @@ export default {
                 return;
             }
 
-            if (!confirm(this.t('twitter.delete_selected_confirm'))) {
+            if (!confirm(this.t('y.delete_selected_confirm'))) {
                 return;
             }
 
             this.isLoading = true;
 
             try {
-                await this.$inertia.post('/tweets/delete', {
+                await this.$inertia.post('/yells/delete', {
                     ids: this.selectedPosts,
                 }, {
                     preserveState: true,
@@ -202,7 +202,7 @@ export default {
             this.isLoading = true;
 
             try {
-                await this.$inertia.replace('/twitter', {
+                await this.$inertia.replace('/y', {
                     data: this.filters,
                     preserveState: true,
                     preserveScroll: true,
