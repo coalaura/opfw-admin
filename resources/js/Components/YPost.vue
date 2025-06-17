@@ -185,14 +185,20 @@ export default {
             // Replace with default
             e.target.src = '/images/default_profile.png';
         },
+		escapeHtml(unsafe) {
+			return unsafe
+				.replace(/&/g, "&amp;")
+				.replace(/</g, "&lt;")
+				.replace(/>/g, "&gt;")
+				.replace(/"/g, "&quot;")
+				.replace(/'/g, "&#039;");
+		},
         formatBody(body) {
-            body = body.trim();
+            body = this.escapeHtml(body.trim());
 
-            if (body.match(/^https?:\/\/[^\s]+?\.(png|jpe?g|gif|bmp|webp)(\?[^\s]*)?$/i)) {
-                return `<a href="${body}" target="_blank" class="block max-w-full w-y-img h-y-img overflow-hidden rounded-xl border border-gray-500"><img src="${body}" class="block w-full h-full object-cover translate hover:scale-105" /></a>`;
-            }
-
-            return body;
+            return body.replace(/https?:\/\/[^\s]+?\.(png|jpe?g|gif|bmp|webp)(\?[^\s]*)?/gi, match => {
+                return `<a href="${match}" target="_blank" class="block max-w-full w-y-img h-y-img overflow-hidden rounded-xl border border-gray-500"><img src="${match}" class="block w-full h-full object-cover translate hover:scale-105" /></a>`;
+            });
         }
     },
 }
