@@ -76,7 +76,7 @@ class CoreLogHelper
         }
 
         return sprintf(
-            "[%s] %s %s",
+            "[%s] %s - %s",
             $date,
             self::user(),
             $message,
