@@ -142,9 +142,8 @@ class DeviceHelper
     }
 }
 
-//*
+/*
 $test = <<<EOF
-"audioinput_headset_lg_ultragear_hdmi_03f0_0294""audioinput_default_device_plantronics_aud_3054_8888""audioinput_digital_audio_hdmi_plantronics_audio_628_usb""videoinput_winsafe_uhv_50h_u2_3054_8888""videoinput_3054_8888""videoinput_""audiooutput_virtual_audio_device_dell_u2723qe""audiooutput_tv_yamaha_steinberg_usb_asio_03f0_0294""audiooutput_default_device_razer_kraken_tournament""audiooutput_speakers_usb_audio_device""audiooutput_voicemeeter_output_vb_audio_cable_b""audiooutput_monitor_conexant_smartaudio_hd"
 EOF;
 
 $devices = json_decode("[" . str_replace('""', '", "', $test) . "]", true);
