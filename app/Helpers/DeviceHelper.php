@@ -97,6 +97,14 @@ class DeviceHelper
         "_insta360_",
         "_powertoys_",
         "screencapture_",
+        "wball_",
+        "_rift_",
+        "_astro_",
+        "_kopfh_rer",
+        "_lautsprecher_",
+        "_earphones_",
+        "_winsafe_",
+        "_plantronics_",
     ];
 
     public static function check(array $devices): bool
@@ -112,7 +120,7 @@ class DeviceHelper
         $devices = array_values(array_filter(array_map(function ($device) {
             return preg_replace('/^(video|audio)(in|out)put_?/m', '', $device);
         }, $devices), function ($device) {
-            return $device && strlen($device) >= 5 && ! substr($device, 0, 4) !== "gpu_";
+            return $device && strlen($device) >= 5 && ! substr($device, 0, 4) !== "gpu_" && ! preg_match('/^_?[\da-f]{4}_[\da-f]{4}_?$/m', $device);
         }));
 
         return array_values(array_filter($devices, function ($device) {
@@ -134,8 +142,9 @@ class DeviceHelper
     }
 }
 
-/*
+//*
 $test = <<<EOF
+"audioinput_headset_lg_ultragear_hdmi_03f0_0294""audioinput_default_device_plantronics_aud_3054_8888""audioinput_digital_audio_hdmi_plantronics_audio_628_usb""videoinput_winsafe_uhv_50h_u2_3054_8888""videoinput_3054_8888""videoinput_""audiooutput_virtual_audio_device_dell_u2723qe""audiooutput_tv_yamaha_steinberg_usb_asio_03f0_0294""audiooutput_default_device_razer_kraken_tournament""audiooutput_speakers_usb_audio_device""audiooutput_voicemeeter_output_vb_audio_cable_b""audiooutput_monitor_conexant_smartaudio_hd"
 EOF;
 
 $devices = json_decode("[" . str_replace('""', '", "', $test) . "]", true);
