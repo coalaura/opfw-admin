@@ -219,9 +219,6 @@ export default {
                 } : false;
             }).filter(Boolean);
         },
-        escapeHTML(text) {
-            return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        },
         dannyColor(danny) {
             const h = (1 - danny) * 120;
 

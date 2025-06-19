@@ -185,14 +185,6 @@ export default {
             // Replace with default
             e.target.src = '/images/default_profile.png';
         },
-		escapeHtml(unsafe) {
-			return unsafe
-				.replace(/&/g, "&amp;")
-				.replace(/</g, "&lt;")
-				.replace(/>/g, "&gt;")
-				.replace(/"/g, "&quot;")
-				.replace(/'/g, "&#039;");
-		},
         formatBody(body) {
             body = this.escapeHtml(body.trim());
 

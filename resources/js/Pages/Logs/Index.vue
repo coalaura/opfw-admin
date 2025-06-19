@@ -611,14 +611,6 @@ export default {
 
 			return this.parseOtherLog(details, action, metadata);
 		},
-		escapeHtml(unsafe) {
-			return unsafe
-				.replace(/&/g, "&amp;")
-				.replace(/</g, "&lt;")
-				.replace(/>/g, "&gt;")
-				.replace(/"/g, "&quot;")
-				.replace(/'/g, "&#039;");
-		},
 		parseLog(details, action, metadata) {
 			details = this.escapeHtml(details);
 

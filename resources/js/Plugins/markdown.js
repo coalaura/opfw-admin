@@ -1,12 +1,5 @@
 const Markdown = {
     async install(Vue, options) {
-        function escapeHtml(unsafe) {
-            return unsafe
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;");
-        }
-
         function find(rgx, str, index = 1) {
             const match = rgx.exec(str);
 
@@ -245,21 +238,21 @@ const Markdown = {
             if (!text) return false;
 
             if (escapeHTML) {
-                text = escapeHtml(text);
+                text = Vue.escapeHtml(text);
             }
 
             const codeBlocks = [];
 
             // ```code```
             text = text.replace(/```(.+?)```\n?/gis, (match, p1, offset, string) => {
-                codeBlocks.push(`<pre class="max-w-2xl py-1 px-2 bg-gray-200 dark:bg-gray-800 rounded-sm leading-5 whitespace-pre-wrap break-words"><code>${escapeHtml(p1.trim())}</code></pre>`);
+                codeBlocks.push(`<pre class="max-w-2xl py-1 px-2 bg-gray-200 dark:bg-gray-800 rounded-sm leading-5 whitespace-pre-wrap break-words"><code>${Vue.escapeHtml(p1.trim())}</code></pre>`);
 
                 return `{{${codeBlocks.length - 1}}}`;
             });
 
             // `code`
             text = text.replace(/`(.+?)`/gi, (match, p1, offset, string) => {
-                codeBlocks.push(`<code class="py-0.5 px-1 bg-gray-200 dark:bg-gray-800 select-all">${escapeHtml(p1.trim())}</code>`);
+                codeBlocks.push(`<code class="py-0.5 px-1 bg-gray-200 dark:bg-gray-800 select-all">${Vue.escapeHtml(p1.trim())}</code>`);
 
                 return `{{${codeBlocks.length - 1}}}`;
             });
