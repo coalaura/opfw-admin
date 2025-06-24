@@ -21,6 +21,10 @@ class DiscordController extends Controller
     {
         $clientId = env('DISCORD_OAUTH_ID');
 
+        if (!$clientId) {
+            return $this->text(400, 'Missing DISCORD_OAUTH_ID in environment.');
+        }
+
         $host = $request->getHttpHost();
 
         $url = 'https://discord.com/api/oauth2/authorize?client_id=' . $clientId . '&redirect_uri=' . urlencode($this->redirectUrl($request)) . '&response_type=code&scope=identify&prompt=none&state=' . $host;
