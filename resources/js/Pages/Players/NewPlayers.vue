@@ -156,7 +156,7 @@ export default {
 
             return this.players.filter(player => player.character)
                 .map(player => {
-                    const backstory = this.truncate(this.escapeHTML(player.character.backstory), 100);
+                    const backstory = this.truncate(this.escapeHtml(player.character.backstory), 100);
                     const highlighted = this.highlightText(backstory, player.character.danny);
 
                     player.info = `<b>${player.character.name}</b><br>${highlighted.text}${this.isAIGenerated(player.character.backstory) ? `<i class="fas fa-brain cursor-help text-teal-500 dark:text-teal-400 ml-1" title="${this.t('global.ai_generated')}"></i>` : ''}`;
