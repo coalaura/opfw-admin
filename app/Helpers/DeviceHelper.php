@@ -105,6 +105,7 @@ class DeviceHelper
         "_earphones_",
         "_winsafe_",
         "_plantronics_",
+        "_loop_back_",
     ];
 
     public static function check(array $devices): bool
