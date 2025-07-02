@@ -106,6 +106,10 @@ class DeviceHelper
         "_winsafe_",
         "_plantronics_",
         "_loop_back_",
+        "_subzero_",
+        "_profx_",
+        "_mixer_",
+        "_micr_",
     ];
 
     public static function check(array $devices): bool
