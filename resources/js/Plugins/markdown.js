@@ -234,25 +234,25 @@ const Markdown = {
             return `<a href="${url}" target="_blank" class="text-indigo-600 dark:text-indigo-400 a-link">${url}</a>`;
         }
 
-        Vue.prototype.markdown = (text, escapeHTML = false) => {
+        Vue.prototype.markdown = function(text, escapeHTML = false) {
             if (!text) return false;
 
             if (escapeHTML) {
-                text = Vue.escapeHtml(text);
+                text = this.escapeHtml(text);
             }
 
             const codeBlocks = [];
 
             // ```code```
             text = text.replace(/```(.+?)```\n?/gis, (match, p1, offset, string) => {
-                codeBlocks.push(`<pre class="max-w-2xl py-1 px-2 bg-gray-200 dark:bg-gray-800 rounded-sm leading-5 whitespace-pre-wrap break-words"><code>${Vue.escapeHtml(p1.trim())}</code></pre>`);
+                codeBlocks.push(`<pre class="max-w-2xl py-1 px-2 bg-gray-200 dark:bg-gray-800 rounded-sm leading-5 whitespace-pre-wrap break-words"><code>${this.escapeHtml(p1.trim())}</code></pre>`);
 
                 return `{{${codeBlocks.length - 1}}}`;
             });
 
             // `code`
             text = text.replace(/`(.+?)`/gi, (match, p1, offset, string) => {
-                codeBlocks.push(`<code class="py-0.5 px-1 bg-gray-200 dark:bg-gray-800 select-all">${Vue.escapeHtml(p1.trim())}</code>`);
+                codeBlocks.push(`<code class="py-0.5 px-1 bg-gray-200 dark:bg-gray-800 select-all">${this.escapeHtml(p1.trim())}</code>`);
 
                 return `{{${codeBlocks.length - 1}}}`;
             });
