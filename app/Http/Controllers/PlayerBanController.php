@@ -144,7 +144,10 @@ class PlayerBanController extends Controller
 
             $query->where(function ($query) use ($player, $alias) {
                 $query->orWhere('creator_identifier', '=', $player->license_identifier);
-                $query->orWhereIn('creator_name', $alias);
+
+                if (!empty($alias) && is_array($alias)) {
+                    $query->orWhereIn('creator_name', $alias);
+                }
             });
         }
 
