@@ -41,8 +41,6 @@ class IO {
 			this.close();
 		}, 5000);
 
-		console.log("connect", this.#type)
-
 		this.#ws = new WebSocket(this.#url.toString());
 
 		this.#ws.binaryType = "arraybuffer";
@@ -145,7 +143,9 @@ class IO {
 export default function io(type, url, options) {
 	const connection = new IO(type, url, options);
 
-	const connect = () => setTimeout(() => connection.connect(), 1000);
+	console.log("no delay")
+
+	const connect = () => setTimeout(() => connection.connect(), 0);
 
 	if (document.readyState === "loading") {
 		document.addEventListener("DOMContentLoaded", connect);

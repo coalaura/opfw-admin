@@ -294,15 +294,11 @@ export default {
             });
 
             this.socket.on("chat", message => {
-                console.log(`Received socket "chat" event.`);
-
                 this.updateTimestamp();
                 this.addMessage(message);
             });
 
             this.socket.on("history", messages => {
-                console.log(`Received socket "history" event.`);
-
                 this.messages = messages;
 
                 this.updateTimestamp();
@@ -313,16 +309,12 @@ export default {
             });
 
             this.socket.on("users", users => {
-                console.log(`Received socket "users" event.`);
-
                 this.users = users;
 
                 this.updateViewers();
             });
 
             this.socket.on("user", update => {
-                console.log(`Received socket "user" event.`);
-
                 const user = this.users.find(user => user.id === update.id);
 
                 if (user) {
@@ -334,18 +326,7 @@ export default {
                 }
             });
 
-            this.socket.on("rejection", err => {
-                console.log(`Received socket "rejection" event.`);
-                console.warn(err);
-
-                this.reconnect = false;
-
-                this.disconnect();
-            });
-
             this.socket.on("disconnect", () => {
-                console.log(`Received socket "disconnect" event.`);
-
                 this.disconnect();
 
                 if (this.active && this.reconnect) {
