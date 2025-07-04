@@ -24,7 +24,7 @@ class IO {
 		}
 	}
 
-	#beforeunload() {
+	_beforeunload() {
 		this.#unloading = true;
 
 		this.close();
@@ -48,7 +48,7 @@ class IO {
 		this.#ws.onopen = () => {
 			clearTimeout(this.#timeout);
 
-			window.addEventListener("beforeunload", this.#beforeunload);
+			window.addEventListener("beforeunload", this._beforeunload);
 
 			this.#connected = Math.floor(Date.now() / 100);
 
@@ -95,7 +95,7 @@ class IO {
 
 		this.#ws.close();
 
-		window.removeEventListener("beforeunload", this.#beforeunload);
+		window.removeEventListener("beforeunload", this._beforeunload);
 	}
 
 	disconnect() {
@@ -142,8 +142,6 @@ class IO {
 
 export default function io(type, url, options) {
 	const connection = new IO(type, url, options);
-
-	console.log("no delay")
 
 	const connect = () => setTimeout(() => connection.connect(), 0);
 
