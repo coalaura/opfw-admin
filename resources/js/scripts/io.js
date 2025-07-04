@@ -7,6 +7,7 @@ class IO {
 	#listeners = {};
 
 	#unloading;
+	#beforeunload;
 	#timeout;
 	#connected;
 
@@ -14,6 +15,12 @@ class IO {
 		this.#type = type;
 
 		this.#parse(url, options);
+
+		this.#beforeunload = () => {
+			this.#unloading = true;
+
+			this.close();
+		};
 	}
 
 	#parse(url, options) {
@@ -22,12 +29,6 @@ class IO {
 		if (options?.query) {
 			this.#url.search = new URLSearchParams(options.query).toString();
 		}
-	}
-
-	#beforeunload() {
-		this.#unloading = true;
-
-		this.close();
 	}
 
 	connect() {
