@@ -54,7 +54,7 @@ const Socket = {
 			}
 		}
 
-		Vue.prototype.resolveSocketHost = proto => {
+		Vue.prototype.resolveSocketHost = function(proto) {
 			if (this.$page.docker || !isDev) {
 				if (window.location.protocol === "https:") {
 					proto += "s";
