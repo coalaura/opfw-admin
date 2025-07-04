@@ -282,7 +282,9 @@ export default {
 
             this.connected = false;
 
-            this.socket = io(this.resolveSocketHost("ws"), {
+            const hostname = this.resolveSocketHost("ws");
+
+            this.socket = io(hostname, {
                 reconnectionDelayMax: 5000,
                 path: "/panel_chat",
                 query: {
