@@ -7,6 +7,18 @@ const Socket = {
 		const isDev = window.location.hostname === "localhost",
 			hashCache = {};
 
+		function resolveSocketHost(vue, proto) {
+			if (vue.$page.docker || !isDev) {
+				if (window.location.protocol === "https:") {
+					proto += "s";
+				}
+
+				return `${proto}://${window.location.host}`;
+			}
+
+			return `${proto}://localhost:9999`;
+		}
+
 		async function executeRequest(vue, type, route, throwError) {
 			if (!vue.$page.auth.socket) {
 				if (throwError) {
@@ -25,7 +37,7 @@ const Socket = {
 			}
 
 			const server = vue.$page.serverName,
-				host = isDev ? "http://localhost:9999" : `https://${window.location.host}`,
+				host = resolveSocketHost(vue, "http"),
 				query = type === "data" ? `?token=${token}` : "";
 
 			const url = `${host}/socket/${server}/${type}/${route}${query}`;
@@ -136,7 +148,7 @@ const Socket = {
 				return false;
 			}
 
-			const socketUrl = isDev ? "ws://localhost:9999" : `wss://${window.location.host}`,
+			const socketUrl = resolveSocketHost(this, "ws"),
 				server = this.$page.serverName;
 
 			const compressor = new DataCompressor();

@@ -34,7 +34,7 @@ class DiscordController extends Controller
 
     public function redirect(Request $request)
     {
-        if (getenv('DOCKER_MODE')) {
+        if (DOCKER) {
             return $this->complete($request);
         }
 

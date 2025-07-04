@@ -177,6 +177,8 @@ class AppServiceProvider extends ServiceProvider
                 ];
             },
 
+            'docker' => DOCKER,
+
             'serverIp'   => $server ? $server['ip'] : null,
             'serverName' => $server ? $server['name'] : null,
             'connect'    => function () {
