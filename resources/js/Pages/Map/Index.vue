@@ -992,7 +992,9 @@ export default {
             if (this.connection) return;
 
             try {
-                const pause = () => this.connection.emit("pause", document.visibilityState === "hidden");
+                const pause = () => {
+                    this.connection?.emit?.("pause", document.visibilityState === "hidden");
+                };
 
                 let lastTrackedId = "";
 

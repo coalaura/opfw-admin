@@ -1,6 +1,6 @@
 import DataCompressor from "../Pages/Map/DataCompressor.js";
 
-import { io } from "socket.io-client";
+import io from "../scripts/io.js";
 
 const Socket = {
 	async install(Vue, options) {
@@ -153,9 +153,7 @@ const Socket = {
 
 			const compressor = new DataCompressor();
 
-			const socket = io(socketUrl, {
-				transports: ["websocket"],
-				reconnectionDelayMax: 5000,
+			const socket = io(type, socketUrl, {
 				query: {
 					server: server,
 					token: token,
@@ -165,8 +163,6 @@ const Socket = {
 			});
 
 			socket.on("reset", data => {
-				console.log(`[${type}] Received socket "reset" event (${data.byteLength || data.length} bytes).`);
-
 				compressor.reset();
 
 				data = compressor.decompressData(type, data);
@@ -174,42 +170,21 @@ const Socket = {
 				options?.onData?.(data);
 			});
 
-			let received;
-
 			socket.on("message", data => {
-				if (!received) {
-					received = true;
-
-					console.log(`[${type}] Received first socket "message" event (${data.byteLength || data.length} bytes).`);
-				}
-
 				data = compressor.decompressData(type, data);
 
 				options?.onData?.(data);
 			});
 
 			socket.on("no_data", () => {
-				console.log(`[${type}] Received socket "no_data" event.`);
-
 				options?.onNoData?.();
 			});
 
 			socket.on("connect", () => {
-				console.log(`[${type}] Received socket "connect" event.`);
-
 				options?.onConnect?.();
 			});
 
-			socket.on("rejection", err => {
-                console.log(`[${type}] Received socket "rejection" event.`);
-                console.warn(err);
-
-                socket.disconnect();
-            });
-
 			socket.on("disconnect", () => {
-				console.log(`[${type}] Received socket "disconnect" event.`);
-
 				compressor.reset();
 				socket.close();
 

@@ -60,8 +60,7 @@
 </template>
 
 <script>
-import { io } from "socket.io-client";
-import { pack, unpack } from "msgpackr";
+import io from "../scripts/io.js";
 
 export default {
     name: 'PanelChat',
@@ -284,28 +283,27 @@ export default {
 
             const hostname = this.resolveSocketHost("ws");
 
-            this.socket = io(hostname, {
-                reconnectionDelayMax: 5000,
+            this.socket = io("panel_chat", hostname, {
                 path: "/panel_chat",
                 query: {
                     token: token,
                     server: this.$page.serverName,
                     license: this.$page.auth.player.licenseIdentifier,
-                    group: this.group || "",
+                    type: this.group || "",
                 }
             });
 
-            this.socket.on("chat", compressed => {
+            this.socket.on("chat", message => {
                 console.log(`Received socket "chat" event.`);
 
                 this.updateTimestamp();
-                this.addMessage(unpack(compressed));
+                this.addMessage(message);
             });
 
-            this.socket.on("history", compressed => {
+            this.socket.on("history", messages => {
                 console.log(`Received socket "history" event.`);
 
-                this.messages = unpack(compressed);
+                this.messages = messages;
 
                 this.updateTimestamp();
 
@@ -314,19 +312,18 @@ export default {
                 }, 500);
             });
 
-            this.socket.on("users", compressed => {
+            this.socket.on("users", users => {
                 console.log(`Received socket "users" event.`);
 
-                this.users = unpack(compressed);
+                this.users = users;
 
                 this.updateViewers();
             });
 
-            this.socket.on("user", compressed => {
+            this.socket.on("user", update => {
                 console.log(`Received socket "user" event.`);
 
-                const update = unpack(compressed),
-                    user = this.users.find(user => user.id === update.id);
+                const user = this.users.find(user => user.id === update.id);
 
                 if (user) {
                     user[update.key] = update.value;
@@ -399,7 +396,7 @@ export default {
             if (!this.socket || !text) return;
 
             this.message = '';
-            this.socket.emit("chat", pack(text));
+            this.socket.emit("chat", text);
         },
 
         shouldIgnoreMessage(message) {
@@ -481,7 +478,7 @@ export default {
         roomChanged() {
             if (!this.connected) return;
 
-            this.socket.emit("room", pack(this.room || ""));
+            this.socket.emit("room", this.room || "");
         },
 
         visibilityStateChanged() {
@@ -489,7 +486,7 @@ export default {
 
             this.visible = document.visibilityState !== "hidden";
 
-            this.socket.emit("active", pack(document.visibilityState !== "hidden"));
+            this.socket.emit("active", document.visibilityState !== "hidden");
         }
     },
     created() {

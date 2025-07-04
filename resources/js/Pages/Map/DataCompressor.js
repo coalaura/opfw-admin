@@ -1,19 +1,7 @@
-import { unpack } from "msgpackr";
-
 class DataCompressor {
 	#data = {};
 
-	decompressData(type, compressed) {
-		let decompressed;
-
-		try {
-			decompressed = unpack(compressed);
-		} catch(e) {
-			console.error(`Failed to decompress packet: ${e.message}`);
-
-			return false;
-		}
-
+	decompressData(type, decompressed) {
 		const data = this.#update(decompressed);
 
 		let isValid;
