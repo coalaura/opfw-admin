@@ -24,7 +24,7 @@ class IO {
 		}
 	}
 
-	_beforeunload() {
+	#beforeunload() {
 		this.#unloading = true;
 
 		this.close();
@@ -48,7 +48,7 @@ class IO {
 		this.#ws.onopen = () => {
 			clearTimeout(this.#timeout);
 
-			window.addEventListener("beforeunload", this._beforeunload);
+			window.addEventListener("beforeunload", this.#beforeunload);
 
 			this.#connected = Math.floor(Date.now() / 100);
 
@@ -95,7 +95,7 @@ class IO {
 
 		this.#ws.close();
 
-		window.removeEventListener("beforeunload", this._beforeunload);
+		window.removeEventListener("beforeunload", this.#beforeunload);
 	}
 
 	disconnect() {
