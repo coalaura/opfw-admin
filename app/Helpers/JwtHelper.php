@@ -15,6 +15,7 @@ use Lcobucci\JWT\Token\Plain;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use Lcobucci\JWT\Validation\Constraint\ValidAt;
 use Lcobucci\JWT\Validation\Validator;
+use Illuminate\Support\Str;
 
 class JwtHelper
 {
@@ -308,7 +309,7 @@ class JwtHelper
             return;
         }
 
-        $isSecure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+        $isSecure = Str::startsWith(env('APP_URL'), 'https://');
 
         setcookie(self::Cookie, $token, [
             'expires'  => time() + 172800,
