@@ -522,15 +522,6 @@ export default {
 
             return player?.player?.isFake;
         },
-        hostname(isSocket) {
-            const isDev = window.location.hostname === 'localhost';
-
-            if (isSocket) {
-                return isDev ? 'ws://localhost:9999' : `wss://${window.location.host}`;
-            }
-
-            return isDev ? 'http://localhost:9999' : `https://${window.location.host}`;
-        },
         historyRangeButton(move) {
             if (this.historyRange && this.historyMarker) {
                 const newVal = Number.parseInt($('#range-slider').val()) + move;
@@ -773,7 +764,7 @@ export default {
             this.loadingScreenStatus = this.t('map.historic_fetch');
 
             try {
-                const result = await _get(`${this.hostname(false)}/socket/${server}/history/${license}/${from}/${till}`, {
+                const result = await _get(`${this.resolveSocketHost("http")}/socket/${server}/history/${license}/${from}/${till}`, {
                     token: this.token
                 });
 
@@ -957,7 +948,7 @@ export default {
         },
         async loadTimestamp(server, timestamp) {
             try {
-                const result = await _get(`${this.hostname(false)}/socket/${server}/timestamp/${timestamp}`, {
+                const result = await _get(`${this.resolveSocketHost("http")}/socket/${server}/timestamp/${timestamp}`, {
                     token: this.token
                 });
 

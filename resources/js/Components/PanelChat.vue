@@ -282,10 +282,7 @@ export default {
 
             this.connected = false;
 
-            const isDev = window.location.hostname === 'localhost',
-                url = isDev ? 'ws://localhost:9999' : `wss://${window.location.host}`;
-
-            this.socket = io(url, {
+            this.socket = io(this.resolveSocketHost("ws"), {
                 reconnectionDelayMax: 5000,
                 path: "/panel_chat",
                 query: {

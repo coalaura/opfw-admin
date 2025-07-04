@@ -331,10 +331,6 @@ export default {
                 return;
             }
 
-            const isDev = window.location.hostname === 'localhost';
-            const server = this.$page.serverName;
-            const socketUrl = isDev ? 'ws://localhost:9999' : `wss://${window.location.host}`;
-
             this.socket = this.createSocket("staff", {
                 onData: data => {
                     this.isLoading = false;
