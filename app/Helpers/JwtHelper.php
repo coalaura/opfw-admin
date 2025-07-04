@@ -79,8 +79,10 @@ class JwtHelper
             return;
         }
 
-        if (! file_exists(dirname($secret))) {
-            return;
+        $directory = dirname($secret);
+
+        if (! file_exists($directory)) {
+            mkdir($directory, 0755, true);
         }
 
         $fp = fopen($secret, 'x');
