@@ -308,12 +308,14 @@ class JwtHelper
             return;
         }
 
+        $isSecure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+
         setcookie(self::Cookie, $token, [
             'expires'  => time() + 172800,
-            'secure'   => true,
+            'secure'   => $isSecure,
             'httponly' => true,
             'path'     => '/',
-            'samesite' => 'None',
+            'samesite' => $isSecure ? 'None' : 'Lax',
         ]);
     }
 
