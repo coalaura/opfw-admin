@@ -24,7 +24,7 @@ $app = new Illuminate\Foundation\Application(
  * This all for multi-instance support
  */
 if (getenv('DOCKER_MODE')) {
-    define('CLUSTER', env('CLUSTER', 'c1'));
+    define('CLUSTER', env('DOCKER_CLUSTER', 'c1'));
 } else {
     if (!defined('CLUSTER')) {
         define('CLUSTER', GeneralHelper::getCluster());
