@@ -1453,6 +1453,8 @@
         "edm_details": "Sabhi EDM kharidon se milaakar kul rajsva.",
         "failed_load": "Sankhyaank load karne mein asafal.",
         "found_items": "Zameen par paaye gaye items",
+        "found_items_count": "Zameen par mile vastu (Ginti)",
+        "found_items_count_details": "Magnifying glass ke saath sabhi vastu ki maatra.",
         "found_items_details": "Magnifying glass ke saath paaye gaye sabhi items se milaakar kul rajsva.",
         "fps_stats": "FPS Sankhya",
         "fps_stats_details": "Ek graph mein FPS sankhya ka tulna karein.",

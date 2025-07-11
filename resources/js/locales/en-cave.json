@@ -1453,6 +1453,8 @@
         "edm_details": "All EDM buy money.",
         "failed_load": "No load numbers.",
         "found_items": "Stuff on ground.",
+        "found_items_count": "Find stuff on ground (Count)",
+        "found_items_count_details": "Number stuff find with glass.",
         "found_items_details": "All find stuff money.",
         "fps_stats": "FPS Stats",
         "fps_stats_details": "Compare FPS graph.",

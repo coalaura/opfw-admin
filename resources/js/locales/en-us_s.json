@@ -1453,6 +1453,8 @@
         "edm_details": "Combined revenue from all them EDM purchases.",
         "failed_load": "Failed to load them statistics.",
         "found_items": "Found Items on the Ground",
+        "found_items_count": "Found Items on th' Ground (Count)",
+        "found_items_count_details": "Amount of all items found with a look-see glass.",
         "found_items_details": "Combined revenue from all items found with a magnifying glass.",
         "fps_stats": "FPS Statistics",
         "fps_stats_details": "Compare FPS statistics in a graph, y'all.",

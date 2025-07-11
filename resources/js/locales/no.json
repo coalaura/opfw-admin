@@ -1453,6 +1453,8 @@
         "edm_details": "Kombinert inntekt fra alle EDM-kjøp.",
         "failed_load": "Kunne ikke laste inn statistikk.",
         "found_items": "Funnet gjenstander på bakken",
+        "found_items_count": "Funnet gjenstander på bakken (Antall)",
+        "found_items_count_details": "Antall av alle gjenstander funnet med et forstørrelsesglass.",
         "found_items_details": "Kombinert inntekt fra alle gjenstander funnet med et forstørrelsesglass.",
         "fps_stats": "FPS-statistikk",
         "fps_stats_details": "Sammenlign FPS-statistikken i en graf.",

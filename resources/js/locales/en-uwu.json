@@ -1453,6 +1453,8 @@
         "edm_details": "Combined wevenue fwom aww EDM purchases.",
         "failed_load": "Faiwed to woad statistics.",
         "found_items": "Found Items on Gwound",
+        "found_items_count": "Found Items on Gwound (Count)",
+        "found_items_count_details": "Amount of aww items found with a magnifying gwass.",
         "found_items_details": "Combined wevenue fwom aww items found with a magnifying gwass.",
         "fps_stats": "FPS Statisticcs",
         "fps_stats_details": "Compawre FPS statisticcs in a gwaph.",
