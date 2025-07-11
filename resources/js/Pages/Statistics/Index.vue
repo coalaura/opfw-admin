@@ -307,6 +307,7 @@
             <StatisticsTable source="dumpsters" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="edm" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="found_items" tag="money" :currency="true" :search="search" />
+            <StatisticsTable source="found_items_count" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="gem" tag="money" :currency="true" :search="search" />
             <StatisticsTable source="guns" tag="amount" :currency="false" :search="search" />
             <StatisticsTable source="impounds" tag="money" :currency="true" :search="search" />

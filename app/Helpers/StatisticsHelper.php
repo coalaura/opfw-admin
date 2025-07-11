@@ -272,15 +272,29 @@ class StatisticsHelper
         $items  = implode(' OR ', array_map(function ($name) {
             return "SUBSTRING_INDEX(SUBSTRING_INDEX(details, '`', -2), '`', 1) = '$name'";
         }, [
-            'Small Frog',
-            'Lucky Penny',
-            'Caterpillar',
             '4 Leaf Clover',
-            'Small Frog MK2',
+            '4 Leaf Clover MK2',
+            'Small Frog',
             'Seashell',
+            'Lucky Penny',
+            'Small Frog MK2',
+            'Caterpillar',
+            'Ladybug',
+            'Feather',
+            'Tiny Crab',
+            'Bottle Cap',
+            'Pretty Marble',
+            'Ball Bearing',
+            'Lego Brick'
         ]));
 
         return self::collectStatistics("SELECT SUM($count) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Used Pawn Shop' AND ($items) GROUP BY date ORDER BY timestamp DESC");
+    }
+
+    // Found items
+    public static function collectFoundItemsCountStatistics(): array
+    {
+        return self::collectStatistics("SELECT 0 as count, SUM(1) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Found Item On Ground' GROUP BY date ORDER BY timestamp DESC");
     }
 
     // General economy statistics

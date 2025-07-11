@@ -147,6 +147,9 @@ class StatisticsController extends Controller
                 case 'blackjack':
                     $result = StatisticsHelper::collectBlackjackWinStatistics();
                     break;
+                case 'found_items_count':
+                    $result = StatisticsHelper::collectFoundItemsCountStatistics();
+                    break;
             }
 
             CacheHelper::write($key, $result, CacheHelper::HOUR);
