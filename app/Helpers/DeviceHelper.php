@@ -110,6 +110,8 @@ class DeviceHelper
         "_profx_",
         "_mixer_",
         "_micr_",
+        "_voice_",
+        "_device_bluetooth_",
     ];
 
     public static function check(array $devices): bool
