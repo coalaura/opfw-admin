@@ -20,13 +20,7 @@ require __DIR__.'/vendor/autoload.php';
 /*
  * Small thing to get migrations working again
  */
-define('DOCKER', !!getenv('DOCKER_MODE'));
-
-if (DOCKER) {
-    define('CLUSTER', env('DOCKER_CLUSTER', 'c1'));
-
-    echo "Using docker cluster " . CLUSTER . "\n";
-} else if (sizeof($argv) > 2 && php_sapi_name() === 'cli') {
+if (sizeof($argv) > 2 && php_sapi_name() === 'cli') {
     $cleanedArgv = [];
     foreach($argv as $arg) {
         if (\Illuminate\Support\Str::startsWith($arg, '--cluster=')) {
