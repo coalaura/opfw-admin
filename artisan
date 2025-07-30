@@ -24,6 +24,8 @@ define('DOCKER', !!getenv('DOCKER_MODE'));
 
 if (DOCKER) {
     define('CLUSTER', env('DOCKER_CLUSTER', 'c1'));
+
+    echo "Using docker cluster " . CLUSTER . "\n";
 } else if (sizeof($argv) > 2 && php_sapi_name() === 'cli') {
     $cleanedArgv = [];
     foreach($argv as $arg) {
