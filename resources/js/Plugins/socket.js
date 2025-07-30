@@ -9,6 +9,8 @@ const Socket = {
 
 		async function executeRequest(vue, type, route, throwError) {
 			if (!vue.$page.auth.socket) {
+				console.debug("no socket available for request");
+
 				if (throwError) {
 					throw new Error("Socket unavailable");
 				}
@@ -21,6 +23,12 @@ const Socket = {
 			const token = await vue.grabToken();
 
 			if (!token) {
+				console.debug("failed to grab token for socket request");
+
+				if (throwError) {
+					throw new Error("Unable to grab token");
+				}
+
 				return false;
 			}
 
@@ -36,6 +44,8 @@ const Socket = {
 				if (data?.status) {
 					return data.data;
 				} else {
+					console.debug("received non-success status for socket request");
+
 					if (throwError) {
 						throw new Error(data?.error || "Unknown error");
 					}
