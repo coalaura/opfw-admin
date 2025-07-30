@@ -20,7 +20,11 @@ require __DIR__.'/vendor/autoload.php';
 /*
  * Small thing to get migrations working again
  */
-if (sizeof($argv) > 2 && php_sapi_name() === 'cli') {
+define('DOCKER', !!getenv('DOCKER_MODE'));
+
+if (DOCKER) {
+    define('CLUSTER', env('DOCKER_CLUSTER', 'c1'));
+} else if (sizeof($argv) > 2 && php_sapi_name() === 'cli') {
     $cleanedArgv = [];
     foreach($argv as $arg) {
         if (\Illuminate\Support\Str::startsWith($arg, '--cluster=')) {
