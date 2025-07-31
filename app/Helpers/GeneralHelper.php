@@ -6,6 +6,7 @@ use App\Player;
 use GuzzleHttp\Client;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Imagick;
 
 class GeneralHelper
@@ -38,34 +39,23 @@ class GeneralHelper
         6, // Left Wrist
     ];
 
-    /**
-     * @var null|array
-     */
-    private static ?array $rootCache = null;
-
     public static function getRootUsers(): array
     {
-        if (!self::$rootCache) {
-            $config = __DIR__ . '/../../envs/root-config.json';
+        $list = explode(",", getenv("ROOT_USERS") ?? env("ROOT_USERS") ?? "");
 
-            self::$rootCache = [];
-
-            if (file_exists($config)) {
-                $json = json_decode(file_get_contents(__DIR__ . '/../../envs/root-config.json'), true);
-
-                if (is_array($json)) {
-                    foreach ($json as $user) {
-                        if (!empty($user['license'])) {
-                            self::$rootCache[] = $user['license'];
-                        }
-                    }
-
-                    self::$rootCache = array_values(array_unique(self::$rootCache));
-                }
-            }
+        if (!$list || !is_array($list)) {
+            return [];
         }
 
-        return self::$rootCache;
+        return array_values(array_filter(array_map(function($license) {
+            $license = trim($license);
+
+            if (empty($license) || !Str::startsWith($license, "license:")) {
+                return false;
+            }
+
+            return $license;
+        }, $list)));
     }
 
     public static function isUserRoot(string $license_identifier): bool
