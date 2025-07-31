@@ -459,13 +459,11 @@
                         </h1>
 
                         <div class="text-xs mb-1 flex justify-between opacity-70">
-                            <span>{{ opfwBanned.serverName }}</span>
                             <span>{{ opfwBanned.timestamp * 1000 | formatTime }}</span>
+                            <span>{{ t('players.show.indefinitely') }}</span>
                         </div>
 
-                        <div class="italic">{{ opfwBanned.banReason }}</div>
-
-                        <div class="text-xs font-semibold absolute bottom-0.5 right-1">{{ opfwBanned.banHash }}</div>
+                        <div class="italic">{{ opfwBanned.reason }}</div>
                     </div>
                 </div>
 
@@ -2086,12 +2084,7 @@ export default {
 
                 if (response?.banned) {
                     this.opfwBanned = response.banned;
-
-                    const steam = encodeURIComponent(this.player.steam.shift() || this.player.licenseIdentifier);
-                    const steamUrl = encodeURIComponent(this.player.steamProfileUrl);
-                    const banHash = encodeURIComponent(this.opfwBanned.banHash);
-
-                    this.opfwBanned.appeal = `https://docs.google.com/forms/d/e/1FAIpQLSeZZnSHR6wdfQsbMow9pZ5Xo2rKmgCVIt5bVesVCAud_NB2KQ/viewform?entry.516511948=${steamUrl}&entry.123013618=${steam}&entry.122814002=${banHash}`;
+                    this.opfwBanned.appeal = `https://docs.google.com/forms/d/e/1FAIpQLSeZZnSHR6wdfQsbMow9pZ5Xo2rKmgCVIt5bVesVCAud_NB2KQ/viewform`;
                 }
             } catch {}
 
