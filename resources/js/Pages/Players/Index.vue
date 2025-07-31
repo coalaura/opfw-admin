@@ -264,7 +264,9 @@ export default {
                     only: ['players', 'time', 'links', 'page', 'filters'],
                 });
 
-                await this.updateStatus();
+                this.$nextTick(() => {
+                    this.updateStatus();
+                });
             } catch (e) { }
 
             this.isLoading = false;
