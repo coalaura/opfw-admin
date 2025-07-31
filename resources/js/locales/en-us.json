@@ -692,6 +692,7 @@
             "whitelist": "Manage Player Whitelist",
             "api_tokens": "Manage API Tokens",
             "realty_edit": "Edit Real Estate",
+            "savings_logs": "View Savings Logs",
             "bulk_delete": "Bulk Delete (Warnings)",
             "view_inventory": "View Inventory (Contents)"
         },

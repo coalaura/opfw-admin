@@ -655,6 +655,7 @@
             "money_logs": "Vis pengelogger",
             "phone_logs": "Vis telefonlogger",
             "realty_edit": "Rediger eiendom",
+            "savings_logs": "Vis sparelogger",
             "screenshot": "Ta skjermbilder",
             "suspicious": "Vis mistenkelige ting",
             "view_inventory": "Vis inventar (innhold)",
@@ -1603,8 +1604,6 @@
         "type": "Type",
         "types": {
             "characters": "Karakterer med mye penger",
-            "inventories": "Uvanlige gjenstander i inventar",
-            "items": "Ulovlige gjenstander i inventar",
             "none": "Velg type",
             "pawn": "Store pantelånsalg",
             "unusual": "Store gjenstandsbevegelser",

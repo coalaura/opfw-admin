@@ -655,6 +655,7 @@
             "money_logs": "View Money Logs",
             "phone_logs": "View Phone Logs",
             "realty_edit": "Edit Real Estate",
+            "savings_logs": "Take a gander at them Savin's Logs",
             "screenshot": "Take Screenshots",
             "suspicious": "View Suspicious Things",
             "view_inventory": "Take a gander at the goods (What's inside)",
@@ -1603,8 +1604,6 @@
         "type": "Type",
         "types": {
             "characters": "Characters with a heap of money",
-            "inventories": "Unusual Items in Inventories",
-            "items": "Illegal items in Inventories",
             "none": "Select type",
             "pawn": "Big pawn shop sales",
             "unusual": "Big item movements",

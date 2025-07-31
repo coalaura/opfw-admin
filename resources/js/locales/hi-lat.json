@@ -655,6 +655,7 @@
             "money_logs": "Money Logs dekhein",
             "phone_logs": "Phone Logs dekhein",
             "realty_edit": "Real Estate edit karein",
+            "savings_logs": "Bachat ke logs dekhein",
             "screenshot": "Screenshots lein",
             "suspicious": "Sandigdh cheezein dekhein",
             "view_inventory": "Inventory dekhein (Samagri)",
@@ -1603,8 +1604,6 @@
         "type": "Prakar",
         "types": {
             "characters": "Bahut dhan wale charitra",
-            "inventories": "Suchiyon mein asamanya vastu",
-            "items": "Suchiyon mein avaid vastu",
             "none": "Prakar chunein",
             "pawn": "Badi girvi dukaan bikri",
             "unusual": "Badi vastu gatividhiyan",

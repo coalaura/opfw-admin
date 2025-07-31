@@ -655,6 +655,7 @@
             "money_logs": "See money logs",
             "phone_logs": "See phone logs",
             "realty_edit": "Edit real estate",
+            "savings_logs": "See Savings Logs",
             "screenshot": "Take screenshots",
             "suspicious": "See suspicious things",
             "view_inventory": "See stuff (Inside)",
@@ -1603,8 +1604,6 @@
         "type": "Kind",
         "types": {
             "characters": "People with much money",
-            "inventories": "Weird Things in Bag",
-            "items": "Bad things in Bag",
             "none": "Pick kind",
             "pawn": "Big shop trade",
             "unusual": "Big thing move",
