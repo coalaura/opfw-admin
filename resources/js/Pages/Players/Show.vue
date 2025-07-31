@@ -2078,7 +2078,7 @@ export default {
         },
         async loadOPFWBan() {
             try {
-                const url = `https://op-framework.com/api/cfx/player/${this.player.licenseIdentifier}/bans`;
+                const url = `https://op-framework.com/api/cfx/player/${this.player.licenseIdentifier}/ban`;
 
                 const response = await _get(url, {
                     _timeout: 3000,
