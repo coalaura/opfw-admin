@@ -248,6 +248,11 @@ export default {
 
         this.filters.streamer_exception = this.filters.streamer_exception ?? "";
     },
+    watch: {
+        players() {
+            this.updateStatus();
+        }
+    },
     methods: {
         refresh: async function () {
             if (this.isLoading) {
@@ -263,15 +268,13 @@ export default {
                     preserveScroll: true,
                     only: ['players', 'time', 'links', 'page', 'filters'],
                 });
-
-                this.$nextTick(() => {
-                    this.updateStatus();
-                });
             } catch (e) { }
 
             this.isLoading = false;
         },
         async updateStatus() {
+            if (this.statusLoading) return;
+
             this.statusLoading = true;
 
             const identifiers = this.players.map(player => player.licenseIdentifier).join(',')
