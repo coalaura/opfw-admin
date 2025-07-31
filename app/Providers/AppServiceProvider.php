@@ -211,9 +211,6 @@ class AppServiceProvider extends ServiceProvider
 
             'emotes'     => Warning::getAllReactions(),
 
-            'global'     => env('GLOBAL_SERVER', 'https://global.op-framework.com/'),
-            'api'        => env('API_SERVER', 'https://op-framework.com/api'),
-
             // Authentication.
             'auth'       => function () {
                 $player = user();

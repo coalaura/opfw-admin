@@ -2064,12 +2064,8 @@ export default {
             return false;
         },
         async loadGlobalBans() {
-            const global = this.$page.global;
-
-            if (!global) return;
-
             try {
-                const url = `${global.replace(/\/?$/, '/')}bans/${this.player.licenseIdentifier}`;
+                const url = `https://op-framework.com/api/fivem/servers/bans/${this.player.licenseIdentifier}`;
 
                 const response = await _get(url, {
                     _timeout: 3000
@@ -2078,20 +2074,11 @@ export default {
                 if (response.data && Array.isArray(response.data)) {
                     this.globalBans = response.data.filter(ban => !ban.serverId || !ban.serverId.startsWith(this.$page.auth.cluster));
                 }
-            } catch (e) {
-            }
+            } catch {}
         },
         async loadOPFWBan() {
-            const api = this.$page.api;
-
-            if (!api) {
-                this.loadingOpfwBan = false;
-
-                return;
-            }
-
             try {
-                const url = `${api.replace(/\/?$/, '/')}global/ban/${this.player.licenseIdentifier}`;
+                const url = `https://op-framework.com/api/cfx/player/${this.player.licenseIdentifier}/bans`;
 
                 const response = await _get(url, {
                     _timeout: 3000,
@@ -2106,8 +2093,7 @@ export default {
 
                     this.opfwBanned.appeal = `https://docs.google.com/forms/d/e/1FAIpQLSeZZnSHR6wdfQsbMow9pZ5Xo2rKmgCVIt5bVesVCAud_NB2KQ/viewform?entry.516511948=${steamUrl}&entry.123013618=${steam}&entry.122814002=${banHash}`;
                 }
-            } catch (e) {
-            }
+            } catch {}
 
             this.local.ban = this.localizeBan();
 
