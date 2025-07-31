@@ -2071,8 +2071,8 @@ export default {
                     _timeout: 3000
                 });
 
-                if (response.data && Array.isArray(response.data)) {
-                    this.globalBans = response.data.filter(ban => !ban.serverId || !ban.serverId.startsWith(this.$page.auth.cluster));
+                if (Array.isArray(response)) {
+                    this.globalBans = response.filter(ban => !ban.serverId || !ban.serverId.startsWith(this.$page.auth.cluster));
                 }
             } catch {}
         },
@@ -2085,7 +2085,7 @@ export default {
                 });
 
                 if (response?.banned) {
-                    this.opfwBanned = response.ban;
+                    this.opfwBanned = response.banned;
 
                     const steam = encodeURIComponent(this.player.steam.shift() || this.player.licenseIdentifier);
                     const steamUrl = encodeURIComponent(this.player.steamProfileUrl);
