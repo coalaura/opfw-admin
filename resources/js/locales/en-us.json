@@ -715,13 +715,11 @@
         "search": "Search",
         "cached": "Logs are cached for 10 minutes to save resources and allow for quicker pagination.",
         "types": {
-            "items": "Illegal items in Inventories",
             "characters": "Characters with a lot of money",
             "vehicles": "Characters with a lot of vehicles",
             "pawn": "Big pawn shop sales",
             "warehouse": "Big warehouse sales",
             "unusual": "Big item movements",
-            "inventories": "Unusual Items in Inventories",
             "none": "Select type"
         },
         "items": {

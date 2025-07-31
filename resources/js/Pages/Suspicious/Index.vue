@@ -30,12 +30,10 @@
                             </label>
                             <select class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="logType" v-model="filters.logType">
                                 <option value="" disabled>{{ t('suspicious.types.none') }}</option>
-                                <option value="items">{{ t('suspicious.types.items') }}</option>
                                 <option value="characters">{{ t('suspicious.types.characters') }}</option>
                                 <option value="pawn">{{ t('suspicious.types.pawn') }}</option>
                                 <option value="warehouse">{{ t('suspicious.types.warehouse') }}</option>
                                 <option value="unusual">{{ t('suspicious.types.unusual') }}</option>
-                                <option value="inventories">{{ t('suspicious.types.inventories') }}</option>
                             </select>
                         </div>
                         <!-- Search button -->

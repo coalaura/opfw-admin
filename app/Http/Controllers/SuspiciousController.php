@@ -33,9 +33,6 @@ class SuspiciousController extends Controller
         // Filtering by type.
         if ($type = $request->input('logType')) {
             switch ($type) {
-                case 'items':
-                    $logs = SuspiciousChecker::findInvalidItems();
-                    break;
                 case 'characters':
                     $logs = SuspiciousChecker::findSuspiciousCharacters();
                     $map = 'license_identifier';
@@ -48,9 +45,6 @@ class SuspiciousController extends Controller
                     break;
                 case 'unusual':
                     $logs = SuspiciousChecker::findUnusualItems();
-                    break;
-                case 'inventories':
-                    $logs = SuspiciousChecker::findUnusualInventories();
                     break;
             }
         }
