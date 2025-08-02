@@ -89,7 +89,7 @@ class HttpHelper
         return null;
     }
 
-    public static function get(string $url): string
+    public static function get(string $url): ?string
     {
         $client = new Client([
             'timeout'         => 10,
@@ -113,7 +113,10 @@ class HttpHelper
     public static function getRedirect(string $url): string
     {
         if (!Str::startsWith($url, 'http')) {
-            if (Str::contains($url, ':')) {
+            $hasPort = Str::contains($url, ':');
+            $isDocker = Str::startsWith($url, 'host.docker.internal');
+
+            if ($hasPort || $isDocker) {
                 $url = 'http://' . $url;
             } else {
                 $url = 'https://' . $url;

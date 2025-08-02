@@ -294,10 +294,6 @@ class OPFWHelper
             return new OPFWResponse(false, 'Invalid OP-FW configuration.');
         }
 
-        if (Str::contains($route, 'localhost')) {
-            $route = str_replace('https://', 'http://', $route);
-        }
-
         /*
         if (!HttpHelper::ping($route, 800)) {
             LoggingHelper::log(HttpHelper::lastError());

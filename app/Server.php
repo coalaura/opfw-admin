@@ -21,6 +21,9 @@ class Server
     {
         $serverIp = Str::finish(trim($serverIp), '/');
 
+        $isLocalhost = Str::startsWith($serverIp, 'localhost');
+        $isDocker = Str::startsWith($serverIp, 'host.docker.internal');
+
         if (!Str::endsWith($serverIp, '/op-framework/')) {
             $serverIp .= 'op-framework/';
         }
@@ -29,7 +32,7 @@ class Server
             $serverIp = 'https://' . $serverIp;
         }
 
-        if (Str::contains($serverIp, 'localhost')) {
+        if ($isDocker || $isLocalhost) {
             $serverIp = preg_replace('/^https?:\/\//m', 'http://', $serverIp);
         }
 
