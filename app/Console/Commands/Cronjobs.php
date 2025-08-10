@@ -207,6 +207,16 @@ class Cronjobs extends Command
         } else {
             echo " - FiveM server is not reachable, skipping static json API refresh." . PHP_EOL;
         }
+
+        // Fix broken permissions
+        $start = microtime(true);
+        echo " - Repairing file permissions...";
+
+        system("chown -R www-data:www-data storage");
+        system("chgrp -R www-data storage");
+        system("chmod -R ug+rwx storage");
+
+        echo $this->stopTime($start);
     }
 
     private function dumpBanLogs(string $category, string $type, array $logs)
