@@ -24,9 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        if (DOCKER) {
-            $schedule->command('cron')->hourly();
-        }
+        $schedule->command('cron')->hourly();
     }
 
     /**
