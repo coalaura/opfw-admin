@@ -112,6 +112,8 @@ class DeviceHelper
         "_micr_",
         "_voice_",
         "_device_bluetooth_",
+        "_meta_",
+        "_casque_",
     ];
 
     public static function check(array $devices): bool
