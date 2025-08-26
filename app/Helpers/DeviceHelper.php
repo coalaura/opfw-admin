@@ -114,6 +114,7 @@ class DeviceHelper
         "_device_bluetooth_",
         "_meta_",
         "_casque_",
+        "_jabra_",
     ];
 
     public static function check(array $devices): bool
