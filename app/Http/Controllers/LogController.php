@@ -151,10 +151,6 @@ class LogController extends Controller
 
         $query = MoneyLog::query()->orderByDesc('timestamp');
 
-        if ($request->getHttpHost() !== 'localhost') {
-            $query->whereNotIn('money_logs.license_identifier', GeneralHelper::getRootUsers());
-        }
-
         // Filtering by identifier.
         $this->searchQuery($request, $query, 'identifier', 'money_logs.license_identifier');
 

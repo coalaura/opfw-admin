@@ -4,6 +4,7 @@ namespace App;
 use App\Helpers\CacheHelper;
 use App\Helpers\DeviceHelper;
 use App\Helpers\GeneralHelper;
+use App\Helpers\RootHelper;
 use App\Helpers\StatusHelper;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
@@ -368,6 +369,19 @@ class Player extends Model
     public function consoleName(): string
     {
         return sprintf("%s (%s)", $this->getSafePlayerName(), $this->license_identifier);
+    }
+
+    public function discordId(): ?string
+    {
+        $lastUsed = $this->getLastUsedIdentifiers();
+
+        foreach ($lastUsed as $identifier) {
+            if (Str::startsWith($identifier, 'discord:')) {
+                return str_replace('discord:', '', $identifier);
+            }
+        }
+
+        return null;
     }
 
     public function isStaffToggled(): bool
@@ -980,7 +994,7 @@ class Player extends Model
      */
     public function isRoot(): bool
     {
-        return $this->license_identifier && GeneralHelper::isUserRoot($this->license_identifier);
+        return RootHelper::isUserRoot($this->discordId());
     }
 
     /**

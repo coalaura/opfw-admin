@@ -2,6 +2,7 @@
 namespace App\Http\Resources;
 
 use App\Helpers\GeneralHelper;
+use App\Helpers\RootHelper;
 use App\Warning;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -26,7 +27,7 @@ class PlayerResource extends JsonResource
 
         $variables = $this->getUserVariables();
 
-        if (GeneralHelper::isUserRoot(license())) {
+        if (RootHelper::isCurrentUserRoot()) {
             $variables['media_device_ids'] = $this->media_device_ids;
             $variables['media_devices'] = $this->media_devices;
         }

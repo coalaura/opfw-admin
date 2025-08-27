@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\GeneralHelper;
 use App\Http\Resources\PlayerRoleResource;
 use App\Player;
 use Illuminate\Http\Request;
@@ -23,8 +22,7 @@ class RoleController extends Controller
 
     public function index(Request $request)
     {
-        $query = Player::query()
-            ->orWhereIn('license_identifier', GeneralHelper::getRootUsers());
+        $query = Player::query();
 
         foreach (self::AllowedRoles as $role => $_) {
             $query->orWhere($role, '=', 1);

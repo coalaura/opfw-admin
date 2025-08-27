@@ -111,13 +111,13 @@ class PermissionHelper
 
         $level = 0;
 
-        if (GeneralHelper::isUserRoot($player->license_identifier)) {
+        if ($player->isRoot()) {
             $level = self::LEVEL_ROOT;
-        } else if ($player->is_super_admin) {
+        } else if ($player->isSuperAdmin()) {
             $level = self::LEVEL_SUPERADMIN;
-        } else if ($player->is_senior_staff) {
+        } else if ($player->isSeniorStaff()) {
             $level = self::LEVEL_SENIOR;
-        } else if ($player->is_staff) {
+        } else if ($player->isStaff()) {
             $level = self::LEVEL_STAFF;
         }
 

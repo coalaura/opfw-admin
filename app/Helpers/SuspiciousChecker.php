@@ -85,22 +85,6 @@ class SuspiciousChecker
         'weapon_snowball'    => 900,
     ];
 
-    private static function ignoreCharacterInventories(): array
-    {
-        $characters = Character::query()->select("character_id")->whereIn("license_identifier", self::getIgnorableLicenseIdentifiers())->get()->toArray();
-
-        $inventories = [];
-
-        foreach ($characters as $character) {
-            $id = $character['character_id'];
-
-            $inventories[] = 'character-' . $id;
-            $inventories[] = 'locker-police-' . $id;
-        }
-
-        return $inventories;
-    }
-
     /**
      * Finds item movements that have unusual amounts
      *
@@ -114,7 +98,7 @@ class SuspiciousChecker
             return CacheHelper::read($key, []);
         }
 
-        $sql = "SELECT * FROM (SELECT `identifier`, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(`details`, ' moved ', -1), ' to ', 1), 'x ', 1)) as `amount`, SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(`details`, ' moved ', -1), ' to ', 1), 'x ', -1) as `item`, `details`, CEIL(UNIX_TIMESTAMP(`timestamp`) / 600) * 600 as `time` FROM `user_logs` WHERE `action`='Item Moved' AND identifier NOT IN ('" . implode("', '", self::getIgnorableLicenseIdentifiers()) . "') GROUP BY CONCAT(`identifier`, '|', `time`, '|', `item`) ORDER BY `time` DESC) `logs` WHERE amount > 250";
+        $sql = "SELECT * FROM (SELECT `identifier`, SUM(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(`details`, ' moved ', -1), ' to ', 1), 'x ', 1)) as `amount`, SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(`details`, ' moved ', -1), ' to ', 1), 'x ', -1) as `item`, `details`, CEIL(UNIX_TIMESTAMP(`timestamp`) / 600) * 600 as `time` FROM `user_logs` WHERE `action`='Item Moved' GROUP BY CONCAT(`identifier`, '|', `time`, '|', `item`) ORDER BY `time` DESC) `logs` WHERE amount > 250";
 
         DB::statement("SET sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));");
         $logs = DB::select($sql);
@@ -218,21 +202,5 @@ class SuspiciousChecker
         }
 
         return $sus;
-    }
-
-    private static function getIgnorableLicenseIdentifiers(): array
-    {
-        $ids = Player::query()->select(["license_identifier"])->where("is_super_admin", "=", 1)->orWhere("is_senior_staff", "=", 1)->get()->toArray();
-
-        $ids = array_values(array_map(function ($entry) {
-            return $entry["license_identifier"];
-        }, $ids));
-
-        $root = GeneralHelper::getRootUsers();
-        foreach ($root as $user) {
-            $ids[] = $user;
-        }
-
-        return $ids;
     }
 }

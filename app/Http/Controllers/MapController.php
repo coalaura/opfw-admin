@@ -48,8 +48,7 @@ class MapController extends Controller
         $staff = Player::query()->where(function ($q) {
             $q->orWhere('is_staff', '=', 1)
                 ->orWhere('is_senior_staff', '=', 1)
-                ->orWhere('is_super_admin', '=', 1)
-                ->orWhereIn('license_identifier', GeneralHelper::getRootUsers());
+                ->orWhere('is_super_admin', '=', 1);
         })->select(['license_identifier', 'player_name'])->get()->toArray();
 
         $marker = $request->query('m') ?? null;

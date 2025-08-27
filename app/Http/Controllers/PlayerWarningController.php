@@ -6,6 +6,7 @@ use App\Helpers\DiscordAttachmentHelper;
 use App\Helpers\GeneralHelper;
 use App\Helpers\Mutex;
 use App\Helpers\PermissionHelper;
+use App\Helpers\RootHelper;
 use App\Http\Requests\WarningStoreRequest;
 use App\Player;
 use App\Warning;
@@ -89,7 +90,7 @@ class PlayerWarningController extends Controller
      */
     public function refresh(Player $player, Warning $warning): RedirectResponse
     {
-        if (!GeneralHelper::isUserRoot(license())) {
+        if (!RootHelper::isCurrentUserRoot()) {
             abort(401);
         }
 

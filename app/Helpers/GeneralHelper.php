@@ -39,32 +39,6 @@ class GeneralHelper
         6, // Left Wrist
     ];
 
-    public static function getRootUsers(): array
-    {
-        $list = explode(",", getenv("ROOT_USERS") ?? env("ROOT_USERS") ?? "");
-
-        if (!$list || !is_array($list)) {
-            return [];
-        }
-
-        return array_values(array_filter(array_map(function($license) {
-            $license = trim($license);
-
-            if (empty($license) || !Str::startsWith($license, "license:")) {
-                return false;
-            }
-
-            return $license;
-        }, $list)));
-    }
-
-    public static function isUserRoot(string $license_identifier): bool
-    {
-        $users = self::getRootUsers();
-
-        return in_array($license_identifier, $users);
-    }
-
     public static function getAllStaff(): array
     {
         $key = "all_staff_list";
