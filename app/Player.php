@@ -994,7 +994,7 @@ class Player extends Model
      */
     public function isRoot(): bool
     {
-        return RootHelper::isUserRoot($this->discordId());
+        return RootHelper::isUserRoot($this->license_identifier);
     }
 
     /**

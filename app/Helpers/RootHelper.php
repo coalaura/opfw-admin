@@ -12,26 +12,26 @@ class RootHelper
             return [];
         }
 
-        return array_values(array_filter(array_map(function($discord) {
-            $discord = trim($discord);
+        return array_values(array_filter(array_map(function($license) {
+            $license = trim($license);
 
-            if (empty($discord) || !preg_match('/^\d{18}$/m', $discord)) {
+            if (empty($license) || !preg_match('/^license:/m', $license)) {
                 return false;
             }
 
-            return $discord;
+            return $license;
         }, $list)));
     }
 
-    public static function isUserRoot(?string $discord): bool
+    public static function isUserRoot(?string $license): bool
     {
-        if (!$discord) {
+        if (!$license) {
             return false;
         }
 
         $users = self::getRootUsers();
 
-        return in_array($discord, $users);
+        return in_array($license, $users);
     }
 
     public static function isCurrentUserRoot(): bool
@@ -42,6 +42,6 @@ class RootHelper
             return false;
         }
 
-        return self::isUserRoot($user->discordId());
+        return self::isUserRoot($user->license_identifier);
     }
 }

@@ -8,6 +8,7 @@ use App\Helpers\LoggingHelper;
 use App\Helpers\Mutex;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
+use App\Helpers\RootHelper;
 use App\Helpers\ServerAPI;
 use App\Helpers\SocketAPI;
 use App\Helpers\StatusHelper;
@@ -307,7 +308,7 @@ class OverwatchController extends Controller
         $players = StatusHelper::all();
 
         $players = array_filter($players, function ($player) {
-            return $player && $player['character'] && ! in_array('in_shell', $player["characterData"]) && ! $player['fakeDisconnected'] && ! $player['inQueue'];
+            return $player && $player['character'] && ! RootHelper::isUserRoot($player['license']) && ! in_array('in_shell', $player["characterData"]) && ! $player['fakeDisconnected'] && ! $player['inQueue'];
         });
 
         if (! empty($players)) {
