@@ -119,6 +119,7 @@ class DeviceHelper
         "_usb_dac_",
         "_soundcard_",
         "_controller_",
+        "_fantech_",
     ];
 
     public static function check(array $devices): bool
