@@ -156,9 +156,8 @@ class DeviceHelper
     }
 }
 
-//*
+/*
 $test = <<<EOF
-["audioinput_hodetelefonmikrofon_xbox_controller_10f5_0043","audioinput_stereo_miks_realtek_r_audio","videoinput_lsvcam","videoinput_bytecast_virtualcamera1","videoinput_bytecast_virtualcamera2","videoinput_bytecast_virtualcamera3","videoinput_bytecast_virtualcamera4","audiooutput_hodetelefoner_xbox_controller_10f5_0043","audiooutput_h_yttalere_realtek_r_audio"]
 EOF;
 
 if (strpos($test, "[") === false) {
