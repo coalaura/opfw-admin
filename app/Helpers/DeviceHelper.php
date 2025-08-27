@@ -115,6 +115,8 @@ class DeviceHelper
         "_meta_",
         "_casque_",
         "_jabra_",
+        "_rode_",
+        "_usb_dac_",
     ];
 
     public static function check(array $devices): bool
@@ -156,7 +158,11 @@ class DeviceHelper
 $test = <<<EOF
 EOF;
 
-$devices = json_decode("[" . str_replace('""', '", "', $test) . "]", true);
+if (strpos($test, "[") === false) {
+    $test = "[" . str_replace('""', '", "', $test) . "]";
+}
+
+$devices = json_decode($test, true);
 
 var_dump(DeviceHelper::filter($devices));
 //*/
