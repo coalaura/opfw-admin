@@ -20,6 +20,7 @@ class SocketAPI
 
         return strpos($output, "LISTENING") !== false;
     }
+
     /**
      * /data/players
      */
@@ -79,9 +80,9 @@ class SocketAPI
             return null;
         }
 
-        $host = DOCKER ? 'host.docker.internal' : 'localhost:9999';
+        $host = DOCKER ? 'socket' : 'localhost';
 
-        $url = sprintf('http://%s/socket/%s/%s', $host, $server, ltrim($route, '/'));
+        $url = sprintf('http://%s:9999/socket/%s/%s', $host, $server, ltrim($route, '/'));
 
         $client = new Client(
             [
