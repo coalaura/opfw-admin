@@ -8,6 +8,10 @@ class SocketAPI
 {
     public static function isUp(): bool
     {
+        if (DOCKER) {
+            return true;
+        }
+
         if (strtoupper(substr(PHP_OS, 0, 3)) !== "WIN") {
             return file_exists("/tmp/op-fw.lock");
         }
