@@ -96,7 +96,9 @@ class PlayerController extends Controller
 
         $players = $query->get();
 
-        if ($players->count() === 1) {
+        $hasFilters = !empty($identifier) || !empty($request->input('license_identifier'));
+
+        if ($players->count() === 1 && $hasFilters) {
             $player = $players->first();
 
             return redirect('/players/' . $player->license_identifier);
