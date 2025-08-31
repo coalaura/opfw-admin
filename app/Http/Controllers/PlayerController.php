@@ -96,7 +96,7 @@ class PlayerController extends Controller
 
         $players = $query->get();
 
-        $hasFilters = !empty($identifier) || !empty($request->input('license_identifier'));
+        $hasFilters = !empty($identifier) || !empty($request->input('license'));
 
         if ($players->count() === 1 && $hasFilters) {
             $player = $players->first();
