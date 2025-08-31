@@ -79,7 +79,7 @@ class SocketAPI
             return null;
         }
 
-        $url = sprintf('http://localhost:9999/socket/%s/%s', $server, ltrim($route, '/'));
+        $url = sprintf('http://%s:9999/socket/%s/%s', DOCKER ? 'host.docker.internal' : 'localhost', $server, ltrim($route, '/'));
 
         $client = new Client(
             [
