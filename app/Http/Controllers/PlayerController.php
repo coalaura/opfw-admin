@@ -96,14 +96,6 @@ class PlayerController extends Controller
 
         $players = $query->get();
 
-        $hasFilters = !empty($identifier) || !empty($request->input('license'));
-
-        if ($players->count() === 1 && $hasFilters) {
-            $player = $players->first();
-
-            return redirect('/players/' . $player->license_identifier);
-        }
-
         $end = round(microtime(true) * 1000);
 
         return Inertia::render('Players/Index', [
