@@ -218,7 +218,7 @@ export default {
             };
 
             try {
-                const result = await _put(`/tokens/${token.id}`, data);
+                const result = await _put(`/tokens/${token.id}`, JSON.stringify(data));
 
                 if (result?.status) {
                     token.changed = false;
