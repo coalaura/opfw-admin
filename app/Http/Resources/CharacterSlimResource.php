@@ -2,13 +2,11 @@
 
 namespace App\Http\Resources;
 
-use App\Character;
 use App\Helpers\GeneralHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Str;
 
-class CharacterResource extends JsonResource
+class CharacterSlimResource extends JsonResource
 {
 
     /**
@@ -39,25 +37,18 @@ class CharacterResource extends JsonResource
             'departmentName'             => $this->department_name,
             'positionName'               => $this->position_name,
             'backstory'                  => $this->backstory,
-            'vehicles'                   => VehicleResource::collection($this->vehicles),
-            'properties'                 => PropertyResource::collection($this->properties),
-            'accessProperties'           => PropertyResource::collection($this->accessProperties()),
             'characterDeleted'           => $this->character_deleted,
             'characterDeletionTimestamp' => $this->character_deletion_timestamp,
             'characterCreationTimestamp' => $this->character_creation_timestamp,
-            'licenses'                   => $this->getLicenses(),
             'creationTime'               => $this->character_creation_time,
             'pedModelHash'               => $this->ped_model_hash ? intval($this->ped_model_hash) : null,
-            'outfits'                    => Character::getOutfits($this->character_id, user()->isSeniorStaff()),
             'danny'                      => GeneralHelper::isDefaultDanny(intval($this->ped_model_hash), $this->ped_model_data),
             'mugshot'                    => $this->mugshot_url ?? null,
             'playtime'                   => $this->playtime,
             'playtime_2w'                => $this->getRecentPlaytime(2),
             'playtime_4w'                => $this->getRecentPlaytime(4),
             'lastLoaded'                 => $this->last_loaded,
-            'coords'                     => json_decode($this->coords, true),
             'marriedTo'                  => $this->married_to,
-            'emailAddress'               => $this->email_address,
         ];
     }
 }

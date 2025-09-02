@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Character;
 use App\Helpers\PermissionHelper;
-use App\Http\Resources\CharacterResource;
+use App\Http\Resources\CharacterSlimResource;
 use App\Http\Resources\YPostResource;
 use App\Http\Resources\YUserResource;
 use App\YPost;
@@ -104,7 +104,7 @@ class YController extends Controller
 
         return Inertia::render('Y/User', [
             'yells'    => YPostResource::collection($yells),
-            'character' => $character ? new CharacterResource($character) : null,
+            'character' => $character ? new CharacterSlimResource($character) : null,
             'user'      => new YUserResource($user),
             'links'     => $this->getPageUrls($page),
             'page'      => $page,

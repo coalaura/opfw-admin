@@ -8,7 +8,7 @@ use App\Helpers\StatisticsHelper;
 use App\Helpers\StatusHelper;
 use App\Http\Controllers\PlayerDataController;
 use App\Http\Resources\BanResource;
-use App\Http\Resources\CharacterResource;
+use App\Http\Resources\CharacterSlimResource;
 use App\Http\Resources\PlayerIndexResource;
 use App\Http\Resources\PlayerResource;
 use App\Player;
@@ -215,7 +215,7 @@ class PlayerController extends Controller
 
         return Inertia::render('Players/Show', [
             'player'            => new PlayerResource($player),
-            'characters'        => CharacterResource::collection($player->characters),
+            'characters'        => CharacterSlimResource::collection($player->characters),
             'warnings'          => $player->fasterWarnings($isSenior),
             'reactions'         => Warning::Reactions,
             'animated'          => Warning::AnimatedReactions,
