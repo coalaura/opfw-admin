@@ -169,6 +169,7 @@ class DeviceHelper
         "_avermedia_",
         "_reproduktory_",
         "_nt_usb_",
+        "_maono_",
     ];
 
     public static function check(array $devices): bool
