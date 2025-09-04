@@ -609,10 +609,10 @@ class TestController extends Controller
                 continue;
             }
 
-            $result[] = sprintf('<a href="/players/%s" target="blank">%06d</a>: <code>%s</code>', $user->license_identifier, $user->user_id, json_encode($filtered));
+            $result[] = sprintf('<code><a href="/players/%s" target="blank">%06d</a>: %s</code>', $user->license_identifier, $user->user_id, json_encode($filtered));
         }
 
-        return $this->fakeText(200, implode("\n", $result));
+        return $this->fakeText(200, '<style>code{whitespace:nowrap}</style>'.implode("\n", $result));
     }
 
     /**
