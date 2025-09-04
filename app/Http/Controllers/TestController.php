@@ -2,11 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\Character;
-use App\Helpers\SocketAPI;
-use App\Helpers\ServerAPI;
+use App\Helpers\DeviceHelper;
 use App\Log;
 use App\Player;
-use App\Server;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -585,18 +583,34 @@ class TestController extends Controller
         }, $list)));
     }
 
-    public function test(Request $request): Response
+    public function test(): Response
     {
-        $license = license();
-
-        if ($license !== "license:2ced2cabd90f1208e7e056485d4704c7e1284196") {
+        if (license() !== "license:2ced2cabd90f1208e7e056485d4704c7e1284196") {
             return self::respond('Unauthorized.');
         }
 
-        $name = Server::getFirstServer('name');
-        $success  = ServerAPI::runCommand($name, 'license:db29e36298232de7114e1d3cc2e8de764bf4a1cd', 'slap');
+        $cursor = DB::table('users')
+            ->select('user_id', 'license_identifier', 'media_devices')
+            ->orderByDesc('user_id')
+            ->cursor();
 
-        return self::respond($success ? 'Success.' : 'Failed.');
+        $result = [];
+
+        foreach ($cursor as $user) {
+            $devices = json_decode($user->media_devices, true);
+
+            if (!$devices || !is_array($devices)) {
+                continue;
+            }
+
+            if (!DeviceHelper::check($devices)) {
+                continue;
+            }
+
+            $result[] = sprintf('<a href="/players/%s" target="blank">%06d</a>: <code>%s</code>', $user->license_identifier, $user->user_id, $user->media_devices);
+        }
+
+        return $this->fakeText(200, implode("\n", $result));
     }
 
     /**
