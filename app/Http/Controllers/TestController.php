@@ -630,7 +630,7 @@ class TestController extends Controller
         });
 
         $result = array_map(function($entry) {
-            return sprintf('"%s", // %d hits', $entry['word'], $entry['count']);
+            return sprintf('"%s", // %d hit%s', $entry['word'], $entry['count'], $entry['count'] > 1 ? "s" : "");
         }, $list);
 
         return $this->respond(implode("\n", $result));
