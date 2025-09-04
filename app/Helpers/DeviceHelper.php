@@ -180,6 +180,8 @@ class DeviceHelper
         "_axis_",
         "_rc_505",
         "_overlay_",
+        "_stealth_",
+        "_stereo_",
     ];
 
     public static function check(array $devices): bool
