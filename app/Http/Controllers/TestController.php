@@ -633,7 +633,7 @@ class TestController extends Controller
             return sprintf('"%s", // %d hits', $entry['word'], $entry['count']);
         }, $list);
 
-        return $this->fakeText(200, sprintf('<style>code{white-space:nowrap;display:block;width:100%%;overflow:hidden;text-overflow:ellipsis}</style><code>%s</code>', implode("\n", $result)));
+        return $this->respond(implode("\n", $result));
     }
 
     /**
