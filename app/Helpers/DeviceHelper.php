@@ -170,6 +170,16 @@ class DeviceHelper
         "_reproduktory_",
         "_nt_usb_",
         "_maono_",
+        "_redmi_buds_",
+        "_tims_buds",
+        "_ngsmedia_",
+        "_ngspreview_",
+        "_ngscamtocam_",
+        "_live_streamer_",
+        "_katana_",
+        "_axis_",
+        "_rc_505",
+        "_overlay_",
     ];
 
     public static function check(array $devices): bool
