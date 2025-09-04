@@ -120,6 +120,8 @@ class DeviceHelper
         "_soundcard_",
         "_controller_",
         "_fantech_",
+        "_spatial_",
+        "_nos_",
     ];
 
     public static function check(array $devices): bool
