@@ -192,28 +192,34 @@ class DeviceHelper
     public static function filter(array $devices): array
     {
         // strip "videoinput_", "audioinput_", etc.
-        $devices = array_values(array_filter(array_map(function ($device) {
+        $devices = self::clean($devices);
+
+        return array_values(array_filter($devices, function ($device) {
+            return ! self::has($device);
+        }));
+    }
+
+    public static function clean(array $devices): array
+    {
+        // strip "videoinput_", "audioinput_", etc.
+        return array_values(array_filter(array_map(function ($device) {
             return preg_replace('/^(video|audio)(in|out)put_?/m', '', $device);
         }, $devices), function ($device) {
             return $device && strlen($device) >= 5 && ! substr($device, 0, 4) !== "gpu_" && ! preg_match('/^_?[\da-f]{4}_[\da-f]{4}_?$/m', $device);
         }));
-
-        return array_values(array_filter($devices, function ($device) {
-            return strlen($device) >= 5 && ! self::has($device);
-        }));
     }
 
-    private static function has(string $device): bool
+    public static function has(string $device): ?string
     {
         $device = sprintf('_%s_', $device);
 
         foreach (self::Wordlist as $word) {
             if (strpos($device, $word) !== false) {
-                return true;
+                return $word;
             }
         }
 
-        return false;
+        return null;
     }
 }
 
