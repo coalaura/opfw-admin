@@ -603,11 +603,13 @@ class TestController extends Controller
                 continue;
             }
 
-            if (!DeviceHelper::check($devices)) {
+            $filtered = DeviceHelper::filter($devices);
+
+            if (sizeof($filtered) < 2) {
                 continue;
             }
 
-            $result[] = sprintf('<a href="/players/%s" target="blank">%06d</a>: <code>%s</code>', $user->license_identifier, $user->user_id, $user->media_devices);
+            $result[] = sprintf('<a href="/players/%s" target="blank">%06d</a>: <code>%s</code>', $user->license_identifier, $user->user_id, json_encode($filtered));
         }
 
         return $this->fakeText(200, implode("\n", $result));
