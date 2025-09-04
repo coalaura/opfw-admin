@@ -594,25 +594,46 @@ class TestController extends Controller
             ->orderByDesc('user_id')
             ->cursor();
 
-        $result = [];
+        $hits = [];
 
         foreach ($cursor as $user) {
             $devices = json_decode($user->media_devices, true);
 
-            if (!$devices || !is_array($devices)) {
+            if (! $devices || ! is_array($devices)) {
                 continue;
             }
 
-            $filtered = DeviceHelper::filter($devices);
+            $cleaned = DeviceHelper::clean($devices);
 
-            if (sizeof($filtered) < 2) {
-                continue;
+            foreach ($cleaned as $clean) {
+                $clean = sprintf('_%s_', $clean);
+
+                foreach (DeviceHelper::Wordlist as $word) {
+                    if (strpos($clean, $word) !== false) {
+                        $hits[$word] = ($hits[$word] ?? 0) + 1;
+                    }
+                }
             }
-
-            $result[] = sprintf('<code><a href="/players/%s" target="blank">%06d</a>: %s</code>', $user->license_identifier, $user->user_id, implode(", ", $filtered));
         }
 
-        return $this->fakeText(200, '<style>code{white-space:nowrap;display:block;width:100%;overflow:hidden;text-overflow:ellipsis}</style>'.implode("", $result));
+        $list = [];
+
+        foreach ($hits as $word => $count) {
+            $list[] = [
+                'word'  => $word,
+                'count' => $count,
+            ];
+        }
+
+        usort($list, function($a, $b) {
+            return $b['count'] - $a['count'];
+        });
+
+        $result = array_map(function($entry) {
+            return sprintf('"%s", // %d hits', $entry['word'], $entry['count']);
+        }, $list);
+
+        return $this->fakeText(200, sprintf('<style>code{white-space:nowrap;display:block;width:100%;overflow:hidden;text-overflow:ellipsis}</style><code>%s</code>', implode("\n", $result)));
     }
 
     /**
