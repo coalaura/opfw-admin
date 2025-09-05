@@ -65,7 +65,7 @@ class ErrorController extends Controller
 
         $query = ServerError::query()
             ->selectRaw("error_id, error_location, error_trace, server_id, timestamp, server_version, COUNT(error_id) as `occurrences`")
-            ->whereNot("error_trace", "LIKE", "is bigger than 128k")
+            ->where("error_trace", "NOT LIKE", "is bigger than 128k")
             ->orderByDesc('timestamp')
             ->groupByRaw("error_location, error_trace, FLOOR(timestamp / 300)");
 
