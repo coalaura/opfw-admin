@@ -42,6 +42,7 @@ use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StaffChatController;
 use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\DataController;
+use App\Http\Controllers\FindController;
 use App\Http\Controllers\LookupController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SuspiciousController;
@@ -207,6 +208,10 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/damage', [LogController::class, 'damageLogs']);
     Route::get('/phone_logs', [LogController::class, 'phoneLogs']);
     Route::get('/phone_logs/get', [LogController::class, 'phoneLogsData']);
+
+    // Find by.
+    Route::get('/find/vehicle/{vehicle}', [FindController::class, 'vehicle']);
+    Route::get('/find/character/{character}', [FindController::class, 'character']);
 
     // Casino Logs.
     Route::resource('casino', CasinoLogController::class);
