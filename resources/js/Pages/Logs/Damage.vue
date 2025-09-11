@@ -199,7 +199,7 @@
 							</span>
 						</td>
 						<td class="p-3 mobile:block max-w-40 whitespace-nowrap">
-							<a :title="t('logs.vehicle_id')" v-if="log.hitVehicleId" :href="`/find/vehicle/${log.hitVehicleId}`" target="_blank">
+							<a :title="t('logs.vehicle_id')" class="text-blue-600 dark:text-blue-400" v-if="log.hitVehicleId" :href="`/find/vehicle/${log.hitVehicleId}`" target="_blank">
 								<i class="fas fa-truck-pickup mr-1"></i>
 								{{ log.hitVehicleId }}
 							</a>
