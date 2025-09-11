@@ -34,6 +34,7 @@ class WeaponDamageEventResource extends JsonResource
             'tireIndex'         => $this->tyre_index,
             'suspensionIndex'   => $this->suspension_index,
             'flags'             => $this->damage_flags,
+            'canceled'          => ! ! $this->canceled,
         ];
     }
 

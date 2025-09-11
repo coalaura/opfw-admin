@@ -546,7 +546,7 @@ class LogController extends Controller
         $page = Paginator::resolveCurrentPage('page');
         $query->limit(30)->offset(($page - 1) * 30);
 
-        $query->select(['id', 'license_identifier', 'timestamp', 'hit_player', 'hit_health', 'distance', 'hit_vehicle_id', 'hit_global_id', 'hit_entity_type', 'hit_component', 'damage_flags', 'silenced', 'tyre_index', 'suspension_index', 'weapon_damage', 'weapon_type', 'bonus_damage']);
+        $query->select(['id', 'license_identifier', 'timestamp', 'hit_player', 'hit_health', 'distance', 'hit_vehicle_id', 'hit_global_id', 'hit_entity_type', 'hit_component', 'damage_flags', 'silenced', 'tyre_index', 'suspension_index', 'weapon_damage', 'weapon_type', 'bonus_damage', 'canceled']);
 
         $logs = WeaponDamageEventResource::collection($query->get());
 

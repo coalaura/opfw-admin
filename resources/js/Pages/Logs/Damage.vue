@@ -170,7 +170,7 @@
 							</a>
 						</th>
 					</tr>
-					<tr class="border-t border-gray-300 dark:border-gray-500 relative" v-for="(log, index) in logs" :key="log.id">
+					<tr class="border-t border-gray-300 dark:border-gray-500 relative" :class="{ 'opacity-50': log.canceled }" v-for="(log, index) in logs" :key="log.id" :title="log.canceled ? t('logs.canceled') : ''">
 						<td class="p-3 pl-8 mobile:block max-w-56">
 							<div class="absolute top-1 left-1 text-sm leading-3 font-semibold italic" v-html="getDamageTag(log)"></div>
 

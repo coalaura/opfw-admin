@@ -1491,6 +1491,7 @@
         "messages": "Messages",
         "no_messages": "No messages found.",
         "not_available": "Not available",
+        "canceled": "Damage event was canceled and dropped. Damage was not applied.",
         "money_title": "Money Logs",
         "money_description": "On this page you can view and filter the money logs.",
         "type": "Type",
