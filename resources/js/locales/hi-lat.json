@@ -383,6 +383,7 @@
         "before-date": "Isse pehle ki Tareekh",
         "before-time": "Isse pehle ka Samay",
         "bonus_damage": "Bonus nuksan (headshots, etc.)",
+        "canceled": "Nuksaan ghatna radd kar di gayi aur gira di gayi. Nuksaan lagu nahi kiya gaya.",
         "channel": "Channel",
         "character": "Paatra",
         "character_id": "Paatra ID",

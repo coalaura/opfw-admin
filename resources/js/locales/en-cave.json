@@ -383,6 +383,7 @@
         "before-date": "Before Day",
         "before-time": "Before Time",
         "bonus_damage": "Extra hit hurt (head, etc.)",
+        "canceled": "Damage event stop. No damage.",
         "channel": "Place",
         "character": "Hero",
         "character_id": "Hero ID",

@@ -383,6 +383,7 @@
         "before-date": "Before Date",
         "before-time": "Before Time",
         "bonus_damage": "Bonus damage (headshots, etc.)",
+        "canceled": "Damage event got canceled and dropped. Damage didn't get applied.",
         "channel": "Channel",
         "character": "Character",
         "character_id": "Character ID",

@@ -383,6 +383,7 @@
         "before-date": "Før dato",
         "before-time": "Før tid",
         "bonus_damage": "Ekstra skade (hodetreff, etc.)",
+        "canceled": "Skadehendelsen ble avlyst og droppet. Skaden ble ikke påført.",
         "channel": "Kanal",
         "character": "Karakter",
         "character_id": "Karakter-ID",

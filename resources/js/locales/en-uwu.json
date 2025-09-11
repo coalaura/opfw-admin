@@ -383,6 +383,7 @@
         "before-date": "Befowe Date",
         "before-time": "Befowe Time",
         "bonus_damage": "Bonus damage (headshots, etc.)",
+        "canceled": "Damage event was cancewed and dwopped. Damage was nyot appwied.",
         "channel": "Channew",
         "character": "Chawactew",
         "character_id": "Chawactew ID",
