@@ -7,6 +7,7 @@ use App\Helpers\LoggingHelper;
 use App\Http\Controllers\Controller;
 use App\Player;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ServerException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 
@@ -17,6 +18,8 @@ use Illuminate\Support\Facades\Crypt;
  */
 class DiscordController extends Controller
 {
+    private ?string $discordApiError;
+
     public function login(Request $request)
     {
         $clientId = env('DISCORD_OAUTH_ID');
@@ -62,7 +65,7 @@ class DiscordController extends Controller
         $tokens = $this->resolveTokens($request, $code);
 
         if (!$tokens) {
-            return redirectWith('/login', 'error', 'Failed to resolve access token.');
+            return redirectWith('/login', 'error', 'Failed to resolve access token. ' . ($this->discordApiError ?? ""));
         }
 
         $accessToken  = $tokens['access'];
@@ -71,7 +74,7 @@ class DiscordController extends Controller
         $user = $this->resolveUser($accessToken);
 
         if (!$user) {
-            return redirectWith('/login', 'error', 'Failed to resolve user.');
+            return redirectWith('/login', 'error', 'Failed to resolve user. ' . ($this->discordApiError ?? ""));
         }
 
         // Process the user data.
@@ -213,6 +216,8 @@ class DiscordController extends Controller
                 ];
             }
         } catch (\Throwable $e) {
+            $this->checkHTTPError($e);
+
             LoggingHelper::log(sprintf('Failed to resolve discord access token: %s', $e->getMessage()));
         }
 
@@ -237,6 +242,8 @@ class DiscordController extends Controller
                 return $data['user'];
             }
         } catch (\Throwable $e) {
+            $this->checkHTTPError($e);
+
             LoggingHelper::log(sprintf('Failed to resolve discord user: %s', $e->getMessage()));
         }
 
@@ -252,5 +259,21 @@ class DiscordController extends Controller
         }
 
         return $request->getSchemeAndHttpHost() . '/auth/complete';
+    }
+
+    private function checkHTTPError(\Throwable $e)
+    {
+        if ($this->discordApiError) {
+            return;
+        }
+
+        if ($e instanceof ServerException) {
+            $response = $e->getResponse();
+            $code = $response ? $response->getStatusCode() : 0;
+
+            if ($code >= 500 && $code <= 504) {
+                $this->discordApiError = "Discord API is unavailable, try again later.";
+            }
+        }
     }
 }
