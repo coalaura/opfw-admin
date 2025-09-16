@@ -88,11 +88,11 @@ const Socket = {
 			try {
 				const response = await _post("https://joaat.sh/j/reverse", JSON.stringify([int]));
 
-				if (!response || !Array.isArray(response)) return false;
+				if (!response?.data || !Array.isArray(response?.data)) return false;
 
 				let result = false;
 
-				const names = response[0];
+				const names = response.data[0];
 
 				if (names && Array.isArray(names) && names.length) {
 					result = {
