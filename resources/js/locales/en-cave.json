@@ -554,7 +554,6 @@
         "historic_resolve": "Fetch from and till from ban timestamp.",
         "historic_till": "Till",
         "historic_title": "Show one player's moves in time",
-        "instance": "Instance {0} - {1}",
         "invisible": "is invisible",
         "invisible_time": "Was invisible for {0}",
         "invisible_title": "Invisible Players",
