@@ -51,6 +51,10 @@ class PlayerContainer {
         };
         this.staff = [];
 
+        this.instanceNames = {
+            [mainInstance]: "overworld",
+        };
+
         this.instances = {
             [mainInstance]: 0
         };
@@ -128,6 +132,7 @@ class PlayerContainer {
 
         if (rawPlayer.character) {
             this.instances[instance] = (this.instances[instance] || 0) + 1;
+
             this.instanceNames[instance] = `${rawPlayer.instanceName} #${instance}`;
         }
 
