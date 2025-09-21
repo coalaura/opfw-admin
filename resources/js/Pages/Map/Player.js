@@ -31,7 +31,8 @@ class Player {
     update(rawData, staffMembers) {
         const flags = Player.getPlayerFlags(rawData);
 
-        this.instance = Number.parseInt(rawData.instance);
+        this.instance = rawData.instance.id;
+        this.instanceName = rawData.instance.name;
 
         this.player = {
             name: rawData.name,

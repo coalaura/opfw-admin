@@ -21,6 +21,7 @@ class PlayerContainer {
         this.mainInstance = 1;
 
         this.instances = [];
+        this.instanceNames = {};
 
         this.notifier = new Notifier();
     }
@@ -67,8 +68,11 @@ class PlayerContainer {
         }
 
         this.instances = Object.entries(this.instances).map(entry => {
+            const id = Number.parseInt(entry[0]);
+
             return {
-                id: Number.parseInt(entry[0]),
+                id: id,
+                name: this.instanceNames[id] || `#${id}`,
                 count: entry[1]
             };
         }).sort((a, b) => a.id > b ? 1 : (a.id < b.id ? -1 : 0));
@@ -121,8 +125,10 @@ class PlayerContainer {
         }
 
         const instance = Number.parseInt(rawPlayer.instance);
+
         if (rawPlayer.character) {
             this.instances[instance] = (this.instances[instance] || 0) + 1;
+            this.instanceNames[instance] = rawPlayer.instanceName;
         }
 
         if (instance !== selectedInstance) {

@@ -12,7 +12,7 @@
                     </select>
                     <select class="inline-block w-36 h-8 ml-2 px-2 py-1 text-sm bg-gray-200 dark:bg-gray-600 border rounded" v-model="selectedInstance" v-if="Object.values(container.instances).length > 0">
                         <option v-for="instance in container.instances" :key="instance.id" :value="instance.id">
-                            {{ instance.id === container.mainInstance ? t('map.main_instance') : t('map.instance', instance.id, instance.count) }}
+                            {{ instance.id === container.mainInstance ? t('map.main_instance') : t('map.instance', instance.name, instance.count) }}
                         </option>
                     </select>
                 </h1>
