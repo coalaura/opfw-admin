@@ -128,12 +128,12 @@ class PlayerContainer {
             return;
         }
 
-        const instance = Number.parseInt(rawPlayer.instance);
+        const instance = Number.parseInt(rawPlayer.instance.id);
 
         if (rawPlayer.character) {
             this.instances[instance] = (this.instances[instance] || 0) + 1;
 
-            this.instanceNames[instance] = `${rawPlayer.instanceName} #${instance}`;
+            this.instanceNames[instance] = `${rawPlayer.instance.name} #${instance}`;
         }
 
         if (instance !== selectedInstance) {

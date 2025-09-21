@@ -89,13 +89,13 @@ class DataCompressor {
 
 	#copy(object) {
 		const copy = obj => {
-            if (Array.isArray(obj)) {
-                return obj.map(copy);
+			if (Array.isArray(obj)) {
+				return obj.map(copy);
 			}
 
-            if (obj === null) {
-                return null;
-            }
+			if (obj === null) {
+				return null;
+			}
 
 			if (typeof obj === "object") {
 				return Object.entries(obj).reduce((obj, [key, value]) => {
