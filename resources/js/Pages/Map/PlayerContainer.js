@@ -128,7 +128,7 @@ class PlayerContainer {
 
         if (rawPlayer.character) {
             this.instances[instance] = (this.instances[instance] || 0) + 1;
-            this.instanceNames[instance] = rawPlayer.instanceName;
+            this.instanceNames[instance] = `${rawPlayer.instanceName} #${instance}`;
         }
 
         if (instance !== selectedInstance) {
