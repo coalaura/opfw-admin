@@ -111,8 +111,6 @@ class OverwatchController extends Controller
             return;
         }
 
-        $hasSpectatorCamera = isset($spectator['data']) && isset($spectator['data']['spectatorCamera']);
-
         switch ($action) {
             case 'revive':
                 OPFWHelper::revivePlayer($license);
@@ -245,7 +243,7 @@ class OverwatchController extends Controller
                 ->first();
 
             if (! $character) {
-                return self::json(false, null, 'Player has no character loaded and no loadable character available.');
+                return self::json(false, null, 'Spectator has no characters that can be loaded.');
             }
 
             $response = ServerAPI::loadCharacter($spectator['server'], $license, $character->character_id);
