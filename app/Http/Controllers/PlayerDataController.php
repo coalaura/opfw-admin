@@ -1,10 +1,7 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Helpers\PermissionHelper;
-use App\Helpers\ServerAPI;
-use App\Helpers\StatusHelper;
 use App\PanelLog;
 use App\Player;
 use Illuminate\Http\RedirectResponse;
@@ -16,6 +13,8 @@ class PlayerDataController extends Controller
     const EnablableCommands = [
         "advanced_metagame",
         "auto_drive",
+        "battle_royale_start",
+        "battle_royale_toggle",
         "brighter_nights",
         "cam_clear",
         "cam_play",
@@ -23,12 +22,14 @@ class PlayerDataController extends Controller
         "cpr",
         "fortnite",
         "freecam",
+        "idle",
         "live_map",
         "minecraft",
         "orbitcam",
         "player_stats",
         "reflect",
         "register_weapon",
+        "registration_lookup",
         "stable_cam",
         "super_jump",
         "watermark",
@@ -43,11 +44,11 @@ class PlayerDataController extends Controller
      */
     public function updateMuteStatus(Player $player, Request $request): RedirectResponse
     {
-        $user = user();
-        $status = !!$request->input('status');
+        $user   = user();
+        $status = ! ! $request->input('status');
 
         if ($status) {
-            $reason = $request->input('reason');
+            $reason  = $request->input('reason');
             $expires = $request->input('expires');
 
             if (empty($reason) || empty($expires) || strtotime($expires) > time()) {
@@ -61,9 +62,9 @@ class PlayerDataController extends Controller
             }
 
             $player->setUserData('muted', [
-                'reason'  => $reason,
+                'reason'          => $reason,
                 'expiryTimestamp' => $expires,
-                'creatorName' => user()->player_name,
+                'creatorName'     => user()->player_name,
             ]);
 
             PanelLog::log(
@@ -94,7 +95,7 @@ class PlayerDataController extends Controller
      */
     public function updateWhitelistStatus(Player $player, Request $request): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_WHITELIST)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_WHITELIST)) {
             return backWith('error', 'You dont have permissions to do this.');
         }
 
@@ -108,7 +109,7 @@ class PlayerDataController extends Controller
         $status = $request->input('status');
 
         if ($status) {
-            if (!$whitelisted) {
+            if (! $whitelisted) {
                 DB::table('user_whitelist')->insert([
                     'license_identifier' => $player->license_identifier,
                 ]);
@@ -143,7 +144,7 @@ class PlayerDataController extends Controller
      */
     public function updateBanExceptionStatus(Player $player, Request $request): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_BAN_EXCEPTION)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_BAN_EXCEPTION)) {
             return backWith('error', 'You dont have permissions to do this.');
         }
 
@@ -180,7 +181,7 @@ class PlayerDataController extends Controller
      */
     public function updateTag(Player $player, Request $request): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_EDIT_TAG)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_EDIT_TAG)) {
             return backWith('error', 'You dont have permissions to do this.');
         }
 
@@ -220,7 +221,7 @@ class PlayerDataController extends Controller
      */
     public function updateEnabledCommands(Player $player, Request $request): RedirectResponse
     {
-        if (!$this->isSuperAdmin($request)) {
+        if (! $this->isSuperAdmin($request)) {
             return backWith('error', 'You dont have permissions to do this.');
         }
 
@@ -229,13 +230,13 @@ class PlayerDataController extends Controller
         $enabledCommands = $request->input('enabledCommands');
 
         foreach ($enabledCommands as $command) {
-            if (!in_array($command, self::EnablableCommands)) {
+            if (! in_array($command, self::EnablableCommands)) {
                 return backWith('error', 'You cannot enable the command "' . $command . '".');
             }
         }
 
         $enabledCommands = array_values(array_unique($enabledCommands));
-        $currentEnabled = $player->enabled_commands ?? [];
+        $currentEnabled  = $player->enabled_commands ?? [];
 
         if (empty(array_diff($enabledCommands, $currentEnabled))) {
             return backWith('success', 'No commands changed.');
@@ -270,6 +271,6 @@ class PlayerDataController extends Controller
             ['commands' => $enabledCommands]
         );
 
-        return backWith('success', 'Commands have been updated successfully.'/* . $refreshed*/);
+        return backWith('success', 'Commands have been updated successfully.' /* . $refreshed*/);
     }
 }
