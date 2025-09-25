@@ -270,6 +270,23 @@ class ServerAPI
     }
 
     /**
+     * /execute/teleportPlayer
+     */
+    public static function teleportPlayer(string $server, int $source, float $x, float $y, float $z)
+    {
+        $url = Server::getServerURL($server);
+
+        $url .= 'execute/teleportPlayer';
+
+        return self::do('POST', $url, [
+            'targetSource' => $source,
+            'x'            => $x,
+            'y'            => $y,
+            'z'            => $z,
+        ], 3, true);
+    }
+
+    /**
      * /execute/kickPlayer
      */
     public static function kickPlayer(string $server, string $licenseIdentifier, string $message)
@@ -282,6 +299,20 @@ class ServerAPI
             'licenseIdentifier'       => $licenseIdentifier,
             'reason'                  => $message,
             'removeReconnectPriority' => false,
+        ], 3, true);
+    }
+
+    /**
+     * /execute/refreshUser
+     */
+    public static function refreshUser(string $server, string $licenseIdentifier)
+    {
+        $url = Server::getServerURL($server);
+
+        $url .= 'execute/refreshUser';
+
+        return self::do('POST', $url, [
+            'licenseIdentifier' => $licenseIdentifier,
         ], 3, true);
     }
 

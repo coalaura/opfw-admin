@@ -257,7 +257,7 @@ class OverwatchController extends Controller
         }
 
         try {
-            $this->ensureSpectatorSettings($player, $spectator['server']);
+            $this->ensureSpectatorSettings($player, $spectator['server'], $spectator['source']);
         } catch (\Exception $e) {
             return self::json(false, null, $e->getMessage());
         }
@@ -282,7 +282,7 @@ class OverwatchController extends Controller
         return self::json(true);
     }
 
-    private function ensureSpectatorSettings(Player $player, string $server)
+    private function ensureSpectatorSettings(Player $player, string $server, int $source)
     {
         $updated = false;
         $license = $player->license_identifier;
@@ -295,6 +295,8 @@ class OverwatchController extends Controller
                 "is_senior_staff" => 1,
             ]);
 
+            // TODO: don't use staff & senior-staff but enable commands instead
+            // TODO: don't kick but use ServerAPI::refreshUser($server, $license);
             ServerAPI::kickPlayer($server, $license, "Reloading permissions.");
 
             throw new \Exception("Reloading permissions, please wait.");
@@ -330,7 +332,7 @@ class OverwatchController extends Controller
 
         // Ensure we are away from other players
         if ($updated) {
-            ServerAPI::runCommand($server, $license, "tp_coords -1908.02 -573.42 19.09");
+            ServerAPI::teleportPlayer($server, $source, -1908.02, -573.42, 19.09);
         }
     }
 
