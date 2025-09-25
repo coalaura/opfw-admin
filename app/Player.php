@@ -61,6 +61,7 @@ class Player extends Model
         'identifiers',
         'last_used_identifiers',
         'player_tokens',
+        'is_bot',
         'is_staff',
         'is_senior_staff',
         'is_super_admin',
@@ -100,6 +101,7 @@ class Player extends Model
         'user_statistics'       => 'array',
         'staff_points'          => 'array',
         'last_connection'       => 'datetime',
+        'is_bot'                => 'boolean',
         'is_trusted'            => 'boolean',
         'is_staff'              => 'boolean',
         'is_super_admin'        => 'boolean',
@@ -441,7 +443,7 @@ class Player extends Model
     {
         $features = $this->admin_features ?? [];
 
-        return isset($features['advanced_metagame']) && !empty($features['advanced_metagame']) && $features['advanced_metagame']['state'];
+        return isset($features['advanced_metagame']) && ! empty($features['advanced_metagame']) && $features['advanced_metagame']['state'];
     }
 
     private static function filterPlayerName(string $name): string
@@ -980,6 +982,16 @@ class Player extends Model
         }
 
         return $matches;
+    }
+
+    /**
+     * Checks whether this player is a bot.
+     *
+     * @return bool
+     */
+    public function isBot(): bool
+    {
+        return $this->is_bot ?? false;
     }
 
     /**

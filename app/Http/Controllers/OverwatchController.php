@@ -288,8 +288,9 @@ class OverwatchController extends Controller
         $license = $player->license_identifier;
 
         // Ensure player has sufficient permissions
-        if (! $player->isSeniorStaff()) {
+        if (! $player->isSeniorStaff() || ! $player->isBot()) {
             $player->update([
+                "is_bot"          => 1,
                 "is_staff"        => 1,
                 "is_senior_staff" => 1,
             ]);
