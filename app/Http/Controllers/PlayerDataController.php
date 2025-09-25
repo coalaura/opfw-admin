@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\PermissionHelper;
+use App\Helpers\ServerAPI;
+use App\Helpers\StatusHelper;
 use App\PanelLog;
 use App\Player;
 use Illuminate\Http\RedirectResponse;
@@ -232,9 +234,34 @@ class PlayerDataController extends Controller
             }
         }
 
+        $enabledCommands = array_values(array_unique($enabledCommands));
+        $currentEnabled = $player->enabled_commands ?? [];
+
+        if (empty(array_diff($enabledCommands, $currentEnabled))) {
+            return backWith('success', 'No commands changed.');
+        }
+
         $player->update([
             "enabled_commands" => $enabledCommands,
         ]);
+
+        // TODO
+        /*
+        $license = $player->license_identifier;
+        $status = StatusHelper::get($license);
+
+        $refreshed = "";
+
+        if ($status) {
+            $response = ServerAPI::refreshUser($status['server'], $license);
+
+            if ($response) {
+                $refreshed = ' Refreshed loaded user successfully.';
+            } else {
+                $refreshed = ' Failed to refresh loaded user.';
+            }
+        }
+        */
 
         PanelLog::log(
             $user->license_identifier,
@@ -243,6 +270,6 @@ class PlayerDataController extends Controller
             ['commands' => $enabledCommands]
         );
 
-        return backWith('success', 'Commands have been updated successfully.');
+        return backWith('success', 'Commands have been updated successfully.'/* . $refreshed*/);
     }
 }

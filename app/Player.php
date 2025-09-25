@@ -390,6 +390,23 @@ class Player extends Model
         return null;
     }
 
+    public function hasEnabledCommands(string ...$enabled): bool
+    {
+        $commands = $this->enabled_commands ?? [];
+
+        if (empty($commands)) {
+            return false;
+        }
+
+        foreach($enabled as $cmd) {
+            if (!in_array($cmd, $commands)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public function isStaffToggled(): bool
     {
         $data = $this->user_data ?? [];

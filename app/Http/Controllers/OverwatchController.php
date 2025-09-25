@@ -288,15 +288,26 @@ class OverwatchController extends Controller
         $license = $player->license_identifier;
 
         // Ensure player has sufficient permissions
-        if (! $player->isSeniorStaff() || ! $player->isBot()) {
-            $player->update([
-                "is_bot"          => 1,
-                "is_staff"        => 1,
-                "is_senior_staff" => 1,
-            ]);
+        $hasCommands = $player->hasEnabledCommands("advanced_metagame", "idle");
+
+        if (! $player->isSeniorStaff() || ! $player->isBot() || ! $hasCommands) {
+            $enabled = $player->enabled_commands ?? [];
+
+            $enabled[] = "advanced_metagame";
+            $enabled[] = "idle";
+
+            $enabled = array_values(array_unique($enabled));
 
             // TODO: don't use staff & senior-staff but enable commands instead
-            // TODO: don't kick but use ServerAPI::refreshUser($server, $license);
+            $player->update([
+                "is_bot"           => 1,
+                "is_staff"         => 1,
+                "is_senior_staff"  => 1,
+
+                "enabled_commands" => json_encode($enabled),
+            ]);
+
+            // ServerAPI::refreshUser($server, $license);
             ServerAPI::kickPlayer($server, $license, "Reloading permissions.");
 
             throw new \Exception("Reloading permissions, please wait.");

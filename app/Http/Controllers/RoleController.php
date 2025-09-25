@@ -79,6 +79,16 @@ class RoleController extends Controller
 
         $player->update($updates);
 
+        // TODO
+        /*
+        $license = $player->license_identifier;
+        $status = StatusHelper::get($license);
+
+        if ($status) {
+            ServerAPI::refreshUser($status['server'], $license);
+        }
+        */
+
         return $this->json(true);
     }
 }
