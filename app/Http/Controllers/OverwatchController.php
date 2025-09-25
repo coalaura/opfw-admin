@@ -2,7 +2,6 @@
 namespace App\Http\Controllers;
 
 use App\Character;
-use App\Helpers\GeneralHelper;
 use App\Helpers\HttpHelper;
 use App\Helpers\LoggingHelper;
 use App\Helpers\Mutex;
@@ -14,7 +13,6 @@ use App\Helpers\SocketAPI;
 use App\Helpers\StatusHelper;
 use App\Player;
 use App\Server;
-use App\Warning;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -120,7 +118,7 @@ class OverwatchController extends Controller
                 $players = Player::getNewPlayers()->filter(function ($player) use ($spectator) {
                     $status = StatusHelper::get($player->license_identifier);
 
-                    if (!$status || !$status['character']) {
+                    if (! $status || ! $status['character']) {
                         return false;
                     }
 
@@ -182,7 +180,7 @@ class OverwatchController extends Controller
             abort(401);
         }
 
-        $isReset = $source === 0;
+        $isReset  = $source === 0;
         $isRandom = session_get('isRandom');
 
         if ($isRandom) {
@@ -197,12 +195,6 @@ class OverwatchController extends Controller
 
         if (! $spectator) {
             return;
-        }
-
-        $hasSpectatorCamera = isset($spectator['data']) && isset($spectator['data']['spectatorCamera']);
-
-        if (!$hasSpectatorCamera) {
-            ServerAPI::setSpectatorCamera($spectator['server'], $license, true);
         }
 
         if ($isReset && ! $spectator['spectating']) {
@@ -260,16 +252,11 @@ class OverwatchController extends Controller
             ->where('license_identifier', '=', $license)
             ->first();
 
-        if (!$player) {
+        if (! $player) {
             return self::json(false, null, 'Could not find spectator player.');
         }
 
-        if (!$player->isSpectatorModeEnabled()) {
-            ServerAPI::setSpectatorMode($spectator['server'], $license, true);
-
-            // Also ensure we are away from other players
-            ServerAPI::runCommand($spectator['server'], $license, "tp_coords -1908.02 -573.42 19.09");
-        }
+        $this->ensureSpectatorSettings($player, $spectator['server']);
 
         // Actually do the spectating
         if ($isReset) {
@@ -289,6 +276,53 @@ class OverwatchController extends Controller
         SocketAPI::putPanelChatMessage($spectator['ip'], $message);
 
         return self::json(true);
+    }
+
+    private function ensureSpectatorSettings(Player $player, string $server)
+    {
+        $updated = false;
+        $license = $player->license_identifier;
+
+        // Ensure player has sufficient permissions
+        if (! $player->isSeniorStaff()) {
+            $player->update([
+                "is_staff"        => 1,
+                "is_senior_staff" => 1,
+            ]);
+        }
+
+        // Ensure spectator mode is enabled
+        if (! $player->isSpectatorModeEnabled()) {
+            $updated = true;
+
+            ServerAPI::setSpectatorMode($server, $license, true);
+        }
+
+        // Ensure spectator camera is enabled
+        if (! $player->isSpectatorCameraEnabled()) {
+            $updated = true;
+
+            ServerAPI::setSpectatorCamera($server, $license, true);
+        }
+
+        // Ensure idle cam is disabled
+        if (! $player->isIdleCamDisabled()) {
+            $updated = true;
+
+            ServerAPI::runCommand($server, $license, "disable_idle");
+        }
+
+        // Ensure advanced metagame is enabled
+        if (! $player->isAdvancedMetagameEnabled()) {
+            $updated = true;
+
+            ServerAPI::runCommand($server, $license, "advanced_metagame 1");
+        }
+
+        // Ensure we are away from other players
+        if ($updated) {
+            ServerAPI::runCommand($server, $license, "tp_coords -1908.02 -573.42 19.09");
+        }
     }
 
     /**

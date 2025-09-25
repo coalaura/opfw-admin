@@ -76,6 +76,8 @@ class Player extends Model
         'average_fps',
         'panel_settings',
         'staff_points',
+        'admin_features',
+        'user_settings',
         'user_data',
         'user_statistics',
         'refresh_tokens',
@@ -92,6 +94,8 @@ class Player extends Model
         'player_tokens'         => 'array',
         'player_aliases'        => 'array',
         'enabled_commands'      => 'array',
+        'admin_features'        => 'array',
+        'user_settings'         => 'array',
         'user_data'             => 'array',
         'user_statistics'       => 'array',
         'staff_points'          => 'array',
@@ -417,6 +421,27 @@ class Player extends Model
         $data = $this->user_data ?? [];
 
         return isset($data['spectatorMode']) && $data['spectatorMode'];
+    }
+
+    public function isSpectatorCameraEnabled(): bool
+    {
+        $data = $this->user_data ?? [];
+
+        return isset($data['spectatorCamera']) && $data['spectatorCamera'];
+    }
+
+    public function isIdleCamDisabled(): bool
+    {
+        $settings = $this->user_settings ?? [];
+
+        return isset($settings['idleCamDisabled']) && $settings['idleCamDisabled'];
+    }
+
+    public function isAdvancedMetagameEnabled(): bool
+    {
+        $features = $this->admin_features ?? [];
+
+        return isset($features['advanced_metagame']) && !empty($features['advanced_metagame']) && $features['advanced_metagame']['state'];
     }
 
     private static function filterPlayerName(string $name): string
