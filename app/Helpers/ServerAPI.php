@@ -270,6 +270,22 @@ class ServerAPI
     }
 
     /**
+     * /execute/kickPlayer
+     */
+    public static function kickPlayer(string $server, string $licenseIdentifier, string $message)
+    {
+        $url = Server::getServerURL($server);
+
+        $url .= 'execute/kickPlayer';
+
+        return self::do('POST', $url, [
+            'licenseIdentifier'       => $licenseIdentifier,
+            'reason'                  => $message,
+            'removeReconnectPriority' => false,
+        ], 3, true);
+    }
+
+    /**
      * /execute/validateAuthToken
      */
     public static function validateAuthToken(string $server, string $licenseIdentifier, string $token)

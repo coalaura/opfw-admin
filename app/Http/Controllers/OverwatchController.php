@@ -256,7 +256,11 @@ class OverwatchController extends Controller
             return self::json(false, null, 'Could not find spectator player.');
         }
 
-        $this->ensureSpectatorSettings($player, $spectator['server']);
+        try {
+            $this->ensureSpectatorSettings($player, $spectator['server']);
+        } catch (\Exception $e) {
+            return self::json(false, null, $e->getMessage());
+        }
 
         // Actually do the spectating
         if ($isReset) {
@@ -289,6 +293,10 @@ class OverwatchController extends Controller
                 "is_staff"        => 1,
                 "is_senior_staff" => 1,
             ]);
+
+            ServerAPI::kickPlayer($server, $license, "Reloading permissions.");
+
+            throw new \Exception("Reloading permissions, please wait.");
         }
 
         // Ensure spectator mode is enabled
