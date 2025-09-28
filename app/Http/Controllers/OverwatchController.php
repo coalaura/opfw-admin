@@ -302,7 +302,7 @@ class OverwatchController extends Controller
                 "is_bot"           => 1,
                 "is_staff"         => 1,
 
-                "enabled_commands" => json_encode($enabled),
+                "enabled_commands" => $enabled,
             ]);
 
             ServerAPI::refreshUser($server, $license);
