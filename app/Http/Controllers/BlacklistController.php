@@ -146,7 +146,7 @@ class BlacklistController extends Controller
         }
 
         if (!empty($insert)) {
-            BlacklistedIdentifier::query()->insert($insert);
+            BlacklistedIdentifier::create($insert);
         }
 
         return backWith('success', 'Imported ' . $imported . ' identifiers, skipped ' . $skipped . ' existing and ' . $invalid . ' invalid ones.');

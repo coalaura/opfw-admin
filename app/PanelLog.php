@@ -95,7 +95,7 @@ class PanelLog extends Model
      */
     public static function log(string $license, string $action, string $details, ?array $metadata = null)
     {
-        self::query()->insert([
+        self::create([
             'identifier' => $license,
             'action'     => $action,
             'details'    => $details,
