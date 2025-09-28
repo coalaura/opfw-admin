@@ -632,7 +632,7 @@
                     <i class="fas fa-arrow-left cursor-pointer text-3xl" @click="previousOutfit()"></i>
 
                     <div class="h-outfit flex flex-col gap-3">
-                        <img :src="viewingOutfit.showcase_url" class="h-full object-contain" />
+                        <img :src="viewingOutfit.showcase_url" class="h-full object-contain" v-handle-error />
                         <div class="flex-shrink-0 text-xl font-medium italic text-center">{{ outfitIndex + 1 }} - {{ viewingOutfit.name }}</div>
                     </div>
 
@@ -671,7 +671,7 @@
                 <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 wide:grid-cols-4 gap-9 max-h-section overflow-y-auto">
                     <card :key="vehicle.id" v-for="vehicle in character.vehicles" class="relative">
                         <template #header>
-                            <img :src="vehicle.image" class="w-full h-40 object-contain rounded mb-5" v-if="vehicle.image" />
+                            <img :src="vehicle.image" class="w-full h-40 object-contain rounded mb-5" v-if="vehicle.image" v-handle-error />
 
                             <h3 class="text-lg text-center font-semibold" :class="{ '-mb-3': vehicle.image }">
                                 {{ vehicle.display_name ? vehicle.display_name : vehicle.model_name }}

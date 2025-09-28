@@ -11,7 +11,7 @@
 
         <div class="mb-10 rounded-lg shadow bg-secondary dark:bg-dark-secondary max-w-6xl" v-for="(company, id) in companies" :key="id">
             <header class="flex items-center gap-6 border-b-2 border-gray-500 bg-gray-300 dark:bg-gray-600 relative">
-                <img :src="company.logo" class="w-32 h-32 rounded-tl-lg" @error="company.logo = '/images/realty_image_broken.png'" />
+                <img :src="company.logo" class="w-32 h-32 rounded-tl-lg" v-handle-error="'/images/realty_image_broken.png'" />
 
                 <h2>
                     {{ company.name }}

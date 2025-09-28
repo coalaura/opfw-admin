@@ -82,7 +82,7 @@
 
                             <div class="my-1 px-3 py-1 border-2 rounded bg-opacity-50" :class="badgeColor(message.sender_number)">
                                 <a v-if="message.image" class="py-2 block" :href="message.image" target="_blank">
-                                    <img :src="message.image" class="h-full max-w-full max-h-80 object-contain" />
+                                    <img :src="message.image" class="h-full max-w-full max-h-80 object-contain" v-handle-error />
                                 </a>
 
                                 <div v-else>

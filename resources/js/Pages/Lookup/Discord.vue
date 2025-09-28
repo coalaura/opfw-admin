@@ -42,7 +42,7 @@
                 <template v-else>
                     <div class="flex rounded bg-discord text-white shadow-sm min-w-box">
                         <a class="block" :href="`https://cdn.discordapp.com/avatars/${result.user.id}/${result.user.avatar}.webp`" target="_blank">
-                            <img class="w-28" :src="`https://cdn.discordapp.com/avatars/${result.user.id}/${result.user.avatar}.webp`" />
+                            <img class="w-28" :src="`https://cdn.discordapp.com/avatars/${result.user.id}/${result.user.avatar}.webp`" v-handle-error="'/images/discord_failed.png'" />
                         </a>
 
                         <div class="flex flex-col justify-center px-5">

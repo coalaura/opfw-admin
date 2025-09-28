@@ -177,7 +177,7 @@
             <template #default>
                 <div class="relative mb-5">
                     <video :src="logMetadata[logImageIndex].url" v-if="logMetadata[logImageIndex].url.endsWith('.webm')" class="block w-screenshot m-auto" controls></video>
-                    <img :src="logMetadata[logImageIndex].url" @error="failedImage($event)" v-else class="block w-screenshot m-auto" />
+                    <img :src="logMetadata[logImageIndex].url" v-handle-error v-else class="block w-screenshot m-auto" />
 
                     <div class="top-1 right-1 absolute shadow p-1 bg-gray-200 dark:bg-gray-800 text-sm font-mono" v-if="logMetadata.length > 1">
                         {{ logImageIndex + 1 }} / {{ logMetadata.length }}
@@ -268,9 +268,6 @@ export default {
     methods: {
         stamp(time) {
             return dayjs.utc(time).unix();
-        },
-        failedImage(e) {
-            e.target.src = '/images/not_found.png';
         },
         nextImage() {
             this.logImageIndex++;

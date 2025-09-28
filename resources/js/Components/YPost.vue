@@ -1,13 +1,13 @@
 <template>
     <div class="flex pt-3 pb-3 border-t w-full border-gray-400 dark:border-gray-500 px-2 relative hover:bg-gray-100 dark:hover:bg-gray-700">
         <div v-if="dontLink" class="mr-2 flex-shrink-0">
-            <img class="block w-12 h-12 rounded-full object-cover" :src="user.avatar_url" @error="avatarError" />
+            <img class="block w-12 h-12 rounded-full object-cover" :src="user.avatar_url" v-handle-error="'/images/default_profile.png'" />
             <span class="block text-xs text-center mt-2 text-gray-500 dark:text-gray-400">
                 <i class="fas fa-heart text-red-800 dark:text-red-500"></i> {{ post.likes }}
             </span>
         </div>
         <inertia-link class="block mr-2 flex-shrink-0" :href="'/y/' + post.authorId" v-else>
-            <img class="block w-12 h-12 rounded-full object-cover" :src="user.avatar_url" @error="avatarError" />
+            <img class="block w-12 h-12 rounded-full object-cover" :src="user.avatar_url" v-handle-error="'/images/default_profile.png'" />
             <span class="block text-xs text-center mt-2 text-gray-500 dark:text-gray-400">
                 <i class="fas fa-heart text-red-600 dark:text-red-500"></i> {{ post.likes }}
             </span>
@@ -180,10 +180,6 @@ export default {
             }
 
             return d.format('MM/DD/YYYY');
-        },
-        avatarError(e) {
-            // Replace with default
-            e.target.src = '/images/default_profile.png';
         },
         formatBody(body) {
             body = this.escapeHtml(body.trim());

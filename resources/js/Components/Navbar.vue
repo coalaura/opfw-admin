@@ -3,7 +3,7 @@
         <!-- Branding / Logo -->
         <div class="flex-shrink-0 px-8 py-3 text-center text-white mobile:hidden w-72">
             <inertia-link href="/" class="flex gap-2 relative">
-                <img :src="serverLogo ? serverLogo : '/images/op-logo.png'" class="block w-logo h-logo object-cover" :class="{ 'drop-shadow': banner }" />
+                <img :src="serverLogo ? serverLogo : '/images/op-logo.png'" class="block w-logo h-logo object-cover" :class="{ 'drop-shadow': banner }" v-handle-error />
 
                 <h1 class="text-lg px-4 flex flex-col text-left justify-center">
                     <span class="block leading-5 drop-shadow">OP-FW</span>
@@ -62,7 +62,7 @@
 
                 <div class="w-avatar relative flex-shrink-0" @contextmenu="showContext" v-click-outside="hideContext">
                     <inertia-link :href="'/players/' + $page.auth.player.licenseIdentifier">
-                        <img :src="getDiscordAvatar('webp')" class="rounded shadow border-2 border-gray-300" @error="failedDiscordAvatar" />
+                        <img :src="getDiscordAvatar('webp')" class="rounded shadow border-2 border-gray-300" v-handle-error="'/images/discord_failed.png'" />
                     </inertia-link>
 
                     <div v-if="showingContext" class="absolute top-full right-0 bg-gray-700 rounded border-2 border-gray-500 min-w-context mt-1 shadow-md text-sm text-white">
@@ -285,7 +285,7 @@
             <template #default>
                 <a class="flex py-4 px-6 mb-5 bg-twitch rounded-lg shadow-sm gap-10 relative text-white" v-for="streamer in streamers" :key="streamer.name" v-if="streamers && streamers.length > 0" :href="'https://twitch.tv/' + streamer.name" target="_blank">
                     <div class="text-7xl">
-                        <img :src="streamer.avatar" class="w-20 h-20" />
+                        <img :src="streamer.avatar" class="w-20 h-20" v-handle-error />
                     </div>
 
                     <div class="flex items-center overflow-hidden">
@@ -343,8 +343,6 @@ export default {
         return {
             showingPermissions: false,
             showingContext: false,
-
-            failedAvatarLoad: false,
 
             serverStatusLoaded: false,
             serverUptime: false,
@@ -477,17 +475,12 @@ export default {
             }
         },
         getDiscordAvatar(ext) {
-            if (this.failedAvatarLoad) return '/images/discord_failed.png';
-
             const discord = this.$page.discord;
 
             if (discord?.sso) return '/images/fivem.webp';
             if (!discord?.id) return '/images/discord.webp';
 
             return `https://cdn.discordapp.com/avatars/${discord.id}/${discord.avatar}.${ext}`;
-        },
-        failedDiscordAvatar() {
-            this.failedAvatarLoad = true;
         },
         showContext($event) {
             $event.preventDefault();

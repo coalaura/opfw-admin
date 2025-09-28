@@ -346,7 +346,7 @@
                     <div class="w-full flex justify-between" v-for="(discord, id) in discordAccounts" :key="id">
                         <div class="w-full relative">
                             <a class="flex items-center text-lg p-5 m-2 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" v-if="discord && discord.username" href="#" :title="t('players.show.discord_copy')" @click="copyText($event, '<@' + discord.id + '> ' + discord.username + (discord.discriminator ? '#' + discord.discriminator : ''))">
-                                <img :src="discord.avatar" class="rounded shadow border-2 border-gray-300 w-avatar mr-3" />
+                                <img :src="discord.avatar" class="rounded shadow border-2 border-gray-300 w-avatar mr-3" v-handle-error="'/images/discord_failed.png'" />
                                 <span>
                                     {{ discord.username }}{{ discord.discriminator ? '#' + discord.discriminator : '' }}
                                 </span>
@@ -1124,7 +1124,7 @@
                         <template #header>
                             <div class="flex justify-between gap-3">
                                 <div class="flex-shrink-0">
-                                    <img class="w-32 h-32 rounded-2xl" :src="'/images/loading.svg'" :data-lazy="character.mugshot" v-if="character.mugshot" />
+                                    <img class="w-32 h-32 rounded-2xl" :src="'/images/loading.svg'" :data-lazy="character.mugshot" v-handle-error="'/images/no_mugshot.png'" v-if="character.mugshot" />
                                     <img class="w-32 h-32 rounded-2xl" :src="'/images/no_mugshot.png'" v-else :title="t('players.characters.no_mugshot')" />
                                 </div>
                                 <div class="w-full overflow-hidden">
@@ -1483,7 +1483,7 @@
 
                 <div class="relative min-h-50">
                     <a v-if="screenshotImage && !screenshotError" class="w-full" :class="{ 'blur-sm': isScreenshotLoading && !continuouslyScreenshotting }" :href="screenshotImage" target="_blank">
-                        <img :src="screenshotImage" alt="Screenshot" class="w-full" />
+                        <img :src="screenshotImage" alt="Screenshot" class="w-full" v-handle-error />
                     </a>
 
                     <div class="flex justify-center absolute left-0 w-full top-1/2 transform -translate-y-1/2" v-if="isScreenshotLoading && !continuouslyScreenshotting">

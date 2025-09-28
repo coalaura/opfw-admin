@@ -33,7 +33,7 @@
                 </div>
 
                 <div v-for="result in results" class="flex rounded text-black dark:text-white shadow-sm border-2 relative p-5 max-w-520 max-w-full" :class="resourceColor(result.resource)" v-else>
-                    <img class="h-32 w-48 object-contain flex-shrink-0" :src="`https://op-framework.com/api/files/gta5/vehicles/${result.model}.png`" @error="modelImageFailed" loading="lazy" />
+                    <img class="h-32 w-48 object-contain flex-shrink-0" :src="`https://op-framework.com/api/files/gta5/vehicles/${result.model}.png`" v-handle-error loading="lazy" />
 
                     <div class="flex flex-col justify-center px-8">
                         <h4 class="m-0 text-lg drop-shadow-sm leading-6">
@@ -172,9 +172,6 @@ export default {
 
             return "bg-gray-300 dark:bg-gray-850 border-gray-500";
         },
-        modelImageFailed(event) {
-            event.target.src = "/images/no_image_ped.webp";
-        }
     }
 }
 </script>

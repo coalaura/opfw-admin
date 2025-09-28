@@ -43,7 +43,7 @@
                 </div>
 
                 <a :href="screenshot.url" class="mt-5 block" target="_blank" v-if="screenshot">
-                    <img :src="screenshot.url" alt="Screenshot" class="block" />
+                    <img :src="screenshot.url" alt="Screenshot" class="block" v-handle-error />
                 </a>
             </div>
 

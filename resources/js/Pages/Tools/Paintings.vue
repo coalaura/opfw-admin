@@ -21,7 +21,7 @@
                 <div v-else-if="painting">
                     <div class="text-lg truncate font-semibold italic mb-2 text-center">{{ painting.name }}</div>
 
-                    <img :src="painting.source" />
+                    <img :src="painting.source" v-handle-error />
 
                     <div class="flex justify-between mt-2">
                         <inertia-link :href="'/inventory/' + painting.inventory" class="text-indigo-600 text-xs !no-underline dark:text-indigo-300 hover:!text-yellow-500 dark:hover:!text-yellow-300" :title="t('paintings.currently_in', painting.inventory)">

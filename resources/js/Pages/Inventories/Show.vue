@@ -34,7 +34,7 @@
                                 <i class="fas fa-people-carry"></i>
                             </button>
 
-                            <img :src="getItemIcon(items[0])" @error="iconFailed($event)" class="w-full h-32 p-3 object-contain" />
+                            <img :src="getItemIcon(items[0])" v-handle-error="'/images/icons/items/other/unknown.png'" class="w-full h-32 p-3 object-contain" />
                         </template>
 
                         <template v-else>
@@ -249,9 +249,6 @@ export default {
         };
     },
     methods: {
-        iconFailed(event) {
-            event.target.src = "/images/icons/items/other/unknown.png";
-        },
         hasDurability(items) {
             return items.length > 0 && typeof items[0].durability === "number";
         },

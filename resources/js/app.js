@@ -97,6 +97,33 @@ Vue.filter("formatGender", formatGender);
 // For using filters as functions (add/remove as needed)
 Vue.prototype.formatSeconds = formatSeconds;
 
+Vue.directive("handle-error", {
+	bind: (el, binding) => {
+		const fallbackUrl = binding.value;
+
+		el.handleErrorEvent = () => {
+			if (fallbackUrl) {
+				el.src = fallbackUrl;
+			} else {
+				el.removeAttribute("src");
+
+				el.classList.add("errored");
+			}
+
+			el.removeAttribute("srcset");
+
+			delete el.dataset.lazy;
+		};
+
+		el.addEventListener("error", el.handleErrorEvent);
+	},
+	unbind: el => {
+		el.removeEventListener("error", el.handleErrorEvent);
+
+		delete el.handleErrorEvent;
+	},
+});
+
 Vue.directive("click-outside", {
 	bind: (el, binding, vnode) => {
 		el.clickOutsideEvent = event => {

@@ -8,7 +8,7 @@
 
         <template #default>
             <video v-if="mainImageURL && (['mp4', 'webm'].includes(mainImageURL.split('.').pop()))" :src="mainImageURL" controls class="w-full mb-3"></video>
-            <img :src="mainImageURL" v-else-if="mainImageURL" class="w-full mb-3" />
+            <img :src="mainImageURL" v-else-if="mainImageURL" class="w-full mb-3" v-handle-error />
 
             <slot></slot>
 
@@ -36,7 +36,7 @@
                 <div class="border rounded border-gray-500 p-2 bg-gray-200 dark:bg-gray-600" v-for="image in images">
                     <h3 class="text-center text-base mb-3 font-mono font-semibold">{{ image.key }}</h3>
 
-                    <img :src="image.value" class="w-40 rounded bg-gray-400 dark:bg-gray-800 p-3" />
+                    <img :src="image.value" class="w-40 rounded bg-gray-400 dark:bg-gray-800 p-3" v-handle-error />
                 </div>
             </div>
         </template>
