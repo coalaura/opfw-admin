@@ -41,12 +41,8 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
-        $this->dump($exception);
-
-        if ($this->shouldIgnoreException($exception)) {
-            parent::report($exception);
-
-            return;
+        if (!$this->shouldIgnoreException($exception)) {
+            $this->dump($exception);
         }
 
         parent::report($exception);
