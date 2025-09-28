@@ -41,11 +41,6 @@ export default defineConfig({
 		}),
 		clearViewCachePlugin(),
 	],
-	css: {
-		url: url => {
-			return !url.startsWith("/");
-		},
-	},
 	server: {
 		hmr: true,
 		host: "localhost",
