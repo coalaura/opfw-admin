@@ -105,7 +105,7 @@ Vue.directive("handle-error", {
 			if (fallbackUrl) {
 				el.src = fallbackUrl;
 			} else {
-				el.removeAttribute("src");
+				el.src = "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
 				el.classList.add("errored");
 			}
