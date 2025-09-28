@@ -248,8 +248,6 @@ class PlayerDataController extends Controller
             "enabled_commands" => $enabledCommands,
         ]);
 
-        // TODO
-        /*
         $license = $player->license_identifier;
         $status = StatusHelper::get($license);
 
@@ -264,7 +262,6 @@ class PlayerDataController extends Controller
                 $refreshed = ' Failed to refresh loaded user.';
             }
         }
-        */
 
         PanelLog::log(
             $user->license_identifier,
@@ -273,6 +270,6 @@ class PlayerDataController extends Controller
             ['commands' => $enabledCommands]
         );
 
-        return backWith('success', 'Commands have been updated successfully.' /* . $refreshed*/);
+        return backWith('success', 'Commands have been updated successfully.' . $refreshed);
     }
 }

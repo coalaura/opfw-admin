@@ -257,7 +257,7 @@ class OverwatchController extends Controller
         }
 
         try {
-            $this->ensureSpectatorSettings($player, $spectator['server'], $spectator['source']);
+            $this->ensureSpectatorSettings($player, $spectator['server'], $spectatorUser['source']);
         } catch (\Exception $e) {
             return self::json(false, null, $e->getMessage());
         }
@@ -298,19 +298,14 @@ class OverwatchController extends Controller
 
             $enabled = array_values(array_unique($enabled));
 
-            // TODO: don't use staff & senior-staff but enable commands instead
             $player->update([
                 "is_bot"           => 1,
                 "is_staff"         => 1,
-                "is_senior_staff"  => 1,
 
                 "enabled_commands" => json_encode($enabled),
             ]);
 
-            // ServerAPI::refreshUser($server, $license);
-            ServerAPI::kickPlayer($server, $license, "Reloading permissions.");
-
-            throw new \Exception("Reloading permissions, please wait.");
+            ServerAPI::refreshUser($server, $license);
         }
 
         // Ensure spectator mode is enabled
