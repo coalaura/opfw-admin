@@ -42,10 +42,8 @@ export default defineConfig({
 		clearViewCachePlugin(),
 	],
 	css: {
-		url: {
-			filter: (url) => {
-				return !url.startsWith("/");
-			},
+		url: url => {
+			return !url.startsWith("/");
 		},
 	},
 	server: {
