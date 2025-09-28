@@ -1306,7 +1306,7 @@ export default {
                     const { showcase_url } = outfit;
 
                     if (!showcase_url) {
-                        outfit.showcase_url = "/images/no_image_ped.webp";
+                        outfit.showcase_url = "";
 
                         continue;
                     }
