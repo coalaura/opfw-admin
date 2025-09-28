@@ -99,15 +99,26 @@ Vue.prototype.formatSeconds = formatSeconds;
 
 Vue.directive("handle-error", {
 	bind: (el, binding) => {
-		const fallbackUrl = binding.value;
+		const fallbackUrl = binding.value,
+			emptyPx = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+
+		el.handleLoadEvent = () => {
+			if (el.src === emptyPx) {
+				return;
+			}
+
+			el.classList.remove("errored");
+		};
 
 		el.handleErrorEvent = () => {
 			if (fallbackUrl) {
 				el.src = fallbackUrl;
 			} else {
-				el.src = "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
+				el.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=";
 
 				el.classList.add("errored");
+
+				el.addEventListener("load", el.handleLoadEvent);
 			}
 
 			el.removeAttribute("srcset");
@@ -118,8 +129,10 @@ Vue.directive("handle-error", {
 		el.addEventListener("error", el.handleErrorEvent);
 	},
 	unbind: el => {
+		el.removeEventListener("load", el.handleLoadEvent);
 		el.removeEventListener("error", el.handleErrorEvent);
 
+		delete el.handleLoadEvent;
 		delete el.handleErrorEvent;
 	},
 });

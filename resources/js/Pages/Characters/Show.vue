@@ -1311,7 +1311,13 @@ export default {
                         continue;
                     }
 
-                    (new Image()).src = showcase_url;
+                    const img = new Image();
+
+                    img.addEventListener("error", () => {
+                        outfit.showcase_url = "";
+                    });
+
+                    img.src = showcase_url;
                 }
             }
 
