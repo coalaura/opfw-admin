@@ -99,7 +99,7 @@ class PanelLog extends Model
             'identifier' => $license,
             'action'     => $action,
             'details'    => $details,
-            'metadata'   => json_encode($metadata),
+            'metadata'   => $metadata,
             'timestamp'  => Carbon::now(),
         ]);
     }

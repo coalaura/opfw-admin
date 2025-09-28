@@ -55,7 +55,7 @@ class CharacterResource extends JsonResource
             'playtime_2w'                => $this->getRecentPlaytime(2),
             'playtime_4w'                => $this->getRecentPlaytime(4),
             'lastLoaded'                 => $this->last_loaded,
-            'coords'                     => json_decode($this->coords, true),
+            'coords'                     => $this->coords,
             'marriedTo'                  => $this->married_to,
             'emailAddress'               => $this->email_address,
         ];

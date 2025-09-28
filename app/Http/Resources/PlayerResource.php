@@ -20,9 +20,6 @@ class PlayerResource extends JsonResource
     {
         $plain = $request->input('plain');
 
-        $identifiers     = is_array($this->player_aliases) ? $this->player_aliases : json_decode($this->player_aliases, true);
-        $enabledCommands = is_array($this->enabled_commands) ? $this->enabled_commands : json_decode($this->enabled_commands, true);
-
         $bans = BanResource::collection($this->uniqueBans());
 
         $variables = $this->getUserVariables();
@@ -52,10 +49,10 @@ class PlayerResource extends JsonResource
             'isBanned'            => $bans->count() > 0,
             'warnings'            => $plain ? 0 : $this->warnings()->whereIn('warning_type', [Warning::TypeStrike, Warning::TypeWarning])->count(),
             'bans'                => $bans,
-            'playerAliases'       => $identifiers ? array_values(array_unique(array_filter($identifiers, function ($e) {
+            'playerAliases'       => $this->player_aliases ? array_values(array_unique(array_filter($this->player_aliases, function ($e) {
                 return $e !== $this->player_name && str_replace('?', '', $e) !== '';
             }))) : [],
-            'enabledCommands'     => $enabledCommands ?? [],
+            'enabledCommands'     => $this->enabled_commands ?? [],
             'tag'                 => $this->panel_tag,
             'mute'                => $this->getActiveMute(),
             'variables'           => $variables,

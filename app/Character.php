@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -96,7 +95,10 @@ class Character extends Model
         'character_creation_timestamp' => 'datetime',
         'character_deleted'            => 'boolean',
         'character_deletion_timestamp' => 'datetime',
+        'coords'                       => 'array',
         'weekly_playtime'              => 'array',
+        'character_data'               => 'array',
+        'tattoos_data'                 => 'array',
     ];
 
     /**
@@ -128,7 +130,7 @@ class Character extends Model
     {
         $type = $this->attributes['blood_type'];
 
-        if (!isset(self::BloodTypes[$type])) {
+        if (! isset(self::BloodTypes[$type])) {
             return null;
         }
 
@@ -159,7 +161,7 @@ class Character extends Model
      */
     public static function find(int $characterId): ?self
     {
-        if (!isset(self::$cache[$characterId])) {
+        if (! isset(self::$cache[$characterId])) {
             self::$cache[$characterId] = self::query()->where('character_id', '=', $characterId)->first();
         }
 
@@ -215,7 +217,7 @@ class Character extends Model
     {
         $json = json_decode($this->character_data, true) ?? [];
 
-        if (!isset($json['licenses']) || !is_array($json['licenses'])) {
+        if (! isset($json['licenses']) || ! is_array($json['licenses'])) {
             return [];
         }
 
@@ -252,7 +254,7 @@ class Character extends Model
     {
         $ids = [];
         foreach ($source as $entry) {
-            if (!in_array($entry[$sourceKey], $ids)) {
+            if (! in_array($entry[$sourceKey], $ids)) {
                 $ids[] = $entry[$sourceKey];
             }
         }
@@ -280,14 +282,14 @@ class Character extends Model
         $current = $this->email_address;
 
         $firstName = splitAlphaNum(strtolower($this->first_name));
-        $lastName = splitAlphaNum(strtolower($this->last_name));
+        $lastName  = splitAlphaNum(strtolower($this->last_name));
 
-        if (!$firstName || !$lastName) {
+        if (! $firstName || ! $lastName) {
             return false;
         }
 
         $counter = 0;
-        $email = sprintf("%s.%s", $firstName, $lastName);
+        $email   = sprintf("%s.%s", $firstName, $lastName);
 
         if ($email === $current) {
             return true;
@@ -300,7 +302,7 @@ class Character extends Model
         }
 
         $this->update([
-            'email_address' => $email
+            'email_address' => $email,
         ]);
 
         return true;

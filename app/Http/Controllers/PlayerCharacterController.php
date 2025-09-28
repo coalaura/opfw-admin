@@ -331,7 +331,7 @@ class PlayerCharacterController extends Controller
         $user = user();
 
         $zone = $request->get('zone');
-        $json = json_decode($character->tattoos_data, true);
+        $json = $character->tattoos_data;
         $map  = json_decode(file_get_contents(__DIR__ . '/../../../helpers/tattoo-map.json'), true);
 
         if (! $map || ! is_array($map)) {
@@ -371,7 +371,7 @@ class PlayerCharacterController extends Controller
         }
 
         $character->update([
-            'tattoos_data' => json_encode($json),
+            'tattoos_data' => $json,
         ]);
 
         PanelLog::log(
@@ -637,12 +637,12 @@ class PlayerCharacterController extends Controller
             return in_array($license, self::Licenses);
         })));
 
-        $json = json_decode($character->character_data, true) ?? [];
+        $json = $character->character_data ?? [];
 
         $json['licenses'] = $licenses;
 
         $character->update([
-            'character_data' => json_encode($json),
+            'character_data' => $json,
         ]);
 
         $info = 'In-Game character refresh failed, user has to soft-nap.';
