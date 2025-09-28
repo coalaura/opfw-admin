@@ -215,7 +215,7 @@ class Character extends Model
      */
     public function getLicenses(): array
     {
-        $json = json_decode($this->character_data, true) ?? [];
+        $json = $this->character_data ?? [];
 
         if (! isset($json['licenses']) || ! is_array($json['licenses'])) {
             return [];
