@@ -1380,7 +1380,8 @@
                 "boat": "Boating License",
                 "passenger": "PPL - Passenger",
                 "driver": "Driver's License",
-                "press": "Press (Journalist)"
+                "press": "Press (Journalist)",
+                "bar": "Bar/Law License"
             }
         },
         "edit": {

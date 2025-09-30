@@ -806,6 +806,7 @@
             "last_loaded": "Aakhri load hua:",
             "license": {
                 "add": "Licenses ko edit karein",
+                "bar": "Bar/Kanoon License",
                 "boat": "Boat chalane ki license",
                 "cfi": "PPL - CFI",
                 "commercial": "PPL - Commercial",

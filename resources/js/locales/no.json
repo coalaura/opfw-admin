@@ -806,6 +806,7 @@
             "last_loaded": "Sist lastet inn:",
             "license": {
                 "add": "Rediger lisenser",
+                "bar": "Advokatlisens",
                 "boat": "Båtførerlisens",
                 "cfi": "PPL - CFI",
                 "commercial": "PPL - Kommersiell",

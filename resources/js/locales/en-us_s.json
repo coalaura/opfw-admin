@@ -806,6 +806,7 @@
             "last_loaded": "Last Loaded:",
             "license": {
                 "add": "Edit Licenses",
+                "bar": "Bar an' Law License",
                 "boat": "Boating License",
                 "cfi": "PPL - CFI",
                 "commercial": "PPL - Commercial",
