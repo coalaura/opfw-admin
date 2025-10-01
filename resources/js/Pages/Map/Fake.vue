@@ -154,7 +154,7 @@ export default {
 
             this.map.attributionControl.addAttribution('map by <a href="https://github.com/coalaura" target="_blank">Laura</a> <i>accurate to about 1-2m</i>');
 
-            L.tileLayer("https://cattos.xyz/api.png?x={x}&y={y}&z={z}", {
+            L.tileLayer("https://cattos.xyz/c/image.png?x={x}&y={y}&z={z}", {
                 noWrap: true,
                 bounds: [
                     [0, 0],
