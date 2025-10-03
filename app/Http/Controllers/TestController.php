@@ -107,10 +107,19 @@ class TestController extends Controller
 
                 if (! isset($leaderboard[$name])) {
                     $leaderboard[$name] = [
+                        'miles' => 0,
                         'steps'  => 0,
                         'deaths' => 0,
                         'kills'  => 0,
                     ];
+                }
+
+                if (isset($metadata['bikeMiles'])) {
+                    $miles = floor(floatval($metadata['bikeMiles']));
+
+                    if ($leaderboard[$name]['miles'] < $miles) {
+                        $leaderboard[$name]['miles'] = $miles;
+                    }
                 }
 
                 if (isset($metadata['stepsWalked'])) {
@@ -144,11 +153,24 @@ class TestController extends Controller
         foreach ($leaderboard as $name => $data) {
             $list[] = [
                 'name'   => $name,
+                'miles'  => $data['miles'],
                 'steps'  => $data['steps'],
                 'deaths' => $data['deaths'],
                 'kills'  => $data['kills'],
             ];
         }
+
+        usort($list, function ($a, $b) {
+            return $b['miles'] - $a['miles'];
+        });
+
+        $index = 0;
+
+        $milesList = array_map(function ($entry) use (&$index) {
+            $index++;
+
+            return $index . ".\t" . number_format($entry['miles']) . "\t" . $entry['name'];
+        }, array_splice($list, 0, 15));
 
         usort($list, function ($a, $b) {
             return $b['steps'] - $a['steps'];
@@ -186,7 +208,9 @@ class TestController extends Controller
             return $index . ".\t" . number_format($entry['kills']) . "\t" . $entry['name'];
         }, array_splice($list, 0, 15));
 
-        $text = "Top 15 steps traveled\n\nSpot\tSteps\tFull-Name\n" . implode("\n", $stepsList);
+        $text = "Top 15 miles on bicycle\n\nSpot\tMiles\tFull-Name\n" . implode("\n", $milesList);
+        $text .= "\n\n- - -\n\n";
+        $text .= "Top 15 steps traveled\n\nSpot\tSteps\tFull-Name\n" . implode("\n", $stepsList);
         $text .= "\n\n- - -\n\n";
         $text .= "Top 15 deaths\n\nSpot\tDeaths\tFull-Name\n" . implode("\n", $deathsList);
         $text .= "\n\n- - -\n\n";
