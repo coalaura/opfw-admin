@@ -169,7 +169,7 @@ class TestController extends Controller
         $milesList = array_map(function ($entry) use (&$index) {
             $index++;
 
-            return $index . ".\t" . number_format($entry['miles'] / 1609) . "\t" . $entry['name'];
+            return $index . ".\t" . number_format($entry['miles'] / 1609, 2) . "\t" . $entry['name'];
         }, array_splice($list, 0, 15));
 
         usort($list, function ($a, $b) {
