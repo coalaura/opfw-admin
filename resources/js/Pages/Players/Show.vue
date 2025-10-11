@@ -593,7 +593,7 @@
 
                 <div v-else>
                     <table class="w-full" v-if="notifications.length > 0">
-                        <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 border-t" v-for="notification in notifications" :key="notification.id">
+                        <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 border-t" :class="{ 'opacity-75': notification.read_at }" v-for="notification in notifications" :key="notification.id">
                             <td class="px-3 py-2">
                                 <i class="fas fa-envelope-open-text" :title="t('players.show.read_notification', formatTime(notification.read_at * 1000, true))" v-if="notification.read_at"></i>
                                 <i class="fas fa-envelope" :title="t('players.show.not_read_notification')" v-else></i>
@@ -601,7 +601,7 @@
                             <td class="px-3 py-2">
                                 <a :href="`/players/${notification.creator_identifier}`" target="_blank">{{ notification.player_name }}</a>
                             </td>
-                            <td class="px-3 py-2 italic">{{ truncate(notification.notification, 25) }}</td>
+                            <td class="px-3 py-2 italic" :title="notification.notification">{{ truncate(notification.notification, 25) }}</td>
                             <td class="px-3 py-2">{{ notification.created_at * 1000 | formatTime(true) }}</td>
                             <td class="px-3 py-2">
                                 <i class="fas fa-trash-alt cursor-pointer text-red-800 dark:text-red-400" @click="deleteNotification(notification.id)" v-if="!notification.read_at"></i>
@@ -2529,9 +2529,6 @@ export default {
             return this.activeBan.expireAt
                 ? this.t(`players.show.ban${suffix}`, this.formatBanCreator(this.activeBan.issuer), this.$options.filters.formatTime(this.activeBan.expireAt))
                 : this.t(`players.ban.forever${suffix}`, this.formatBanCreator(this.activeBan.issuer));
-        },
-        formatTime(t) {
-            return this.$options.filters.formatTime(t);
         },
         async pmPlayer() {
             // Send request.
