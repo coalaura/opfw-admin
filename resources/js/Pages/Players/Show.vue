@@ -588,7 +588,7 @@
                 </div>
 
                 <div v-else-if="creatingNotification">
-                    <textarea class="block bg-gray-200 dark:bg-gray-600 rounded w-full px-4 py-2 h-72" v-model="notification"></textarea>
+                    <textarea class="block bg-gray-200 dark:bg-gray-600 rounded w-full px-4 py-2 h-72" v-model="notification" maxlength="2000"></textarea>
                 </div>
 
                 <div v-else>
