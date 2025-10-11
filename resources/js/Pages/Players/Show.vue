@@ -567,6 +567,69 @@
             </template>
         </modal>
 
+        <!-- Notifications -->
+        <modal :show.sync="showingNotifications">
+            <template #header>
+                <h1 class="dark:text-white flex justify-between items-center">
+                    {{ t('players.show.notifications') }}
+
+                    <i class="fas fa-plus text-green-600 dark:text-green-400 cursor-pointer text-2xl" v-if="!creatingNotification && !loadingNotifications" @click="creatingNotification = true"></i>
+                </h1>
+            </template>
+
+            <template #default>
+                <div v-if="loadingNotifications">
+                    <div class="flex justify-center items-center my-6 mt-12">
+                        <div>
+                            <i class="fas fa-cog animate-spin"></i>
+                            {{ t('global.loading') }}
+                        </div>
+                    </div>
+                </div>
+
+                <div v-else-if="creatingNotification">
+                    <textarea class="block bg-gray-200 dark:bg-gray-600 rounded w-full px-4 py-2 h-72" v-model="notification"></textarea>
+                </div>
+
+                <div v-else>
+                    <table class="w-full" v-if="notifications.length > 0">
+                        <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 border-t" v-for="notification in notifications" :key="notification.id">
+                            <td class="px-3 py-2">
+                                <i class="fas fa-envelope-open-text" :title="t('players.show.read_notification', formatTime(notification.read_at * 1000, true))" v-if="notification.read_at"></i>
+                                <i class="fas fa-envelope" :title="t('players.show.not_read_notification')" v-else></i>
+                            </td>
+                            <td class="px-3 py-2">
+                                <a :href="`/players/${notification.creator_identifier}`" target="_blank">{{ notification.player_name }}</a>
+                            </td>
+                            <td class="px-3 py-2 italic">{{ truncate(notification.notification, 25) }}</td>
+                            <td class="px-3 py-2">{{ notification.created_at * 1000 | formatTime(true) }}</td>
+                            <td class="px-3 py-2">
+                                <i class="fas fa-trash-alt cursor-pointer text-red-800 dark:text-red-400" @click="deleteNotification(notification.id)" v-if="!notification.read_at"></i>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p v-else>{{ t("players.show.no_notifications") }}</p>
+                </div>
+            </template>
+
+            <template #actions>
+                <template v-if="creatingNotification">
+                    <button type="button" class="px-5 py-2 rounded bg-danger dark:bg-dark-danger" @click="creatingNotification = false">
+                        {{ t('global.cancel') }}
+                    </button>
+
+                    <button type="button" class="px-5 py-2 rounded bg-success dark:bg-dark-success" @click="createNotification()" :disabled="notification.trim().length === 0">
+                        {{ t('global.create') }}
+                    </button>
+                </template>
+
+                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showingNotifications = false" v-else>
+                    {{ t('global.close') }}
+                </button>
+            </template>
+        </modal>
+
         <!-- Anti Cheat -->
         <modal :show.sync="isShowingAntiCheat">
             <template #header>
@@ -1064,15 +1127,19 @@
         <!-- Useful links -->
         <v-section class="dark:bg-dark-secondary" :noFooter="true" :noHeader="true">
             <div class="flex flex-wrap items-center text-center">
-                <inertia-link class="flex-1 block p-5 m-2 font-semibold text-white bg-indigo-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" :href="'/logs?identifier=' + player.licenseIdentifier">
+                <inertia-link class="flex-1 block p-3 m-2 font-semibold text-white bg-indigo-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" :href="'/logs?identifier=' + player.licenseIdentifier">
                     <i class="mr-1 fas fa-toilet-paper"></i>
                     {{ t('players.show.logs') }}
                 </inertia-link>
-                <a class="flex-1 block p-5 m-2 font-semibold text-white bg-steam rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" target="_blank" :href="player.steamProfileUrl" v-if="player.steamProfileUrl && !$page.discord.sso">
-                    <i class="mr-1 fab fa-steam"></i>
-                    {{ t('players.show.steam') }}
-                </a>
-                <button class="flex-1 block p-5 m-2 font-semibold text-white bg-rose-700 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" @click="showAntiCheat" v-if="canSeeAntiCheat">
+
+                <button class="flex-1 block p-3 m-2 font-semibold text-white bg-teal-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" @click="showNotifications">
+                    <i class="mr-1 fas fa-envelope-open-text"></i>
+                    <span>
+                        {{ t('players.show.notifications') }}
+                    </span>
+                </button>
+
+                <button class="flex-1 block p-3 m-2 font-semibold text-white bg-rose-700 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" @click="showAntiCheat" v-if="canSeeAntiCheat">
                     <i class="mr-1 fas fa-bullseye"></i>
                     <span>
                         {{ t('players.show.anti_cheat') }}
@@ -1080,12 +1147,17 @@
                 </button>
             </div>
             <div class="flex flex-wrap items-center text-center">
-                <a class="flex-1 block p-5 m-2 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" v-if="player.discord.length > 0" href="#" @click="showDiscord($event)">
+                <a class="flex-1 block p-3 m-2 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" v-if="player.discord.length > 0" href="#" @click="showDiscord($event)">
                     <i class="mr-1 fab fa-discord"></i>
                     {{ t('players.show.discord_accounts', player.discord.length) }}
                 </a>
 
-                <button class="flex-1 block p-5 m-2 font-semibold text-white bg-indigo-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" @click="showLinked">
+                <a class="flex-1 block p-3 m-2 font-semibold text-white bg-steam rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" target="_blank" :href="player.steamProfileUrl" v-if="player.steamProfileUrl && !$page.discord.sso">
+                    <i class="mr-1 fab fa-steam"></i>
+                    {{ t('players.show.steam') }}
+                </a>
+
+                <button class="flex-1 block p-3 m-2 font-semibold text-white bg-indigo-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" @click="showLinked">
                     <span>
                         {{ t('players.show.linked') }}
                     </span>
@@ -1799,7 +1871,13 @@ export default {
 
             isShowingStaffStatistics: false,
             statisticsSearch: '',
-            staffStatistics: {}
+            staffStatistics: {},
+
+            showingNotifications: false,
+            loadingNotifications: false,
+            creatingNotification: false,
+            notifications: [],
+            notification: ""
         }
     },
     computed: {
@@ -1910,10 +1988,82 @@ export default {
                 if (response?.status) {
                     this.systemInfo = response.data;
                 }
-            } catch (e) {
+            } catch {
             }
 
             this.isSystemInfoLoading = false;
+        },
+        async showNotifications() {
+            if (this.loadingNotifications) {
+                return;
+            }
+
+            this.showingNotifications = true;
+            this.creatingNotification = false;
+            this.loadingNotifications = true;
+
+            this.notifications = [];
+
+            try {
+                const response = await _get(`/players/${this.player.licenseIdentifier}/notifications`);
+
+                if (response?.status) {
+                    this.notifications = response.data;
+                }
+            } catch {}
+
+            this.loadingNotifications = false;
+        },
+        async createNotification() {
+            if (this.loadingNotifications) {
+                return;
+            }
+
+            const text = this.notification.trim();
+
+            if (!text.length) {
+                return;
+            }
+
+            this.loadingNotifications = true;
+            this.creatingNotification = false;
+
+            try {
+                const response = await _post(`/players/${this.player.licenseIdentifier}/notifications`, {
+                    notification: text,
+                });
+
+                if (response?.status) {
+                    this.notification = "";
+
+                    this.notifications = response.data;
+                } else {
+                    alert(response?.error || this.t("players.show.failed_create_notification"));
+                }
+            } catch {}
+
+            this.loadingNotifications = false;
+        },
+        async deleteNotification(id) {
+            if (this.loadingNotifications || !confirm(this.t("players.show.confirm_delete_notification"))) {
+                return;
+            }
+
+            this.loadingNotifications = true;
+
+            try {
+                const response = await _delete(`/players/${this.player.licenseIdentifier}/notifications/${id}`);
+
+                if (response?.status) {
+                    this.notifications = response.data;
+                } else {
+                    alert(response?.error || this.t("players.show.failed_delete_notification"));
+                }
+            } catch (e) {
+                console.error(e)
+            }
+
+            this.loadingNotifications = false;
         },
         warningMessageChanged() {
             const message = this.form.warning.message;

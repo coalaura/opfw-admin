@@ -126,6 +126,11 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::post('/players/{player}/update_mute', [PlayerDataController::class, 'updateMuteStatus']);
     Route::post('/players/{player}/update_tag', [PlayerDataController::class, 'updateTag']);
 
+    // Player notifications
+    Route::get('/players/{player}/notifications', [PlayerDataController::class, 'notifications']);
+    Route::post('/players/{player}/notifications', [PlayerDataController::class, 'createNotification']);
+    Route::delete('/players/{player}/notifications/{id}', [PlayerDataController::class, 'deleteNotification']);
+
     // Ban actions.
     Route::get('/smurf/{hash}', [PlayerBanController::class, 'smurfBan']);
     Route::post('/players/{player}/unlink/{player2}', [PlayerBanController::class, 'unlinkIdentifiers']);

@@ -73,8 +73,8 @@ function request(method) {
 	};
 }
 
-window._get = request("GET", false, false);
-window._post = request("POST", false, false);
-window._put = request("PUT", false, false);
-window._patch = request("PATCH", false, false);
-window._delete = request("DELETE", false, false);
+window._get = request("GET");
+window._post = request("POST");
+window._put = request("PUT");
+window._patch = request("PATCH");
+window._delete = request("DELETE");

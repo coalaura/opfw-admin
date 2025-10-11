@@ -250,7 +250,7 @@ class PlayerDataController extends Controller
         ]);
 
         $license = $player->license_identifier;
-        $status = StatusHelper::get($license);
+        $status  = StatusHelper::get($license);
 
         $refreshed = "";
 
@@ -272,5 +272,97 @@ class PlayerDataController extends Controller
         );
 
         return backWith('success', 'Commands have been updated successfully.' . $refreshed);
+    }
+
+    /**
+     * Returns all user notifications.
+     *
+     * @param Player $player
+     * @param Request $request
+     * @return Response
+     */
+    public function notifications(Player $player)
+    {
+        $notifications = DB::table("user_notifications")->select([
+            "id", "creator_identifier", "users.player_name", "notification", "created_at", "read_at",
+        ])->leftJoin("users", "users.license_identifier", "user_notifications.creator_identifier")->where("user_notifications.license_identifier", $player->license_identifier)->orderBy("created_at")->get()->toArray();
+
+        return $this->json(true, array_map(function ($notification) {
+            $notification->player_name = Player::getFilteredPlayerName($notification->player_name, [], $notification->creator_identifier);
+
+            return $notification;
+        }, $notifications));
+    }
+
+    /**
+     * Creates a user notification
+     *
+     * @param Player $player
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function createNotification(Player $player, Request $request)
+    {
+        $user = user();
+
+        $notification = trim($request->input("notification") ?? "");
+
+        if (empty($notification) || strlen($notification) > 2000) {
+            return $this->json(false, null, "invalid notification body");
+        }
+
+        $id = DB::table("user_notifications")->insertGetId([
+            "license_identifier" => $player->license_identifier,
+            "creator_identifier" => $user->license_identifier,
+            "notification"       => $notification,
+            "created_at"         => time(),
+        ]);
+
+        if (! $id) {
+            return $this->json(false, null, "failed to create notification");
+        }
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Created Notification",
+            sprintf("%s created notification #%d for %s.", $user->consoleName(), $id, $player->consoleName()),
+            ['notification' => $notification]
+        );
+
+        return $this->notifications($player);
+    }
+
+    /**
+     * Deletes a user notification
+     *
+     * @param Player $player
+     * @return RedirectResponse
+     */
+    public function deleteNotification(Player $player, int $id)
+    {
+        if (! $id || $id <= 0) {
+            return $this->json(false, null, "invalid notification");
+        }
+
+        $user = user();
+
+        $notification = DB::table("user_notifications")->where("license_identifier", $player->license_identifier)->where("id", $id)->first();
+
+        if (! $notification) {
+            return $this->json(false, null, "notification not found");
+        } else if ($notification->read_at) {
+            return $this->json(false, null, "notification was already read");
+        }
+
+        DB::table("user_notifications")->where("license_identifier", $player->license_identifier)->where("id", $id)->delete();
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Deleted Notification",
+            sprintf("%s deleted notification #%d for %s.", $user->consoleName(), $id, $player->consoleName()),
+            ['notification' => $notification->notification]
+        );
+
+        return $this->notifications($player);
     }
 }

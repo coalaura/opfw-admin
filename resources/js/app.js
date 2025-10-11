@@ -96,6 +96,7 @@ Vue.filter("formatGender", formatGender);
 
 // For using filters as functions (add/remove as needed)
 Vue.prototype.formatSeconds = formatSeconds;
+Vue.prototype.formatTime = formatTime;
 
 Vue.directive("handle-error", {
 	bind: (el, binding) => {
