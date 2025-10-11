@@ -25,6 +25,7 @@ class PlayerDataController extends Controller
         "fortnite",
         "freecam",
         "idle",
+        "keychain_create",
         "live_map",
         "minecraft",
         "orbitcam",
