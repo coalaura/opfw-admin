@@ -322,7 +322,7 @@ class JwtHelper
             'secure'   => $isSecure,
             'httponly' => true,
             'path'     => '/',
-            'samesite' => 'None',
+            'samesite' => $isSecure ? 'None' : 'Lax',
         ]);
     }
 
