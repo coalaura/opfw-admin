@@ -79,7 +79,7 @@ class LoginController extends Controller
             $name = substr($name, 0, 22) . '...';
         }
 
-        LoggingHelper:log(sprintf("SSO login success for user %s (#%d)", $player->getSafePlayerName(), $player->user_id));
+        LoggingHelper:log(sprintf("SSO login success for user %s (#%d)", $name, $player->user_id));
 
         JwtHelper::login($player, [
             'id'            => $player->user_id,
