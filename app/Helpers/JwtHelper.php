@@ -170,6 +170,8 @@ class JwtHelper
             return null;
         }
 
+        LoggingHelper::log(sprintf('Loaded user %s from JWT token', $user->user_id));
+
         return $user;
     }
 
@@ -259,8 +261,6 @@ class JwtHelper
         if (self::$claims !== null) {
             return;
         }
-
-        LoggingHelper::log("Initialized JWTHelper");
 
         self::loadSecret();
 
