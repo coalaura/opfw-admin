@@ -36,11 +36,15 @@ class StaffMiddleware
         if (! $user) {
             JwtHelper::logout();
 
+            LoggingHelper::log("Logged out, missing user");
+
             return redirectWith('/login', 'error', 'You are not logged in.');
         }
 
         if (! $user->isStaff()) {
             JwtHelper::logout();
+
+            LoggingHelper::log("Logged out, no longer staff");
 
             return redirectWith(
                 '/login',
