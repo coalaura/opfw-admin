@@ -187,6 +187,8 @@ class JwtHelper
         $jwt = request()->cookie(self::Cookie);
 
         if (empty($jwt)) {
+            LoggingHelper::log('Missing jwt cookie');
+
             return;
         }
 
