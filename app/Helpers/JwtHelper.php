@@ -260,6 +260,8 @@ class JwtHelper
             return;
         }
 
+        LoggingHelper::log("Initialized JWTHelper");
+
         self::loadSecret();
 
         self::read();
