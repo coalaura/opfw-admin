@@ -256,7 +256,7 @@ class JwtHelper
 
     public static function init()
     {
-        if (self::$claims) {
+        if (self::$claims === null) {
             return;
         }
 
