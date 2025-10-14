@@ -5,6 +5,7 @@ use App\Character;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\ServerAPI;
+use App\Helpers\StatusHelper;
 use App\Http\Requests\CharacterUpdateRequest;
 use App\Http\Resources\CharacterIndexResource;
 use App\Http\Resources\CharacterResource;
@@ -650,6 +651,12 @@ class PlayerCharacterController extends Controller
             "Changed Ped Model",
             sprintf("%s changed the ped model of %s (#%d) to `%s`.", $user->consoleName(), $player->consoleName(), $character->character_id, $model),
         );
+
+        $status = StatusHelper::get($player->license_identifier);
+
+        if ($status && $status['character']) {
+            OPFWHelper::unloadCharacter(user()->license_identifier, $player, $status['character']['id'], "Your character's ped model has been changed.");
+        }
 
         return backWith('success', 'Ped model successfully changed.');
     }
