@@ -16,7 +16,7 @@
             </div>
 
             <div class="mt-2 italic text-sm font-mono text-gray-500 dark:text-gray-400">
-                {{ pedModel(character.pedModelHash) }} <i class="fas fa-pencil-alt cursor-pointer" @click="editingPedModel = true" v-if="$page.auth.player.isSuperAdmin"></i>
+                {{ character.pedModelName ? character.pedModelName : character.pedModelHash }} <i class="fas fa-pencil-alt cursor-pointer" @click="editingPedModel = true" v-if="$page.auth.player.isSuperAdmin"></i>
             </div>
 
             <div class="mt-0.5 italic text-sm font-mono text-gray-500 dark:text-gray-400" v-if="character.coords">
@@ -1360,13 +1360,6 @@ export default {
             }
 
             this.isViewingOutfits = true;
-        },
-        pedModel(hash) {
-            if (!hash) {
-                return 'unknown';
-            }
-
-            return this.pedModels[hash] || hash;
         },
         async showProperty(propertyId) {
             if (this.isShowingProperty) return;
