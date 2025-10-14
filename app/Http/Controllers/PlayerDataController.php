@@ -285,7 +285,7 @@ class PlayerDataController extends Controller
     {
         $notifications = DB::table("user_notifications")->select([
             "id", "creator_identifier", "users.player_name", "notification", "created_at", "read_at",
-        ])->leftJoin("users", "users.license_identifier", "user_notifications.creator_identifier")->where("user_notifications.license_identifier", $player->license_identifier)->orderBy("created_at")->get()->toArray();
+        ])->leftJoin("users", "users.license_identifier", "user_notifications.creator_identifier")->where("user_notifications.license_identifier", $player->license_identifier)->orderByDesc("created_at")->get()->toArray();
 
         return $this->json(true, array_map(function ($notification) {
             $notification->player_name = Player::getFilteredPlayerName($notification->player_name, [], $notification->creator_identifier);
@@ -320,6 +320,12 @@ class PlayerDataController extends Controller
 
         if (! $id) {
             return $this->json(false, null, "failed to create notification");
+        }
+
+        $status = StatusHelper::get($player->license_identifier);
+
+        if ($status) {
+            ServerAPI::showUserNotifications($status['server'], $status['source']);
         }
 
         PanelLog::log(

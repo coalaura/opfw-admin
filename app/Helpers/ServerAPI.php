@@ -317,6 +317,20 @@ class ServerAPI
     }
 
     /**
+     * /execute/showUserNotifications
+     */
+    public static function showUserNotifications(string $server, int $targetSource)
+    {
+        $url = Server::getServerURL($server);
+
+        $url .= 'execute/showUserNotifications';
+
+        return self::do('POST', $url, [
+            'targetSource' => $targetSource,
+        ], 3, true);
+    }
+
+    /**
      * /execute/validateAuthToken
      */
     public static function validateAuthToken(string $server, string $licenseIdentifier, string $token)
