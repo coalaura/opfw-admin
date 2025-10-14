@@ -374,7 +374,11 @@ class ServerAPI
             $refresh = true;
         }
 
-        return self::fresh('GET', $route, null, $ttl);
+        if ($refresh) {
+            return self::fresh('GET', $route, null, $ttl);
+        }
+
+        return null;
     }
 
     /**
