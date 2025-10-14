@@ -7,7 +7,6 @@ use App\Helpers\GeneralHelper;
 use App\Helpers\ServerAPI;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Str;
 
 class CharacterResource extends JsonResource
 {
