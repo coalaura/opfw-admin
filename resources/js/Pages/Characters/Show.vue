@@ -16,7 +16,7 @@
             </div>
 
             <div class="mt-2 italic text-sm font-mono text-gray-500 dark:text-gray-400">
-                {{ pedModel(character.pedModelHash) }}
+                {{ pedModel(character.pedModelHash) }} <i class="fas fa-pencil-alt cursor-pointer" @click="editingPedModel = true" v-if="$page.auth.player.isSuperAdmin"></i>
             </div>
 
             <div class="mt-0.5 italic text-sm font-mono text-gray-500 dark:text-gray-400" v-if="character.coords">
@@ -596,6 +596,35 @@
             </template>
         </modal>
 
+        <!-- Ped Model -->
+        <modal :show.sync="editingPedModel">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.characters.ped.edit') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="flex gap-3 items-center">
+                    <label class="block w-40" for="modelName">
+                        {{ t('players.characters.ped.model') }}
+                    </label>
+
+                    <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" :class="{ 'border-red-500': !pedEditModelValid }" id="modelName" placeholder="sultan2" minlength="1" maxlength="250" v-model="pedEditModel" />
+                </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="editingPedModel = false">
+                    {{ t('global.cancel') }}
+                </button>
+
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" @click="editPedModel" v-if="pedEditModelValid">
+                    {{ t('players.characters.ped.save') }}
+                </button>
+            </template>
+        </modal>
+
         <!-- Edit Licenses -->
         <modal :show.sync="isLicenseEdit">
             <template #header>
@@ -1051,10 +1080,6 @@ import Badge from './../../Components/Badge.vue';
 import Modal from "../../Components/Modal.vue";
 import MultiSelector from '../../Components/MultiSelector.vue';
 
-import { ModelSelect } from 'vue-search-select';
-
-import models from "../../data/ped_models.json";
-
 let jobsObject = [];
 
 export default {
@@ -1064,7 +1089,6 @@ export default {
         Card,
         Badge,
         Modal,
-        ModelSelect,
         MultiSelector,
     },
     props: {
@@ -1106,6 +1130,10 @@ export default {
         },
         vehicleValue: {
             type: Number,
+            required: true,
+        },
+        pedModels: {
+            type: Object,
             required: true,
         },
     },
@@ -1254,7 +1282,10 @@ export default {
 
             isShowingProperty: false,
             isLoadingProperty: false,
-            propertyData: false
+            propertyData: false,
+
+            editingPedModel: false,
+            pedEditModel: this.character.pedModelName
         };
     },
     computed: {
@@ -1282,6 +1313,13 @@ export default {
         },
         vehicleAddModelValid() {
             return this.vehicles.includes(this.vehicleAddModel);
+        },
+        pedEditModelValid() {
+            if (this.pedEditModel && this.character.pedModelName === this.pedEditModel) {
+                return true;
+            }
+
+            return this.pedModels.includes(this.pedEditModel);
         },
         viewingOutfit() {
             return this.character.outfits[this.outfitIndex];
@@ -1328,7 +1366,7 @@ export default {
                 return 'unknown';
             }
 
-            return models[hash] || hash;
+            return this.pedModels[hash] || hash;
         },
         async showProperty(propertyId) {
             if (this.isShowingProperty) return;
@@ -1564,6 +1602,17 @@ export default {
             // Reset.
             this.vehicleAddModel = '';
             this.isVehicleAdd = false;
+        },
+        async editPedModel() {
+            if (this.character.pedModelName !== this.pedEditModel) {
+                // Send request.
+                await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${this.character.id}/edit_ped`, {
+                    model: this.pedEditModel
+                }, { preserveScroll: true });
+            }
+
+            // Reset.
+            this.editingPedModel = false;
         },
         async updateLicenses() {
             // Send request.

@@ -31,6 +31,31 @@ function first($array)
     return $array[0];
 }
 
+function joaat(string $str): int {
+    $str = strtolower($str);
+    $hash = 0;
+
+    for ($i = 0; $i < strlen($str); $i++) {
+        $hash += ord($str[$i]);
+        $hash += ($hash << 10);
+        $hash &= 0xFFFFFFFF;
+        $hash ^= ($hash >> 6);
+    }
+
+    $hash += ($hash << 3);
+    $hash &= 0xFFFFFFFF;
+    $hash ^= ($hash >> 11);
+    $hash += ($hash << 15);
+    $hash &= 0xFFFFFFFF;
+
+    // Convert to signed int32
+    if ($hash > 0x7FFFFFFF) {
+        $hash -= 0x100000000;
+    }
+
+    return $hash;
+}
+
 if (!function_exists('mb_str_pad')) {
     function mb_str_pad($input, $pad_length, $pad_string = ' ', $pad_type = STR_PAD_RIGHT, $encoding = 'UTF-8')
     {

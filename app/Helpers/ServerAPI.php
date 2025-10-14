@@ -46,6 +46,14 @@ class ServerAPI
     }
 
     /**
+     * /peds.json
+     */
+    public static function getPeds(bool $refresh = false): array
+    {
+        return self::cached('/peds.json', $refresh, self::MediumCacheTime) ?? [];
+    }
+
+    /**
      * /jobs.json
      */
     public static function getJobs(bool $refresh = false): array

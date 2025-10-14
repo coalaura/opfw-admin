@@ -20,6 +20,7 @@ class Cronjobs extends Command
         [ServerAPI::class, 'getVehicles'],
         [ServerAPI::class, 'getVehiclesTxt'],
         [ServerAPI::class, 'getWeapons'],
+        [ServerAPI::class, 'getPeds'],
         [ServerAPI::class, 'getJobs'],
         [ServerAPI::class, 'getDefaultJobs'],
         [ServerAPI::class, 'getChatEmotes'],

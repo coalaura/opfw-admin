@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Character;
 use App\Helpers\GeneralHelper;
+use App\Helpers\ServerAPI;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
@@ -19,6 +20,15 @@ class CharacterResource extends JsonResource
      */
     public function toArray($request): array
     {
+        $modelHash = $this->ped_model_hash ? intval($this->ped_model_hash) : null;
+        $modelName = "";
+
+        if ($modelHash) {
+            $pedModels = ServerAPI::getPeds();
+
+            $modelName = $pedModels[$modelHash] ?? "";
+        }
+
         return [
             'id'                         => $this->character_id,
             'licenseIdentifier'          => $this->license_identifier,
@@ -47,7 +57,8 @@ class CharacterResource extends JsonResource
             'characterCreationTimestamp' => $this->character_creation_timestamp,
             'licenses'                   => $this->getLicenses(),
             'creationTime'               => $this->character_creation_time,
-            'pedModelHash'               => $this->ped_model_hash ? intval($this->ped_model_hash) : null,
+            'pedModelHash'               => $modelHash,
+            'pedModelName'               => $modelName,
             'outfits'                    => Character::getOutfits($this->character_id, user()->isSeniorStaff()),
             'danny'                      => GeneralHelper::isDefaultDanny(intval($this->ped_model_hash), $this->ped_model_data),
             'mugshot'                    => $this->mugshot_url ?? null,

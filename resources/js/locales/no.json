@@ -836,6 +836,11 @@
             "no_mugshot": "Ingen muggbilde tilgjengelig",
             "none": "Denne spilleren har ikke opprettet noen karakterer ennå.",
             "outfits": "Antrekk",
+            "ped": {
+                "edit": "Rediger Ped-modell",
+                "model": "Ped-modell",
+                "save": "Lagre"
+            },
             "playtime_label": "Spilletid",
             "playtime_recent": "{0} spilte de siste 2 ukene, {1} de siste 4 ukene.",
             "remove_tattoo": "Fjern tatoveringer",

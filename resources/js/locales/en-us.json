@@ -1305,6 +1305,11 @@
             },
             "spawn_no_undo": "This action cannot be undone and will be logged. Make sure you have the permissions to do so!<br><br><b>The player has to be logged out (soft-napping) for the changes to take effect.</b>",
             "spawn_do": "Reset Spawn-Point",
+            "ped": {
+                "edit": "Edit Ped Model",
+                "model": "Ped Model",
+                "save": "Save"
+            },
             "vehicle": {
                 "edit": "Pimp my Ride™",
                 "owner": "Owner CID",

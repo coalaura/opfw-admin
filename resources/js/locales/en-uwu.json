@@ -836,6 +836,11 @@
             "no_mugshot": "No mugshot avaiwabwe",
             "none": "Dis pwayew has nyet cweated any chawactews yet.",
             "outfits": "Ouwfits",
+            "ped": {
+                "edit": "Edit Ped Model uwu",
+                "model": "Ped Model uwu",
+                "save": "Save uwu"
+            },
             "playtime_label": "Pwaytime",
             "playtime_recent": "{0} pwayed in the wast 2 weeks, {1} in the wast 4 weeks.",
             "remove_tattoo": "Wemove Tawtoos",

@@ -29,7 +29,7 @@ class PlayerCharacterController extends Controller
     ];
 
     const Licenses = [
-        "heli", "fw", "cfi", "hwh", "hw", "perf", "utility", "commercial", "management", "passenger", "military", "special", "hunting", "fishing", "mining", "bar", "weapon", "driver", "boat", "press"
+        "heli", "fw", "cfi", "hwh", "hw", "perf", "utility", "commercial", "management", "passenger", "military", "special", "hunting", "fishing", "mining", "bar", "weapon", "driver", "boat", "press",
     ];
 
     /**
@@ -161,6 +161,7 @@ class PlayerCharacterController extends Controller
             'jobs'            => $jobs ? $jobs['jobs'] : [],
             'resetCoords'     => $resetCoords ? array_keys($resetCoords) : [],
             'vehicleValue'    => Vehicle::getTotalVehicleValue($character->character_id),
+            'pedModels'       => $this->getPedModels(),
         ]);
     }
 
@@ -617,6 +618,43 @@ class PlayerCharacterController extends Controller
     }
 
     /**
+     * Changed the characters ped model.
+     *
+     * @param Request $request
+     * @param Player $player
+     * @param Character $character
+     * @return RedirectResponse
+     */
+    public function editPedModel(Request $request, Player $player, Character $character): RedirectResponse
+    {
+        $model = $request->post('model');
+
+        if (! $this->isSuperAdmin($request)) {
+            return backWith('error', 'Only super admins can edit ped models.');
+        }
+
+        $user = user();
+
+        $pedModels = $this->getPedModels();
+
+        if (!$model || !in_array($model, $pedModels)) {
+            return backWith('error', 'Invalid ped model.');
+        }
+
+        $character->update([
+            'ped_model_hash' => joaat($model),
+        ]);
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Changed Ped Model",
+            sprintf("%s changed the ped model of %s (#%d) to `%s`.", $user->consoleName(), $player->consoleName(), $character->character_id, $model),
+        );
+
+        return backWith('success', 'Ped model successfully changed.');
+    }
+
+    /**
      * Updates a characters licenses.
      *
      * @param Request $request
@@ -894,6 +932,19 @@ class PlayerCharacterController extends Controller
             "access"  => $access,
             "logs"    => $logs,
         ]);
+    }
+
+    private function getPedModels()
+    {
+        $peds = ServerAPI::getPeds();
+
+        $models = [];
+
+        foreach ($peds as $data) {
+            $models[] = $data["ModelName"];
+        }
+
+        return $models;
     }
 
 }

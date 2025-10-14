@@ -233,6 +233,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::post('/players/{player}/characters/{character}/reset_spawn', [PlayerCharacterController::class, 'resetSpawn']);
     Route::put('/players/{player}/characters/{character}/edit_balance', [PlayerCharacterController::class, 'editBalance']);
     Route::post('/players/{player}/characters/{character}/add_vehicle', [PlayerCharacterController::class, 'addVehicle']);
+    Route::post('/players/{player}/characters/{character}/edit_ped', [PlayerCharacterController::class, 'editPedModel']);
     Route::post('/players/{player}/characters/{character}/update_licenses', [PlayerCharacterController::class, 'updateLicenses']);
     Route::post('/players/{player}/characters/{character}/refresh_email', [PlayerCharacterController::class, 'refreshEmail']);
     Route::delete('/players/{player}/characters/{character}/divorce', [PlayerCharacterController::class, 'divorce']);

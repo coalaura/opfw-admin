@@ -836,6 +836,11 @@
             "no_mugshot": "Koi mugshot uplabdh nahi hai.",
             "none": "Is khiladi ne abhi tak koi kirdar nahi banaya hai.",
             "outfits": "Outfits",
+            "ped": {
+                "edit": "Ped model ko edit karein",
+                "model": "Ped model",
+                "save": "Bachayein"
+            },
             "playtime_label": "Playtime",
             "playtime_recent": "Aakhri 2 hafton me {0} khela, aakhri 4 hafton me {1}.",
             "remove_tattoo": "Tattoos hatao",

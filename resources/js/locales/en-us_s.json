@@ -836,6 +836,11 @@
             "no_mugshot": "No mugshot available",
             "none": "This here player ain't created any characters yet.",
             "outfits": "Outfits",
+            "ped": {
+                "edit": "Edit the Ped Model",
+                "model": "Ped Model",
+                "save": "Save"
+            },
             "playtime_label": "Playtime",
             "playtime_recent": "{0} played in the last 2 weeks, {1} in the last 4 weeks.",
             "remove_tattoo": "Remove Tattoos",
