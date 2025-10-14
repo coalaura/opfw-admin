@@ -12,7 +12,6 @@ use Illuminate\Console\Command;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use PDO;
 
 class Cronjobs extends Command
 {
@@ -72,16 +71,7 @@ class Cronjobs extends Command
         $this->info(CLUSTER . " Testing database connection...");
 
         try {
-            /**
-             * @var \Illuminate\Database\Connection
-             */
-            $conn = DB::connection();
-
-            $pdo = $conn->getPdo();
-
-            $statement = $pdo->prepare('SELECT 1');
-            $statement->setAttribute(PDO::ATTR_TIMEOUT, 3);
-            $statement->execute();
+            DB::select("SELECT 1");
         } catch (QueryException $e) {
             $this->warn(sprintf("Failed to connect to database: %s", $e->getMessage()));
 
