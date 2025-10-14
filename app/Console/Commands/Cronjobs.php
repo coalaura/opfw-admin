@@ -71,7 +71,7 @@ class Cronjobs extends Command
         $this->info(CLUSTER . " Testing database connection...");
 
         try {
-            DB::select("SELECT 1");
+            DB::query()->timeout(3)->selectRaw('1')->first();
         } catch (QueryException $e) {
             $this->warn(sprintf("Failed to connect to database: %s", $e->getMessage()));
 
