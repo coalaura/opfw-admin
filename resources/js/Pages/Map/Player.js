@@ -95,7 +95,7 @@ class Player {
 	}
 
 	static getDamageFlags(flags) {
-        flags = flags || 0;
+        flags = 15;//flags || 0;
 
 		return {
 			shot: !!(flags & 1),
