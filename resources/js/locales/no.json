@@ -1099,7 +1099,7 @@
             "expiry_date": "Utløpsdato",
             "failed_create_notification": "Kunne ikke opprette varsel.",
             "failed_delete_notification": "Kunne ikke slette varsel.",
-            "global_info": "Global",
+            "global_info": "Andre forbud",
             "global_opfw_ban": "Global OP-FW-ban",
             "global_title": "Spilleren er bannet på {0} OP-FW-servere.",
             "hide_system": "Skjul {0} systemnotater",

@@ -1040,7 +1040,7 @@
             "streamer_exception": "Ban-Exception",
             "streamer_exception_title": "This player is allowed to play while actively streaming on `{0}`.",
             "user_variables": "User Variables",
-            "global_info": "Global",
+            "global_info": "Other Bans",
             "global_title": "Player is banned on {0} OP-FW servers.",
             "opfw_banned": "Player is globally banned from all OP-FW servers.",
             "opfw_ban": "Global OP-FW Ban",

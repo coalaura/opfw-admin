@@ -1099,7 +1099,7 @@
             "expiry_date": "End date",
             "failed_create_notification": "Failed to make alert.",
             "failed_delete_notification": "Failed to delete alert.",
-            "global_info": "Global",
+            "global_info": "Other bans",
             "global_opfw_ban": "Global OP-FW ban",
             "global_title": "Player banned on {0} OP-FW servers.",
             "hide_system": "Hide {0} system notes",
