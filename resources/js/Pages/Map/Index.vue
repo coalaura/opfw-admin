@@ -157,7 +157,7 @@
                             </button>
                         </div>
                         <p class="text-center">{{ historyRange.val }}</p>
-                        <p class="text-center text-sm">{{ historicDetails }}</p>
+                        <p class="text-center text-sm" v-html="historicDetails"></p>
                     </div>
 
                     <div class="relative w-full">
@@ -552,9 +552,11 @@ export default {
                     pos?.d ? 'dead' : false
                 ].filter(flag => flag).join(", ");
 
+                const damageIcons = Player.getDamageIcons(Player.getDamageFlags(pos?.df));
+
                 const speed = pos && "s" in pos ? `${(pos.s * 2.236936).toFixed(1)}mph` : "N/A";
 
-                this.historicDetails = `Flags: ${flags ? flags : 'N/A'} - Altitude: ${pos ? `${pos.z.toFixed(1)}m` : "N/A"} - Speed: ${speed}`;
+                this.historicDetails = `Flags: ${flags ? flags : 'N/A'} - Altitude: ${pos ? `${pos.z.toFixed(1)}m` : "N/A"} - Speed: ${speed} <div class="flex gap-1">${damageIcons.join("")}</div>`;
 
                 if (pos && !pos.missing) {
                     const coords = Vector3.fromGameCoords(Number.parseInt(pos.x), Number.parseInt(pos.y), 0).toMap();
@@ -934,7 +936,9 @@ export default {
                         userFlags ? `<div class="flex gap-2">${userFlags}</div>` : false
                     ].filter(Boolean).join("");
 
-                    const popup = `${characterName ? `<a href="/players/${player.license}/characters/${player.cid}" target="_blank" class="block"><i class="fas fa-street-view" title="Character"></i> ${characterName}</a>` : ""}<a href="/players/${player.license}" target="_blank" class="block"><i class="fas fa-user-circle" title="Player"></i> ${playerName}</a><div class="mt-1 pt-1 border-t border-gray-300 flex flex-col">${infos}</div>${flags ? `<div class="flex flex-col gap-1 mt-1 pt-1 border-t border-gray-300">${flags}</div>` : ""}`;
+                    const damageIcons = Player.getDamageIcons(Player.getDamageFlags(player.df));
+
+                    const popup = `${characterName ? `<a href="/players/${player.license}/characters/${player.cid}" target="_blank" class="block"><i class="fas fa-street-view" title="Character"></i> ${characterName}</a>` : ""}<a href="/players/${player.license}" target="_blank" class="block"><i class="fas fa-user-circle" title="Player"></i> ${playerName}</a><div class="mt-1 pt-1 border-t border-gray-300 flex flex-col">${infos}</div>${flags ? `<div class="flex flex-col gap-1 mt-1 pt-1 border-t border-gray-300">${flags}</div>` : ""}${damageIcons.length ? `<span class="flex gap-1 mt-1 border-t border-gray-700 pt-2">${damageIcons.join("")}</span>` : ""}`;
 
                     marker.bindPopup(popup, {
                         autoPan: false
