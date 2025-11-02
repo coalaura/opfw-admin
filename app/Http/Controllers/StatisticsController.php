@@ -186,7 +186,7 @@ class StatisticsController extends Controller
                 'points' => [],
             ];
 
-            for ($weeksAgo = 1; $weeksAgo <= 8; $weeksAgo++) {
+            for ($weeksAgo = 0; $weeksAgo <= 7; $weeksAgo++) {
                 $monNoon = $monNoonAnchor->modify("-{$weeksAgo} weeks");
 
                 $year = $monNoon->format('Y');
