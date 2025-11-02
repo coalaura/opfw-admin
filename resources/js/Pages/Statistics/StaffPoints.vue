@@ -118,7 +118,13 @@ export default {
             return false;
         },
         getWeekName(week) {
-            return dayjs.utc().subtract(week, 'weeks').startOf('isoWeek').format('Do MMM');
+            const now = dayjs.utc(),
+                dow = now.isoWeekday(),
+                mondayNoon = now.hour(12).minute(0).second(0).millisecond(0).subtract(dow - 1, 'day');
+
+            const target = mondayNoon.subtract(weeksAgo, 'week');
+
+            return target.format('Do MMM');
         }
     },
     mounted() {
