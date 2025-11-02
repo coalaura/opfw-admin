@@ -172,7 +172,8 @@ class StatisticsController extends Controller
 
         $points = [];
 
-        $start = strtotime('monday this week');
+        $tz    = new \DateTimeZone('UTC');
+        $start = new \DateTimeImmutable('monday this week', $tz);
 
         foreach ($staff as $player) {
             $license     = $player->license_identifier;
@@ -184,8 +185,8 @@ class StatisticsController extends Controller
             ];
 
             for ($week = 7; $week >= 0; $week--) {
-                $time = $start - ($week * 604800);
-                $date = sprintf('%s-%d', date('o', $time), intval(date('W', $time)));
+                $time = $start->modify("-{$week} weeks");
+                $date = $time->format('o-W');
 
                 $points[$license]['points'][abs($week)] = ($staffPoints[$date] ?? 0);
             }
