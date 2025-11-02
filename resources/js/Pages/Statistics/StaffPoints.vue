@@ -117,7 +117,7 @@ export default {
 
             return false;
         },
-        getWeekName(week) {
+        getWeekName(weeksAgo) {
             const now = dayjs.utc(),
                 dow = now.isoWeekday(),
                 mondayNoon = now.hour(12).minute(0).second(0).millisecond(0).subtract(dow - 1, 'day');
