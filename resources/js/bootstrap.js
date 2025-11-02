@@ -7,12 +7,14 @@ import timezone from "dayjs/plugin/timezone";
 import duration from "dayjs/plugin/duration";
 import relativeTime from "dayjs/plugin/relativeTime";
 import advancedFormat from "dayjs/plugin/advancedFormat";
+import isoWeek from "dayjs/plugin/isoWeek";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 dayjs.extend(advancedFormat);
+dayjs.extend(isoWeek);
 
 window.dayjs = dayjs;
 
