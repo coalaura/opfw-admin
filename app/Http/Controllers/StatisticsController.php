@@ -172,8 +172,10 @@ class StatisticsController extends Controller
 
         $points = [];
 
-        $tz    = new \DateTimeZone('UTC');
-        $start = new \DateTimeImmutable('monday this week', $tz);
+        $tz            = new \DateTimeZone('UTC');
+        $now           = new \DateTimeImmutable('now', $tz);
+        $dow           = (int) $now->format('N');
+        $monNoonAnchor = $now->setTime(12, 0, 0)->modify(sprintf('-%d days', $dow - 1));
 
         foreach ($staff as $player) {
             $license     = $player->license_identifier;
@@ -184,34 +186,22 @@ class StatisticsController extends Controller
                 'points' => [],
             ];
 
-            for ($week = 7; $week >= 0; $week--) {
-                $date = $this->getIsoWeekIdentifier(time() - ($week * 604800));
+            for ($weeksAgo = 0; $weeksAgo <= 7; $weeksAgo++) {
+                $monNoon   = $monNoonAnchor->modify("-{$weeksAgo} weeks");
+                $endOfWeek = $monNoon->modify('+6 days');
 
-                $points[$license]['points'][abs($week)] = ($staffPoints[$date] ?? 0);
+                $year = $endOfWeek->format('Y');
+                $week = (int) $endOfWeek->format('W');
+
+                $key = sprintf('%s-%d', $year, $week);
+
+                $points[$license]['points'][$weeksAgo] = $staffPoints[$key] ?? 0;
             }
         }
 
         return Inertia::render('Statistics/StaffPoints', [
             'points' => $points,
         ]);
-    }
-
-    private function getIsoWeekIdentifier(?int $unixTimestamp = null): string
-    {
-        $tz  = new \DateTimeZone('UTC');
-        $now = $unixTimestamp !== null ? (new \DateTimeImmutable('@' . $unixTimestamp))->setTimezone($tz) : (new \DateTimeImmutable('now', $tz));
-
-        $dow       = (int) $now->format('N');
-        $dayOfWeek = $dow - 1;
-
-        $mondayNoon = $now->setTime(12, 0, 0)->modify(sprintf('-%d days', $dayOfWeek));
-
-        $endOfWeek = $mondayNoon->modify('+6 days');
-
-        $year = $endOfWeek->format('Y');
-        $week = (int) $endOfWeek->format('W');
-
-        return sprintf('%s-%02d', $year, $week);
     }
 
     /**
