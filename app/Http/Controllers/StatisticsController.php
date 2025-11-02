@@ -187,11 +187,10 @@ class StatisticsController extends Controller
             ];
 
             for ($weeksAgo = 0; $weeksAgo <= 7; $weeksAgo++) {
-                $monNoon   = $monNoonAnchor->modify("-{$weeksAgo} weeks");
-                $endOfWeek = $monNoon->modify('+6 days');
+                $monNoon = $monNoonAnchor->modify("-{$weeksAgo} weeks");
 
-                $year = $endOfWeek->format('Y');
-                $week = (int) $endOfWeek->format('W');
+                $year = $monNoon->format('Y');
+                $week = (int) $monNoon->format('W');
 
                 $key = sprintf('%s-%d', $year, $week);
 
