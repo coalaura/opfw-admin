@@ -194,7 +194,7 @@ class StatisticsController extends Controller
 
                 $key = sprintf('%s-%d', $year, $week);
 
-                $points[$license]['points'][$weeksAgo-1] = $staffPoints[$key] ?? 0;
+                $points[$license]['points'][$weeksAgo] = $staffPoints[$key] ?? 0;
             }
         }
 
