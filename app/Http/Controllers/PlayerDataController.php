@@ -249,7 +249,7 @@ class PlayerDataController extends Controller
         $enabledCommands = array_values(array_unique($enabledCommands));
         $currentEnabled  = $player->enabled_commands ?? [];
 
-        if (empty(array_diff($enabledCommands, $currentEnabled))) {
+        if (!empty($enabledCommands) && empty(array_diff($enabledCommands, $currentEnabled))) {
             return backWith('success', 'No commands changed.');
         }
 
