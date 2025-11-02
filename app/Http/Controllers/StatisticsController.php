@@ -186,7 +186,7 @@ class StatisticsController extends Controller
                 'points' => [],
             ];
 
-            for ($weeksAgo = 0; $weeksAgo <= 7; $weeksAgo++) {
+            for ($weeksAgo = -1; $weeksAgo <= 6; $weeksAgo++) {
                 $monNoon = $monNoonAnchor->modify("-{$weeksAgo} weeks");
 
                 $year = $monNoon->format('Y');
@@ -194,7 +194,7 @@ class StatisticsController extends Controller
 
                 $key = sprintf('%s-%d', $year, $week);
 
-                $points[$license]['points'][$weeksAgo] = $staffPoints[$key] ?? 0;
+                $points[$license]['points'][$weeksAgo+1] = $staffPoints[$key] ?? 0;
             }
         }
 
