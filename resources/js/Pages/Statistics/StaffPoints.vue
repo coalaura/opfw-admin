@@ -38,7 +38,7 @@
                         <th class="font-bold px-4 py-1.5 text-left">{{ getWeekName(7) }}</th>
                     </tr>
 
-                    <tr v-for="(player, license) in points" :key="license" class="odd:bg-gray-200 dark:odd:bg-gray-500" :class="{'border-2 border-gray-400': license === $page.auth.player.licenseIdentifier}">
+                    <tr v-for="(player, license) in points" :key="license" class="odd:bg-gray-200 dark:odd:bg-gray-500" :class="{ 'border-2 border-gray-400': license === $page.auth.player.licenseIdentifier }">
                         <td class="italic px-4 py-1.5">
                             <a :href="`/players/${license}`" target="_blank" :title="player.name">
                                 {{ truncate(player.name, 25) }}
@@ -118,7 +118,7 @@ export default {
             return false;
         },
         getWeekName(week) {
-            return dayjs.utc().subtract(week, 'weeks').startOf('week').format('Do MMM');
+            return dayjs.utc().subtract(week, 'weeks').startOf('isoWeek').format('Do MMM');
         }
     },
     mounted() {
