@@ -185,8 +185,7 @@ class StatisticsController extends Controller
             ];
 
             for ($week = 7; $week >= 0; $week--) {
-                $time = $start->modify("-{$week} weeks");
-                $date = sprintf('%s-%d', $time->format('o'), intval($time->format('W')));
+                $date = $this->getIsoWeekIdentifier(time() - ($week * 604800));
 
                 $points[$license]['points'][abs($week)] = ($staffPoints[$date] ?? 0);
             }
@@ -195,6 +194,24 @@ class StatisticsController extends Controller
         return Inertia::render('Statistics/StaffPoints', [
             'points' => $points,
         ]);
+    }
+
+    private function getIsoWeekIdentifier(?int $unixTimestamp = null): string
+    {
+        $tz  = new \DateTimeZone('UTC');
+        $now = $unixTimestamp !== null ? (new \DateTimeImmutable('@' . $unixTimestamp))->setTimezone($tz) : (new \DateTimeImmutable('now', $tz));
+
+        $dow       = (int) $now->format('N');
+        $dayOfWeek = $dow - 1;
+
+        $mondayNoon = $now->setTime(12, 0, 0)->modify(sprintf('-%d days', $dayOfWeek));
+
+        $endOfWeek = $mondayNoon->modify('+6 days');
+
+        $year = $endOfWeek->format('Y');
+        $week = (int) $endOfWeek->format('W');
+
+        return sprintf('%s-%02d', $year, $week);
     }
 
     /**
