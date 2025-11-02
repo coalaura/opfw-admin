@@ -186,7 +186,7 @@ class StatisticsController extends Controller
 
             for ($week = 7; $week >= 0; $week--) {
                 $time = $start->modify("-{$week} weeks");
-                $date = $time->format('o-W');
+                $date = sprintf('%s-%d', $time->format('o'), intval($time->format('W')));
 
                 $points[$license]['points'][abs($week)] = ($staffPoints[$date] ?? 0);
             }
