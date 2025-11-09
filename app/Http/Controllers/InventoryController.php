@@ -196,7 +196,7 @@ class InventoryController extends Controller
 
         $query = Log::query()
             ->select(['id', 'identifier', 'action', 'details', 'metadata', 'timestamp'])
-            ->where('action', '=', 'Item Moved')
+            ->whereIn('action', ['Item Moved', 'Item Given'])
             ->where(function ($subQuery) use ($inventory) {
                 $subQuery->where(DB::raw("JSON_EXTRACT(metadata, '$.startInventory')"), '=', $inventory)
                     ->orWhere(DB::raw("JSON_EXTRACT(metadata, '$.endInventory')"), '=', $inventory);
@@ -228,7 +228,7 @@ class InventoryController extends Controller
     {
         $query = Log::query()
             ->select(['id', 'identifier', 'action', 'details', 'metadata', 'timestamp'])
-            ->where('action', '=', 'Item Moved')
+            ->whereIn('action', ['Item Moved', 'Item Given'])
             ->where(DB::raw("JSON_CONTAINS(metadata, $itemId, '$.itemIds')"), '=', '1')
             ->orderByDesc('timestamp');
 
