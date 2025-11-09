@@ -13,36 +13,12 @@ use Illuminate\Support\Facades\DB;
 class PlayerDataController extends Controller
 {
     const EnablableCommands = [
-        "advanced_metagame",
-        "auto_drive",
-        "battle_royale_start",
-        "battle_royale_toggle",
-        "brighter_nights",
-        "cam_clear",
-        "cam_play",
-        "cam_point",
-        "cpr",
-        "fortnite",
-        "freecam",
-        "garage_vehicle",
-        "idle",
-        "keychain_create",
-        "live_map",
-        "minecraft",
-        "noclip",
-        "orbitcam",
-        "pickup_keys",
-        "player_stats",
-        "range_revive",
-        "reflect",
-        "register_weapon",
-        "registration_lookup",
-        "respawn_vehicle",
-        "set_body_armor",
-        "set_fuel",
-        "stable_cam",
-        "super_jump",
-        "ungarage_vehicle",
+        "advanced_metagame", "auto_drive", "auto_drive", "battle_royale_start", "battle_royale_toggle",
+        "brighter_nights", "cam_clear", "cam_play", "cam_point", "cpr", "create_garage", "door_debug",
+        "fortnite", "fortnite", "freecam", "freecam", "garage_vehicle", "idle", "indestructibility", "invisibility",
+        "keychain_create", "live_map", "minecraft", "minecraft", "noclip", "noclip", "pickup_keys", "player_stats",
+        "range_revive", "reflect", "register_weapon", "registration_lookup", "remove_garage", "respawn_vehicle",
+        "set_body_armor", "set_fuel", "slap", "snapshot", "stable_cam", "super_jump", "ungarage_vehicle",
         "watermark",
     ];
 
@@ -249,7 +225,7 @@ class PlayerDataController extends Controller
         $enabledCommands = array_values(array_unique($enabledCommands));
         $currentEnabled  = $player->enabled_commands ?? [];
 
-        if (!empty($enabledCommands) && empty(array_diff($enabledCommands, $currentEnabled))) {
+        if (! empty($enabledCommands) && empty(array_diff($enabledCommands, $currentEnabled))) {
             return backWith('success', 'No commands changed.');
         }
 
