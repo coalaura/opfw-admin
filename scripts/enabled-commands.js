@@ -44,4 +44,4 @@ await walkDirectory("D:\\op-fw\\FXServer\\server-data\\resources\\op-framework",
 
 commands.sort();
 
-console.log(commands);
+console.log([...new Set(commands)]);
