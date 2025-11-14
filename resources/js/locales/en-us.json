@@ -854,6 +854,7 @@
             "refresh": "Refresh",
             "player": "Player",
             "server_id": "Server ID",
+            "move_type": "Type",
             "items_moved": "Item(s) Moved",
             "from": "From",
             "to": "To",

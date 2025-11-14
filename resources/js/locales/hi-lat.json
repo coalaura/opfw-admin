@@ -315,6 +315,7 @@
             "from": "Se",
             "item_history": "Item ka itihas",
             "items_moved": "Item(s) ko move kiya gaya",
+            "move_type": "Prakar",
             "multiple_items": "Itihas dikhane ke liye item chuniye (kul {0}).",
             "no_logs": "Koi inventory logs nahi mile.",
             "player": "Khilaadi",

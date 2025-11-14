@@ -315,6 +315,7 @@
             "from": "From",
             "item_history": "Item History",
             "items_moved": "Item(s) moved",
+            "move_type": "Type",
             "multiple_items": "Select an item to show the history ({0} total).",
             "no_logs": "No inventory logs found.",
             "player": "Player",

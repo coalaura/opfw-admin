@@ -315,6 +315,7 @@
             "from": "Fra",
             "item_history": "Gjenstandshistorikk",
             "items_moved": "Gjenstand(er) flyttet.",
+            "move_type": "Type",
             "multiple_items": "Velg gjenstand for å vise historikken ({0} totalt).",
             "no_logs": "Ingen inventarlogger funnet.",
             "player": "Spiller",

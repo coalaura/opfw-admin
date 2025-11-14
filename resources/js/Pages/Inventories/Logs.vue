@@ -24,6 +24,7 @@
 					<tr class="font-semibold text-left mobile:hidden">
 						<th class="p-3 pl-8 max-w-56">{{ t('inventories.logs.player') }}</th>
 						<th class="p-3 whitespace-nowrap">{{ t('inventories.logs.server_id') }}</th>
+						<th class="p-3">{{ t('inventories.logs.move_type') }}</th>
 						<th class="p-3">{{ t('inventories.logs.items_moved') }}</th>
 						<th class="p-3">{{ t('inventories.logs.from') }}</th>
 						<th class="p-3">{{ t('inventories.logs.to') }}</th>
@@ -47,6 +48,9 @@
 							<span class="font-semibold" v-else>
 								{{ t('global.status.offline') }}
 							</span>
+						</td>
+						<td class="p-3 mobile:block">
+							{{ log.action }}
 						</td>
 						<td class="p-3 mobile:block">
 							<span v-if="!log.metadata || !log.metadata.itemIds || log.metadata.itemIds.length === 0">{{ movedItems(log.details) }}</span>
