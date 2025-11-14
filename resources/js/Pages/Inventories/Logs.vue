@@ -30,7 +30,7 @@
 						<th class="p-3">{{ t('inventories.logs.to') }}</th>
 						<th class="p-3 pr-8 whitespace-nowrap">{{ t('inventories.logs.timestamp') }}</th>
 					</tr>
-					<tr class="border-t border-gray-300 dark:border-gray-500 relative" v-for="log in logs" :key="log.id">
+					<tr class="border-t border-gray-300 dark:border-gray-500 relative" :class="moveTypeColor(log.action)" v-for="log in logs" :key="log.id">
 						<td class="p-3 pl-8 mobile:block max-w-56">
 							<inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.licenseIdentifier" v-if="log.licenseIdentifier">
 								{{ playerName(log.licenseIdentifier) }}
@@ -49,8 +49,8 @@
 								{{ t('global.status.offline') }}
 							</span>
 						</td>
-						<td class="p-3 mobile:block">
-							{{ log.action }}
+						<td class="p-3 mobile:block font-semibold">
+							{{ log.action.replace(/^Item\s+/m, "") }}
 						</td>
 						<td class="p-3 mobile:block">
 							<span v-if="!log.metadata || !log.metadata.itemIds || log.metadata.itemIds.length === 0">{{ movedItems(log.details) }}</span>
@@ -102,27 +102,27 @@
 			</template>
 		</v-section>
 
-        <modal :show.sync="isSelectingItem">
-            <template #header>
-                <h1 class="dark:text-white">
-                    {{ t('inventories.logs.item_history') }}
-                </h1>
-            </template>
+		<modal :show.sync="isSelectingItem">
+			<template #header>
+				<h1 class="dark:text-white">
+					{{ t('inventories.logs.item_history') }}
+				</h1>
+			</template>
 
-            <template #default>
+			<template #default>
 				<div class="grid grid-cols-6 gap-3 justify-evenly">
 					<a class="px-2 py-0.5 cursor-pointer truncate shadow border-teal-300 bg-teal-200 dark:bg-teal-700 font-semibold" :href="'/inventory/item/' + itemId" :title="t('inventories.logs.single_item', itemId)" v-for="itemId in selectingItemIds" :key="itemId">
 						#{{ itemId }}
 					</a>
 				</div>
-            </template>
+			</template>
 
-            <template #actions>
-                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isSelectingItem = false">
-                    {{ t('global.close') }}
-                </button>
-            </template>
-        </modal>
+			<template #actions>
+				<button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isSelectingItem = false">
+					{{ t('global.close') }}
+				</button>
+			</template>
+		</modal>
 
 	</div>
 </template>
@@ -212,6 +212,16 @@ export default {
 			}
 
 			this.isLoading = false;
+		},
+		moveTypeColor(action) {
+			switch (action) {
+				case "Item Given":
+					return 'bg-purple-500 !bg-opacity-20 hover:!bg-opacity-40';
+				case "Item Moved":
+					return 'bg-teal-500 !bg-opacity-20 hover:!bg-opacity-40';
+			}
+
+			return "";
 		},
 		movedItems(details) {
 			const items = details.match(/(?<=moved |gave )\d+x .+?(?= to)/gi)?.shift() || "Unknown";
