@@ -210,7 +210,7 @@ export default {
 			this.isLoading = false;
 		},
 		movedItems(details) {
-			const items = details.match(/(?<=moved )\d+x .+?(?= to)/gi).pop();
+			const items = details.match(/(?<=moved |gave )\d+x .+?(?= to)/gi)?.pop() || "Unknown";
 
 			return items;
 		},
