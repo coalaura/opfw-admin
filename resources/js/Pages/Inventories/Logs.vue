@@ -210,12 +210,12 @@ export default {
 			this.isLoading = false;
 		},
 		movedItems(details) {
-			const items = details.match(/(?<=moved |gave )\d+x .+?(?= to)/gi)?.pop() || "Unknown";
+			const items = details.match(/(?<=moved |gave )\d+x .+?(?= to)/gi)?.shift() || "Unknown";
 
 			return items;
 		},
 		fromInventory(details) {
-			const inventory = details.match(/(?<=from inventory )\w+(-[\w-:]+)?/i)?.pop();
+			const inventory = details.match(/(?<=from inventory )\w+-[\w-:]+/i)?.shift();
 
 			if (!inventory) {
 				return "N/A";
@@ -224,7 +224,7 @@ export default {
 			return `<a title="${this.t('inventories.show_inv')}" class="text-indigo-600 dark:text-indigo-400 font-semibold" href="/inventory/${inventory.replace(/:\d+/, '')}">${inventory}</a>`;
 		},
 		toInventory(details) {
-			const inventory = details.match(/(?<=to )\w+(-[\w-:]+)?/i)?.pop();
+			const inventory = details.match(/(?<=to )\w+-[\w-:]+/i)?.shift();
 
 			if (!inventory) {
 				return "N/A";
