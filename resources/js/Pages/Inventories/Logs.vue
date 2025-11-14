@@ -215,7 +215,7 @@ export default {
 			return items;
 		},
 		fromInventory(details) {
-			const inventory = details.match(/(?<=from inventory )[\w-:]+/i)?.pop();
+			const inventory = details.match(/(?<=from inventory )\w+(-[\w-:]+)?/i)?.pop();
 
 			if (!inventory) {
 				return "N/A";
@@ -224,7 +224,7 @@ export default {
 			return `<a title="${this.t('inventories.show_inv')}" class="text-indigo-600 dark:text-indigo-400 font-semibold" href="/inventory/${inventory.replace(/:\d+/, '')}">${inventory}</a>`;
 		},
 		toInventory(details) {
-			const inventory = details.match(/(?<=to )[\w-:]+/i)?.pop();
+			const inventory = details.match(/(?<=to )\w+(-[\w-:]+)?/i)?.pop();
 
 			if (!inventory) {
 				return "N/A";
