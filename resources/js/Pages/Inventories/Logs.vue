@@ -216,9 +216,9 @@ export default {
 		moveTypeColor(action) {
 			switch (action) {
 				case "Item Given":
-					return 'bg-purple-500 !bg-opacity-20 hover:!bg-opacity-40';
+					return 'bg-purple-500 !bg-opacity-10 hover:!bg-opacity-20';
 				case "Item Moved":
-					return 'bg-teal-500 !bg-opacity-20 hover:!bg-opacity-40';
+					return 'bg-teal-500 !bg-opacity-10 hover:!bg-opacity-20';
 			}
 
 			return "";
