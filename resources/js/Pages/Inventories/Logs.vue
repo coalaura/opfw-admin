@@ -215,8 +215,8 @@ export default {
 			return items;
 		},
 		fromInventory(metadata, details) {
-			if (metadata?.fromInventory) {
-				return metadata.fromInventory;
+			if (metadata?.startInventory) {
+				return metadata.startInventory;
 			}
 
 			const inventory = details.match(/(?<=from inventory )\w+-[\w-:]+/i)?.shift();
@@ -228,8 +228,8 @@ export default {
 			return `<a title="${this.t('inventories.show_inv')}" class="text-indigo-600 dark:text-indigo-400 font-semibold" href="/inventory/${inventory.replace(/:\d+/, '')}">${inventory}</a>`;
 		},
 		toInventory(metadata, details) {
-			if (metadata?.toInventory) {
-				return metadata.toInventory;
+			if (metadata?.endInventory) {
+				return metadata.endInventory;
 			}
 
 			const inventory = details.match(/(?<=to )\w+-[\w-:]+/i)?.shift();
