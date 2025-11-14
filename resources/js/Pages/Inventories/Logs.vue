@@ -59,8 +59,8 @@
 								{{ movedItems(log.details) }}
 							</a>
 						</td>
-						<td class="p-3 mobile:block" v-html="fromInventory(log.details)"></td>
-						<td class="p-3 mobile:block" v-html="toInventory(log.details)"></td>
+						<td class="p-3 mobile:block" v-html="fromInventory(log.metadata, log.details)"></td>
+						<td class="p-3 mobile:block" v-html="toInventory(log.metadata, log.details)"></td>
 						<td class="p-3 pr-8 mobile:block whitespace-nowrap">
 							{{ log.timestamp | formatTime(true) }}
 							<i class="block text-xs leading-1 whitespace-nowrap text-yellow-600 dark:text-yellow-400">{{ formatRawTimestamp(log.timestamp) }}</i>
@@ -214,7 +214,11 @@ export default {
 
 			return items;
 		},
-		fromInventory(details) {
+		fromInventory(metadata, details) {
+			if (metadata?.fromInventory) {
+				return metadata.fromInventory;
+			}
+
 			const inventory = details.match(/(?<=from inventory )\w+-[\w-:]+/i)?.shift();
 
 			if (!inventory) {
@@ -223,7 +227,11 @@ export default {
 
 			return `<a title="${this.t('inventories.show_inv')}" class="text-indigo-600 dark:text-indigo-400 font-semibold" href="/inventory/${inventory.replace(/:\d+/, '')}">${inventory}</a>`;
 		},
-		toInventory(details) {
+		toInventory(metadata, details) {
+			if (metadata?.toInventory) {
+				return metadata.toInventory;
+			}
+
 			const inventory = details.match(/(?<=to )\w+-[\w-:]+/i)?.shift();
 
 			if (!inventory) {
