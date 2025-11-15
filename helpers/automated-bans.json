@@ -45,7 +45,7 @@
 		"CLIENT_EVENT": "Ah, trying to tune into the hidden frequency of `${DATA}`, were you? This isn't a secret radio station, and that song's not on our playlist.",
 		"HONEYPOT_NATIVE": "Oh, bother! It seems you've stumbled into a place where honey wasn't meant to be found. Some pots are best left alone, no matter how tempting they may seem.",
 		"SERVER_EVENT": "Wished to dance to the unheard rhythm of `${DATA}`, did we? This isn't a secret ballroom, and those dance moves? Strictly not allowed.",
-		"INCOMPATIBLE_PROGRAM": "Missing locale (incompatible_program)"
+		"INCOMPATIBLE_PROGRAM": "Attempted to duet with a mysterious backstage process, did we? The orchestra checked the guest list, and that tune wasn't authorized."
 	},
 	"ILLEGAL_VALUES": {
 		"PED_OBJECT": "Attempting to add a ped object not in the 'allowed' list of ped objects.",
