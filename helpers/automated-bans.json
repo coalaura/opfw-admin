@@ -1,75 +1,75 @@
 {
-	"MEDIOCRE": {
-		"BAD_PED_MESSAGE": "Attempted to create a possibly bad ped message: \"${DATA}\"",
-		"BAD_Y_ACCOUNT": "Attempted to create a possibly bad y account: \"${DATA}\"",
-		"BAD_PHONE_MESSAGE": "Attempted to create a possibly bad phone message: \"${DATA}\"",
-		"BAD_CHAT_MESSAGE": "Attempted to post a possibly bad message in the OOC chat: \"${DATA}\"",
-		"BAD_Y_POST": "Attempted to create a possibly bad y post: \"${DATA}\""
-	},
-	"ILLEGAL_VALUES": {
-		"BURGER_SHOT_DELIVERY_ITEM_ID": "Attempting to use a burger shot delivery item with an illegal item id.",
-		"RADIO_FREQUENCY": "Attempting to access illegal radio frequencies.",
-		"LIGHTER_ITEM_ID": "Attempting to use a lighter item with an illegal item id.",
-		"FIRE_EXTINGUISHER_MODEL": "Attempted to delete a fire extinguisher on all clients with a model that wasn't a fire extinguisher.",
-		"EXTERNAL_SOUND_EFFECT": "Attempted to tell other clients to play an external audio without proper permissions.",
-		"SECURITY_CAMERAS": "Attempting to tamper with illegal security cameras.",
-		"RAW_PED_OBJECT": "Attempting to add a raw ped object without proper permissions.",
-		"PED_OBJECT": "Attempting to add a ped object not in the 'allowed' list of ped objects.",
-		"PROP_ITEM_ID": "Player attempted to use a prop item with an illegal item id.",
-		"PAWN_SHOP": "Attempting to pass values for a pawn shop that doesn't exist.",
-		"WEATHER_NAME": "Attempting to use a weather spell with an illegal weather name.",
-		"BOOMBOX_ITEM_ID": "Attempting to use a boombox item with an illegal item id."
-	},
 	"MODDING": {
-		"HANDLING_FIELD": "Looks like you tried to turbocharge the laws of physics. Nice try, but in this world, we keep our wheels grounded in reality.",
-		"SUSPICIOUS_EXPLOSION": "Sorry, but this isn't a Michael Bay film. Excessive use of pyrotechnics is not permitted.",
-		"SPECTATING": "Ghostly specters are reserved for haunted mansions, not here. Your astral projection skills were noted, but not welcomed.",
-		"VEHICLE_SPAWN": "Ah, dreaming of a joyride with `${DATA}`, were you? This isn't a showroom, and that particular model? It's on an eternal waitlist!",
+		"ILLEGAL_GLOBAL": "Tried to tap into the matrix, did we? Neo might be impressed, but we're not.",
+		"WEAPON_SPAWN": "Yearning for the `${DATA}`, were you? This isn't an armory, and that piece? Still in the forge.",
 		"THERMAL_NIGHTVISION": "Brighter Nights is not allowed.",
-		"INFINITE_AMMO": "Despite popular belief, the laws of conservation do apply here. The magic ammunition pouch has been confiscated.",
+		"BLACKLISTED_COMMAND": "I'm sorry, but you do not have permissions to perform this command. Please contact the server administrators if you believe that this is an error.",
+		"SUSPICIOUS_EXPLOSION": "Sorry, but this isn't a Michael Bay film. Excessive use of pyrotechnics is not permitted.",
+		"HIGH_DISTANCE_DAMAGE": "A punch was thrown... somewhere. And yet, bones cracked here. Physics raised an eyebrow, then walked out of the room.",
+		"ILLEGAL_VEHICLE_MODIFIER": "Unlike Dom Toretto from Fast and Furious, we are not family.",
+		"DAMAGE_MODIFIER": "Your power level cannot be over 9000.",
 		"ADVANCED_NOCLIP": "Trying a secret slide through unseen corridors? This isn't a phantom waltz, and that move? Not on our dance card.",
-		"DISABLED_CONTROLS": "The puppet master has been caught manipulating the strings from behind the curtain.",
-		"FAST_MOVEMENT": "Flying is not enabled on this server.",
-		"ILLEGAL_LOCAL_VEHICLE": "Seems like you've found the invisible steed of Lord Mirage! Alas, this mystical ride is reserved for the annual phantom parade.",
-		"TELEPORTED": "Blink and you're gone? Not in this dimension, traveler.",
+		"BAD_ENTITY_SPAWN": "Ah, trying to summon the ancient artifact of `${DATA}`, were you? This isn't an episode of Antiques Roadshow, and that relic is staying in the vault.",
 		"SEMI_GODMODE": "Your insistence on the fountain of youth seems to have disrupted the natural flow of time. Eternity isn't as fun as it sounds.",
+		"FAST_MOVEMENT": "Flying is not enabled on this server.",
+		"INVINCIBILITY": "You are not the Black Knight, you may not be invincible.",
+		"ILLEGAL_FREEZE": "While spirits may wander freely, we mere mortals are bound by the laws of physics. Sir Isaac Newton wouldn't have it any other way.",
 		"ILLEGAL_NATIVE": "Tried to whisper to the spirits of the digital realm, did we? Unfortunately, this seance has been denied. Better luck in the ethereal plane.",
 		"FREECAM": "You seem to have had an out of body experience.",
-		"INVALID_HEALTH": "Your health bar seems to have had a bit too much of spinach, Popeye",
-		"ILLEGAL_VEHICLE_MODIFIER": "Unlike Dom Toretto from Fast and Furious, we are not family.",
-		"HIGH_DISTANCE_DAMAGE": "A punch was thrown... somewhere. And yet, bones cracked here. Physics raised an eyebrow, then walked out of the room.",
-		"PED_CHANGE": "Identity theft is not a joke, Jim! Millions of characters suffer every year.",
-		"RUNTIME_TEXTURE": "Mod menu you have, use it you may not.",
-		"VEHICLE_MODIFICATION": "You couldn't find the headlight fluid for your car.",
-		"ILLEGAL_DAMAGE": "The scales of power were tilted too far in your favor, disrupting the balance of our realm.",
-		"ILLEGAL_EVENT_USAGE": "The fabric of existence twitched for a moment, like a badly stitched quilt unraveling at the edges. But don't worry, we've patched that little anomaly... by removing the needle.",
-		"BAD_ENTITY_SPAWN": "Ah, trying to summon the ancient artifact of `${DATA}`, were you? This isn't an episode of Antiques Roadshow, and that relic is staying in the vault.",
-		"TEXT_ENTRY": "Inspecting Element is not permitted on this browser.",
+		"TELEPORTED": "Blink and you're gone? Not in this dimension, traveler.",
 		"PLAYER_BLIPS": "Airspace is full, UAV unavailable.",
-		"HONEYPOT": "You attempted to toggle your creative mode, but didn't have the permissions to do so.",
-		"PED_SPAWN": "Ah, hoping to beckon the legendary figure of `${DATA}`, were you? This isn't a Hollywood casting, and that star is staying off-stage.",
-		"DAMAGE_MODIFIER": "Your power level cannot be over 9000.",
-		"ILLEGAL_FREEZE": "While spirits may wander freely, we mere mortals are bound by the laws of physics. Sir Isaac Newton wouldn't have it any other way.",
-		"BLACKLISTED_COMMAND": "I'm sorry, but you do not have permissions to perform this command. Please contact the server administrators if you believe that this is an error.",
+		"VEHICLE_MODIFICATION": "You couldn't find the headlight fluid for your car.",
+		"ILLEGAL_LOCAL_VEHICLE": "Seems like you've found the invisible steed of Lord Mirage! Alas, this mystical ride is reserved for the annual phantom parade.",
+		"VEHICLE_SPAWN": "Ah, dreaming of a joyride with `${DATA}`, were you? This isn't a showroom, and that particular model? It's on an eternal waitlist!",
+		"RUNTIME_TEXTURE": "Mod menu you have, use it you may not.",
 		"CLEAR_TASKS": "This is not a Jedi mind trick training center. Your efforts to influence the free will of others has been noted... and rejected.",
-		"WEAPON_SPAWN": "Yearning for the `${DATA}`, were you? This isn't an armory, and that piece? Still in the forge.",
-		"INVINCIBILITY": "You are not the Black Knight, you may not be invincible.",
-		"ILLEGAL_GLOBAL": "Tried to tap into the matrix, did we? Neo might be impressed, but we're not."
+		"SPECTATING": "Ghostly specters are reserved for haunted mansions, not here. Your astral projection skills were noted, but not welcomed.",
+		"PED_CHANGE": "Identity theft is not a joke, Jim! Millions of characters suffer every year.",
+		"HONEYPOT": "You attempted to toggle your creative mode, but didn't have the permissions to do so.",
+		"ILLEGAL_EVENT_USAGE": "The fabric of existence twitched for a moment, like a badly stitched quilt unraveling at the edges. But don't worry, we've patched that little anomaly... by removing the needle.",
+		"HANDLING_FIELD": "Looks like you tried to turbocharge the laws of physics. Nice try, but in this world, we keep our wheels grounded in reality.",
+		"INVALID_HEALTH": "Your health bar seems to have had a bit too much of spinach, Popeye",
+		"INFINITE_AMMO": "Despite popular belief, the laws of conservation do apply here. The magic ammunition pouch has been confiscated.",
+		"ILLEGAL_DAMAGE": "The scales of power were tilted too far in your favor, disrupting the balance of our realm.",
+		"TEXT_ENTRY": "Inspecting Element is not permitted on this browser.",
+		"PED_SPAWN": "Ah, hoping to beckon the legendary figure of `${DATA}`, were you? This isn't a Hollywood casting, and that star is staying off-stage."
 	},
 	"TIMEOUT_BYPASS": {
 		"PED_ROBBING": "Excessive ped-robbing! (Bypassed server-timeout, most likely using an injector to accomplish this.)",
 		"ZOMBIE_LOOTING": "Excessive zombie looting! (Bypassed server-timeout, most likely using an injector to accomplish this.)"
 	},
+	"FRAUD": {
+		"CHARGEBACK": "Fraud / Chargeback"
+	},
 	"INJECTION": {
-		"SERVER_EVENT": "Wished to dance to the unheard rhythm of `${DATA}`, did we? This isn't a secret ballroom, and those dance moves? Strictly not allowed.",
 		"CLIENT_EVENT": "Ah, trying to tune into the hidden frequency of `${DATA}`, were you? This isn't a secret radio station, and that song's not on our playlist.",
-		"HONEYPOT_NATIVE": "Oh, bother! It seems you've stumbled into a place where honey wasn't meant to be found. Some pots are best left alone, no matter how tempting they may seem."
+		"HONEYPOT_NATIVE": "Oh, bother! It seems you've stumbled into a place where honey wasn't meant to be found. Some pots are best left alone, no matter how tempting they may seem.",
+		"SERVER_EVENT": "Wished to dance to the unheard rhythm of `${DATA}`, did we? This isn't a secret ballroom, and those dance moves? Strictly not allowed.",
+		"INCOMPATIBLE_PROGRAM": "Missing locale (incompatible_program)"
+	},
+	"ILLEGAL_VALUES": {
+		"PED_OBJECT": "Attempting to add a ped object not in the 'allowed' list of ped objects.",
+		"PROP_ITEM_ID": "Player attempted to use a prop item with an illegal item id.",
+		"SECURITY_CAMERAS": "Attempting to tamper with illegal security cameras.",
+		"LIGHTER_ITEM_ID": "Attempting to use a lighter item with an illegal item id.",
+		"RAW_PED_OBJECT": "Attempting to add a raw ped object without proper permissions.",
+		"PAWN_SHOP": "Attempting to pass values for a pawn shop that doesn't exist.",
+		"RADIO_FREQUENCY": "Attempting to access illegal radio frequencies.",
+		"BURGER_SHOT_DELIVERY_ITEM_ID": "Attempting to use a burger shot delivery item with an illegal item id.",
+		"BOOMBOX_ITEM_ID": "Attempting to use a boombox item with an illegal item id.",
+		"FIRE_EXTINGUISHER_MODEL": "Attempted to delete a fire extinguisher on all clients with a model that wasn't a fire extinguisher.",
+		"EXTERNAL_SOUND_EFFECT": "Attempted to tell other clients to play an external audio without proper permissions.",
+		"WEATHER_NAME": "Attempting to use a weather spell with an illegal weather name."
+	},
+	"MEDIOCRE": {
+		"BAD_PHONE_MESSAGE": "Attempted to create a possibly bad phone message: \"${DATA}\"",
+		"BAD_Y_POST": "Attempted to create a possibly bad y post: \"${DATA}\"",
+		"BAD_PED_MESSAGE": "Attempted to create a possibly bad ped message: \"${DATA}\"",
+		"BAD_CHAT_MESSAGE": "Attempted to post a possibly bad message in the OOC chat: \"${DATA}\"",
+		"BAD_Y_ACCOUNT": "Attempted to create a possibly bad y account: \"${DATA}\""
 	},
 	"PEPEGA": {
 		"MODERATE": "You have been banned from OP-FW without any specified reasons.",
 		"ULTIMATE": "You have been banned from this server."
-	},
-	"FRAUD": {
-		"CHARGEBACK": "Fraud / Chargeback"
 	}
 }
