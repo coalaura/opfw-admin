@@ -64,14 +64,14 @@
 
 						<!-- Identifier -->
 						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
-							<label class="block mb-2" for="identifier">
+							<label class="block mb-2 mt-3" for="identifier">
 								{{ t('logs.identifier') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier">
 						</div>
 						<!-- Character ID -->
 						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
-							<label class="block mb-2" for="character_id">
+							<label class="block mb-2 mt-3" for="character_id">
 								{{ t('logs.character_id') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" type="number" min="0" id="character_id" placeholder="1628" v-model="filters.character_id">
