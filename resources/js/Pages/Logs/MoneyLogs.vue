@@ -77,8 +77,8 @@
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" type="number" min="0" id="character_id" placeholder="1628" v-model="filters.character_id">
 						</div>
 						<!-- Details -->
-						<div class="w-1/3 px-3">
-							<label class="block mb-3 mt-3" for="details">
+						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
+							<label class="block mb-2 mt-3" for="details">
 								{{ t('logs.details') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="details" placeholder="garage-retrieval" v-model="filters.details">
@@ -86,28 +86,28 @@
 
 						<!-- After Date -->
 						<div class="w-1/4 px-3 pr-1 mobile:w-full mobile:mb-3">
-							<label class="block mb-3 mt-3" for="after-date">
+							<label class="block mb-2 mt-3" for="after-date">
 								{{ t('logs.after-date') }}
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="after-date" type="date" placeholder="">
 						</div>
 						<!-- After Time -->
 						<div class="w-1/4 px-3 pl-1 mobile:w-full mobile:mb-3">
-							<label class="block mb-3 mt-3" for="after-time">
+							<label class="block mb-2 mt-3" for="after-time">
 								{{ t('logs.after-time') }}
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="after-time" type="time" placeholder="">
 						</div>
 						<!-- Before Date -->
 						<div class="w-1/4 px-3 pr-1 mobile:w-full mobile:mb-3">
-							<label class="block mb-3 mt-3" for="before-date">
+							<label class="block mb-2 mt-3" for="before-date">
 								{{ t('logs.before-date') }}
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="before-date" type="date" placeholder="">
 						</div>
 						<!-- Before Time -->
 						<div class="w-1/4 px-3 pl-1 mobile:w-full mobile:mb-3">
-							<label class="block mb-3 mt-3" for="before-time">
+							<label class="block mb-2 mt-3" for="before-time">
 								{{ t('logs.before-time') }}
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="before-time" type="time" placeholder="">
