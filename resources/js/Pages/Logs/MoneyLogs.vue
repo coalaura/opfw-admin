@@ -336,6 +336,7 @@ export default {
 			$('#before-date').val(`${d.getFullYear()}-${(`${d.getMonth() + 1}`).padStart(2, '0')}-${(`${d.getDate()}`).padStart(2, '0')}`);
 			$('#before-time').val(`${d.getHours()}:${d.getMinutes()}`);
 		}
+
 		if (this.filters.after) {
 			const d = new Date(this.filters.after * 1000);
 

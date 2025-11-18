@@ -2,7 +2,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\CacheHelper;
-use App\Helpers\GeneralHelper;
 use App\Helpers\PermissionHelper;
 use App\Http\Resources\LogResource;
 use App\Http\Resources\MoneyLogResource;
@@ -14,14 +13,14 @@ use App\WeaponDamageEvent;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Str;
 
 class LogController extends Controller
 {
     const RestrictedLogs = [
-        "Changed Frequency"
+        "Changed Frequency",
     ];
 
     /**
@@ -38,7 +37,7 @@ class LogController extends Controller
 
         $query = Log::query()->orderByDesc('timestamp');
 
-        if (!$this->isSeniorStaff($request)) {
+        if (! $this->isSeniorStaff($request)) {
             $query->whereNotIn('action', self::RestrictedLogs);
 
             $skipped = ['action is "' . implode('", "', self::RestrictedLogs) . '"'];
@@ -116,8 +115,8 @@ class LogController extends Controller
         $end = round(microtime(true) * 1000);
 
         return Inertia::render('Logs/Index', [
-            'logs'           => $logs,
-            'filters'        => $request->all(
+            'logs'      => $logs,
+            'filters'   => $request->all(
                 'identifier',
                 'server',
                 'action',
@@ -126,12 +125,12 @@ class LogController extends Controller
                 'after',
                 'before'
             ),
-            'links'          => $this->getPageUrls($page),
-            'time'           => $end - $start,
-            'playerMap'      => Player::fetchLicensePlayerNameMap($logs->toArray($request), 'licenseIdentifier'),
-            'page'           => $page,
-            'actions'        => CacheHelper::getLogActions(),
-            'skipped'        => $skipped,
+            'links'     => $this->getPageUrls($page),
+            'time'      => $end - $start,
+            'playerMap' => Player::fetchLicensePlayerNameMap($logs->toArray($request), 'licenseIdentifier'),
+            'page'      => $page,
+            'actions'   => CacheHelper::getLogActions(),
+            'skipped'   => $skipped,
         ]);
     }
 
@@ -204,10 +203,12 @@ class LogController extends Controller
         return Inertia::render('Logs/MoneyLogs', [
             'logs'    => $logs,
             'filters' => [
+                'typ'          => $request->input('typ') ?? '',
+                'direction'    => $request->input('direction') ?? '',
+                'amount'       => $request->input('amount'),
                 'identifier'   => $request->input('identifier'),
                 'character_id' => $request->input('character_id'),
                 'details'      => $request->input('details'),
-                'typ'          => $request->input('typ') ?? '',
                 'after'        => $request->input('after'),
                 'before'       => $request->input('before'),
             ],
@@ -496,10 +497,10 @@ class LogController extends Controller
 
             if (Str::startsWith($victim, 'license:')) {
                 $query->where('hit_player', $victim);
-            //} else if (Str::startsWith($victim, 'v')) {
-            //    $query->where('hit_vehicle_id', substr($victim, 1));
+                //} else if (Str::startsWith($victim, 'v')) {
+                //    $query->where('hit_vehicle_id', substr($victim, 1));
             } else {
-                if (!preg_match('/^\d/m', $victim)) {
+                if (! preg_match('/^\d/m', $victim)) {
                     $victim = substr($victim, 1);
                 }
 
