@@ -160,6 +160,9 @@ class LogController extends Controller
         // Filtering by details.
         $this->searchQuery($request, $query, 'details', 'details');
 
+        // Filtering by amount.
+        $this->searchQuery($request, $query, 'amount', 'amount');
+
         // Filtering by before.
         if ($before = $request->input('before')) {
             $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '<', $before);
@@ -173,6 +176,15 @@ class LogController extends Controller
         // Filtering by type.
         if ($type = $request->input('typ')) {
             $query->where('type', $type);
+        }
+
+        // Filtering by direction.
+        if ($direction = $request->input('direction')) {
+            if ($direction === "in") {
+                $query->where('amount', '>', '0');
+            } else if ($direction === "out") {
+                $query->where('amount', '<', '0');
+            }
         }
 
         $query->leftJoin('users', 'users.license_identifier', '=', 'money_logs.license_identifier');

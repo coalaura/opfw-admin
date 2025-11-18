@@ -33,7 +33,7 @@
 
 					<div class="flex flex-wrap mb-4">
 						<!-- Type -->
-						<div class="w-1/5 px-3 mobile:w-full mobile:mb-3 relative">
+						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3 relative">
 							<label class="block mb-2" for="type">
 								{{ t('logs.type') }}
 							</label>
@@ -43,6 +43,25 @@
 								<option value="bank">{{ t('logs.types.bank') }}</option>
 							</select>
 						</div>
+						<!-- Direction -->
+						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3 relative">
+							<label class="block mb-2" for="direction">
+								{{ t('logs.direction') }}
+							</label>
+							<select class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="direction" v-model="filters.direction">
+								<option value="">{{ t('logs.directions.all') }}</option>
+								<option value="in">{{ t('logs.directions.in') }}</option>
+								<option value="out">{{ t('logs.directions.out') }}</option>
+							</select>
+						</div>
+						<!-- Amount -->
+						<div class="w-2/5 px-3 mobile:w-full mobile:mb-3">
+							<label class="block mb-2" for="amount">
+								{{ t('logs.amount') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+							</label>
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="amount" placeholder=">8000" v-model="filters.amount">
+						</div>
+
 						<!-- Identifier -->
 						<div class="w-2/5 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2" for="identifier">
@@ -57,7 +76,6 @@
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" type="number" min="0" id="character_id" placeholder="1628" v-model="filters.character_id">
 						</div>
-
 						<!-- Details -->
 						<div class="w-1/3 px-3">
 							<label class="block mb-3 mt-3" for="details">
@@ -65,6 +83,7 @@
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="details" placeholder="garage-retrieval" v-model="filters.details">
 						</div>
+
 						<!-- After Date -->
 						<div class="w-1/6 px-3 pr-1 mobile:w-full mobile:mb-3">
 							<label class="block mb-3 mt-3" for="after-date">
@@ -225,6 +244,8 @@ export default {
 		},
 		filters: {
 			typ: String,
+			direction: String,
+			amount: String,
 			identifier: String,
 			character_id: String,
 			details: String,

@@ -423,6 +423,12 @@
         },
         "details": "Detaljer",
         "diff_label": "Tid som har gått siden loggoppføringen nedenfor",
+        "direction": "Retning",
+        "directions": {
+            "all": "Alle",
+            "in": "Inn",
+            "out": "Ut"
+        },
         "distance": "Avstand",
         "entity": "Enhet",
         "filter": "Filtrer logger",

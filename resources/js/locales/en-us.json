@@ -1513,6 +1513,12 @@
             "cash": "Cash",
             "bank": "Bank"
         },
+        "direction": "Direction",
+        "directions": {
+            "all": "All",
+            "in": "In",
+            "out": "Out"
+        },
         "amount": "Amount",
         "character_id": "Character ID",
         "character": "Character",

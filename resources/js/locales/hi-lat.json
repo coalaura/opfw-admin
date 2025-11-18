@@ -423,6 +423,12 @@
         },
         "details": "Vivaran",
         "diff_label": "Neeche ki log entry ke baad beetaa hua samay",
+        "direction": "Disha",
+        "directions": {
+            "all": "Sabhi",
+            "in": "Andar",
+            "out": "Baahar"
+        },
         "distance": "Doori",
         "entity": "Entity",
         "filter": "Logs filter karein.",

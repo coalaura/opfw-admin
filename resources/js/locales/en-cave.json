@@ -423,6 +423,12 @@
         },
         "details": "Details",
         "diff_label": "Time passed since log below.",
+        "direction": "Which way",
+        "directions": {
+            "all": "All",
+            "in": "In",
+            "out": "Out"
+        },
         "distance": "Distance",
         "entity": "Entity",
         "filter": "Filter Logs",

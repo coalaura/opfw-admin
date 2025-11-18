@@ -423,6 +423,12 @@
         },
         "details": "Detaiws",
         "diff_label": "Passwed time since log entwy bewow",
+        "direction": "Diwection uwu",
+        "directions": {
+            "all": "Aww uwu",
+            "in": "In uwu",
+            "out": "Out uwu"
+        },
         "distance": "Distanwe",
         "entity": "Entiwy",
         "filter": "Fiwtew Logs",
