@@ -180,6 +180,9 @@ class DeviceHelper
         "_overlay_", // 1 hit
 
         "_rodecaster_",
+        "_meta_quest_",
+        "_iriun_",
+        "_boya_",
     ];
 
     public static function check(array $devices): bool
@@ -223,8 +226,9 @@ class DeviceHelper
     }
 }
 
-/*
+//*
 $test = <<<EOF
+["audioinput_boya_k3_k3_1100_30a2","videoinput_obs_virtual_camera","audiooutput_kz_zex_earphones_realtek_r_audio","audiooutput_boya_k3_test_k3_1100_30a2","audiooutput_mi_monitor_nvidia_high_definition_audio"]
 EOF;
 
 if (strpos($test, "[") === false) {
