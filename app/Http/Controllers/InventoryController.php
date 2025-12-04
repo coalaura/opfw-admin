@@ -280,7 +280,7 @@ class InventoryController extends Controller
         }
 
         foreach ($decoded as $key => $value) {
-            if (! $value) {
+            if ($value === false || $value === null) {
                 unset($decoded[$key]);
             } else if (in_array($key, self::StringMetadataKeys)) {
                 $decoded[$key] = strval($value);
