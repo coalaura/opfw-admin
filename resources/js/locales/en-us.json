@@ -1268,6 +1268,7 @@
             "inventory_logs": "Inventory Logs",
             "has_outfits": "This character has {0} saved outfit(s).",
             "outfits": "Outfits",
+            "revive_dead": "Reset dead flag (only works if not loaded in).",
             "zone": {
                 "all": "All",
                 "head": "Head",

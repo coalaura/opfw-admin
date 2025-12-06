@@ -472,7 +472,36 @@ class PlayerCharacterController extends Controller
             sprintf("%s divorced %s (#%d) from #%s.", $user->consoleName(), $player->consoleName(), $character->character_id, $marriedTo),
         );
 
-        return backWith('success', 'Spawn was reset successfully.');
+        return backWith('success', 'Divorced successfully.');
+    }
+
+    /**
+     * Reset a character's dead flag
+     *
+     * @param Player $player
+     * @param Character $character
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function reviveOffline(Player $player, Character $character, Request $request): RedirectResponse
+    {
+        if (! $this->isSuperAdmin($request)) {
+            return backWith('error', 'Only super admins can revive offline characters.');
+        }
+
+        $user = user();
+
+        $character->update([
+            'is_dead' => 0,
+        ]);
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Revived Offline",
+            sprintf("%s revived %s (#%d).", $user->consoleName(), $player->consoleName(), $character->character_id),
+        );
+
+        return backWith('success', 'Revived successfully.');
     }
 
     /**

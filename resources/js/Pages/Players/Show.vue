@@ -1306,7 +1306,7 @@
                                         </button>
 
                                         <!-- Character dead -->
-                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-red-300 bg-red-600 dark:bg-red-400 border-2 block cursor-help" v-if="character.isDead" :class="{ 'left-10': status && status.character === character.id }">
+                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-red-300 bg-red-600 dark:bg-red-400 border-2 block cursor-help" v-if="character.isDead" :title="canReviveCharacter(character.id) ? t('players.characters.revive_dead') : ''" :class="{ 'left-10': status && status.character === character.id, 'cursor-pointer': canReviveCharacter(character.id) }">
                                             <i class="fas fa-skull-crossbones"></i>
                                         </button>
 
@@ -1969,6 +1969,29 @@ export default {
 
             // Send request.
             await this.$inertia.delete(`/players/${this.player.licenseIdentifier}/characters/${characterId}/divorce`);
+
+            this.isLoading = false;
+        },
+        canReviveCharacter(characterId) {
+            if (!this.$page.auth.player.isSuperAdmin) {
+                return false;
+            }
+
+            if (this.status && this.status.character === characterId) {
+                return false;
+            }
+
+            return true;
+        },
+        async revive(characterId) {
+            if (this.isLoading) {
+                return;
+            }
+
+            this.isLoading = true;
+
+            // Send request.
+            await this.$inertia.delete(`/players/${this.player.licenseIdentifier}/characters/${characterId}/revive_offline`);
 
             this.isLoading = false;
         },
