@@ -1991,7 +1991,7 @@ export default {
             this.isLoading = true;
 
             // Send request.
-            await this.$inertia.delete(`/players/${this.player.licenseIdentifier}/characters/${characterId}/revive_offline`);
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/characters/${characterId}/revive_offline`);
 
             this.isLoading = false;
         },
