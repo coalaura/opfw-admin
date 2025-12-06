@@ -1306,7 +1306,7 @@
                                         </button>
 
                                         <!-- Character dead -->
-                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-red-300 bg-red-600 dark:bg-red-400 border-2 block cursor-help" v-if="character.isDead" :title="canReviveCharacter(character.id) ? t('players.characters.revive_dead') : ''" :class="{ 'left-10': status && status.character === character.id, 'cursor-pointer': canReviveCharacter(character.id) }">
+                                        <button class="p-1 text-sm font-bold leading-4 text-center w-7 rounded border-red-300 bg-red-600 dark:bg-red-400 border-2 block cursor-help" v-if="character.isDead" @click="reviveCharacter(character.id)" :title="canReviveCharacter(character.id) ? t('players.characters.revive_dead') : ''" :class="{ 'left-10': status && status.character === character.id, '!cursor-pointer': canReviveCharacter(character.id) }">
                                             <i class="fas fa-skull-crossbones"></i>
                                         </button>
 
@@ -1983,7 +1983,7 @@ export default {
 
             return true;
         },
-        async revive(characterId) {
+        async reviveCharacter(characterId) {
             if (this.isLoading) {
                 return;
             }
