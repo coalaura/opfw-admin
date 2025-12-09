@@ -71,12 +71,24 @@ class Cronjobs extends Command
 
         $this->info(CLUSTER . " Testing database connection...");
 
+        $connName = DB::getDefaultConnection();
+        $optKey   = "database.connections.{$connName}.options";
+        $original = config($optKey, []);
+
+        config([$optKey => $original + [\PDO::ATTR_TIMEOUT => 2]]);
+
+        DB::purge($connName);
+
         try {
             DB::select("SELECT 1");
         } catch (QueryException $e) {
             $this->warn(sprintf("Failed to connect to database: %s", $e->getMessage()));
 
             return;
+        } finally {
+            config([$optKey => $original]);
+
+            DB::purge($connName);
         }
 
         $this->info(CLUSTER . " Running cronjobs...");
