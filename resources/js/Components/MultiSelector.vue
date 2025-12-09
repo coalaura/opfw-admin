@@ -48,8 +48,8 @@ export default {
             return label;
         },
         title(item) {
-            if (this.labels && item in this.labels) {
-                return this.labels[item];
+            if (this.titles && item in this.titles) {
+                return this.titles[item];
             }
 
             return "";

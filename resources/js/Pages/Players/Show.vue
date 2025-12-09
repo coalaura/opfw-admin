@@ -750,7 +750,7 @@
             </template>
 
             <template #default>
-                <MultiSelector :items="enablableKeys" prefix="/" v-model="enabledCommands" />
+                <MultiSelector :items="enablableKeys" :titles="enablable" prefix="/" v-model="enabledCommands" />
             </template>
 
             <template #actions>
