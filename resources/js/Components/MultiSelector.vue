@@ -49,7 +49,13 @@ export default {
         },
         title(item) {
             if (this.titles && item in this.titles) {
-                return this.titles[item];
+                const title = this.titles[item];
+
+                if (typeof title === "object") {
+                    return title.label;
+                }
+
+                return title;
             }
 
             return "";
