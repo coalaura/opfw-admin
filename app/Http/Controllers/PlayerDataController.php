@@ -215,13 +215,10 @@ class PlayerDataController extends Controller
 
         $enabledCommands = $request->input('enabledCommands');
 
-        foreach ($enabledCommands as $command) {
-            if (! in_array($command, self::EnablableCommands)) {
-                return backWith('error', 'You cannot enable the command "' . $command . '".');
-            }
-        }
+        $enabledCommands = array_values(array_unique(array_filter($enabledCommands, function($command) {
+            return in_array($command, self::EnablableCommands);
+        })));
 
-        $enabledCommands = array_values(array_unique($enabledCommands));
         $currentEnabled  = $player->enabled_commands ?? [];
 
         if (! empty($enabledCommands) && empty(array_diff($enabledCommands, $currentEnabled))) {
