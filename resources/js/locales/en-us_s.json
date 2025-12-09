@@ -852,6 +852,7 @@
             "playtime_recent": "{0} played in the last 2 weeks, {1} in the last 4 weeks.",
             "remove_tattoo": "Remove Tattoos",
             "reset_spawn": "Reset Spawn",
+            "revive_dead": "Reset the dead flag (it only works if it's not loaded in).",
             "save_changes": "Save changes",
             "show": "Show {0} deleted",
             "spawn": {

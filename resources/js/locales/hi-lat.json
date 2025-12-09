@@ -852,6 +852,7 @@
             "playtime_recent": "Aakhri 2 hafton me {0} khela, aakhri 4 hafton me {1}.",
             "remove_tattoo": "Tattoos hatao",
             "reset_spawn": "Spawn reset karein",
+            "revive_dead": "Dead flag ko reset karo (sirf tabhi kaam karta hai jab load in nahi kiya gaya ho).",
             "save_changes": "Badlav save karein",
             "show": "Show {0} delete kiye gaye",
             "spawn": {
