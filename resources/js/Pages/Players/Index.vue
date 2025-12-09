@@ -75,7 +75,7 @@
                             </label>
                             <select class="block w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="enablable" name="enablable" v-model="filters.enablable">
                                 <option value="">{{ t('global.all') }}</option>
-                                <option :value="command" v-for="command in enablable">/{{ command }}</option>
+                                <option :value="command" v-for="command in enablableKeys">/{{ command }}</option>
                             </select>
                         </div>
                     </div>
@@ -251,7 +251,12 @@ export default {
     watch: {
         players() {
             this.updateStatus();
-        }
+        },
+    },
+    computed: {
+        enablableKeys() {
+            return Object.keys(this.enablable).toSorted();
+        },
     },
     methods: {
         refresh: async function () {

@@ -750,7 +750,7 @@
             </template>
 
             <template #default>
-                <MultiSelector :items="enablableCommands" prefix="/" v-model="enabledCommands" />
+                <MultiSelector :items="enablableKeys" prefix="/" v-model="enabledCommands" />
             </template>
 
             <template #actions>
@@ -1717,7 +1717,7 @@ export default {
             type: Array,
             required: true,
         },
-        enablableCommands: {
+        enablable: {
             type: Array,
             required: true,
         },
@@ -1941,7 +1941,10 @@ export default {
             if (!this.player.variables || !this.player.variables.fingerprint) return false;
 
             return this.player.variables.fingerprint;
-        }
+        },
+        enablableKeys() {
+            return Object.keys(this.enablable).toSorted();
+        },
     },
     methods: {
         isModdingBan() {

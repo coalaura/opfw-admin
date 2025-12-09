@@ -65,8 +65,9 @@ class PlayerController extends Controller
         }
 
         // Filtering by enabled command
+        $available = ServerAPI::getPermissions();
         $enablable = $request->input('enablable');
-        if (in_array($enablable, Player::getEnablableCommands())) {
+        if (!isset($available[$enablable])) {
             $query->where(DB::raw('JSON_CONTAINS(enabled_commands, \'"' . $enablable . '"\')'), '=', '1');
         }
 
@@ -112,7 +113,7 @@ class PlayerController extends Controller
             'links'     => $this->getPageUrls($page),
             'page'      => $page,
             'time'      => $end - $start,
-            'enablable' => Player::getEnablableCommands(),
+            'enablable' => ServerAPI::getPermissions(),
         ]);
     }
 
@@ -224,7 +225,7 @@ class PlayerController extends Controller
             'whitelisted'       => ! ! $whitelisted,
             'blacklisted'       => ! ! $blacklisted,
             'tags'              => Player::resolveTags(),
-            'enablableCommands' => Player::getEnablableCommands(),
+            'enablable'         => ServerAPI::getPermissions(),
             'uniqueBans'        => BanResource::collection($player->uniqueBans()),
         ]);
     }

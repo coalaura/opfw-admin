@@ -204,7 +204,7 @@ class PlayerDataController extends Controller
 
         $user = user();
 
-        $available = Player::getEnablableCommands();
+        $available = ServerAPI::getPermissions();
 
         if (empty($available)) {
             return backWith('error', 'No enablable commands available.');
@@ -213,7 +213,7 @@ class PlayerDataController extends Controller
         $enabledCommands = $request->input('enabledCommands');
 
         $enabledCommands = array_values(array_unique(array_filter($enabledCommands, function($command) use ($available) {
-            return in_array($command, $available);
+            return isset($available[$command]);
         })));
 
         $currentEnabled  = $player->enabled_commands ?? [];

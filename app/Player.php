@@ -1195,15 +1195,6 @@ class Player extends Model
         ]);
     }
 
-    public static function getEnablableCommands(): array
-    {
-        $commands = array_keys(ServerAPI::getPermissions());
-
-        sort($commands);
-
-        return $commands;
-    }
-
     /**
      * Calculates the users total XP.
      */
