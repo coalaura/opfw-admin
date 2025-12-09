@@ -468,7 +468,7 @@ class PlayerCharacterController extends Controller
 
         PanelLog::log(
             $user->license_identifier,
-            "Reset Spawn",
+            "Divorced Characters",
             sprintf("%s divorced %s (#%d) from #%s.", $user->consoleName(), $player->consoleName(), $character->character_id, $marriedTo),
         );
 
