@@ -120,7 +120,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::post('/players/{player}/revive', [PlayerRouteController::class, 'revivePlayer']);
 
     // Update player data.
-    Route::post('/players/{player}/update_commands', [PlayerDataController::class, 'updateEnabledCommands']);
+    Route::post('/players/{player}/update_permissions', [PlayerDataController::class, 'updateEnabledPermissions']);
     Route::post('/players/{player}/update_ban_exception', [PlayerDataController::class, 'updateBanExceptionStatus']);
     Route::post('/players/{player}/update_whitelist', [PlayerDataController::class, 'updateWhitelistStatus']);
     Route::post('/players/{player}/update_mute', [PlayerDataController::class, 'updateMuteStatus']);

@@ -52,7 +52,7 @@ class PlayerResource extends JsonResource
             'playerAliases'       => $this->player_aliases ? array_values(array_unique(array_filter($this->player_aliases, function ($e) {
                 return $e !== $this->player_name && str_replace('?', '', $e) !== '';
             }))) : [],
-            'enabledCommands'     => $this->enabled_commands ?? [],
+            'enabledPermissions'  => $this->enabled_commands ?? [],
             'tag'                 => $this->panel_tag,
             'mute'                => $this->getActiveMute(),
             'variables'           => $variables,

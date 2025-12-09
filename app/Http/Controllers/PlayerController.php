@@ -64,7 +64,7 @@ class PlayerController extends Controller
             $query->whereIn('license_identifier', $online);
         }
 
-        // Filtering by enabled command
+        // Filtering by enabled permission
         $available = ServerAPI::getPermissions();
         $enablable = $request->input('enablable');
         if (!isset($available[$enablable])) {

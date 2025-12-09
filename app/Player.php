@@ -391,16 +391,16 @@ class Player extends Model
         return null;
     }
 
-    public function hasEnabledCommands(string ...$enabled): bool
+    public function hasEnabledPermissions(string ...$enabled): bool
     {
-        $commands = $this->enabled_commands ?? [];
+        $permissions = $this->enabled_commands ?? [];
 
-        if (empty($commands)) {
+        if (empty($permissions)) {
             return false;
         }
 
-        foreach($enabled as $cmd) {
-            if (!in_array($cmd, $commands)) {
+        foreach($enabled as $perm) {
+            if (!in_array($perm, $permissions)) {
                 return false;
             }
         }

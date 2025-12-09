@@ -190,13 +190,13 @@ class PlayerDataController extends Controller
     }
 
     /**
-     * Updates enabled commands
+     * Updates enabled permissions
      *
      * @param Player $player
      * @param Request $request
      * @return RedirectResponse
      */
-    public function updateEnabledCommands(Player $player, Request $request): RedirectResponse
+    public function updateEnabledPermissions(Player $player, Request $request): RedirectResponse
     {
         if (! $this->isSuperAdmin($request)) {
             return backWith('error', 'You dont have permissions to do this.');
@@ -207,23 +207,23 @@ class PlayerDataController extends Controller
         $available = ServerAPI::getPermissions();
 
         if (empty($available)) {
-            return backWith('error', 'No enablable commands available.');
+            return backWith('error', 'No enablable permissions available.');
         }
 
-        $enabledCommands = $request->input('enabledCommands');
+        $enabledPermissions = $request->input('enabledPermissions');
 
-        $enabledCommands = array_values(array_unique(array_filter($enabledCommands, function($command) use ($available) {
+        $enabledPermissions = array_values(array_unique(array_filter($enabledPermissions, function($command) use ($available) {
             return isset($available[$command]);
         })));
 
-        $currentEnabled  = $player->enabled_commands ?? [];
+        $currentEnabled = $player->enabled_commands ?? [];
 
-        if (! empty($enabledCommands) && empty(array_diff($enabledCommands, $currentEnabled))) {
-            return backWith('success', 'No commands changed.');
+        if (! empty($enabledPermissions) && empty(array_diff($enabledPermissions, $currentEnabled))) {
+            return backWith('success', 'No permissions changed.');
         }
 
         $player->update([
-            "enabled_commands" => $enabledCommands,
+            "enabled_commands" => $enabledPermissions,
         ]);
 
         $license = $player->license_identifier;
@@ -243,12 +243,12 @@ class PlayerDataController extends Controller
 
         PanelLog::log(
             $user->license_identifier,
-            "Edited Commands",
-            sprintf("%s edited the enabled commands of %s.", $user->consoleName(), $player->consoleName()),
-            ['commands' => $enabledCommands]
+            "Edited Permissions",
+            sprintf("%s edited the enabled permissions of %s.", $user->consoleName(), $player->consoleName()),
+            ['permissions' => $enabledPermissions]
         );
 
-        return backWith('success', 'Commands have been updated successfully.' . $refreshed);
+        return backWith('success', 'Permissions have been updated successfully.' . $refreshed);
     }
 
     /**

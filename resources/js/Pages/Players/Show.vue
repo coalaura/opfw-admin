@@ -253,9 +253,9 @@
             <!-- Small icon buttons top right -->
             <div class="absolute top-2 right-2 flex gap-2 items-center">
                 <!-- Staff statistics -->
-                <button v-if="$page.auth.player.isSuperAdmin" class="p-1 text-sm font-bold leading-4 text-center rounded border-teal-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :title="t('players.show.commands_edit')" @click="isEnablingCommands = true; enabledCommands = player.enabledCommands">
+                <button v-if="$page.auth.player.isSuperAdmin" class="p-1 text-sm font-bold leading-4 text-center rounded border-teal-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :title="t('players.show.permissions_edit')" @click="isEnablingPermissions = true; enabledPermissions = player.enabledPermissions">
                     <i class="fas fa-terminal mr-1"></i>
-                    CMD
+                    PERM
                 </button>
 
                 <button v-if="$page.auth.player.isSeniorStaff && player.isStaff" class="p-1 text-sm font-bold leading-4 text-center rounded border-teal-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :title="t('players.show.staff_stats')" @click="isShowingStaffStatistics = true">
@@ -420,7 +420,7 @@
 
                 <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
                     <h2 class="text-lg mb-1">
-                        {{ t("players.show.staff_commands") }}
+                        {{ t("players.show.staff_permissions") }}
                     </h2>
 
                     <input class="block w-full px-4 py-2 bg-gray-200 border rounded dark:bg-gray-600" v-model="statisticsSearch" type="text" placeholder="/revive" />
@@ -741,24 +741,24 @@
             </div>
         </div>
 
-        <!-- Enablable commands -->
-        <modal :show.sync="isEnablingCommands">
+        <!-- Enablable permissions -->
+        <modal :show.sync="isEnablingPermissions">
             <template #header>
                 <h1 class="dark:text-white">
-                    {{ t('players.show.enabled_commands') }}
+                    {{ t('players.show.enabled_permissions') }}
                 </h1>
             </template>
 
             <template #default>
-                <MultiSelector :items="enablableKeys" :labels="enablable" prefix="/" v-model="enabledCommands" />
+                <MultiSelector :items="enablableKeys" :labels="enablable" prefix="/" v-model="enabledPermissions" />
             </template>
 
             <template #actions>
-                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" @click="updateCommands">
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" @click="updatePermissions">
                     {{ t('players.show.save_changes') }}
                 </button>
 
-                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isEnablingCommands = false">
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isEnablingPermissions = false">
                     {{ t('global.close') }}
                 </button>
             </template>
@@ -1787,8 +1787,8 @@ export default {
             isSchedulingUnban: false,
             scheduledUnbanDate: false,
 
-            isEnablingCommands: false,
-            enabledCommands: [],
+            isEnablingPermissions: false,
+            enabledPermissions: [],
 
             isShowingDiscord: false,
             isShowingDiscordLoading: false,
@@ -2180,16 +2180,16 @@ export default {
 
             this.isLoading = false;
         },
-        async updateCommands() {
+        async updatePermissions() {
             if (this.isLoading) return;
 
-            this.isEnablingCommands = false;
+            this.isEnablingPermissions = false;
 
             this.isLoading = true;
 
             // Send request.
-            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/update_commands`, {
-                enabledCommands: this.enabledCommands,
+            await this.$inertia.post(`/players/${this.player.licenseIdentifier}/update_permissions`, {
+                enabledPermissions: this.enabledPermissions,
             });
 
             this.isLoading = false;

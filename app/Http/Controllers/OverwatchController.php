@@ -288,9 +288,9 @@ class OverwatchController extends Controller
         $license = $player->license_identifier;
 
         // Ensure player has sufficient permissions
-        $hasCommands = $player->hasEnabledCommands("advanced_metagame", "idle");
+        $hasPermissions = $player->hasEnabledPermissions("advanced_metagame", "idle");
 
-        if (! $player->isSeniorStaff() || ! $player->isBot() || ! $hasCommands) {
+        if (! $player->isSeniorStaff() || ! $player->isBot() || ! $hasPermissions) {
             $enabled = $player->enabled_commands ?? [];
 
             $enabled[] = "advanced_metagame";

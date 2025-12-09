@@ -20,7 +20,7 @@ class PanelLog extends Model
         "Deleted Vehicle",
         "Edited Balance",
         "Edited Character",
-        "Edited Commands",
+        "Edited Permissions",
         "Edited Licenses",
         "Enabled Ban Exception",
         "Kicked Player",
