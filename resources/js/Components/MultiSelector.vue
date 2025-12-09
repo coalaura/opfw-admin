@@ -1,6 +1,6 @@
 <template>
     <div :class="layout">
-        <div class="px-2 py-0.5 cursor-pointer truncate border-lime-300 bg-lime-200 dark:bg-lime-700" :title="title(item) || itemLabel(item)" :class="{ '!border-red-300 !bg-red-200 dark:!bg-red-700': !value.includes(item) }" v-for="item in items" :key="value.value" @click="toggle(item)">
+        <div class="px-2 py-0.5 cursor-pointer truncate border-lime-300 bg-lime-200 dark:bg-lime-700" :title="itemLabel(item)" :class="{ '!border-red-300 !bg-red-200 dark:!bg-red-700': !value.includes(item) }" v-for="item in items" :key="value.value" @click="toggle(item)">
             {{ itemLabel(item) }}
         </div>
     </div>
@@ -19,7 +19,7 @@ export default {
             type: Array,
             required: true
         },
-        titles: {
+        labels: {
             type: Object,
         },
         prefix: {
@@ -37,6 +37,16 @@ export default {
         itemLabel(item) {
             let label = item;
 
+            if (this.labels && item in this.labels) {
+                label = this.labels[item];
+
+                if (typeof label === "object") {
+                    return label.label;
+                }
+
+                return label;
+            }
+
             if (this.locale) {
                 label = this.t(`${this.locale}.${item}`);
             }
@@ -46,19 +56,6 @@ export default {
             }
 
             return label;
-        },
-        title(item) {
-            if (this.titles && item in this.titles) {
-                const title = this.titles[item];
-
-                if (typeof title === "object") {
-                    return title.label;
-                }
-
-                return title;
-            }
-
-            return "";
         },
         toggle(item) {
             let newValue;
