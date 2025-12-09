@@ -86,6 +86,14 @@ class ServerAPI
     }
 
     /**
+     * /permissions.json
+     */
+    public static function getPermissions(bool $refresh = false): array
+    {
+        return self::cached('/permissions.json', $refresh, self::MediumCacheTime) ?? [];
+    }
+
+    /**
      * /config.json
      */
     public static function getConfig(bool $refresh = false): array

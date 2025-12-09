@@ -5,6 +5,7 @@ use App\Helpers\CacheHelper;
 use App\Helpers\DeviceHelper;
 use App\Helpers\GeneralHelper;
 use App\Helpers\RootHelper;
+use App\Helpers\ServerAPI;
 use App\Helpers\StatusHelper;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
@@ -1192,6 +1193,13 @@ class Player extends Model
             'action'     => $action,
             'timestamp'  => time(),
         ]);
+    }
+
+    public static function getEnablableCommands(): array
+    {
+        $commands = ServerAPI::getPermissions();
+
+        return array_keys($commands);
     }
 
     /**

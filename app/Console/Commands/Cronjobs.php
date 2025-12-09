@@ -25,6 +25,7 @@ class Cronjobs extends Command
         [ServerAPI::class, 'getDefaultJobs'],
         [ServerAPI::class, 'getChatEmotes'],
         [ServerAPI::class, 'getRoutes'],
+        [ServerAPI::class, 'getPermissions'],
         [ServerAPI::class, 'getCrafting'],
         [ServerAPI::class, 'getConfig'],
     ];

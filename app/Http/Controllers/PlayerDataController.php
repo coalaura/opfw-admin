@@ -12,15 +12,6 @@ use Illuminate\Support\Facades\DB;
 
 class PlayerDataController extends Controller
 {
-    const EnablableCommands = [
-        "advanced_metagame", "auto_drive", "battle_royale_toggle", "brighter_nights", "cam_point",
-        "cpr", "create_garage", "door_debug", "fortnite", "freecam", "garage_vehicle", "idle", "indestructibility",
-        "invisibility", "keychain_create", "live_map", "minecraft", "noclip", "pickup_keys", "player_stats",
-        "range_revive", "reflect", "register_weapon", "registration_lookup", "remove_garage", "respawn_vehicle",
-        "set_body_armor", "set_fuel", "slap", "snapshot", "stable_cam", "super_jump", "ungarage_vehicle",
-        "watermark",
-    ];
-
     /**
      * Sets the mute status
      *
@@ -213,10 +204,16 @@ class PlayerDataController extends Controller
 
         $user = user();
 
+        $available = Player::getEnablableCommands();
+
+        if (empty($available)) {
+            return backWith('error', 'No enablable commands available.');
+        }
+
         $enabledCommands = $request->input('enabledCommands');
 
-        $enabledCommands = array_values(array_unique(array_filter($enabledCommands, function($command) {
-            return in_array($command, self::EnablableCommands);
+        $enabledCommands = array_values(array_unique(array_filter($enabledCommands, function($command) use ($available) {
+            return in_array($command, $available);
         })));
 
         $currentEnabled  = $player->enabled_commands ?? [];

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\BlacklistedIdentifier;
 use App\Character;
 use App\Helpers\GeneralHelper;
+use App\Helpers\ServerAPI;
 use App\Helpers\StatisticsHelper;
 use App\Helpers\StatusHelper;
 use App\Http\Controllers\PlayerDataController;
@@ -65,7 +66,7 @@ class PlayerController extends Controller
 
         // Filtering by enabled command
         $enablable = $request->input('enablable');
-        if (in_array($enablable, PlayerDataController::EnablableCommands)) {
+        if (in_array($enablable, Player::getEnablableCommands())) {
             $query->where(DB::raw('JSON_CONTAINS(enabled_commands, \'"' . $enablable . '"\')'), '=', '1');
         }
 
@@ -111,7 +112,7 @@ class PlayerController extends Controller
             'links'     => $this->getPageUrls($page),
             'page'      => $page,
             'time'      => $end - $start,
-            'enablable' => PlayerDataController::EnablableCommands,
+            'enablable' => Player::getEnablableCommands(),
         ]);
     }
 
@@ -223,7 +224,7 @@ class PlayerController extends Controller
             'whitelisted'       => ! ! $whitelisted,
             'blacklisted'       => ! ! $blacklisted,
             'tags'              => Player::resolveTags(),
-            'enablableCommands' => PlayerDataController::EnablableCommands,
+            'enablableCommands' => Player::getEnablableCommands(),
             'uniqueBans'        => BanResource::collection($player->uniqueBans()),
         ]);
     }
