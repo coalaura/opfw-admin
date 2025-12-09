@@ -1197,9 +1197,11 @@ class Player extends Model
 
     public static function getEnablableCommands(): array
     {
-        $commands = ServerAPI::getPermissions();
+        $commands = array_keys(ServerAPI::getPermissions());
 
-        return array_keys($commands);
+        sort($commands);
+
+        return $commands;
     }
 
     /**
