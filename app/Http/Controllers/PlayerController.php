@@ -67,7 +67,7 @@ class PlayerController extends Controller
         // Filtering by enabled permission
         $available = ServerAPI::getPermissions();
         $enablable = $request->input('enablable');
-        if (!isset($available[$enablable])) {
+        if (isset($available[$enablable])) {
             $query->where(DB::raw('JSON_CONTAINS(enabled_commands, \'"' . $enablable . '"\')'), '=', '1');
         }
 
