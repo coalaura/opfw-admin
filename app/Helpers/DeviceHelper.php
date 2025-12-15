@@ -183,6 +183,7 @@ class DeviceHelper
         "_meta_quest_",
         "_iriun_",
         "_boya_",
+        "uairplayer",
     ];
 
     public static function check(array $devices): bool
