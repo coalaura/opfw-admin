@@ -310,7 +310,7 @@ class Controller extends BaseController
                         break;
                     default:
                         // Why use slow LIKE when we can use fast = ?
-                        if ($this->isFullLicenseIdentifier($value)) {
+                        if ((Str::contains($col, "license") || Str::contains($col, "identifier")) && $this->isFullLicenseIdentifier($value)) {
                             $operator = '=';
 
                             break;
