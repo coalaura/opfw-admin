@@ -240,7 +240,7 @@
         "results": "Sewarch took {0} miwwiseconds.",
         "root": "Woot",
         "search": {
-            "custom": "<b>*</b> By defauwt wetuwns aww wows whewe the cowumn <u>contains</u> youw searh. You can use opewatows such as: <b>=</b> (equaws), <b>!=</b> (does nyot equaw), <b>&gt;</b> (gweatwer thwan), <b>&lt;</b> (wess thwan) ow <b>!</b> (doesnyt contain) at the <u>beginning</u> of youw searce stwing. You can awso searwch fow <u>muwtiple vawues</u> by sepawating them with a wline (e.g: \"seawrch1|seawrch2\")."
+            "custom": "<b>*</b> Seawches fow text <u>containing</u> youw input. Split with <b>|</b> (this OR that) ow <b>&</b> (this AND that). Stawt with <b>=</b> (exact/equals), <b>!=</b> (not equal), <b>!~</b> (excludes/doesn't contain), ow <b>&lt;</b>/<b>&gt;</b> (gweater than, less than, only numbers)."
         },
         "search_placeholder": "Seawch...",
         "senior_staff": "Seniew Stawf",

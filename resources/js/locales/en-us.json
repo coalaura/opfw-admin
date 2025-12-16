@@ -72,7 +72,7 @@
         "server_timeout": "Server ID is cached for 5 minutes",
         "info": "Info",
         "search": {
-            "custom": "<b>*</b> By default returns all rows where the column <u>contains</u> your search. You can use operators such as: <b>=</b> (equals), <b>!=</b> (does not equal), <b>&gt;</b> (greater than), <b>&lt;</b> (less than) or <b>!</b> (doesn't contain) at the <u>beginning</u> of your search string. You can also search for <u>multiple values</u> by separating them with a line (e.g: \"search1|search2\")."
+            "custom": "<b>*</b> Searches for text <u>containing</u> your input. Split with <b>|</b> (this OR that) or <b>&</b> (this AND that). Start with <b>=</b> (exact/equals), <b>!=</b> (not equal), <b>!~</b> (excludes/doesn't contain), or <b>&lt;</b>/<b>&gt;</b> (greater than, less than, only numbers)."
         },
         "results": "Search took {0} milliseconds.",
         "entries": "Showing {0} total entries on {1} page(s).",

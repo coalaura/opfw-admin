@@ -240,7 +240,7 @@
         "results": "Søket tok {0} millisekunder.",
         "root": "Rot",
         "search": {
-            "custom": "<b>*</b> Som standard returnerer den alle rader der kolonnen <u>inneholder</u> søket ditt. Du kan bruke operasjoner som: <b>=</b> (lik), <b>!=</b> (ikke lik), <b>&gt;</b> (større enn), <b>&lt;</b> (mindre enn) eller <b>!</b> (inneholder ikke) i begynnelsen av søket ditt. Du kan også søke etter <u>flere verdier</u> ved å skille dem med en linje (f.eks: \"search1|search2\")."
+            "custom": "<b>*</b> Søker etter tekst <u>som inneholder</u> din input. Skill med <b>|</b> (dette ELLER det) eller <b>&</b> (dette OG det). Start med <b>=</b> (eksakt/lik), <b>!=</b> (ikke lik), <b>!~</b> (ekskluderer/inneholder ikke), eller <b>&lt;</b>/<b>&gt;</b> (større enn, mindre enn, bare tall)."
         },
         "search_placeholder": "Søk...",
         "senior_staff": "Senior ansatte",

@@ -240,7 +240,7 @@
         "results": "Khoj ne {0} milliseconds liye.",
         "root": "Mool",
         "search": {
-            "custom": "<b>*</b> By default sabhi rows wapas karta hai jahan column <u>contains</u> aapki search. Aap operators jaise: <b>=</b> (equals), <b>!=</b> (does not equal), <b>&gt;</b> (greater than), <b>&lt;</b> (less than) ya <b>!</b> (doesn't contain) aapki search string ke <u>beginning</u> par ho sakte hain. Aap <u>ek se adhik mulya</u> bhi search kar sakte hain in line se alag kar ke (jaise: \\\"search1|search2\\\")."
+            "custom": "<b>*</b> Aapke input ko <u>shamil</u> karne wala text dhoondhta hai. Isse <b>|</b> (yeh ya woh) ya <b>&</b> (yeh aur woh) ke saath baant dein. Shuru karein <b>=</b> (samaksh/barabar), <b>!=</b> (na barabar), <b>!~</b> (jo shaamil nahi karta/excludes), ya <b>&lt;</b>/<b>&gt;</b> (bada se, chhota se, sirf numbers)."
         },
         "search_placeholder": "Khoj...",
         "senior_staff": "Varishth Karmachari",

@@ -266,7 +266,7 @@ class Controller extends BaseController
     }
 
     /**
-     * Search values in a column. Available operators are =, !=, >, <, !, default is LIKE
+     * Search values in a column. Available operators are =, !=, >, <, !~, ~, default is LIKE
      */
     protected function searchQuery(Request $request, &$query, string $input, mixed $column)
     {
@@ -276,57 +276,81 @@ class Controller extends BaseController
             return;
         }
 
-        $search = array_map(function ($entry) {
-            return trim($entry);
-        }, explode('|', $search));
+        // Split into OR groups first
+        $orGroups = explode('|', $search);
 
-        $query->where(function ($subQuery) use ($search, $column) {
-            foreach ($search as $index => $value) {
-                $parts = preg_split('/(?<=!=|[!=><])(?!=)/', $value);
+        $query->where(function ($baseQuery) use ($orGroups, $column) {
+            foreach ($orGroups as $groupStr) {
+                $groupStr = trim($groupStr);
 
-                $operator = sizeof($parts) > 1 ? $parts[0] : false;
-                $value    = trim($operator ? $parts[1] : $value);
-
-                // No need to search for empty values
-                if (!$value) {
+                if ($groupStr === '') {
                     continue;
                 }
 
-                $col = is_callable($column) && !is_string($column) ? $column($value) : $column;
+                // Create a sub-group for AND conditions
+                $baseQuery->orWhere(function ($andQuery) use ($groupStr, $column) {
+                    $andParts = explode('&', $groupStr);
 
-                switch ($operator) {
-                    case "!=":
-                    case "!":
-                    case "=":
-                        // These are fine as-is
-                        break;
-                    case ">":
-                    case "<":
-                        // Only works with numeric values
-                        if (!is_numeric($value)) {
-                            continue 2;
+                    foreach ($andParts as $part) {
+                        $part = trim($part);
+
+                        if ($part === '') {
+                            continue;
                         }
 
-                        break;
-                    default:
-                        // Why use slow LIKE when we can use fast = ?
-                        if ((Str::contains($col, "license") || Str::contains($col, "identifier")) && $this->isFullLicenseIdentifier($value)) {
-                            $operator = '=';
+                        // Extract operator and value
+                        preg_match('/^(!=|!~|[=<>~])?(.*)$/', $part, $matches);
 
-                            break;
+                        $operatorSymbol = $matches[1] ?? '';
+                        $value = trim($matches[2]);
+
+                        if ($value === '') {
+                            continue;
                         }
 
-                        $operator = 'LIKE';
-                        $value    = "%{$value}%";
+                        // Resolve column name if it's a closure
+                        $col = is_callable($column) && !is_string($column)
+                            ? $column($value)
+                            : $column;
 
-                        break;
-                }
+                        // Map symbols to SQL operators
+                        $sqlOperator = match ($operatorSymbol) {
+                            '!=' => '!=',
+                            '=' => '=',
+                            '<' => '<',
+                            '>' => '>',
+                            '!~' => 'NOT LIKE',
+                            '~' => 'LIKE',
+                            default => null,
+                        };
 
-                if ($index === 0) {
-                    $subQuery->where($col, $operator, $value);
-                } else {
-                    $subQuery->orWhere($col, $operator, $value);
-                }
+                        // Validation for numeric operators
+                        if (in_array($sqlOperator, ['<', '>']) && !is_numeric($value)) {
+                            continue;
+                        }
+
+                        // Handle default behavior (no operator provided)
+                        if ($sqlOperator === null) {
+                            $isLicenseCol = Str::contains($col, ['license', 'identifier']);
+
+                            if ($isLicenseCol && $this->isFullLicenseIdentifier($value)) {
+                                // Optimization: Exact match for full licenses
+                                $sqlOperator = '=';
+                            } else {
+                                // Default to fuzzy search
+                                $sqlOperator = 'LIKE';
+                                $value = "%{$value}%";
+                            }
+                        }
+
+                        // Handle explicit LIKE/NOT LIKE wildcards
+                        if (in_array($sqlOperator, ['LIKE', 'NOT LIKE']) && !Str::contains($value, '%')) {
+                            $value = "%{$value}%";
+                        }
+
+                        $andQuery->where($col, $sqlOperator, $value);
+                    }
+                });
             }
         });
     }
