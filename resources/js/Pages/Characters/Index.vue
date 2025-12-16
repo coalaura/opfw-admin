@@ -47,21 +47,21 @@
                             <label class="block mb-2" for="name">
                                 {{ t('characters.form.name') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="name" placeholder="Lela Law" v-model="filters.name">
+                            <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="name" placeholder="Lela Law" v-model="filters.name" :title="previewQuery(filters.name)">
                         </div>
                         <!-- Vehicle Plate -->
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="vehicle_plate">
                                 {{ t('characters.form.plate') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="vehicle_plate" placeholder="23FTW355" v-model="filters.vehicle_plate">
+                            <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="vehicle_plate" placeholder="23FTW355" v-model="filters.vehicle_plate" :title="previewQuery(filters.vehicle_plate)">
                         </div>
                         <!-- Vehicle ID -->
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="vehicle_id">
                                 {{ t('characters.form.vehicle_id') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="vehicle_id" placeholder="69420" v-model="filters.vehicle_id">
+                            <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="vehicle_id" placeholder="69420" v-model="filters.vehicle_id" :title="previewQuery(filters.vehicle_id)">
                         </div>
                         <!-- Date of Birth -->
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
@@ -75,14 +75,14 @@
                             <label class="block mb-2" for="phone">
                                 {{ t('characters.form.phone') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="phone" placeholder="723-4797" v-model="filters.phone">
+                            <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="phone" placeholder="723-4797" v-model="filters.phone" :title="previewQuery(filters.phone)">
                         </div>
                         <!-- Job -->
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="job">
                                 {{ t('characters.form.job') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="job" placeholder="Law Enforcement SASP Cadet" v-model="filters.job">
+                            <input class="block w-full px-4 py-3 mb-3 bg-gray-200 border rounded dark:bg-gray-600" id="job" placeholder="Law Enforcement SASP Cadet" v-model="filters.job" :title="previewQuery(filters.job)">
                         </div>
                         <!-- Licenses -->
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">

@@ -31,19 +31,19 @@
                             <label class="block mb-4 font-semibold" for="identifier">
                                 {{ t('blacklist.identifier') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="identifier" name="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier">
+                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="identifier" name="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier" :title="previewQuery(filters.identifier)">
                         </div>
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-4 font-semibold" for="reason">
                                 {{ t('blacklist.reason') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="reason" name="reason" placeholder="Really bad guy i don't like him." v-model="filters.reason">
+                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="reason" name="reason" placeholder="Really bad guy i don't like him." v-model="filters.reason" :title="previewQuery(filters.reason)">
                         </div>
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-4 font-semibold" for="note">
                                 {{ t('blacklist.note') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="note" name="note" placeholder="Really bad guy i don't like him." v-model="filters.note">
+                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="note" name="note" placeholder="Really bad guy i don't like him." v-model="filters.note" :title="previewQuery(filters.note)">
                         </div>
                     </div>
                     <!-- Description -->

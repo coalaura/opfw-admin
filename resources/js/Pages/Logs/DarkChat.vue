@@ -37,21 +37,21 @@
 							<label class="block mb-2" for="license">
 								{{ t('logs.license') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="license" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.license">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="license" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.license" :title="previewQuery(filters.license)">
 						</div>
 						<!-- Channel -->
 						<div class="w-2/12 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2" for="channel">
 								{{ t('logs.channel') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="channel" placeholder="guns" v-model="filters.channel">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="channel" placeholder="guns" v-model="filters.channel" :title="previewQuery(filters.channel)">
 						</div>
 						<!-- Message -->
 						<div class="w-7/12 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2" for="message">
 								{{ t('logs.message') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" placeholder="how do i remove safety?" v-model="filters.message">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" placeholder="how do i remove safety?" v-model="filters.message" :title="previewQuery(filters.message)">
 						</div>
 					</div>
 

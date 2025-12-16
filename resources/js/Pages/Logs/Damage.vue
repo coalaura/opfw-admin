@@ -37,7 +37,7 @@
 							<label class="block mb-2" for="attacker">
 								{{ t('logs.attacker') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="attacker" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.attacker">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="attacker" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.attacker" :title="previewQuery(filters.attacker)">
 						</div>
 
 						<!-- Victim -->
@@ -55,9 +55,9 @@
 						<!-- Damage -->
 						<div class="w-1/6 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2" for="damage">
-								{{ t('logs.damage') }}
+								{{ t('logs.damage') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 !bg-opacity-10 border rounded outline-none" :class="damageColor" id="damage" placeholder=">20" v-model="filters.damage">
+							<input class="block w-full px-4 py-3 !bg-opacity-10 border rounded outline-none" :class="damageColor" id="damage" placeholder=">20" v-model="filters.damage" :title="previewQuery(filters.damage)">
 
 							<div class="w-full mt-1 italic">
 								<small class="text-muted dark:text-dark-muted leading-4 block" v-html="t('logs.damage_hint')"></small>

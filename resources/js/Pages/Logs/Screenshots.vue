@@ -28,14 +28,14 @@
                             <label class="block mb-2" for="identifier">
                                 {{ t('logs.identifier') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier">
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier" :title="previewQuery(filters.identifier)">
                         </div>
                         <!-- Character -->
                         <div class="w-1/2 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="details">
                                 {{ t('screenshot_logs.character') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="details" placeholder="1,2,3" v-model="filters.character">
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="details" placeholder="1,2,3" v-model="filters.character" :title="previewQuery(filters.character)">
                         </div>
                         <!-- After Date -->
                         <div class="w-1/4 px-3 pr-1 mobile:w-full mobile:mb-3">

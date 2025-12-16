@@ -39,13 +39,13 @@
                             <label class="block mb-2" for="name">
                                 {{ t('players.name') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="name" name="name" placeholder="Marius Truckster" v-model="filters.name">
+                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="name" name="name" placeholder="Marius Truckster" v-model="filters.name" :title="previewQuery(filters.name)">
                         </div>
                         <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="license">
                                 {{ t('players.license') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="license" name="license" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.license">
+                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="license" name="license" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.license" :title="previewQuery(filters.license)">
                         </div>
                         <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="server_id">

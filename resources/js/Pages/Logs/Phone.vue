@@ -41,7 +41,7 @@
                                 <label class="block mb-2" for="message">
                                     {{ t('phone.message') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                                 </label>
-                                <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" placeholder="Some text message" v-model="filters.message">
+                                <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" placeholder="Some text message" v-model="filters.message" :title="previewQuery(filters.message)">
                             </div>
                         </div>
 

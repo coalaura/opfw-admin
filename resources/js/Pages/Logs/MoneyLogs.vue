@@ -59,7 +59,7 @@
 							<label class="block mb-2" for="amount">
 								{{ t('logs.amount') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="amount" placeholder=">8000" v-model="filters.amount">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="amount" placeholder=">8000" v-model="filters.amount" :title="previewQuery(filters.amount)">
 						</div>
 
 						<!-- Identifier -->
@@ -67,21 +67,21 @@
 							<label class="block mb-2 mt-3" for="identifier">
 								{{ t('logs.identifier') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier" :title="previewQuery(filters.identifier)">
 						</div>
 						<!-- Character ID -->
 						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2 mt-3" for="character_id">
 								{{ t('logs.character_id') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" type="number" min="0" id="character_id" placeholder="1628" v-model="filters.character_id">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" type="number" min="0" id="character_id" placeholder="1628" v-model="filters.character_id" :title="previewQuery(filters.character_id)">
 						</div>
 						<!-- Details -->
 						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2 mt-3" for="details">
 								{{ t('logs.details') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="details" placeholder="garage-retrieval" v-model="filters.details">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="details" placeholder="garage-retrieval" v-model="filters.details" :title="previewQuery(filters.details)">
 						</div>
 
 						<!-- After Date -->

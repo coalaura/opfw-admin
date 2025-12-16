@@ -27,6 +27,7 @@ import Storage from "./Plugins/storage.js";
 import Spreadsheet from "./Plugins/spreadsheet.js";
 import Style from "./Plugins/style.js";
 import Flags from "./Plugins/flags.js";
+import Search from "./Plugins/search.js";
 
 import humanizeSeconds from "./Filters/humanizeSeconds.js";
 import formatSeconds from "./Filters/formatSeconds.js";
@@ -81,6 +82,7 @@ Vue.use(Flags);
 Vue.use(Permissions, page);
 Vue.use(Settings, page);
 Vue.use(Style);
+Vue.use(Search);
 Vue.use(Toast, {
 	transition: "Vue-Toastification__slideBlurred",
 	maxToasts: 10,

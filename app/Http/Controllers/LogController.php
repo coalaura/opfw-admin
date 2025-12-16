@@ -497,8 +497,8 @@ class LogController extends Controller
 
             if (Str::startsWith($victim, 'license:')) {
                 $query->where('hit_player', $victim);
-                //} else if (Str::startsWith($victim, 'v')) {
-                //    $query->where('hit_vehicle_id', substr($victim, 1));
+            } else if (Str::startsWith($victim, 'v')) {
+                $query->where('hit_vehicle_id', substr($victim, 1));
             } else {
                 if (! preg_match('/^\d/m', $victim)) {
                     $victim = substr($victim, 1);
@@ -509,11 +509,7 @@ class LogController extends Controller
         }
 
         // Filtering by damage.
-        $damage = $request->input('damage');
-
-        if ($damage && preg_match('/^[<=>]\d+$/m', $damage)) {
-            $query->where('weapon_damage', $damage[0], substr($damage, 1));
-        }
+        $this->searchQuery($request, $query, 'damage', 'weapon_damage');
 
         // Filtering by weapon.
         if ($weapon = $request->input('weapon')) {

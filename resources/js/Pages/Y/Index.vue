@@ -39,14 +39,14 @@
                             <label class="block mb-3" for="username">
                                 {{ t('y.account') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="username" :placeholder="t('y.placeholder_username')" v-model="filters.username">
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="username" :placeholder="t('y.placeholder_username')" v-model="filters.username" :title="previewQuery(filters.username)">
                         </div>
                         <!-- Details -->
                         <div class="w-7/12 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-3" for="message">
                                 {{ t('y.message') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" :placeholder="t('y.placeholder_message')" v-model="filters.message">
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" :placeholder="t('y.placeholder_message')" v-model="filters.message" :title="previewQuery(filters.message)">
                         </div>
                         <!-- Top Yells -->
                         <div class="w-2/12 px-3 mobile:w-full mobile:mb-3">

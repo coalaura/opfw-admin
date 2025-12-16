@@ -25,14 +25,14 @@
                             <label class="block mb-4 font-semibold" for="banHash">
                                 {{ t('players.ban.hash') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="banHash" name="banHash" placeholder="b60f832e-0c78-42ed-acae-9c89b5f14265" v-model="filters.banHash">
+                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="banHash" name="banHash" placeholder="b60f832e-0c78-42ed-acae-9c89b5f14265" v-model="filters.banHash" :title="previewQuery(filters.banHash)">
                         </div>
 
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-4 font-semibold" for="reason">
                                 {{ t('players.ban.reason') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
-                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="reason" name="reason" placeholder="L Bozo" v-model="filters.reason">
+                            <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="reason" name="reason" placeholder="L Bozo" v-model="filters.reason" :title="previewQuery(filters.reason)">
                         </div>
 
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">

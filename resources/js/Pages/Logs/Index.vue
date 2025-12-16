@@ -35,14 +35,14 @@
 							<label class="block mb-2" for="identifier">
 								{{ t('logs.identifier') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="filters.identifier" :title="previewQuery(filters.identifier)">
 						</div>
 						<!-- Action -->
 						<div class="w-1/3 px-3 mobile:w-full mobile:mb-3 relative">
 							<label class="block mb-2" for="action">
 								{{ t('logs.action') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="action" :placeholder="t('logs.placeholder_action')" v-model="filters.action" @keyup="searchActions()" @blur="cancelActionSearch()" @focus="searchActions()">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="action" :placeholder="t('logs.placeholder_action')" v-model="filters.action" @keyup="searchActions()" @blur="cancelActionSearch()" @focus="searchActions()" :title="previewQuery(filters.action)">
 							<div class="w-full absolute top-full left-0 px-3 z-10" v-if="searchingActions && searchableActions.length > 0">
 								<div class="max-h-40 overflow-y-auto rounded-b border">
 									<button class="block text-left w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 transition duration-200 hover:bg-gray-300" :class="{ 'border-b': index < searchableActions.length - 1 }" v-for="(action, index) in searchableActions" @click="selectAction('=' + action.action)">
@@ -59,7 +59,7 @@
 							<label class="block mb-2" for="details">
 								{{ t('logs.details') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="details" :placeholder="t('logs.placeholder_details')" v-model="filters.details">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="details" :placeholder="t('logs.placeholder_details')" v-model="filters.details" :title="previewQuery(filters.details)">
 						</div>
 
 						<!-- Server -->
@@ -67,7 +67,7 @@
 							<label class="block mb-2" for="server">
 								{{ t('logs.server_id') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
-							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="server" placeholder="3" v-model="filters.server">
+							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="server" placeholder="3" v-model="filters.server" :title="previewQuery(filters.server)">
 						</div>
 						<!-- Minigames -->
 						<div class="w-1/6 px-3 mobile:w-full mobile:mb-3 mt-3">
