@@ -19,13 +19,11 @@ function writeString(buf, value) {
 }
 
 const MapEncoder = {
-	async install(Vue, options) {
+	install: async (Vue, options) => {
 		Vue.prototype.buildMapUrl = (connect, points) => {
 			const buffer = [connect ? 1 : 0];
 
-			for (let i = 0; i < points.length; i++) {
-				const point = points[i];
-
+			for (const point of points) {
 				writeInt24LE(buffer, Math.round(point.x * 100));
 				writeInt24LE(buffer, Math.round(point.y * 100));
 				writeString(buffer, point.label || "");

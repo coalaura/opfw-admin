@@ -163,7 +163,7 @@ export default {
         findVectors(value) {
             const text = value.replace(/(<([^>]+)>)/gi, "");
 
-            const rgx = /(\w+)\s*: vector\d\((-?\d+(\.\d+)?), (-?\d+(\.\d+)?)/g,
+            const rgx = /((\w+)\s*: )?vector\d\((-?\d+(\.\d+)?), (-?\d+(\.\d+)?)/g,
                 vectors = [];
 
             let m;
@@ -171,9 +171,9 @@ export default {
             while ((m = rgx.exec(text)) !== null) {
                 if (m.index === rgx.lastIndex) rgx.lastIndex++;
 
-                const name = m[1],
-                    x = parseFloat(m[2]),
-                    y = parseFloat(m[4]);
+                const name = m[2],
+                    x = parseFloat(m[3]),
+                    y = parseFloat(m[5]);
 
                 vectors.push({
                     x: x,
