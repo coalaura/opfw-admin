@@ -23,10 +23,18 @@ const MapEncoder = {
 		Vue.prototype.buildMapUrl = (connect, points) => {
 			const buffer = [connect ? 1 : 0];
 
+			let last;
+
 			for (const point of points) {
+				if (last && point.x === last.x && point.y === last.y) {
+					continue;
+				}
+
 				writeInt24LE(buffer, Math.round(point.x * 100));
 				writeInt24LE(buffer, Math.round(point.y * 100));
 				writeString(buffer, point.label || "");
+
+				last = point;
 			}
 
 			const base64 = Uint8Array.from(buffer)
