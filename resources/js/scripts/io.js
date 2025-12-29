@@ -104,6 +104,12 @@ class IO {
 	}
 
 	#trigger(type, data = null, length = 0) {
+		if (type === "ping") {
+			this.emit("pong");
+
+			return;
+		}
+
 		if (type !== "message") {
 			console.log(`[${this.#type}]${this.#connected ? ` ${(Math.floor(Date.now() / 100) - this.#connected) / 10}s -` : ""} Received "${type}" event${length > 0 ? `(${length} bytes)` : ""}`);
 		}
