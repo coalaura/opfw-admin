@@ -116,6 +116,20 @@ export default {
             } else {
                 this.pageStore.remove("header_closed");
             }
+        },
+
+        async authPoll() {
+            try {
+                const response = await fetch("/meow");
+
+                if (!response.ok && response.status === 401) {
+                    window.location.reload();
+                }
+            } catch {}
+
+            setTimeout(() => {
+                this.authPoll();
+            }, 15000);
         }
     },
     updated() {
@@ -157,6 +171,10 @@ export default {
 
             metallic.style.setProperty('--shine-delay', `${randomDelay}s`);
         }
+
+        setTimeout(() => {
+            this.authPoll();
+        }, 10000);
     }
 };
 </script>
