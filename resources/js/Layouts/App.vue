@@ -3,7 +3,7 @@
 
         <div class="flex flex-col h-screen">
             <!-- Navbar -->
-            <navbar :showChat.sync="showChat" />
+            <navbar />
 
             <!-- Modals -->
             <portal-target name="modals" />
