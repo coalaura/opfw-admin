@@ -113,6 +113,8 @@
                     </div>
                 </div>
             </div>
+
+            <i class="dark:text-white absolute top-1.5 right-2 shadow-sm cursor-pointer !transition-opacity opacity-50 hover:opacity-100 fas fa-comment" :title="t('staff_chat.title')" @click="showStaffChat" v-if="$page.discord && !$page.discord.sso"></i>
         </nav>
 
         <modal :show.sync="showingPermissions">
