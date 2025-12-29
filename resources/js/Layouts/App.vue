@@ -129,7 +129,7 @@ export default {
 
             setTimeout(() => {
                 this.authPoll();
-            }, 20000);
+            }, 30000);
         }
     },
     updated() {
