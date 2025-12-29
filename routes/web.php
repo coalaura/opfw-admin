@@ -74,11 +74,7 @@ Route::group(['middleware' => ['session']], function () {
 
 Route::group(['middleware' => ['session']], function() {
     Route::get('/meow', function (Request $request) {
-        if (user()) {
-            abort(204);
-        }
-
-        abort(401);
+        abort(user() ? 204 : 401);
     });
 });
 
