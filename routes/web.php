@@ -72,6 +72,16 @@ Route::group(['middleware' => ['session']], function () {
     Route::get('/sso/{token}/{license}', [LoginController::class, 'sso']);
 });
 
+Route::group(['middleware' => ['session']], function() {
+    Route::get('/meow', function (Request $request) {
+        if (user()) {
+            abort(204);
+        }
+
+        abort(401);
+    });
+});
+
 // Routes requiring being logged in as a staff member.
 Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     // Refresh Discord
