@@ -184,6 +184,7 @@ class DeviceHelper
         "_iriun_",
         "_boya_",
         "uairplayer",
+        "_beats_",
     ];
 
     public static function check(array $devices): bool
