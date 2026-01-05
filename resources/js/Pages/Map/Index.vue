@@ -1213,7 +1213,7 @@ export default {
 
             this.map.attributionControl.addAttribution('map by <a href="https://github.com/coalaura" target="_blank">Laura</a> <i>accurate to about 1-2m</i>');
 
-            L.tileLayer("https://worryfree.host/tiles/{z}/{x}/{y}.webp", {
+            L.tileLayer("https://tiles.shrt.day/{z}/{x}/{y}.webp", {
                 noWrap: true,
                 bounds: [
                     [0, 0],
