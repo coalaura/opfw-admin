@@ -365,6 +365,8 @@ export default {
                 case 'illegal_server_event':
                 case 'honeypot':
                     return metadata.eventName;
+                case 'illegal_event_usage':
+                    return metadata.event;
                 case 'suspicious_explosion':
                     return metadata.explosionEvent;
                 case 'suspicious_transfer':
