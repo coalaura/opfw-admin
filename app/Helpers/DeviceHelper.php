@@ -104,6 +104,7 @@ class DeviceHelper
         "_nt_usb_", // 131 hits
         "_hodetelefoner_", // 128 hits
         "_fantech_", // 128 hits
+        "virtualcamera", // 127 hits
         "_meta_", // 122 hits
         "_behringer_", // 114 hits
         "studiocam_", // 104 hits
