@@ -227,7 +227,7 @@ class DeviceHelper
     }
 }
 
-//*
+/*
 $test = <<<EOF
 EOF;
 
