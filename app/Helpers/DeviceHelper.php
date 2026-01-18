@@ -12,7 +12,7 @@ class DeviceHelper
         "_nvidia_", // 37739 hits
         "_realtek_", // 30524 hits
         "_headset_", // 23556 hits
-        "_camera_", // 20613 hits
+        "camera_", // 20613 hits
         "_headphones_", // 16011 hits
         "_voicemeeter_", // 14338 hits
         "_steelseries_", // 13791 hits
@@ -104,7 +104,6 @@ class DeviceHelper
         "_nt_usb_", // 131 hits
         "_hodetelefoner_", // 128 hits
         "_fantech_", // 128 hits
-        "virtualcamera", // 127 hits
         "_meta_", // 122 hits
         "_behringer_", // 114 hits
         "studiocam_", // 104 hits
@@ -140,13 +139,11 @@ class DeviceHelper
         "_nuroum_", // 28 hits
         "_motu_", // 24 hits
         "_usb_dac_", // 24 hits
-        "_streamcamera_", // 20 hits
         "_fineshare_", // 17 hits
         "_micusb", // 14 hits
         "_viro_plus_", // 13 hits
         "_chromacam_", // 12 hits
         "_rc_505", // 12 hits
-        "_easycamera_", // 11 hits
         "_katana_", // 11 hits
         "_avstream_", // 10 hits
         "_wistream_", // 10 hits
@@ -185,6 +182,7 @@ class DeviceHelper
         "_boya_",
         "uairplayer",
         "_beats_",
+        "_windows_",
     ];
 
     public static function check(array $devices): bool
@@ -228,7 +226,7 @@ class DeviceHelper
     }
 }
 
-/*
+//*
 $test = <<<EOF
 EOF;
 
