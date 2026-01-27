@@ -24,7 +24,7 @@ class DeviceHelper
         "_output_",
         "_hyperx_",
         "_gaming_",
-        "_webcam_",
+        "_webcam",
         "_pro_",
         "_angle_",
         "_direct3d11_",
@@ -101,7 +101,6 @@ class DeviceHelper
         "_k66_",
         "_jabra_",
         "_plantronics_",
-        "_nt_usb_",
         "_hodetelefoner_",
         "_fantech_",
         "virtualcam",
@@ -139,7 +138,6 @@ class DeviceHelper
         "_minifuse_",
         "_nuroum_",
         "_motu_",
-        "_usb_dac_",
         "_fineshare_",
         "_micusb",
         "_viro_plus_",
@@ -184,6 +182,42 @@ class DeviceHelper
         "_beats_",
         "_windows_",
         "_z632_",
+        "_htc_vive_",
+        "gamecapture",
+        "_usb_",
+        "_ultraleap_",
+        "_universal_",
+        "_live_cam",
+        "_bigeye_",
+        "_dac_amp_",
+        "_truevision_",
+        "_cybertrack_",
+        "facecam_",
+        "_rog_delta_",
+        "_nova_",
+        "_ipcam_",
+        "sprekers_",
+        "_portable_",
+        "_neweye_",
+        "_galaxy_buds",
+        "_soundgrid_",
+        "_smart_tv_",
+        "_default_device_",
+        "zoomcam_",
+        "_mixcast_",
+        "_ekacom_",
+        "_osmopocket",
+        "_airhug_",
+        "_ultra_hd_",
+        "_xpresscam",
+        "_1080p_",
+        "_vidbox_",
+        "_vision_",
+        "_g06_bt_",
+        "_tel_fono_",
+        "_aula_a_",
+        "_localhost_",
+        "_none_",
     ];
 
     public static function check(array $devices): bool
@@ -207,7 +241,9 @@ class DeviceHelper
     {
         // strip "videoinput_", "audioinput_", etc.
         return array_values(array_filter(array_map(function ($device) {
-            return preg_replace('/^(video|audio)(in|out)put_?/m', '', $device);
+            $device = preg_replace('/^(video|audio)(in|out)put_?/m', '', $device);
+
+            return sprintf('_%s_', $device);
         }, $devices), function ($device) {
             return $device && strlen($device) >= 5 && ! substr($device, 0, 4) !== "gpu_" && ! preg_match('/^(_[a-z0-9]{1,4})*_[\da-f]{4}_[\da-f]{4}_$/', $device);
         }));
@@ -215,8 +251,6 @@ class DeviceHelper
 
     public static function has(string $device): ?string
     {
-        $device = sprintf('_%s_', $device);
-
         foreach (self::Wordlist as $word) {
             if (strpos($device, $word) !== false) {
                 return $word;
