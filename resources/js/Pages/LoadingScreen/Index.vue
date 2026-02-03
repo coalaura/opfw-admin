@@ -231,27 +231,41 @@ export default {
             return !!test.match(/\.(mp4|webm)$/);
         },
         isActive(picture) {
-            if (picture.excluded) return false;
-            if (this.hasIncluded && !picture.included) return false;
+            if (picture.excluded) {
+                return false;
+            }
+
+            if (this.hasIncluded && !picture.included) {
+                return false;
+            }
+
             return true;
         },
         async toggleInclude(picture) {
             picture.included = !picture.included;
+
             if (picture.included) {
                 picture.excluded = false;
             }
+
             await this.savePictureStatus(picture);
         },
         async toggleExclude(picture) {
             picture.excluded = !picture.excluded;
+
             if (picture.excluded) {
                 picture.included = false;
             }
+
             await this.savePictureStatus(picture);
         },
         async savePictureStatus(picture) {
-            if (this.isLoading) return;
+            if (this.isLoading) {
+                return;
+            }
+
             this.isLoading = true;
+
             try {
                 await this.$inertia.put(`/loading_screen/${picture.id}`, {
                     image_url: picture.image_url,
@@ -260,6 +274,7 @@ export default {
                     excluded: picture.excluded,
                 });
             } catch (e) {}
+
             this.isLoading = false;
         },
         async deletePicture(e, id) {

@@ -362,6 +362,7 @@
         "failed_count_label": "Bildet kunne ikke lastes inn.",
         "image_description": "Bildebeskrivelse",
         "loading_images": "Lastet {0} av {1} bilder...",
+        "no_description": "Ingen beskrivelse",
         "picture": "Bilde-URL",
         "pictures": "Bilder",
         "remove": "Fjern",

@@ -362,6 +362,7 @@
         "failed_count_label": "Image failed ta load.",
         "image_description": "Image description",
         "loading_images": "Loaded {0} o' {1} images...",
+        "no_description": "Ain't no description.",
         "picture": "Picture URL",
         "pictures": "Pictures",
         "remove": "Remove",

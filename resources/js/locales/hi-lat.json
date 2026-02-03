@@ -362,6 +362,7 @@
         "failed_count_label": "Chhavi load nahi ho paayi.",
         "image_description": "Chhavi varnan",
         "loading_images": "{0} me se {1} chhavi load ho chuki hain...",
+        "no_description": "Koi varan nahi",
         "picture": "Chhavi URL",
         "pictures": "Chhaviyaan",
         "remove": "Hatao",

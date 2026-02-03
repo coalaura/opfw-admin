@@ -362,6 +362,7 @@
         "failed_count_label": "Pic fail load.",
         "image_description": "Pic descrip.",
         "loading_images": "Loaded {0} ov {1} pic...",
+        "no_description": "No describe.",
         "picture": "Pic URL",
         "pictures": "Pics",
         "remove": "Take away",
