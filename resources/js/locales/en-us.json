@@ -150,7 +150,12 @@
         "failed_count_label": "Image failed to load.",
         "small_size_count_label": "Image is too small. Recommended size is at least 1920x1080, current resolution is {0}.",
         "loading_images": "Loaded {0} of {1} images...",
-        "no_description": "No description"
+        "no_description": "No description",
+        "include": "Include this image",
+        "exclude": "Exclude this image",
+        "included": "Included",
+        "excluded": "Excluded",
+        "inactive": "Inactive"
     },
     "backstories": {
         "title": "Backstories",
@@ -203,7 +208,6 @@
         "auto_refresh": "Toggle the auto-refresh.",
         "profile": "{0} - {1} (#{2})",
         "server": "Server: {0}",
-
         "live": "Overwatch - Live",
         "live_description": "Live spectate of players in the server.",
         "streams": "Streams",
@@ -338,13 +342,11 @@
         "license": "License Identifier",
         "xp": "XP Level",
         "footer": "Your actions contribute to the success and growth of OP-FW. Through the reliable systems of OP-Framework, your efforts are recognized and celebrated as part of our collective progress. Teamwork drives achievement, and dedication builds excellence. Glory to the OP-FW!",
-
         "title_chinese": "Citizen Contribution Tracker",
         "description_chinese": "A detailed record of your contributions to societal harmony and progress, monitored by the Party for the benefit of all. Remember, every action reflects your dedication to the collective future.",
         "xp_chinese": "Social Credits",
         "player_chinese": "Citizen",
         "footer_chinese": "Every action you take is a testament to your loyalty and commitment to the Party. Under the watchful eyes of the system, your contributions are recorded and celebrated as part of our collective progress. Obedience ensures harmony, and vigilance guarantees prosperity. Glory to the CCP!",
-
         "wiped-entities": "Entities Wiped",
         "kicked-player": "Players Kicked",
         "banned-player": "Players Banned",
@@ -370,7 +372,6 @@
         "respawned-vehicle": "Vehicles Respawned",
         "garaged-vehicle": "Vehicles Garaged",
         "ungaraged-vehicle": "Vehicles Ungaraged",
-
         "level": "Level {0}",
         "level_0": "Unawakened Wanderer",
         "level_0_description": "Though you have set foot upon the staff path, your potential remains dormant and unshaped. You glean knowledge from the whispers of mentors and watch the realm's energies swirl around you with curiosity. The seeds of greatness lie within your grasp, waiting for the moment you step forward to claim them.",
@@ -433,7 +434,6 @@
         "timeouts_val": "Timeouts",
         "crashes_val": "Crashes",
         "average_5_day": "Average over the last 5 days.",
-
         "casino": "Casino Revenue",
         "casino_details": "Combined revenue from all available games in the casino.",
         "pdm": "PDM Sales",
@@ -1688,12 +1688,10 @@
         "title": "Staff Roles",
         "description": "Player role management.",
         "readonly": "Read Only Mode",
-
         "player": "Player",
         "save": "Save Changes",
         "reset": "Reset",
         "add": "Add player with license identifier.",
-
         "is_super_admin": "Is Super Admin",
         "is_senior_staff": "Is Senior Staff",
         "is_staff": "Is Staff",
