@@ -151,11 +151,11 @@
         "small_size_count_label": "Image is too small. Recommended size is at least 1920x1080, current resolution is {0}.",
         "loading_images": "Loaded {0} of {1} images...",
         "no_description": "No description",
-        "include": "Include this image",
-        "exclude": "Exclude this image",
-        "included": "Included",
-        "excluded": "Excluded",
-        "inactive": "Inactive"
+        "include": "Only use selected images (excludes all others)",
+        "exclude": "Never show this image",
+        "included": "Always shown",
+        "excluded": "Blocked",
+        "inactive": "Not shown"
     },
     "backstories": {
         "title": "Backstories",
