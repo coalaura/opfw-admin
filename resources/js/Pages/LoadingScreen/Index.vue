@@ -272,6 +272,8 @@ export default {
                     description: picture.description,
                     included: picture.included,
                     excluded: picture.excluded,
+                }, {
+                    preserveScroll: true
                 });
             } catch (e) {}
 
