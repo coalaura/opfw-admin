@@ -24,7 +24,7 @@ class CharacterResource extends JsonResource
 
         if ($modelHash) {
             $pedModels = ServerAPI::getPeds();
-            $pedModel = $pedModels ? $pedModels[$modelHash] : null;
+            $pedModel = $pedModels && isset($pedModels[$modelHash]) ? $pedModels[$modelHash] : null;
 
             $modelName = $pedModel ? $pedModel["ModelName"] : "";
         }
