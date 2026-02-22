@@ -95,8 +95,12 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/discord', [LookupController::class, 'renderDiscord']);
     Route::post('/discord', [LookupController::class, 'playerInfoDiscord']);
 
+    // Staff Chat.
     Route::get('/chat', [StaffChatController::class, 'chat']);
     Route::post('/chat', [StaffChatController::class, 'sendChat']);
+
+    // Goto Player.
+    Route::get('/goto/{identifier}', [PlayerController::class, 'goto']);
 
     // Players.
     Route::get('/players', [PlayerController::class, 'index']);

@@ -7,7 +7,6 @@ use App\Helpers\GeneralHelper;
 use App\Helpers\ServerAPI;
 use App\Helpers\StatisticsHelper;
 use App\Helpers\StatusHelper;
-use App\Http\Controllers\PlayerDataController;
 use App\Http\Resources\BanResource;
 use App\Http\Resources\CharacterSlimResource;
 use App\Http\Resources\PlayerIndexResource;
@@ -44,18 +43,20 @@ class PlayerController extends Controller
         $identifier = $request->input('identifier');
 
         if ($identifier) {
-            if (Str::startsWith($identifier, '~') or ! Str::contains($identifier, ':')) {
-                $identifier = substr($identifier, 1);
+            if (Str::startsWith($identifier, '~')) {
+                $clean = substr($identifier, 1);
 
+                $query->where('identifiers', 'LIKE', '%' . $clean . '%');
+            } elseif (! Str::contains($identifier, ':')) {
                 $query->where('identifiers', 'LIKE', '%' . $identifier . '%');
             } else {
                 $id = '"' . $identifier . '"';
 
-                $query->where(DB::raw("JSON_CONTAINS(identifiers, '$id')"), '=', '1');
+                $query->whereRaw("JSON_CONTAINS(identifiers, ?)", [$id]);
             }
         }
 
-        // Filtering by serer-id.
+        // Filtering by server-id.
         if ($server = $request->input('server')) {
             $online = array_keys(array_filter(StatusHelper::all(), function ($player) use ($server) {
                 return $player['source'] === intval($server);
@@ -67,6 +68,7 @@ class PlayerController extends Controller
         // Filtering by enabled permission
         $available = ServerAPI::getPermissions();
         $enablable = $request->input('enablable');
+
         if (isset($available[$enablable])) {
             $query->where(DB::raw('JSON_CONTAINS(enabled_commands, \'"' . $enablable . '"\')'), '=', '1');
         }
@@ -115,6 +117,51 @@ class PlayerController extends Controller
             'time'      => $end - $start,
             'enablable' => ServerAPI::getPermissions(),
         ]);
+    }
+
+    public function goto(string $identifier)
+    {
+        $type = $this->detectIdentifierType($identifier);
+
+        // fast paths
+        switch ($type) {
+            case 'license':
+                if (! Str::startsWith($identifier, 'license:')) {
+                    $identifier = sprintf('license:%s', $identifier);
+                }
+
+                return redirect(sprintf('/players/%s', $identifier));
+            case 'discord':
+                if (Str::startsWith($identifier, 'discord:')) {
+                    $identifier = str_replace('discord:', '', $identifier);
+                }
+
+                $player = Player::query()
+                    ->where('discord_id', '=', $identifier)
+                    ->orderBy('last_connection', 'DESC')
+                    ->first();
+
+                if ($player) {
+                    return redirect(sprintf('/players/%s', $player->license_identifier));
+                }
+        }
+
+        $query = Player::query();
+
+        if (Str::contains($identifier, ':')) {
+            $query->whereRaw("JSON_CONTAINS(identifiers, ?)", ['"' . $identifier . '"']);
+        } else {
+            $query->where('identifiers', 'LIKE', '%' . $identifier . '%');
+        }
+
+        $player = $query->orderBy('last_connection', 'DESC')
+            ->first();
+
+        if (! $player) {
+            abort(404);
+        }
+
+        return redirect(sprintf('/players/%s', $player->license_identifier));
     }
 
     /**
@@ -216,17 +263,17 @@ class PlayerController extends Controller
         $isSenior = $this->isSeniorStaff($request);
 
         return Inertia::render('Players/Show', [
-            'player'            => new PlayerResource($player),
-            'characters'        => CharacterSlimResource::collection($player->characters),
-            'warnings'          => $player->fasterWarnings($isSenior),
-            'reactions'         => Warning::Reactions,
-            'animated'          => Warning::AnimatedReactions,
-            'kickReason'        => trim($request->query('kick')) ?? '',
-            'whitelisted'       => ! ! $whitelisted,
-            'blacklisted'       => ! ! $blacklisted,
-            'tags'              => Player::resolveTags(),
-            'enablable'         => ServerAPI::getPermissions(),
-            'uniqueBans'        => BanResource::collection($player->uniqueBans()),
+            'player'      => new PlayerResource($player),
+            'characters'  => CharacterSlimResource::collection($player->characters),
+            'warnings'    => $player->fasterWarnings($isSenior),
+            'reactions'   => Warning::Reactions,
+            'animated'    => Warning::AnimatedReactions,
+            'kickReason'  => trim($request->query('kick')) ?? '',
+            'whitelisted' => ! ! $whitelisted,
+            'blacklisted' => ! ! $blacklisted,
+            'tags'        => Player::resolveTags(),
+            'enablable'   => ServerAPI::getPermissions(),
+            'uniqueBans'  => BanResource::collection($player->uniqueBans()),
         ]);
     }
 

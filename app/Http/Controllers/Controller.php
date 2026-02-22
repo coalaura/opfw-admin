@@ -397,4 +397,69 @@ class Controller extends BaseController
 
         return null;
     }
+
+    protected function detectIdentifierType($identifier) {
+        if (empty($identifier) || !is_string($identifier)) {
+            return false;
+        }
+
+        $validTypes = ['steam', 'license', 'license2', 'fivem', 'xbl', 'live', 'discord', 'ip'];
+
+        if (strpos($identifier, ':') !== false) {
+            $parts = explode(':', $identifier);
+
+            if (count($parts) !== 2) {
+                return false;
+            }
+
+            $type = strtolower($parts[0]);
+
+            if (in_array($type, $validTypes)) {
+                return $type;
+            }
+
+            return false;
+        }
+
+        // Steam (15 chars, hex)
+        if (preg_match('/^[a-f0-9]{15}$/im', $identifier)) {
+            return 'steam';
+        }
+
+        // License2 (40 chars, hex)
+        if (preg_match('/^[a-f0-9]{40}$/im', $identifier)) {
+            return 'license2';
+        }
+
+        // FiveM (4 to 8 digits)
+        if (preg_match('/^\d{4,8}$/im', $identifier)) {
+            return 'fivem';
+        }
+
+        // XBL (16 digits) - Checked before 'live' to prioritize 16-digit matches to XBL
+        if (preg_match('/^\d{16}$/im', $identifier)) {
+            return 'xbl';
+        }
+
+        // Live (15-16 digits) - Will mostly catch 15 digits here since 16 is caught by XBL above
+        if (preg_match('/^\d{15,16}$/im', $identifier)) {
+            return 'live';
+        }
+
+        // Discord (17-19 digits)
+        if (preg_match('/^\d{17,19}$/im', $identifier)) {
+            $min = 1420070400000; // 2015-01-01 00:00:00
+            $max = (int) (microtime(true) * 1000); // Current timestamp in milliseconds
+
+            // Emulate BigInt right shift by 22
+            $snowflake = (int) $identifier;
+            $timestamp = ($snowflake >> 22) + 1420070400000;
+
+            if ($timestamp >= $min && $timestamp <= $max) {
+                return 'discord';
+            }
+        }
+
+        return false;
+    }
 }
