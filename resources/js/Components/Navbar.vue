@@ -229,7 +229,7 @@
             <div class="absolute inset-0" @click="hideGoto"></div>
 
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex bg-white rounded overflow-hidden shadow-lg dark:bg-dark-secondary dark:text-white border-2 border-gray-400 dark:border-gray-500">
-                <div class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-lg flex items-center">
+                <div class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-lg flex items-center select-none cursor-default">
                     {{ t('nav.goto') }}
                 </div>
 
