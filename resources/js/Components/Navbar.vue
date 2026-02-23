@@ -226,7 +226,7 @@
         </modal>
 
         <div v-if="gotoPlayer" class="fixed inset-0 backdrop-blur backdrop-filter" style="z-index: 9999; background-color: rgba(0, 0, 0, .5);">
-            <div class="absolute inset-0" @click="gotoPlayer = false"></div>
+            <div class="absolute inset-0" @click="hideGoto"></div>
 
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex bg-white rounded overflow-hidden shadow-lg dark:bg-dark-secondary dark:text-white border-2 border-gray-400 dark:border-gray-500">
                 <div class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-lg flex items-center">
@@ -584,6 +584,13 @@ export default {
 
             window.location.href = `/goto/${encodeURIComponent(query)}`;
         },
+        hideGoto() {
+            if (this.goingToPlayer) {
+                return;
+            }
+
+            this.gotoPlayer = false;
+        },
         async showDebugInfo() {
             if (this.loadingDebug) return;
 
@@ -696,7 +703,7 @@ export default {
 
             switch (event.key) {
                 case "Escape":
-                    this.gotoPlayer = false;
+                    this.hideGoto();
 
                     break;
                 case " ":
