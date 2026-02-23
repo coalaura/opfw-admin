@@ -697,17 +697,17 @@ export default {
             }, (Math.floor(Math.random() * 60) + 120) * 1000);
         },
         handleKeypress(event) {
-            if (this.goingToPlayer) {
-                return;
-            }
-
             switch (event.key) {
                 case "Escape":
-                    this.hideGoto();
+                    this.gotoPlayer = false;
 
                     break;
                 case " ":
                 case "p":
+                    if (this.goingToPlayer) {
+                        return;
+                    }
+
                     if (event.ctrlKey) {
                         event.preventDefault();
 
