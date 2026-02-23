@@ -51,7 +51,21 @@ export default {
          */
         hide() {
             this.$emit('update:show', false);
+        },
+
+        handleKeypress(event) {
+            if (event.key !== "Escape") {
+                return;
+            }
+
+            this.hide();
         }
+    },
+    created() {
+        window.addEventListener("keydown", this.handleKeypress);
+    },
+    destroyed() {
+        window.removeEventListener("keydown", this.handleKeypress);
     },
 }
 </script>

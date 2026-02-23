@@ -638,6 +638,8 @@
         "debug_system_uptime": "Systemets oppetid",
         "debug_user_agent": "Bruker-agent",
         "game_time": "Spilltid går 12 ganger raskere enn realtid.",
+        "goto": "Gå til",
+        "goto_player": "Gå til spilleren",
         "hide_header": "Klikk for å skjule/vise toppteksten.",
         "level_0": "Gjest",
         "level_1": "Ansatte",

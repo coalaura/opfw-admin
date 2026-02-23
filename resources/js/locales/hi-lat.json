@@ -638,6 +638,8 @@
         "debug_system_uptime": "System Uptime",
         "debug_user_agent": "User-Agent",
         "game_time": "In-Game Samay vastavik samay se 12 guna tez chal raha hai.",
+        "goto": "Jao",
+        "goto_player": "Player par jao",
         "hide_header": "Header ko chhupane/dikhane ke liye click karein.",
         "level_0": "Mehmaan",
         "level_1": "Karmachari",

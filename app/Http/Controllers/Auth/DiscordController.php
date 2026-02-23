@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Crypt;
  */
 class DiscordController extends Controller
 {
-    private ?string $discordApiError;
+    private ?string $discordApiError = null;
 
     public function login(Request $request)
     {
@@ -47,7 +47,11 @@ class DiscordController extends Controller
             return $this->text(400, 'Missing oauth2 state.');
         }
 
-        $url = 'https://' . $state;
+        if ($state === "localhost") {
+            $url = 'http://' . $state;
+        } else {
+            $url = 'https://' . $state;
+        }
 
         $url .= '/auth/complete?code=' . $request->get('code');
 

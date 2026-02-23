@@ -121,6 +121,12 @@ class PlayerController extends Controller
 
     public function goto(string $identifier)
     {
+        if (Str::startsWith($identifier, "?")) {
+            $search = trim(substr($identifier, 1));
+
+            return redirect(sprintf('/players?name=%s', urlencode($search)));
+        }
+
         $type = $this->detectIdentifierType($identifier);
 
         // fast paths

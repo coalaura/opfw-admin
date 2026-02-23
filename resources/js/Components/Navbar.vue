@@ -76,6 +76,11 @@
                             {{ t('staff_chat.title') }}
                         </button>
 
+                        <button @click="showGotoPlayer" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500">
+                            <i class="fas fa-location-arrow mr-1"></i>
+                            {{ t('nav.goto_player') }}
+                        </button>
+
                         <button @click="openMinesweeper" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" v-if="$page.discord && !$page.discord.sso">
                             <i class="fas fa-bomb mr-1"></i>
                             {{ t('nav.minesweeper') }}
@@ -220,6 +225,24 @@
             </template>
         </modal>
 
+        <div v-if="gotoPlayer" class="fixed inset-0 backdrop-blur backdrop-filter">
+            <div class="absolute inset-0" @click="gotoPlayer = false"></div>
+
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex bg-white rounded overflow-hidden shadow-lg dark:bg-dark-secondary dark:text-white border-2 border-gray-400 dark:border-gray-500">
+                <div class="px-4 py-2 bg-gray-200 dark:bg-gray-600 text-lg flex items-center">
+                    {{ t('nav.goto') }}
+                </div>
+
+                <div class="px-4 py-2 bg-gray-100 dark:bg-gray-700">
+                    <input v-model="gotoPlayerQuery" class="p-0 bg-transparent border-0 text-xl w-[540px]" @keydown="keydownGoto" ref="goto" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" />
+                </div>
+
+                <button class="flex items-center justify-center w-14 px-4" :class="gotoQueryValid ? 'bg-lime-300 hover:bg-lime-400 dark:bg-lime-600 dark:hover:bg-lime-700' : 'bg-gray-200 dark:bg-gray-600 cursor-not-allowed'" @click="clickGoto">
+                    <i class="fas fa-location-arrow"></i>
+                </button>
+            </div>
+        </div>
+
         <modal :show.sync="showingWorldTime">
             <template #header>
                 <h1 class="dark:text-white">
@@ -341,6 +364,9 @@ export default {
             showingPermissions: false,
             showingContext: false,
 
+            gotoPlayer: false,
+            gotoPlayerQuery: "",
+
             serverStatusLoaded: false,
             serverUptime: false,
             serverUptimeDetail: false,
@@ -408,6 +434,17 @@ export default {
             }
 
             return `https://${ip}`;
+        },
+        gotoQueryValid() {
+            const query = this.gotoPlayerQuery?.trim();
+
+            if (!query) {
+                return false;
+            } else if (query.startsWith("?")) {
+                return true;
+            }
+
+            return this.detectIdentifierType(query);
         }
     },
     methods: {
@@ -507,6 +544,28 @@ export default {
         },
         formatUptime(pMilliseconds, pFull) {
             return this.formatSeconds(Math.round(pMilliseconds / 1000), pFull ? "YMdhm" : "dh", !pFull);
+        },
+        showGotoPlayer() {
+            this.hideContext();
+
+            this.gotoPlayer = true;
+            this.gotoPlayerQuery = "";
+
+            this.$nextTick(() => {
+                this.$refs.goto.focus();
+            });
+        },
+        keydownGoto(event) {
+            if (event.key === "Enter") {
+                this.clickGoto();
+            }
+        },
+        clickGoto() {
+            if (!this.gotoQueryValid) {
+                return;
+            }
+
+            window.location.href = `/goto/${encodeURIComponent(this.gotoPlayerQuery)}`;
         },
         async showDebugInfo() {
             if (this.loadingDebug) return;
@@ -612,7 +671,33 @@ export default {
             setTimeout(() => {
                 this.renderAbbreviation();
             }, (Math.floor(Math.random() * 60) + 120) * 1000);
+        },
+        handleKeypress(event) {
+            switch (event.key) {
+                case "Escape":
+                    this.gotoPlayer = false;
+
+                    break;
+                case " ":
+                case "p":
+                    if (event.ctrlKey) {
+                        event.preventDefault();
+
+                        if (!this.gotoPlayer) {
+                            this.showGotoPlayer();
+                        }
+                    }
+
+                    break;
+            }
+
         }
+    },
+    created() {
+        window.addEventListener("keydown", this.handleKeypress);
+    },
+    destroyed() {
+        window.removeEventListener("keydown", this.handleKeypress);
     },
     async mounted() {
         this.subscribeMisc("navbar", data => {

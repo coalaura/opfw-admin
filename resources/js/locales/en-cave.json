@@ -638,6 +638,8 @@
         "debug_system_uptime": "System Up Time",
         "debug_user_agent": "User-Agent",
         "game_time": "In-game time 12x faster than real time.",
+        "goto": "Go",
+        "goto_player": "Go to player",
         "hide_header": "Click to hide/show header.",
         "level_0": "Guest",
         "level_1": "Staff",
