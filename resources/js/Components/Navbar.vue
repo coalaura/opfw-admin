@@ -699,7 +699,9 @@ export default {
         handleKeypress(event) {
             switch (event.key) {
                 case "Escape":
-                    this.gotoPlayer = false;
+                    event.preventDefault();
+
+                    this.hideGoto();
 
                     break;
                 case " ":
