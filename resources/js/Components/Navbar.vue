@@ -364,10 +364,6 @@ export default {
             showingPermissions: false,
             showingContext: false,
 
-            goingToPlayer: false,
-            gotoPlayer: false,
-            gotoPlayerQuery: "",
-
             serverStatusLoaded: false,
             serverUptime: false,
             serverUptimeDetail: false,
@@ -397,7 +393,60 @@ export default {
             banner: false,
 
             streamers: false,
-            showingStreamers: false
+            showingStreamers: false,
+
+            goingToPlayer: false,
+            gotoPlayer: false,
+            gotoPlayerQuery: "",
+
+            gotoShortcuts: {
+                "@me": `/players/${this.$page.auth.player.licenseIdentifier}`,
+
+                "@home": "/",
+                "@dash": "/",
+
+                "@ac": "/anti_cheat",
+                "@anti": "/anti_cheat",
+                "@cheat": "/anti_cheat",
+
+                "@y": "/y",
+                "@twitter": "/y",
+
+                "@ban": "/bans",
+                "@bans": "/bans",
+
+                "@stocks": "/stocks/companies",
+                "@comp": "/stocks/companies",
+                "@companies": "/stocks/companies",
+                "@realty": "/stocks/companies",
+
+                "@cont": "/containers",
+                "@container": "/containers",
+                "@containers": "/containers",
+                "@storage": "/containers",
+                "@store": "/containers",
+
+                "@dmg": "/damage",
+                "@damage": "/damage",
+
+                "@log": "/logs",
+                "@logs": "/logs",
+
+                "@player": "/players",
+                "@players": "/players",
+
+                "@char": "/characters",
+                "@character": "/characters",
+                "@characters": "/characters",
+
+                "@load": "/loading_screen",
+                "@loading": "/loading_screen",
+
+                "@map": "/map",
+                "@live": "/live",
+                "@new": "/new_players",
+                "@money": "/money_logs",
+            },
         }
     },
     computed: {
@@ -447,7 +496,7 @@ export default {
                 return false;
             } else if (query.startsWith("?")) {
                 return true;
-            } else if (query === "@me") {
+            } else if (query in this.gotoShortcuts) {
                 return true;
             }
 
@@ -576,8 +625,10 @@ export default {
 
             this.goingToPlayer = true;
 
-            if (query === "@me") {
-                window.location.href = `/players/${this.$page.auth.player.licenseIdentifier}`;
+            const shortcut = this.gotoShortcuts[query];
+
+            if (shortcut) {
+                window.location.href = shortcut;
 
                 return;
             }
