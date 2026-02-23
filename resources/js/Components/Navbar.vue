@@ -436,11 +436,13 @@ export default {
             return `https://${ip}`;
         },
         gotoQueryValid() {
-            const query = this.gotoPlayerQuery?.trim();
+            const query = (this.gotoPlayerQuery || "").trim().toLowerCase();
 
             if (!query) {
                 return false;
             } else if (query.startsWith("?")) {
+                return true;
+            } else if (query === "@me") {
                 return true;
             }
 
@@ -561,11 +563,19 @@ export default {
             }
         },
         clickGoto() {
+            const query = (this.gotoPlayerQuery || "").trim().toLowerCase();
+
             if (!this.gotoQueryValid) {
                 return;
             }
 
-            window.location.href = `/goto/${encodeURIComponent(this.gotoPlayerQuery)}`;
+            if (query === "@me") {
+                window.location.href = `/players/${this.$page.auth.player.licenseIdentifier}`;
+
+                return;
+            }
+
+            window.location.href = `/goto/${encodeURIComponent(query)}`;
         },
         async showDebugInfo() {
             if (this.loadingDebug) return;
