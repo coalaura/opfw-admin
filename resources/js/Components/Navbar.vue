@@ -225,7 +225,7 @@
             </template>
         </modal>
 
-        <div v-if="gotoPlayer" class="fixed inset-0 backdrop-blur backdrop-filter">
+        <div v-if="gotoPlayer" class="fixed inset-0 backdrop-blur backdrop-filter" style="z-index: 9998; background-color: rgba(0, 0, 0, .5);">
             <div class="absolute inset-0" @click="gotoPlayer = false"></div>
 
             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex bg-white rounded overflow-hidden shadow-lg dark:bg-dark-secondary dark:text-white border-2 border-gray-400 dark:border-gray-500">
