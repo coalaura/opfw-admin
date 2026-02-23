@@ -364,6 +364,7 @@ export default {
             showingPermissions: false,
             showingContext: false,
 
+            goingToPlayer: false,
             gotoPlayer: false,
             gotoPlayerQuery: "",
 
@@ -436,6 +437,10 @@ export default {
             return `https://${ip}`;
         },
         gotoQueryValid() {
+            if (this.goingToPlayer) {
+                return false;
+            }
+
             const query = (this.gotoPlayerQuery || "").trim().toLowerCase();
 
             if (!query) {
@@ -569,6 +574,8 @@ export default {
                 return;
             }
 
+            this.goingToPlayer = true;
+
             if (query === "@me") {
                 window.location.href = `/players/${this.$page.auth.player.licenseIdentifier}`;
 
@@ -683,6 +690,10 @@ export default {
             }, (Math.floor(Math.random() * 60) + 120) * 1000);
         },
         handleKeypress(event) {
+            if (this.goingToPlayer) {
+                return;
+            }
+
             switch (event.key) {
                 case "Escape":
                     this.gotoPlayer = false;
@@ -700,7 +711,6 @@ export default {
 
                     break;
             }
-
         }
     },
     created() {
