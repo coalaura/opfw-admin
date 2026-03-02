@@ -98,7 +98,7 @@
                     <li>...almost exclusively for <b>cheating or modding</b> purposes.</li>
                 </ul>
 
-                <p class="mt-2 text-red-500 dark:text-red-400 font-semibold">
+                <p class="mt-2 italic">
                     Note: Our Anti-Cheat now automatically detects this specific disconnect reason and will ban the player immediately.
                 </p>
 
