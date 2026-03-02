@@ -87,6 +87,23 @@
 
                 <div class="w-full h-px bg-gray-700 dark:bg-gray-300 my-4"></div>
 
+                <img :src="'/images/docs/reason_incompatible.png'" class="w-full shadow-md mb-3 border border-gray-500" />
+
+                <p class="mb-1">
+                    This specific crash reason (<code>Program is incompatible</code>) is triggered...
+                </p>
+
+                <ul class="w-full pl-8 list-disc">
+                    <li>...by a player attempting to load a third-party program that injects into the game/FiveM.</li>
+                    <li>...almost exclusively for <b>cheating or modding</b> purposes.</li>
+                </ul>
+
+                <p class="mt-2 text-red-500 dark:text-red-400 font-semibold">
+                    Note: Our Anti-Cheat now automatically detects this specific disconnect reason and will ban the player immediately.
+                </p>
+
+                <div class="w-full h-px bg-gray-700 dark:bg-gray-300 my-4"></div>
+
                 <p class="mb-1">
                     <b>One thing to keep in mind</b> is that disconnect reasons <u>can be faked</u>. By typing "<i>quit meow</i>" in the F8 console for example...
                 </p>
