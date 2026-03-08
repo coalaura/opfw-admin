@@ -19,7 +19,7 @@
                 {{ character.pedModelName ? character.pedModelName : character.pedModelHash }} <i class="fas fa-pencil-alt cursor-pointer" @click="editingPedModel = true" v-if="$page.auth.player.isSuperAdmin"></i>
             </div>
 
-            <div class="mt-0.5 italic text-sm font-mono text-gray-500 dark:text-gray-400" v-if="character.coords">
+            <div class="mt-0.5 italic text-sm font-mono text-gray-500 dark:text-gray-400" v-if="character.coords && typeof character.coords === 'object'">
                 <span v-if="isOffline">{{ character.coords.x.toFixed(1) }}, {{ character.coords.y.toFixed(1) }}, {{ character.coords.z.toFixed(1) }}</span>
                 <span class="blur-xs font-semibold" :title="t('players.characters.no_coords')" v-else>123.4, -567.8, 901.2</span>
             </div>
