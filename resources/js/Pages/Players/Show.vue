@@ -2971,7 +2971,7 @@ export default {
         },
         highlightUnicode(text) {
             return text.split('').map(char => {
-                if (char.match(/[a-z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]/)) return char;
+                if (char.match(/[a-zA-Z0-9!"#$%&'()*+,.\/:;<=>?@\[\] ^_`{|}~-]/)) return char;
 
                 return `\\u${(`0000${char.charCodeAt(0).toString(16)}`).slice(-4)}`;
             }).join('');
