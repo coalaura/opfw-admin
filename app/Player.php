@@ -489,7 +489,7 @@ class Player extends Model
         }
 
         foreach ($aliases as $alias) {
-            if (! preg_match('/[a-z0-9]/i', $alias)) {
+            if (! preg_match('/[a-zA-Z0-9]/', $alias)) {
                 continue;
             }
 
