@@ -145,9 +145,15 @@ export default {
                 hidden: !this.perm.check(this.perm.PERM_MONEY_LOGS),
             },
             {
-                label: "phone.title",
+                label: "phone_call.title",
                 icon: "fas fa-phone",
-                url: "/phone_logs",
+                url: "/phone_call",
+                hidden: !this.perm.check(this.perm.PERM_PHONE_LOGS),
+            },
+            {
+                label: "phone_msg.title",
+                icon: "fas fa-sms",
+                url: "/phone_msg",
                 hidden: !this.perm.check(this.perm.PERM_PHONE_LOGS),
             },
             {
@@ -343,7 +349,8 @@ export default {
                 children: [
                     "/logs",
                     "/damage",
-                    "/phone_logs",
+                    "/phone_call",
+                    "/phone_msg",
                     "/money_logs",
                     "/panel",
                     "/searches",

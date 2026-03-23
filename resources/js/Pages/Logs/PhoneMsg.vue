@@ -5,10 +5,10 @@
             <h1 class="dark:text-white">
                 <i class="mr-3 fas fa-unlock-alt" :title="perm.restriction(perm.PERM_PHONE_LOGS)"></i>
 
-                {{ t('phone.title') }}
+                {{ t('phone_msg.title') }}
             </h1>
             <p>
-                {{ t('phone.description') }}
+                {{ t('phone_msg.description') }}
             </p>
         </portal>
 
@@ -23,7 +23,7 @@
                             <!-- Participant 1 -->
                             <div class="w-full px-3 mb-4">
                                 <label class="block mb-2" for="number1">
-                                    {{ t('phone.number1') }}
+                                    {{ t('phone_msg.number1') }}
                                 </label>
                                 <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="number1" placeholder="123-4567" v-model="filters.number1">
                             </div>
@@ -31,7 +31,7 @@
                             <!-- Participant 2 -->
                             <div class="w-full px-3 mb-4">
                                 <label class="block mb-2" for="number2">
-                                    {{ t('phone.number2') }}
+                                    {{ t('phone_msg.number2') }}
                                 </label>
                                 <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="number2" placeholder="987-6543" v-model="filters.number2">
                             </div>
@@ -39,7 +39,7 @@
                             <!-- Message -->
                             <div class="w-full px-3 mb-4">
                                 <label class="block mb-2" for="message">
-                                    {{ t('phone.message') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+                                    {{ t('phone_msg.message') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                                 </label>
                                 <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" placeholder="Some text message" v-model="filters.message" :title="previewQuery(filters.message)">
                             </div>
@@ -99,14 +99,16 @@
                             <div class="flex justify-center" v-if="hasMore">
                                 <button class="px-3 py-1 border-2 rounded bg-opacity-50 bg-gray-300 dark:bg-gray-800 border-gray-500 font-semibold" @click="more">
                                     <i class="fas fa-plus mr-1"></i>
-                                    {{ t('phone.more') }}
+                                    {{ t('phone_msg.more') }}
                                 </button>
                             </div>
 
                             <div class="flex justify-center" v-else-if="messages.length === 0">
-                                <div class="px-3 py-1 border-2 rounded bg-opacity-50 bg-gray-300 dark:bg-gray-800 border-gray-500 font-semibold">{{ t('phone.no_messages') }}</div>
+                                <div class="px-3 py-1 border-2 rounded bg-opacity-50 bg-gray-300 dark:bg-gray-800 border-gray-500 font-semibold">{{ t('phone_msg.no_messages') }}</div>
                             </div>
                         </template>
+
+                        <div v-else class="text-center px-3 py-1"><i class="fas fa-spinner fa-spin text-xl"></i></div>
                     </div>
                 </div>
             </div>
@@ -121,14 +123,16 @@ import VSection from './../../Components/Section.vue';
 import Pagination from './../../Components/Pagination.vue';
 
 // bg-red-300 dark:bg-red-900 border-red-500 text-red-500
+// bg-orange-300 dark:bg-orange-900 border-rose-500 text-rose-500
 // bg-yellow-300 dark:bg-yellow-900 border-yellow-500 text-yellow-500
-// bg-green-300 dark:bg-green-900 border-green-500 text-green-500
-// bg-blue-300 dark:bg-blue-900 border-blue-500 text-blue-500
+// bg-lime-300 dark:bg-lime-900 border-lime-500 text-lime-500
+// bg-emerald-300 dark:bg-emerald-900 border-emerald-500 text-emerald-500
+// bg-sky-300 dark:bg-sky-900 border-sky-500 text-sky-500
+// bg-indigo-300 dark:bg-indigo-900 border-indigo-500 text-indigo-500
 // bg-purple-300 dark:bg-purple-900 border-purple-500 text-purple-500
 // bg-pink-300 dark:bg-pink-900 border-pink-500 text-pink-500
-// bg-lime-300 dark:bg-lime-900 border-lime-500 text-lime-500
-const colors = ['red', 'yellow', 'green', 'blue', 'purple', 'pink', 'lime'];
-const usedColors = {};
+const colors = ['red', 'orange', 'lime', 'emerald', 'sky', 'indigo', 'purple', 'pink'],
+    usedColors = {};
 
 let index = 0;
 
@@ -203,7 +207,7 @@ export default {
             try {
                 const before = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : 0;
 
-                const data = await _get("/phone_logs/get", {
+                const data = await _get("/phone_msg/get", {
                     before: before,
                     ...this.filters
                 });

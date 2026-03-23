@@ -223,8 +223,10 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/searches', [LogController::class, 'searches']);
     Route::get('/screenshot_logs', [LogController::class, 'screenshotLogs']);
     Route::get('/damage', [LogController::class, 'damageLogs']);
-    Route::get('/phone_logs', [LogController::class, 'phoneLogs']);
-    Route::get('/phone_logs/get', [LogController::class, 'phoneLogsData']);
+    Route::get('/phone_msg', [LogController::class, 'phoneMsgs']);
+    Route::get('/phone_msg/get', [LogController::class, 'phoneMsgsData']);
+    Route::get('/phone_call', [LogController::class, 'phoneCalls']);
+    Route::get('/phone_call/get', [LogController::class, 'phoneCallsData']);
 
     // Find by.
     Route::get('/find/vehicle/{vehicle}', [FindController::class, 'vehicle']);

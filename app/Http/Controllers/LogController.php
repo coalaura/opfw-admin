@@ -268,13 +268,13 @@ class LogController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function phoneLogs(Request $request): Response
+    public function phoneMsgs(Request $request): Response
     {
         if (! PermissionHelper::hasPermission(PermissionHelper::PERM_PHONE_LOGS)) {
             abort(403);
         }
 
-        return Inertia::render('Logs/Phone', [
+        return Inertia::render('Logs/PhoneMsg', [
             'filters' => $request->all(
                 'number1',
                 'number2',
@@ -288,7 +288,7 @@ class LogController extends Controller
      *
      * @param Request $request
      */
-    public function phoneLogsData(Request $request)
+    public function phoneMsgsData(Request $request)
     {
         if (! PermissionHelper::hasPermission(PermissionHelper::PERM_PHONE_LOGS)) {
             abort(403);
@@ -331,6 +331,73 @@ class LogController extends Controller
 
         if ($before = intval($request->input('before'))) {
             $query->where('id', '<', $before);
+        }
+
+        $query->limit(30);
+
+        $logs = $query->get()->toArray();
+
+        return $this->json(true, $logs);
+    }
+
+    /**
+     * Display the phone call logs.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function phoneCalls(Request $request): Response
+    {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_PHONE_LOGS)) {
+            abort(403);
+        }
+
+        return Inertia::render('Logs/PhoneCall', [
+            'filters' => $request->all(
+                'number',
+                'after',
+                'before'
+            ),
+        ]);
+    }
+
+    /**
+     * Returns calls.
+     *
+     * @param Request $request
+     */
+    public function phoneCallsData(Request $request)
+    {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_PHONE_LOGS)) {
+            abort(403);
+        }
+
+        $query = DB::table("phone_call_logs")->select([
+            'id', 'caller_number', 'receiver_number', 'accepted', 'anonymous', 'duration', 'reason', 'timestamp',
+        ])->orderByDesc('timestamp')->orderByDesc('id');
+
+        $number = $this->multiValues($request->input('number'));
+
+        if ($number) {
+            $query->where(function ($q) use ($number) {
+                $q->where('caller_number', $number)->orWhere('receiver_number', $number);
+            });
+        }
+
+        $after = intval($request->input('after'));
+
+        if ($after) {
+            $query->where(function ($q) use ($after) {
+                $q->where('timestamp', '>', $after)->orWhere(DB::raw('timestamp + duration'), '>', $after);
+            });
+        }
+
+        $before = intval($request->input('before'));
+
+        if ($before) {
+            $query->where(function ($q) use ($before) {
+                $q->where('timestamp', '<', $before)->orWhere(DB::raw('timestamp - duration'), '<', $before);
+            });
         }
 
         $query->limit(30);

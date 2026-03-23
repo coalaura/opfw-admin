@@ -97,6 +97,7 @@ module.exports = {
                 "input":   "200px",
                 "context": "150px",
                 "base":    "24px",
+                "call":    "100px",
                 "chart":   "25%"
             },
             minHeight: {
@@ -106,6 +107,7 @@ module.exports = {
             maxWidth: {
                 "56":     "14rem",
                 "large":  "min(90%, 1220px)",
+                "xlarge":  "min(90%, 1420px)",
                 "px":     "1px",
                 "40":     "10rem",
             },

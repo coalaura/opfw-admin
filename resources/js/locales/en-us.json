@@ -1459,8 +1459,8 @@
         "till": "Till",
         "entries": "Taken Screenshots"
     },
-    "phone": {
-        "title": "Phone Logs",
+    "phone_msg": {
+        "title": "Phone Messages",
         "description": "On this page you can view and filter the phone message logs.",
         "sender": "Sender",
         "receiver": "Receiver",
@@ -1468,6 +1468,16 @@
         "number1": "Number A",
         "number2": "Number B",
         "no_messages": "No messages found.",
+        "more": "Load More"
+    },
+    "phone_call": {
+        "title": "Phone Calls",
+        "description": "On this page you can view and filter the phone call logs.",
+        "number": "Number",
+        "after": "After",
+        "before": "Before",
+        "after_time": "After {0}",
+        "no_calls": "No calls found.",
         "more": "Load More"
     },
     "logs": {
