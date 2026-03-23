@@ -329,8 +329,8 @@ class LogController extends Controller
         // Filtering by message.
         $this->searchQuery($request, $query, 'message', 'message');
 
-        if ($before = intval($request->input('before'))) {
-            $query->where('id', '<', $before);
+        if ($id = intval($request->input('id'))) {
+            $query->where('id', '<', $id);
         }
 
         $query->limit(30);
@@ -398,6 +398,10 @@ class LogController extends Controller
             $query->where(function ($q) use ($before) {
                 $q->where('timestamp', '<', $before)->orWhere(DB::raw('timestamp - duration'), '<', $before);
             });
+        }
+
+        if ($id = intval($request->input('id'))) {
+            $query->where('id', '<', $id);
         }
 
         $query->limit(30);

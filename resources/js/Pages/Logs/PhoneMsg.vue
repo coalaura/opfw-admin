@@ -205,10 +205,10 @@ export default {
             this.isLoading = true;
 
             try {
-                const before = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : 0;
+                const id = this.messages.length > 0 ? this.messages[this.messages.length - 1].id : 0;
 
                 const data = await _get("/phone_msg/get", {
-                    before: before,
+                    id: id,
                     ...this.filters
                 });
 

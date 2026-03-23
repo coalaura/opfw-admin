@@ -201,10 +201,10 @@ export default {
             this.replaceState();
 
             try {
-                const before = this.calls.length > 0 ? this.calls[this.calls.length - 1].id : 0;
+                const id = this.calls.length > 0 ? this.calls[this.calls.length - 1].id : 0;
 
                 const data = await _get("/phone_call/get", {
-                    before: before,
+                    id: id,
                     ...this.filters
                 });
 
