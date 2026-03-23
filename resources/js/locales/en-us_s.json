@@ -756,16 +756,26 @@
         "timestamp": "Timestamp",
         "title": "Panel Logs"
     },
-    "phone": {
+    "phone_call": {
+        "after": "After",
+        "after_time": "After {0}",
+        "before": "Before",
+        "description": "On this here page you can view and filter the phone call logs.",
+        "more": "Load More",
+        "no_calls": "No calls found.",
+        "number": "Number",
+        "title": "Phone Calls"
+    },
+    "phone_msg": {
         "description": "On this here page you can view and filter the phone message logs.",
         "message": "Message",
         "more": "Load More",
-        "no_messages": "Ain't no messages found.",
+        "no_messages": "No messages found.",
         "number1": "Number A",
         "number2": "Number B",
         "receiver": "Receiver",
         "sender": "Sender",
-        "title": "Phone Logs"
+        "title": "Phone Messages"
     },
     "players": {
         "ban": {

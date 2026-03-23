@@ -756,16 +756,26 @@
         "timestamp": "Timestamp",
         "title": "Panew Wogs"
     },
-    "phone": {
-        "description": "On this page you can view and fiwter the phoone mewssage wogs.",
-        "message": "Mewssage",
-        "more": "Woad Mowe",
-        "no_messages": "No mewssages fownd.",
+    "phone_call": {
+        "after": "Aftwe",
+        "after_time": "Aftwe {0}",
+        "before": "Befowe",
+        "description": "On this page you can view and filtew the phone caww wogs.",
+        "more": "Loawd Mowe",
+        "no_calls": "No cawws fouwnd.",
+        "number": "Numbew",
+        "title": "Phone Cawws"
+    },
+    "phone_msg": {
+        "description": "On this page you can view and filtew the phone message logs.",
+        "message": "Message",
+        "more": "Loawd Mowe",
+        "no_messages": "No messages found.",
         "number1": "Numbew A",
         "number2": "Numbew B",
         "receiver": "Weceivew",
         "sender": "Sendew",
-        "title": "Phoone Wogs"
+        "title": "Phone Messages"
     },
     "players": {
         "ban": {

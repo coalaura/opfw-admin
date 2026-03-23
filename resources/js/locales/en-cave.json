@@ -756,16 +756,26 @@
         "timestamp": "Time",
         "title": "Panel logs"
     },
-    "phone": {
-        "description": "Dis page. You see phone logs. You sort them.",
-        "message": "Note",
-        "more": "More",
-        "no_messages": "No messages found.",
-        "number1": "Num A",
-        "number2": "Num B",
-        "receiver": "Receiver",
-        "sender": "Sender",
-        "title": "Phone Logs"
+    "phone_call": {
+        "after": "Afta",
+        "after_time": "Afta {0}",
+        "before": "Befor",
+        "description": "Dis page. You see and pick phone call logs.",
+        "more": "Moar",
+        "no_calls": "No calls seen.",
+        "number": "Numb A",
+        "title": "Phone Calls"
+    },
+    "phone_msg": {
+        "description": "Dis page. You see and pick phone message logs.",
+        "message": "Msg",
+        "more": "Moar",
+        "no_messages": "No messages seen.",
+        "number1": "Numb A",
+        "number2": "Numb B",
+        "receiver": "Who get",
+        "sender": "Who send",
+        "title": "Phone Messages"
     },
     "players": {
         "ban": {

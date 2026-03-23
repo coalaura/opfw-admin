@@ -756,16 +756,26 @@
         "timestamp": "Samay-sanket",
         "title": "Panel Logs"
     },
-    "phone": {
-        "description": "Is page par aap phone sandesh logs ko dekh sakte hain aur filter kar sakte hain.",
+    "phone_call": {
+        "after": "Baad",
+        "after_time": "Baad {0}",
+        "before": "Pehle",
+        "description": "Is page par aap phone call logs ko dekh sakte hain aur filter kar sakte hain.",
+        "more": "Aur dekhein",
+        "no_calls": "Koi calls nahi mili.",
+        "number": "Nambar",
+        "title": "Phone Calls"
+    },
+    "phone_msg": {
+        "description": "Is page par aap phone message logs ko dekh sakte hain aur filter kar sakte hain.",
         "message": "Sandesh",
-        "more": "Aur adhik load karein",
+        "more": "Aur dekhein",
         "no_messages": "Koi sandesh nahi mila.",
-        "number1": "Number A",
-        "number2": "Number B",
+        "number1": "Nambar A",
+        "number2": "Nambar B",
         "receiver": "Praaptakarta",
-        "sender": "Bhejnewala",
-        "title": "Phone Logs"
+        "sender": "Bhejne wala",
+        "title": "Phone Sandesh"
     },
     "players": {
         "ban": {

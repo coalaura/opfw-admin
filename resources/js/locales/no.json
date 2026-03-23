@@ -756,16 +756,26 @@
         "timestamp": "Tidsstempel",
         "title": "Panellogger"
     },
-    "phone": {
-        "description": "På denne siden kan du se og filtrere telefonmeldingsloggene.",
+    "phone_call": {
+        "after": "Etter",
+        "after_time": "Etter {0}",
+        "before": "Før",
+        "description": "På denne siden kan du se og filtrere samtaleloggene.",
+        "more": "Last inn mer",
+        "no_calls": "Ingen samtaler funnet.",
+        "number": "Nummer",
+        "title": "Telefonanrop"
+    },
+    "phone_msg": {
+        "description": "På denne siden kan du se og filtrere loggene for telefonmeldinger.",
         "message": "Melding",
         "more": "Last inn mer",
-        "no_messages": "Ingen meldinger ble funnet.",
-        "number1": "Tall A",
-        "number2": "Tall B",
+        "no_messages": "Ingen meldinger funnet.",
+        "number1": "Nummer A",
+        "number2": "Nummer B",
         "receiver": "Mottaker",
         "sender": "Avsender",
-        "title": "Telefonlogger"
+        "title": "Telefonmeldinger"
     },
     "players": {
         "ban": {
