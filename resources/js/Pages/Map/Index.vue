@@ -1162,7 +1162,7 @@ export default {
                         }
                     });
 
-                    this.loadCharacterInfos(characterID);
+                    this.loadCharacterInfos(newCharacterIds);
 
                     for (const id in this.markers) {
                         if (!Object.hasOwn(this.markers, id) || this.container.shouldDrawPlayerMarker(id, this.selectedInstance)) {
