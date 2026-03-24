@@ -62,7 +62,7 @@ class PlayerContainer {
         for (const source in rawData) {
             rawData[source] = Player.fixData(rawData[source]);
 
-            this.updatePlayer(source, rawData[source], selectedInstance);
+            this.updatePlayer(source, rawData[source], selectedInstance, vue.characterInfos);
         }
 
         for (const source in this.players) {
@@ -103,7 +103,7 @@ class PlayerContainer {
         });
     }
 
-    updatePlayer(source, rawPlayer, selectedInstance) {
+    updatePlayer(source, rawPlayer, selectedInstance, characterInfos) {
         const flags = Player.getPlayerFlags(rawPlayer);
 
         if (flags.fakeDisconnected) {
@@ -124,11 +124,12 @@ class PlayerContainer {
         this.stats.total++;
 
         const characterFlags = Character.getCharacterFlags(rawPlayer.character);
+
         if (!characterFlags.spawned) {
             return;
         }
 
-        const instance = Number.parseInt(rawPlayer.instance.id);
+        const instance = Number.parseInt(rawPlayer.instance.id, 10);
 
         if (rawPlayer.character) {
             this.instances[instance] = (this.instances[instance] || 0) + 1;
@@ -185,11 +186,11 @@ class PlayerContainer {
         if (player.onDuty === 'police') {
             this.stats.police++;
 
-            this.on_duty.pd.push(this.getPlayerListInfo(player));
+            this.on_duty.pd.push(this.getPlayerListInfo(player, characterInfos));
         } else if (player.onDuty === 'medical') {
             this.stats.ems++;
 
-            this.on_duty.ems.push(this.getPlayerListInfo(player));
+            this.on_duty.ems.push(this.getPlayerListInfo(player, characterInfos));
         }
     }
 
@@ -223,7 +224,13 @@ class PlayerContainer {
         }
     }
 
-    getPlayerListInfo(player) {
+    getPlayerListInfo(player, characterInfos) {
+        let info = null;
+
+        if (player.character) {
+            info = characterInfos[player.character.id];
+        }
+
         return {
             is_staff: player.player.isStaff,
             name: player.character ? player.character.name : 'N/A',
@@ -232,8 +239,28 @@ class PlayerContainer {
             invisible: player.invisible.time,
             csource: player.character ? player.character.source : 0,
             source: player.player.source,
-            onDuty: player.onDuty
+            onDuty: player.onDuty,
+            color: info ? this.getDepartmentColor(info.department_name) : false,
         };
+    }
+
+    getDepartmentColor(department) {
+        switch (department) {
+            case "SASP":
+                return "map-sasp";
+            case "SAHP":
+                return "map-sahp";
+            case "BCSO":
+                return "map-bcso";
+            case "Bolingbroke Penitentiary":
+                return "map-doc";
+            case "Los Santos Medical Center":
+                return "map-medical";
+            case "Blaine County Fire Department":
+                return "map-fire";
+        }
+
+        return false;
     }
 }
 

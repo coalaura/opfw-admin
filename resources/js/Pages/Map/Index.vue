@@ -404,6 +404,9 @@ export default {
             loadingScreenStatus: null,
             historicValidLicense: false,
 
+            loadingCharacterInfo: false,
+            characterInfos: {},
+
             isTimestamp: false,
             isHistoric: false,
 
@@ -1059,6 +1062,41 @@ export default {
             }
                 return "Players";
         },
+        async loadCharacterInfos(characterIds) {
+            if (!characterIds.length || this.loadingCharacterInfo) {
+                return;
+            }
+
+            this.loadingCharacterInfo = true;
+
+            for (const id of characterIds) {
+                if (!(id in this.characterInfos)) {
+                    this.characterInfos[id] = false;
+                }
+            }
+
+            try {
+                const result = await _post('/map/infos', JSON.stringify({
+                    ids: characterIds
+                }));
+
+                if (result?.status) {
+                    for (const id in result.data) {
+
+                    }
+                } else if (!result.status) {
+                    throw new Error(result.error);
+                }
+            } catch (e) {
+                console.error(e);
+
+                for (const id of characterIds) {
+                    delete this.characterInfos[id];
+                }
+            }
+
+            this.loadingCharacterInfo = false;
+        },
         async renderMapData(data, trackedId, trackedChanged) {
             if (this.isPaused || this.isDragging || this.isTimestampShowing || this.isHistoricShowing) {
                 return;
@@ -1077,7 +1115,8 @@ export default {
 
                     this.updateTrackingInfo();
 
-                    const unknownCharacters = [];
+                    const unknownCharacters = [],
+                        newCharacterIds = [];
 
                     this.container.eachPlayer((id, player) => {
                         if (!player.character) {
@@ -1089,6 +1128,10 @@ export default {
 
                         if (characterID && !unknownCharacters.includes(characterID) && !(characterID in this.characters)) {
                             unknownCharacters.push(characterID);
+                        }
+
+                        if (characterID && !newCharacterIds.includes(characterID) && !(characterID in this.characterInfos)) {
+                            newCharacterIds.push(characterID);
                         }
 
                         if (!(id in this.markers)) {
@@ -1118,6 +1161,8 @@ export default {
                             isActivelyTracking = true;
                         }
                     });
+
+                    this.loadCharacterInfos(characterID);
 
                     for (const id in this.markers) {
                         if (!Object.hasOwn(this.markers, id) || this.container.shouldDrawPlayerMarker(id, this.selectedInstance)) {

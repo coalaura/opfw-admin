@@ -80,6 +80,35 @@ class MapController extends Controller
         ]);
     }
 
+    public function infos(Request $request)
+    {
+        $ids = $request->input('ids') ?? [];
+
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_LIVEMAP)) {
+            return self::json(false, null, 'You can not use the livemap functionality');
+        }
+
+        if (!is_array($ids) || empty($ids)) {
+            return self::json(false, null, 'Invalid ids');
+        }
+
+        $ids = array_unique($ids);
+
+        $characters = Character::query()->select(['character_id', 'department_name'])->whereIn('character_id', $ids)->get()->toArray();
+
+        $map          = [];
+
+        foreach ($characters as $character) {
+            $id = $character['character_id'];
+
+            unset($character['character_id']);
+
+            $map[$id] = $character;
+        }
+
+        return self::json(true, $map);
+    }
+
     public function playerNames(Request $request): \Illuminate\Http\Response
     {
         $licenses = $request->input('licenses') ?? [];
@@ -95,7 +124,7 @@ class MapController extends Controller
         $licenses = array_unique($licenses);
 
         $data       = Player::query()->select(['player_name', 'license_identifier'])->whereIn('license_identifier', $licenses)->get()->toArray();
-        $characters = Character::query()->select(['character_id', 'first_name', 'last_name'])->whereIn('license_identifier', $licenses)->get()->toArray();
+        $characters = Character::query()->select(['character_id', 'first_name', 'last_name','department_name'])->whereIn('license_identifier', $licenses)->get()->toArray();
 
         $map          = [];
         $characterMap = [];

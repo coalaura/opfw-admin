@@ -163,6 +163,13 @@ module.exports = {
                 "map-ems":       "#FF5959",
                 "map-highlight": "#FF6400",
 
+                "map-sasp": "#5db6e5",
+                "map-sahp": "#276A9F",
+                "map-bcso": "#b89b7b",
+                "map-doc": "#eec64e",
+                "map-medical": "#ed8ca1",
+                "map-fire": "#e03232",
+
                 ...colors,
 
                 // Special color variants
