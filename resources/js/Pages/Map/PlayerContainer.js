@@ -225,10 +225,12 @@ class PlayerContainer {
     }
 
     getPlayerListInfo(player, characterInfos) {
-        let info = null;
+        let department = null;
 
         if (characterInfos && player.character) {
-            info = this.getDepartmentInfo(characterInfos[player.character.id]);
+            const info = characterInfos[player.character.id];
+
+            department = this.getDepartmentInfo(info ? info.department_name : false);
         }
 
         return {
@@ -240,8 +242,8 @@ class PlayerContainer {
             csource: player.character ? player.character.source : 0,
             source: player.player.source,
             onDuty: player.onDuty,
-            color: info ? info.color : false,
-            title: info ? info.label : false,
+            color: department ? department.color : false,
+            title: department ? department.label : false,
         };
     }
 
