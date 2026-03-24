@@ -247,17 +247,17 @@ class PlayerContainer {
     getDepartmentColor(department) {
         switch (department) {
             case "SASP":
-                return "map-sasp";
+                return "text-map-sasp";
             case "SAHP":
-                return "map-sahp";
+                return "text-map-sahp";
             case "BCSO":
-                return "map-bcso";
+                return "text-map-bcso";
             case "Bolingbroke Penitentiary":
-                return "map-doc";
+                return "text-map-doc";
             case "Los Santos Medical Center":
-                return "map-medical";
+                return "text-map-medical";
             case "Blaine County Fire Department":
-                return "map-fire";
+                return "text-map-fire";
         }
 
         return false;
