@@ -37,7 +37,7 @@ class PlayerContainer {
         };
     }
 
-    updatePlayers(rawData, vue, selectedInstance, mainInstance) {
+    updatePlayers(rawData, vue, selectedInstance, mainInstance, characterInfos) {
         this.resetStats();
 
         this.vehicles = {};
@@ -62,7 +62,7 @@ class PlayerContainer {
         for (const source in rawData) {
             rawData[source] = Player.fixData(rawData[source]);
 
-            this.updatePlayer(source, rawData[source], selectedInstance, vue.characterInfos);
+            this.updatePlayer(source, rawData[source], selectedInstance, characterInfos);
         }
 
         for (const source in this.players) {
@@ -227,7 +227,7 @@ class PlayerContainer {
     getPlayerListInfo(player, characterInfos) {
         let info = null;
 
-        if (player.character) {
+        if (characterInfos && player.character) {
             info = characterInfos[player.character.id];
         }
 

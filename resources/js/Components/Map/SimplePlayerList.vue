@@ -5,7 +5,7 @@
         <table class="text-sm font-mono font-medium">
             <tr v-for="(player, x) in players" :key="x">
                 <td class="pr-2">
-                    <a target="_blank" :href="'/players/' + player.license" :class="color">
+                    <a target="_blank" :href="'/players/' + player.license" :class="player.color ? player.color : color">
                         {{ usePlayerName ? player.playerName : player.name }}
                     </a>
                 </td>

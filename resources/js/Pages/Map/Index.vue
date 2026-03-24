@@ -1111,7 +1111,7 @@ export default {
                         this.selectedInstance = data.instance;
                     }
 
-                    this.container.updatePlayers(data.players, this, this.selectedInstance, data.instance);
+                    this.container.updatePlayers(data.players, this, this.selectedInstance, data.instance, this.characterInfos);
 
                     this.updateTrackingInfo();
 
