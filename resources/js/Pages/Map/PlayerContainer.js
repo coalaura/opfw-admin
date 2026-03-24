@@ -228,7 +228,7 @@ class PlayerContainer {
         let info = null;
 
         if (characterInfos && player.character) {
-            info = characterInfos[player.character.id];
+            info = this.getDepartmentInfo(characterInfos[player.character.id]);
         }
 
         return {
@@ -240,24 +240,43 @@ class PlayerContainer {
             csource: player.character ? player.character.source : 0,
             source: player.player.source,
             onDuty: player.onDuty,
-            color: info ? this.getDepartmentColor(info.department_name) : false,
+            color: info ? info.color : false,
+            title: info ? info.label : false,
         };
     }
 
-    getDepartmentColor(department) {
+    getDepartmentInfo(department) {
         switch (department) {
             case "SASP":
-                return "text-map-sasp";
+                return {
+                    color: "text-map-sasp",
+                    label: "SASP - Law",
+                };
             case "SAHP":
-                return "text-map-sahp";
+                return {
+                    color: "text-map-sahp",
+                    label: "SAHP - Law",
+                };
             case "BCSO":
-                return "text-map-bcso";
+                return {
+                    color: "text-map-bcso",
+                    label: "BCSO - Law",
+                };
             case "Bolingbroke Penitentiary":
-                return "text-map-doc";
+                return {
+                    color: "text-map-doc",
+                    label: "DOC - Law",
+                };
             case "Los Santos Medical Center":
-                return "text-map-medical";
+                return {
+                    color: "text-map-medical",
+                    label: "EMS - Medical",
+                };
             case "Blaine County Fire Department":
-                return "text-map-fire";
+                return {
+                    color: "text-map-fire",
+                    label: "Fire - Medical",
+                };
         }
 
         return false;
