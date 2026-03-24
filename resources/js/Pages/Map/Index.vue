@@ -1082,10 +1082,10 @@ export default {
 
                 if (result?.status) {
                     for (const id in result.data) {
-
+                        this.characterInfos[id] = result.data[id];
                     }
-                } else if (!result.status) {
-                    throw new Error(result.error);
+                } else {
+                    throw new Error(result?.error || "unknown error");
                 }
             } catch (e) {
                 console.error(e);

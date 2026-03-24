@@ -1,8 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Ban;
 use App\Character;
 use App\Helpers\GeneralHelper;
 use App\Helpers\PermissionHelper;
@@ -25,13 +23,13 @@ class MapController extends Controller
     public function index(Request $request, string $server = ''): Response
     {
         $perms = PermissionHelper::hasPermission(PermissionHelper::PERM_LIVEMAP);
-        $fake = $perms && $request->query('meow') === '420';
+        $fake  = $perms && $request->query('meow') === '420';
 
-        if (!$server) {
+        if (! $server) {
             $server = Server::getFirstServer('name');
         }
 
-        if (!$perms || $fake) {
+        if (! $perms || $fake) {
             if (user()->isDebugger() || $fake) {
                 return Inertia::render('Map/Fake', [
                     'activeServer' => $server,
@@ -41,7 +39,7 @@ class MapController extends Controller
             abort(401);
         }
 
-        if (!Server::getServerURL($server)) {
+        if (! Server::getServerURL($server)) {
             abort(404);
         }
 
@@ -84,11 +82,11 @@ class MapController extends Controller
     {
         $ids = $request->input('ids') ?? [];
 
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_LIVEMAP)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_LIVEMAP)) {
             return self::json(false, null, 'You can not use the livemap functionality');
         }
 
-        if (!is_array($ids) || empty($ids)) {
+        if (! is_array($ids) || empty($ids)) {
             return self::json(false, null, 'Invalid ids');
         }
 
@@ -96,7 +94,7 @@ class MapController extends Controller
 
         $characters = Character::query()->select(['character_id', 'department_name'])->whereIn('character_id', $ids)->get()->toArray();
 
-        $map          = [];
+        $map = [];
 
         foreach ($characters as $character) {
             $id = $character['character_id'];
@@ -113,18 +111,18 @@ class MapController extends Controller
     {
         $licenses = $request->input('licenses') ?? [];
 
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_LIVEMAP)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_LIVEMAP)) {
             return self::json(false, null, 'You can not use the livemap functionality');
         }
 
-        if (!is_array($licenses) || empty($licenses)) {
+        if (! is_array($licenses) || empty($licenses)) {
             return self::json(false, null, 'Invalid licenses');
         }
 
         $licenses = array_unique($licenses);
 
         $data       = Player::query()->select(['player_name', 'license_identifier'])->whereIn('license_identifier', $licenses)->get()->toArray();
-        $characters = Character::query()->select(['character_id', 'first_name', 'last_name','department_name'])->whereIn('license_identifier', $licenses)->get()->toArray();
+        $characters = Character::query()->select(['character_id', 'first_name', 'last_name', 'department_name'])->whereIn('license_identifier', $licenses)->get()->toArray();
 
         $map          = [];
         $characterMap = [];
