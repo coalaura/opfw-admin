@@ -60,24 +60,16 @@ class Controller extends BaseController
      */
     protected static function json(bool $status, $data = null, string $error = ''): Response
     {
-        if ($status) {
-            $resp = [
-                'status' => true,
-                'data'   => $data,
-            ];
-        } else {
-            $resp = [
-                'status'  => false,
-            ];
+        $resp = [
+            'status'  => $status,
+        ];
 
-            if ($error) {
-                $resp['message'] = $error;
-            }
+        if ($error) {
+            $resp['message'] = $error;
+        }
 
-            if ($data) {
-                $resp['data'] = $data;
-            }
-
+        if ($data) {
+            $resp['data'] = $data;
         }
 
         return self::jsonRaw($resp);
