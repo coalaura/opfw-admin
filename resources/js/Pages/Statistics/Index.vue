@@ -260,6 +260,87 @@
                 </div>
             </div>
 
+            <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4" v-if="shouldShowTable(t('statistics.ping_stats'))">
+                <div class="flex">
+                    <h2 class="text-lg flex gap-2" @click="loadPingStatistics()" :class="{ 'cursor-pointer': !pingLoading && !ping }">
+                        {{ t('statistics.ping_stats') }}
+                    </h2>
+                </div>
+
+                <p class="text-sm italic mb-3">
+                    {{ t('statistics.ping_stats_details') }}
+                </p>
+
+                <button @click="loadPingStatistics()" class="icon-button text-white bg-green-600" v-if="!pingLoading && !ping">
+                    <i class="fas fa-plus"></i>
+                </button>
+
+                <div class="flex gap-6 overflow-y-auto">
+                    <div v-if="!pingTableShow" class="bg-gray-300 dark:bg-gray-700 no-alpha border-2 border-gray-500 py-1.5 px-2">
+                        <i class="fas fa-expand-alt cursor-pointer" @click="togglePingTable()"></i>
+                    </div>
+                    <div class="max-h-statistics-long inline-block pr-2 flex-shrink-0 w-max" v-else>
+                        <table class="whitespace-nowrap">
+                            <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
+                                <th class="font-semibold px-2 py-0.5 text-left">
+                                    <div class="flex gap-3 justify-between items-center">
+                                        {{ t('statistics.date') }}
+
+                                        <i class="fas fa-compress-alt cursor-pointer" @click="togglePingTable()" v-if="!pingLoading && ping"></i>
+                                    </div>
+                                </th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(ping, 0)">{{ t('statistics.min_ping') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(ping, 1)">{{ t('statistics.max_ping') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(ping, 2)">{{ t('statistics.avg_ping') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(ping, 3)">{{ t('statistics.min_loss') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(ping, 4)">{{ t('statistics.max_loss') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(ping, 5)">{{ t('statistics.avg_loss') }}</th>
+                                <th class="font-semibold px-2 py-0.5 text-left" :style="datasetColor(ping, 6)">{{ t('statistics.count') }}</th>
+                            </tr>
+
+                            <tr class="border-t border-gray-500" v-if="!pingLoading && !ping">
+                                <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
+                                <td class="px-2 py-0.5">...</td>
+                            </tr>
+
+                            <tr class="border-t border-gray-500" v-else-if="pingLoading">
+                                <td class="px-2 py-0.5 text-center" colspan="8">
+                                    <i class="fas fa-spinner animate-spin"></i>
+                                </td>
+                            </tr>
+
+                            <tr class="border-t border-gray-500" v-else-if="ping.data.length === 0">
+                                <td class="px-2 py-0.5 text-center italic" colspan="8">
+                                    {{ t('statistics.no_players_recorded') }}
+                                </td>
+                            </tr>
+
+                            <tr v-for="(entry, index) in ping.data" :key="index" class="border-t border-gray-500" v-else>
+                                <td class="italic text-gray-700 dark:text-gray-300 px-2 py-0.5">{{ entry.date }}</td>
+
+                                <td class="px-2 py-0.5" :style="datasetColor(ping, 0)">{{ numberFormat(entry.min_ping, false, false) }}</td>
+                                <td class="px-2 py-0.5" :style="datasetColor(ping, 1)">{{ numberFormat(entry.max_ping, false, false) }}</td>
+                                <td class="px-2 py-0.5" :style="datasetColor(ping, 2)">{{ numberFormat(entry.avg_ping, false, false) }}</td>
+                                <td class="px-2 py-0.5" :style="datasetColor(ping, 3)">{{ numberFormat(entry.min_loss, false, false) }}</td>
+                                <td class="px-2 py-0.5" :style="datasetColor(ping, 4)">{{ numberFormat(entry.max_loss, false, false) }}</td>
+                                <td class="px-2 py-0.5" :style="datasetColor(ping, 5)">{{ numberFormat(entry.avg_loss, false, false) }}</td>
+                                <td class="px-2 py-0.5" :style="datasetColor(ping, 6)">{{ numberFormat(entry.count, false, false) }}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div v-if="!pingLoading && ping && ping.graph" class="w-full max-h-statistics-long overflow-hidden">
+                        <LineChart :chartData="ping.graph" class="h-full" :reRender="pingReRender"></LineChart>
+                    </div>
+                </div>
+            </div>
+
             <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4" v-if="shouldShowTable(t('statistics.money_logs'))">
                 <div class="flex">
                     <h2 class="text-lg flex gap-2">
@@ -364,6 +445,11 @@ export default {
             fpsReRender: 0,
             fps: false,
 
+            pingLoading: false,
+            pingTableShow: true,
+            pingReRender: 0,
+            ping: false,
+
             moneyLogType: "",
             moneyLogTypes: [],
             moneyLogStyles: [],
@@ -409,6 +495,11 @@ export default {
             this.fpsTableShow = !this.fpsTableShow;
 
             this.fpsReRender++;
+        },
+        togglePingTable() {
+            this.pingTableShow = !this.pingTableShow;
+
+            this.pingReRender++;
         },
         addMoneyLogType() {
             const type = this.moneyLogType;
@@ -531,6 +622,26 @@ export default {
             }
 
             this.fpsLoading = false;
+        },
+        async loadPingStatistics() {
+            if (this.pingLoading || this.ping) return;
+
+            this.pingLoading = true;
+
+            try {
+                const data = await _get('/statistics/ping');
+
+                if (data.status) {
+                    this.ping = data.data;
+                }
+            } catch (e) {
+                // Signalize we failed to load the data
+                this.ping = {
+                    data: []
+                };
+            }
+
+            this.pingLoading = false;
         },
         overallEconomyMovement() {
             if (!this.economy || !this.economy.data.length) return;

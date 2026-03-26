@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Helpers;
 
 use Illuminate\Support\Facades\DB;
@@ -251,7 +250,7 @@ class StatisticsHelper
     // Shots fired (by guns damage dealt)
     public static function collectShotsFiredStatistics(): array
     {
-        $unsignedGuns = array_map(function($hash) {
+        $unsignedGuns = array_map(function ($hash) {
             if ($hash < 0) {
                 return $hash + 2 ** 32; // Convert negative to unsigned 32-bit equivalent
             }
@@ -285,7 +284,7 @@ class StatisticsHelper
             'Bottle Cap',
             'Pretty Marble',
             'Ball Bearing',
-            'Lego Brick'
+            'Lego Brick',
         ]));
 
         return self::collectStatistics("SELECT SUM($count) as count, SUM($amount) as amount, DATE_FORMAT(timestamp, '%c/%d/%Y') as date from user_logs WHERE action = 'Used Pawn Shop' AND ($items) GROUP BY date ORDER BY timestamp DESC");
@@ -313,6 +312,12 @@ class StatisticsHelper
     public static function collectFPSStatistics(): array
     {
         return DB::select("SELECT date, minimum, maximum, average, average_1_percent, lag_spikes FROM fps_statistics WHERE STR_TO_DATE(date, '%d.%m.%Y %H:%i') >= DATE_SUB(NOW(), INTERVAL 30 DAY) ORDER BY STR_TO_DATE(date, '%d.%m.%Y %H:%i') ASC");
+    }
+
+    // General ping statistics
+    public static function collectPingStatistics(): array
+    {
+        return DB::select("SELECT date, min_ping, max_ping, avg_ping, min_loss, max_loss, avg_loss, count FROM ping_statistics WHERE STR_TO_DATE(date, '%d.%m.%Y %H:%i') >= DATE_SUB(NOW(), INTERVAL 30 DAY) ORDER BY STR_TO_DATE(date, '%d.%m.%Y %H:%i') ASC");
     }
 
     // Anti-cheat statistics
@@ -354,7 +359,7 @@ class StatisticsHelper
 
         $data = DB::select($query);
 
-        if ($showAll && !empty($data)) {
+        if ($showAll && ! empty($data)) {
             $time = min(array_map(function ($entry) {
                 return $entry->timestamp;
             }, $data));

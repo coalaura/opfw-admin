@@ -562,6 +562,106 @@ class StatisticsController extends Controller
         return $this->json(true, $statistics);
     }
 
+    public function pingStatistics()
+    {
+        $datasets = 7;
+
+        $statistics = [
+            "data"  => [],
+            "graph" => [
+                "datasets" => [
+                    [
+                        "label"           => "Min Ping",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(0, $datasets, 0.3),
+                        "borderColor"     => $this->color(0, $datasets, 1),
+                        "pointRadius"     => 0,
+                    ],
+                    [
+                        "label"           => "Max Ping",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(1, $datasets, 0.3),
+                        "borderColor"     => $this->color(1, $datasets, 1),
+                        "pointRadius"     => 0,
+                    ],
+                    [
+                        "label"           => "Average Ping",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(2, $datasets, 0.3),
+                        "borderColor"     => $this->color(2, $datasets, 1),
+                        "pointRadius"     => 0,
+                    ],
+                    [
+                        "label"           => "Min Loss",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(3, $datasets, 0.3),
+                        "borderColor"     => $this->color(3, $datasets, 1),
+                        "pointRadius"     => 0,
+                    ],
+                    [
+                        "label"           => "Max Loss",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(4, $datasets, 0.3),
+                        "borderColor"     => $this->color(4, $datasets, 1),
+                        "pointRadius"     => 0,
+                    ],
+                    [
+                        "label"           => "Average Loss",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(5, $datasets, 0.3),
+                        "borderColor"     => $this->color(5, $datasets, 1),
+                        "pointRadius"     => 0,
+                    ],
+                    [
+                        "label"           => "Count",
+                        "data"            => [],
+                        "backgroundColor" => $this->color(6, $datasets, 0.3),
+                        "borderColor"     => $this->color(6, $datasets, 1),
+                        "pointRadius"     => 0,
+                    ],
+                ],
+                "labels"   => [],
+            ],
+        ];
+
+        $data = StatisticsHelper::collectPingStatistics();
+
+        $min = strtotime("-30 days");
+
+        foreach ($data as $entry) {
+            $date = $entry->date;
+
+            $time = strtotime($entry->date);
+
+            if ($time >= $min) {
+                $statistics["data"][$date] = [
+                    "date"     => $date,
+                    "min_ping" => $entry->min_ping,
+                    "max_ping" => $entry->max_ping,
+                    "avg_ping" => $entry->avg_ping,
+                    "min_loss" => $entry->min_loss,
+                    "max_loss" => $entry->max_loss,
+                    "avg_loss" => $entry->avg_loss,
+                    "count"    => $entry->count,
+                ];
+            }
+
+            $statistics["graph"]["labels"][] = $date;
+
+            $statistics["graph"]["datasets"][0]["data"][] = $entry->min_ping;
+            $statistics["graph"]["datasets"][1]["data"][] = $entry->max_ping;
+            $statistics["graph"]["datasets"][2]["data"][] = $entry->avg_ping;
+            $statistics["graph"]["datasets"][3]["data"][] = $entry->min_loss;
+            $statistics["graph"]["datasets"][4]["data"][] = $entry->max_loss;
+            $statistics["graph"]["datasets"][5]["data"][] = $entry->avg_loss;
+            $statistics["graph"]["datasets"][6]["data"][] = $entry->count;
+        }
+
+        $statistics["data"] = array_reverse(array_values($statistics["data"]));
+
+        return $this->json(true, $statistics);
+    }
+
     public function moneyLogs(Request $request)
     {
         $types = $request->input('types', []);
