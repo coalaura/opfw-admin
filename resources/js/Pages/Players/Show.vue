@@ -1640,7 +1640,7 @@
                 </p>
 
                 <p v-if="screenCaptureVideo" class="mt-3 text-sm">
-                    {{ t('map.screecapture_description') }}
+                    {{ t('map.screencapture_description') }}
                 </p>
 
                 <div v-if="screenCaptureLogs" class="mb-5">

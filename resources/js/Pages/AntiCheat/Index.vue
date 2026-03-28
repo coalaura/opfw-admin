@@ -5,7 +5,7 @@
             <h1 class="dark:text-white">
                 <i class="mr-3 fas fa-unlock-alt" :title="perm.restriction(perm.PERM_ANTI_CHEAT)"></i>
 
-                {{ t('screenshot.anti_cheat') }}
+                <span id="cheat_title">{{ t('screenshot.anti_cheat') }}</span>
             </h1>
             <p>
                 {{ t('screenshot.anti_cheat_description') }}
@@ -510,6 +510,11 @@ export default {
             }
 
             return false;
+        }
+    },
+    mounted() {
+        if (Math.round(Math.random() * 100) === 1) { // 1% chance it says fib spy satellite map
+            $('#cheat_title').text(this.t('screenshot.anti_cheese'));
         }
     }
 };
