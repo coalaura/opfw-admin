@@ -592,7 +592,7 @@
                 </div>
 
                 <div v-else>
-                    <table class="w-full" v-if="notifications.length > 0">
+                    <table class="w-full" v-if="notifications && notifications.length > 0">
                         <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 border-t" :class="{ 'opacity-75': notification.read_at }" v-for="notification in notifications" :key="notification.id">
                             <td class="px-3 py-2">
                                 <i class="fas fa-envelope-open-text" :title="t('players.show.read_notification', formatTime(notification.read_at * 1000, true))" v-if="notification.read_at"></i>
