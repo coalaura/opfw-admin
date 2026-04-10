@@ -536,6 +536,14 @@ class PlayerCharacterController extends Controller
             'stocks_balance' => $stocks,
         ]);
 
+        $info = 'In-Game character refresh failed, user has to soft-nap.';
+
+        $refresh = OPFWHelper::updateCharacter($player, $character->character_id);
+
+        if ($refresh->status) {
+            $info = $refresh->notExecuted ? '' : 'In-Game character refresh was successful too.';
+        }
+
         PanelLog::log(
             $user->license_identifier,
             "Edited Balance",
@@ -543,7 +551,7 @@ class PlayerCharacterController extends Controller
             ['changed' => $changed]
         );
 
-        return backWith('success', 'Balance has been updated successfully.');
+        return backWith('success', 'Balance has been updated successfully. ' . $info);
     }
 
     /**
