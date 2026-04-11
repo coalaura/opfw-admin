@@ -305,7 +305,7 @@ class Player {
 
 		marker._popup.setContent(popup);
 
-		marker.options.forceZIndex = this.getZIndex(this.trackServerId);
+		marker.options.forceZIndex = this.getZIndex(trackServerId);
 
 		return marker;
 	}

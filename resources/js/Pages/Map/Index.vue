@@ -1169,6 +1169,10 @@ export default {
                             continue;
                         }
 
+                        for (const key in this.layers) {
+                            this.layers[key].removeLayer(this.markers[id]);
+                        }
+
                         this.map.removeLayer(this.markers[id]);
 
                         delete this.markers[id];
