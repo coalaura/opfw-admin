@@ -1,48 +1,16 @@
 {
-    "helicopter": {
-        "size": 28,
-        "models": [
-            "as350",
-            "990116733",
-            "akula",
-            "annihilator",
-            "buzzard",
-            "buzzard2",
-            "frogger",
-            "frogger2",
-            "havok",
-            "hunter",
-            "maverick",
-            "savage",
-            "seasparrow",
-            "skylift",
-            "supervolito",
-            "supervolito2",
-            "swift",
-            "swift2",
-            "valkyrie",
-            "valkyrie2",
-            "volatus",
-            "annihilator2",
-            "seasparrow2",
-            "seasparrow3",
-            "thruster",
-            "newsmav",
-            "ka52a",
-            "pavelow",
-            "foxch47"
-        ]
-    },
     "ems_helicopter": {
         "size": 28,
         "models": [
             "as332",
-            "buzzard6"
+            "buzzard6",
+            "buzzard7"
         ]
     },
     "police_helicopter": {
         "size": 28,
         "models": [
+            "as350",
             "mh6",
             "polmav",
             "swathel",
@@ -53,6 +21,7 @@
     "cargobob": {
         "size": 34,
         "models": [
+            "foxch47",
             "cargobob",
             "cargobob2",
             "cargobob3",
@@ -83,7 +52,9 @@
             "dinghy5",
             "kosatka",
             "longfin",
-            "patrolboat"
+            "patrolboat",
+
+            "subtitan"
         ]
     },
     "ems_boat": {
@@ -99,104 +70,13 @@
             "predator1"
         ]
     },
-    "float_plane": {
-        "size": 28,
-        "models": [
-            "dodo"
-        ]
-    },
-    "light_plane": {
-        "size": 28,
-        "models": [
-            "alphaz1",
-            "cuban800",
-            "duster",
-            "howard",
-            "mammatus",
-            "microlight",
-            "nokota",
-            "rogue",
-            "seabreeze",
-            "stunt",
-            "velum",
-            "velum2",
-            "vestra",
-            "spitfire",
-            "rq4",
-            "citationii",
-            "sf50vision",
-            "foxc90",
-            "spitfire"
-        ]
-    },
-    "medium_plane": {
-        "size": 28,
-        "models": [
-            "blimp",
-            "blimp2",
-            "blimp3",
-            "luxor",
-            "luxor2",
-            "miljet",
-            "mogul",
-            "nimbus",
-            "shamal",
-            "tula",
-            "avenger",
-            "avenger2",
-            "b17e",
-            "sshuttle",
-            "a321",
-            "b737800",
-            "do228",
-            "hs748"
-        ]
-    },
-    "big_plane": {
-        "size": 36,
-        "models": [
-            "bombushka",
-            "cargoplane",
-            "jet",
-            "titan",
-            "afo",
-            "b52",
-            "globe"
-        ]
-    },
-    "small_jet": {
-        "size": 28,
-        "models": [
-            "besra",
-            "hydra",
-            "lazer",
-            "pyro",
-            "molotok",
-            "starling",
-            "strikeforce",
-            "f22a",
-            "fa18e",
-            "f14a2",
-            "mig29a",
-            "a10c",
-            "f117a",
-            "f15j2",
-            "su27"
-        ]
-    },
-    "big_jet": {
-        "size": 36,
-        "models": [
-            "volatol",
-            "alkonost",
-            "spirit"
-        ]
-    },
     "dumptruck": {
         "size": 28,
         "models": [
             "trash",
-            "trash2"
+            "trash2",
+
+            "trash3"
         ]
     },
     "truck": {
@@ -216,9 +96,6 @@
             "mixer2",
             "mixer",
             "dump",
-            "riot",
-            "riot2",
-            "firetruk",
             "terbyte",
             "stockade3",
             "stockade",
@@ -244,7 +121,21 @@
             "utillitruck2",
             "scrap",
             "journey2",
-            "m983"
+            "bulldozer",
+            "cutter",
+            "dump",
+            "guardian",
+            "handler",
+            "mixer",
+            "mixer2",
+            "rubble",
+            "tiptruck",
+            "tiptruck2",
+
+            "phantomday",
+            "phanflattop",
+            "phanoldsch",
+            "cptruck"
         ]
     },
     "bearcat": {
@@ -263,7 +154,8 @@
             "towtruck2",
             "towcustom",
             "20ramrbc",
-            "ramflatbed"
+            "ramflatbed",
+            "civflatbed"
         ]
     },
     "ems_car": {
@@ -278,7 +170,9 @@
             "ambulance6",
             "arrowladder",
             "fpump",
-            "brushram"
+            "brushram",
+            "emssuv",
+            "emsatv"
         ]
     },
     "police_car": {
@@ -287,13 +181,13 @@
             "police",
             "police2",
             "police3",
-            "policeb",
             "policeold1",
             "policeold2",
             "policet",
             "pranger",
             "sheriff",
             "sheriff2",
+
             "peel50police",
             "21tr14charg",
             "21tr16fpiu",
@@ -301,23 +195,43 @@
             "valor20ram",
             "valorcap",
             "21trcvpi",
-            "valorf250",
+            "24valor2500",
             "21trfpis",
             "valor18ta",
-            "pdblazer",
-            "challenger18",
+            "pdglazer",
+            "gauker",
+            "18beast",
             "sspres",
             "polnspeedo",
             "zr1rb",
-            "mustang",
+            "pdmus",
             "govburb",
             "ranger2pd",
+            "pdenduro",
             "gcptvan",
             "06srt",
-            "pdtaycan",
-            "kawasaki",
-            "pdenduro",
-            "pbike"
+            "pdtaygan",
+            "pdslamfb",
+            "aseacop",
+            "pugway",
+            "25poldc",
+            "nbpolg",
+            "pold10",
+            "polbuf6",
+            "polbuf",
+            "poldom10",
+            "nbpolice5",
+            "polterm1",
+            "poldor",
+            "polcara1",
+            "polimp",
+            "polschafter",
+
+            "policeb",
+
+            "pbike",
+            "kasaki",
+            "pdenduro"
         ]
     },
     "unmarked_pd": {
@@ -333,7 +247,8 @@
             "fibd3",
             "fibh",
             "fibk2",
-            "fibs"
+            "fibs",
+            "speedo"
         ]
     },
     "bus": {
@@ -345,7 +260,9 @@
             "coach",
             "pbus2",
             "rentalbus",
-            "tourbus"
+            "tourbus",
+
+            "abus"
         ]
     },
     "jetsky": {
@@ -369,7 +286,9 @@
             "formula",
             "formula2",
             "openwheel1",
-            "openwheel2"
+            "openwheel2",
+
+            "redbull21"
         ]
     },
     "tank": {
@@ -382,56 +301,21 @@
             "scarab",
             "scarab2",
             "scarab3",
-            "trailersmall2"
+            "trailersmall2",
+
+            "m1a2"
         ]
     },
     "big_boat": {
         "size": 45,
         "models": [
             "amels200",
-            "titanic2"
-        ]
-    },
-    "falcon": {
-        "size": 35,
-        "models": [
-            "falcon"
-        ]
-    },
-    "star_destroyer": {
-        "size": 45,
-        "models": [
-            "stardestroy"
-        ]
-    },
-    "death_star": {
-        "size": 40,
-        "models": [
-            "deathstar"
-        ]
-    },
-    "pod_racer": {
-        "size": 35,
-        "models": [
-            "podracer"
-        ]
-    },
-    "royal_naboo": {
-        "size": 40,
-        "models": [
-            "royalnaboo"
-        ]
-    },
-    "x_wing": {
-        "size": 40,
-        "models": [
-            "xwing2"
-        ]
-    },
-    "tie_fighter": {
-        "size": 40,
-        "models": [
-            "tiefighterx"
+            "titanic2",
+            "iowa",
+            "nathan",
+            "amels200",
+            "titanic2",
+            "lcac"
         ]
     }
 }

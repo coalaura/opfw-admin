@@ -52,8 +52,13 @@ export class Vehicle {
 		v.name = rawData.vehicle.name;
 		v.model = `${rawData.vehicle.model}`;
 
-		let type = "car";
-		let size = 23;
+		let type = "car",
+			size = 23;
+
+		if (v.model in blip_map) {
+			type = `gta/Blip_${blip_map[v.model]}`;
+			size = 28;
+		}
 
 		for (const typ in custom_icons) {
 			const cfg = custom_icons[typ];
@@ -73,14 +78,6 @@ export class Vehicle {
 	}
 
 	getIcon(className = null) {
-		if (this.model in blip_map) {
-			return new L.Icon({
-				iconUrl: `/images/icons/gta/Blip_${blip_map[this.model]}.png`,
-				iconSize: [28, 28],
-				className: className,
-			});
-		}
-
 		return new L.Icon({
 			iconUrl: `/images/icons/${this.icon.type}.png`,
 			iconSize: [this.icon.size, this.icon.size],
