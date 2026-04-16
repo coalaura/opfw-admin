@@ -815,6 +815,7 @@
         "characters": {
             "born": "Bown",
             "characters": "Chawactews",
+            "coords": "Coowds",
             "created_at": "Cweated",
             "delete": "Deweete",
             "deleted_at": "Deweeted",
@@ -866,6 +867,7 @@
                 "model": "Ped Model uwu",
                 "save": "Save uwu"
             },
+            "ped_model": "Pewd",
             "playtime_label": "Pwaytime",
             "playtime_recent": "{0} pwayed in the wast 2 weeks, {1} in the wast 4 weeks.",
             "remove_tattoo": "Wemove Tawtoos",

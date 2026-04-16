@@ -815,6 +815,7 @@
         "characters": {
             "born": "Født",
             "characters": "Karakterer",
+            "coords": "Koordinater",
             "created_at": "Opprettet",
             "delete": "Slett",
             "deleted_at": "Slettet",
@@ -866,6 +867,7 @@
                 "model": "Ped-modell",
                 "save": "Lagre"
             },
+            "ped_model": "Gående",
             "playtime_label": "Spilletid",
             "playtime_recent": "{0} spilte de siste 2 ukene, {1} de siste 4 ukene.",
             "remove_tattoo": "Fjern tatoveringer",

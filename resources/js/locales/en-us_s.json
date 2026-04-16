@@ -815,6 +815,7 @@
         "characters": {
             "born": "Born",
             "characters": "Characters",
+            "coords": "Co-ords",
             "created_at": "Created",
             "delete": "Delete",
             "deleted_at": "Deleted",
@@ -866,6 +867,7 @@
                 "model": "Ped Model",
                 "save": "Save"
             },
+            "ped_model": "Ped",
             "playtime_label": "Playtime",
             "playtime_recent": "{0} played in the last 2 weeks, {1} in the last 4 weeks.",
             "remove_tattoo": "Remove Tattoos",

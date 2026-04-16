@@ -1,49 +1,67 @@
 <template>
     <div>
         <portal to="title">
-            <div class="flex items-start space-x-10 mobile:flex-wrap">
-                <h1 class="dark:text-white">
-                    {{ character.name }} #{{ character.id }}
-                </h1>
-                <div class="flex items-center space-x-5 mobile:flex-wrap mobile:w-full mobile:!mr-0 mobile:!ml-0 mobile:space-x-0">
-                    <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale" v-if="character.characterDeleted">
-                        <span class="font-semibold">
-                            {{ t('players.edit.deleted') }}:
-                            {{ character.characterDeletionTimestamp | formatTime }}
-                        </span>
-                    </badge>
+            <div class="flex gap-5">
+                <img :src="character.mugshot" class="!m-0 h-32 w-32 rounded-2xl" />
+
+                <div class="flex flex-col gap-4">
+                    <div class="flex items-start space-x-10 mobile:flex-wrap">
+                        <h1 class="dark:text-white">
+                            {{ character.name }} #{{ character.id }}
+                        </h1>
+                        <div class="flex items-center space-x-5 mobile:flex-wrap mobile:w-full mobile:!mr-0 mobile:!ml-0 mobile:space-x-0">
+                            <badge class="border-red-200 bg-danger-pale dark:bg-dark-danger-pale" v-if="character.characterDeleted">
+                                <span class="font-semibold">
+                                    {{ t('players.edit.deleted') }}:
+                                    {{ character.characterDeletionTimestamp | formatTime }}
+                                </span>
+                            </badge>
+                        </div>
+                    </div>
+
+                    <div class="rounded shadow px-3 py-2 bg-secondary dark:bg-dark-secondary flex flex-col gap-1 w-max">
+                        <table class="!m-0">
+                            <tr>
+                                <th class="font-semibold py-0.5 px-1">{{ t('players.characters.ped_model') }}:</th>
+                                <td class="py-0.5 px-1 text-gray-700 dark:text-gray-300 font-mono">{{ character.pedModelName ? character.pedModelName : character.pedModelHash }}</td>
+                                <td class="py-0.5 px-1">
+                                    <i class="fas fa-pencil-alt cursor-pointer" @click="editingPedModel = true" v-if="$page.auth.player.isSuperAdmin"></i>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th class="font-semibold py-0.5 px-1">{{ t('players.characters.coords') }}:</th>
+                                <td class="py-0.5 px-1 text-gray-700 dark:text-gray-300 font-mono">
+                                    <span v-if="isOffline">{{ character.coords.x.toFixed(1) }}, {{ character.coords.y.toFixed(1) }}, {{ character.coords.z.toFixed(1) }}</span>
+                                    <span class="blur-xs font-semibold" :title="t('players.characters.no_coords')" v-else>123.4, -567.8, 901.2</span>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
-
-            <div class="mt-2 italic text-sm font-mono text-gray-500 dark:text-gray-400">
-                {{ character.pedModelName ? character.pedModelName : character.pedModelHash }} <i class="fas fa-pencil-alt cursor-pointer" @click="editingPedModel = true" v-if="$page.auth.player.isSuperAdmin"></i>
-            </div>
-
-            <div class="mt-0.5 italic text-sm font-mono text-gray-500 dark:text-gray-400" v-if="character.coords && typeof character.coords === 'object'">
-                <span v-if="isOffline">{{ character.coords.x.toFixed(1) }}, {{ character.coords.y.toFixed(1) }}, {{ character.coords.z.toFixed(1) }}</span>
-                <span class="blur-xs font-semibold" :title="t('players.characters.no_coords')" v-else>123.4, -567.8, 901.2</span>
-            </div>
         </portal>
 
-        <portal to="actions">
-            <div>
-                <!-- Remove Tattoos -->
-                <a href="#" class="px-5 py-2 font-semibold text-white rounded bg-danger mr-3 dark:bg-dark-danger mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="(e) => { e.preventDefault(); isTattooRemoval = true }">
-                    <i class="fas fa-eraser"></i>
-                    {{ t('players.characters.remove_tattoo') }}
-                </a>
-                <!-- Reset Spawn-point -->
-                <a href="#" class="px-5 py-2 font-semibold text-white rounded bg-warning mr-3 dark:bg-dark-warning mobile:block mobile:w-full mobile:m-0 mobile:mb-3" @click="(e) => { e.preventDefault(); isResetSpawn = true }">
-                    <i class="fas fa-heartbeat"></i>
-                    {{ t('players.characters.reset_spawn') }}
-                </a>
-                <!-- Back -->
-                <a class="px-5 py-2 font-semibold text-white rounded bg-primary dark:bg-dark-primary mobile:block mobile:w-full mobile:m-0 mobile:mb-3" :href="'/players/' + character.licenseIdentifier">
-                    <i class="fas fa-backward"></i>
-                    {{ t('players.characters.to_player') }}
-                </a>
-            </div>
-        </portal>
+        <div class="absolute top-2 right-2 flex gap-2 items-center">
+            <!-- Remove Tattoos -->
+            <button class="p-1 text-sm font-bold leading-4 text-center rounded border-red-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" @click="isTattooRemoval = true" :title="t('players.characters.remove_tattoo')">
+                <i class="fas fa-eraser mr-1"></i>
+                Tat
+            </button>
+
+            <!-- Reset Spawn-point -->
+            <button class="p-1 text-sm font-bold leading-4 text-center rounded border-orange-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" @click="isResetSpawn = true" :title="t('players.characters.reset_spawn')">
+                <i class="fas fa-compass mr-1"></i>
+                Spwn
+            </button>
+
+            <!-- Back -->
+            <a class="p-1 text-sm font-bold leading-4 text-center rounded border-blue-400 bg-secondary dark:bg-dark-secondary border-2 flex items-center" :href="'/players/' + character.licenseIdentifier" :title="t('players.characters.to_player')">
+                <i class="fas fa-backward mr-1"></i>
+                Back
+            </a>
+        </div>
 
         <!-- Remove Tattoos -->
         <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isTattooRemoval">
@@ -610,7 +628,7 @@
                         {{ t('players.characters.ped.model') }}
                     </label>
 
-                    <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" :class="{ 'border-red-500': !pedEditModelValid }" id="modelName" placeholder="sultan2" minlength="1" maxlength="250" v-model="pedEditModel" />
+                    <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" :class="{ 'border-red-500': !pedEditModelValid }" id="modelName" placeholder="mp_m_freemode_01" minlength="1" maxlength="250" v-model="pedEditModel" />
                 </div>
             </template>
 
@@ -689,9 +707,8 @@
                     </h2>
 
                     <!-- Add Vehicle -->
-                    <button class="block px-5 py-2 font-semibold text-center text-white rounded bg-success dark:bg-dark-success text-base" @click="isVehicleAdd = true" v-if="$page.auth.player.isSuperAdmin">
+                    <button class="block py-1 px-3 font-semibold text-center text-white rounded text-lg" @click="isVehicleAdd = true" v-if="$page.auth.player.isSuperAdmin" :title="t('players.characters.vehicle.add')">
                         <i class="fas fa-plus"></i>
-                        {{ t('players.characters.vehicle.add') }}
                     </button>
                 </div>
             </template>
@@ -811,9 +828,9 @@
             </template>
 
             <template v-if="$page.auth.player.isSeniorStaff">
-                <h3 class="mb-4 mt-5 pt-5 border-t-2 border-dashed border-gray-500">
+                <h2 class="mb-4 mt-5 pt-5 border-t-2 border-dashed border-gray-500">
                     {{ t('players.properties.properties_shared') }}
-                </h3>
+                </h2>
                 <div class="grid grid-cols-1 xl:grid-cols-2 3xl:grid-cols-3 wide:grid-cols-4 gap-9 max-h-section overflow-y-auto" v-if="character.accessProperties.length > 0">
                     <card :key="property.property_id" v-for="(property) in character.accessProperties" :no_body="true" class="relative">
                         <template #header>

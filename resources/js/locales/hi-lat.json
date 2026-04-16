@@ -815,6 +815,7 @@
         "characters": {
             "born": "Paida",
             "characters": "Kirdar",
+            "coords": "Sanket",
             "created_at": "Banaya gaya",
             "delete": "Hataayein",
             "deleted_at": "Hataaya gaya",
@@ -866,6 +867,7 @@
                 "model": "Ped model",
                 "save": "Bachayein"
             },
+            "ped_model": "Chalne wala vyakti",
             "playtime_label": "Playtime",
             "playtime_recent": "Aakhri 2 hafton me {0} khela, aakhri 4 hafton me {1}.",
             "remove_tattoo": "Tattoos hatao",

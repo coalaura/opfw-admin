@@ -1212,11 +1212,11 @@
             "oil_change_needed": "Oil change is needed."
         },
         "properties": {
-            "properties": "Properties",
+            "properties": "Owned Properties",
             "property": "Property",
             "properties_shared": "Shared Properties",
-            "none": "This character does not have access to any properties.",
-            "none_access": "This character does not have shared access to any properties.",
+            "none": "This character does not own any properties.",
+            "none_access": "This character does not have access to any shared properties.",
             "cost": "Maintenance Cost",
             "rent": "Rent",
             "paid_till": "Rent paid till",
@@ -1232,7 +1232,7 @@
         },
         "motels": {
             "motels": "Motels",
-            "none": "This character does not have access to any motels.",
+            "none": "This character is not renting any motels.",
             "paid_till": "Rent paid till"
         },
         "savings": {
@@ -1296,6 +1296,8 @@
             "save_changes": "Save changes",
             "no_coords": "Last coords are unavailable while the player is online.",
             "to_player": "Player Profile",
+            "ped_model": "Ped",
+            "coords": "Coords",
             "reset_spawn": "Reset Spawn",
             "sure_spawn": "Are you sure you want to reset this characters spawn-point?",
             "spawn_point": "Reset location",
