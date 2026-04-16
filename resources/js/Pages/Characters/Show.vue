@@ -201,7 +201,7 @@
                         <div class="flex flex-col gap-4">
                             <div>
                                 <label class="block mb-2 font-semibold">{{ t('players.edit.phone') }}</label>
-                                <div class="w-full px-4 py-3 bg-gray-200 border border-input rounded dark:bg-gray-600 font-mono select-all">
+                                <div class="w-full px-4 py-3 bg-gray-200 border border-input rounded dark:bg-gray-600 font-mono">
                                     {{ character.phoneNumber }}
                                 </div>
                             </div>
@@ -210,7 +210,7 @@
                                     <label class="block font-semibold">{{ t('players.edit.email') }}</label>
                                 </div>
                                 <div class="flex justify-between items-center w-full px-4 py-3 bg-gray-200 border border-input rounded dark:bg-gray-600">
-                                    <span class="font-mono select-all">{{ character.emailAddress || "N/A" }}</span>
+                                    <span class="font-mono">{{ character.emailAddress || "N/A" }}</span>
                                     <i class="fas fa-sync cursor-pointer text-gray-500 hover:text-primary dark:hover:text-dark-primary transition-colors" :class="{ 'animate-spin': isRefreshingEmail }" @click="refreshEmail"></i>
                                 </div>
                             </div>
