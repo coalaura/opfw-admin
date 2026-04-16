@@ -346,7 +346,11 @@ export default {
             this.isActionTimedOut = true;
 
             try {
-                await _patch(`/live/do/${this.spectator.license}/${action.name}`);
+                const resp = await _patch(`/live/do/${this.spectator.license}/${action.name}`);
+
+                if (!resp?.status && resp?.message) {
+                    alert(resp.message);
+                }
             } catch {}
 
             this.isPerformingAction = false;
