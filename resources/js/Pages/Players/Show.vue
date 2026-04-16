@@ -1126,42 +1126,44 @@
 
         <!-- Useful links -->
         <v-section class="dark:bg-dark-secondary" :noFooter="true" :noHeader="true">
-            <div class="flex flex-wrap items-center text-center">
-                <inertia-link class="flex-1 block p-3 m-2 font-semibold text-white bg-indigo-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" :href="'/logs?identifier=' + player.licenseIdentifier">
-                    <i class="mr-1 fas fa-toilet-paper"></i>
-                    {{ t('players.show.logs') }}
-                </inertia-link>
+            <div class="flex flex-col gap-3.5">
+                <div class="flex flex-wrap items-center text-center gap-3">
+                    <inertia-link class="flex-1 block p-3 font-semibold text-white bg-indigo-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" :href="'/logs?identifier=' + player.licenseIdentifier">
+                        <i class="mr-1 fas fa-toilet-paper"></i>
+                        {{ t('players.show.logs') }}
+                    </inertia-link>
 
-                <button class="flex-1 block p-3 m-2 font-semibold text-white bg-teal-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" @click="showNotifications">
-                    <i class="mr-1 fas fa-envelope-open-text"></i>
-                    <span>
-                        {{ t('players.show.notifications') }}
-                    </span>
-                </button>
+                    <button class="flex-1 block p-3 font-semibold text-white bg-teal-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" @click="showNotifications">
+                        <i class="mr-1 fas fa-envelope-open-text"></i>
+                        <span>
+                            {{ t('players.show.notifications') }}
+                        </span>
+                    </button>
 
-                <button class="flex-1 block p-3 m-2 font-semibold text-white bg-rose-700 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" @click="showAntiCheat" v-if="canSeeAntiCheat">
-                    <i class="mr-1 fas fa-bullseye"></i>
-                    <span>
-                        {{ t('players.show.anti_cheat') }}
-                    </span>
-                </button>
-            </div>
-            <div class="flex flex-wrap items-center text-center">
-                <a class="flex-1 block p-3 m-2 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" v-if="player.discord.length > 0" href="#" @click="showDiscord($event)">
-                    <i class="mr-1 fab fa-discord"></i>
-                    {{ t('players.show.discord_accounts', player.discord.length) }}
-                </a>
+                    <button class="flex-1 block p-3 font-semibold text-white bg-rose-700 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" @click="showAntiCheat" v-if="canSeeAntiCheat">
+                        <i class="mr-1 fas fa-bullseye"></i>
+                        <span>
+                            {{ t('players.show.anti_cheat') }}
+                        </span>
+                    </button>
+                </div>
+                <div class="flex flex-wrap items-center text-center gap-3">
+                    <a class="flex-1 block p-3 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" v-if="player.discord.length > 0" href="#" @click="showDiscord($event)">
+                        <i class="mr-1 fab fa-discord"></i>
+                        {{ t('players.show.discord_accounts', player.discord.length) }}
+                    </a>
 
-                <a class="flex-1 block p-3 m-2 font-semibold text-white bg-steam rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" target="_blank" :href="player.steamProfileUrl" v-if="player.steamProfileUrl && !$page.discord.sso">
-                    <i class="mr-1 fab fa-steam"></i>
-                    {{ t('players.show.steam') }}
-                </a>
+                    <a class="flex-1 block p-3 font-semibold text-white bg-steam rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" target="_blank" :href="player.steamProfileUrl" v-if="player.steamProfileUrl && !$page.discord.sso">
+                        <i class="mr-1 fab fa-steam"></i>
+                        {{ t('players.show.steam') }}
+                    </a>
 
-                <button class="flex-1 block p-3 m-2 font-semibold text-white bg-indigo-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" @click="showLinked">
-                    <span>
-                        {{ t('players.show.linked') }}
-                    </span>
-                </button>
+                    <button class="flex-1 block p-3 font-semibold text-white bg-indigo-600 rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" @click="showLinked">
+                        <span>
+                            {{ t('players.show.linked') }}
+                        </span>
+                    </button>
+                </div>
             </div>
         </v-section>
 
