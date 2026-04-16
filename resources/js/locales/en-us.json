@@ -1388,7 +1388,7 @@
             "license": {
                 "license": "License",
                 "licenses": "Licenses",
-                "add": "Edit Licenses",
+                "add": "Edit",
                 "remove": "Remove all",
                 "heli": "PPL - Helicopter",
                 "fw": "PPL - Fixed Wing",

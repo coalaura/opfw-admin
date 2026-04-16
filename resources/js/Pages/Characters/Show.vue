@@ -132,7 +132,7 @@
 
             <template>
                 <form @submit.prevent="submit(false)">
-                    <!-- Name & Phone -->
+                    <!-- Name, etc -->
                     <div class="flex flex-wrap mb-4">
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="first_name">
@@ -175,111 +175,101 @@
                         </button>
                     </div>
 
-                    <hr class="border-gray-200 dark:border-gray-600">
+                    <hr class="border-gray-200 dark:border-gray-600 my-6">
 
-                    <div class="flex flex-wrap mb-6 mt-6">
-                        <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
-                            <label class="block font-semibold">
-                                {{ t('players.characters.license.licenses') }}
-                            </label>
-                            <ul v-if="character.licenses.length > 0" class="text-sm">
-                                <li v-for="license in character.licenses" :key="license" class="ml-3 pl-2 list-dash">
-                                    {{ t('players.characters.license.' + license) }}
-                                </li>
-                            </ul>
-                            <ul v-else class="text-sm">
-                                <li class="ml-3 pl-2 list-dash">{{ t('global.none') }}</li>
-                            </ul>
-
-                            <!-- Add License -->
-                            <button type="button" class="block w-full px-5 py-2 mt-6 hover:shadow-xl font-semibold text-white rounded bg-primary mr-3 dark:bg-dark-primary" @click="isLicenseEdit = true">
-                                {{ t('players.characters.license.add') }}
-                            </button>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-3 mb-4">
+                        <!-- Licenses Column -->
+                        <div class="flex flex-col">
+                            <div class="flex justify-between items-end mb-2">
+                                <label class="block font-semibold">{{ t('players.characters.license.licenses') }}</label>
+                                <button type="button" class="text-xs bg-primary hover:!bg-indigo-500 dark:bg-dark-primary text-white px-2 py-1 rounded shadow-sm transition-colors" @click="isLicenseEdit = true">
+                                    <i class="fas fa-pencil-alt mr-1"></i> {{ t('players.characters.license.add') }}
+                                </button>
+                            </div>
+                            <div class="bg-gray-200 dark:bg-gray-600 border border-input rounded p-4 flex-grow shadow-inner">
+                                <ul v-if="character.licenses.length > 0" class="text-sm space-y-2">
+                                    <li v-for="license in character.licenses" :key="license" class="flex items-center gap-2">
+                                        <i class="fas fa-id-card text-gray-500 dark:text-gray-400 text-center w-4"></i>
+                                        {{ t('players.characters.license.' + license) }}
+                                    </li>
+                                </ul>
+                                <div v-else class="text-sm text-gray-500 dark:text-gray-400 italic">{{ t('global.none') }}</div>
+                            </div>
                         </div>
-                        <div class="w-1/3 px-3 mobile:w-full mobile:mb-3">
-                            <table class="text-left w-full">
-                                <tr>
-                                    <th class="font-semibold p-2">{{ t('players.edit.phone') }}</th>
-                                    <td class="p-2">
-                                        <span class="block border-gray-500 border-b-2 px-3 py-2">
-                                            {{ character.phoneNumber }}
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="font-semibold p-2">{{ t('players.edit.email') }}</th>
-                                    <td class="p-2">
-                                        <span class="flex justify-between items-center border-gray-500 border-b-2 px-3 py-2 relative">
-                                            {{ character.emailAddress || "N/A" }}
 
-                                            <i class="fas fa-sync cursor-pointer" :class="{ 'animate-spin': isRefreshingEmail }" @click="refreshEmail"></i>
-                                        </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="italic p-2 font-normal" colspan="2">
-                                        {{ t('players.characters.has_outfits', character.outfits.length) }}
-                                        <span class="cursor-pointer dark:text-blue-300 text-blue-500" @click="viewOutfits()" v-if="$page.auth.player.isSeniorStaff && character.outfits.length > 0">{{ t('global.view') }}</span>
-                                    </th>
-                                </tr>
-                            </table>
+                        <!-- Contact & Outfits Column -->
+                        <div class="flex flex-col gap-4">
+                            <div>
+                                <label class="block mb-2 font-semibold">{{ t('players.edit.phone') }}</label>
+                                <div class="w-full px-4 py-3 bg-gray-200 border border-input rounded dark:bg-gray-600 font-mono select-all">
+                                    {{ character.phoneNumber }}
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-end mb-2">
+                                    <label class="block font-semibold">{{ t('players.edit.email') }}</label>
+                                </div>
+                                <div class="flex justify-between items-center w-full px-4 py-3 bg-gray-200 border border-input rounded dark:bg-gray-600">
+                                    <span class="font-mono select-all">{{ character.emailAddress || "N/A" }}</span>
+                                    <i class="fas fa-sync cursor-pointer text-gray-500 hover:text-primary dark:hover:text-dark-primary transition-colors" :class="{ 'animate-spin': isRefreshingEmail }" @click="refreshEmail"></i>
+                                </div>
+                            </div>
+                            <div class="mt-auto">
+                                <div class="flex justify-between items-center w-full px-4 py-3 bg-gray-200 border border-input rounded dark:bg-gray-600">
+                                    <span class="italic text-sm">{{ t('players.characters.has_outfits', character.outfits.length) }}</span>
+                                    <button type="button" class="text-sm bg-primary hover:!bg-indigo-500 dark:bg-dark-primary text-white px-3 py-1 rounded shadow-sm transition-colors" @click="viewOutfits()" v-if="$page.auth.player.isSeniorStaff && character.outfits.length > 0">
+                                        <i class="fas fa-tshirt mr-1"></i> {{ t('global.view') }}
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="w-1/3 px-3 mobile:w-full mobile:mb-3 relative">
-                            <table class="text-left w-full">
-                                <tr>
-                                    <th class="p-2">
-                                        <label class="block font-semibold">
-                                            {{ t('players.characters.edit_cash') }}
-                                        </label>
-                                    </th>
-                                    <td class="p-2 relative">
-                                        <template v-if="$page.auth.player.isSuperAdmin">
-                                            <input type="number" class="block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" v-model="balanceForm.cash" />
-                                            <span class="absolute top-0 left-0 font-mono text-xs leading-1 italic text-gray-500 dark:text-gray-400 pointer-events-none" v-if="balanceForm.cash !== 0">{{ numberFormat(balanceForm.cash, 0, true) }}</span>
-                                        </template>
 
-                                        <span class="block border-gray-500 border-b-2 px-3 py-2" v-else>{{ numberFormat(balanceForm.cash, 0, true) }}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="p-2">
-                                        <label class="block font-semibold">
-                                            {{ t('players.characters.edit_bank') }}
-                                        </label>
-                                    </th>
-                                    <td class="p-2 relative">
-                                        <template v-if="$page.auth.player.isSuperAdmin">
-                                            <input type="number" class="block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" v-model="balanceForm.bank" />
-                                            <span class="absolute top-0 left-0 font-mono text-xs leading-1 italic text-gray-500 dark:text-gray-400 pointer-events-none" v-if="balanceForm.bank !== 0">{{ numberFormat(balanceForm.bank, 0, true) }}</span>
-                                        </template>
+                        <!-- Finances Column -->
+                        <div class="flex flex-col gap-4 relative">
+                            <div>
+                                <label class="block mb-2 font-semibold text-lime-700 dark:text-lime-400">{{ t('players.characters.edit_cash') }}</label>
+                                <div class="relative">
+                                    <template v-if="$page.auth.player.isSuperAdmin">
+                                        <input type="number" class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 font-mono" v-model="balanceForm.cash" />
+                                        <span class="absolute right-3 top-3.5 font-mono text-sm italic text-gray-500 dark:text-gray-400 pointer-events-none" v-if="balanceForm.cash !== 0">{{ numberFormat(balanceForm.cash, 0, true) }}</span>
+                                    </template>
+                                    <div class="block w-full px-4 py-3 bg-gray-200 border border-input rounded dark:bg-gray-600 cursor-not-allowed font-mono" v-else>
+                                        {{ numberFormat(balanceForm.cash, 0, true) }}
+                                    </div>
+                                </div>
+                            </div>
 
-                                        <span class="block border-gray-500 border-b-2 px-3 py-2" v-else>{{ numberFormat(balanceForm.bank, 0, true) }}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th class="p-2">
-                                        <label class="block font-semibold">
-                                            {{ t('players.characters.edit_stocks') }}
-                                        </label>
-                                    </th>
-                                    <td class="p-2 relative">
-                                        <template v-if="$page.auth.player.isSuperAdmin">
-                                            <input type="number" class="block shadow-none !border-gray-500 border-0 border-b-2 bg-transparent !ring-transparent" v-model="balanceForm.stocks" />
-                                            <span class="absolute top-0 left-0 font-mono text-xs leading-1 italic text-gray-500 dark:text-gray-400 pointer-events-none" v-if="balanceForm.stocks !== 0">{{ numberFormat(balanceForm.stocks, 0, true) }}</span>
-                                        </template>
+                            <div>
+                                <label class="block mb-2 font-semibold text-indigo-700 dark:text-indigo-400">{{ t('players.characters.edit_bank') }}</label>
+                                <div class="relative">
+                                    <template v-if="$page.auth.player.isSuperAdmin">
+                                        <input type="number" class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 font-mono" v-model="balanceForm.bank" />
+                                        <span class="absolute right-3 top-3.5 font-mono text-sm italic text-gray-500 dark:text-gray-400 pointer-events-none" v-if="balanceForm.bank !== 0">{{ numberFormat(balanceForm.bank, 0, true) }}</span>
+                                    </template>
+                                    <div class="block w-full px-4 py-3 bg-gray-200 border border-input rounded dark:bg-gray-600 cursor-not-allowed font-mono" v-else>
+                                        {{ numberFormat(balanceForm.bank, 0, true) }}
+                                    </div>
+                                </div>
+                            </div>
 
-                                        <span class="block border-gray-500 border-b-2 px-3 py-2" v-else>{{ numberFormat(balanceForm.stocks, 0, true) }}</span>
-                                    </td>
-                                </tr>
-                                <tr v-if="$page.auth.player.isSuperAdmin && balanceEdited">
-                                    <td class="p-2">&nbsp;</td>
-                                    <td class="p-2">
-                                        <button type="button" class="block w-full px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-green-600 mr-3 dark:bg-green-500" @click="editBalance">
-                                            {{ t('players.characters.save_changes') }}
-                                        </button>
-                                    </td>
-                                </tr>
-                            </table>
+                            <div>
+                                <label class="block mb-2 font-semibold text-purple-700 dark:text-purple-400">{{ t('players.characters.edit_stocks') }}</label>
+                                <div class="relative">
+                                    <template v-if="$page.auth.player.isSuperAdmin">
+                                        <input type="number" class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 font-mono" v-model="balanceForm.stocks" />
+                                        <span class="absolute right-3 top-3.5 font-mono text-sm italic text-gray-500 dark:text-gray-400 pointer-events-none" v-if="balanceForm.stocks !== 0">{{ numberFormat(balanceForm.stocks, 0, true) }}</span>
+                                    </template>
+                                    <div class="block w-full px-4 py-3 bg-gray-200 border border-input rounded dark:bg-gray-600 cursor-not-allowed font-mono" v-else>
+                                        {{ numberFormat(balanceForm.stocks, 0, true) }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div v-if="$page.auth.player.isSuperAdmin && balanceEdited">
+                                <button type="button" class="block w-full px-5 py-2.5 mt-1 hover:shadow-xl font-semibold text-white rounded bg-green-600 dark:bg-green-500 transition-colors" @click="editBalance">
+                                    <i class="fas fa-save mr-1"></i> {{ t('players.characters.save_changes') }}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </form>
