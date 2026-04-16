@@ -186,7 +186,7 @@
                                     <i class="fas fa-pencil-alt mr-1"></i> {{ t('players.characters.license.add') }}
                                 </button>
                             </div>
-                            <div class="bg-gray-200 dark:bg-gray-600 border border-input rounded p-4 flex-grow shadow-inner">
+                            <div class="bg-gray-200 dark:bg-gray-600 border border-input rounded p-4 flex-grow shadow-inner max-h-80 overflow-y-auto">
                                 <ul v-if="character.licenses.length > 0" class="text-sm space-y-2">
                                     <li v-for="license in character.licenses" :key="license" class="flex items-center gap-2">
                                         <i class="fas fa-id-card text-gray-500 dark:text-gray-400 text-center w-4"></i>
