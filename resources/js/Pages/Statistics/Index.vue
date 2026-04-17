@@ -34,12 +34,12 @@
                     <i class="fas fa-plus"></i>
                 </button>
 
-                <div class="flex gap-6 overflow-y-auto">
-                    <div v-if="!economyTableShow" class="bg-gray-300 dark:bg-gray-700 no-alpha border-2 border-gray-500 py-1.5 px-2">
+                <div class="flex flex-col gap-6">
+                    <div v-if="!economyTableShow" class="bg-gray-300 dark:bg-gray-700 no-alpha border-2 border-gray-500 py-1.5 px-2 w-max">
                         <i class="fas fa-expand-alt cursor-pointer" @click="toggleEconomyTable()"></i>
                     </div>
-                    <div class="max-h-statistics-long inline-block pr-2 flex-shrink-0 w-max" v-else>
-                        <table class="whitespace-nowrap">
+                    <div class="max-h-statistics-long overflow-auto pr-2 w-full" v-else>
+                        <table class="whitespace-nowrap w-full">
                             <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
                                 <th class="font-semibold px-2 py-0.5 text-left">
                                     <div class="flex gap-3 justify-between items-center">
@@ -107,7 +107,7 @@
                         </table>
                     </div>
 
-                    <div v-if="!economyLoading && economy && economy.graph" class="w-full max-h-statistics-long min-w-chart overflow-hidden">
+                    <div v-if="!economyLoading && economy && economy.graph" class="w-full h-96 overflow-hidden">
                         <LineChart :chartData="economy.graph" class="h-full" :currency="true" :reRender="economyReRender"></LineChart>
                     </div>
                 </div>
@@ -128,12 +128,12 @@
                     <i class="fas fa-plus"></i>
                 </button>
 
-                <div class="flex gap-6 overflow-y-auto">
-                    <div v-if="!playersTableShow" class="bg-gray-300 dark:bg-gray-700 no-alpha border-2 border-gray-500 py-1.5 px-2">
+                <div class="flex flex-col gap-6">
+                    <div v-if="!playersTableShow" class="bg-gray-300 dark:bg-gray-700 no-alpha border-2 border-gray-500 py-1.5 px-2 w-max">
                         <i class="fas fa-expand-alt cursor-pointer" @click="togglePlayersTable()"></i>
                     </div>
-                    <div class="max-h-statistics-long inline-block pr-2 flex-shrink-0 w-max" v-else>
-                        <table class="whitespace-nowrap">
+                    <div class="max-h-statistics-long overflow-auto pr-2 w-full" v-else>
+                        <table class="whitespace-nowrap w-full">
                             <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
                                 <th class="font-semibold px-2 py-0.5 text-left">
                                     <div class="flex gap-3 justify-between items-center">
@@ -179,7 +179,7 @@
                         </table>
                     </div>
 
-                    <div v-if="!playersLoading && players && players.graph" class="w-full max-h-statistics-long overflow-hidden">
+                    <div v-if="!playersLoading && players && players.graph" class="w-full h-96 overflow-hidden">
                         <LineChart :chartData="players.graph" class="h-full" :reRender="playersReRender"></LineChart>
                     </div>
                 </div>
@@ -200,12 +200,12 @@
                     <i class="fas fa-plus"></i>
                 </button>
 
-                <div class="flex gap-6 overflow-y-auto">
-                    <div v-if="!fpsTableShow" class="bg-gray-300 dark:bg-gray-700 no-alpha border-2 border-gray-500 py-1.5 px-2">
+                <div class="flex flex-col gap-6">
+                    <div v-if="!fpsTableShow" class="bg-gray-300 dark:bg-gray-700 no-alpha border-2 border-gray-500 py-1.5 px-2 w-max">
                         <i class="fas fa-expand-alt cursor-pointer" @click="toggleFpsTable()"></i>
                     </div>
-                    <div class="max-h-statistics-long inline-block pr-2 flex-shrink-0 w-max" v-else>
-                        <table class="whitespace-nowrap">
+                    <div class="max-h-statistics-long overflow-auto pr-2 w-full" v-else>
+                        <table class="whitespace-nowrap w-full">
                             <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
                                 <th class="font-semibold px-2 py-0.5 text-left">
                                     <div class="flex gap-3 justify-between items-center">
@@ -254,7 +254,7 @@
                         </table>
                     </div>
 
-                    <div v-if="!fpsLoading && fps && fps.graph" class="w-full max-h-statistics-long overflow-hidden">
+                    <div v-if="!fpsLoading && fps && fps.graph" class="w-full h-96 overflow-hidden">
                         <LineChart :chartData="fps.graph" class="h-full" :reRender="fpsReRender"></LineChart>
                     </div>
                 </div>
@@ -275,12 +275,12 @@
                     <i class="fas fa-plus"></i>
                 </button>
 
-                <div class="flex gap-6 overflow-y-auto">
-                    <div v-if="!pingTableShow" class="bg-gray-300 dark:bg-gray-700 no-alpha border-2 border-gray-500 py-1.5 px-2">
+                <div class="flex flex-col gap-6">
+                    <div v-if="!pingTableShow" class="bg-gray-300 dark:bg-gray-700 no-alpha border-2 border-gray-500 py-1.5 px-2 w-max">
                         <i class="fas fa-expand-alt cursor-pointer" @click="togglePingTable()"></i>
                     </div>
-                    <div class="max-h-statistics-long inline-block pr-2 flex-shrink-0 w-max" v-else>
-                        <table class="whitespace-nowrap">
+                    <div class="max-h-statistics-long overflow-auto pr-2 w-full" v-else>
+                        <table class="whitespace-nowrap w-full">
                             <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
                                 <th class="font-semibold px-2 py-0.5 text-left">
                                     <div class="flex gap-3 justify-between items-center">
@@ -335,7 +335,7 @@
                         </table>
                     </div>
 
-                    <div v-if="!pingLoading && ping && ping.graph" class="w-full max-h-statistics-long overflow-hidden">
+                    <div v-if="!pingLoading && ping && ping.graph" class="w-full h-96 overflow-hidden">
                         <LineChart :chartData="ping.graph" class="h-full" :reRender="pingReRender"></LineChart>
                     </div>
                 </div>
@@ -360,8 +360,8 @@
                     </div>
                 </div>
 
-                <div class="relative min-h-base" v-if="moneyLogData || moneyLogLoading">
-                    <LineChart :chartData="moneyLogData" :currency="true" v-if="moneyLogData"></LineChart>
+                <div class="relative h-96" v-if="moneyLogData || moneyLogLoading">
+                    <LineChart :chartData="moneyLogData" class="h-full" :currency="true" v-if="moneyLogData"></LineChart>
 
                     <div class="absolute top-0 left-0 right-0 bottom-0 backdrop-blur-md" v-if="moneyLogLoading">
                         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">

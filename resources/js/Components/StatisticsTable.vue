@@ -27,9 +27,9 @@
             <i class="fas fa-minus" v-else></i>
         </button>
 
-        <div class="flex gap-6">
-            <div class="overflow-y-auto max-h-statistics inline-block pr-2 flex-shrink-0" ref="table">
-                <table class="whitespace-nowrap">
+        <div class="flex flex-col gap-6">
+            <div class="overflow-auto max-h-statistics pr-2 w-full" ref="table">
+                <table class="whitespace-nowrap w-full">
                     <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
                         <th class="font-semibold px-2 py-0.5 text-left">
                             {{ t('statistics.date') }}
@@ -74,7 +74,7 @@
                 </table>
             </div>
 
-            <SimpleChart :data="data" v-if="!collapsed && data" :amounts="amounts" :labels="chartLabels" />
+            <SimpleChart :data="data" v-if="!collapsed && data" :amounts="amounts" :labels="chartLabels" height="h-64" />
         </div>
     </div>
 </template>

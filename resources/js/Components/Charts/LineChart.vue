@@ -137,7 +137,19 @@ export default {
                     fontColor: textColor
                 },
                 responsive: true,
-                maintainAspectRatio: false
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 0
+                },
+                hover: {
+                    animationDuration: 0
+                },
+                responsiveAnimationDuration: 0,
+                elements: {
+                    line: {
+                        tension: 0
+                    }
+                }
             };
         },
         chartDataUpdated() {
