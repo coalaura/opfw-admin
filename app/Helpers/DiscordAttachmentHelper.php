@@ -83,6 +83,62 @@ class DiscordAttachmentHelper
             return url($path);
         }, $message);
 
+        $otherRe = '/https:\/\/(?:i\.imgur\.com|imgur\.com|ibb\.co|files\.catbox\.moe|i\.postimg\.cc|postimg\.cc|live\.staticflickr\.com)\/[^\s#"\'<>]+/m';
+
+        $message = preg_replace_callback($otherRe, function ($matches) {
+            $url = $matches[0];
+            $originalUrl = $url;
+            
+            $url = rtrim($url, '.,;:)!?');
+
+            $host = parse_url($url, PHP_URL_HOST);
+            $path = parse_url($url, PHP_URL_PATH);
+
+            if (!$host || !$path) return $originalUrl;
+
+            if ($host === 'imgur.com') {
+                if (!preg_match('/\.\w+$/', $path)) {
+                    $url = 'https://i.imgur.com' . $path . '.png';
+                } else {
+                    $url = 'https://i.imgur.com' . $path;
+                }
+            } else if ($host === 'postimg.cc') {
+                $html = HttpHelper::get($url);
+                if ($html && preg_match('/<meta\s+property="og:image"\s+content="([^"]+)"/i', $html, $m)) {
+                    $url = $m[1];
+                } else {
+                    return $originalUrl;
+                }
+            } else if ($host === 'ibb.co') {
+                $html = HttpHelper::get($url);
+                if ($html && preg_match('/<meta\s+property="og:image"\s+content="([^"]+)"/i', $html, $m)) {
+                    $url = $m[1];
+                } else {
+                    return $originalUrl;
+                }
+            }
+
+            $name = basename(parse_url($url, PHP_URL_PATH));
+            if (!preg_match('/\.\w+$/', $name)) {
+                $name .= '.png';
+            }
+
+            if (!DiscordAttachmentHelper::isFileNameAllowed($name)) {
+                return $originalUrl;
+            }
+
+            $attachId = abs(crc32($originalUrl));
+
+            $savedPath = DiscordAttachmentHelper::ensureAttachment($attachId, $name, $url);
+            if (!$savedPath) {
+                return $originalUrl;
+            }
+
+            LoggingHelper::log('Downloaded attachment: ' . $savedPath);
+
+            return url($savedPath);
+        }, $message);
+
         // Update the message if it was changed
         if ($message !== $warning->message) {
             $warning->message = $message;
