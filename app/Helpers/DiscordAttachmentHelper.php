@@ -2,6 +2,7 @@
 namespace App\Helpers;
 
 use App\Warning;
+use Illuminate\Support\Str;
 
 class DiscordAttachmentHelper
 {
@@ -89,6 +90,7 @@ class DiscordAttachmentHelper
         $message = preg_replace_callback($otherRe, function ($matches) {
             $url         = $matches[0];
             $originalUrl = $url;
+            $cleanUrl = $originalUrl;
 
             $url = rtrim($url, '.,;:)!?');
 
@@ -96,7 +98,7 @@ class DiscordAttachmentHelper
             $path = parse_url($url, PHP_URL_PATH);
 
             if (! $host || ! $path) {
-                return $originalUrl;
+                return $cleanUrl;
             }
 
             if ($host === 'imgur.com') {
@@ -109,8 +111,12 @@ class DiscordAttachmentHelper
                 $html = HttpHelper::get($url, "text/html");
                 if ($html && preg_match('/<meta\s+property="og:image"\s+content="([^"]+)"/i', $html, $m)) {
                     $url = $m[1];
+
+                    if ($url && Str::startsWith($url, "https://")) {
+                        $cleanUrl = $url;
+                    }
                 } else {
-                    return $originalUrl;
+                    return $cleanUrl;
                 }
             }
 
@@ -120,17 +126,17 @@ class DiscordAttachmentHelper
             }
 
             if (! DiscordAttachmentHelper::isFileNameAllowed($name)) {
-                return $originalUrl;
+                return $cleanUrl;
             }
 
             $attachId = abs(crc32($originalUrl));
 
             $savedPath = DiscordAttachmentHelper::ensureAttachment($attachId, $name, $url);
             if (! $savedPath) {
-                return $originalUrl;
+                return $cleanUrl;
             }
 
-            LoggingHelper::log(sprintf('Downloaded attachment %s from %s', $savedPath, $url));
+            LoggingHelper::log(sprintf('Downloaded attachment %s from %s', $savedPath, $originalUrl));
 
             return url($savedPath);
         }, $message);
