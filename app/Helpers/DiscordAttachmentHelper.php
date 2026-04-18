@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Helpers;
 
 use App\Warning;
@@ -18,14 +17,14 @@ class DiscordAttachmentHelper
     ];
 
     const ImageExtensions = [
-        'jpg',     // JPEG
-        'jpeg',    // JPEG
-        'png',     // PNG
-        'gif',     // GIF
-        'bmp',     // BMP (since PHP 7.2)
-        'webp',    // WebP (since PHP 7.0 with GD version 2.1.0+)
-        'wbmp',    // WBMP (Wireless Bitmap)
-        'xbm',     // XBM (X BitMap)
+        'jpg',  // JPEG
+        'jpeg', // JPEG
+        'png',  // PNG
+        'gif',  // GIF
+        'bmp',  // BMP (since PHP 7.2)
+        'webp', // WebP (since PHP 7.0 with GD version 2.1.0+)
+        'wbmp', // WBMP (Wireless Bitmap)
+        'xbm',  // XBM (X BitMap)
     ];
 
     const NonWebPImageExtensions = [
@@ -36,7 +35,9 @@ class DiscordAttachmentHelper
     {
         $message = $warning->message;
 
-        if (empty($message)) return;
+        if (empty($message)) {
+            return;
+        }
 
         TranscriptHelper::replaceMessageTranscripts($message);
 
@@ -47,14 +48,14 @@ class DiscordAttachmentHelper
         $re = '/https:\/\/(?:cdn\.discordapp\.com|media\.discordapp\.net)\/attachments\/\d+\/(\d+)\/([^\s\/?#]+)\?([^\s#]+)/m';
 
         $message = preg_replace_callback($re, function ($matches) {
-            $url = $matches[0];
+            $url      = $matches[0];
             $attachId = $matches[1];
-            $name = $matches[2];
+            $name     = $matches[2];
 
             // Remove width and height
             $url = preg_replace('/&(width|height)=[0-9]+/', '', $url);
 
-            if (!DiscordAttachmentHelper::isFileNameAllowed($name)) {
+            if (! DiscordAttachmentHelper::isFileNameAllowed($name)) {
                 return $url;
             }
 
@@ -62,19 +63,19 @@ class DiscordAttachmentHelper
             $is = DiscordAttachmentHelper::find('/is=([a-f0-9]+)/', $matches[3]);
             $hm = DiscordAttachmentHelper::find('/hm=([a-f0-9]+)/', $matches[3]);
 
-            if (!$ex || !$is || !$hm) {
+            if (! $ex || ! $is || ! $hm) {
                 return $url;
             }
 
             $ts = hexdec($ex);
 
             // Is link expired?
-            if (!$ts || $ts < time()) {
+            if (! $ts || $ts < time()) {
                 return $url;
             }
 
             $path = DiscordAttachmentHelper::ensureAttachment($attachId, $name, $url);
-            if (!$path) {
+            if (! $path) {
                 return $url;
             }
 
@@ -86,18 +87,20 @@ class DiscordAttachmentHelper
         $otherRe = '/https:\/\/(?:i\.imgur\.com|imgur\.com|ibb\.co|files\.catbox\.moe|i\.postimg\.cc|postimg\.cc|live\.staticflickr\.com|i\.gyazo\.com|gyazo\.com)\/[^\s#"\'<>]+/m';
 
         $message = preg_replace_callback($otherRe, function ($matches) {
-            $url = $matches[0];
+            $url         = $matches[0];
             $originalUrl = $url;
-            
+
             $url = rtrim($url, '.,;:)!?');
 
             $host = parse_url($url, PHP_URL_HOST);
             $path = parse_url($url, PHP_URL_PATH);
 
-            if (!$host || !$path) return $originalUrl;
+            if (! $host || ! $path) {
+                return $originalUrl;
+            }
 
             if ($host === 'imgur.com') {
-                if (!preg_match('/\.\w+$/', $path)) {
+                if (! preg_match('/\.\w+$/', $path)) {
                     $url = 'https://i.imgur.com' . $path . '.png';
                 } else {
                     $url = 'https://i.imgur.com' . $path;
@@ -112,22 +115,22 @@ class DiscordAttachmentHelper
             }
 
             $name = basename(parse_url($url, PHP_URL_PATH));
-            if (!preg_match('/\.\w+$/', $name)) {
+            if (! preg_match('/\.\w+$/', $name)) {
                 $name .= '.png';
             }
 
-            if (!DiscordAttachmentHelper::isFileNameAllowed($name)) {
+            if (! DiscordAttachmentHelper::isFileNameAllowed($name)) {
                 return $originalUrl;
             }
 
             $attachId = abs(crc32($originalUrl));
 
             $savedPath = DiscordAttachmentHelper::ensureAttachment($attachId, $name, $url);
-            if (!$savedPath) {
+            if (! $savedPath) {
                 return $originalUrl;
             }
 
-            LoggingHelper::log('Downloaded attachment: ' . $savedPath);
+            LoggingHelper::log('Downloaded attachment: ' . $savedPath . ' from ' . $url);
 
             return url($savedPath);
         }, $message);
@@ -143,14 +146,14 @@ class DiscordAttachmentHelper
     private static function ensureAttachment(int $attachId, string $name, string $url): ?string
     {
         $dir = public_path('/_discord_attachments/');
-        if (!file_exists($dir)) {
+        if (! file_exists($dir)) {
             mkdir($dir, 0777, true);
         }
 
         $name = self::clean($name);
 
         $relative = '/_discord_attachments/' . $attachId . '-' . $name;
-        $path = public_path($relative);
+        $path     = public_path($relative);
 
         if (file_exists($path)) {
             return $relative;
@@ -160,21 +163,21 @@ class DiscordAttachmentHelper
             $data = HttpHelper::get($url);
 
             if (empty($data)) {
-                LoggingHelper::log('Failed to download attachment (empty data)');
+                LoggingHelper::log('Failed to download attachment (empty data): ' . $url);
 
                 return null;
             }
 
             $ext = pathinfo($name, PATHINFO_EXTENSION);
 
-            if (in_array($ext, self::ImageExtensions) && !in_array($ext, self::NonWebPImageExtensions)) {
+            if (in_array($ext, self::ImageExtensions) && ! in_array($ext, self::NonWebPImageExtensions)) {
                 $relative = str_replace($ext, 'webp', $relative);
-                $path = public_path($relative);
+                $path     = public_path($relative);
 
                 $data = ImageHelper::convertToWebP($data);
 
-                if (!$data) {
-                    LoggingHelper::log('Failed to convert attachment to webp');
+                if (! $data) {
+                    LoggingHelper::log('Failed to convert attachment to webp: ' . $url);
 
                     return null;
                 }
@@ -182,7 +185,7 @@ class DiscordAttachmentHelper
 
             file_put_contents($path, $data);
         } catch (\Exception $e) {
-            LoggingHelper::log('Failed to download attachment: ' . $e->getMessage());
+            LoggingHelper::log('Failed to download attachment (' . $url . '): ' . $e->getMessage());
 
             return null;
         }
@@ -205,7 +208,7 @@ class DiscordAttachmentHelper
         $ids = [];
 
         foreach ($matches as $match) {
-            $id = $match[1];
+            $id  = $match[1];
             $ext = $match[2];
 
             $ids[] = $id . $ext;
@@ -217,7 +220,7 @@ class DiscordAttachmentHelper
     public static function garbageCollectAttachments(string $messageBefore, string $messageAfter)
     {
         $namesBefore = self::findStoredMessageAttachments($messageBefore);
-        $namesAfter = self::findStoredMessageAttachments($messageAfter);
+        $namesAfter  = self::findStoredMessageAttachments($messageAfter);
 
         $names = array_diff($namesBefore, $namesAfter);
 
@@ -282,13 +285,13 @@ class DiscordAttachmentHelper
 
         $ext = $ext ? strtolower($ext) : null;
 
-        if (!$ext || in_array($ext, self::BlockedExtensions)) {
+        if (! $ext || in_array($ext, self::BlockedExtensions)) {
             return false;
         }
 
         // for html, only transcripts are allowed
         if ($ext === "html") {
-            return !!preg_match("/^transcript-closed-\d+\.html$/", $name);
+            return ! ! preg_match("/^transcript-closed-\d+\.html$/", $name);
         }
 
         return true;

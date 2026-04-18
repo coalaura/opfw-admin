@@ -75,6 +75,8 @@ class Handler extends ExceptionHandler
 
         $base = realpath(__DIR__ . '/../../');
 
+        $stack = [];
+
         foreach ($trace as $index => $item) {
             $index = (sizeof($trace) - 1) - $index;
 

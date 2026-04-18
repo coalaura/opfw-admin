@@ -95,6 +95,7 @@ class HttpHelper
             'timeout'         => 10,
             'connect_timeout' => 10,
             'http_errors'     => false,
+            'allow_redirects' => true,
             'headers'         => [
                 'User-Agent'      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0',
                 'Accept-Language' => 'en-US,en;q=0.7,de;q=0.3',
@@ -103,6 +104,10 @@ class HttpHelper
 
         try {
             $res = $client->get($url);
+
+            if ($res->getStatusCode() >= 300) {
+                return null;
+            }
 
             return (string) $res->getBody();
         } catch (\Throwable $t) {}
