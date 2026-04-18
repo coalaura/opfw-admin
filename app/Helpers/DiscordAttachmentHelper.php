@@ -83,7 +83,7 @@ class DiscordAttachmentHelper
             return url($path);
         }, $message);
 
-        $otherRe = '/https:\/\/(?:i\.imgur\.com|imgur\.com|ibb\.co|files\.catbox\.moe|i\.postimg\.cc|postimg\.cc|live\.staticflickr\.com)\/[^\s#"\'<>]+/m';
+        $otherRe = '/https:\/\/(?:i\.imgur\.com|imgur\.com|ibb\.co|files\.catbox\.moe|i\.postimg\.cc|postimg\.cc|live\.staticflickr\.com|i\.gyazo\.com|gyazo\.com)\/[^\s#"\'<>]+/m';
 
         $message = preg_replace_callback($otherRe, function ($matches) {
             $url = $matches[0];
@@ -102,14 +102,7 @@ class DiscordAttachmentHelper
                 } else {
                     $url = 'https://i.imgur.com' . $path;
                 }
-            } else if ($host === 'postimg.cc') {
-                $html = HttpHelper::get($url);
-                if ($html && preg_match('/<meta\s+property="og:image"\s+content="([^"]+)"/i', $html, $m)) {
-                    $url = $m[1];
-                } else {
-                    return $originalUrl;
-                }
-            } else if ($host === 'ibb.co') {
+            } else if ($host === 'postimg.cc' || $host === 'ibb.co' || $host === 'gyazo.com') {
                 $html = HttpHelper::get($url);
                 if ($html && preg_match('/<meta\s+property="og:image"\s+content="([^"]+)"/i', $html, $m)) {
                     $url = $m[1];

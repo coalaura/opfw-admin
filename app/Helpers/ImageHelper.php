@@ -11,6 +11,10 @@ class ImageHelper
             return false;
         }
 
+        if (!imageistruecolor($gd)) {
+            imagepalettetotruecolor($gd);
+        }
+
         ob_start();
 
         imagewebp($gd, null, 90);
