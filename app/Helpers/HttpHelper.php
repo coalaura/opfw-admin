@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Helpers;
 
 use GuzzleHttp\Client;
@@ -8,6 +7,8 @@ use Illuminate\Support\Str;
 
 class HttpHelper
 {
+    const CleanUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:149.0) Gecko/20100101 Firefox/149.0";
+
     private static string $error = "";
 
     /**
@@ -33,7 +34,7 @@ class HttpHelper
             self::$error = sprintf("%s (%s)", $errstr, $errno);
         }
 
-        return !!$connection;
+        return ! ! $connection;
     }
 
     /**
@@ -50,14 +51,15 @@ class HttpHelper
      * @param int $port The port to check
      * @return bool True if the port is in use, false otherwise
      */
-    public static function isPortInUse($port = 4644): bool {
+    public static function isPortInUse($port = 4644): bool
+    {
         if (stripos(PHP_OS, "win") !== false) {
             $output = shell_exec("netstat -ano | findstr :$port");
         } else {
             $output = shell_exec("ss -tuln | grep :$port") ?: shell_exec("netstat -tuln | grep :$port");
         }
 
-        return !empty($output);
+        return ! empty($output);
     }
 
     public static function getIPInfo(string $ip): ?array
@@ -89,7 +91,7 @@ class HttpHelper
         return null;
     }
 
-    public static function get(string $url): ?string
+    public static function get(string $url, ?string $accept = null): ?string
     {
         $client = new Client([
             'timeout'         => 10,
@@ -97,8 +99,9 @@ class HttpHelper
             'http_errors'     => false,
             'allow_redirects' => true,
             'headers'         => [
-                'User-Agent'      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0',
-                'Accept-Language' => 'en-US,en;q=0.7,de;q=0.3',
+                'User-Agent'      => self::CleanUserAgent,
+                'Accept-Language' => 'en-US,en;q=0.9',
+                'Accept'          => $accept ? $accept : '*/*',
             ],
         ]);
 
@@ -119,8 +122,8 @@ class HttpHelper
 
     public static function getRedirect(string $url): string
     {
-        if (!Str::startsWith($url, 'http')) {
-            $hasPort = Str::contains($url, ':');
+        if (! Str::startsWith($url, 'http')) {
+            $hasPort  = Str::contains($url, ':');
             $isDocker = Str::startsWith($url, 'host.docker.internal');
 
             if ($hasPort || $isDocker) {
@@ -136,8 +139,8 @@ class HttpHelper
             'http_errors'     => false,
             'allow_redirects' => true,
             'headers'         => [
-                'User-Agent'      => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:128.0) Gecko/20100101 Firefox/128.0',
-                'Accept-Language' => 'en-US,en;q=0.7,de;q=0.3',
+                'User-Agent'      => self::CleanUserAgent,
+                'Accept-Language' => 'en-US,en;q=0.9',
             ],
             'on_stats'        => function (TransferStats $stats) use (&$url) {
                 $url = (string) $stats->getEffectiveUri();

@@ -106,7 +106,7 @@ class DiscordAttachmentHelper
                     $url = 'https://i.imgur.com' . $path;
                 }
             } else if ($host === 'postimg.cc' || $host === 'ibb.co' || $host === 'gyazo.com') {
-                $html = HttpHelper::get($url);
+                $html = HttpHelper::get($url, "text/html");
                 if ($html && preg_match('/<meta\s+property="og:image"\s+content="([^"]+)"/i', $html, $m)) {
                     $url = $m[1];
                 } else {
@@ -160,7 +160,7 @@ class DiscordAttachmentHelper
         }
 
         try {
-            $data = HttpHelper::get($url);
+            $data = HttpHelper::get($url, "image/*");
 
             if (empty($data)) {
                 LoggingHelper::log(sprintf('Failed to download attachment (empty data): %s', $url));
