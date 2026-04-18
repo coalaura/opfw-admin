@@ -79,7 +79,7 @@ class DiscordAttachmentHelper
                 return $url;
             }
 
-            LoggingHelper::log('Downloaded attachment: ' . $path);
+            LoggingHelper::log(sprintf('Downloaded attachment %s from %s', $path, $url));
 
             return url($path);
         }, $message);
@@ -130,7 +130,7 @@ class DiscordAttachmentHelper
                 return $originalUrl;
             }
 
-            LoggingHelper::log('Downloaded attachment: ' . $savedPath . ' from ' . $url);
+            LoggingHelper::log(sprintf('Downloaded attachment %s from %s', $savedPath, $url));
 
             return url($savedPath);
         }, $message);
@@ -163,7 +163,7 @@ class DiscordAttachmentHelper
             $data = HttpHelper::get($url);
 
             if (empty($data)) {
-                LoggingHelper::log('Failed to download attachment (empty data): ' . $url);
+                LoggingHelper::log(sprintf('Failed to download attachment (empty data): %s', $url));
 
                 return null;
             }
@@ -177,7 +177,7 @@ class DiscordAttachmentHelper
                 $data = ImageHelper::convertToWebP($data);
 
                 if (! $data) {
-                    LoggingHelper::log('Failed to convert attachment to webp: ' . $url);
+                    LoggingHelper::log(sprintf('Failed to convert attachment to webp: %s', $url));
 
                     return null;
                 }
@@ -185,7 +185,7 @@ class DiscordAttachmentHelper
 
             file_put_contents($path, $data);
         } catch (\Exception $e) {
-            LoggingHelper::log('Failed to download attachment (' . $url . '): ' . $e->getMessage());
+            LoggingHelper::log(sprintf('Failed to download attachment (%s): %s', $url, $e->getMessage()));
 
             return null;
         }

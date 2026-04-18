@@ -106,6 +106,8 @@ class HttpHelper
             $res = $client->get($url);
 
             if ($res->getStatusCode() >= 300) {
+                LoggingHelper::log(sprintf('Got status %d for %s', $res->getStatusCode(), $url));
+
                 return null;
             }
 
