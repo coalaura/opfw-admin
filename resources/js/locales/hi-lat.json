@@ -1651,15 +1651,30 @@
         "no_logs": "Koi entry nahi mili.",
         "search": "Khoj",
         "title": "Sandehjanak cheezein",
-        "type": "Prakar",
+        "type": "Type",
         "types": {
             "characters": "Bahut paise wale patra",
             "none": "Prakar chunein",
             "pawn": "Bade pawn shop ki bikri",
             "unusual": "Bade samaan ki gatividhi",
             "vehicles": "Bahut zyada gaadiyon wale patra",
-            "warehouse": "Bade godam ki bikri"
-        }
+            "warehouse": "Bade godam ki bikri",
+            "vehicle": "Vehicle",
+            "ped": "Ped",
+            "object": "Object"
+        },
+        "entity_spawns": "Entity Spawns",
+        "entity_spawns_description": "Suspicious entity spawns on the server.",
+        "license_identifier": "License Identifier",
+        "entity_types": "Entity Types",
+        "player": "Player",
+        "model": "Model",
+        "distance": "Distance",
+        "population": "Population",
+        "coordinates": "Coordinates",
+        "flags": "Flags",
+        "script": "Script",
+        "time": "Time"
     },
     "tokens": {
         "api_logs": "API Logs",

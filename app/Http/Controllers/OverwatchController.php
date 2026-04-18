@@ -129,7 +129,7 @@ class OverwatchController extends Controller
                     return true;
                 })->values();
 
-                if (empty($players)) {
+                if (empty($players) || sizeof($players) === 0) {
                     return self::json(false, null, 'No new players found.');
                 }
 

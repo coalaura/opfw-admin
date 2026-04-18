@@ -294,6 +294,12 @@ export default {
                 hidden: !this.perm.check(this.perm.PERM_SUSPICIOUS),
             },
             {
+                label: "suspicious.entity_spawns",
+                icon: "fas fa-ghost",
+                url: "/suspicious/entity_spawns",
+                hidden: !this.perm.check(this.perm.PERM_SUSPICIOUS_ENTITIES),
+            },
+            {
                 label: "errors.client.title",
                 icon: "fas fa-laptop-code",
                 url: "/errors/client",
@@ -405,6 +411,7 @@ export default {
                 children: [
                     "/advanced",
                     "/suspicious",
+                    "/suspicious/entity_spawns",
                 ],
             },
             {

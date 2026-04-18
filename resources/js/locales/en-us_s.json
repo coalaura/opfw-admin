@@ -1658,8 +1658,23 @@
             "pawn": "Big pawn shop sales",
             "unusual": "Big item movements",
             "vehicles": "Characters with a lotta vehicles",
-            "warehouse": "Big warehouse sales"
-        }
+            "warehouse": "Big warehouse sales",
+            "vehicle": "Vehicle",
+            "ped": "Ped",
+            "object": "Object"
+        },
+        "entity_spawns": "Entity Spawns",
+        "entity_spawns_description": "Suspicious entity spawns on the server.",
+        "license_identifier": "License Identifier",
+        "entity_types": "Entity Types",
+        "player": "Player",
+        "model": "Model",
+        "distance": "Distance",
+        "population": "Population",
+        "coordinates": "Coordinates",
+        "flags": "Flags",
+        "script": "Script",
+        "time": "Time"
     },
     "tokens": {
         "api_logs": "API Logs",

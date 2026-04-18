@@ -732,7 +732,10 @@
             "pawn": "Big pawn shop sales",
             "warehouse": "Big warehouse sales",
             "unusual": "Big item movements",
-            "none": "Select type"
+            "none": "Select type",
+            "vehicle": "Vehicle",
+            "ped": "Ped",
+            "object": "Object"
         },
         "items": {
             "player": "Player",
@@ -750,7 +753,19 @@
             "total_balance": "Total",
             "savings_balance": "Savings"
         },
-        "no_logs": "No entries found"
+        "no_logs": "No entries found",
+        "entity_spawns": "Entity Spawns",
+        "entity_spawns_description": "Suspicious entity spawns on the server.",
+        "license_identifier": "License Identifier",
+        "entity_types": "Entity Types",
+        "player": "Player",
+        "model": "Model",
+        "distance": "Distance",
+        "population": "Population",
+        "coordinates": "Coordinates",
+        "flags": "Flags",
+        "script": "Script",
+        "time": "Time"
     },
     "vehicles": {
         "title": "Vehicle Info",

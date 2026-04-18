@@ -208,6 +208,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Suspicious.
     Route::get('/suspicious', [SuspiciousController::class, 'index']);
+    Route::get('/suspicious/entity_spawns', [\App\Http\Controllers\SuspiciousEntitySpawnController::class, 'index']);
 
     // Y.
     Route::get('y', [YController::class, 'index']);

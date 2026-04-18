@@ -1651,15 +1651,30 @@
         "no_logs": "No specks found.",
         "search": "Find",
         "title": "Weird things",
-        "type": "Kind",
+        "type": "Type",
         "types": {
             "characters": "Rich folks",
             "none": "Pick kind",
             "pawn": "Big pawn sale",
             "unusual": "Big stuff move",
             "vehicles": "Many cars folks",
-            "warehouse": "Big warehouse sale"
-        }
+            "warehouse": "Big warehouse sale",
+            "vehicle": "Vehicle",
+            "ped": "Ped",
+            "object": "Object"
+        },
+        "entity_spawns": "Entity Spawns",
+        "entity_spawns_description": "Suspicious entity spawns on the server.",
+        "license_identifier": "License Identifier",
+        "entity_types": "Entity Types",
+        "player": "Player",
+        "model": "Model",
+        "distance": "Distance",
+        "population": "Population",
+        "coordinates": "Coordinates",
+        "flags": "Flags",
+        "script": "Script",
+        "time": "Time"
     },
     "tokens": {
         "api_logs": "API Logs",
