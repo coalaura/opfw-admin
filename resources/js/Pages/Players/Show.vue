@@ -1520,7 +1520,7 @@
                                 </h4>
 
                                 <div class="flex gap-3">
-                                    <button class="text-black dark:text-white shadow-sm text-base" @click="form.warning.warning_type = ''; form.warning.message = ''; warningMessageChanged()">
+                                    <button class="text-black dark:text-white shadow-sm text-base" @click="form.warning.warning_type = ''; form.warning.message = ''; warningPreviewMode = false; warningMessageChanged()">
                                         <i class="fas fa-backspace"></i>
                                     </button>
 
@@ -1531,11 +1531,24 @@
                             </div>
 
                             <div class="relative">
+                                <div class="flex gap-2 mb-2">
+                                    <button type="button" class="px-3 py-1 text-sm font-semibold rounded" :class="!warningPreviewMode ? 'bg-blue-500 text-white' : 'bg-gray-300 dark:bg-gray-500 text-gray-700 dark:text-gray-300'" @click="warningPreviewMode = false">
+                                        <i class="fas fa-edit mr-1"></i>Write
+                                    </button>
+                                    <button type="button" class="px-3 py-1 text-sm font-semibold rounded" :class="warningPreviewMode ? 'bg-blue-500 text-white' : 'bg-gray-300 dark:bg-gray-500 text-gray-700 dark:text-gray-300'" @click="warningPreviewMode = true">
+                                        <i class="fas fa-eye mr-1"></i>Preview
+                                    </button>
+                                </div>
+
                                 <inertia-link class="text-black dark:text-white no-underline absolute top-0.5 right-1.5" :title="t('global.support_markdown')" href="/docs/markdown">
                                     <i class="fab fa-markdown"></i>
                                 </inertia-link>
 
-                                <textarea class="w-full p-5 rounded bg-gray-200 dark:bg-gray-600" id="message" name="message" rows="4" :placeholder="t('players.warning.placeholder', player.playerName)" v-model="form.warning.message" @input="warningMessageChanged()" required></textarea>
+                                <textarea v-if="!warningPreviewMode" class="w-full p-5 min-h-base rounded bg-gray-200 dark:bg-gray-600" id="message" name="message" rows="4" :placeholder="t('players.warning.placeholder', player.playerName)" v-model="form.warning.message" @input="warningMessageChanged()" required></textarea>
+
+                                <div v-else class="w-full p-5 rounded bg-gray-200 dark:bg-gray-600 min-h-[6rem] max-h-96 overflow-auto">
+                                    <span class="whitespace-pre-wrap text-gray-800 dark:text-gray-200" v-html="form.warning.message ? markdown(form.warning.message, false) : '<span class=\'italic text-gray-500\'>Nothing to preview</span>'"></span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1879,7 +1892,8 @@ export default {
             loadingNotifications: false,
             creatingNotification: false,
             notifications: [],
-            notification: ""
+            notification: "",
+            warningPreviewMode: false
         }
     },
     computed: {
