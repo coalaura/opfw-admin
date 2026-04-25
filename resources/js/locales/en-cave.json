@@ -1273,9 +1273,11 @@
             "new": "New {0}",
             "note": "Note",
             "placeholder": "{0} made oops.",
+            "preview": "Look first",
             "remember": "<b>Remember!</b> Take Strike or Warning when give out. Notes for... well... notes",
             "strike": "Strike",
-            "warning": "Warning"
+            "warning": "Warning",
+            "write": "Make mark"
         }
     },
     "points": {
@@ -1639,8 +1641,14 @@
             "stocks_balance": "Stok",
             "total_balance": "Total"
         },
+        "coordinates": "Coordinates",
         "description": "Weird logs, characters, etc.",
+        "distance": "Distance",
+        "entity_spawns": "Entity Spawns",
+        "entity_spawns_description": "Suspicious entity spawns on the server.",
+        "entity_types": "Entity Types",
         "filter": "Filter",
+        "flags": "Flags",
         "items": {
             "details": "Log details",
             "inventory": "Inventory",
@@ -1648,33 +1656,27 @@
             "player": "Me",
             "time": "Time"
         },
+        "license_identifier": "License Identifier",
+        "model": "Model",
         "no_logs": "No specks found.",
+        "player": "Player",
+        "population": "Population",
+        "script": "Script",
         "search": "Find",
+        "time": "Time",
         "title": "Weird things",
         "type": "Type",
         "types": {
             "characters": "Rich folks",
             "none": "Pick kind",
+            "object": "Object",
             "pawn": "Big pawn sale",
-            "unusual": "Big stuff move",
-            "vehicles": "Many cars folks",
-            "warehouse": "Big warehouse sale",
-            "vehicle": "Vehicle",
             "ped": "Ped",
-            "object": "Object"
-        },
-        "entity_spawns": "Entity Spawns",
-        "entity_spawns_description": "Suspicious entity spawns on the server.",
-        "license_identifier": "License Identifier",
-        "entity_types": "Entity Types",
-        "player": "Player",
-        "model": "Model",
-        "distance": "Distance",
-        "population": "Population",
-        "coordinates": "Coordinates",
-        "flags": "Flags",
-        "script": "Script",
-        "time": "Time"
+            "unusual": "Big stuff move",
+            "vehicle": "Vehicle",
+            "vehicles": "Many cars folks",
+            "warehouse": "Big warehouse sale"
+        }
     },
     "tokens": {
         "api_logs": "API Logs",

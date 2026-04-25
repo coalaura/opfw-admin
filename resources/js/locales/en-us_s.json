@@ -1273,9 +1273,11 @@
             "new": "New {0}",
             "note": "Note",
             "placeholder": "{0} done goofed.",
+            "preview": "Preview",
             "remember": "<b>Remember!</b> Make sure to select <u>Strike</u> or <u>Warning</u> when handin' them out. Notes should only be used for... well... notes",
             "strike": "Strike",
-            "warning": "Warning"
+            "warning": "Warning",
+            "write": "Write"
         }
     },
     "points": {
@@ -1639,8 +1641,14 @@
             "stocks_balance": "Stocks",
             "total_balance": "Total"
         },
+        "coordinates": "Coordinates",
         "description": "Suspicious log entries, folks, etc.",
+        "distance": "Distance",
+        "entity_spawns": "Entity Spawns",
+        "entity_spawns_description": "Suspicious entity spawns on the server.",
+        "entity_types": "Entity Types",
         "filter": "Filter",
+        "flags": "Flags",
         "items": {
             "details": "Log details",
             "inventory": "Inventory",
@@ -1648,33 +1656,27 @@
             "player": "Player",
             "time": "Timestamp"
         },
+        "license_identifier": "License Identifier",
+        "model": "Model",
         "no_logs": "No entries found",
+        "player": "Player",
+        "population": "Population",
+        "script": "Script",
         "search": "Search",
+        "time": "Time",
         "title": "Suspicious things",
         "type": "Type",
         "types": {
             "characters": "Characters with a lotta money",
             "none": "Select type",
+            "object": "Object",
             "pawn": "Big pawn shop sales",
-            "unusual": "Big item movements",
-            "vehicles": "Characters with a lotta vehicles",
-            "warehouse": "Big warehouse sales",
-            "vehicle": "Vehicle",
             "ped": "Ped",
-            "object": "Object"
-        },
-        "entity_spawns": "Entity Spawns",
-        "entity_spawns_description": "Suspicious entity spawns on the server.",
-        "license_identifier": "License Identifier",
-        "entity_types": "Entity Types",
-        "player": "Player",
-        "model": "Model",
-        "distance": "Distance",
-        "population": "Population",
-        "coordinates": "Coordinates",
-        "flags": "Flags",
-        "script": "Script",
-        "time": "Time"
+            "unusual": "Big item movements",
+            "vehicle": "Vehicle",
+            "vehicles": "Characters with a lotta vehicles",
+            "warehouse": "Big warehouse sales"
+        }
     },
     "tokens": {
         "api_logs": "API Logs",

@@ -1273,9 +1273,11 @@
             "new": "Nyew {0}",
             "note": "Note",
             "placeholder": "{0} did an oopsie.",
+            "preview": "Pweview",
             "remember": "<b>Weembwer!</b> Make suwwe to sewect <u>Stwike</u> or <u>Wawning</u> when handwing them out. Notes should onwy be used fow... well... notes",
             "strike": "Stwike",
-            "warning": "Wawning"
+            "warning": "Wawning",
+            "write": "Wwite"
         }
     },
     "points": {
@@ -1639,8 +1641,14 @@
             "stocks_balance": "Stawks",
             "total_balance": "Totaw"
         },
+        "coordinates": "Coordinates",
         "description": "Sewpicious wog enwiwies, chawactews, etc.",
+        "distance": "Distance",
+        "entity_spawns": "Entity Spawns",
+        "entity_spawns_description": "Suspicious entity spawns on the server.",
+        "entity_types": "Entity Types",
         "filter": "Fiwter",
+        "flags": "Flags",
         "items": {
             "details": "Wog deteils",
             "inventory": "Invetowwy",
@@ -1648,33 +1656,27 @@
             "player": "Pwayew",
             "time": "Timestawmp"
         },
+        "license_identifier": "License Identifier",
+        "model": "Model",
         "no_logs": "No enwiwes fouwnd",
+        "player": "Player",
+        "population": "Population",
+        "script": "Script",
         "search": "Seawwch",
+        "time": "Time",
         "title": "Sewspiciwous Things",
         "type": "Type",
         "types": {
             "characters": "Chawactews wifh a wot of money",
             "none": "Sewect type",
+            "object": "Object",
             "pawn": "Big pawwn shop sawes",
-            "unusual": "Big item movements",
-            "vehicles": "Chawactews wifh a wot of vehicwes",
-            "warehouse": "Big wawehouse sawes",
-            "vehicle": "Vehicle",
             "ped": "Ped",
-            "object": "Object"
-        },
-        "entity_spawns": "Entity Spawns",
-        "entity_spawns_description": "Suspicious entity spawns on the server.",
-        "license_identifier": "License Identifier",
-        "entity_types": "Entity Types",
-        "player": "Player",
-        "model": "Model",
-        "distance": "Distance",
-        "population": "Population",
-        "coordinates": "Coordinates",
-        "flags": "Flags",
-        "script": "Script",
-        "time": "Time"
+            "unusual": "Big item movements",
+            "vehicle": "Vehicle",
+            "vehicles": "Chawactews wifh a wot of vehicwes",
+            "warehouse": "Big wawehouse sawes"
+        }
     },
     "tokens": {
         "api_logs": "API Wogs",

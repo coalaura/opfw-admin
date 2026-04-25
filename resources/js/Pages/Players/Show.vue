@@ -1533,10 +1533,10 @@
                             <div class="relative">
                                 <div class="flex gap-2 mb-2">
                                     <button type="button" class="px-3 py-1 text-sm font-semibold rounded" :class="!warningPreviewMode ? 'bg-blue-500 text-white' : 'bg-gray-300 dark:bg-gray-500 text-gray-700 dark:text-gray-300'" @click="warningPreviewMode = false">
-                                        <i class="fas fa-edit mr-1"></i>Write
+                                        <i class="fas fa-edit mr-1"></i>{{ t('players.warning.write') }}
                                     </button>
                                     <button type="button" class="px-3 py-1 text-sm font-semibold rounded" :class="warningPreviewMode ? 'bg-blue-500 text-white' : 'bg-gray-300 dark:bg-gray-500 text-gray-700 dark:text-gray-300'" @click="warningPreviewMode = true">
-                                        <i class="fas fa-eye mr-1"></i>Preview
+                                        <i class="fas fa-eye mr-1"></i>{{ t('players.warning.preview') }}
                                     </button>
                                 </div>
 

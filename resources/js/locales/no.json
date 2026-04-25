@@ -1273,9 +1273,11 @@
             "new": "Ny {0}",
             "note": "Merknad",
             "placeholder": "{0} gjorde en tabbe.",
+            "preview": "Forhåndsvisning",
             "remember": "<b>Husk!</b> Velg <u>Strike</u> eller <u>Advarsel</u> når du utdeler dem. Notater bør bare brukes til... vel... notater",
             "strike": "Stryk",
-            "warning": "Advarsel"
+            "warning": "Advarsel",
+            "write": "Skriv"
         }
     },
     "points": {
@@ -1639,8 +1641,14 @@
             "stocks_balance": "Aksjer",
             "total_balance": "Totalt"
         },
+        "coordinates": "Coordinates",
         "description": "Mistenkelige loggoppføringer, tegn osv.",
+        "distance": "Distance",
+        "entity_spawns": "Entity Spawns",
+        "entity_spawns_description": "Suspicious entity spawns on the server.",
+        "entity_types": "Entity Types",
         "filter": "Filter",
+        "flags": "Flags",
         "items": {
             "details": "Loggdetaljer",
             "inventory": "Inventar",
@@ -1648,33 +1656,27 @@
             "player": "Spiller",
             "time": "Tidspunkt"
         },
+        "license_identifier": "License Identifier",
+        "model": "Model",
         "no_logs": "Ingen oppføringer funnet",
+        "player": "Player",
+        "population": "Population",
+        "script": "Script",
         "search": "Søk",
+        "time": "Time",
         "title": "Mistankevekkende ting",
         "type": "Type",
         "types": {
             "characters": "Karakterer med mye penger",
             "none": "Velg type",
+            "object": "Object",
             "pawn": "Store pantelåneresalg",
-            "unusual": "Store varebevegelser",
-            "vehicles": "Karakterer med mange kjøretøy",
-            "warehouse": "Store lagerutsalg",
-            "vehicle": "Vehicle",
             "ped": "Ped",
-            "object": "Object"
-        },
-        "entity_spawns": "Entity Spawns",
-        "entity_spawns_description": "Suspicious entity spawns on the server.",
-        "license_identifier": "License Identifier",
-        "entity_types": "Entity Types",
-        "player": "Player",
-        "model": "Model",
-        "distance": "Distance",
-        "population": "Population",
-        "coordinates": "Coordinates",
-        "flags": "Flags",
-        "script": "Script",
-        "time": "Time"
+            "unusual": "Store varebevegelser",
+            "vehicle": "Vehicle",
+            "vehicles": "Karakterer med mange kjøretøy",
+            "warehouse": "Store lagerutsalg"
+        }
     },
     "tokens": {
         "api_logs": "API-logger",

@@ -1202,7 +1202,9 @@
             "strike": "Strike",
             "warning": "Warning",
             "note": "Note",
-            "hidden": "Hidden Note"
+            "hidden": "Hidden Note",
+            "write": "Write",
+            "preview": "Preview"
         },
         "job": {
             "job": "Job",

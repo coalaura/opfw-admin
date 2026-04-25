@@ -1273,9 +1273,11 @@
             "new": "Naya {0}",
             "note": "Tippani",
             "placeholder": "{0} ne galti ki.",
+            "preview": "purvaavalokan",
             "remember": "<b>Yaad rakhein!</b> Jab inhe baant rahe hon to sunishchit karein ki <u>Strike</u> ya <u>Warning</u> chunein. Notes sirf... achha... notes ke liye hi hote hain",
             "strike": "Strike",
-            "warning": "Warning"
+            "warning": "Warning",
+            "write": "Likho"
         }
     },
     "points": {
@@ -1639,8 +1641,14 @@
             "stocks_balance": "Shaers",
             "total_balance": "Kul"
         },
+        "coordinates": "Coordinates",
         "description": "Sandeh janak log pravishtiyan, patra, aadi.",
+        "distance": "Distance",
+        "entity_spawns": "Entity Spawns",
+        "entity_spawns_description": "Suspicious entity spawns on the server.",
+        "entity_types": "Entity Types",
         "filter": "Filter",
+        "flags": "Flags",
         "items": {
             "details": "Log ke vivaran",
             "inventory": "Samaan",
@@ -1648,33 +1656,27 @@
             "player": "Kheladi",
             "time": "Samay-Sanket"
         },
+        "license_identifier": "License Identifier",
+        "model": "Model",
         "no_logs": "Koi entry nahi mili.",
+        "player": "Player",
+        "population": "Population",
+        "script": "Script",
         "search": "Khoj",
+        "time": "Time",
         "title": "Sandehjanak cheezein",
         "type": "Type",
         "types": {
             "characters": "Bahut paise wale patra",
             "none": "Prakar chunein",
+            "object": "Object",
             "pawn": "Bade pawn shop ki bikri",
-            "unusual": "Bade samaan ki gatividhi",
-            "vehicles": "Bahut zyada gaadiyon wale patra",
-            "warehouse": "Bade godam ki bikri",
-            "vehicle": "Vehicle",
             "ped": "Ped",
-            "object": "Object"
-        },
-        "entity_spawns": "Entity Spawns",
-        "entity_spawns_description": "Suspicious entity spawns on the server.",
-        "license_identifier": "License Identifier",
-        "entity_types": "Entity Types",
-        "player": "Player",
-        "model": "Model",
-        "distance": "Distance",
-        "population": "Population",
-        "coordinates": "Coordinates",
-        "flags": "Flags",
-        "script": "Script",
-        "time": "Time"
+            "unusual": "Bade samaan ki gatividhi",
+            "vehicle": "Vehicle",
+            "vehicles": "Bahut zyada gaadiyon wale patra",
+            "warehouse": "Bade godam ki bikri"
+        }
     },
     "tokens": {
         "api_logs": "API Logs",
