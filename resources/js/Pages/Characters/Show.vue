@@ -32,7 +32,7 @@
                             <tr>
                                 <th class="font-semibold py-0.5 px-1">{{ t('players.characters.coords') }}:</th>
                                 <td class="py-0.5 px-1 text-gray-700 dark:text-gray-300 font-mono">
-                                    <span v-if="isOffline">{{ character.coords.x.toFixed(1) }}, {{ character.coords.y.toFixed(1) }}, {{ character.coords.z.toFixed(1) }}</span>
+                                    <span v-if="isOffline">{{ (character.coords?.x || 0).toFixed(1) }}, {{ (character.coords?.y || 0).toFixed(1) }}, {{ (character.coords?.z || 0).toFixed(1) }}</span>
                                     <span class="blur-xs font-semibold" :title="t('players.characters.no_coords')" v-else>123.4, -567.8, 901.2</span>
                                 </td>
                                 <td></td>
