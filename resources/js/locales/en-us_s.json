@@ -1264,7 +1264,8 @@
             "plate": "Plate number",
             "vehicle_id": "Vehicle ID",
             "vehicle_value": "Total value o' owned vehicles",
-            "vehicles": "{0} Vehicle(s)"
+            "vehicles": "{0} Vehicle(s)",
+            "vin_scratched": "VIN-scratched"
         },
         "warning": {
             "create_new": "Create a new:",

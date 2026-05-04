@@ -709,8 +709,10 @@
                         <template #header>
                             <img :src="vehicle.image" class="w-full h-40 object-contain rounded mb-5" v-if="vehicle.image" v-handle-error />
 
-                            <h3 class="text-lg text-center font-semibold" :class="{ '-mb-3': vehicle.image }">
+                            <h3 class="text-lg text-center font-semibold relative" :class="{ '-mb-3': vehicle.image }">
                                 {{ vehicle.display_name ? vehicle.display_name : vehicle.model_name }}
+
+                                <span class="italic text-xxs leading-none absolute bottom-0 right-0 text-orange-700 dark:text-orange-300" v-if="vehicle.boosted">{{ t('players.vehicles.vin_scratched') }}</span>
                             </h3>
 
                             <div class="absolute bottom-1 left-1.5 text-sm font-semibold">#{{ vehicle.id }}</div>
@@ -720,6 +722,7 @@
                         <template>
                             <p class="italic">
                                 <span :class="vehicle.garage_name ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'" v-html="getGarageLabel(vehicle.garage_name)"></span>
+                                &nbsp;
                                 <span v-if="vehicle.oil !== null" :class="vehicle.oil > 0 ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'" v-html="getOilLabel(vehicle.oil)"></span>
                             </p>
                         </template>

@@ -1264,7 +1264,8 @@
             "plate": "Gaadi ki plate number",
             "vehicle_id": "Vaahan ki ID",
             "vehicle_value": "Malik ki gaadiyon ki kul keemat",
-            "vehicles": "{0} Gaadiyan"
+            "vehicles": "{0} Gaadiyan",
+            "vin_scratched": "VIN-scratch kiya gaya"
         },
         "warning": {
             "create_new": "Naya banaayein:",

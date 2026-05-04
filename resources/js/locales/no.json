@@ -1264,7 +1264,8 @@
             "plate": "Registreringsnummer",
             "vehicle_id": "Kjøretøy-ID",
             "vehicle_value": "Totalt verdi av eide kjøretøy",
-            "vehicles": "{0} kjøretøy"
+            "vehicles": "{0} kjøretøy",
+            "vin_scratched": "VIN-skadet"
         },
         "warning": {
             "create_new": "Opprett en ny:",

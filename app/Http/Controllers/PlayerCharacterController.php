@@ -642,6 +642,7 @@ class PlayerCharacterController extends Controller
                 'deprecated_modifications' => null,
                 'deprecated_fuel'          => 100,
                 'deprecated_supporter'     => 0,
+                'was_boosted'              => 0,
                 'vehicle_deleted'          => 0,
             ],
         ]);
@@ -675,7 +676,7 @@ class PlayerCharacterController extends Controller
 
         $pedModels = $this->getPedModels();
 
-        if (!$model || !in_array($model, $pedModels)) {
+        if (! $model || ! in_array($model, $pedModels)) {
             return backWith('error', 'Invalid ped model.');
         }
 

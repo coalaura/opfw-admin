@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use App\Helpers\ServerAPI;
@@ -53,7 +52,8 @@ class Vehicle extends Model
         'oil_mileage_after',
         'mileage',
         'image_url',
-        'deprecated_supporter'
+        'deprecated_supporter',
+        'was_boosted',
     ];
 
     const PublicGarages = [
@@ -104,11 +104,11 @@ class Vehicle extends Model
     {
         $vehicles = ServerAPI::getVehicles();
 
-        if (!$vehicles) {
+        if (! $vehicles) {
             return null;
         }
 
-        foreach($vehicles as $vehicle) {
+        foreach ($vehicles as $vehicle) {
             if ($vehicle['model'] === $this->model_name) {
                 return $vehicle['label'];
             }
@@ -121,11 +121,11 @@ class Vehicle extends Model
     {
         $vehicles = ServerAPI::getVehicles();
 
-        if (!$vehicles) {
+        if (! $vehicles) {
             return null;
         }
 
-        foreach($vehicles as $vehicle) {
+        foreach ($vehicles as $vehicle) {
             if ($vehicle['model'] === $this->model_name) {
                 return $vehicle['class'];
             }
@@ -187,7 +187,7 @@ class Vehicle extends Model
             return sprintf("#%02x%02x%02x", $r, $g, $b);
         };
         $isColor = function (array $json, string $key): bool {
-            return isset($json[$key]) && is_array($json[$key]) && !empty($json[$key]) && isset($json[$key]['r']) && isset($json[$key]['g']) && isset($json[$key]['b']);
+            return isset($json[$key]) && is_array($json[$key]) && ! empty($json[$key]) && isset($json[$key]['r']) && isset($json[$key]['g']) && isset($json[$key]['b']);
         };
 
         $json    = json_decode($this->deprecated_modifications, true) ?? [];
@@ -196,15 +196,15 @@ class Vehicle extends Model
         return [
             'xenon_headlights' => isset($json['modXenon']) && intval($json['modXenon']) === 1,
             'tire_smoke'       => $isColor($json, 'tireSmokeColor')
-            ? $color($json['tireSmokeColor']['r'], $json['tireSmokeColor']['g'], $json['tireSmokeColor']['b'])
-            : $default,
+                ? $color($json['tireSmokeColor']['r'], $json['tireSmokeColor']['g'], $json['tireSmokeColor']['b'])
+                : $default,
             'neon_enabled'     => isset($json['neonEnabled']) && sizeof($json['neonEnabled']) === 4 && $json['neonEnabled'][0] && $json['neonEnabled'][1] && $json['neonEnabled'][2] && $json['neonEnabled'][3],
             'engine'           => isset($json['modEngine']) && is_numeric($json['modEngine']) ? intval($json['modEngine']) + 1 : 0,
             'transmission'     => isset($json['modTransmission']) && is_numeric($json['modTransmission']) ? intval($json['modTransmission']) + 1 : 0,
             'breaks'           => isset($json['modBrakes']) && is_numeric($json['modBrakes']) ? intval($json['modBrakes']) + 1 : 0,
             'neon'             => $isColor($json, 'neonColor')
-            ? $color($json['neonColor']['r'], $json['neonColor']['g'], $json['neonColor']['b'])
-            : $default,
+                ? $color($json['neonColor']['r'], $json['neonColor']['g'], $json['neonColor']['b'])
+                : $default,
             'turbo'            => isset($json['modTurbo']) && intval($json['modTurbo']) === 1,
             'suspension'       => isset($json['modSuspension']) && is_numeric($json['modSuspension']) ? intval($json['modSuspension']) + 1 : 0,
             'armor'            => isset($json['modArmor']) && is_numeric($json['modArmor']) ? intval($json['modArmor']) + 1 : 0,
@@ -229,19 +229,19 @@ class Vehicle extends Model
         }, $mods);
 
         $validate = [
-            'tire_smoke'       => !isset($mods['tire_smoke']) || !preg_match('/^#[0-9a-f]{6}$/mi', $mods['tire_smoke']),
-            'neon'             => !isset($mods['neon']) || !preg_match('/^#[0-9a-f]{6}$/mi', $mods['neon']),
-            'xenon_headlights' => !isset($mods['xenon_headlights']) || !is_bool($mods['xenon_headlights']),
-            'neon_enabled'     => !isset($mods['neon_enabled']) || !is_bool($mods['neon_enabled']),
-            'turbo'            => !isset($mods['turbo']) || !is_bool($mods['turbo']),
-            'engine'           => !isset($mods['engine']) || !is_integer($mods['engine']) || $mods['engine'] < 0 || $mods['engine'] > 4,
-            'transmission'     => !isset($mods['transmission']) || !is_integer($mods['transmission']) || $mods['transmission'] < 0 || $mods['transmission'] > 3,
-            'breaks'           => !isset($mods['breaks']) || !is_integer($mods['breaks']) || $mods['breaks'] < 0 || $mods['breaks'] > 3,
-            'suspension'       => !isset($mods['suspension']) || !is_integer($mods['suspension']) || $mods['suspension'] < 0 || $mods['suspension'] > 4,
-            'armor'            => !isset($mods['armor']) || !is_integer($mods['armor']) || $mods['armor'] < 0 || $mods['armor'] > 5,
-            'tint'             => !isset($mods['tint']) || !is_integer($mods['tint']) || $mods['tint'] < 0 || $mods['tint'] > 5,
-            'plate_type'       => !isset($mods['plate_type']) || !is_integer($mods['plate_type']) || $mods['plate_type'] < 0 || $mods['plate_type'] > 12,
-            'horn'             => !isset($mods['horn']) || !is_integer($mods['horn']) || !isset($hornMap[$mods['horn']]),
+            'tire_smoke'       => ! isset($mods['tire_smoke']) || ! preg_match('/^#[0-9a-f]{6}$/mi', $mods['tire_smoke']),
+            'neon'             => ! isset($mods['neon']) || ! preg_match('/^#[0-9a-f]{6}$/mi', $mods['neon']),
+            'xenon_headlights' => ! isset($mods['xenon_headlights']) || ! is_bool($mods['xenon_headlights']),
+            'neon_enabled'     => ! isset($mods['neon_enabled']) || ! is_bool($mods['neon_enabled']),
+            'turbo'            => ! isset($mods['turbo']) || ! is_bool($mods['turbo']),
+            'engine'           => ! isset($mods['engine']) || ! is_integer($mods['engine']) || $mods['engine'] < 0 || $mods['engine'] > 4,
+            'transmission'     => ! isset($mods['transmission']) || ! is_integer($mods['transmission']) || $mods['transmission'] < 0 || $mods['transmission'] > 3,
+            'breaks'           => ! isset($mods['breaks']) || ! is_integer($mods['breaks']) || $mods['breaks'] < 0 || $mods['breaks'] > 3,
+            'suspension'       => ! isset($mods['suspension']) || ! is_integer($mods['suspension']) || $mods['suspension'] < 0 || $mods['suspension'] > 4,
+            'armor'            => ! isset($mods['armor']) || ! is_integer($mods['armor']) || $mods['armor'] < 0 || $mods['armor'] > 5,
+            'tint'             => ! isset($mods['tint']) || ! is_integer($mods['tint']) || $mods['tint'] < 0 || $mods['tint'] > 5,
+            'plate_type'       => ! isset($mods['plate_type']) || ! is_integer($mods['plate_type']) || $mods['plate_type'] < 0 || $mods['plate_type'] > 12,
+            'horn'             => ! isset($mods['horn']) || ! is_integer($mods['horn']) || ! isset($hornMap[$mods['horn']]),
         ];
 
         foreach ($validate as $key => $invalid) {

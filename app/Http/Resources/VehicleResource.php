@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
@@ -28,7 +27,8 @@ class VehicleResource extends JsonResource
             'emergency'     => intval($this->emergency_type) ?? 0,
             'oil'           => $this->oilChangeMiles(),
             'image'         => $this->image_url ?? null,
-            'supporter'     => intval($this->deprecated_supporter) ?? 0
+            'supporter'     => intval($this->deprecated_supporter) ?? 0,
+            'boosted'       => intval($this->was_boosted) ?? 0,
         ];
     }
 

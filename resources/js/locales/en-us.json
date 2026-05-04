@@ -1226,7 +1226,8 @@
             "delete_vehicle": "Are you sure you want to delete this vehicle?",
             "vehicle_value": "Total value of owned vehicles",
             "oil_change": "Oil change is due in <b>{0}</b> miles.",
-            "oil_change_needed": "Oil change is needed."
+            "oil_change_needed": "Oil change is needed.",
+            "vin_scratched": "VIN-Scratched"
         },
         "properties": {
             "properties": "Owned Properties",

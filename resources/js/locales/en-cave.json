@@ -1264,7 +1264,8 @@
             "plate": "Plate num",
             "vehicle_id": "Wagon ID",
             "vehicle_value": "All wagons worth",
-            "vehicles": "{0} Wagon(s)"
+            "vehicles": "{0} Wagon(s)",
+            "vin_scratched": "VIN scratch."
         },
         "warning": {
             "create_new": "Make new:",

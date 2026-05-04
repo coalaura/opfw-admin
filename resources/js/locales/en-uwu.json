@@ -1264,7 +1264,8 @@
             "plate": "Pwate Numbew",
             "vehicle_id": "Vehicwe ID",
             "vehicle_value": "Totaw vawue of ow ned vehicwes",
-            "vehicles": "{0} Vehicwes"
+            "vehicles": "{0} Vehicwes",
+            "vin_scratched": "VIN-Scwatched"
         },
         "warning": {
             "create_new": "Cweate a nyew:",
