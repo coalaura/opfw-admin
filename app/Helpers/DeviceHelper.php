@@ -262,9 +262,8 @@ class DeviceHelper
     }
 }
 
-//*
+/*
 $test = <<<EOF
-["audioinput_microphone_mic_web_camera_1d6c_0103","audioinput_microphone_high_definition_audio_device","audioinput_microphone_me6s_0c76_8688","videoinput_web_camera_1d6c_0103","videoinput_lsvcam","audiooutput_headphones_high_definition_audio_device","audiooutput_speakers_me6s_0c76_8688","audioinput_microphone_voicemod","audiooutput_dummy_output_voicemod","audioinput_steelseries_sonar_microphone_steelseries_sonar_virtual_audio_device","audiooutput_steelseries_sonar_gaming_steelseries_sonar_virtual_audio_device","audiooutput_steelseries_sonar_chat_steelseries_sonar_virtual_audio_device","audiooutput_steelseries_sonar_microphone_steelseries_sonar_virtual_audio_device","audiooutput_speakers_high_definition_audio_device","videoinput_obs_virtual_camera","audioinput_microphone_2_me6s_0c76_8688","audiooutput_speakers_2_me6s_0c76_8688","audiooutput_lg_fhd_nvidia_high_definition_audio","audioinput_e19190_me6s_0c76_8688","audioinput_b52h51_high_definition_audio_device","audiooutput_37v4zh_high_definition_audio_device","audiooutput_72zvvb_me6s_0c76_8688"]
 EOF;
 
 if (strpos($test, "[") === false) {
