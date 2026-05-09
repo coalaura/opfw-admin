@@ -11,6 +11,7 @@ use App\Log;
 use App\Player;
 use App\Server;
 use App\Vehicle;
+use App\PanelLog;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
@@ -320,7 +321,17 @@ class InventoryController extends Controller
             DB::table('inventories')->whereIn('id', $delete)->delete();
         }
 
-        LoggingHelper::log(consoleName() . ' changed all items in ' . $inventory . ' (slot ' . $slot . ') to ' . $amount . 'x ' . $name . ' (' . $metadata . ').');
+        $logMessage = consoleName() . ' changed all items in ' . $inventory . ' (slot ' . $slot . ') to ' . $amount . 'x ' . $name . ' (' . $metadata . ').';
+
+        LoggingHelper::log($logMessage);
+
+        PanelLog::log($request->user()->license, 'Edited Inventory', $logMessage, [
+            'inventory' => $inventory,
+            'slot'      => $slot,
+            'item'      => $name,
+            'amount'    => $amount,
+            'metadata'  => $decoded,
+        ]);
 
         DB::table('inventories')->where('inventory_name', '=', $inventory)->where('inventory_slot', '=', $slot)->update([
             'item_name'     => $name,
@@ -369,7 +380,16 @@ class InventoryController extends Controller
             $availableSlot++;
         }
 
-        LoggingHelper::log(consoleName() . ' moved all items in ' . $inventory . ' (slot ' . $slot . ') to ' . $target . ' (slot ' . $availableSlot . ').');
+        $logMessage = consoleName() . ' moved all items in ' . $inventory . ' (slot ' . $slot . ') to ' . $target . ' (slot ' . $availableSlot . ').';
+
+        LoggingHelper::log($logMessage);
+
+        PanelLog::log($request->user()->license, 'Moved Inventory Item', $logMessage, [
+            'sourceInventory'      => $inventory,
+            'sourceSlot'           => $slot,
+            'targetInventory'      => $target,
+            'targetSlot'           => $availableSlot,
+        ]);
 
         DB::table('inventories')->where('inventory_name', '=', $inventory)->where('inventory_slot', '=', $slot)->update([
             'inventory_name' => $target,
@@ -396,7 +416,14 @@ class InventoryController extends Controller
             abort(403);
         }
 
-        LoggingHelper::log(consoleName() . ' deleted all items in ' . $inventory . ' (slot ' . $slot . ').');
+        $logMessage = consoleName() . ' deleted all items in ' . $inventory . ' (slot ' . $slot . ').';
+
+        LoggingHelper::log($logMessage);
+
+        PanelLog::log($request->user()->license, 'Deleted Inventory Item', $logMessage, [
+            'inventory' => $inventory,
+            'slot'      => $slot,
+        ]);
 
         DB::table('inventories')->where('inventory_name', '=', $inventory)->where('inventory_slot', '=', $slot)->delete();
 
@@ -484,7 +511,7 @@ class InventoryController extends Controller
             return 100;
         }
 
-        $timeElapsed = $timestamp - $degradationStartsAt;
+        $timeElapsed       = $timestamp - $degradationStartsAt;
         $durabilityPercent = 100 - (($timeElapsed / $degradeAfterTime) * 100);
 
         return round(min(100, max(0, $durabilityPercent)), 2);
