@@ -59,7 +59,7 @@
                             </select>
                         </div>
                         <!-- Date From -->
-                        <div class="w-2/12 px-3 pr-1 mobile:w-full mobile:mb-3 mt-3">
+                        <div class="w-3/12 px-3 pr-1 mobile:w-full mobile:mb-3 mt-3">
                             <label class="block mb-3" for="date_from">
                                 {{ t('y.date_from') }}
                             </label>
@@ -69,7 +69,7 @@
                             />
                         </div>
                         <!-- Date From Time -->
-                        <div class="w-1/12 px-3 pl-1 mobile:w-full mobile:mb-3 mt-3">
+                        <div class="w-3/12 px-3 pl-1 mobile:w-full mobile:mb-3 mt-3">
                             <label class="block mb-3" for="date_from_time">
                                 {{ t('y.date_from_time') }}
                             </label>
@@ -80,7 +80,7 @@
                         </div>
 
                         <!-- Date To -->
-                        <div class="w-2/12 px-3 pr-1 mobile:w-full mobile:mb-3 mt-3">
+                        <div class="w-3/12 px-3 pr-1 mobile:w-full mobile:mb-3 mt-3">
                             <label class="block mb-3" for="date_to">
                                 {{ t('y.date_to') }}
                             </label>
@@ -90,7 +90,7 @@
                             />
                         </div>
                         <!-- Date To Time -->
-                        <div class="w-1/12 px-3 pl-1 mobile:w-full mobile:mb-3 mt-3">
+                        <div class="w-3/12 px-3 pl-1 mobile:w-full mobile:mb-3 mt-3">
                             <label class="block mb-3" for="date_to_time">
                                 {{ t('y.date_to_time') }}
                             </label>
