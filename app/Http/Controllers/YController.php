@@ -119,6 +119,7 @@ class YController extends Controller
             'user'      => new YUserResource($user),
             'links'     => $this->getPageUrls($page),
             'page'      => $page,
+            'filters'   => $request->only('date_from', 'date_to'),
         ]);
     }
 

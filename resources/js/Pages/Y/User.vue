@@ -37,9 +37,17 @@
                             {{ t('y.date_from') }}
                         </label>
                         <input class="block w-full px-4 py-2 bg-gray-200 border rounded dark:bg-gray-600"
-                            type="datetime-local"
+                            type="date"
                             id="date_from"
-                            v-model="filters.date_from"
+                        />
+                    </div>
+                    <div class="mobile:w-full" style="width: 130px;">
+                        <label class="block mb-1 text-sm" for="date_from_time">
+                            {{ t('y.date_from_time') }}
+                        </label>
+                        <input class="block w-full px-4 py-2 bg-gray-200 border rounded dark:bg-gray-600"
+                            type="time"
+                            id="date_from_time"
                         />
                     </div>
                     <div class="flex-1 mobile:w-full">
@@ -47,11 +55,20 @@
                             {{ t('y.date_to') }}
                         </label>
                         <input class="block w-full px-4 py-2 bg-gray-200 border rounded dark:bg-gray-600"
-                            type="datetime-local"
+                            type="date"
                             id="date_to"
-                            v-model="filters.date_to"
                         />
                     </div>
+                    <div class="mobile:w-full" style="width: 130px;">
+                        <label class="block mb-1 text-sm" for="date_to_time">
+                            {{ t('y.date_to_time') }}
+                        </label>
+                        <input class="block w-full px-4 py-2 bg-gray-200 border rounded dark:bg-gray-600"
+                            type="time"
+                            id="date_to_time"
+                        />
+                    </div>
+
                     <button
                         class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg"
                         type="submit"
@@ -178,6 +195,14 @@ export default {
             this.isLoading = true;
 
             try {
+                const fromDate = $('#date_from').val();
+                const fromTime = $('#date_from_time').val() || '00:00';
+                const toDate = $('#date_to').val();
+                const toTime = $('#date_to_time').val() || '23:59';
+
+                this.filters.date_from = fromDate ? `${fromDate} ${fromTime}` : null;
+                this.filters.date_to = toDate ? `${toDate} ${toTime}` : null;
+
                 await this.$inertia.replace(`/y/${this.user.id}`, {
                     data: this.filters,
                     preserveState: true,
@@ -195,6 +220,18 @@ export default {
                 this.selectedPosts = this.selectedPosts.filter(postId => postId !== id);
             }
         },
+    },
+    mounted() {
+        if (this.filters.date_from) {
+            const d = new Date(this.filters.date_from);
+            $('#date_from').val(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`);
+            $('#date_from_time').val(`${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`);
+        }
+        if (this.filters.date_to) {
+            const d = new Date(this.filters.date_to);
+            $('#date_to').val(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`);
+            $('#date_to_time').val(`${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`);
+        }
     },
     props: {
         yells: {
@@ -215,7 +252,11 @@ export default {
         page: {
             type: Number,
             required: true,
-        }
+        },
+        filters: {
+            type: Object,
+            default: () => ({})
+        },
     },
 }
 </script>

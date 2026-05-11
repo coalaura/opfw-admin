@@ -942,7 +942,9 @@
         "delete_mark": "Select this yell for bulk deletion.",
         "delete_confirm": "Are you sure you want to delete this yell? This cannot be undone.",
         "date_from": "Date From",
-        "date_to": "Date To"
+        "date_to": "Date To",
+        "date_from_time": "From Time",
+        "date_to_time": "To Time"
     },
     "players": {
         "title": "Players",
