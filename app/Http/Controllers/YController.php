@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Character;
@@ -39,6 +38,7 @@ class YController extends Controller
         if ($request->input('date_from')) {
             $query->where('time', '>=', $request->input('date_from'));
         }
+
         if ($request->input('date_to')) {
             $query->where('time', '<=', $request->input('date_to'));
         }
@@ -91,8 +91,12 @@ class YController extends Controller
         $yells = YPost::query()
             ->where('authorId', '=', $user->id)
             ->where('is_deleted', '=', '0')
-            ->when($request->input('date_from'), fn($q, $v) => $q->where('time', '>=', $v))
-            ->when($request->input('date_to'),   fn($q, $v) => $q->where('time', '<=', $v))
+            ->when($request->input('date_from'), function ($q, $v) {
+                $q->where('time', '>=', $v);
+            })
+            ->when($request->input('date_to'), function ($q, $v) {
+                $q->where('time', '<=', $v);
+            })
             ->select(['id', 'authorId', 'realUser', 'message', 'time', 'likes'])
             ->orderByDesc('time')
             ->limit(30)->offset(($page - 1) * 30)
@@ -100,7 +104,7 @@ class YController extends Controller
 
         $creatorCid = $user->creator_cid;
 
-        if (!$creatorCid) {
+        if (! $creatorCid) {
             $yell = $yells->first();
 
             $creatorCid = $yell ? $yell->realUser : null;
@@ -114,7 +118,7 @@ class YController extends Controller
             ->get()->first() : null;
 
         return Inertia::render('Y/User', [
-            'yells'    => YPostResource::collection($yells),
+            'yells'     => YPostResource::collection($yells),
             'character' => $character ? new CharacterSlimResource($character) : null,
             'user'      => new YUserResource($user),
             'links'     => $this->getPageUrls($page),
@@ -131,7 +135,7 @@ class YController extends Controller
      */
     public function editYell(Request $request, YPost $post): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_Y_EDIT)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_Y_EDIT)) {
             abort(401);
         }
 
@@ -162,7 +166,7 @@ class YController extends Controller
      */
     public function deleteYells(Request $request): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_Y)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_Y)) {
             abort(401);
         }
 
@@ -185,7 +189,7 @@ class YController extends Controller
      */
     public function verify(Request $request, YUser $user): RedirectResponse
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_Y_VERIFY)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_Y_VERIFY)) {
             abort(401);
         }
 
