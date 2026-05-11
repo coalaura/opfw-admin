@@ -30,6 +30,40 @@
         </template>
 
         <template>
+            <div class="w-full max-w-2xl m-auto mb-4">
+                <form @submit.prevent="applyFilters" class="flex flex-wrap gap-3 items-end">
+                    <div class="flex-1 mobile:w-full">
+                        <label class="block mb-1 text-sm" for="date_from">
+                            {{ t('y.date_from') }}
+                        </label>
+                        <input class="block w-full px-4 py-2 bg-gray-200 border rounded dark:bg-gray-600"
+                            type="datetime-local"
+                            id="date_from"
+                            v-model="filters.date_from"
+                        />
+                    </div>
+                    <div class="flex-1 mobile:w-full">
+                        <label class="block mb-1 text-sm" for="date_to">
+                            {{ t('y.date_to') }}
+                        </label>
+                        <input class="block w-full px-4 py-2 bg-gray-200 border rounded dark:bg-gray-600"
+                            type="datetime-local"
+                            id="date_to"
+                            v-model="filters.date_to"
+                        />
+                    </div>
+                    <button
+                        class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg"
+                        type="submit"
+                    >
+                        <i class="fas fa-search"></i>
+                        {{ t('y.search') }}
+                    </button>
+                </form>
+            </div>
+        </template>
+
+        <template>
             <div class="w-full flex flex-wrap max-w-2xl m-auto">
                 <div v-if="yells.length === 0" class="p-2 italic">{{ t('y.no_yells') }}</div>
 
@@ -91,8 +125,11 @@ export default {
     data() {
         return {
             isLoading: false,
-
-            selectedPosts: []
+            selectedPosts: [],
+            filters: {
+                date_from: '',
+                date_to: '',
+            }
         }
     },
     methods: {
@@ -133,6 +170,21 @@ export default {
                     preserveScroll: true
                 });
             } catch (e) { }
+
+            this.isLoading = false;
+        },
+        async applyFilters() {
+            if (this.isLoading) return;
+            this.isLoading = true;
+
+            try {
+                await this.$inertia.replace(`/y/${this.user.id}`, {
+                    data: this.filters,
+                    preserveState: true,
+                    preserveScroll: true,
+                    only: ['yells', 'links', 'page']
+                });
+            } catch (e) {}
 
             this.isLoading = false;
         },

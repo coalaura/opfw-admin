@@ -58,6 +58,29 @@
                                 <option :value="1">{{ t('global.yes') }}</option>
                             </select>
                         </div>
+                        <!-- Date From -->
+                        <div class="w-3/12 px-3 mobile:w-full mobile:mb-3">
+                            <label class="block mb-3" for="date_from">
+                                {{ t('y.date_from') }}
+                            </label>
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
+                                type="datetime-local"
+                                id="date_from"
+                                v-model="filters.date_from"
+                            />
+                        </div>
+
+                        <!-- Date To -->
+                        <div class="w-3/12 px-3 mobile:w-full mobile:mb-3">
+                            <label class="block mb-3" for="date_to">
+                                {{ t('y.date_to') }}
+                            </label>
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
+                                type="datetime-local"
+                                id="date_to"
+                                v-model="filters.date_to"
+                            />
+                        </div>
                     </div>
                     <!-- Description -->
                     <div class="w-full px-3 mt-3">
@@ -141,6 +164,8 @@ export default {
             username: String,
             message: String,
             top: Number,
+            date_from: String,
+            date_to: String,
         },
         links: {
             type: Object,
