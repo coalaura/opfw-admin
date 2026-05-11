@@ -58,6 +58,47 @@
                                 <option :value="1">{{ t('global.yes') }}</option>
                             </select>
                         </div>
+                        <!-- Date From -->
+                        <div class="w-3/12 px-3 pr-1 mobile:w-full mobile:mb-3 mt-3">
+                            <label class="block mb-3" for="date_from">
+                                {{ t('y.date_from') }}
+                            </label>
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
+                                type="date"
+                                id="date_from"
+                            />
+                        </div>
+                        <!-- Date From Time -->
+                        <div class="w-3/12 px-3 pl-1 mobile:w-full mobile:mb-3 mt-3">
+                            <label class="block mb-3" for="date_from_time">
+                                {{ t('y.date_from_time') }}
+                            </label>
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
+                                type="time"
+                                id="date_from_time"
+                            />
+                        </div>
+
+                        <!-- Date To -->
+                        <div class="w-3/12 px-3 pr-1 mobile:w-full mobile:mb-3 mt-3">
+                            <label class="block mb-3" for="date_to">
+                                {{ t('y.date_to') }}
+                            </label>
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
+                                type="date"
+                                id="date_to"
+                            />
+                        </div>
+                        <!-- Date To Time -->
+                        <div class="w-3/12 px-3 pl-1 mobile:w-full mobile:mb-3 mt-3">
+                            <label class="block mb-3" for="date_to_time">
+                                {{ t('y.date_to_time') }}
+                            </label>
+                            <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600"
+                                type="time"
+                                id="date_to_time"
+                            />
+                        </div>
                     </div>
                     <!-- Description -->
                     <div class="w-full px-3 mt-3">
@@ -141,6 +182,8 @@ export default {
             username: String,
             message: String,
             top: Number,
+            date_from: String,
+            date_to: String,
         },
         links: {
             type: Object,
@@ -202,6 +245,23 @@ export default {
             this.isLoading = true;
 
             try {
+                const fromDate = $('#date_from').val();
+                const fromTime = $('#date_from_time').val() || '00:00';
+                const toDate = $('#date_to').val();
+                const toTime = $('#date_to_time').val() || '23:59';
+
+                if (fromDate) {
+                    this.filters.date_from = `${fromDate} ${fromTime}`;
+                } else {
+                    this.filters.date_from = null;
+                }
+
+                if (toDate) {
+                    this.filters.date_to = `${toDate} ${toTime}`;
+                } else {
+                    this.filters.date_to = null;
+                }
+
                 await this.$inertia.replace('/y', {
                     data: this.filters,
                     preserveState: true,
@@ -215,5 +275,17 @@ export default {
             this.isLoading = false;
         },
     },
+    mounted() {
+        if (this.filters.date_from) {
+            const d = new Date(this.filters.date_from);
+            $('#date_from').val(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`);
+            $('#date_from_time').val(`${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`);
+        }
+        if (this.filters.date_to) {
+            const d = new Date(this.filters.date_to);
+            $('#date_to').val(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`);
+            $('#date_to_time').val(`${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`);
+        }
+    }
 }
 </script>

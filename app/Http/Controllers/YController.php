@@ -36,6 +36,13 @@ class YController extends Controller
         // Filtering by message.
         $this->searchQuery($request, $query, 'message', 'message');
 
+        if ($request->input('date_from')) {
+            $query->where('time', '>=', $request->input('date_from'));
+        }
+        if ($request->input('date_to')) {
+            $query->where('time', '<=', $request->input('date_to'));
+        }
+
         $query->leftJoin('y_accounts', 'y_accounts.id', '=', 'authorId');
 
         if (intval($request->input('top', '0')) === 1) {
@@ -61,7 +68,9 @@ class YController extends Controller
             'filters' => $request->all(
                 'message',
                 'username',
-                'top'
+                'top',
+                'date_from',
+                'date_to'
             ),
             'links'   => $this->getPageUrls($page),
             'time'    => $end - $start,
@@ -75,13 +84,15 @@ class YController extends Controller
      * @param YUser $user
      * @return Response
      */
-    public function user(YUser $user): Response
+    public function user(Request $request, YUser $user): Response
     {
         $page = Paginator::resolveCurrentPage('page');
 
         $yells = YPost::query()
             ->where('authorId', '=', $user->id)
             ->where('is_deleted', '=', '0')
+            ->when($request->input('date_from'), fn($q, $v) => $q->where('time', '>=', $v))
+            ->when($request->input('date_to'),   fn($q, $v) => $q->where('time', '<=', $v))
             ->select(['id', 'authorId', 'realUser', 'message', 'time', 'likes'])
             ->orderByDesc('time')
             ->limit(30)->offset(($page - 1) * 30)
@@ -108,6 +119,7 @@ class YController extends Controller
             'user'      => new YUserResource($user),
             'links'     => $this->getPageUrls($page),
             'page'      => $page,
+            'filters'   => $request->only('date_from', 'date_to'),
         ]);
     }
 
