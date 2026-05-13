@@ -920,7 +920,7 @@
                                 {{ t('players.savings.access') }}
                             </div>
 
-                            <div class="absolute top-1 left-1.5 text-blue-600 dark:text-blue-400 text-sm font-semibold">
+                            <div class="absolute top-1 left-1.5 text-blue-600 dark:text-blue-400 text-sm font-semibold" v-else>
                                 <i class="fas fa-thumbtack"></i>
                                 {{ t('players.savings.deposit_access') }}
                             </div>
