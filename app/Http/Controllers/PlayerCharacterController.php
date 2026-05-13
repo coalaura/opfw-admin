@@ -144,6 +144,7 @@ class PlayerCharacterController extends Controller
         $savingsAccounts = DB::table("savings_accounts")
             ->where("character_id", $character->character_id)
             ->orWhere(DB::raw("JSON_CONTAINS(access, " . $character->character_id . ")"), '=', '1')
+            ->orWhere(DB::raw("JSON_CONTAINS(deposit_access, " . $character->character_id . ")"), '=', '1')
             ->get()->toArray();
 
         $horns = Vehicle::getHornMap(false);
@@ -869,6 +870,7 @@ class PlayerCharacterController extends Controller
     public function getCharacters(Request $request): \Illuminate\Http\Response
     {
         $ids = $request->post('ids', []);
+
         if (empty($ids) || ! is_array($ids)) {
             return (new \Illuminate\Http\Response([
                 'status' => false,
@@ -898,11 +900,13 @@ class PlayerCharacterController extends Controller
         $player = $character->player()->first();
 
         $discords = [];
+
         foreach ($player->getIdentifiers() as $identifier) {
             if (Str::startsWith($identifier, 'discord:')) {
                 $discords[] = '<@' . str_replace('discord:', '', $identifier) . '>';
             }
         }
+
         $export[] = 'Email(s): - ' . ($discords ? implode(', ', $discords) : 'N/A');
         $export[] = '';
 
@@ -910,6 +914,7 @@ class PlayerCharacterController extends Controller
         $export[] = '**Vehicles**';
 
         $vehicles = $character->vehicles()->get();
+
         foreach ($vehicles as $vehicle) {
             $export[] = $vehicle->model_name . ' - ' . $vehicle->plate . ' - ' . $vehicle->garage();
         }
@@ -924,6 +929,7 @@ class PlayerCharacterController extends Controller
         $export[] = '**Houses**';
 
         $properties = $character->properties()->get();
+
         foreach ($properties as $property) {
             $export[] = $property->property_address . ' - ' . $property->companyName();
         }
@@ -946,7 +952,7 @@ class PlayerCharacterController extends Controller
         }
 
         $account = DB::table('savings_accounts')
-            ->select('id', 'character_id', 'name', 'access')
+            ->select('id', 'character_id', 'name', 'access', 'deposit_access')
             ->where('id', '=', $id)
             ->first();
 
@@ -954,16 +960,27 @@ class PlayerCharacterController extends Controller
             return $this->json(false, null, 'Invalid ID');
         }
 
-        $access   = json_decode($account->access, true) ?? [];
-        $access[] = $account->character_id;
+        $accessIds   = json_decode($account->access, true) ?? [];
+        $depositIds  = json_decode($account->deposit_access, true) ?? [];
+
+        $accessIds[] = $account->character_id;
 
         unset($account->access);
+        unset($account->deposit_access);
 
-        $access = Character::select(["player_name", DB::raw("CONCAT(first_name, ' ', last_name) as full_name"), "character_id", "characters.license_identifier"])
+        $allIds = array_unique(array_merge($accessIds, $depositIds));
+
+        $characters = Character::select(["player_name", DB::raw("CONCAT(first_name, ' ', last_name) as full_name"), "character_id", "characters.license_identifier"])
             ->leftJoin("users", "characters.license_identifier", "=", "users.license_identifier")
-            ->whereIn("character_id", $access)
+            ->whereIn("character_id", $allIds)
             ->orderBy("full_name")
             ->get()->toArray();
+
+        $access = array_map(function ($char) use ($accessIds) {
+            $char['full'] = in_array($char['character_id'], $accessIds);
+
+            return $char;
+        }, $characters);
 
         $logs = DB::table('savings_accounts_logs')
             ->select(DB::raw('characters.license_identifier as license, characters.character_id, CONCAT(first_name, " ", last_name) as name, action, amount, reason, timestamp'))

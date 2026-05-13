@@ -905,6 +905,7 @@
                             <h3>
                                 {{ account.name }} #{{ account.id }}
                             </h3>
+
                             <h4 class="text-green-600 dark:text-green-300 text-lg mb-2 font-semibold" :class="{ '!text-red-600 dark:!text-red-300': account.balance <= 0 }">
                                 {{ numberFormat(account.balance, false, true) }}
                             </h4>
@@ -913,9 +914,15 @@
                                 <i class="fas fa-wallet"></i>
                                 {{ t('players.savings.owner') }}
                             </div>
-                            <div class="absolute top-1 left-1.5 text-blue-600 dark:text-blue-400 text-sm font-semibold" v-else>
+
+                            <div class="absolute top-1 left-1.5 text-blue-600 dark:text-blue-400 text-sm font-semibold" v-else-if="account.access?.includes?.(character.id)">
                                 <i class="fas fa-thumbtack"></i>
                                 {{ t('players.savings.access') }}
+                            </div>
+
+                            <div class="absolute top-1 left-1.5 text-blue-600 dark:text-blue-400 text-sm font-semibold">
+                                <i class="fas fa-thumbtack"></i>
+                                {{ t('players.savings.deposit_access') }}
                             </div>
 
                             <button class="absolute top-1 right-1.5 text-yellow-600 dark:text-yellow-400 text-sm font-semibold" @click="showSavingsAccount(account)" v-if="perm.check(perm.PERM_SAVINGS_LOGS)">
@@ -1049,7 +1056,8 @@
                             </td>
                             <td class="px-2 py-0.5 italic">
                                 <span v-if="savingsData.account.character_id === access.character_id">{{ t('players.savings.owner') }}</span>
-                                <span v-else>{{ t('players.savings.access') }}</span>
+                                <span v-else-if="access.full">{{ t('players.savings.access') }}</span>
+                                <span v-else>{{ t('players.savings.deposit_access') }}</span>
                             </td>
                         </tr>
                     </table>

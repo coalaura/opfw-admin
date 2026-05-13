@@ -1265,6 +1265,7 @@
             "none": "This character does not own or has access any savings accounts.",
             "owner": "Owner",
             "access": "Access",
+            "deposit_access": "Deposit",
             "show": "Show Account",
             "logs_none": "No transaction logs found.",
             "character": "Character",
