@@ -705,7 +705,9 @@
             "realty_edit": "Edit Real Estate",
             "savings_logs": "View Savings Logs",
             "bulk_delete": "Bulk Delete (Warnings)",
-            "view_inventory": "View Inventory (Contents)"
+            "view_inventory": "View Inventory (Contents)",
+            "edit_company_balance": "Edit Company Balance",
+            "edit_savings_balance": "Edit Savings Balance"
         },
         "world_time": "World Time",
         "world_time_desc": "The time in the {0} most used timezones.",
