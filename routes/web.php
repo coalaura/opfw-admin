@@ -256,11 +256,13 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Savings Accounts.
     Route::get('/savings/{id}', [PlayerCharacterController::class, 'savingsData']);
+    Route::post('/savings/{id}/balance', [PlayerCharacterController::class, 'editSavingsBalance']);
 
     // Stocks Companies (realty).
     Route::get('/stocks/companies', [StocksController::class, 'companies']);
     Route::get('/stocks/property/{propertyId}', [StocksController::class, 'property']);
     Route::post('/stocks/property/{propertyId}', [StocksController::class, 'updateProperty']);
+    Route::post('/stocks/companies/{id}/balance', [StocksController::class, 'editCompanyBalance']);
 
     // Storage Containers.
     Route::get('/containers', [ContainerController::class, 'containers']);

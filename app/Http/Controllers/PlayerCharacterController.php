@@ -979,6 +979,119 @@ class PlayerCharacterController extends Controller
         ]);
     }
 
+    public function editSavingsBalance(Request $request, int $id): \Illuminate\Http\Response
+    {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_EDIT_SAVINGS_BALANCE)) {
+            return self::json(false, null, 'You do not have permission to edit savings balances.');
+        }
+
+        $account = DB::table('savings_accounts')
+            ->select('id', 'balance')
+            ->where('id', '=', $id)
+            ->first();
+
+        if (! $account) {
+            return self::json(false, null, 'Invalid account ID.');
+        }
+
+        $balance = intval($request->post('balance'));
+        $user    = user();
+
+        DB::table('savings_accounts')
+            ->where('id', '=', $id)
+            ->update(['balance' => $balance]);
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Edited Savings Balance",
+            sprintf(
+                "%s edited savings account #%d balance: %d -> %d.",
+                $user->consoleName(),
+                $id,
+                $account->balance,
+                $balance
+            )
+        );
+
+        return self::json(true);
+    }
+
+    public function companyData(int $cid): \Illuminate\Http\Response
+    {
+        if (! $this->isSuperAdmin(request())) {
+            abort(401);
+        }
+
+        $owned = DB::table('stocks_companies')
+            ->where('owner_cid', '=', $cid)
+            ->select('company_id as id', 'company_name as name', 'company_balance as balance')
+            ->get()
+            ->map(function ($c) {
+                $c->is_owner = true;
+                $c->position = 'Owner';
+                return $c;
+            });
+
+        $employed = DB::table('stocks_companies')
+            ->join('stocks_company_employees', 'stocks_companies.company_id', '=', 'stocks_company_employees.company_id')
+            ->where('stocks_company_employees.employee_cid', '=', $cid)
+            ->where('stocks_companies.owner_cid', '!=', $cid)
+            ->select(
+                'stocks_companies.company_id as id',
+                'stocks_companies.company_name as name',
+                'stocks_companies.company_balance as balance',
+                'stocks_company_employees.position',
+                'stocks_company_employees.permissions'
+            )
+            ->get()
+            ->map(function ($c) {
+                $c->is_owner = false;
+                return $c;
+            });
+
+        $companies = $owned->concat($employed)->values()->toArray();
+
+        return self::json(true, $companies);
+    }
+
+    public function editCompanyBalance(Request $request, int $id): \Illuminate\Http\Response
+    {
+        if (! $this->isSuperAdmin($request)) {
+            return self::json(false, null, 'Only super admins can edit company balances.');
+        }
+
+        $company = DB::table('stocks_companies')
+            ->select('company_id', 'company_name', 'company_balance')
+            ->where('company_id', '=', $id)
+            ->first();
+
+        if (! $company) {
+            return self::json(false, null, 'Invalid company ID.');
+        }
+
+        $balance = intval($request->post('balance'));
+        $user    = user();
+
+        DB::table('stocks_companies')
+            ->where('company_id', '=', $id)
+            ->update(['company_balance' => $balance]);
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Edited Company Balance",
+            sprintf(
+                "%s edited company #%d (%s) balance: %d -> %d.",
+                $user->consoleName(),
+                $id,
+                $company->company_name,
+                $company->company_balance,
+                $balance
+            )
+        );
+
+        return self::json(true);
+    }
+
     private function getPedModels()
     {
         $peds = ServerAPI::getPeds();

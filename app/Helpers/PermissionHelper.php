@@ -31,6 +31,8 @@ class PermissionHelper
         self::PERM_BULK_DELETE    => ['bulk_delete', self::LEVEL_ROOT],
         self::PERM_VIEW_INVENTORY => ['view_inventory', self::LEVEL_SUPERADMIN],
         self::PERM_SUSPICIOUS_ENTITIES => ['suspicious_entities', self::LEVEL_SENIOR],
+        self::PERM_EDIT_COMPANY_BALANCE => ['edit_company_balance', self::LEVEL_SUPERADMIN],
+        self::PERM_EDIT_SAVINGS_BALANCE => ['edit_savings_balance', self::LEVEL_SUPERADMIN],
     ];
 
     const PERM_SCREENSHOT     = 'P_SCREENSHOT';
@@ -60,6 +62,8 @@ class PermissionHelper
     const PERM_BULK_DELETE    = 'P_BULK_DELETE';
     const PERM_VIEW_INVENTORY = 'P_VIEW_INVENTORY';
     const PERM_SUSPICIOUS_ENTITIES = 'P_SUSPICIOUS_ENTITIES';
+    const PERM_EDIT_COMPANY_BALANCE = 'P_EDIT_COMPANY_BALANCE';
+    const PERM_EDIT_SAVINGS_BALANCE = 'P_EDIT_SAVINGS_BALANCE';
 
     const LEVEL_STAFF      = 1;
     const LEVEL_SENIOR     = 2;

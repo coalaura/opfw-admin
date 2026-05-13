@@ -49,6 +49,8 @@ const Permissions = {
             PERM_SAVINGS_LOGS: 'savings_logs',
             PERM_BULK_DELETE: 'bulk_delete',
             PERM_VIEW_INVENTORY: 'view_inventory',
+            PERM_EDIT_COMPANY_BALANCE: 'edit_company_balance',
+            PERM_EDIT_SAVINGS_BALANCE: 'edit_savings_balance',
 
             level(permission) {
                 if (!(permission in permissions)) {
