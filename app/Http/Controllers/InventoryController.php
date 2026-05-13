@@ -325,7 +325,7 @@ class InventoryController extends Controller
 
         LoggingHelper::log($logMessage);
 
-        PanelLog::log($request->user()->license, 'Edited Inventory', $logMessage, [
+        PanelLog::log(license(), 'Edited Inventory', $logMessage, [
             'inventory' => $inventory,
             'slot'      => $slot,
             'item'      => $name,
@@ -384,7 +384,7 @@ class InventoryController extends Controller
 
         LoggingHelper::log($logMessage);
 
-        PanelLog::log($request->user()->license, 'Moved Inventory Item', $logMessage, [
+        PanelLog::log(license(), 'Moved Inventory Item', $logMessage, [
             'sourceInventory'      => $inventory,
             'sourceSlot'           => $slot,
             'targetInventory'      => $target,
@@ -420,7 +420,7 @@ class InventoryController extends Controller
 
         LoggingHelper::log($logMessage);
 
-        PanelLog::log($request->user()->license, 'Deleted Inventory Item', $logMessage, [
+        PanelLog::log(license(), 'Deleted Inventory Item', $logMessage, [
             'inventory' => $inventory,
             'slot'      => $slot,
         ]);
