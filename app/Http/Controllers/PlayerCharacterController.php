@@ -979,6 +979,43 @@ class PlayerCharacterController extends Controller
         ]);
     }
 
+    public function editSavingsBalance(Request $request, int $id): \Illuminate\Http\Response
+    {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_EDIT_SAVINGS_BALANCE)) {
+            return self::json(false, null, 'You do not have permission to edit savings balances.');
+        }
+
+        $account = DB::table('savings_accounts')
+            ->select('id', 'balance')
+            ->where('id', '=', $id)
+            ->first();
+
+        if (! $account) {
+            return self::json(false, null, 'Invalid account ID.');
+        }
+
+        $balance = intval($request->post('balance'));
+        $user    = user();
+
+        DB::table('savings_accounts')
+            ->where('id', '=', $id)
+            ->update(['balance' => $balance]);
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Edited Savings Balance",
+            sprintf(
+                "%s edited savings account #%d balance: %d -> %d.",
+                $user->consoleName(),
+                $id,
+                $account->balance,
+                $balance
+            )
+        );
+
+        return self::json(true);
+    }
+
     private function getPedModels()
     {
         $peds = ServerAPI::getPeds();

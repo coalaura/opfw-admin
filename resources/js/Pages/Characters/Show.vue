@@ -1005,6 +1005,24 @@
                     {{ t('players.savings.failed_load') }}
                 </div>
                 <template v-else>
+                    <div class="flex items-center gap-3 mb-4" v-if="perm.check(perm.PERM_EDIT_SAVINGS_BALANCE)">
+                        <label class="font-semibold w-24 flex-shrink-0">Balance</label>
+                        <input
+                            type="number"
+                            class="flex-grow px-4 py-2 bg-gray-200 border rounded dark:bg-gray-600 font-mono"
+                            v-model="savingsEditBalance"
+                        />
+                        <button
+                            type="button"
+                            class="flex-shrink-0 px-4 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400 font-semibold"
+                            @click="saveSavingsBalance"
+                            :disabled="isSavingSavings"
+                        >
+                            <i class="fas fa-cog animate-spin mr-1" v-if="isSavingSavings"></i>
+                            <i class="fas fa-save mr-1" v-else></i>
+                            Save
+                        </button>
+                    </div>
                     <table class="whitespace-nowrap w-full">
                         <tr class="sticky top-0 bg-gray-300 dark:bg-gray-700 no-alpha">
                             <th class="font-semibold px-2 py-0.5 text-left">{{ t('players.savings.player') }}</th>
@@ -1078,7 +1096,6 @@
                 </button>
             </template>
         </modal>
-
     </div>
 </template>
 
@@ -1295,7 +1312,10 @@ export default {
             propertyData: false,
 
             editingPedModel: false,
-            pedEditModel: this.character.pedModelName
+            pedEditModel: this.character.pedModelName,
+
+            savingsEditBalance: 0,
+            isSavingSavings: false,
         };
     },
     computed: {
@@ -1392,20 +1412,43 @@ export default {
         async showSavingsAccount(account) {
             if (this.isShowingSavings) return;
 
-            this.isShowingSavings = true;
-            this.isLoadingSavings = true;
-            this.savingsData = false;
+            this.isShowingSavings   = true;
+            this.isLoadingSavings   = true;
+            this.savingsData        = false;
+            this.savingsEditBalance = account.balance;
 
             try {
                 const data = await _get(`/savings/${account.id}`);
 
                 if (data?.status) {
-                    this.savingsData = data.data;
+                    this.savingsData        = data.data;
+                    this.savingsEditBalance = data.data.account.balance;
                 }
             } catch (e) {
             }
 
             this.isLoadingSavings = false;
+        },
+
+        async saveSavingsBalance() {
+            if (this.isSavingSavings || !this.savingsData) return;
+            this.isSavingSavings = true;
+
+            try {
+                const response = await _post(`/savings/${this.savingsData.account.id}/balance`, {
+                    balance: this.savingsEditBalance
+                });
+
+                if (response?.status) {
+                    this.savingsData.account.balance = parseInt(this.savingsEditBalance);
+
+                    const card = this.savingsAccounts.find(a => a.id === this.savingsData.account.id);
+                    if (card) card.balance = parseInt(this.savingsEditBalance);
+                }
+            } catch (e) {
+            }
+
+            this.isSavingSavings = false;
         },
         getResetCoords() {
             return this.resetCoords

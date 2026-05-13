@@ -13,9 +13,25 @@
             <header class="flex items-center gap-6 border-b-2 border-gray-500 bg-gray-300 dark:bg-gray-600 relative">
                 <img :src="company.logo" class="w-32 h-32 rounded-tl-lg" v-handle-error="'/images/realty_image_broken.png'" />
 
-                <h2>
-                    {{ company.name }}
-                </h2>
+                <div class="flex flex-col gap-1">
+                    <h2>{{ company.name }}</h2>
+                    <div class="flex items-center gap-2">
+                        <span
+                            class="font-mono font-semibold text-lg"
+                            :class="company.balance > 0 ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300'"
+                        >
+                            {{ numberFormat(company.balance, false, true) }}
+                        </span>
+                        <button
+                            v-if="perm.check(perm.PERM_EDIT_COMPANY_BALANCE)"
+                            class="text-xs text-yellow-600 dark:text-yellow-400"
+                            @click="startEditBalance(id, company.balance)"
+                            :title="'Edit balance'"
+                        >
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                    </div>
+                </div>
 
                 <span class="bg-rose-600 text-white py-0.5 px-1.5 text-xs rounded-sm shadow-sm absolute top-1.5 right-1.5" v-if="company.bankrupt">{{ t("stocks.bankrupt") }}</span>
             </header>
@@ -234,6 +250,37 @@
             </template>
         </modal>
 
+        <modal :show.sync="isEditingBalance">
+            <template #header>
+                <h1 class="dark:text-white">Edit Company Balance</h1>
+            </template>
+
+            <template #default>
+                <div class="flex gap-3 items-center">
+                    <label class="block w-24 font-semibold flex-shrink-0">Balance</label>
+                    <input
+                        type="number"
+                        class="flex-grow px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded font-mono"
+                        v-model="editingBalanceValue"
+                    />
+                </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isEditingBalance = false">
+                    {{ t('global.cancel') }}
+                </button>
+                <button
+                    type="button"
+                    class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400"
+                    @click="saveBalance"
+                    :disabled="isSavingBalance"
+                >
+                    <i class="fas fa-cog animate-spin mr-1" v-if="isSavingBalance"></i>
+                    Save
+                </button>
+            </template>
+        </modal>
     </div>
 </template>
 
@@ -278,7 +325,12 @@ export default {
 
             isShowingProperty: false,
             isLoadingProperty: false,
-            propertyData: false
+            propertyData: false,
+
+            isEditingBalance: false,
+            editingBalanceId: null,
+            editingBalanceValue: 0,
+            isSavingBalance: false,
         };
     },
     methods: {
@@ -358,7 +410,30 @@ export default {
 
             this.isLoading = false;
             this.isEditingProperty = false;
-        }
+        },
+        startEditBalance(companyId, currentBalance) {
+            this.editingBalanceId    = companyId;
+            this.editingBalanceValue = currentBalance;
+            this.isEditingBalance    = true;
+        },
+
+        async saveBalance() {
+            if (this.isSavingBalance) return;
+            this.isSavingBalance = true;
+
+            try {
+                const response = await _post(`/stocks/companies/${this.editingBalanceId}/balance`, {
+                    balance: this.editingBalanceValue
+                });
+
+                if (response?.status) {
+                    this.$set(this.companies[this.editingBalanceId], 'balance', parseInt(this.editingBalanceValue));
+                    this.isEditingBalance = false;
+                }
+            } catch (e) {}
+
+            this.isSavingBalance = false;
+        },
     }
 }
 </script>

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Character;
 use App\Helpers\PermissionHelper;
+use App\PanelLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -33,6 +34,7 @@ class StocksController extends Controller
                 'owner'             => $company->owner_name,
                 'reg_timestamp'     => $company->company_reg_timestamp,
                 'bankrupt'          => $company->bankrupt,
+                'balance'           => $company->company_balance,
                 'properties'        => [],
                 'employees'         => [],
                 'empty_properties'  => 0,
@@ -235,5 +237,43 @@ class StocksController extends Controller
         ]);
 
         return backWith('success', 'Property updated');
+    }
+
+    public function editCompanyBalance(Request $request, int $id): \Illuminate\Http\Response
+    {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_EDIT_COMPANY_BALANCE)) {
+            return self::json(false, null, 'You do not have permission to edit company balances.');
+        }
+
+        $company = DB::table('stocks_companies')
+            ->select('company_id', 'company_name', 'company_balance')
+            ->where('company_id', '=', $id)
+            ->first();
+
+        if (! $company) {
+            return self::json(false, null, 'Invalid company ID.');
+        }
+
+        $balance = intval($request->post('balance'));
+        $user    = user();
+
+        DB::table('stocks_companies')
+            ->where('company_id', '=', $id)
+            ->update(['company_balance' => $balance]);
+
+        PanelLog::log(
+            $user->license_identifier,
+            "Edited Company Balance",
+            sprintf(
+                "%s edited company #%d (%s) balance: %d -> %d.",
+                $user->consoleName(),
+                $id,
+                $company->company_name,
+                $company->company_balance,
+                $balance
+            )
+        );
+
+        return self::json(true);
     }
 }
