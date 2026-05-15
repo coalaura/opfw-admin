@@ -447,21 +447,25 @@ export default {
             this.pageStore.set("volume", this.volume);
         },
         destroyStream(full) {
-            clearInterval(this.interval);
+        clearInterval(this.interval);
 
-            if (full) {
-                this.source = false;
-                this.error = false;
-                this.isLoading = false;
+        const video = this.$refs.video;
+        if (video) {
+            video.pause();
+            video.src = '';
+            video.load();
+        }
 
-                this.updateChatRoom();
-            }
+        if (full) {
+            this.source = false;
+            this.error = false;
+            this.isLoading = false;
+            this.updateChatRoom();
+        }
 
-            if (!this.hls) return;
-
-            this.hls.destroy();
-
-            this.hls = false;
+        if (!this.hls) return;
+        this.hls.destroy();
+        this.hls = false;
         },
         updateChatRoom() {
             if (this.source) {
@@ -712,7 +716,7 @@ export default {
         }, 10000);
     },
     beforeUnmount() {
-        this.destroyStream();
+        this.destroyStream(true);
 
         clearInterval(this.timestampLoop);
     }
