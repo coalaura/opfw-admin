@@ -185,7 +185,7 @@ class Token extends Model
         $available = [];
 
         foreach (self::ValidMethods as $method) {
-            $available[$method] = $method === "REST" ? self::RestTables : [];
+            $available[$method] = [];
         }
 
         $routes = ServerAPI::getRoutes();

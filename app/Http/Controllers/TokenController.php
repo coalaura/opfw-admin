@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Helpers\PermissionHelper;
@@ -12,7 +11,7 @@ class TokenController extends Controller
 {
     public function index(Request $request)
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
             abort(401);
         }
 
@@ -23,18 +22,19 @@ class TokenController extends Controller
             'tokens'  => TokenResource::collection($tokens),
             'methods' => Token::ValidMethods,
             'routes'  => Token::getAvailableRoutes(),
+            'rest'    => Token::RestTables,
         ]);
     }
 
     public function update(Request $request, Token $token)
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
             abort(401);
         }
 
         $permissions = $request->input('permissions', '');
 
-        if (!Token::permissionsValid($permissions)) {
+        if (! Token::permissionsValid($permissions)) {
             return $this->json(false, null, 'Invalid permissions');
         }
 
@@ -50,7 +50,7 @@ class TokenController extends Controller
 
     public function create(Request $request)
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
             abort(401);
         }
 
@@ -67,7 +67,7 @@ class TokenController extends Controller
 
     public function delete(Request $request, Token $token)
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
             abort(401);
         }
 
@@ -78,13 +78,13 @@ class TokenController extends Controller
 
     public function logs(Request $request)
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
             abort(401);
         }
 
         $tokenId = $request->input('id');
 
-        if (!$tokenId || !is_numeric($tokenId)) {
+        if (! $tokenId || ! is_numeric($tokenId)) {
             return $this->json(false, null, 'Invalid token ID');
         }
 
@@ -97,13 +97,13 @@ class TokenController extends Controller
 
     public function rps(Request $request)
     {
-        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_API_TOKENS)) {
             abort(401);
         }
 
         $tokenId = $request->input('id');
 
-        if (!$tokenId || !is_numeric($tokenId)) {
+        if (! $tokenId || ! is_numeric($tokenId)) {
             return $this->json(false, null, 'Invalid token ID');
         }
 

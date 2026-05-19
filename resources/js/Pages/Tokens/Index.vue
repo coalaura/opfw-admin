@@ -54,7 +54,7 @@
                                 <option v-for="method in methods" :value="method">{{ method }}</option>
                             </select>
 
-                            <input type="text" maxlength="512" v-model="permission.path" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full font-mono" v-if="permission.method === 'REST'" placeholder="characters{first_name,last_name}" @change="token.changed = true" :disabled="token.disabled" :class="{ '!bg-blue-500 !bg-opacity-20 !border-blue-400': token.disabled, '!bg-red-500 !bg-opacity-20 !border-red-400': !validRestCfg(permission, routes[permission.method]) }" />
+                            <input type="text" maxlength="512" v-model="permission.path" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full font-mono" v-if="permission.method === 'REST'" placeholder="characters{first_name,last_name}" @change="token.changed = true" :disabled="token.disabled" :class="{ '!bg-blue-500 !bg-opacity-20 !border-blue-400': token.disabled, '!bg-red-500 !bg-opacity-20 !border-red-400': !validRestCfg(permission) }" />
 
                             <select v-model="permission.path" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full" @change="token.changed = true" :disabled="token.disabled" v-else :class="{ '!bg-blue-500 !bg-opacity-20 border-blue-400': token.disabled }">
                                 <option value="*">*</option>
@@ -160,6 +160,10 @@ export default {
         routes: {
             type: Object,
             required: true
+        },
+        rest: {
+            type: Object,
+            required: true
         }
     },
     data() {
@@ -185,7 +189,7 @@ export default {
         };
     },
     methods: {
-        validRestCfg(permission, validTables) {
+        validRestCfg(permission) {
             const data = permission.path?.trim();
 
             if (!data) {
@@ -210,7 +214,7 @@ export default {
                             return false; // missing table name
                         } else if (inBrackets) {
                             return false; // no double open brackets
-                        } else if (validTables && !validTables[table]) {
+                        } else if (this.rest && !this.rest[table]) {
                             return false; // invalid table
                         }
 
@@ -245,7 +249,7 @@ export default {
                                 return false; // missing table definition
                             } else if (!field) {
                                 return false; // no field name
-                            } else if (!validTables[table].includes(field)) {
+                            } else if (!this.rest[table].includes(field)) {
                                 return false; // invalid field
                             }
 
