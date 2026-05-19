@@ -450,22 +450,28 @@ export default {
             clearInterval(this.interval);
 
             const video = this.$refs.video;
+
             if (video) {
                 video.pause();
-                video.src = '';
-                video.load();
             }
 
             if (full) {
                 this.source = false;
                 this.error = false;
                 this.isLoading = false;
+
                 this.updateChatRoom();
             }
 
-            if (!this.hls) return;
-            this.hls.destroy();
-            this.hls = false;
+            if (this.hls) {
+                this.hls.destroy();
+
+                this.hls = false;
+            }
+
+            if (video) {
+                video.remove();
+            }
         },
         updateChatRoom() {
             if (this.source) {
