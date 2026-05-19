@@ -224,7 +224,13 @@ export default {
                             return false; // missing table name
                         } else if (!inBrackets) {
                             return false; // missing open brackets
+                        } else if (!field) {
+                            return false; // no field name
                         }
+
+                        tables[table].push(field);
+
+                        field = "";
 
                         inBrackets = false;
 
@@ -237,6 +243,8 @@ export default {
                         if (inBrackets) {
                             if (!tables[table]) {
                                 return false; // missing table definition
+                            } else if (!field) {
+                                return false; // no field name
                             } else if (!validTables[table].includes(field)) {
                                 return false; // invalid field
                             }
