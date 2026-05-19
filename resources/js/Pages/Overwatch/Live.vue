@@ -469,7 +469,7 @@ export default {
                 this.hls = false;
             }
 
-            if (video) {
+            if (full && video) {
                 video.remove();
             }
         },
@@ -707,6 +707,7 @@ export default {
         window.removeEventListener("fullscreenchange", this.updateFullscreen);
 
         this.destroyStream(true);
+
         clearInterval(this.timestampLoop);
     },
     mounted() {
