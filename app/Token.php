@@ -63,15 +63,6 @@ class Token extends Model
         'last_request_timestamp' => 'integer',
     ];
 
-    public function getPermissions(): array
-    {
-        if (! $this->permissions) {
-            return [];
-        }
-
-        return self::stringToPermissions($this->permissions);
-    }
-
     public static function getRecentLogs(int $tokenId, ?int $beforeId = null, int $limit = 50): array
     {
         $query = DB::table('api_logs')
@@ -102,7 +93,7 @@ class Token extends Model
         ];
     }
 
-    public static function stringToPermissions(string $permissions): array
+    public static function stringToPermissions(string $permissions): ?array
     {
         $available = self::getAvailableRoutes();
 
@@ -120,10 +111,16 @@ class Token extends Model
             $method = strtoupper($parts[0]);
             $path   = trim($parts[1]);
 
-            $allowed = $available[$method] ?? [];
+            if ($method === "REST") {
+                if (!self::validRestCfg($path)) {
+                    return null;
+                }
+            } else {
+                $allowed = $available[$method] ?? [];
 
-            if (! in_array($path, $allowed) && $path !== '*') {
-                continue;
+                if (! in_array($path, $allowed) && $path !== '*') {
+                    continue;
+                }
             }
 
             $result[] = [
@@ -164,6 +161,10 @@ class Token extends Model
         }
 
         $data = self::stringToPermissions($permissions);
+
+        if (!$data) {
+            return false;
+        }
 
         return self::permissionsToString($data) === $permissions;
     }
@@ -208,8 +209,91 @@ class Token extends Model
         return $available;
     }
 
-    public static function validRestCfg(string $data)
+    public static function validRestCfg(string $path): bool
     {
+        $data = trim($path);
 
+        if ($data === '') {
+            return false;
+        } elseif ($data === '*') {
+            return true;
+        }
+
+        $tables     = [];
+        $table      = "";
+        $field      = "";
+        $inBrackets = false;
+        $length     = strlen($data);
+
+        for ($x = 0; $x < $length; $x++) {
+            $c = $data[$x];
+
+            switch ($c) {
+                case " ":
+                    continue 2;
+                case "{":
+                    if ($table === "") {
+                        return false; // missing table name
+                    } elseif ($inBrackets) {
+                        return false; // no double open brackets
+                    } elseif (! isset(self::RestTables[$table])) {
+                        return false; // invalid table
+                    }
+
+                    $tables[$table] = [];
+                    $inBrackets     = true;
+
+                    continue 2;
+                case "}":
+                    if ($table === "") {
+                        return false; // missing table name
+                    } elseif (! $inBrackets) {
+                        return false; // missing open brackets
+                    } elseif ($field === "") {
+                        return false; // no field name
+                    } elseif (! in_array($field, self::RestTables[$table], true)) {
+                        return false; // invalid field
+                    }
+
+                    $tables[$table][] = $field;
+                    $field            = "";
+                    $inBrackets       = false;
+
+                    continue 2;
+                case ";":
+                    if ($table === "") {
+                        return false; // missing table name
+                    }
+
+                    if ($inBrackets) {
+                        if (! isset($tables[$table])) {
+                            return false; // missing table definition
+                        } elseif ($field === "") {
+                            return false; // no field name
+                        } elseif (! in_array($field, self::RestTables[$table], true)) {
+                            return false; // invalid field
+                        }
+
+                        $tables[$table][] = $field;
+                        $field            = "";
+                    } else {
+                        $table = "";
+                    }
+
+                    continue 2;
+            }
+
+            if ($inBrackets) {
+                $field .= $c;
+            } else {
+                $table .= $c;
+            }
+        }
+
+        if ($inBrackets) {
+            $path .= "}"; // missing final closing bracket (safe)
+        }
+
+        return true;
     }
 }

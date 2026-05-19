@@ -54,7 +54,7 @@
                                 <option v-for="method in methods" :value="method">{{ method }}</option>
                             </select>
 
-                            <input type="text" maxlength="512" v-model="permission.path" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full font-mono" v-if="permission.method === 'REST'" placeholder="characters{first_name,last_name}" @change="token.changed = true" :disabled="token.disabled" :class="{ '!bg-blue-500 !bg-opacity-20 !border-blue-400': token.disabled, '!bg-red-500 !bg-opacity-20 !border-red-400': !validRestCfg(permission) }" />
+                            <input type="text" maxlength="512" v-model="permission.path" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full font-mono" v-if="permission.method === 'REST'" placeholder="characters{first_name;last_name}" @change="token.changed = true" :disabled="token.disabled" :class="{ '!bg-blue-500 !bg-opacity-20 !border-blue-400': token.disabled, '!bg-red-500 !bg-opacity-20 !border-red-400': !validRestCfg(permission) }" />
 
                             <select v-model="permission.path" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full" @change="token.changed = true" :disabled="token.disabled" v-else :class="{ '!bg-blue-500 !bg-opacity-20 border-blue-400': token.disabled }">
                                 <option value="*">*</option>
@@ -230,6 +230,8 @@ export default {
                             return false; // missing open brackets
                         } else if (!field) {
                             return false; // no field name
+                        } else if (!this.rest[table].includes(field)) {
+                            return false; // invalid field
                         }
 
                         tables[table].push(field);
@@ -239,7 +241,7 @@ export default {
                         inBrackets = false;
 
                         continue;
-                    case ",":
+                    case ";":
                         if (!table) {
                             return false; // missing table name
                         }
