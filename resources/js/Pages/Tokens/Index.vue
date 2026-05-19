@@ -359,7 +359,7 @@ export default {
         async loadMoreLogs() {
             this.isLoadingLogs = true;
 
-            const lastId = this.logs.length ? this.logs[this.logs.length - 1].id : 0;
+            const lastId = this.logs?.length ? this.logs[this.logs.length - 1].id : 0;
 
             try {
                 const result = await _get("/tokens/logs", {
