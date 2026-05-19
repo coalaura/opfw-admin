@@ -359,7 +359,11 @@ export default {
         async loadMoreLogs() {
             this.isLoadingLogs = true;
 
-            const lastId = this.logs?.length ? this.logs[this.logs.length - 1].id : 0;
+            let lastId;
+
+            if (this.logs?.length) {
+                lastId = this.logs[this.logs.length - 1].id;
+            }
 
             try {
                 const result = await _get("/tokens/logs", {
@@ -372,9 +376,11 @@ export default {
                 if (result?.status) {
                     const logs = result.data;
 
-                    this.logs = this.logs.concat(logs);
+                    if (logs) {
+                        this.logs = this.logs.concat(logs);
+                    }
 
-                    this.moreLogs = logs.length === 50;
+                    this.moreLogs = logs && logs.length === 50;
                     this.logsLoaded = true;
                 }
             } catch (e) { }
