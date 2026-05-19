@@ -55,7 +55,7 @@
                             </select>
 
                             <select v-model="permission.path" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full" @change="token.changed = true" :disabled="token.disabled" :class="{ '!bg-blue-500 !bg-opacity-20 border-blue-400': token.disabled }">
-                                <option value="*">*</option>
+                                <option value="*" v-if="!routes[permission.method].includes('*')">*</option>
 
                                 <option v-for="path in routes[permission.method]" :value="path">{{ path }}</option>
                             </select>
