@@ -179,7 +179,7 @@ export default {
                 return token;
             }),
 
-            controller: new AbortController(),
+            controller: false,
             showingLogs: false,
             logTokenId: false,
             isLoadingLogs: false,
@@ -400,12 +400,16 @@ export default {
             return token ? token.note : `Token #${tokenId}`;
         },
         viewLogs(tokenId) {
-            this.controller.abort();
+            if (this.controller) {
+                this.controller.abort();
+            }
 
             this.showingLogs = true;
             this.logTokenId = tokenId;
             this.logs = [];
             this.moreLogs = false;
+
+            this.controller = new AbortController();
 
             this.loadLogInfo();
             this.loadMoreLogs();
