@@ -102,7 +102,7 @@ class Token extends Model
         ];
     }
 
-    public static function stringToPermissions(string $permissions): ?array
+    public static function stringToPermissions(string $permissions): array
     {
         $available = self::getAvailableRoutes();
 
@@ -114,7 +114,7 @@ class Token extends Model
             $parts = explode(' ', $route);
 
             if (sizeof($parts) !== 2) {
-                return null;
+                continue;
             }
 
             $method = strtoupper($parts[0]);
@@ -122,13 +122,13 @@ class Token extends Model
 
             if ($method === "REST") {
                 if (! self::validRestCfg($path)) {
-                    return null;
+                    continue;
                 }
             } else {
                 $allowed = $available[$method] ?? [];
 
                 if (! in_array($path, $allowed) && $path !== '*') {
-                    return null;
+                    continue;
                 }
             }
 
