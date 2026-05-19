@@ -17,8 +17,8 @@ class ApiController extends Controller
             abort(401);
         }
 
-        $crafting  = ServerAPI::getCrafting();
-        $combining = ServerAPI::getCombining();
+        $crafting  = ServerAPI::getCrafting(true);
+        $combining = ServerAPI::getCombining(true);
 
         return (new Response(implode("\n\n", [$crafting, $combining]), 200))
             ->header('Content-Type', 'text/plain');
