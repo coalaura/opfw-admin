@@ -705,6 +705,9 @@ export default {
         window.removeEventListener("keyup", this.handleKeypress);
         window.removeEventListener("resize", this.setChatHeight);
         window.removeEventListener("fullscreenchange", this.updateFullscreen);
+
+        this.destroyStream(true);
+        clearInterval(this.timestampLoop);
     },
     mounted() {
         this.volume = this.pageStore.get("volume", 0.5);
@@ -720,11 +723,6 @@ export default {
         this.timestampLoop = setInterval(() => {
             this.timestamp = Math.floor(Date.now() / 1000);
         }, 10000);
-    },
-    beforeUnmount() {
-        this.destroyStream(true);
-
-        clearInterval(this.timestampLoop);
     }
 };
 </script>
