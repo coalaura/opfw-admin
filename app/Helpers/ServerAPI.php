@@ -118,6 +118,14 @@ class ServerAPI
     }
 
     /**
+     * /combining.txt
+     */
+    public static function getCombining(bool $refresh = false): string
+    {
+        return self::cached('/combining.txt', $refresh, self::MediumCacheTime) ?? "";
+    }
+
+    /**
      * /variables.json
      */
     public static function getVariables(): array
