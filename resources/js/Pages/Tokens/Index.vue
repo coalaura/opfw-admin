@@ -183,6 +183,83 @@ export default {
             logInfo: false
         };
     },
+    computed: {
+        validRestCfg() {
+            const data = permission.path?.trim();
+
+            if (!data) {
+                return false;
+            } else if (data === "*") {
+                return true;
+            }
+
+            let tables = {},
+                table = "",
+                field = "",
+                inBrackets = false;
+
+            for (let x = 0; x < data.length; x++) {
+                const c = data.charAt(x);
+
+                switch (c) {
+                    case " ":
+                        continue;
+                    case "{":
+                        if (!table) {
+                            return false; // missing table name
+                        } else if (inBrackets) {
+                            return false; // no double open brackets
+                        }
+
+                        tables[table] = [];
+
+                        inBrackets = true;
+
+                        continue;
+                    case "}":
+                        if (!table) {
+                            return false; // missing table name
+                        } else if (!inBrackets) {
+                            return false; // missing open brackets
+                        }
+
+                        inBrackets = false;
+
+                        continue;
+                    case ",":
+                        if (!table) {
+                            return false; // missing table name
+                        }
+
+                        if (inBrackets) {
+                            if (!tables[table]) {
+                                return false; // missing table definition
+                            }
+
+                            tables[table].push(field);
+
+                            field = "";
+                        } else {
+                            table = "";
+                        }
+
+                        continue;
+                }
+
+                if (inBrackets) {
+                    field += c;
+                } else {
+                    table += c;
+                }
+            }
+
+            if (inBrackets) {
+                permission.path += "}"; // missing closing bracket
+            }
+
+            return true;
+        }
+    },
     methods: {
         async deleteToken(id) {
             if (this.isLoading) return;
