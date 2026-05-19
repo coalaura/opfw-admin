@@ -48,7 +48,8 @@
                 <p v-if="isLoading" class="py-2 text-center">{{ t("global.loading") }}</p>
 
                 <template v-else>
-                    <div class="mb-3" v-for="station in craftingRecipes" :key="station.id">
+                    <div class="mb-3" v-for="(station, index) in craftingRecipes" :key="station.id">
+                        <div class="mb-3 border-b-2 border-dashed border-gray-500 w-full" v-if="index > 0 && craftingRecipes[index - 1].type !== station.type"></div>
                         <p class="font-semibold mb-1">{{ station.type }} {{ station.id }}</p>
                         <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm">{{ station.data }}</pre>
                     </div>
