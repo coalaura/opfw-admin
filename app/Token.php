@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use App\Helpers\ServerAPI;
@@ -12,6 +11,7 @@ class Token extends Model
     use HasFactory;
 
     const ValidMethods = ['*', 'REST', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
+    const RestTables   = ['*', 'characters', 'character_vehicles', 'users', 'stocks_company_properties', 'stocks_companies'];
 
     /**
      * The table associated with the model.
@@ -59,7 +59,7 @@ class Token extends Model
 
     public function getPermissions(): array
     {
-        if (!$this->permissions) {
+        if (! $this->permissions) {
             return [];
         }
 
@@ -92,7 +92,7 @@ class Token extends Model
 
         return [
             'count' => $count,
-            'rps' => round($count / $interval, 2)
+            'rps'   => round($count / $interval, 2),
         ];
     }
 
@@ -116,7 +116,7 @@ class Token extends Model
 
             $allowed = $available[$method] ?? [];
 
-            if (!in_array($path, $allowed) && $path !== '*') {
+            if (! in_array($path, $allowed) && $path !== '*') {
                 continue;
             }
 
@@ -134,14 +134,14 @@ class Token extends Model
         $result = [];
 
         foreach ($permissions as $permission) {
-            if (!isset($permission['method']) || !isset($permission['path'])) {
+            if (! isset($permission['method']) || ! isset($permission['path'])) {
                 continue;
             }
 
             $method = strtoupper($permission['method']);
             $path   = trim($permission['path']);
 
-            if (!in_array($method, self::ValidMethods) || empty($path)) {
+            if (! in_array($method, self::ValidMethods) || empty($path)) {
                 continue;
             }
 
@@ -153,7 +153,7 @@ class Token extends Model
 
     public static function permissionsValid(?string $permissions): bool
     {
-        if (!$permissions) {
+        if (! $permissions) {
             return true;
         }
 
@@ -167,7 +167,7 @@ class Token extends Model
         // Token is a 20 character alphanumeric string
         $token = false;
 
-        while (!$token || Token::where('token', $token)->exists()) {
+        while (! $token || Token::where('token', $token)->exists()) {
             $token = bin2hex(random_bytes(10));
         }
 
@@ -179,7 +179,7 @@ class Token extends Model
         $available = [];
 
         foreach (self::ValidMethods as $method) {
-            $available[$method] = [];
+            $available[$method] = $method === "REST" ? self::RestTables : [];
         }
 
         $routes = ServerAPI::getRoutes();
