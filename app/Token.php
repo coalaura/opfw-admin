@@ -11,7 +11,13 @@ class Token extends Model
     use HasFactory;
 
     const ValidMethods = ['*', 'REST', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
-    const RestTables   = ['*', 'characters', 'character_vehicles', 'users', 'stocks_company_properties', 'stocks_companies'];
+    const RestTables   = [
+        'characters'                => ["character_id", "license_identifier", "first_name", "last_name", "date_of_birth", "gender", "backstory", "blood_type", "phone_number", "mugshot_url", "playtime", "jail", "cash", "bank", "stocks_balance", "job_name", "department_name", "position_name", "licenses", "on_duty_time"],
+        'character_vehicles'        => ["vehicle_id", "owner_cid", "plate", "model_name", "mileage", "emergency_type", "police_impound_expire", "police_impound_unit_id", "was_boosted", "image_url"],
+        'users'                     => ["license_identifier", "player_name", "playtime", "player_aliases", "is_trusted", "is_staff", "is_super_admin", "is_debugger"],
+        'stocks_company_properties' => ["company_id", "block_id", "property_id", "property_name", "property_type", "property_address", "property_cost", "property_income", "property_renter", "property_renter_cid", "property_last_pay"],
+        'stocks_companies'          => ["company_id", "owner_cid", "owner_name", "company_name", "company_description", "company_logo", "company_balance", "total_shares", "total_shares_purchased", "max_shares", "share_price"],
+    ];
 
     /**
      * The table associated with the model.
@@ -200,5 +206,10 @@ class Token extends Model
         }
 
         return $available;
+    }
+
+    public static function validRestCfg(string $data)
+    {
+
     }
 }
