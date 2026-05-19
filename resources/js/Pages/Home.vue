@@ -254,15 +254,17 @@ export default {
 
                 const text = await _get('/api/crafting', null, true);
 
-                const rgx = /- - - Station (\d+) - - -\s+(.+?)(?=\s+- - -|$)/gs;
+               const rgx = /- - - (Station|Recipe) (\d+) - - -\s+(.+?)(?=\s+- - -|$)/gs;
 
                 for (const match of text.matchAll(rgx)) {
-                    const station = match[1];
-                    const recipes = match[2];
+                    const type = match[1];
+                    const id = match[2];
+                    const content = match[3];
 
                     this.craftingRecipes.push({
-                        id: station,
-                        data: recipes
+                        type: type,
+                        id: id,
+                        data: content
                     });
                 }
             }
