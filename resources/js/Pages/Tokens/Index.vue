@@ -208,7 +208,7 @@ export default {
 
                 switch (c) {
                     case " ":
-                        continue;
+                        return false; // no spaces
                     case "{":
                         if (!table) {
                             return false; // missing table name
@@ -270,6 +270,14 @@ export default {
                 } else {
                     table += c;
                 }
+            }
+
+            if (table) {
+                if (this.rest && !this.rest[table]) {
+                    return false; // invalid table
+                }
+
+                tables[table] = [];
             }
 
             if (inBrackets) {

@@ -114,7 +114,7 @@ class Token extends Model
             $parts = explode(' ', $route);
 
             if (sizeof($parts) !== 2) {
-                continue;
+                return null;
             }
 
             $method = strtoupper($parts[0]);
@@ -128,7 +128,7 @@ class Token extends Model
                 $allowed = $available[$method] ?? [];
 
                 if (! in_array($path, $allowed) && $path !== '*') {
-                    continue;
+                    return null;
                 }
             }
 
@@ -239,7 +239,7 @@ class Token extends Model
 
             switch ($c) {
                 case " ":
-                    continue 2;
+                    return false; // no spaces
                 case "{":
                     if ($table === "") {
                         return false; // missing table name
@@ -300,6 +300,14 @@ class Token extends Model
             } else {
                 $table .= $c;
             }
+        }
+
+        if ($table) {
+            if (! isset(self::RestTables[$table])) {
+                return false; // invalid table
+            }
+
+            $tables[$table] = [];
         }
 
         if ($inBrackets) {
