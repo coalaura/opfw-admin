@@ -449,6 +449,12 @@ export default {
         destroyStream(full) {
             clearInterval(this.interval);
 
+            const video = this.$refs.video;
+
+            if (video) {
+                video.pause();
+            }
+
             if (full) {
                 this.source = false;
                 this.error = false;
@@ -457,11 +463,15 @@ export default {
                 this.updateChatRoom();
             }
 
-            if (!this.hls) return;
+            if (this.hls) {
+                this.hls.destroy();
 
-            this.hls.destroy();
+                this.hls = false;
+            }
 
-            this.hls = false;
+            if (video) {
+                video.remove();
+            }
         },
         updateChatRoom() {
             if (this.source) {
@@ -712,7 +722,7 @@ export default {
         }, 10000);
     },
     beforeUnmount() {
-        this.destroyStream();
+        this.destroyStream(true);
 
         clearInterval(this.timestampLoop);
     }
