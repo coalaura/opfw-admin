@@ -49,7 +49,7 @@
 
                 <template v-else>
                     <div class="mb-3" v-for="station in craftingRecipes" :key="station.id">
-                        <p class="font-semibold mb-1">Station {{ station.id }}</p>
+                        <p class="font-semibold mb-1">{{ station.type }} {{ station.id }}</p>
                         <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm">{{ station.data }}</pre>
                     </div>
                 </template>
