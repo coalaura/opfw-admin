@@ -310,10 +310,6 @@ class Token extends Model
             $tables[$table] = [];
         }
 
-        if ($inBrackets) {
-            $path .= "}"; // missing final closing bracket (safe)
-        }
-
         return true;
     }
 }

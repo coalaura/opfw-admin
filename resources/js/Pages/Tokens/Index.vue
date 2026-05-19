@@ -280,10 +280,6 @@ export default {
                 tables[table] = [];
             }
 
-            if (inBrackets) {
-                permission.path += "}"; // missing closing bracket
-            }
-
             return true;
         },
         async deleteToken(id) {
