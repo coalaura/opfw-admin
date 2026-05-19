@@ -63,6 +63,15 @@ class Token extends Model
         'last_request_timestamp' => 'integer',
     ];
 
+    public function getPermissions(): array
+    {
+        if (! $this->permissions) {
+            return [];
+        }
+
+        return self::stringToPermissions($this->permissions);
+    }
+
     public static function getRecentLogs(int $tokenId, ?int $beforeId = null, int $limit = 50): array
     {
         $query = DB::table('api_logs')
@@ -112,7 +121,7 @@ class Token extends Model
             $path   = trim($parts[1]);
 
             if ($method === "REST") {
-                if (!self::validRestCfg($path)) {
+                if (! self::validRestCfg($path)) {
                     return null;
                 }
             } else {
@@ -162,7 +171,7 @@ class Token extends Model
 
         $data = self::stringToPermissions($permissions);
 
-        if (!$data) {
+        if (! $data) {
             return false;
         }
 
@@ -241,7 +250,8 @@ class Token extends Model
                     }
 
                     $tables[$table] = [];
-                    $inBrackets     = true;
+
+                    $inBrackets = true;
 
                     continue 2;
                 case "}":
@@ -256,8 +266,9 @@ class Token extends Model
                     }
 
                     $tables[$table][] = $field;
-                    $field            = "";
-                    $inBrackets       = false;
+
+                    $field      = "";
+                    $inBrackets = false;
 
                     continue 2;
                 case ";":
@@ -275,7 +286,8 @@ class Token extends Model
                         }
 
                         $tables[$table][] = $field;
-                        $field            = "";
+
+                        $field = "";
                     } else {
                         $table = "";
                     }
