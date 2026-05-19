@@ -449,12 +449,6 @@ export default {
         destroyStream(full) {
             clearInterval(this.interval);
 
-            const video = this.$refs.video;
-
-            if (video) {
-                video.pause();
-            }
-
             if (full) {
                 this.source = false;
                 this.error = false;
@@ -469,8 +463,10 @@ export default {
                 this.hls = false;
             }
 
-            if (full && video) {
-                video.remove();
+            const video = this.$refs.video;
+
+            if (video) {
+                video.pause();
             }
         },
         updateChatRoom() {
