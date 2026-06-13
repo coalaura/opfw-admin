@@ -751,6 +751,15 @@
 
             <template #default>
                 <MultiSelector :items="enablableKeys" :labels="enablable" prefix="/" v-model="enabledPermissions" />
+                <div class="mt-3 pt-3 border-t-2 border-dashed border-gray-500" v-if="enabledPermissions.includes('freecam') && !player.isStaff">
+                    <div class="flex gap-3 items-center">
+                        <label class="block whitespace-nowrap" for="freecamRange">
+                            {{ t('players.show.freecam_range') }}
+                        </label>
+
+                        <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="freecamRange" placeholder="30" type="number" step="1" min="5" max="100" v-model="freecamRange" />
+                    </div>
+                </div>
             </template>
 
             <template #actions>
@@ -1804,6 +1813,7 @@ export default {
 
             isEnablingPermissions: false,
             enabledPermissions: [],
+            freecamRange: this.player.userSettings.freecamRange ?? 30,
 
             isShowingDiscord: false,
             isShowingDiscordLoading: false,
@@ -2206,6 +2216,7 @@ export default {
             // Send request.
             await this.$inertia.post(`/players/${this.player.licenseIdentifier}/update_permissions`, {
                 enabledPermissions: this.enabledPermissions,
+                freecamRange: this.freecamRange,
             });
 
             this.isLoading = false;

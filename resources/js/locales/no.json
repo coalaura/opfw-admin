@@ -1129,6 +1129,7 @@
             "expiry_date": "Utløpsdato",
             "failed_create_notification": "Kunne ikke opprette varsel.",
             "failed_delete_notification": "Kunne ikke slette varsel.",
+            "freecam_range": "Freecam rekkevidde (m)",
             "global_info": "Andre forbud",
             "global_opfw_ban": "Global OP-FW-ban",
             "global_title": "Spilleren er bannet på {0} OP-FW-servere.",

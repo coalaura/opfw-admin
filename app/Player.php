@@ -457,6 +457,13 @@ class Player extends Model
         return isset($settings['idleCamDisabled']) && $settings['idleCamDisabled'];
     }
 
+    public function getFreecamRange(): bool
+    {
+        $settings = $this->user_settings ?? [];
+
+        return isset($settings['freecamRange']) ? $settings['freecamRange'] : false;
+    }
+
     public function isAdvancedMetagameEnabled(): bool
     {
         $features = $this->admin_features ?? [];
@@ -558,7 +565,7 @@ class Player extends Model
         ];
     }
 
-    public function setUserData(string $key, $value)
+    public function setUserData(string $key, mixed $value)
     {
         $data = $this->user_data ?? [];
 
@@ -570,6 +577,21 @@ class Player extends Model
 
         $this->update([
             'user_data' => $data,
+        ]);
+    }
+
+    public function setUserSetting(string $key, mixed $value)
+    {
+        $settings = $this->user_settings ?? [];
+
+        if ($value && ! empty($value)) {
+            $settings[$key] = $value;
+        } else {
+            unset($settings[$key]);
+        }
+
+        $this->update([
+            'user_settings' => $settings,
         ]);
     }
 

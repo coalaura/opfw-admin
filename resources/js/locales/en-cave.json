@@ -1129,6 +1129,7 @@
             "expiry_date": "End date",
             "failed_create_notification": "Failed to make alert.",
             "failed_delete_notification": "Failed to delete alert.",
+            "freecam_range": "Freecam range (m)",
             "global_info": "Other bans",
             "global_opfw_ban": "Global OP-FW ban",
             "global_title": "Player banned on {0} OP-FW servers.",

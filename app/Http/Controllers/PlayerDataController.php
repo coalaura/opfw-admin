@@ -222,6 +222,18 @@ class PlayerDataController extends Controller
             return backWith('success', 'No permissions changed.');
         }
 
+        if (in_array("freecam", $enabledPermissions)) {
+            $range = intval($request->input('freecamRange'));
+
+            if ($range && $range >= 5 && $range <= 100) {
+                if ($range === 30) {
+                    $range = false;
+                }
+
+                $user->setUserSetting("freecamRange", $range);
+            }
+        }
+
         $player->update([
             "enabled_commands" => $enabledPermissions,
         ]);
