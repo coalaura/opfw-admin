@@ -76,6 +76,7 @@ class Player extends Model
         'panel_tag',
         'average_ping',
         'average_fps',
+        'user_settings',
         'panel_settings',
         'staff_points',
         'admin_features',
