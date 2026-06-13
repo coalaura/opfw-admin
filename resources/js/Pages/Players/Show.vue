@@ -757,7 +757,7 @@
                             {{ t('players.show.freecam_range') }}
                         </label>
 
-                        <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="freecamRange" placeholder="30" type="number" step="1" min="5" max="100" v-model="freecamRange" />
+                        <input class="w-full px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="freecamRange" placeholder="30" type="number" step="1" min="5" max="10000" v-model="freecamRange" />
                     </div>
                 </div>
             </template>

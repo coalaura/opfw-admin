@@ -233,7 +233,7 @@ class PlayerDataController extends Controller
         if (in_array("freecam", $enabledPermissions)) {
             $range = intval($request->input('freecamRange'));
 
-            if ($range && $range >= 5 && $range <= 100) {
+            if ($range && $range >= 5 && $range <= 10000) {
                 if ($range === 30) {
                     $range = false;
                 }
