@@ -220,7 +220,7 @@ class PlayerDataController extends Controller
 
         $currentEnabled = $player->enabled_commands ?? [];
 
-        if (! empty(array_diff($enabledPermissions, $currentEnabled))) {
+        if (sizeof($enabledPermissions) !== sizeof($currentEnabled) || ! empty(array_diff($enabledPermissions, $currentEnabled))) {
             $changed = true;
 
             $player->update([
