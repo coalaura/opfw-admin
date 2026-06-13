@@ -76,7 +76,6 @@ class Player extends Model
         'panel_tag',
         'average_ping',
         'average_fps',
-        'user_settings',
         'panel_settings',
         'staff_points',
         'admin_features',
@@ -458,7 +457,7 @@ class Player extends Model
         return isset($settings['idleCamDisabled']) && $settings['idleCamDisabled'];
     }
 
-    public function getFreecamRange(): bool
+    public function getFreecamRange()
     {
         $settings = $this->user_settings ?? [];
 

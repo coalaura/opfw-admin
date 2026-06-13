@@ -210,17 +210,25 @@ class PlayerDataController extends Controller
             return backWith('error', 'No enablable permissions available.');
         }
 
+        $changed = false;
+
         $enabledPermissions = $request->input('enabledPermissions');
 
-        $enabledPermissions = array_values(array_unique(array_filter($enabledPermissions, function($command) use ($available) {
+        $enabledPermissions = array_values(array_unique(array_filter($enabledPermissions, function ($command) use ($available) {
             return isset($available[$command]);
         })));
 
         $currentEnabled = $player->enabled_commands ?? [];
 
-        if (! empty($enabledPermissions) && empty(array_diff($enabledPermissions, $currentEnabled))) {
-            return backWith('success', 'No permissions changed.');
+        if (! empty(array_diff($enabledPermissions, $currentEnabled))) {
+            $changed = true;
+
+            $player->update([
+                "enabled_commands" => $enabledPermissions,
+            ]);
         }
+
+        $freecamRange = false;
 
         if (in_array("freecam", $enabledPermissions)) {
             $range = intval($request->input('freecamRange'));
@@ -230,13 +238,19 @@ class PlayerDataController extends Controller
                     $range = false;
                 }
 
-                $user->setUserSetting("freecamRange", $range);
+                if ($player->getFreecamRange() != $range) {
+                    $changed = true;
+
+                    $player->setUserSetting("freecamRange", $range);
+
+                    $freecamRange = $range ?: 30;
+                }
             }
         }
 
-        $player->update([
-            "enabled_commands" => $enabledPermissions,
-        ]);
+        if (!$changed) {
+            return backWith('success', 'No permissions changed.');
+        }
 
         $license = $player->license_identifier;
         $status  = StatusHelper::get($license);
@@ -257,7 +271,10 @@ class PlayerDataController extends Controller
             $user->license_identifier,
             "Edited Permissions",
             sprintf("%s edited the enabled permissions of %s.", $user->consoleName(), $player->consoleName()),
-            ['permissions' => $enabledPermissions]
+            [
+                'permissions'  => $enabledPermissions,
+                'freecamRange' => $freecamRange,
+            ]
         );
 
         return backWith('success', 'Permissions have been updated successfully.' . $refreshed);
