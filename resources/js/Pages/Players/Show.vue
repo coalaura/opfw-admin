@@ -751,7 +751,7 @@
 
             <template #default>
                 <MultiSelector :items="enablableKeys" :labels="enablable" prefix="/" v-model="enabledPermissions" />
-                <div class="mt-3 pt-3 border-t-2 border-dashed border-gray-500" v-if="enabledPermissions.includes('freecam')">
+                <div class="mt-3 pt-3 border-t-2 border-dashed border-gray-500" v-if="enabledPermissions.includes('freecam') && !player.isStaff">
                     <div class="flex gap-3 items-center">
                         <label class="block whitespace-nowrap" for="freecamRange">
                             {{ t('players.show.freecam_range') }}
