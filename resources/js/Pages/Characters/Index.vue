@@ -141,9 +141,14 @@
                     </tr>
                     <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="character in characters" :key="character.id">
                         <td class="p-3 pl-8 mobile:block">
-                            <inertia-link class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + character.licenseIdentifier">
-                                {{ playerName(character.licenseIdentifier) }}
-                            </inertia-link>
+                            <div class="flex items-center gap-2">
+                                <span class="inline-flex items-center justify-center w-14 px-2 py-1 text-xs font-semibold text-white rounded" :class="statusClass(character.licenseIdentifier)">
+                                    {{ statusLabel(character.licenseIdentifier) }}
+                                </span>
+                                <inertia-link class="font-semibold text-indigo-700 dark:text-indigo-300 hover:underline" :href="'/players/' + character.licenseIdentifier">
+                                    {{ playerName(character.licenseIdentifier) }}
+                                </inertia-link>
+                            </div>
                         </td>
                         <td class="p-3 mobile:block">{{ character.id }}</td>
                         <td class="p-3 mobile:block">{{ character.phoneNumber }}</td>
@@ -249,8 +254,18 @@ export default {
     },
     data() {
         return {
-            isLoading: false
+            isLoading: false,
+            statusLoading: false,
+            status: {},
         };
+    },
+    mounted() {
+        this.updateStatus();
+    },
+    watch: {
+        characters() {
+            this.updateStatus();
+        },
     },
     methods: {
         refresh: async function () {
@@ -272,7 +287,42 @@ export default {
         },
         playerName(licenseIdentifier) {
             return licenseIdentifier in this.playerMap ? this.playerMap[licenseIdentifier] : licenseIdentifier;
-        }
+        },
+        statusLabel(license) {
+            if (this.statusLoading) {
+                return '...';
+            }
+
+            if (this.status[license]) {
+                return this.status[license].source;
+            }
+
+            return this.t('global.status.offline');
+        },
+        statusClass(license) {
+            if (this.statusLoading) {
+                return 'bg-gray-500';
+            }
+
+            return this.status[license] ? 'bg-green-600 dark:bg-green-500' : 'bg-gray-600 dark:bg-gray-500';
+        },
+        async updateStatus() {
+            if (this.statusLoading) {
+                return;
+            }
+
+            this.statusLoading = true;
+
+            const identifiers = this.characters.map(character => character.licenseIdentifier).join(',');
+
+            if (identifiers) {
+                this.status = await this.requestData(`/online/${identifiers}`) || {};
+            } else {
+                this.status = {};
+            }
+
+            this.statusLoading = false;
+        },
     }
 };
 </script>
