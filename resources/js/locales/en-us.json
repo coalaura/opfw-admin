@@ -951,7 +951,7 @@
         "date_to_time": "To Time"
     },
     "ban_exceptions": {
-        "title": "Streamer Ban Exceptions",
+        "title": "Ban Exceptions",
         "description": "Players allowed to play while actively streaming on Twitch.",
         "search": "Filter",
         "license_filter": "License",

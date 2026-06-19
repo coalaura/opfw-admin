@@ -64,7 +64,7 @@
         "results": "{0} total exception(s)",
         "search": "Filter",
         "search_btn": "Search Exceptions",
-        "title": "Streamer Ban Exceptions",
+        "title": "Ban Exceptions",
         "twitch": "Twitch",
         "twitch_filter": "Twitch",
         "twitch_placeholder": "Twitch user name"
