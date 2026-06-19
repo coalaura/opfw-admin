@@ -1787,6 +1787,7 @@
         "time": "Time",
         "title": "Y Feed",
         "top": "Top Yells",
+        "top_description": "Me like best yells from last 15 suns",
         "un_verify": "Drop verif badge",
         "unknown_character": "Unknown character",
         "verify": "Set user as verified",

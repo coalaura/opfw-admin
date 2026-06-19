@@ -11,6 +11,10 @@
         </portal>
 
         <portal to="actions">
+            <inertia-link class="px-4 py-2 mr-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400 hover:bg-indigo-500" href="/y/top">
+                <i class="fas fa-fire mr-1"></i>
+                {{ t('y.top') }}
+            </inertia-link>
             <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
                 <span v-if="!isLoading">
                     <i class="fa fa-redo-alt mr-1"></i>
@@ -35,28 +39,18 @@
                 <form @submit.prevent>
                     <div class="flex flex-wrap mb-4">
                         <!-- Details -->
-                        <div class="w-3/12 px-3 mobile:w-full mobile:mb-3">
+                        <div class="w-4/12 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-3" for="username">
                                 {{ t('y.account') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
                             <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="username" :placeholder="t('y.placeholder_username')" v-model="filters.username" :title="previewQuery(filters.username)">
                         </div>
                         <!-- Details -->
-                        <div class="w-7/12 px-3 mobile:w-full mobile:mb-3">
+                        <div class="w-8/12 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-3" for="message">
                                 {{ t('y.message') }} <sup class="text-muted dark:text-dark-muted">*</sup>
                             </label>
                             <input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="message" :placeholder="t('y.placeholder_message')" v-model="filters.message" :title="previewQuery(filters.message)">
-                        </div>
-                        <!-- Top Yells -->
-                        <div class="w-2/12 px-3 mobile:w-full mobile:mb-3">
-                            <label class="block mb-3" for="top">
-                                {{ t('y.top') }}
-                            </label>
-                            <select class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="top" v-model="filters.top">
-                                <option :value="null">{{ t('global.no') }}</option>
-                                <option :value="1">{{ t('global.yes') }}</option>
-                            </select>
                         </div>
                         <!-- Date From -->
                         <div class="w-3/12 px-3 pr-1 mobile:w-full mobile:mb-3 mt-3">
@@ -181,7 +175,6 @@ export default {
         filters: {
             username: String,
             message: String,
-            top: Number,
             date_from: String,
             date_to: String,
         },

@@ -924,6 +924,7 @@
         "account": "Account",
         "message": "Message",
         "top": "Top Yells",
+        "top_description": "Most liked yells from the last 15 days",
         "likes": "Likes",
         "time": "Time",
         "yells": "Yells",

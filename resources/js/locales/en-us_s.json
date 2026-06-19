@@ -1787,6 +1787,7 @@
         "time": "Time",
         "title": "Y Feed",
         "top": "Top Yells",
+        "top_description": "The most liked yells from the past 15 days",
         "un_verify": "Remove users' verified status",
         "unknown_character": "Unknown Character",
         "verify": "Set user as verified",

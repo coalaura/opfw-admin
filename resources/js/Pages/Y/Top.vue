@@ -6,11 +6,15 @@
                 {{ t('y.top') }}
             </h1>
             <p>
-                Most liked yells from the last 15 days.
+                {{ t('y.top_description') }}
             </p>
         </portal>
 
         <portal to="actions">
+            <inertia-link class="px-4 py-2 mr-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400 hover:bg-indigo-500" href="/y">
+                <i class="fab fa-twitter mr-1"></i>
+                {{ t('y.title') }}
+            </inertia-link>
             <button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
                 <span v-if="!isLoading">
                     <i class="fa fa-redo-alt mr-1"></i>

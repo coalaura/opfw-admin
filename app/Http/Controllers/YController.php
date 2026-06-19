@@ -46,14 +46,7 @@ class YController extends Controller
 
         $query->leftJoin('y_accounts', 'y_accounts.id', '=', 'authorId');
 
-        if (intval($request->input('top', '0')) === 1) {
-            // y_tweets.TIME > CURRENT_TIMESTAMP() - INTERVAL '15' DAY
-            $query->where('time', '>', date('Y-m-d H:i:s', strtotime('-15 days')));
-
-            $query->orderByDesc('likes');
-        } else {
-            $query->orderByDesc('time');
-        }
+        $query->orderByDesc('time');
 
         $page = Paginator::resolveCurrentPage('page');
 
@@ -69,7 +62,6 @@ class YController extends Controller
             'filters' => $request->all(
                 'message',
                 'username',
-                'top',
                 'date_from',
                 'date_to'
             ),

@@ -1787,6 +1787,7 @@
         "time": "Tid",
         "title": "Y-feed",
         "top": "Topp yeller",
+        "top_description": "Mest likte rop fra de siste 15 dagene",
         "un_verify": "Fjern verifisering av brukere",
         "unknown_character": "Ukjent tegn",
         "verify": "Sett bruker som verifisert",
