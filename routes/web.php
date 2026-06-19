@@ -41,7 +41,6 @@ use App\Http\Controllers\StocksController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StaffChatController;
 use App\Http\Controllers\StatisticsController;
-use App\Http\Controllers\DataController;
 use App\Http\Controllers\FindController;
 use App\Http\Controllers\LookupController;
 use App\Http\Controllers\RoleController;
@@ -161,6 +160,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/bans', [PlayerBanController::class, 'index']);
     Route::get('/my_bans', [PlayerBanController::class, 'indexMine']);
     Route::get('/system_bans', [PlayerBanController::class, 'indexSystem']);
+    Route::get('/ban_exceptions', [PlayerBanController::class, 'indexExceptions']);
 
     // Ban API.
     Route::get('/findUserBanHash/{hash}', [PlayerBanController::class, 'findUserBanHash']);
@@ -357,8 +357,12 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/api/config/{key}', [ApiController::class, 'config']);
     Route::get('/api/token', [ApiController::class, 'token']);
 
-    // Data routes.
-    Route::get('/__data/ban_exceptions', [DataController::class, 'banExceptions']);
+    // Legacy routes.
+    Route::get('/__data/ban_exceptions', function (Request $request) {
+        $query = $request->getQueryString();
+
+        return redirect('/ban_exceptions' . ($query ? '?' . $query : ''));
+    });
 
     // Generic playground route.
     Route::get('/test/test', [TestController::class, 'test']);

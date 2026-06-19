@@ -200,6 +200,12 @@ export default {
                 url: "/system_bans",
             },
             {
+                label: "ban_exceptions.title",
+                icon: "fab fa-twitch",
+                url: "/ban_exceptions",
+                hidden: !this.perm.check(this.perm.PERM_BAN_EXCEPTION),
+            },
+            {
                 label: "tokens.title",
                 icon: "fas fa-key",
                 hidden: !this.perm.check(this.perm.PERM_API_TOKENS),
@@ -382,6 +388,7 @@ export default {
                     "/bans",
                     "/my_bans",
                     "/system_bans",
+                    "/ban_exceptions",
                 ],
             },
             {

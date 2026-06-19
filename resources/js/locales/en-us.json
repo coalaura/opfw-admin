@@ -948,6 +948,23 @@
         "date_from_time": "From Time",
         "date_to_time": "To Time"
     },
+    "ban_exceptions": {
+        "title": "Streamer Ban Exceptions",
+        "description": "Players allowed to play while actively streaming on Twitch.",
+        "search": "Filter",
+        "license_filter": "License",
+        "name_filter": "Name",
+        "twitch_filter": "Twitch",
+        "license_placeholder": "license:2ced2cabd90f1208e7e056485d4704c7e1284196",
+        "name_placeholder": "Player name",
+        "twitch_placeholder": "Twitch username",
+        "search_btn": "Search Exceptions",
+        "results": "{0} total exception(s)",
+        "player": "Player",
+        "license": "License Identifier",
+        "twitch": "Twitch",
+        "none": "No streamer ban exceptions were found."
+    },
     "players": {
         "title": "Players",
         "description": "Search for players.",

@@ -2,9 +2,11 @@
 namespace App\Http\Controllers;
 
 use App\Ban;
+use App\Helpers\CacheHelper;
 use App\Helpers\DeviceHelper;
 use App\Helpers\DiscordAttachmentHelper;
 use App\Helpers\GeneralHelper;
+use App\Helpers\HttpHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
 use App\Http\Requests\BanStoreRequest;
@@ -49,6 +51,132 @@ class PlayerBanController extends Controller
     public function indexSystem(Request $request): Response
     {
         return $this->bans($request, false, true);
+    }
+
+    public function indexExceptions(Request $request): Response
+    {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_BAN_EXCEPTION)) {
+            abort(401);
+        }
+
+        $license = trim((string) $request->input('license', ''));
+        $name = trim((string) $request->input('name', ''));
+        $twitch = trim((string) $request->input('twitch', ''));
+
+        $twitch = preg_replace('/^https?:\/\/(?:www\.)?twitch\.tv\//i', '', $twitch);
+        $twitch = preg_replace('/[^a-zA-Z0-9_]/', '', $twitch);
+
+        $licenseFilter = strtolower($license);
+        $nameFilter = strtolower($name);
+        $twitchFilter = strtolower($twitch);
+
+        $exceptions = [];
+
+        $players = Player::query()
+            ->select([
+                'license_identifier',
+                'player_name',
+                'player_aliases',
+                DB::raw("JSON_UNQUOTE(JSON_EXTRACT(user_data, '$.twitchBanException')) as twitch_ban_exception"),
+            ])
+            ->whereNotNull(DB::raw("JSON_EXTRACT(user_data, '$.twitchBanException')"))
+            ->get();
+
+        foreach ($players as $player) {
+            $twitch = strtolower(trim((string) ($player->twitch_ban_exception ?? '')));
+            $twitch = preg_replace('/[^a-z0-9_]/', '', $twitch);
+
+            if (empty($twitch)) {
+                continue;
+            }
+
+            $entry = [
+                'licenseIdentifier' => $player->license_identifier,
+                'playerName'        => $player->getSafePlayerName(),
+                'twitch'            => $twitch,
+            ];
+
+            if ($licenseFilter && ! Str::contains(strtolower($entry['licenseIdentifier']), $licenseFilter)) {
+                continue;
+            }
+
+            if ($nameFilter && ! Str::contains(strtolower($entry['playerName']), $nameFilter)) {
+                continue;
+            }
+
+            if ($twitchFilter && ! Str::contains($entry['twitch'], $twitchFilter)) {
+                continue;
+            }
+
+            $exceptions[] = $entry;
+        }
+
+        usort($exceptions, function (array $left, array $right) {
+            $name = strcasecmp($left['playerName'], $right['playerName']);
+
+            if ($name !== 0) {
+                return $name;
+            }
+
+            return strcmp($left['licenseIdentifier'], $right['licenseIdentifier']);
+        });
+
+        $page = Paginator::resolveCurrentPage('page');
+
+        $perPage = 15;
+        $offset = ($page - 1) * $perPage;
+        $total = sizeof($exceptions);
+
+        $exceptions = array_slice($exceptions, $offset, $perPage);
+
+        foreach ($exceptions as &$exception) {
+            $exception['avatarUrl'] = $this->fetchTwitchAvatar($exception['twitch']);
+        }
+
+        unset($exception);
+
+        return Inertia::render('Players/BanExceptions', [
+            'exceptions' => $exceptions,
+            'links'      => $this->getPageUrls($page),
+            'page'       => $page,
+            'hasMore'    => $total > ($offset + $perPage),
+            'total'      => $total,
+            'filters'    => [
+                'license' => $license ?: null,
+                'name'    => $name ?: null,
+                'twitch'  => $twitch ?: null,
+            ],
+        ]);
+    }
+
+    private function fetchTwitchAvatar(string $username): ?string
+    {
+        $username = preg_replace('/[^a-z0-9_]/', '', strtolower(trim($username)));
+
+        if (empty($username)) {
+            return null;
+        }
+
+        $key = sprintf('twitch_avatar_url_%s', $username);
+
+        if (CacheHelper::exists($key)) {
+            $url = CacheHelper::read($key, '');
+
+            return is_string($url) && filter_var($url, FILTER_VALIDATE_URL) ? $url : null;
+        }
+
+        $url = sprintf('https://decapi.me/twitch/avatar/%s', rawurlencode($username));
+        $url = trim(HttpHelper::get($url, 'text/plain') ?: '');
+
+        if (! filter_var($url, FILTER_VALIDATE_URL)) {
+            CacheHelper::write($key, '', CacheHelper::HOUR);
+
+            return null;
+        }
+
+        CacheHelper::write($key, $url, CacheHelper::DAY);
+
+        return $url;
     }
 
     public function findUserBanHash(string $hash)
