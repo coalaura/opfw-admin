@@ -61,104 +61,76 @@ class PlayerBanController extends Controller
 
         $license = trim((string) $request->input('license', ''));
         $name = trim((string) $request->input('name', ''));
-        $twitch = trim((string) $request->input('twitch', ''));
+        $twitchInput = trim((string) $request->input('twitch', ''));
 
-        $twitch = preg_replace('/^https?:\/\/(?:www\.)?twitch\.tv\//i', '', $twitch);
-        $twitch = preg_replace('/[^a-zA-Z0-9_]/', '', $twitch);
+        $twitchInput = preg_replace('/^https?:\/\/(?:www\.)?twitch\.tv\//i', '', $twitchInput);
+        $twitchInput = preg_replace('/[^a-zA-Z0-9_]/', '', $twitchInput);
 
-        $licenseFilter = strtolower($license);
-        $nameFilter = strtolower($name);
-        $twitchFilter = strtolower($twitch);
         $now = time();
 
-        $latestBanIds = DB::table('user_bans')
-            ->select([
-                'identifier',
-                DB::raw('MAX(id) as latest_id'),
-            ])
-            ->whereNotNull('reason')
-            ->where(function ($query) use ($now) {
-                $query->whereNull('expire')
-                    ->orWhereRaw('(timestamp + expire) > ?', [$now]);
-            })
-            ->groupBy('identifier');
+        $page = Paginator::resolveCurrentPage('page');
+        $perPage = 15;
+        $offset = ($page - 1) * $perPage;
 
-        $latestBans = DB::table('user_bans as latest_bans')
-            ->select([
-                'latest_bans.identifier',
-                'latest_bans.reason',
-                'latest_bans.creator_name',
-            ])
-            ->joinSub($latestBanIds, 'latest_ban_ids', function ($join) {
-                $join->on('latest_bans.identifier', '=', 'latest_ban_ids.identifier')
-                    ->on('latest_bans.id', '=', 'latest_ban_ids.latest_id');
-            });
-
-        $exceptions = [];
-
-        $players = Player::query()
+        $playersQuery = Player::query()
             ->select([
                 'users.license_identifier',
                 'users.player_name',
                 'users.player_aliases',
-                'current_ban.reason as current_ban_reason',
-                'current_ban.creator_name as current_ban_creator',
+                'user_bans.reason as current_ban_reason',
+                'user_bans.creator_name as current_ban_creator',
                 DB::raw("JSON_UNQUOTE(JSON_EXTRACT(users.user_data, '$.twitchBanException')) as twitch_ban_exception"),
             ])
-            ->leftJoinSub($latestBans, 'current_ban', function ($join) {
-                $join->on('current_ban.identifier', '=', 'users.license_identifier');
+            ->leftJoin('user_bans', function ($join) use ($now) {
+                $join->on('user_bans.identifier', '=', 'users.license_identifier')
+                    ->whereNotNull('user_bans.reason')
+                    ->where(function ($query) use ($now) {
+                        $query->whereNull('user_bans.expire')
+                            ->orWhereRaw('(user_bans.timestamp + user_bans.expire) > ?', [$now]);
+                    });
             })
             ->whereNotNull(DB::raw("JSON_EXTRACT(users.user_data, '$.twitchBanException')"))
+            ->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(users.user_data, '$.twitchBanException')) REGEXP '^[A-Za-z0-9_]+$'");
+
+        if ($license) {
+            $playersQuery->where('users.license_identifier', '=', $license);
+        }
+
+        if ($name) {
+            $playersQuery->where('users.player_name', 'LIKE', '%' . $name . '%');
+        }
+
+        if ($twitchInput) {
+            $playersQuery->where(DB::raw("JSON_UNQUOTE(JSON_EXTRACT(users.user_data, '$.twitchBanException'))"), 'LIKE', '%' . $twitchInput . '%');
+        }
+
+        $total = (clone $playersQuery)->distinct('users.license_identifier')->count('users.license_identifier');
+
+        $players = $playersQuery
+            ->groupBy('users.license_identifier')
+            ->orderBy('users.player_name')
+            ->orderBy('users.license_identifier')
+            ->offset($offset)
+            ->limit($perPage)
             ->get();
 
-        foreach ($players as $player) {
-            $twitch = strtolower(trim((string) ($player->twitch_ban_exception ?? '')));
-            $twitch = preg_replace('/[^a-z0-9_]/', '', $twitch);
+        $exceptions = [];
 
-            if (empty($twitch)) {
+        foreach ($players as $player) {
+            $playerTwitch = strtolower(trim((string) ($player->twitch_ban_exception ?? '')));
+
+            if (empty($playerTwitch)) {
                 continue;
             }
 
-            $entry = [
+            $exceptions[] = [
                 'licenseIdentifier' => $player->license_identifier,
                 'playerName'        => $player->getSafePlayerName(),
-                'twitch'            => $twitch,
+                'twitch'            => $playerTwitch,
                 'currentBanReason'  => trim((string) ($player->current_ban_reason ?? '')) ?: null,
                 'currentBanCreator' => trim((string) ($player->current_ban_creator ?? '')) ?: null,
             ];
-
-            if ($licenseFilter && ! Str::contains(strtolower($entry['licenseIdentifier']), $licenseFilter)) {
-                continue;
-            }
-
-            if ($nameFilter && ! Str::contains(strtolower($entry['playerName']), $nameFilter)) {
-                continue;
-            }
-
-            if ($twitchFilter && ! Str::contains($entry['twitch'], $twitchFilter)) {
-                continue;
-            }
-
-            $exceptions[] = $entry;
         }
-
-        usort($exceptions, function (array $left, array $right) {
-            $name = strcasecmp($left['playerName'], $right['playerName']);
-
-            if ($name !== 0) {
-                return $name;
-            }
-
-            return strcmp($left['licenseIdentifier'], $right['licenseIdentifier']);
-        });
-
-        $page = Paginator::resolveCurrentPage('page');
-
-        $perPage = 15;
-        $offset = ($page - 1) * $perPage;
-        $total = sizeof($exceptions);
-
-        $exceptions = array_slice($exceptions, $offset, $perPage);
 
         return Inertia::render('Players/BanExceptions', [
             'exceptions' => $exceptions,
@@ -169,7 +141,7 @@ class PlayerBanController extends Controller
             'filters'    => [
                 'license' => $license ?: null,
                 'name'    => $name ?: null,
-                'twitch'  => $twitch ?: null,
+                'twitch'  => $twitchInput ?: null,
             ],
         ]);
     }
