@@ -962,6 +962,9 @@
         "results": "{0} total exception(s)",
         "player": "Player",
         "license": "License Identifier",
+        "current_ban": "Current Ban",
+        "creator": "Creator",
+        "no_active_ban": "Not currently banned",
         "twitch": "Twitch",
         "none": "No streamer ban exceptions were found."
     },

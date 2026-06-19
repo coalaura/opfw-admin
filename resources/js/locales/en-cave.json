@@ -49,6 +49,26 @@
         "failed": "Backstory fail load.",
         "title": "Backstories"
     },
+    "ban_exceptions": {
+        "creator": "Maker",
+        "current_ban": "Now ban",
+        "description": "Players can play while live on Twitch.",
+        "license": "License ID",
+        "license_filter": "License",
+        "license_placeholder": "license:2ced2cabd90f1208e7e056485d4704c7e1284196",
+        "name_filter": "Name",
+        "name_placeholder": "Player name",
+        "no_active_ban": "No ban now",
+        "none": "No streamer ban exceptions found.",
+        "player": "Player",
+        "results": "{0} total exception(s)",
+        "search": "Filter",
+        "search_btn": "Find exceptions",
+        "title": "Streamer Ban Exceptions",
+        "twitch": "Twitch",
+        "twitch_filter": "Twitch",
+        "twitch_placeholder": "Twitch username"
+    },
     "blacklist": {
         "add": "Add id",
         "confirm_remove": "You sure you want to remove this id?",

@@ -77,6 +77,8 @@ Route::group(['middleware' => ['session']], function() {
 
         return (new Response("meow", $state))->header('Content-Type', 'text/plain');
     });
+
+    Route::get('/twitch/{user}', [PlayerBanController::class, 'twitchAvatar']);
 });
 
 // Routes requiring being logged in as a staff member.

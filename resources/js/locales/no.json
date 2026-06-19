@@ -49,6 +49,26 @@
         "failed": "Kunne ikke laste bakhistorien.",
         "title": "Bakhistorier"
     },
+    "ban_exceptions": {
+        "creator": "Skaper",
+        "current_ban": "Nåværende forbud",
+        "description": "Spillere som får spille mens de aktivt streamer på Twitch.",
+        "license": "Lisensidentifikator",
+        "license_filter": "Lisens",
+        "license_placeholder": "license:2ced2cabd90f1208e7e056485d4704c7e1284196",
+        "name_filter": "Navn",
+        "name_placeholder": "Spillernavn",
+        "no_active_ban": "For øyeblikket ikke utestengt",
+        "none": "Ingen unntak for streamer-bann ble funnet.",
+        "player": "Spiller",
+        "results": "{0} totalt unntak",
+        "search": "Filter",
+        "search_btn": "Søk etter unntak",
+        "title": "Unntak fra streamer-bann",
+        "twitch": "Twitch",
+        "twitch_filter": "Twitch",
+        "twitch_placeholder": "Twitch-brukernavn"
+    },
     "blacklist": {
         "add": "Legg til identifikator",
         "confirm_remove": "Er du sikker på at du vil fjerne denne identifikatoren?",

@@ -69,17 +69,46 @@ class PlayerBanController extends Controller
         $licenseFilter = strtolower($license);
         $nameFilter = strtolower($name);
         $twitchFilter = strtolower($twitch);
+        $now = time();
+
+        $latestBanIds = DB::table('user_bans')
+            ->select([
+                'identifier',
+                DB::raw('MAX(id) as latest_id'),
+            ])
+            ->whereNotNull('reason')
+            ->where(function ($query) use ($now) {
+                $query->whereNull('expire')
+                    ->orWhereRaw('(timestamp + expire) > ?', [$now]);
+            })
+            ->groupBy('identifier');
+
+        $latestBans = DB::table('user_bans as latest_bans')
+            ->select([
+                'latest_bans.identifier',
+                'latest_bans.reason',
+                'latest_bans.creator_name',
+            ])
+            ->joinSub($latestBanIds, 'latest_ban_ids', function ($join) {
+                $join->on('latest_bans.identifier', '=', 'latest_ban_ids.identifier')
+                    ->on('latest_bans.id', '=', 'latest_ban_ids.latest_id');
+            });
 
         $exceptions = [];
 
         $players = Player::query()
             ->select([
-                'license_identifier',
-                'player_name',
-                'player_aliases',
-                DB::raw("JSON_UNQUOTE(JSON_EXTRACT(user_data, '$.twitchBanException')) as twitch_ban_exception"),
+                'users.license_identifier',
+                'users.player_name',
+                'users.player_aliases',
+                'current_ban.reason as current_ban_reason',
+                'current_ban.creator_name as current_ban_creator',
+                DB::raw("JSON_UNQUOTE(JSON_EXTRACT(users.user_data, '$.twitchBanException')) as twitch_ban_exception"),
             ])
-            ->whereNotNull(DB::raw("JSON_EXTRACT(user_data, '$.twitchBanException')"))
+            ->leftJoinSub($latestBans, 'current_ban', function ($join) {
+                $join->on('current_ban.identifier', '=', 'users.license_identifier');
+            })
+            ->whereNotNull(DB::raw("JSON_EXTRACT(users.user_data, '$.twitchBanException')"))
             ->get();
 
         foreach ($players as $player) {
@@ -94,6 +123,8 @@ class PlayerBanController extends Controller
                 'licenseIdentifier' => $player->license_identifier,
                 'playerName'        => $player->getSafePlayerName(),
                 'twitch'            => $twitch,
+                'currentBanReason'  => trim((string) ($player->current_ban_reason ?? '')) ?: null,
+                'currentBanCreator' => trim((string) ($player->current_ban_creator ?? '')) ?: null,
             ];
 
             if ($licenseFilter && ! Str::contains(strtolower($entry['licenseIdentifier']), $licenseFilter)) {
@@ -129,12 +160,6 @@ class PlayerBanController extends Controller
 
         $exceptions = array_slice($exceptions, $offset, $perPage);
 
-        foreach ($exceptions as &$exception) {
-            $exception['avatarUrl'] = $this->fetchTwitchAvatar($exception['twitch']);
-        }
-
-        unset($exception);
-
         return Inertia::render('Players/BanExceptions', [
             'exceptions' => $exceptions,
             'links'      => $this->getPageUrls($page),
@@ -147,6 +172,21 @@ class PlayerBanController extends Controller
                 'twitch'  => $twitch ?: null,
             ],
         ]);
+    }
+
+    public function twitchAvatar(string $user): RedirectResponse
+    {
+        if (! user()) {
+            abort(401);
+        }
+
+        $avatarUrl = $this->fetchTwitchAvatar($user);
+
+        if (! $avatarUrl) {
+            abort(404);
+        }
+
+        return redirect()->away($avatarUrl);
     }
 
     private function fetchTwitchAvatar(string $username): ?string
@@ -167,14 +207,16 @@ class PlayerBanController extends Controller
 
         $url = sprintf('https://decapi.me/twitch/avatar/%s', rawurlencode($username));
         $url = trim(HttpHelper::get($url, 'text/plain') ?: '');
+        $host = strtolower(parse_url($url, PHP_URL_HOST) ?? '');
+        $validHost = $host === 'jtvnw.net' || Str::endsWith($host, '.jtvnw.net');
 
-        if (! filter_var($url, FILTER_VALIDATE_URL)) {
+        if (! filter_var($url, FILTER_VALIDATE_URL) || ! $validHost) {
             CacheHelper::write($key, '', CacheHelper::HOUR);
 
             return null;
         }
 
-        CacheHelper::write($key, $url, CacheHelper::DAY);
+        CacheHelper::write($key, $url, CacheHelper::HOUR * 12);
 
         return $url;
     }

@@ -49,6 +49,26 @@
         "failed": "Backstory load karne mein asafal.",
         "title": "Pichhli kahaniyan"
     },
+    "ban_exceptions": {
+        "creator": "Srishti karta",
+        "current_ban": "Vartaman pratibandh",
+        "description": "Twitch par sakriya roop se streaming karte waqt khelne ki anumati.",
+        "license": "License Identifier",
+        "license_filter": "Licence",
+        "license_placeholder": "license:2ced2cabd90f1208e7e056485d4704c7e1284196",
+        "name_filter": "Naam",
+        "name_placeholder": "Kheladi ka naam",
+        "no_active_ban": "Abhi pratibandhit nahin hai",
+        "none": "Kisi streamer ban ki chhoot nahi mili.",
+        "player": "Kheladi",
+        "results": "{0} kul chhoot",
+        "search": "Filter",
+        "search_btn": "Chhooten ki talaash",
+        "title": "Streamer Ban ki chhooten",
+        "twitch": "Twitch",
+        "twitch_filter": "Twitch",
+        "twitch_placeholder": "Twitch upayogakarta ka naam"
+    },
     "blacklist": {
         "add": "Identifier jodain",
         "confirm_remove": "Kya aap is identifier ko hataana chahte hain?",

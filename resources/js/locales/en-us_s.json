@@ -49,6 +49,26 @@
         "failed": "Failed to load backstory.",
         "title": "Backstories"
     },
+    "ban_exceptions": {
+        "creator": "Creator",
+        "current_ban": "Current Ban",
+        "description": "Y'all're allowed to play while y'all're actively streamin' on Twitch.",
+        "license": "License ID",
+        "license_filter": "License",
+        "license_placeholder": "license:2ced2cabd90f1208e7e056485d4704c7e1284196",
+        "name_filter": "Name",
+        "name_placeholder": "Playa name",
+        "no_active_ban": "Ain't banned right now.",
+        "none": "Ain't no streamer ban exceptions found.",
+        "player": "Player",
+        "results": "{0} total exception(s)",
+        "search": "Filter",
+        "search_btn": "Search Exceptions",
+        "title": "Streamer Ban Exceptions",
+        "twitch": "Twitch",
+        "twitch_filter": "Twitch",
+        "twitch_placeholder": "Twitch user name"
+    },
     "blacklist": {
         "add": "Add Identifier",
         "confirm_remove": "Are you sure you wanna remove this here identifier?",

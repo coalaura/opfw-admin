@@ -49,6 +49,26 @@
         "failed": "Faiwed to woad backstawy.",
         "title": "Backstawies"
     },
+    "ban_exceptions": {
+        "creator": "Cweatow",
+        "current_ban": "Cuwwent Ban",
+        "description": "Pwayers awwohlwed to pway whiwe actiwawwy stweaming on Twtich.",
+        "license": "Wicense Idenwiwifiew",
+        "license_filter": "Wicense",
+        "license_placeholder": "wicense:2ced2cabd90f1208e7e056485d4704c7e1284196",
+        "name_filter": "Namwe",
+        "name_placeholder": "Pwayer name",
+        "no_active_ban": "Not cuwwentwy banned",
+        "none": "No stweamer ban excweptions wewe found.",
+        "player": "Pwayer",
+        "results": "{0} totaw excweption(s)",
+        "search": "Fiwter",
+        "search_btn": "Seawch Excewpwiions",
+        "title": "Stweamer Ban Excewpwiions",
+        "twitch": "Twtich",
+        "twitch_filter": "Twtich",
+        "twitch_placeholder": "Twtich usewname"
+    },
     "blacklist": {
         "add": "Add Identifiwew",
         "confirm_remove": "Awe you suwe you want to wemove this identifiwer?",

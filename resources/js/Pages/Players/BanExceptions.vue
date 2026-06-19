@@ -75,28 +75,43 @@
                 <table class="w-full">
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="px-6 py-4">{{ t('ban_exceptions.player') }}</th>
-                        <th class="px-6 py-4">{{ t('ban_exceptions.license') }}</th>
                         <th class="px-6 py-4">{{ t('ban_exceptions.twitch') }}</th>
+                        <th class="px-6 py-4">{{ t('ban_exceptions.current_ban') }}</th>
+                        <th class="px-6 py-4">{{ t('ban_exceptions.creator') }}</th>
                         <th class="w-24 px-6 py-4"></th>
                     </tr>
 
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-600 mobile:border-b-4" v-for="exception in exceptions" :key="exception.licenseIdentifier">
                         <td class="px-6 py-3 border-t mobile:block">
-                            <inertia-link class="font-semibold text-indigo-700 dark:text-indigo-300 hover:underline" :href="'/players/' + exception.licenseIdentifier">
-                                {{ exception.playerName }}
-                            </inertia-link>
-                        </td>
+                            <div class="flex items-center gap-2">
+                                <span class="inline-flex items-center justify-center w-14 px-2 py-1 text-xs font-semibold text-white rounded" :class="statusClass(exception.licenseIdentifier)">
+                                    {{ statusLabel(exception.licenseIdentifier) }}
+                                </span>
 
-                        <td class="px-6 py-3 border-t mobile:block">
-                            <span class="font-mono text-xs">{{ exception.licenseIdentifier }}</span>
+                                <inertia-link class="font-semibold text-indigo-700 dark:text-indigo-300 hover:underline" :href="'/players/' + exception.licenseIdentifier">
+                                    {{ exception.playerName }}
+                                </inertia-link>
+                            </div>
                         </td>
 
                         <td class="px-6 py-3 border-t mobile:block">
                             <a class="inline-flex items-center font-semibold text-purple-700 dark:text-purple-300 hover:underline" :href="'https://twitch.tv/' + exception.twitch" target="_blank" rel="noopener noreferrer">
-                                <img class="w-8 h-8 rounded-full mr-2 border border-purple-200 dark:border-purple-500 object-cover" :src="exception.avatarUrl" alt="" v-if="exception.avatarUrl" />
-                                <i class="fab fa-twitch mr-2" v-else></i>
+                                <img class="w-8 h-8 rounded-full mr-2 border border-purple-200 dark:border-purple-500 object-cover" :src="'/twitch/' + exception.twitch" :alt="exception.twitch" />
                                 {{ exception.twitch }}
                             </a>
+                        </td>
+
+                        <td class="px-6 py-3 border-t mobile:block">
+                            <span class="font-mono text-xs" :title="exception.currentBanReason" v-if="exception.currentBanReason">
+                                {{ exception.currentBanReason }}
+                            </span>
+                            <span class="text-muted dark:text-dark-muted italic" v-else>
+                                {{ t('ban_exceptions.no_active_ban') }}
+                            </span>
+                        </td>
+
+                        <td class="px-6 py-3 border-t mobile:block">
+                            {{ exception.currentBanCreator || t('global.system') }}
                         </td>
 
                         <td class="px-6 py-3 border-t mobile:block">
@@ -174,6 +189,8 @@ export default {
     data() {
         return {
             isLoading: false,
+            statusLoading: false,
+            status: {},
             form: {
                 license: this.filters.license || '',
                 name: this.filters.name || '',
@@ -181,7 +198,50 @@ export default {
             },
         };
     },
+    mounted() {
+        this.updateStatus();
+    },
+    watch: {
+        exceptions() {
+            this.updateStatus();
+        },
+    },
     methods: {
+        statusLabel(license) {
+            if (this.statusLoading) {
+                return '...';
+            }
+
+            if (this.status[license]) {
+                return this.status[license].source;
+            }
+
+            return this.t('global.status.offline');
+        },
+        statusClass(license) {
+            if (this.statusLoading) {
+                return 'bg-gray-500';
+            }
+
+            return this.status[license] ? 'bg-green-600 dark:bg-green-500' : 'bg-gray-600 dark:bg-gray-500';
+        },
+        async updateStatus() {
+            if (this.statusLoading) {
+                return;
+            }
+
+            this.statusLoading = true;
+
+            const identifiers = this.exceptions.map(exception => exception.licenseIdentifier).join(',');
+
+            if (identifiers) {
+                this.status = await this.requestData(`/online/${identifiers}`) || {};
+            } else {
+                this.status = {};
+            }
+
+            this.statusLoading = false;
+        },
         async refresh() {
             if (this.isLoading) {
                 return;
