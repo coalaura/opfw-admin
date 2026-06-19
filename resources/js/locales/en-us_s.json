@@ -228,6 +228,7 @@
         "debugger": "Debugger",
         "debugger_title": "Debuggers got access to some dev commands like /debug.",
         "delete": "Delete",
+        "deleted": "Done got deleted.",
         "developer": "Developer",
         "developer_title": "Developers have unrestricted access to all available commands.",
         "disabled": "Disabled",

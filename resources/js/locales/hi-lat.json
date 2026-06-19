@@ -228,6 +228,7 @@
         "debugger": "Debugger",
         "debugger_title": "Debugger ko kuch dev commands jaise /debug ki access hoti hai.",
         "delete": "Hataayein",
+        "deleted": "Hataaya gaya",
         "developer": "Vikasak",
         "developer_title": "Vikasakon ko sabhi uplabdh commands ki seemaheen pahunch hoti hai.",
         "disabled": "Nishkriya",

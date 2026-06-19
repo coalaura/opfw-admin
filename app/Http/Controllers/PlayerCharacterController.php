@@ -98,7 +98,7 @@ class PlayerCharacterController extends Controller
 
         $query->select([
             'character_id', 'license_identifier', 'first_name', 'last_name', 'gender', 'job_name',
-            'department_name', 'position_name', 'phone_number', 'date_of_birth',
+            'department_name', 'position_name', 'phone_number', 'date_of_birth', 'character_deleted',
         ]);
 
         $page = Paginator::resolveCurrentPage('page');

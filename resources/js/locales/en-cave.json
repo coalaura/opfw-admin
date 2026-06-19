@@ -228,6 +228,7 @@
         "debugger": "Debugger",
         "debugger_title": "Debuggers use some dev commands like /debug.",
         "delete": "Delete",
+        "deleted": "It gone.",
         "developer": "Developer",
         "developer_title": "Developers can use all commands.",
         "disabled": "Disabled",

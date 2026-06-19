@@ -7,6 +7,7 @@
         "live": "Live",
         "banned": "Banned",
         "not_banned": "Not banned",
+        "deleted": "Deleted",
         "by": "by {0}",
         "soon_tm": "Soon™",
         "apply": "Apply",

@@ -152,6 +152,9 @@
                             <inertia-link class="font-semibold text-indigo-700 dark:text-indigo-300 hover:underline" :href="'/players/' + character.licenseIdentifier + '/characters/' + character.id">
                                 {{ character.firstName }} {{ character.lastName }}
                             </inertia-link>
+                            <span class="inline-flex items-center justify-center px-1.5 py-0.5 ml-1.5 text-[10px] font-bold uppercase tracking-wider text-white bg-red-600 rounded" v-if="character.characterDeleted">
+                                {{ t('global.deleted') }}
+                            </span>
                         </td>
                         <td class="p-3 mobile:block">
                             {{ character.jobName || t('global.none') }} /

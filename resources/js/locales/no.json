@@ -228,6 +228,7 @@
         "debugger": "Feilsøker",
         "debugger_title": "Feilsøkere har tilgang til visse utviklerkommandoer som /debug.",
         "delete": "Slett",
+        "deleted": "Slettet",
         "developer": "Utvikler",
         "developer_title": "Utviklere har ubegrenset tilgang til alle tilgjengelige kommandoer.",
         "disabled": "Deaktivert",
