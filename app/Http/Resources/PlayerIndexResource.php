@@ -24,6 +24,7 @@ class PlayerIndexResource extends JsonResource
             'staffToggled'      => $this->isStaffToggled(),
             'staffHidden'       => $this->isStaffHidden(),
             'suspicious'        => $this->areMediaDevicesSuspicious(),
+            'lastConnection'    => $this->last_connection,
         ];
     }
 

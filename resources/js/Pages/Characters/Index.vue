@@ -132,12 +132,9 @@
                     <tr class="font-semibold text-left mobile:hidden">
                         <th class="p-3 pl-8">{{ t('characters.result.player') }}</th>
                         <th class="p-3">{{ t('characters.form.character_id') }}</th>
-                        <th class="p-3">{{ t('characters.form.phone') }}</th>
                         <th class="p-3">{{ t('characters.form.name') }}</th>
-                        <th class="p-3">{{ t('characters.result.gender') }}</th>
-                        <th class="p-3">{{ t('characters.form.dob') }}</th>
                         <th class="p-3">{{ t('characters.form.job') }}</th>
-                        <th class="p-3 pr-8"></th>
+                        <th class="w-24 p-3 pr-8"></th>
                     </tr>
                     <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="character in characters" :key="character.id">
                         <td class="p-3 pl-8 mobile:block">
@@ -151,15 +148,10 @@
                             </div>
                         </td>
                         <td class="p-3 mobile:block">{{ character.id }}</td>
-                        <td class="p-3 mobile:block">{{ character.phoneNumber }}</td>
                         <td class="p-3 mobile:block">
-                            {{ character.firstName }} {{ character.lastName }}
-                        </td>
-                        <td class="p-3 mobile:block">
-                            {{ character.gender | formatGender(t) }}
-                        </td>
-                        <td class="p-3 mobile:block">
-                            {{ character.dateOfBirth }}
+                            <inertia-link class="font-semibold text-indigo-700 dark:text-indigo-300 hover:underline" :href="'/players/' + character.licenseIdentifier + '/characters/' + character.id">
+                                {{ character.firstName }} {{ character.lastName }}
+                            </inertia-link>
                         </td>
                         <td class="p-3 mobile:block">
                             {{ character.jobName || t('global.none') }} /

@@ -118,6 +118,7 @@
                         <th class="p-3 pl-8">{{ t('players.form.name') }}</th>
                         <th class="p-3">{{ t('players.form.identifier') }}</th>
                         <th class="p-3">{{ t('players.form.playtime') }}</th>
+                        <th class="p-3">{{ t('global.sort.last') }}</th>
                         <th class="w-64 p-3 text-center">{{ t('players.form.banned') }}?</th>
                         <th class="w-24 p-3 pr-8"></th>
                     </tr>
@@ -127,16 +128,17 @@
                                 <span class="inline-flex items-center justify-center w-14 px-2 py-1 text-xs font-semibold text-white rounded" :class="statusClass(player.licenseIdentifier)">
                                     {{ statusLabel(player.licenseIdentifier) }}
                                 </span>
-                                <span class="font-semibold">
+                                <inertia-link class="font-semibold text-indigo-700 dark:text-indigo-300 hover:underline" :href="'/players/' + player.licenseIdentifier">
                                     {{ player.playerName }}
-                                    <i class="fas fa-user-ninja ml-1 text-red-500 dark:text-red-400" :title="t('players.show.suspicious_spoof')" v-if="player.suspicious"></i>
-                                </span>
+                                </inertia-link>
+                                <i class="fas fa-user-ninja ml-1 text-red-500 dark:text-red-400" :title="t('players.show.suspicious_spoof')" v-if="player.suspicious"></i>
                             </div>
                         </td>
                         <td class="p-3 mobile:block">
                             <span class="font-mono text-xs">{{ player.licenseIdentifier }}</span>
                         </td>
                         <td class="p-3 mobile:block" :title="formatSeconds(player.playTime, 'YMdhm')">{{ player.playTime | humanizeSeconds }}</td>
+                        <td class="p-3 mobile:block">{{ player.lastConnection | formatTime(true) }}</td>
                         <td class="p-3 text-center mobile:block">
                             <span class="block px-4 py-2 text-white rounded bg-red-500 dark:bg-red-600" v-if="player.isBanned">
                                 {{ t('global.banned') }}
