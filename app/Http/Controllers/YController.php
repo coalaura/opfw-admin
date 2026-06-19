@@ -11,6 +11,7 @@ use App\YUser;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -75,6 +76,47 @@ class YController extends Controller
             'links'   => $this->getPageUrls($page),
             'time'    => $end - $start,
             'page'    => $page,
+        ]);
+    }
+
+    /**
+     * Display top yells.
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function top(Request $request): Response
+    {
+        $start = round(microtime(true) * 1000);
+
+        $postsRaw = DB::table('y_tweets')
+            ->leftJoin('y_accounts', 'y_accounts.id', '=', 'y_tweets.authorId')
+            ->where('y_tweets.time', '>', DB::raw('CURRENT_TIMESTAMP() - INTERVAL "15" DAY'))
+            ->where('y_tweets.is_deleted', '!=', 1)
+            ->where('likes', '>', 1)
+            ->orderByDesc('likes')
+            ->orderByDesc('time')
+            ->limit(30)
+            ->select([
+                'y_tweets.id',
+                'authorId',
+                'realUser',
+                'message',
+                DB::raw('unix_timestamp(y_tweets.time) * 1000 AS time'),
+                'likes',
+                'username',
+                'is_verified',
+                'avatar_url'
+            ])
+            ->get();
+
+        $posts = YPostResource::collection($postsRaw);
+
+        $end = round(microtime(true) * 1000);
+
+        return Inertia::render('Y/Top', [
+            'posts' => $posts,
+            'time'  => $end - $start,
         ]);
     }
 

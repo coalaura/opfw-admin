@@ -214,6 +214,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Y.
     Route::get('y', [YController::class, 'index']);
+    Route::get('y/top', [YController::class, 'top']);
     Route::get('y/{user}', [YController::class, 'user']);
     Route::post('y/{user}/verify', [YController::class, 'verify']);
     Route::post('yells/delete', [YController::class, 'deleteYells']);

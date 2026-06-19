@@ -116,6 +116,11 @@ export default {
                 url: "/y",
             },
             {
+                label: "y.top",
+                icon: "fas fa-fire",
+                url: "/y/top",
+            },
+            {
                 label: "map.title",
                 icon: "fas fa-map",
                 url: "/map",
