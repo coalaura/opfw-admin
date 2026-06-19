@@ -125,9 +125,7 @@
                     <tr class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600" v-for="player in players" v-bind:key="player.id">
                         <td class="p-3 pl-8 mobile:block">
                             <div class="flex items-center gap-2">
-                                <span class="inline-flex items-center justify-center w-14 px-2 py-1 text-xs font-semibold text-white rounded" :class="statusClass(player.licenseIdentifier)">
-                                    {{ statusLabel(player.licenseIdentifier) }}
-                                </span>
+                                <status-tag :status="status[player.licenseIdentifier]" :loading="statusLoading" />
                                 <inertia-link class="font-semibold text-indigo-700 dark:text-indigo-300 hover:underline" :href="'/players/' + player.licenseIdentifier">
                                     {{ player.playerName }}
                                 </inertia-link>
@@ -192,6 +190,7 @@ import Layout from './../../Layouts/App.vue';
 import VSection from './../../Components/Section.vue';
 import Badge from './../../Components/Badge.vue';
 import Pagination from './../../Components/Pagination.vue';
+import StatusTag from './../../Components/StatusTag.vue';
 
 export default {
     layout: Layout,
@@ -199,6 +198,7 @@ export default {
         VSection,
         Badge,
         Pagination,
+        StatusTag,
     },
     props: {
         players: {
@@ -291,24 +291,6 @@ export default {
 
             this.statusLoading = false;
         },
-        statusLabel(license) {
-            if (this.statusLoading) {
-                return '...';
-            }
-
-            if (this.status[license]) {
-                return this.status[license].source;
-            }
-
-            return this.t('global.status.offline');
-        },
-        statusClass(license) {
-            if (this.statusLoading) {
-                return 'bg-gray-500';
-            }
-
-            return this.status[license] ? 'bg-green-600 dark:bg-green-500' : 'bg-gray-600 dark:bg-gray-500';
-        }
     }
 }
 </script>
