@@ -33,7 +33,7 @@
 
 					<div class="flex flex-wrap mb-4">
 						<!-- Attacker -->
-						<div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
+						<div class="w-1/6 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2" for="attacker">
 								{{ t('logs.attacker') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
@@ -41,7 +41,7 @@
 						</div>
 
 						<!-- Victim -->
-						<div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
+						<div class="w-1/6 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2" for="victim">
 								{{ t('logs.victim') }}
 							</label>
@@ -52,10 +52,10 @@
 							</div>
 						</div>
 
-						<!-- Damage -->
+						<!-- Damage Dealt -->
 						<div class="w-1/6 px-3 mobile:w-full mobile:mb-3">
 							<label class="block mb-2" for="damage">
-								{{ t('logs.damage') }} <sup class="text-muted dark:text-dark-muted">*</sup>
+								{{ t('logs.damage_dealt') }} <sup class="text-muted dark:text-dark-muted">*</sup>
 							</label>
 							<input class="block w-full px-4 py-3 !bg-opacity-10 border rounded outline-none" :class="damageColor" id="damage" placeholder=">20" v-model="filters.damage" :title="previewQuery(filters.damage)">
 
