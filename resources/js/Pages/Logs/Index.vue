@@ -69,14 +69,18 @@
 							</label>
 							<input class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="server" placeholder="3" v-model="filters.server" :title="previewQuery(filters.server)">
 						</div>
-						<!-- Minigames -->
+						<!-- Minigame -->
 						<div class="w-1/6 px-3 mobile:w-full mobile:mb-3 mt-3">
-							<label class="block mb-2" for="minigames">
-								{{ t('logs.minigames') }}
+							<label class="block mb-2" for="minigame">
+								{{ t('logs.minigame') }}
 							</label>
-							<select class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="minigames" v-model="filters.minigames">
-								<option :value="null">{{ t('global.all') }}</option>
+							<select class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="minigame" v-model="filters.minigame">
+								<option value="any">{{ t('global.any') }}</option>
 								<option value="none">{{ t('logs.minigame_none') }}</option>
+								<option value="arena">{{ t('logs.minigame_arena') }}</option>
+								<option value="battle_royale">{{ t('logs.minigame_battle_royale') }}</option>
+								<option value="zombie_pill">{{ t('logs.minigame_zombie_pill') }}</option>
+								<option value="training">{{ t('logs.minigame_training') }}</option>
 							</select>
 						</div>
 						<!-- After Date -->
@@ -331,7 +335,7 @@ export default {
 			action: String,
 			details: String,
 			server: String,
-			minigames: String,
+			minigame: String,
 			before: Number,
 			after: Number,
 		},
@@ -449,9 +453,9 @@ export default {
 		},
 		getLogColor(action, metadata) {
 			if (this.setting('parseLogs')) {
-				const minigames = metadata?.minigames || [];
+				const minigame = metadata?.minigame;
 
-				if (minigames.length > 0) {
+				if (minigame) {
 					return 'bg-purple-500 !bg-opacity-20 hover:!bg-opacity-40';
 				} else if (MoneyTransferActions.includes(action)) {
 					return 'bg-teal-500 !bg-opacity-20 hover:!bg-opacity-40';
@@ -467,10 +471,10 @@ export default {
 		getLogTag(action, metadata) {
 			if (!this.setting('parseLogs')) return '';
 
-			const minigames = metadata?.minigames || [];
+			const minigame = metadata?.minigame;
 
-			if (minigames.length > 0) {
-				return `<i class="text-purple-800 dark:text-purple-200 fas fa-gamepad" title="${minigames.join(', ')}"></i>`;
+			if (minigame) {
+				return `<i class="text-purple-800 dark:text-purple-200 fas fa-gamepad" title="${minigame}"></i>`;
 			} else if (MoneyTransferActions.includes(action)) {
 				return `<i class="text-teal-800 dark:text-teal-200 fas fa-money-bill-wave" title="money transfer"></i>`;
 			} else if (DisconnectActions.includes(action)) {

@@ -487,7 +487,12 @@
             "title": "Wog-Entwy metadawa"
         },
         "minigame_none": "Excwude Awl",
+        "minigame": "Minigame",
         "minigames": "Minigames",
+        "minigame_arena": "Awena",
+        "minigame_battle_royale": "Bwattle Woyawe",
+        "minigame_zombie_pill": "Zombie Piww",
+        "minigame_training": "Twaining",
         "money_description": "On this page you can view and fwiwter the money wogs.",
         "money_search": "Money-Wogs",
         "money_title": "Money Wogs",

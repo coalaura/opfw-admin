@@ -487,7 +487,12 @@
             "title": "Log‑entry metadata"
         },
         "minigame_none": "Exclude it all.",
+        "minigame": "Minigame",
         "minigames": "Minigames",
+        "minigame_arena": "Arena",
+        "minigame_battle_royale": "Battle Royale",
+        "minigame_zombie_pill": "Zombie Pill",
+        "minigame_training": "Trainin'",
         "money_description": "On this here page you can view and filter the money logs.",
         "money_search": "Money Logs",
         "money_title": "Money Logs",

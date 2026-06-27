@@ -487,7 +487,12 @@
             "title": "Log-Entry ki metadata"
         },
         "minigame_none": "Sabhi ko alag karein",
+        "minigame": "Mini-khel",
         "minigames": "Mini-khel",
+        "minigame_arena": "Arena",
+        "minigame_battle_royale": "Yuddh royal",
+        "minigame_zombie_pill": "Zombie pill",
+        "minigame_training": "Preshan",
         "money_description": "Is page par aap paise ke logs dekh sakte hain aur unhe filter kar sakte hain.",
         "money_search": "Paise ke logs",
         "money_title": "Paise Logs",

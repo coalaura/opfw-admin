@@ -55,15 +55,26 @@ class LogController extends Controller
         // Filtering by server.
         $this->searchQuery($request, $query, 'server', DB::raw("JSON_EXTRACT(metadata, '$.playerServerId')"));
 
-        // Filtering by minigames.
-        if ($request->input('minigames') === 'none') {
-            $query->where(function ($subQuery) {
-                // The only actions where we even use minigames are Player Died, Player Killed and Killed Player.
-                $subQuery->whereNotIn('action', ['Player Died', 'Player Killed', 'Killed Player']);
+        // Filtering by minigame.
+        $minigame = $request->input('minigame');
 
-                // If the action is Player Died or Player Killed, we have to check.
-                $subQuery->orWhere('metadata', 'LIKE', '%"minigames":[]%');
-            });
+        if ($minigame && $minigame !== 'any') {
+            // The only actions where we even use minigame are Player Died, Player Killed and Killed Player.
+            $minigameActions = ['Player Died', 'Player Killed', 'Killed Player'];
+
+            if ($minigame === 'none') {
+                $query->where(function ($subQuery) use ($minigameActions) {
+                    $subQuery->whereNotIn('action', $minigameActions);
+
+                    // If the action is Player Died or Player Killed, we have to check.
+                    $subQuery->orWhereNull(DB::raw("JSON_UNQUOTE(JSON_EXTRACT(metadata, '$.minigame'))"));
+                });
+            } elseif (in_array($minigame, ['arena', 'battle_royale', 'zombie_pill', 'training'], true)) {
+                $query->where(function ($subQuery) use ($minigameActions, $minigame) {
+                    $subQuery->whereIn('action', $minigameActions);
+                    $subQuery->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(metadata, '$.minigame')) = ?", [$minigame]);
+                });
+            }
         }
 
         // Filtering by before.
@@ -121,7 +132,7 @@ class LogController extends Controller
                 'server',
                 'action',
                 'details',
-                'minigames',
+                'minigame',
                 'after',
                 'before'
             ),
@@ -613,6 +624,19 @@ class LogController extends Controller
             }
         }
 
+        // Filtering by minigame.
+        $minigame = $request->input('minigame');
+        if ($minigame && $minigame !== 'any') {
+            if ($minigame === 'none') {
+                $query->where(function ($subQuery) {
+                    $subQuery->whereNull('minigame');
+                    $subQuery->orWhere('minigame', '=', '');
+                });
+            } elseif (in_array($minigame, ['arena', 'battle_royale', 'zombie_pill', 'training'], true)) {
+                $query->where('minigame', '=', $minigame);
+            }
+        }
+
         // Filtering by before.
         if ($before = intval($request->input('before'))) {
             $query->where('timestamp', '<', $before * 1000);
@@ -640,6 +664,7 @@ class LogController extends Controller
                 'damage',
                 'weapon',
                 'entity',
+                'minigame',
                 'after',
                 'before'
             ),

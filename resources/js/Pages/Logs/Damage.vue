@@ -86,6 +86,21 @@
 							</select>
 						</div>
 
+						<!-- Minigame -->
+						<div class="w-1/6 px-3 mobile:w-full mobile:mb-3">
+							<label class="block mb-2" for="minigame">
+								{{ t('logs.minigame') }}
+							</label>
+							<select class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="minigame" v-model="filters.minigame">
+								<option value="any">{{ t('global.any') }}</option>
+								<option value="none">{{ t('logs.minigame_none') }}</option>
+								<option value="arena">{{ t('logs.minigame_arena') }}</option>
+								<option value="battle_royale">{{ t('logs.minigame_battle_royale') }}</option>
+								<option value="zombie_pill">{{ t('logs.minigame_zombie_pill') }}</option>
+								<option value="training">{{ t('logs.minigame_training') }}</option>
+							</select>
+						</div>
+
 						<!-- After Date -->
 						<div class="w-1/4 px-3 mobile:w-full mobile:mb-3 mt-3">
 							<label class="block mb-2" for="after-date">
@@ -301,6 +316,7 @@ export default {
 			damage: String,
 			weapon: String,
 			entity: String,
+			minigame: String,
 			before: Number,
 			after: Number,
 		},

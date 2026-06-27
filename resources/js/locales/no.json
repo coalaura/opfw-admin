@@ -487,7 +487,12 @@
             "title": "Metadata for loggoppføring"
         },
         "minigame_none": "Ekskluder alle",
+        "minigame": "Minispill",
         "minigames": "Minispill",
+        "minigame_arena": "Arena",
+        "minigame_battle_royale": "Battle Royale",
+        "minigame_zombie_pill": "Zombie-pill",
+        "minigame_training": "Trening",
         "money_description": "På denne siden kan du se og filtrere penge-loggene.",
         "money_search": "Penge-logg",
         "money_title": "Penge-loggene",
