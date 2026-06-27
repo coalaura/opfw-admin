@@ -92,7 +92,7 @@
 								{{ t('logs.minigame') }}
 							</label>
 							<select class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="minigame" v-model="filters.minigame">
-								<option value="">{{ t('global.any') }}</option>
+								<option :value="null">{{ t('global.any') }}</option>
 								<option value="none">{{ t('logs.minigame_none') }}</option>
 								<option value="arena">{{ t('logs.minigame_arena') }}</option>
 								<option value="battle_royale">{{ t('logs.minigame_battle_royale') }}</option>
