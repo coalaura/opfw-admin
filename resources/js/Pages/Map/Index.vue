@@ -53,15 +53,17 @@
         </portal>
 
         <!-- Historic Data -->
-        <modal :show.sync="isHistoric" :raw="true">
-            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded w-alert">
-                <h3 class="mb-2">
+        <modal :show.sync="isHistoric">
+            <template #header>
+                <h1 class="dark:text-white">
                     {{ t('map.historic_title') }}
-                </h3>
+                </h1>
+            </template>
 
+            <template #default>
                 <!-- license Identifier -->
-                <div class="w-full p-3 flex justify-between px-0">
-                    <label class="mr-4 block w-1/3 pt-2 font-bold" for="historic_license">
+                <div class="w-full py-3 flex items-center justify-between px-0">
+                    <label class="mr-4 block w-1/3 font-semibold text-left" for="historic_license">
                         {{ t('map.historic_license') }}
                     </label>
                     <div class="flex gap-3 w-2/3">
@@ -74,65 +76,69 @@
                 </div>
 
                 <!-- From -->
-                <div class="w-full p-3 flex justify-between px-0" v-if="historicValidLicense">
-                    <label class="mr-4 block w-1/3 pt-2 font-bold" for="historic_date_from">
+                <div class="w-full py-3 flex items-center justify-between px-0" v-if="historicValidLicense">
+                    <label class="mr-4 block w-1/3 font-semibold text-left" for="historic_date_from">
                         {{ t('map.historic_from') }}
                     </label>
-                    <input class="w-1/3 px-4 py-2 mr-1 bg-gray-200 dark:bg-gray-600 border rounded" type="date" step="any" id="historic_date_from" v-model="form.historic_from_date" />
-                    <input class="w-1/3 px-4 py-2 ml-1 bg-gray-200 dark:bg-gray-600 border rounded" type="time" step="any" id="historic_time_from" v-model="form.historic_from_time" />
+                    <div class="flex w-2/3 gap-2">
+                        <input class="w-1/2 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" type="date" step="any" id="historic_date_from" v-model="form.historic_from_date" />
+                        <input class="w-1/2 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" type="time" step="any" id="historic_time_from" v-model="form.historic_from_time" />
+                    </div>
                 </div>
 
                 <!-- Till -->
-                <div class="w-full p-3 flex justify-between px-0" v-if="historicValidLicense">
-                    <label class="mr-4 block w-1/3 pt-2 font-bold" for="historic_date_till">
+                <div class="w-full py-3 flex items-center justify-between px-0" v-if="historicValidLicense">
+                    <label class="mr-4 block w-1/3 font-semibold text-left" for="historic_date_till">
                         {{ t('map.historic_till') }}
                     </label>
-                    <input class="w-1/3 px-4 py-2 mr-1 bg-gray-200 dark:bg-gray-600 border rounded" type="date" step="any" id="historic_date_till" v-model="form.historic_till_date" />
-                    <input class="w-1/3 px-4 py-2 ml-1 bg-gray-200 dark:bg-gray-600 border rounded" type="time" step="any" id="historic_time_till" v-model="form.historic_till_time" />
+                    <div class="flex w-2/3 gap-2">
+                        <input class="w-1/2 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" type="date" step="any" id="historic_date_till" v-model="form.historic_till_date" />
+                        <input class="w-1/2 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" type="time" step="any" id="historic_time_till" v-model="form.historic_till_time" />
+                    </div>
                 </div>
 
-                <p>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mt-2">
                     {{ t('map.historic_note') }}
                 </p>
+            </template>
 
-                <!-- Buttons -->
-                <div class="flex items-center mt-2">
-                    <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded mr-2" v-if="historicValidLicense" @click="showHistory">
-                        <i class="mr-1 fas fa-plus"></i>
-                        {{ t('global.confirm') }}
-                    </button>
-                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" @click="isHistoric = false">
-                        {{ t('global.cancel') }}
-                    </button>
-                </div>
-            </div>
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isHistoric = false">
+                    {{ t('global.cancel') }}
+                </button>
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-600 dark:hover:bg-green-400 dark:text-white" v-if="historicValidLicense" @click="showHistory">
+                    <i class="mr-1 fas fa-plus"></i>
+                    {{ t('global.confirm') }}
+                </button>
+            </template>
         </modal>
 
-        <modal :show.sync="isTimestamp" :raw="true">
-            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded w-alert">
-                <h3 class="mb-2">
+        <modal :show.sync="isTimestamp">
+            <template #header>
+                <h1 class="dark:text-white">
                     {{ t('map.timestamp_title') }}
-                </h3>
+                </h1>
+            </template>
 
+            <template #default>
                 <!-- From -->
-                <div class="w-full p-3 flex justify-between px-0">
-                    <label class="mr-4 block w-1/3 pt-2 font-bold" for="historic_license">
+                <div class="w-full py-3 flex items-center justify-between px-0">
+                    <label class="mr-4 block w-1/3 font-semibold text-left" for="historic_license">
                         {{ t('map.timestamp_date') }}
                     </label>
                     <input class="w-2/3 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" v-model="form.timestamp" />
                 </div>
+            </template>
 
-                <!-- Buttons -->
-                <div class="flex items-center mt-2">
-                    <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded mr-2" @click="showTimestamp">
-                        <i class="mr-1 fas fa-plus"></i>
-                        {{ t('global.confirm') }}
-                    </button>
-                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" @click="isTimestamp = false">
-                        {{ t('global.cancel') }}
-                    </button>
-                </div>
-            </div>
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isTimestamp = false">
+                    {{ t('global.cancel') }}
+                </button>
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-600 dark:hover:bg-green-400 dark:text-white" @click="showTimestamp">
+                    <i class="mr-1 fas fa-plus"></i>
+                    {{ t('global.confirm') }}
+                </button>
+            </template>
         </modal>
 
         <template>

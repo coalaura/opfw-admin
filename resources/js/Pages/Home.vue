@@ -132,29 +132,30 @@
             </div>
         </div>
 
-        <modal :show.sync="isServerAnnouncement" :raw="true">
-            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded w-alert">
-                <h3 class="mb-2">
+        <modal :show.sync="isServerAnnouncement">
+            <template #header>
+                <h1 class="dark:text-white">
                     {{ t('home.server_announcement') }}
-                </h3>
+                </h1>
+            </template>
 
-                <div class="w-full mt-4 flex justify-between">
-                    <label class="mr-4 block w-1/4 text-center pt-2 font-bold">
+            <template #default>
+                <div class="w-full py-3 flex items-center justify-between">
+                    <label class="mr-4 block font-semibold text-left">
                         {{ t('home.announcement_message') }}
                     </label>
-                    <input type="text" class="px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 w-3/4 ml-1" v-model="announcementMessage" />
+                    <input type="text" class="flex-1 px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 ml-1" v-model="announcementMessage" />
                 </div>
+            </template>
 
-                <!-- Buttons -->
-                <div class="flex justify-end mt-5">
-                    <button class="px-5 py-2 rounded bg-success dark:bg-dark-success mr-2" @click="postAnnouncement()">
-                        {{ t('home.send_announcement') }}
-                    </button>
-                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" @click="isServerAnnouncement = false">
-                        {{ t('global.close') }}
-                    </button>
-                </div>
-            </div>
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isServerAnnouncement = false">
+                    {{ t('global.close') }}
+                </button>
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-600 dark:hover:bg-green-400 dark:text-white" @click="postAnnouncement()">
+                    {{ t('home.send_announcement') }}
+                </button>
+            </template>
         </modal>
 
     </div>

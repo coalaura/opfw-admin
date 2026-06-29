@@ -331,28 +331,33 @@
         </div>
 
         <!-- Discord Accounts -->
-        <modal :show.sync="isShowingDiscord" :raw="true">
-            <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
-                <h3 class="mb-2">{{ t('players.show.discord_title') }}</h3>
+        <modal :show.sync="isShowingDiscord">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.show.discord_title') }}
+                </h1>
+            </template>
+
+            <template #default>
                 <div v-if="isShowingDiscordLoading">
                     <div class="flex justify-center items-center my-6 mt-12">
                         <div>
-                            <i class="fas fa-cog animate-spin"></i>
+                            <i class="fas fa-cog animate-spin mr-1"></i>
                             {{ t('global.loading') }}
                         </div>
                     </div>
                 </div>
-                <div v-else>
+                <div v-else class="space-y-3">
                     <div class="w-full flex justify-between" v-for="(discord, id) in discordAccounts" :key="id">
                         <div class="w-full relative">
-                            <a class="flex items-center text-lg p-5 m-2 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" v-if="discord && discord.username" href="#" :title="t('players.show.discord_copy')" @click="copyText($event, '<@' + discord.id + '> ' + discord.username + (discord.discriminator ? '#' + discord.discriminator : ''))">
+                            <a class="flex items-center text-lg p-5 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" v-if="discord && discord.username" href="#" :title="t('players.show.discord_copy')" @click="copyText($event, '<@' + discord.id + '> ' + discord.username + (discord.discriminator ? '#' + discord.discriminator : ''))">
                                 <img :src="discord.avatar" class="rounded shadow border-2 border-gray-300 w-avatar mr-3" v-handle-error="'/images/discord_failed.png'" />
                                 <span>
                                     {{ discord.username }}{{ discord.discriminator ? '#' + discord.discriminator : '' }}
                                 </span>
                             </a>
-                            <a class="flex items-center text-lg p-5 m-2 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" v-else href="#" :title="t('players.show.discord_copy')" @click="copyText($event, '<@' + id + '>')">
-                                <i class="mr-1 fab fa-discord"></i>
+                            <a class="flex items-center text-lg p-5 font-semibold text-white bg-discord rounded mobile:w-full mobile:m-0 mobile:mb-3 mobile:flex-none" v-else href="#" :title="t('players.show.discord_copy')" @click="copyText($event, '<@' + id + '>')">
+                                <i class="mr-3 fab fa-discord"></i>
                                 {{ t('players.show.discord', id) }}
                             </a>
 
@@ -360,12 +365,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-end mt-2">
-                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-dark-secondary mr-3 dark:text-black dark:bg-secondary" @click="isShowingDiscord = false">
-                        {{ t('global.close') }}
-                    </button>
-                </div>
-            </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingDiscord = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
         </modal>
 
         <metadataViewer :title="t('players.show.user_variables')" :metadata="player.variables" :show.sync="showingUserVariables"></metadataViewer>
@@ -677,68 +683,74 @@
         <metadataViewer :title="t('players.show.anti_cheat_metadata')" :image="antiCheatMetadataImage" :metadata="antiCheatMetadataJSON" :show.sync="antiCheatMetadata"></metadataViewer>
 
         <!-- Unloading -->
-        <modal :show.sync="isUnloading" :raw="true">
-            <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
-                <h3 class="mb-2">{{ t('players.show.unload') }}</h3>
+        <modal :show.sync="isUnloading">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.show.unload') }}
+                </h1>
+            </template>
+
+            <template #default>
                 <form class="space-y-6" @submit.prevent="unloadCharacter">
                     <!-- Message -->
-                    <div class="w-full p-3 flex justify-between">
-                        <label class="mr-4 block w-1/4 text-center pt-2 font-bold">
+                    <div class="w-full py-3 flex items-center justify-between">
+                        <label class="mr-4 block w-1/4 font-semibold text-left" for="unload_message">
                             {{ t('players.show.unload_msg') }}
                         </label>
                         <textarea class="block bg-gray-200 dark:bg-gray-600 rounded w-3/4 px-4 py-2" id="unload_message" v-model="form.unload.message"></textarea>
                     </div>
 
-                    <p>
+                    <p class="text-sm text-gray-600 dark:text-gray-300">
                         {{ t('players.show.unload_confirm') }}
                     </p>
-
-                    <!-- Buttons -->
-                    <div class="flex items-center space-x-3">
-                        <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600" type="submit">
-                            <i class="fas fa-bolt mr-1"></i>
-                            {{ t('players.show.unload_do') }}
-                        </button>
-                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" type="button" @click="isUnloading = false">
-                            {{ t('global.cancel') }}
-                        </button>
-                    </div>
                 </form>
-            </div>
+            </template>
+
+            <template #actions>
+                <button class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" type="button" @click="isUnloading = false">
+                    {{ t('global.cancel') }}
+                </button>
+                <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600" type="button" @click="unloadCharacter">
+                    <i class="fas fa-bolt mr-1"></i>
+                    {{ t('players.show.unload_do') }}
+                </button>
+            </template>
         </modal>
 
         <!-- Tag -->
-        <modal :show.sync="isTagging" :raw="true">
-            <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
-                <h3 class="mb-2">{{ t('players.show.edit_tag') }}</h3>
-                <form class="space-y-6">
-                    <div class="flex">
-                        <select class="px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 w-1/2 mr-1" v-model="tagCategory">
-                            <option value="custom">{{ t('players.show.tag_custom') }}</option>
-                            <option :value="tag.panel_tag" :key="tag.panel_tag" v-for="tag in tags">{{
-                                tag.panel_tag
-                            }}
-                            </option>
-                        </select>
+        <modal :show.sync="isTagging">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.show.edit_tag') }}
+                </h1>
+            </template>
 
-                        <input type="text" class="px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 w-1/2 ml-1" v-if="tagCategory === 'custom'" v-model="tagCustom" />
-                    </div>
+            <template #default>
+                <div class="flex gap-4 py-3">
+                    <select class="px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 w-1/2" v-model="tagCategory">
+                        <option value="custom">{{ t('players.show.tag_custom') }}</option>
+                        <option :value="tag.panel_tag" :key="tag.panel_tag" v-for="tag in tags">{{
+                            tag.panel_tag
+                        }}
+                        </option>
+                    </select>
 
-                    <!-- Buttons -->
-                    <div class="flex items-center space-x-3">
-                        <button class="px-5 py-2 font-semibold text-white bg-green-500 rounded hover:bg-green-600" type="button" @click="addTag">
-                            <i class="fas fa-tag mr-1"></i>
-                            {{ t('players.show.edit_tag') }}
-                        </button>
-                        <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600" type="button" @click="removeTag">
-                            {{ t('players.show.remove_tag') }}
-                        </button>
-                        <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" type="button" @click="isTagging = false">
-                            {{ t('global.cancel') }}
-                        </button>
-                    </div>
-                </form>
-            </div>
+                    <input type="text" class="px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 w-1/2" v-if="tagCategory === 'custom'" v-model="tagCustom" />
+                </div>
+            </template>
+
+            <template #actions>
+                <button class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" type="button" @click="isTagging = false">
+                    {{ t('global.cancel') }}
+                </button>
+                <button class="px-5 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600" type="button" @click="removeTag">
+                    {{ t('players.show.remove_tag') }}
+                </button>
+                <button class="px-5 py-2 font-semibold text-white bg-green-500 rounded hover:bg-green-600" type="button" @click="addTag">
+                    <i class="fas fa-tag mr-1"></i>
+                    {{ t('players.show.edit_tag') }}
+                </button>
+            </template>
         </modal>
 
         <!-- Enablable permissions -->
@@ -893,26 +905,32 @@
         </alert>
 
         <!-- Removing system ban -->
-        <modal :show.sync="isConfirmingUnban" :raw="true">
-            <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
-                <h3 class="mb-2">{{ t('players.show.unban_system_title') }}</h3>
+        <modal :show.sync="isConfirmingUnban">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.show.unban_system_title') }}
+                </h1>
+            </template>
+
+            <template #default>
                 <div>
-                    <p class="select-none">
+                    <p class="select-none text-sm text-gray-600 dark:text-gray-300">
                         {{ t('players.show.unban_system_confirm') }}
                     </p>
 
                     <input class="w-full px-4 py-2 !border-red-400 !bg-red-500 !bg-opacity-10 border rounded my-3" v-model="confirmingUnbanInput" placeholder="confirm" :class="{ '!border-lime-400 !bg-lime-500 !bg-opacity-10': confirmingUnbanInput === 'confirm' }" />
                 </div>
-                <div class="flex justify-end mt-2">
-                    <button type="button" class="px-5 py-2 font-semibold text-white rounded bg-dark-secondary dark:text-black dark:bg-secondary" @click="isConfirmingUnban = false">
-                        {{ t('global.close') }}
-                    </button>
-                    <button class="px-5 py-2 rounded bg-danger dark:bg-dark-danger ml-3" type="button" @click="unbanPlayer()" v-if="confirmingUnbanInput === 'confirm'">
-                        <i class="mr-1 fas fa-lock-open"></i>
-                        {{ t('players.show.unban') }}
-                    </button>
-                </div>
-            </div>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isConfirmingUnban = false">
+                    {{ t('global.close') }}
+                </button>
+                <button class="px-5 py-2 rounded bg-red-100 hover:bg-red-200 text-red-600 dark:bg-red-600 dark:hover:bg-red-400 dark:text-white ml-3" type="button" @click="unbanPlayer()" v-if="confirmingUnbanInput === 'confirm'">
+                    <i class="mr-1 fas fa-lock-open"></i>
+                    {{ t('players.show.unban') }}
+                </button>
+            </template>
         </modal>
 
         <!-- Ban -->
@@ -1566,13 +1584,15 @@
         </v-section>
 
         <!-- Screenshot -->
-        <modal :show="isScreenshot && this.perm.check(this.perm.PERM_SCREENSHOT)" @update:show="isScreenshot = $event" :raw="true">
-            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded" :class="continuouslyScreenshotting ? 'w-vlarge-alert' : 'w-alert'">
-                <h3 class="mb-2">
+        <modal :show="isScreenshot && this.perm.check(this.perm.PERM_SCREENSHOT)" @update:show="isScreenshot = $event" :extraClass="continuouslyScreenshotting ? 'max-w-large' : ''">
+            <template #header>
+                <h1 class="dark:text-white">
                     {{ t('map.screenshot') }}
                     <span v-if="nextContinuousScreenshot > 0 && continuouslyScreenshotting"> - {{ nextContinuousScreenshot.toFixed(1) }}s</span>
-                </h3>
+                </h1>
+            </template>
 
+            <template #default>
                 <p v-if="screenshotError" class="text-danger dark:text-dark-danger font-semibold mb-3">
                     {{ screenshotError }}
                 </p>
@@ -1587,7 +1607,7 @@
                     </div>
                 </div>
 
-                <p v-if="screenshotImage" class="mt-3 text-sm">
+                <p v-if="screenshotImage" class="mt-3 text-sm text-gray-600 dark:text-gray-300">
                     {{ t('map.screenshot_description') }}
                 </p>
 
@@ -1602,38 +1622,39 @@
 
                     <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm" v-html="screenCaptureLogs.join('\n')"></pre>
                 </div>
+            </template>
 
-                <!-- Buttons -->
-                <div class="flex justify-end mt-2">
-                    <button class="px-5 py-2 rounded bg-primary dark:bg-dark-primary mr-2" @click="startContinuousScreenshot()" v-if="!continuouslyScreenshotting && !isScreenshotLoading">
-                        {{ t('screenshot.continuous') }}
-                    </button>
-                    <button class="px-5 py-2 rounded bg-danger dark:bg-dark-danger mr-2" @click="stopContinuousScreenshot()" v-else-if="continuouslyScreenshotting">
-                        <i class="fas fa-cog animate-spin mr-1" v-if="isScreenshotLoading"></i>
+            <template #actions>
+                <button class="px-5 py-2 rounded bg-indigo-100 hover:bg-indigo-200 text-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-400 dark:text-white mr-2" @click="startContinuousScreenshot()" v-if="!continuouslyScreenshotting && !isScreenshotLoading">
+                    {{ t('screenshot.continuous') }}
+                </button>
+                <button class="px-5 py-2 rounded bg-red-100 hover:bg-red-200 text-red-600 dark:bg-red-600 dark:hover:bg-red-400 dark:text-white mr-2" @click="stopContinuousScreenshot()" v-else-if="continuouslyScreenshotting">
+                    <i class="fas fa-cog animate-spin mr-1" v-if="isScreenshotLoading"></i>
 
-                        {{ t('screenshot.continuous_stop') }}
-                    </button>
+                    {{ t('screenshot.continuous_stop') }}
+                </button>
 
-                    <button class="px-5 py-2 rounded bg-success dark:bg-dark-success mr-2" @click="createScreenshot()" v-if="!isScreenshotLoading && !continuouslyScreenshotting">
-                        {{ t('global.refresh') }}
-                    </button>
-                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" v-if="!continuouslyScreenshotting" @click="isScreenshot = false; screenshotImage = null; screenshotError = null; screenshotLicense = null">
-                        {{ t('global.close') }}
-                    </button>
-                </div>
-            </div>
+                <button class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-600 dark:hover:bg-green-400 dark:text-white mr-2" @click="createScreenshot()" v-if="!isScreenshotLoading && !continuouslyScreenshotting">
+                    {{ t('global.refresh') }}
+                </button>
+                <button class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400 mr-2" v-if="!continuouslyScreenshotting" @click="isScreenshot = false; screenshotImage = null; screenshotError = null; screenshotLicense = null">
+                    {{ t('global.close') }}
+                </button>
+            </template>
         </modal>
 
         <!-- Screen capture -->
-        <modal :show="isScreenCapture && this.perm.check(this.perm.PERM_SCREENSHOT)" @update:show="isScreenCapture = $event" :raw="true">
-            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded" :class="screenCaptureVideo ? 'w-large-alert' : 'w-alert'">
-                <h3 class="mb-2">
+        <modal :show="isScreenCapture && this.perm.check(this.perm.PERM_SCREENSHOT)" @update:show="isScreenCapture = $event" :extraClass="screenCaptureVideo ? 'max-w-large' : ''">
+            <template #header>
+                <h1 class="dark:text-white">
                     {{ t('screenshot.screencapture') }}
-                </h3>
+                </h1>
+            </template>
 
+            <template #default>
                 <!-- Duration -->
-                <div class="w-full p-3 flex justify-between px-0" v-if="!screenCaptureStatus && !screenCaptureVideo">
-                    <label class="mr-4 block w-1/4 pt-2 font-bold" for="capture_duration">
+                <div class="w-full py-3 flex items-center justify-between px-0" v-if="!screenCaptureStatus && !screenCaptureVideo">
+                    <label class="mr-4 block w-1/4 font-semibold text-left" for="capture_duration">
                         {{ t('screenshot.capture_duration') }}
                     </label>
                     <input class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="capture_duration" min="1" max="30" type="number" v-model="captureData.duration" />
@@ -1659,11 +1680,11 @@
                     </div>
                 </div>
 
-                <p v-if="screenCaptureStatus === 'processing'" class="mt-3 text-sm">
+                <p v-if="screenCaptureStatus === 'processing'" class="mt-3 text-sm text-gray-600 dark:text-gray-300">
                     {{ t('screenshot.processing_description') }}
                 </p>
 
-                <p v-if="screenCaptureVideo" class="mt-3 text-sm">
+                <p v-if="screenCaptureVideo" class="mt-3 text-sm text-gray-600 dark:text-gray-300">
                     {{ t('map.screencapture_description') }}
                 </p>
 
@@ -1672,20 +1693,19 @@
 
                     <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm" v-html="screenCaptureLogs.join('\n')"></pre>
                 </div>
+            </template>
 
-                <!-- Buttons -->
-                <div class="flex justify-end mt-2">
-                    <a v-if="screenCaptureVideo" :href="screenCaptureVideo" target="_blank" class="px-5 py-2 rounded bg-primary dark:bg-dark-primary mr-2">
-                        {{ t('global.download') }}
-                    </a>
-                    <button class="px-5 py-2 rounded bg-primary dark:bg-dark-primary mr-2" @click="createScreenCapture()" v-if="!screenCaptureStatus && !screenCaptureVideo">
-                        {{ t('global.create') }}
-                    </button>
-                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" v-if="!screenCaptureStatus" @click="isScreenCapture = false; captureData.duration = 5; screenCaptureVideo = false; screenCaptureError = false">
-                        {{ t('global.close') }}
-                    </button>
-                </div>
-            </div>
+            <template #actions>
+                <a v-if="screenCaptureVideo" :href="screenCaptureVideo" target="_blank" class="px-5 py-2 rounded bg-indigo-100 hover:bg-indigo-200 text-indigo-600 dark:bg-indigo-600 dark:hover:bg-indigo-400 dark:text-white mr-2">
+                    {{ t('global.download') }}
+                </a>
+                <button class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-600 dark:hover:bg-green-400 dark:text-white mr-2" @click="createScreenCapture()" v-if="!screenCaptureStatus && !screenCaptureVideo">
+                    {{ t('global.create') }}
+                </button>
+                <button class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400 mr-2" v-if="!screenCaptureStatus" @click="isScreenCapture = false; captureData.duration = 5; screenCaptureVideo = false; screenCaptureError = false">
+                    {{ t('global.close') }}
+                </button>
+            </template>
         </modal>
     </div>
 </template>

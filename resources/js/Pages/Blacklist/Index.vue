@@ -84,82 +84,83 @@
         </portal>
 
         <!-- Add -->
-        <modal :show.sync="isAdding" :raw="true">
-            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded w-alert">
-                <h3 class="mb-2">
+        <modal :show.sync="isAdding">
+            <template #header>
+                <h1 class="dark:text-white">
                     {{ t('blacklist.add') }}
-                </h3>
+                </h1>
+            </template>
 
+            <template #default>
                 <!-- License Identifier -->
-                <div class="w-full p-3 flex justify-between px-0">
-                    <label class="mr-4 block w-1/4 pt-2 font-bold" for="add_identifier">
+                <div class="w-full py-3 flex items-center justify-between px-0">
+                    <label class="mr-4 block w-1/4 font-semibold text-left" for="add_identifier">
                         {{ t('blacklist.identifier') }}
                     </label>
                     <input class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="add_identifier" placeholder="license:2ced2cabd90f1208e7e056485d4704c7e1284196" v-model="form.identifier" />
                 </div>
 
                 <!-- Ban Reason -->
-                <div class="w-full p-3 flex justify-between px-0">
-                    <label class="mr-4 block w-1/4 pt-2 font-bold">
+                <div class="w-full py-3 flex items-start justify-between px-0">
+                    <label class="mr-4 block w-1/4 pt-2 font-semibold text-left">
                         {{ t('blacklist.reason') }}
                     </label>
-                    <textarea class="block w-3/4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="add_reason" placeholder="1.1, 1.2" v-model="form.reason"></textarea>
+                    <textarea class="block w-3/4 py-2 px-4 bg-gray-200 dark:bg-gray-600 border rounded" id="add_reason" placeholder="1.1, 1.2" v-model="form.reason"></textarea>
                 </div>
 
                 <!-- Note -->
-                <div class="w-full p-3 flex justify-between px-0">
-                    <label class="mr-4 block w-1/4 pt-2 font-bold">
+                <div class="w-full py-3 flex items-start justify-between px-0">
+                    <label class="mr-4 block w-1/4 pt-2 font-semibold text-left">
                         {{ t('blacklist.note') }}
                     </label>
-                    <textarea class="block w-3/4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="add_note" placeholder="Really bad guy i don't like him." v-model="form.note"></textarea>
+                    <textarea class="block w-3/4 py-2 px-4 bg-gray-200 dark:bg-gray-600 border rounded" id="add_note" placeholder="Really bad guy i don't like him." v-model="form.note"></textarea>
                 </div>
+            </template>
 
-                <!-- Buttons -->
-                <div class="flex items-center mt-2">
-                    <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded mr-2" @click="confirmAdd">
-                        <i class="mr-1 fas fa-plus"></i>
-                        {{ t('global.confirm') }}
-                    </button>
-                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" @click="isAdding = false">
-                        {{ t('global.cancel') }}
-                    </button>
-                </div>
-            </div>
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isAdding = false">
+                    {{ t('global.cancel') }}
+                </button>
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-600 dark:hover:bg-green-400 dark:text-white" @click="confirmAdd">
+                    <i class="mr-1 fas fa-plus"></i>
+                    {{ t('global.confirm') }}
+                </button>
+            </template>
         </modal>
 
         <!-- Import -->
-        <modal :show.sync="isUploading" :raw="true">
-            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded w-alert">
-                <h3 class="mb-2">
+        <modal :show.sync="isUploading">
+            <template #header>
+                <h1 class="dark:text-white">
                     {{ t('blacklist.import') }}
-                </h3>
+                </h1>
+            </template>
 
+            <template #default>
                 <!-- License Identifier -->
-                <div class="w-full p-3 flex justify-between px-0">
-                    <label class="mr-4 block w-1/4 pt-2 font-bold" for="add_identifier">
+                <div class="w-full py-3 flex items-center justify-between px-0">
+                    <label class="mr-4 block w-1/4 font-semibold text-left" for="add_identifier">
                         {{ t('blacklist.file') }}
                     </label>
                     <input class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 rounded" id="import-file" type="file" accept=".csv,.txt" />
                 </div>
+            </template>
 
-                <!-- Buttons -->
-                <div class="flex items-center mt-2">
-                    <button class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded mr-2" @click="confirmImport">
-                        <span v-if="!isUploadLoading">
-                            <i class="mr-1 fas fa-cloud-upload-alt"></i>
-                            {{ t('global.confirm') }}
-                        </span>
-                        <span v-else>
-                            <i class="mr-1 fas fa-cog animate-spin"></i>
-                            {{ t('blacklist.importing') }}
-                        </span>
-                    </button>
-
-                    <button class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-500" @click="isUploading = false">
-                        {{ t('global.cancel') }}
-                    </button>
-                </div>
-            </div>
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isUploading = false">
+                    {{ t('global.cancel') }}
+                </button>
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-600 dark:hover:bg-green-400 dark:text-white" @click="confirmImport">
+                    <span v-if="!isUploadLoading">
+                        <i class="mr-1 fas fa-cloud-upload-alt"></i>
+                        {{ t('global.confirm') }}
+                    </span>
+                    <span v-else>
+                        <i class="mr-1 fas fa-cog animate-spin"></i>
+                        {{ t('blacklist.importing') }}
+                    </span>
+                </button>
+            </template>
         </modal>
 
         <v-section class="overflow-x-auto">

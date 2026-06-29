@@ -64,14 +64,19 @@
         </div>
 
         <!-- Remove Tattoos -->
-        <modal :show.sync="isTattooRemoval" :raw="true">
-            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
-                <h3 class="mb-2">{{ t('players.characters.sure_tattoos') }}</h3>
-                <div class="w-full p-3 flex justify-between">
-                    <label class="mr-4 block w-1/4 text-center pt-2 font-bold">
+        <modal :show.sync="isTattooRemoval">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.characters.sure_tattoos') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="w-full py-3 flex items-center justify-between">
+                    <label class="mr-4 block font-semibold text-left">
                         {{ t('players.characters.tattoo_zone') }}
                     </label>
-                    <select class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="zone">
+                    <select class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="zone">
                         <option value="all">{{ t('players.characters.zone.all') }}</option>
                         <option value="head" selected>{{ t('players.characters.zone.head') }}</option>
                         <option value="left_arm">{{ t('players.characters.zone.left_arm') }}</option>
@@ -81,27 +86,33 @@
                         <option value="right_leg">{{ t('players.characters.zone.right_leg') }}</option>
                     </select>
                 </div>
-                <p v-html="t('players.characters.tattoo_no_undo')"></p>
-                <div class="flex justify-end mt-2">
-                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-dark-secondary mr-3 dark:text-black dark:bg-secondary" @click="isTattooRemoval = false">
-                        {{ t('global.cancel') }}
-                    </button>
-                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-danger mr-3 dark:bg-dark-danger" @click="removeTattoos">
-                        {{ t('players.characters.tattoo_do') }}
-                    </button>
-                </div>
-            </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mt-2" v-html="t('players.characters.tattoo_no_undo')"></p>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isTattooRemoval = false">
+                    {{ t('global.cancel') }}
+                </button>
+                <button type="button" class="px-5 py-2 rounded bg-red-100 hover:bg-red-200 text-red-600 dark:bg-red-600 dark:hover:bg-red-400 dark:text-white" @click="removeTattoos">
+                    {{ t('players.characters.tattoo_do') }}
+                </button>
+            </template>
         </modal>
 
         <!-- Reset spawn -->
-        <modal :show.sync="isResetSpawn" :raw="true">
-            <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
-                <h3 class="mb-2">{{ t('players.characters.sure_spawn') }}</h3>
-                <div class="w-full p-3 flex justify-between">
-                    <label class="mr-4 block w-1/4 text-center pt-2 font-bold">
+        <modal :show.sync="isResetSpawn">
+            <template #header>
+                <h1 class="dark:text-white">
+                    {{ t('players.characters.sure_spawn') }}
+                </h1>
+            </template>
+
+            <template #default>
+                <div class="w-full py-3 flex items-center justify-between">
+                    <label class="mr-4 block font-semibold text-left">
                         {{ t('players.characters.spawn_point') }}
                     </label>
-                    <select class="w-3/4 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="spawn">
+                    <select class="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-600 border rounded" id="spawn">
                         <option v-for="coords in getResetCoords()" :key="coords.key" :value="coords.key">
                             {{ coords.label }}
                         </option>
@@ -110,16 +121,17 @@
                         </option>
                     </select>
                 </div>
-                <p v-html="t('players.characters.spawn_no_undo')"></p>
-                <div class="flex justify-end mt-2">
-                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-dark-secondary mr-3 dark:text-black dark:bg-secondary" @click="isResetSpawn = false">
-                        {{ t('global.cancel') }}
-                    </button>
-                    <button type="button" class="px-5 py-2 hover:shadow-xl font-semibold text-white rounded bg-danger mr-3 dark:bg-dark-danger" @click="resetSpawn">
-                        {{ t('players.characters.spawn_do') }}
-                    </button>
-                </div>
-            </div>
+                <p class="text-sm text-gray-600 dark:text-gray-300 mt-2" v-html="t('players.characters.spawn_no_undo')"></p>
+            </template>
+
+            <template #actions>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isResetSpawn = false">
+                    {{ t('global.cancel') }}
+                </button>
+                <button type="button" class="px-5 py-2 rounded bg-red-100 hover:bg-red-200 text-red-600 dark:bg-red-600 dark:hover:bg-red-400 dark:text-white" @click="resetSpawn">
+                    {{ t('players.characters.spawn_do') }}
+                </button>
+            </template>
         </modal>
 
         <!-- Editing -->
