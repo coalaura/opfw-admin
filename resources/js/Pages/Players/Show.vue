@@ -425,10 +425,6 @@
                 <div class="border-t-2 border-gray-500 my-6"></div>
 
                 <div class="bg-gray-100 p-6 rounded shadow-lg max-w-full dark:bg-gray-600 relative mb-4">
-                    <h2 class="text-lg mb-1">
-                        {{ t("players.show.staff_permissions") }}
-                    </h2>
-
                     <input class="block w-full px-4 py-2 bg-gray-200 border rounded dark:bg-gray-600" v-model="statisticsSearch" type="text" placeholder="/revive" />
                 </div>
 
@@ -515,11 +511,11 @@
             </template>
 
             <template #actions>
-                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isSchedulingUnban = false">
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isSchedulingUnban = false">
                     {{ t('global.close') }}
                 </button>
 
-                <button type="button" class="px-5 py-2 rounded hover:bg-yellow-200 dark:bg-yellow-600 dark:hover:bg-yellow-400" @click="scheduleUnban()">
+                <button type="button" class="px-5 py-2 rounded bg-yellow-100 hover:bg-yellow-200 text-yellow-800 dark:bg-yellow-600 dark:hover:bg-yellow-400 dark:text-white" @click="scheduleUnban()">
                     {{ t('players.show.schedule_unban') }}
                 </button>
             </template>
@@ -567,7 +563,7 @@
             </template>
 
             <template #actions>
-                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingLinked = false">
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingLinked = false">
                     {{ t('global.close') }}
                 </button>
             </template>
@@ -621,16 +617,16 @@
 
             <template #actions>
                 <template v-if="creatingNotification">
-                    <button type="button" class="px-5 py-2 rounded bg-danger dark:bg-dark-danger" @click="creatingNotification = false">
+                    <button type="button" class="px-5 py-2 rounded bg-red-100 hover:bg-red-200 text-red-600 dark:bg-red-600 dark:hover:bg-red-400 dark:text-white" @click="creatingNotification = false">
                         {{ t('global.cancel') }}
                     </button>
 
-                    <button type="button" class="px-5 py-2 rounded bg-success dark:bg-dark-success" @click="createNotification()" :disabled="notification.trim().length === 0">
+                    <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-600 dark:hover:bg-green-400 dark:text-white" @click="createNotification()" :disabled="notification.trim().length === 0">
                         {{ t('global.create') }}
                     </button>
                 </template>
 
-                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showingNotifications = false" v-else>
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showingNotifications = false" v-else>
                     {{ t('global.close') }}
                 </button>
             </template>
@@ -674,7 +670,7 @@
             </template>
 
             <template #actions>
-                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingAntiCheat = false">
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingAntiCheat = false">
                     {{ t('global.close') }}
                 </button>
             </template>
@@ -775,7 +771,7 @@
             </template>
 
             <template #actions>
-                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" @click="updatePermissions">
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-600 dark:hover:bg-green-400 dark:text-white" @click="updatePermissions">
                     {{ t('players.show.save_changes') }}
                 </button>
 
@@ -804,7 +800,7 @@
             </template>
 
             <template #actions>
-                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" @click="setBanException">
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-600 dark:hover:bg-green-400 dark:text-white" @click="setBanException">
                     <template v-if="updatingBanException">
                         <i class="fas fa-spinner animate-spin mr-1"></i>
                         {{ t("players.show.saving") }}

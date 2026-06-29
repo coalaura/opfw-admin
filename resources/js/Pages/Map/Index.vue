@@ -287,7 +287,7 @@
             </template>
 
             <template #actions>
-                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="viewingUnloadedPlayerList = false">
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="viewingUnloadedPlayerList = false">
                     {{ t('global.close') }}
                 </button>
             </template>

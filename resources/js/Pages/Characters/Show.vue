@@ -575,7 +575,7 @@
                     {{ t('global.cancel') }}
                 </button>
 
-                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" @click="editVehicle">
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-600 dark:hover:bg-green-400 dark:text-white" @click="editVehicle">
                     <span v-if="!isVehicleLoading">
                         {{ t('players.characters.vehicle.confirm') }}
                     </span>
@@ -610,7 +610,7 @@
                     {{ t('global.cancel') }}
                 </button>
 
-                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" @click="addVehicle" v-if="vehicleAddModelValid">
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-600 dark:hover:bg-green-400 dark:text-white" @click="addVehicle" v-if="vehicleAddModelValid">
                     {{ t('players.characters.vehicle.add') }}
                 </button>
             </template>
@@ -639,7 +639,7 @@
                     {{ t('global.cancel') }}
                 </button>
 
-                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" @click="editPedModel" v-if="pedEditModelValid">
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-600 dark:hover:bg-green-400 dark:text-white" @click="editPedModel" v-if="pedEditModelValid">
                     {{ t('players.characters.ped.save') }}
                 </button>
             </template>
@@ -662,7 +662,7 @@
                     {{ t('global.cancel') }}
                 </button>
 
-                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400" @click="updateLicenses" v-if="licensesChanged">
+                <button type="button" class="px-5 py-2 rounded bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-600 dark:hover:bg-green-400 dark:text-white" @click="updateLicenses" v-if="licensesChanged">
                     {{ t('players.characters.license.add') }}
                 </button>
             </template>
@@ -1000,7 +1000,7 @@
             </template>
 
             <template #actions>
-                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingProperty = false">
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingProperty = false">
                     {{ t('global.close') }}
                 </button>
             </template>
@@ -1033,7 +1033,7 @@
                         />
                         <button
                             type="button"
-                            class="flex-shrink-0 px-4 py-2 rounded bg-green-100 hover:bg-green-200 dark:bg-green-600 dark:hover:bg-green-400 font-semibold"
+                            class="flex-shrink-0 px-4 py-2 rounded bg-green-100 hover:bg-green-200 text-green-600 dark:bg-green-600 dark:hover:bg-green-400 dark:text-white font-semibold"
                             @click="saveSavingsBalance"
                             :disabled="isSavingSavings"
                         >
@@ -1111,7 +1111,7 @@
             </template>
 
             <template #actions>
-                <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingSavings = false">
+                <button type="button" class="px-5 py-2 rounded bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isShowingSavings = false">
                     {{ t('global.close') }}
                 </button>
             </template>
