@@ -64,7 +64,7 @@
         </div>
 
         <!-- Remove Tattoos -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isTattooRemoval">
+        <modal :show.sync="isTattooRemoval" :raw="true">
             <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
                 <h3 class="mb-2">{{ t('players.characters.sure_tattoos') }}</h3>
                 <div class="w-full p-3 flex justify-between">
@@ -91,10 +91,10 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </modal>
 
         <!-- Reset spawn -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isResetSpawn">
+        <modal :show.sync="isResetSpawn" :raw="true">
             <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
                 <h3 class="mb-2">{{ t('players.characters.sure_spawn') }}</h3>
                 <div class="w-full p-3 flex justify-between">
@@ -120,7 +120,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </modal>
 
         <!-- Editing -->
         <v-section :noFooter="true">

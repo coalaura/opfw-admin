@@ -331,7 +331,7 @@
         </div>
 
         <!-- Discord Accounts -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isShowingDiscord">
+        <modal :show.sync="isShowingDiscord" :raw="true">
             <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
                 <h3 class="mb-2">{{ t('players.show.discord_title') }}</h3>
                 <div v-if="isShowingDiscordLoading">
@@ -366,7 +366,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </modal>
 
         <metadataViewer :title="t('players.show.user_variables')" :metadata="player.variables" :show.sync="showingUserVariables"></metadataViewer>
 
@@ -677,7 +677,7 @@
         <metadataViewer :title="t('players.show.anti_cheat_metadata')" :image="antiCheatMetadataImage" :metadata="antiCheatMetadataJSON" :show.sync="antiCheatMetadata"></metadataViewer>
 
         <!-- Unloading -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isUnloading">
+        <modal :show.sync="isUnloading" :raw="true">
             <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
                 <h3 class="mb-2">{{ t('players.show.unload') }}</h3>
                 <form class="space-y-6" @submit.prevent="unloadCharacter">
@@ -705,10 +705,10 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </modal>
 
         <!-- Tag -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isTagging">
+        <modal :show.sync="isTagging" :raw="true">
             <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
                 <h3 class="mb-2">{{ t('players.show.edit_tag') }}</h3>
                 <form class="space-y-6">
@@ -739,7 +739,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+        </modal>
 
         <!-- Enablable permissions -->
         <modal :show.sync="isEnablingPermissions">
@@ -893,7 +893,7 @@
         </alert>
 
         <!-- Removing system ban -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-30" v-if="isConfirmingUnban">
+        <modal :show.sync="isConfirmingUnban" :raw="true">
             <div class="max-h-max overflow-y-auto shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-4 rounded w-alert">
                 <h3 class="mb-2">{{ t('players.show.unban_system_title') }}</h3>
                 <div>
@@ -913,7 +913,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </modal>
 
         <!-- Ban -->
         <div>
@@ -1566,7 +1566,7 @@
         </v-section>
 
         <!-- Screenshot -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k" v-if="isScreenshot && this.perm.check(this.perm.PERM_SCREENSHOT)">
+        <modal :show="isScreenshot && this.perm.check(this.perm.PERM_SCREENSHOT)" @update:show="isScreenshot = $event" :raw="true">
             <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded" :class="continuouslyScreenshotting ? 'w-vlarge-alert' : 'w-alert'">
                 <h3 class="mb-2">
                     {{ t('map.screenshot') }}
@@ -1622,10 +1622,10 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </modal>
 
         <!-- Screen capture -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k" v-if="isScreenCapture && this.perm.check(this.perm.PERM_SCREENSHOT)">
+        <modal :show="isScreenCapture && this.perm.check(this.perm.PERM_SCREENSHOT)" @update:show="isScreenCapture = $event" :raw="true">
             <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded" :class="screenCaptureVideo ? 'w-large-alert' : 'w-alert'">
                 <h3 class="mb-2">
                     {{ t('screenshot.screencapture') }}
@@ -1686,7 +1686,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </modal>
     </div>
 </template>
 

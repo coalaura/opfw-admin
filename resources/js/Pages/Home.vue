@@ -25,7 +25,7 @@
 
                 <!-- Announcement -->
                 <button class="py-1 px-2 ml-2 font-semibold text-white rounded bg-danger dark:bg-dark-danger block" @click="isServerAnnouncement = true" v-if="this.perm.check(this.perm.PERM_ANNOUNCEMENT)" :title="t('home.server_announcement')">
-                    <i class="fas fa-scroll"></i>
+                    <i class="fas fa-bullhorn"></i>
                 </button>
             </div>
 
@@ -132,7 +132,7 @@
             </div>
         </div>
 
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k" v-if="isServerAnnouncement">
+        <modal :show.sync="isServerAnnouncement" :raw="true">
             <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded w-alert">
                 <h3 class="mb-2">
                     {{ t('home.server_announcement') }}
@@ -155,7 +155,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </modal>
 
     </div>
 </template>

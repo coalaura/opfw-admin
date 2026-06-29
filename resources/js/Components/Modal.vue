@@ -2,13 +2,16 @@
     <portal to="modals" v-if="show">
         <!-- Backdrop -->
         <div class="absolute inset-0 flex items-start justify-center overflow-hidden modal" style="z-index: 9998; background-color: rgba(0, 0, 0, .85);" tabindex="-1" role="dialog" @mousedown.self="hide">
+            <!-- Slot inside raw mode -->
+            <slot v-if="raw" />
+
             <!-- Container -->
-            <div :class="className" class="max-w-3xl my-20 max-h-modal-max relative flex flex-col bg-white rounded-md shadow dark:bg-dark-secondary dark:text-white" role="document" v-bind="$attrs">
+            <div v-else :class="className" class="max-w-3xl my-20 max-h-modal-max relative flex flex-col bg-white rounded-md shadow dark:bg-dark-secondary dark:text-white" role="document" v-bind="$attrs">
                 <!-- Content part -->
                 <div class="px-10 py-4 flex flex-col overflow-hidden">
 
                     <!-- Header -->
-                    <header class="max-w-full prose text-center pt-4 mb-6 !block">
+                    <header v-if="$slots.header" class="max-w-full prose text-center pt-4 mb-6 !block">
                         <slot name="header" />
                     </header>
 
@@ -20,7 +23,7 @@
                 </div>
 
                 <!-- Actions -->
-                <footer class="flex items-center justify-end px-10 py-4 space-x-3">
+                <footer v-if="$slots.actions" class="flex items-center justify-end px-10 py-4 space-x-3">
                     <slot name="actions" />
                 </footer>
             </div>
@@ -36,6 +39,7 @@ export default {
         show: Boolean,
         small: Boolean,
         extraClass: String,
+        raw: Boolean,
     },
     computed: {
         className() {

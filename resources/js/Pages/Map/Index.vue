@@ -53,7 +53,7 @@
         </portal>
 
         <!-- Historic Data -->
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k" v-if="isHistoric">
+        <modal :show.sync="isHistoric" :raw="true">
             <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded w-alert">
                 <h3 class="mb-2">
                     {{ t('map.historic_title') }}
@@ -106,9 +106,9 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </modal>
 
-        <div class="fixed bg-black bg-opacity-70 top-0 left-0 right-0 bottom-0 z-2k" v-if="isTimestamp">
+        <modal :show.sync="isTimestamp" :raw="true">
             <div class="shadow-xl absolute bg-gray-100 dark:bg-gray-600 text-black dark:text-white left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 transform p-6 rounded w-alert">
                 <h3 class="mb-2">
                     {{ t('map.timestamp_title') }}
@@ -133,7 +133,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </modal>
 
         <template>
             <div class="-mt-10 flex flex-wrap">
