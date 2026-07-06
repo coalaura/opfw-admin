@@ -59,8 +59,8 @@ class PlayerBanController extends Controller
             abort(401);
         }
 
-        $license = trim((string) $request->input('license', ''));
-        $name = trim((string) $request->input('name', ''));
+        $license     = trim((string) $request->input('license', ''));
+        $name        = trim((string) $request->input('name', ''));
         $twitchInput = trim((string) $request->input('twitch', ''));
 
         $twitchInput = preg_replace('/^https?:\/\/(?:www\.)?twitch\.tv\//i', '', $twitchInput);
@@ -68,9 +68,9 @@ class PlayerBanController extends Controller
 
         $now = time();
 
-        $page = Paginator::resolveCurrentPage('page');
+        $page    = Paginator::resolveCurrentPage('page');
         $perPage = 15;
-        $offset = ($page - 1) * $perPage;
+        $offset  = ($page - 1) * $perPage;
 
         $playersQuery = Player::query()
             ->select([
@@ -177,9 +177,9 @@ class PlayerBanController extends Controller
             return is_string($url) && filter_var($url, FILTER_VALIDATE_URL) ? $url : null;
         }
 
-        $url = sprintf('https://decapi.me/twitch/avatar/%s', rawurlencode($username));
-        $url = trim(HttpHelper::get($url, 'text/plain') ?: '');
-        $host = strtolower(parse_url($url, PHP_URL_HOST) ?? '');
+        $url       = sprintf('https://decapi.me/twitch/avatar/%s', rawurlencode($username));
+        $url       = trim(HttpHelper::get($url, 'text/plain') ?: '');
+        $host      = strtolower(parse_url($url, PHP_URL_HOST) ?? '');
         $validHost = $host === 'jtvnw.net' || Str::endsWith($host, '.jtvnw.net');
 
         if (! filter_var($url, FILTER_VALIDATE_URL) || ! $validHost) {
@@ -287,7 +287,7 @@ class PlayerBanController extends Controller
             $query->where(function ($query) use ($player, $alias) {
                 $query->orWhere('creator_identifier', '=', $player->license_identifier);
 
-                if (!empty($alias) && is_array($alias)) {
+                if (! empty($alias) && is_array($alias)) {
                     $query->orWhereIn('creator_name', $alias);
                 }
             });
@@ -375,8 +375,8 @@ class PlayerBanController extends Controller
 
         // Create reason.
         $reason = $request->input('reason')
-        ? 'I banned this person with the reason: `' . $request->input('reason') . '`'
-        : 'I banned this person without a reason';
+            ? 'I banned this person with the reason: `' . $request->input('reason') . '`'
+            : 'I banned this person without a reason';
 
         $reason .= ($ban['expire'] ? ' for ' . GeneralHelper::formatSeconds(intval($ban['expire'])) : ' indefinitely') . '.';
 
@@ -407,8 +407,8 @@ class PlayerBanController extends Controller
         }
 
         $kickReason = $request->input('reason')
-        ? 'You have been banned by ' . $staffName . ' for reason `' . $request->input('reason') . '`.'
-        : 'You have been banned without a specified reason by ' . $staffName;
+            ? 'You have been banned by ' . $staffName . ' for reason `' . $request->input('reason') . '`.'
+            : 'You have been banned without a specified reason by ' . $staffName;
 
         $response = OPFWHelper::kickPlayer($user->player_name, $player, $kickReason);
 
@@ -668,23 +668,30 @@ class PlayerBanController extends Controller
         $user   = user();
         $reason = $request->input('reason') ?: 'No reason.';
 
-        $expireBefore = $ban->getExpireTimeInSeconds() ? GeneralHelper::formatSeconds($ban->getExpireTimeInSeconds()) : 'permanent';
-        $expireAfter  = $request->input('expire') ? GeneralHelper::formatSeconds(intval($request->input('expire')) + (time() - $ban->getTimestamp())) : 'permanent';
-
-        $before = $ban->getExpireTimeInSeconds() || null;
+        $before = $ban->getExpireTimeInSeconds() ?: null;
         $after  = $request->input('expire') ? intval($request->input('expire')) + (time() - $ban->getTimestamp()) : null;
 
-        $message = '';
+        $expireBefore = $before ? GeneralHelper::formatSeconds($before) : 'permanent';
+        $expireAfter  = $after ? GeneralHelper::formatSeconds($after) : 'permanent';
 
-        if ($before === $after && $reason === $ban->reason) {
+        $reasonChanged = $reason !== $ban->reason;
+        $expireChanged = $before !== $after;
+
+        if (! $reasonChanged && ! $expireChanged) {
             return backWith('error', 'You did not change anything!');
-        } else if ($before === $after) {
-            $message = 'I changed this bans reason to be "' . $reason . '". ';
-        } else if ($reason === $ban->reason) {
-            $message = 'I updated this ban to be "' . $expireAfter . '" instead of "' . $expireBefore . '". ';
-        } else {
-            $message = 'I updated this ban to be "' . $expireAfter . '" instead of "' . $expireBefore . '" and changed the reason to "' . $reason . '". ';
         }
+
+        $parts = [];
+
+        if ($expireChanged) {
+            $parts[] = 'updated this ban to be "' . $expireAfter . '" instead of "' . $expireBefore . '"';
+        }
+
+        if ($reasonChanged) {
+            $parts[] = 'changed the reason to "' . $reason . '"';
+        }
+
+        $message = 'I ' . implode(' and ', $parts) . '. ';
 
         $bans = Ban::query()->where('ban_hash', '=', $ban->ban_hash)->get();
         foreach ($bans->values() as $b) {
@@ -774,10 +781,10 @@ class PlayerBanController extends Controller
             }
 
             if ($count->ban_hash) {
-                $bannedTotal += 1;
+                $bannedTotal       += 1;
                 $entries[$date][0] += 1;
             } else {
-                $unbannedTotal += 1;
+                $unbannedTotal     += 1;
                 $entries[$date][1] += 1;
             }
         }
