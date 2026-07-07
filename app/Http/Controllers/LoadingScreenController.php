@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\AuditLog;
 use App\Helpers\PermissionHelper;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,6 +45,12 @@ class LoadingScreenController extends Controller
 
         DB::table('loading_screen_images')->where('id', $id)->delete();
 
+        $user = user();
+
+        AuditLog::log(license(), 'loading_screen.delete', 'loading_screen_image', $id, sprintf('%s deleted loading screen image #%d.', $user->consoleName(), $id), [
+            'image_id' => $id,
+        ]);
+
         return backWith('success', 'The picture has successfully been deleted.');
     }
 
@@ -81,6 +88,16 @@ class LoadingScreenController extends Controller
             'excluded'    => $excluded,
         ]);
 
+        $user = user();
+
+        AuditLog::log(license(), 'loading_screen.update', 'loading_screen_image', $id, sprintf('%s edited loading screen image #%d.', $user->consoleName(), $id), [
+            'image_id'   => $id,
+            'image_url'  => $url,
+            'description' => $description,
+            'included'   => $included,
+            'excluded'   => $excluded,
+        ]);
+
         return backWith('success', 'The picture has successfully been edited.');
     }
 
@@ -102,7 +119,14 @@ class LoadingScreenController extends Controller
             return backWith('error', 'Invalid url.');
         }
 
-        DB::table('loading_screen_images')->insert([
+        $imageId = DB::table('loading_screen_images')->insertGetId([
+            'image_url' => $url,
+        ]);
+
+        $user = user();
+
+        AuditLog::log(license(), 'loading_screen.create', 'loading_screen_image', $imageId, sprintf('%s added loading screen image #%d.', $user->consoleName(), $imageId), [
+            'image_id'  => $imageId,
             'image_url' => $url,
         ]);
 

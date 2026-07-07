@@ -7,7 +7,7 @@ use App\Helpers\HttpHelper;
 use App\Helpers\OPFWHelper;
 use App\Helpers\PermissionHelper;
 use App\Helpers\ServerAPI;
-use App\PanelLog;
+use App\AuditLog;
 use App\Player;
 use App\Server;
 use Illuminate\Http\RedirectResponse;
@@ -46,9 +46,11 @@ class PlayerRouteController extends Controller
             return backWith('error', 'Failed to kick player');
         }
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Kicked Player",
+            'player.kick',
+            'player',
+            $player->license_identifier,
             sprintf("%s kicked %s.", $user->consoleName(), $player->consoleName()),
             ['reason' => $reason]
         );
@@ -82,9 +84,11 @@ class PlayerRouteController extends Controller
             return backWith('error', 'Failed to send staffPM');
         }
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Staff PM",
+            'player.staff_pm',
+            'player',
+            $player->license_identifier,
             sprintf("%s sent a staffPM to %s.", $user->consoleName(), $player->consoleName()),
             ['message' => $message]
         );
@@ -120,11 +124,13 @@ class PlayerRouteController extends Controller
             return backWith('error', 'Failed to unload character');
         }
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Unloaded Character",
+            'character.unload',
+            'player',
+            $player->license_identifier,
             sprintf("%s unloaded %s.", $user->consoleName(), $player->consoleName()),
-            ['message' => $message]
+            ['message' => $message, 'character_id' => $character]
         );
 
         if (!$player->isStaff()) {
@@ -274,9 +280,11 @@ class PlayerRouteController extends Controller
             return backWith('error', 'Failed to revive player');
         }
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Revived Player",
+            'player.revive',
+            'player',
+            $player->license_identifier,
             sprintf("%s revived %s.", $user->consoleName(), $player->consoleName())
         );
 

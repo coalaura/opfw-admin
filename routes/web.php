@@ -38,6 +38,7 @@ use App\Http\Controllers\PlayerDataController;
 use App\Http\Controllers\PlayerWarningController;
 use App\Http\Controllers\AntiCheatController;
 use App\Http\Controllers\StocksController;
+use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StaffChatController;
 use App\Http\Controllers\StatisticsController;
@@ -241,6 +242,9 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Panel Logs.
     Route::get('/panel', [PanelLogController::class, 'index']);
+
+    // Audit Logs.
+    Route::get('/audit_logs', [AuditLogController::class, 'index']);
 
     // Characters.
     Route::resource('characters', PlayerCharacterController::class);

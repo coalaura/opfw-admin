@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AuditLog;
 use App\BlacklistedIdentifier;
 use App\Http\Requests\BlacklistedIdentifierStoreRequest;
 use App\Http\Resources\BlacklistedIdentifierResource;
@@ -92,6 +93,13 @@ class BlacklistController extends Controller
 
         BlacklistedIdentifier::query()->updateOrCreate($identifier);
 
+        AuditLog::log(license(), 'blacklist.create', 'blacklist', $identifier['identifier'], sprintf('%s blacklisted identifier %s.', $user->consoleName(), $identifier['identifier']), [
+            'identifier'         => $identifier['identifier'],
+            'reason'             => $identifier['reason'] ?? null,
+            'note'               => $identifier['note'] ?? null,
+            'creator_identifier' => $user->license_identifier,
+        ]);
+
         return backWith('success', 'The identifier has successfully been blacklisted.');
     }
 
@@ -149,6 +157,12 @@ class BlacklistController extends Controller
             BlacklistedIdentifier::create($insert);
         }
 
+        AuditLog::log(license(), 'blacklist.import', 'blacklist', null, sprintf('%s imported blacklist entries (%d imported, %d skipped, %d invalid).', $user->consoleName(), $imported, $skipped, $invalid), [
+            'imported' => $imported,
+            'skipped'  => $skipped,
+            'invalid'  => $invalid,
+        ]);
+
         return backWith('success', 'Imported ' . $imported . ' identifiers, skipped ' . $skipped . ' existing and ' . $invalid . ' invalid ones.');
     }
 
@@ -160,7 +174,15 @@ class BlacklistController extends Controller
      */
     public function destroy(BlacklistedIdentifier $identifier): RedirectResponse
     {
+        $identifierString = $identifier->identifier;
+
         $identifier->forceDelete();
+
+        $user = user();
+
+        AuditLog::log(license(), 'blacklist.remove', 'blacklist', $identifierString, sprintf('%s removed identifier %s from the blacklist.', $user->consoleName(), $identifierString), [
+            'identifier' => $identifierString,
+        ]);
 
         return backWith('success', 'The identifier has successfully been removed.');
     }

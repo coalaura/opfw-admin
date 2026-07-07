@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Character;
 use App\Helpers\PermissionHelper;
-use App\PanelLog;
+use App\AuditLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -261,9 +261,11 @@ class StocksController extends Controller
             ->where('company_id', '=', $id)
             ->update(['company_balance' => $balance]);
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Edited Company Balance",
+            'balance.edit',
+            'company',
+            $id,
             sprintf(
                 "%s edited company #%d (%s) balance: %d -> %d.",
                 $user->consoleName(),
@@ -271,7 +273,13 @@ class StocksController extends Controller
                 $company->company_name,
                 $company->company_balance,
                 $balance
-            )
+            ),
+            [
+                'company_id'   => $id,
+                'company_name' => $company->company_name,
+                'before'       => $company->company_balance,
+                'after'        => $balance,
+            ]
         );
 
         return self::json(true);

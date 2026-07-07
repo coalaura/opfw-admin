@@ -51,6 +51,7 @@ const Permissions = {
             PERM_VIEW_INVENTORY: 'view_inventory',
             PERM_EDIT_COMPANY_BALANCE: 'edit_company_balance',
             PERM_EDIT_SAVINGS_BALANCE: 'edit_savings_balance',
+            PERM_VIEW_AUDIT_LOGS: 'view_audit_logs',
 
             level(permission) {
                 if (!(permission in permissions)) {

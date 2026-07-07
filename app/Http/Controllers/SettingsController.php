@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\AuditLog;
+use App\Helpers\ChunkedHelper;
 use App\Session;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
-use App\Helpers\ChunkedHelper;
 
 class SettingsController extends Controller
 {
@@ -34,6 +35,8 @@ class SettingsController extends Controller
         $success = true;
         $error = '';
 
+        $before = $user->getPanelSetting($key);
+
         try {
             $user->setPanelSetting($key, $value, function ($progress) use ($chunked) {
                 $chunked->sendChunk([
@@ -46,6 +49,15 @@ class SettingsController extends Controller
         }
 
         $chunked->end();
+
+        if ($success) {
+            AuditLog::log(license(), 'settings.update', 'player', $user->license_identifier, sprintf('%s updated their panel setting `%s`.', $user->consoleName(), $key), [
+                'player' => $user->license_identifier,
+                'key'    => $key,
+                'before' => $before,
+                'after'  => $value,
+            ]);
+        }
 
         return $this->json($success, $user->getPanelSetting($key), $error);
     }

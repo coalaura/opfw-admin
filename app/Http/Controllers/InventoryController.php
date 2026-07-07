@@ -11,7 +11,7 @@ use App\Log;
 use App\Player;
 use App\Server;
 use App\Vehicle;
-use App\PanelLog;
+use App\AuditLog;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
@@ -325,7 +325,7 @@ class InventoryController extends Controller
 
         LoggingHelper::log($logMessage);
 
-        PanelLog::log(license(), 'Edited Inventory', $logMessage, [
+        AuditLog::log(license(), 'inventory.edit', 'inventory', $inventory, $logMessage, [
             'inventory' => $inventory,
             'slot'      => $slot,
             'item'      => $name,
@@ -384,7 +384,7 @@ class InventoryController extends Controller
 
         LoggingHelper::log($logMessage);
 
-        PanelLog::log(license(), 'Moved Inventory Item', $logMessage, [
+        AuditLog::log(license(), 'inventory.move', 'inventory', $inventory, $logMessage, [
             'sourceInventory'      => $inventory,
             'sourceSlot'           => $slot,
             'targetInventory'      => $target,
@@ -420,7 +420,7 @@ class InventoryController extends Controller
 
         LoggingHelper::log($logMessage);
 
-        PanelLog::log(license(), 'Deleted Inventory Item', $logMessage, [
+        AuditLog::log(license(), 'inventory.delete', 'inventory', $inventory, $logMessage, [
             'inventory' => $inventory,
             'slot'      => $slot,
         ]);

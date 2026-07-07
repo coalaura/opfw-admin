@@ -178,6 +178,12 @@ export default {
                 url: "/panel",
             },
             {
+                label: "audit_logs.title",
+                icon: "fas fa-clipboard-list",
+                url: "/audit_logs",
+                hidden: !this.perm.check(this.perm.PERM_VIEW_AUDIT_LOGS),
+            },
+            {
                 label: "search_logs.title",
                 icon: "fas fa-search",
                 url: "/searches",
@@ -370,6 +376,7 @@ export default {
                     "/phone_msg",
                     "/money_logs",
                     "/panel",
+                    "/audit_logs",
                     "/searches",
                     "/screenshot_logs",
                     "/casino",

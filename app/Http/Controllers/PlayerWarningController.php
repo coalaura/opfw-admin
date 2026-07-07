@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AuditLog;
 use App\Helpers\DiscordAttachmentHelper;
 use App\Helpers\GeneralHelper;
 use App\Helpers\Mutex;
@@ -47,6 +48,15 @@ class PlayerWarningController extends Controller
             DiscordAttachmentHelper::ensureMessageAttachments($warning);
         }
 
+        $user = user();
+
+        AuditLog::log(license(), 'warning.create', 'player', $player->license_identifier, sprintf('%s added warning #%d to %s.', $user->consoleName(), $warning->id, $player->consoleName()), [
+            'player'     => $player->license_identifier,
+            'warning_id' => $warning->id,
+            'type'       => $data['warning_type'],
+            'message'    => $data['message'],
+        ]);
+
         return backWith('success', 'Warning/Note has been added successfully.');
     }
 
@@ -78,6 +88,15 @@ class PlayerWarningController extends Controller
         DiscordAttachmentHelper::garbageCollectAttachments($messageBefore, $warning->message);
         DiscordAttachmentHelper::ensureMessageAttachments($warning);
 
+        $user = user();
+
+        AuditLog::log(license(), 'warning.update', 'player', $player->license_identifier, sprintf('%s updated warning #%d on %s.', $user->consoleName(), $warning->id, $player->consoleName()), [
+            'player'         => $player->license_identifier,
+            'warning_id'     => $warning->id,
+            'message_before' => $messageBefore,
+            'message_after'  => $warning->message,
+        ]);
+
         return backWith('success', 'Successfully updated warning/note');
     }
 
@@ -95,6 +114,13 @@ class PlayerWarningController extends Controller
         }
 
         DiscordAttachmentHelper::ensureMessageAttachments($warning);
+
+        $user = user();
+
+        AuditLog::log(license(), 'warning.refresh', 'player', $player->license_identifier, sprintf('%s refreshed Discord attachments for warning #%d on %s.', $user->consoleName(), $warning->id, $player->consoleName()), [
+            'player'     => $player->license_identifier,
+            'warning_id' => $warning->id,
+        ]);
 
         return backWith('success', 'Successfully refreshed warning/note');
     }
@@ -115,9 +141,20 @@ class PlayerWarningController extends Controller
             abort(401);
         }
 
+        $warningId = $warning->id;
+        $warningMessage = $warning->message;
+
         $warning->forceDelete();
 
         DiscordAttachmentHelper::unlinkMessageAttachments($warning);
+
+        $user = user();
+
+        AuditLog::log(license(), 'warning.delete', 'player', $player->license_identifier, sprintf('%s deleted warning #%d from %s.', $user->consoleName(), $warningId, $player->consoleName()), [
+            'player'     => $player->license_identifier,
+            'warning_id' => $warningId,
+            'message'    => $warningMessage,
+        ]);
 
         return backWith('success', 'The warning/note has successfully been deleted from the player\'s record.');
     }
@@ -136,11 +173,20 @@ class PlayerWarningController extends Controller
 
         $warnings = Warning::query()->where('player_id', $player->user_id)->whereIn('id', $ids)->get();
 
+        $user = user();
+
+        $warningIds = $warnings->pluck('id')->toArray();
+
         foreach ($warnings as $warning) {
             $warning->forceDelete();
 
             DiscordAttachmentHelper::unlinkMessageAttachments($warning);
         }
+
+        AuditLog::log(license(), 'warning.bulk_delete', 'player', $player->license_identifier, sprintf('%s bulk-deleted %d warnings from %s (#%s).', $user->consoleName(), count($warningIds), $player->consoleName(), implode(', ', $warningIds)), [
+            'player'      => $player->license_identifier,
+            'warning_ids' => $warningIds,
+        ]);
 
         return backWith('success', 'The warnings have successfully been deleted from the player\'s record.');
     }
@@ -186,6 +232,15 @@ class PlayerWarningController extends Controller
         $warning->update(['reactions' => $reactions]);
 
         $mutex->unlock();
+
+        $user = user();
+
+        AuditLog::log(license(), 'warning.react', 'player', $player->license_identifier, sprintf('%s toggled a reaction on warning #%d for %s.', $user->consoleName(), $warning->id, $player->consoleName()), [
+            'player'     => $player->license_identifier,
+            'warning_id' => $warning->id,
+            'emoji'      => $emoji,
+            'reactions'  => $reactions,
+        ]);
 
         return $this->json(true, $warning->getReactions($license));
     }

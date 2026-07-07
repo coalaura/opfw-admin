@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Helpers\PermissionHelper;
 use App\Helpers\ServerAPI;
 use App\Helpers\StatusHelper;
-use App\PanelLog;
+use App\AuditLog;
 use App\Player;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -44,18 +44,22 @@ class PlayerDataController extends Controller
                 'creatorName'     => user()->player_name,
             ]);
 
-            PanelLog::log(
+            AuditLog::log(
                 $user->license_identifier,
-                "Muted Player",
+                'player.mute',
+                'player',
+                $player->license_identifier,
                 sprintf("%s muted %s.", $user->consoleName(), $player->consoleName()),
                 ['reason' => $reason]
             );
         } else {
             $player->setUserData('muted', null);
 
-            PanelLog::log(
+            AuditLog::log(
                 $user->license_identifier,
-                "Unmuted Player",
+                'player.unmute',
+                'player',
+                $player->license_identifier,
                 sprintf("%s unmuted %s.", $user->consoleName(), $player->consoleName()),
             );
         }
@@ -92,9 +96,11 @@ class PlayerDataController extends Controller
                 ]);
             }
 
-            PanelLog::log(
+            AuditLog::log(
                 $user->license_identifier,
-                "Whitelisted Player",
+                'player.whitelist',
+                'player',
+                $player->license_identifier,
                 sprintf("%s whitelisted %s.", $user->consoleName(), $player->consoleName()),
             );
         } else {
@@ -102,9 +108,11 @@ class PlayerDataController extends Controller
                 DB::table('user_whitelist')->where('license_identifier', '=', $player->license_identifier)->delete();
             }
 
-            PanelLog::log(
+            AuditLog::log(
                 $user->license_identifier,
-                "Un-Whitelisted Player",
+                'player.unwhitelist',
+                'player',
+                $player->license_identifier,
                 sprintf("%s un-whitelisted %s.", $user->consoleName(), $player->consoleName()),
             );
         }
@@ -133,15 +141,19 @@ class PlayerDataController extends Controller
         $player->setUserData('twitchBanException', $twitch);
 
         if ($twitch) {
-            PanelLog::log(
+            AuditLog::log(
                 $user->license_identifier,
-                "Enabled Ban Exception",
+                'ban_exception.enable',
+                'player',
+                $player->license_identifier,
                 sprintf("%s enabled ban exception for %s (`%s`).", $user->consoleName(), $player->consoleName(), $twitch),
             );
         } else {
-            PanelLog::log(
+            AuditLog::log(
                 $user->license_identifier,
-                "Removed Ban Exception",
+                'ban_exception.disable',
+                'player',
+                $player->license_identifier,
                 sprintf("%s removed ban exception for %s.", $user->consoleName(), $player->consoleName(), $twitch),
             );
         }
@@ -173,15 +185,19 @@ class PlayerDataController extends Controller
         Player::resolveTags(true);
 
         if ($tag) {
-            PanelLog::log(
+            AuditLog::log(
                 $user->license_identifier,
-                "Updated Tag",
+                'tag.set',
+                'player',
+                $player->license_identifier,
                 sprintf("%s set the tag of %s to `%s`.", $user->consoleName(), $player->consoleName(), $tag),
             );
         } else {
-            PanelLog::log(
+            AuditLog::log(
                 $user->license_identifier,
-                "Removed Tag",
+                'tag.remove',
+                'player',
+                $player->license_identifier,
                 sprintf("%s removed the tag of %s.", $user->consoleName(), $player->consoleName()),
             );
         }
@@ -267,9 +283,11 @@ class PlayerDataController extends Controller
             }
         }
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Edited Permissions",
+            'permissions.edit',
+            'player',
+            $player->license_identifier,
             sprintf("%s edited the enabled permissions of %s.", $user->consoleName(), $player->consoleName()),
             [
                 'permissions'  => $enabledPermissions,
@@ -334,9 +352,11 @@ class PlayerDataController extends Controller
             ServerAPI::showUserNotifications($status['server'], $status['source']);
         }
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Created Notification",
+            'notification.create',
+            'player',
+            $player->license_identifier,
             sprintf("%s created notification #%d for %s.", $user->consoleName(), $id, $player->consoleName()),
             ['notification' => $notification]
         );
@@ -368,9 +388,11 @@ class PlayerDataController extends Controller
 
         DB::table("user_notifications")->where("license_identifier", $player->license_identifier)->where("id", $id)->delete();
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Deleted Notification",
+            'notification.delete',
+            'player',
+            $player->license_identifier,
             sprintf("%s deleted notification #%d for %s.", $user->consoleName(), $id, $player->consoleName()),
             ['notification' => $notification->notification]
         );

@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\AuditLog;
 use App\Helpers\PermissionHelper;
 use App\Http\Resources\TokenResource;
 use App\Token;
@@ -40,9 +41,25 @@ class TokenController extends Controller
 
         $note = trim($request->input('note', ''));
 
+        $tokenBefore = [
+            'note'        => $token->note,
+            'permissions' => $token->permissions,
+        ];
+
         $token->update([
             'note'        => $note,
             'permissions' => $permissions,
+        ]);
+
+        $user = user();
+
+        AuditLog::log(license(), 'token.update', 'token', $token->id, sprintf('%s updated API token #%d.', $user->consoleName(), $token->id), [
+            'token_id'    => $token->id,
+            'before'      => $tokenBefore,
+            'after'       => [
+                'note'        => $note,
+                'permissions' => $permissions,
+            ],
         ]);
 
         return $this->json(true);
@@ -62,6 +79,12 @@ class TokenController extends Controller
             'last_request_timestamp' => 0,
         ]);
 
+        $user = user();
+
+        AuditLog::log(license(), 'token.create', 'token', $token->id, sprintf('%s created API token #%d.', $user->consoleName(), $token->id), [
+            'token_id' => $token->id,
+        ]);
+
         return $this->json(true, TokenResource::make($token));
     }
 
@@ -71,7 +94,17 @@ class TokenController extends Controller
             abort(401);
         }
 
+        $tokenId = $token->id;
+        $tokenNote = $token->note;
+
         $token->delete();
+
+        $user = user();
+
+        AuditLog::log(license(), 'token.delete', 'token', $tokenId, sprintf('%s deleted API token #%d.', $user->consoleName(), $tokenId), [
+            'token_id' => $tokenId,
+            'note'     => $tokenNote,
+        ]);
 
         return $this->json(true);
     }

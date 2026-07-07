@@ -11,7 +11,7 @@ use App\Http\Resources\CharacterIndexResource;
 use App\Http\Resources\CharacterResource;
 use App\Http\Resources\PlayerResource;
 use App\Motel;
-use App\PanelLog;
+use App\AuditLog;
 use App\Player;
 use App\Vehicle;
 use Illuminate\Http\RedirectResponse;
@@ -247,9 +247,11 @@ class PlayerCharacterController extends Controller
             $info = $refresh->notExecuted ? '' : 'In-Game character refresh was successful too.';
         }
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Edited Character",
+            'character.edit',
+            'character',
+            $character->character_id,
             sprintf("%s edited %s (#%d).", $user->consoleName(), $player->consoleName(), $character->character_id),
             ['data' => $data]
         );
@@ -275,9 +277,11 @@ class PlayerCharacterController extends Controller
 
         $user = user();
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Refreshed E-Mail",
+            'email.refresh',
+            'character',
+            $character->character_id,
             sprintf("%s refreshed the email address of %s (#%d).", $user->consoleName(), $player->consoleName(), $character->character_id),
             [
                 'before' => $before,
@@ -309,9 +313,11 @@ class PlayerCharacterController extends Controller
         }
 
         if (DB::statement('UPDATE `characters` SET `character_deleted` = 1, `character_deletion_timestamp`=' . time() . ' WHERE `character_id` = ' . $character->character_id)) {
-            PanelLog::log(
+            AuditLog::log(
                 $user->license_identifier,
-                "Deleted Character",
+                'character.delete',
+                'character',
+                $character->character_id,
                 sprintf("%s deleted character #%d from %s.", $user->consoleName(), $character->character_id, $player->consoleName()),
             );
 
@@ -377,9 +383,11 @@ class PlayerCharacterController extends Controller
             'tattoos_data' => $json,
         ]);
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Removed Tattoos",
+            'tattoos.remove',
+            'character',
+            $character->character_id,
             sprintf("%s removed %s tattoos from %s (#%d).", $user->consoleName(), $zone, $player->consoleName(), $character->character_id),
         );
 
@@ -421,9 +429,11 @@ class PlayerCharacterController extends Controller
             'coords' => $coords,
         ]);
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Reset Spawn",
+            'spawn.reset',
+            'character',
+            $character->character_id,
             sprintf("%s reset the spawn for %s (#%d).", $user->consoleName(), $player->consoleName(), $character->character_id),
         );
 
@@ -467,9 +477,11 @@ class PlayerCharacterController extends Controller
             ]);
         }
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Divorced Characters",
+            'character.divorce',
+            'character',
+            $character->character_id,
             sprintf("%s divorced %s (#%d) from #%s.", $user->consoleName(), $player->consoleName(), $character->character_id, $marriedTo),
         );
 
@@ -496,9 +508,11 @@ class PlayerCharacterController extends Controller
             'is_dead' => 0,
         ]);
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Revived Offline",
+            'character.revive_offline',
+            'character',
+            $character->character_id,
             sprintf("%s revived %s (#%d).", $user->consoleName(), $player->consoleName(), $character->character_id),
         );
 
@@ -545,9 +559,11 @@ class PlayerCharacterController extends Controller
             $info = $refresh->notExecuted ? '' : 'In-Game character refresh was successful too.';
         }
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Edited Balance",
+            'balance.edit',
+            'character',
+            $character->character_id,
             sprintf("%s edited the balance of %s (#%d).", $user->consoleName(), $player->consoleName(), $character->character_id),
             ['changed' => $changed]
         );
@@ -574,9 +590,11 @@ class PlayerCharacterController extends Controller
             'vehicle_deleted' => '1',
         ]);
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Deleted Vehicle",
+            'vehicle.delete',
+            'vehicle',
+            $vehicle->vehicle_id,
             sprintf("%s deleted vehicle #%d from character #%d.", $user->consoleName(), $vehicle->vehicle_id, $vehicle->owner_cid),
         );
 
@@ -648,9 +666,11 @@ class PlayerCharacterController extends Controller
             ],
         ]);
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Added Vehicle",
+            'vehicle.add',
+            'character',
+            $character->character_id,
             sprintf("%s added a `%s` to %s (#%d).", $user->consoleName(), $model, $player->consoleName(), $character->character_id),
         );
 
@@ -685,9 +705,11 @@ class PlayerCharacterController extends Controller
             'ped_model_hash' => joaat($model),
         ]);
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Changed Ped Model",
+            'ped_model.change',
+            'character',
+            $character->character_id,
             sprintf("%s changed the ped model of %s (#%d) to `%s`.", $user->consoleName(), $player->consoleName(), $character->character_id, $model),
         );
 
@@ -737,9 +759,11 @@ class PlayerCharacterController extends Controller
             $info = $refresh->notExecuted ? '' : 'In-Game character refresh was successful too.';
         }
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Edited Licenses",
+            'licenses.edit',
+            'character',
+            $character->character_id,
             sprintf("%s edited the licenses of %s (#%d).", $user->consoleName(), $player->consoleName(), $character->character_id),
             ['licenses' => $licenses]
         );
@@ -1018,9 +1042,11 @@ class PlayerCharacterController extends Controller
             ->where('id', '=', $id)
             ->update(['balance' => $balance]);
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Edited Savings Balance",
+            'balance.edit',
+            'savings_account',
+            $id,
             sprintf(
                 "%s edited savings account #%d balance: %d -> %d.",
                 $user->consoleName(),

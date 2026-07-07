@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\AuditLog;
 use App\Character;
 use App\Helpers\PermissionHelper;
 use App\Http\Resources\CharacterSlimResource;
@@ -187,7 +188,23 @@ class YController extends Controller
             }
         }
 
+        $before = [];
+        if (isset($update['message'])) {
+            $before['message'] = $post->message;
+        }
+        if (isset($update['likes'])) {
+            $before['likes'] = $post->likes;
+        }
+
         $post->update($update);
+
+        $actor = user();
+
+        AuditLog::log(license(), 'yell.edit', 'yell', $post->id, sprintf('%s edited yell #%d.', $actor->consoleName(), $post->id), [
+            'post_id' => $post->id,
+            'before'  => $before,
+            'after'   => $update,
+        ]);
 
         return backWith('success', 'Successfully edited yell');
     }
@@ -212,6 +229,12 @@ class YController extends Controller
 
         YPost::query()->whereIn('id', $ids)->delete();
 
+        $actor = user();
+
+        AuditLog::log(license(), 'yell.delete', 'yell', null, sprintf('%s deleted %d yells.', $actor->consoleName(), is_array($ids) ? count($ids) : 1), [
+            'ids' => $ids,
+        ]);
+
         return backWith('success', 'Successfully deleted yells');
     }
 
@@ -227,8 +250,19 @@ class YController extends Controller
             abort(401);
         }
 
+        $yUserId = $user->id;
+        $beforeVerified = $user->is_verified;
+
         $user->update([
             'is_verified' => $user->is_verified ? 0 : 1,
+        ]);
+
+        $actor = user();
+
+        AuditLog::log(license(), 'y_user.verify', 'y_user', $yUserId, sprintf('%s %sverified Y user #%d.', $actor->consoleName(), $beforeVerified ? 'un' : '', $yUserId), [
+            'y_user_id'    => $yUserId,
+            'before'       => $beforeVerified,
+            'after'        => !$beforeVerified,
         ]);
 
         return backWith('success', 'Successfully changed verification status');

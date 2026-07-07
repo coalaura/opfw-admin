@@ -13,7 +13,7 @@ use App\Http\Requests\BanStoreRequest;
 use App\Http\Requests\BanUpdateRequest;
 use App\Http\Resources\BanResource;
 use App\Http\Resources\PlayerResource;
-use App\PanelLog;
+use App\AuditLog;
 use App\Player;
 use App\Warning;
 use Illuminate\Http\RedirectResponse;
@@ -447,9 +447,11 @@ class PlayerBanController extends Controller
             ->whereNotNull('smurf_account')
             ->delete();
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Removed Ban",
+            'ban.remove',
+            'player',
+            $player->license_identifier,
             sprintf("%s removed a ban from %s.", $user->consoleName(), $player->consoleName()),
             ['hash' => $ban->ban_hash]
         );
@@ -572,10 +574,13 @@ class PlayerBanController extends Controller
             'player_tokens' => $newTokens2,
         ]);
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Unlinked HWID",
-            sprintf("%s unlinked %s from %s.", $user->consoleName(), $player->consoleName(), $player2->consoleName())
+            'hwid.unlink',
+            'player',
+            $player->license_identifier,
+            sprintf("%s unlinked %s from %s.", $user->consoleName(), $player->consoleName(), $player2->consoleName()),
+            ['target_player_2' => $player2->license_identifier]
         );
 
         return backWith('success', 'The players have been successfully unlinked.');
@@ -622,10 +627,13 @@ class PlayerBanController extends Controller
             'identifiers' => $newIdentifiers2,
         ]);
 
-        PanelLog::log(
+        AuditLog::log(
             $user->license_identifier,
-            "Unlinked Identifier",
-            sprintf("%s unlinked %s from %s.", $user->consoleName(), $player->consoleName(), $player2->consoleName())
+            'identifier.unlink',
+            'player',
+            $player->license_identifier,
+            sprintf("%s unlinked %s from %s.", $user->consoleName(), $player->consoleName(), $player2->consoleName()),
+            ['target_player_2' => $player2->license_identifier]
         );
 
         return backWith('success', 'The players have been successfully unlinked.');

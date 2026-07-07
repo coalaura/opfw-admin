@@ -5,6 +5,7 @@ use App\Ban;
 use App\Helpers\CacheHelper;
 use App\Helpers\LoggingHelper;
 use App\Helpers\ServerAPI;
+use App\AuditLog;
 use App\PanelLog;
 use App\Server;
 use App\Warning;
@@ -108,6 +109,12 @@ class Cronjobs extends Command
         $start = microtime(true);
         echo " - Cleaning up panel logs...";
         PanelLog::cleanup();
+
+        echo $this->stopTime($start);
+
+        $start = microtime(true);
+        echo " - Cleaning up audit logs...";
+        AuditLog::cleanup();
 
         echo $this->stopTime($start);
 

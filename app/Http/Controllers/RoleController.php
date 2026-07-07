@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AuditLog;
 use App\Http\Resources\PlayerRoleResource;
 use App\Player;
 use Illuminate\Http\Request;
@@ -77,7 +78,20 @@ class RoleController extends Controller
             return $this->json(true);
         }
 
+        $before = [];
+        foreach (array_keys($updates) as $role) {
+            $before[$role] = $player->{$role};
+        }
+
         $player->update($updates);
+
+        $user = user();
+
+        AuditLog::log(license(), 'role.edit', 'player', $player->license_identifier, sprintf('%s edited the role flags of %s.', $user->consoleName(), $player->consoleName()), [
+            'player'  => $player->license_identifier,
+            'before'  => $before,
+            'after'   => $updates,
+        ]);
 
         // TODO
         /*
