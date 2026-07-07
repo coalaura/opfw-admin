@@ -17,7 +17,7 @@ class ApiController extends Controller
             abort(401);
         }
 
-        $data  = ServerAPI::getCrafting(true);
+        $data      = ServerAPI::getCrafting(true);
         $combining = ServerAPI::getCombining(true);
 
         if ($combining) {
@@ -52,11 +52,14 @@ class ApiController extends Controller
 
         // Database connection test
         $start      = microtime(true);
-        $one        = DB::select(DB::raw("SELECT 1 as one"));
+        $one        = DB::select(DB::raw("SELECT 1 AS one, VERSION() AS version"));
         $selectTime = GeneralHelper::formatMilliseconds(round((microtime(true) - $start) * 1000));
 
         if (! $one || $one[0]->one !== 1) {
             $selectTime = false;
+            $dbVersion  = false;
+        } else {
+            $dbVersion = $one[0]->version;
         }
 
         // Server API test
@@ -76,6 +79,7 @@ class ApiController extends Controller
             [], // separator
 
             ['database_check', $selectTime],
+            ['database_version', $dbVersion ?? '-'],
             ['api_variables', $serverTime],
             ['server_version', $api ? $api['frameworkVersion'] : '-'],
             ['server_host', $api ? $api['serverHost'] : '-'],
