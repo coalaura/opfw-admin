@@ -421,14 +421,6 @@ export default {
                     "/suspicious/entity_spawns",
                 ],
             },
-            {
-                label: "sidebar.diagnostics",
-                icon: "fas fa-bug",
-                children: [
-                    "/errors/client",
-                    "/errors/server",
-                ],
-            },
         ];
 
         const expand = this.setting("expandSidenav"),
