@@ -666,6 +666,7 @@
 		"debug_system_uptime": "System Uptime",
 		"debug_php_version": "PHP Version",
 		"debug_database_check": "MariaDB Query Time",
+		"debug_database_version": "MariaDB Version",
 		"debug_api_variables": "FiveM Server API Time",
 		"debug_server_version": "FiveM Server Version",
 		"debug_server_host": "FiveM Server Host",
