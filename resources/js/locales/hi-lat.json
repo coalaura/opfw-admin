@@ -210,23 +210,6 @@
         "search": "Khoj",
         "title": "Discord"
     },
-    "errors": {
-        "client": {
-            "description": "Clients se FiveM error reports log kiye gaye.",
-            "title": "Client Galtiyan"
-        },
-        "detail": "Vistaarit Galti Report",
-        "errors": "Galtiyan",
-        "feedback": "Upyogakarta ki Pratikriya",
-        "no_errors": "Koi likhi hui galtiyan nahi mili.",
-        "no_feedback": "Koi upyogakarta ki pratikriya jama nahi ki gayi.",
-        "occurrences": "Ghatnayein",
-        "search": "Khoj",
-        "server": {
-            "description": "Server se FiveM ki galti ki reports log ki gayi.",
-            "title": "Server Galtiyan"
-        }
-    },
     "global": {
         "ai_generated": "Sabse zyada AI dwara utpann.",
         "all": "Sabhi",

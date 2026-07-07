@@ -21,7 +21,6 @@ use App\Http\Controllers\BlacklistController;
 use App\Http\Controllers\CasinoLogController;
 use App\Http\Controllers\ContainerController;
 use App\Http\Controllers\DocumentationController;
-use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InventoryController;
@@ -304,10 +303,6 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Documentations.
     Route::get('/docs/{type}', [DocumentationController::class, 'docs']);
-
-    // Errors.
-    Route::get('/errors/client', [ErrorController::class, 'client']);
-    Route::get('/errors/server', [ErrorController::class, 'server']);
 
     // Tokens.
     Route::get('/tokens', [TokenController::class, 'index']);

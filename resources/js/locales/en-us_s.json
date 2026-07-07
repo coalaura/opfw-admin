@@ -210,23 +210,6 @@
         "search": "Search",
         "title": "Discord"
     },
-    "errors": {
-        "client": {
-            "description": "Logged FiveM error reports from folks.",
-            "title": "Cli'ent Errors"
-        },
-        "detail": "Detailed Error Report",
-        "errors": "Errors",
-        "feedback": "User Feedback",
-        "no_errors": "No logged errors found.",
-        "no_feedback": "No user feedback submitted.",
-        "occurrences": "Occurrences",
-        "search": "Search",
-        "server": {
-            "description": "Logged FiveM error reports from the server.",
-            "title": "Server Errors"
-        }
-    },
     "global": {
         "ai_generated": "Most likely AI-generated.",
         "all": "All",

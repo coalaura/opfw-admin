@@ -210,23 +210,6 @@
         "search": "Sewarch",
         "title": "Discowd"
     },
-    "errors": {
-        "client": {
-            "description": "Wogged FiveM ewwow wepowts fwom cwients.",
-            "title": "Cwient Ewows"
-        },
-        "detail": "Detailed Ewow Wepowt",
-        "errors": "Ewows",
-        "feedback": "Usew Feedbawk",
-        "no_errors": "Nwo wogged ewwows fouwnd.",
-        "no_feedback": "Nyo usew feedbawk submitted.",
-        "occurrences": "Occuwwences",
-        "search": "Sewarch",
-        "server": {
-            "description": "W-wogged FiveM ewwow wepowts fwoom the sewwver.",
-            "title": "Sewwver Ewows"
-        }
-    },
     "global": {
         "ai_generated": "Most wikewy AI genewated.",
         "all": "Awl",

@@ -210,23 +210,6 @@
         "search": "Søk",
         "title": "Discord"
     },
-    "errors": {
-        "client": {
-            "description": "Loggede FiveM-feilrapporter fra klienter.",
-            "title": "Klientfeil"
-        },
-        "detail": "Detaljert feilmelding",
-        "errors": "Feil",
-        "feedback": "Brukerfeedback",
-        "no_errors": "Ingen loggede feil funnet.",
-        "no_feedback": "Ingen tilbakemelding fra brukere.",
-        "occurrences": "Forekomster",
-        "search": "Søk",
-        "server": {
-            "description": "Loggede FiveM-feilrapporter fra serveren.",
-            "title": "Serverfeil"
-        }
-    },
     "global": {
         "ai_generated": "Mest sannsynlig generert av AI.",
         "all": "Alle",

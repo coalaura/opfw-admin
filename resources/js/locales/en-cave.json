@@ -210,23 +210,6 @@
         "search": "Search",
         "title": "Discord"
     },
-    "errors": {
-        "client": {
-            "description": "Saved FiveM error reports from players.",
-            "title": "Client errors"
-        },
-        "detail": "Long error report.",
-        "errors": "Errors",
-        "feedback": "User talk",
-        "no_errors": "No error logged.",
-        "no_feedback": "No user talk yet.",
-        "occurrences": "Times",
-        "search": "Search",
-        "server": {
-            "description": "Found five FiveM error reports from server.",
-            "title": "Server wrongs"
-        }
-    },
     "global": {
         "ai_generated": "Most likely AI made.",
         "all": "All",

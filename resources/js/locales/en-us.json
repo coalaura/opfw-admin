@@ -235,23 +235,6 @@
 		"active_viewers": "Active Viewers: {0}",
 		"inactive_viewers": "Inactive Viewers: {0}"
 	},
-	"errors": {
-		"client": {
-			"title": "Client Errors",
-			"description": "Logged FiveM error reports from clients."
-		},
-		"server": {
-			"title": "Server Errors",
-			"description": "Logged FiveM error reports from the server."
-		},
-		"no_errors": "No logged errors found.",
-		"errors": "Errors",
-		"search": "Search",
-		"detail": "Detailed Error Report",
-		"feedback": "User Feedback",
-		"no_feedback": "No user feedback submitted.",
-		"occurrences": "Occurrences"
-	},
 	"screenshot": {
 		"continuous": "Continuous",
 		"continuous_stop": "Stop",

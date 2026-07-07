@@ -316,18 +316,6 @@ export default {
                 url: "/suspicious/entity_spawns",
                 hidden: !this.perm.check(this.perm.PERM_SUSPICIOUS_ENTITIES),
             },
-            {
-                label: "errors.client.title",
-                icon: "fas fa-laptop-code",
-                url: "/errors/client",
-                hidden: !this.$page.auth.player.isSuperAdmin,
-            },
-            {
-                label: "errors.server.title",
-                icon: "fas fa-server",
-                url: "/errors/server",
-                hidden: !this.$page.auth.player.isSuperAdmin,
-            }
         ];
 
         const order = [
