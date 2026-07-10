@@ -701,10 +701,10 @@
             <template #header>
                 <div class="flex justify-between">
                     <h2>
-                        {{ character.vehicles.length > 0 ? t('players.vehicles.vehicles', character.vehicles.length) : t('players.vehicles.no_vehicles') }}
+                        {{ t('players.vehicles.title') }}
 
-                        <sup :title="t('players.vehicles.vehicle_value')" class="font-mono text-xs -top-6">
-                            {{ numberFormat(vehicleValue, false, true) }}
+                        <sup class="font-mono text-xs -top-6">
+                            {{ numberFormat(character.vehicles.length, false, false) }}
                         </sup>
                     </h2>
 

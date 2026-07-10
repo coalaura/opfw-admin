@@ -1289,7 +1289,6 @@
         "vehicles": {
             "delete_vehicle": "Are you sure you wanna delete this vehicle?",
             "impounded": "Vehicle is impounded.",
-            "no_vehicles": "No Vehicles",
             "none": "This character ain't got any vehicles.",
             "not_parked": "Vehicle ain't parked.",
             "oil_change": "Oil change is due in <b>{0}</b> miles.",
@@ -1297,9 +1296,9 @@
             "parked": "Parked at <b>{0}</b>.",
             "parked_any": "The vehicle can be withdrawn anywhere.",
             "plate": "Plate number",
+            "title": "Them vehicles",
             "vehicle_id": "Vehicle ID",
             "vehicle_value": "Total value o' owned vehicles",
-            "vehicles": "{0} Vehicle(s)",
             "vin_scratched": "VIN-scratched"
         },
         "warning": {

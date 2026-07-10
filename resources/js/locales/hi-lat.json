@@ -1289,7 +1289,6 @@
         "vehicles": {
             "delete_vehicle": "Kya aap pakka is gaadi ko delete karna chahte hain?",
             "impounded": "Gaadi jabt hai.",
-            "no_vehicles": "Koi gaadiyan nahi.",
             "none": "Is kirdaar ke paas koi gaadiyaan nahi hain.",
             "not_parked": "Gaadi park mein nahi hai.",
             "oil_change": "Tel badalna <b>{0}</b> miles mein zaroori hai.",
@@ -1297,9 +1296,9 @@
             "parked": "Park kiya gaya hai <b>{0}</b> par.",
             "parked_any": "Gaadi kahin bhi nikaali ja sakti hai.",
             "plate": "Gaadi ki plate number",
+            "title": "Gaadiyaan",
             "vehicle_id": "Vaahan ki ID",
             "vehicle_value": "Malik ki gaadiyon ki kul keemat",
-            "vehicles": "{0} Gaadiyan",
             "vin_scratched": "VIN-scratch kiya gaya"
         },
         "warning": {

@@ -1289,7 +1289,6 @@
         "vehicles": {
             "delete_vehicle": "You sure you delete this vehicle?",
             "impounded": "Vehicle is impounded.",
-            "no_vehicles": "No vehicles.",
             "none": "This character owns no vehicles.",
             "not_parked": "Vehicle not parked.",
             "oil_change": "Oil change due in <b>{0}</b> miles.",
@@ -1297,9 +1296,9 @@
             "parked": "Parked at <b>{0}</b>.",
             "parked_any": "Vehicle can be withdrawn anywhere.",
             "plate": "Plate num",
+            "title": "Things that move",
             "vehicle_id": "Wagon ID",
             "vehicle_value": "All wagons worth",
-            "vehicles": "{0} Wagon(s)",
             "vin_scratched": "VIN scratch."
         },
         "warning": {

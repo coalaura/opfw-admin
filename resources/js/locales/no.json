@@ -1289,7 +1289,6 @@
         "vehicles": {
             "delete_vehicle": "Er du sikker på at du vil slette dette kjøretøyet?",
             "impounded": "Kjøretøyet er inndratt.",
-            "no_vehicles": "Ingen kjøretøy",
             "none": "Denne karakteren eier ingen kjøretøy.",
             "not_parked": "Kjøretøyet er ikke parkert.",
             "oil_change": "Oljeskift er om <b>{0}</b> mil.",
@@ -1297,9 +1296,9 @@
             "parked": "Parkert ved <b>{0}</b>.",
             "parked_any": "Kjøretøyet kan hentes hvor som helst.",
             "plate": "Registreringsnummer",
+            "title": "Kjøretøy",
             "vehicle_id": "Kjøretøy-ID",
             "vehicle_value": "Totalt verdi av eide kjøretøy",
-            "vehicles": "{0} kjøretøy",
             "vin_scratched": "VIN-skadet"
         },
         "warning": {

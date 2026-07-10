@@ -1289,7 +1289,6 @@
         "vehicles": {
             "delete_vehicle": "Awe you suwe you want to dewete this vehicwe uwu?",
             "impounded": "Vehicwe is impownded uwu.",
-            "no_vehicles": "No Vehicwes uwu",
             "none": "Dis chawactew does nyot own any vehicwes uwu",
             "not_parked": "Vehicwe is nyot pawked uwu.",
             "oil_change": "Oiw change is due in <b>{0}</b> miwes uwu.",
@@ -1297,9 +1296,9 @@
             "parked": "Pawwed at <b>{0}</b> uwu.",
             "parked_any": "Vehicwe can be withdwan anywhewe uwu.",
             "plate": "Pwate Numbew",
+            "title": "Vewhicwes uwu",
             "vehicle_id": "Vehicwe ID",
             "vehicle_value": "Totaw vawue of ow ned vehicwes",
-            "vehicles": "{0} Vehicwes",
             "vin_scratched": "VIN-Scwatched"
         },
         "warning": {
