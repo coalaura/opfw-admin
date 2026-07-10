@@ -1,12 +1,11 @@
 <?php
 namespace App\Console\Commands;
 
+use App\AuditLog;
 use App\Ban;
 use App\Helpers\CacheHelper;
 use App\Helpers\LoggingHelper;
 use App\Helpers\ServerAPI;
-use App\AuditLog;
-use App\PanelLog;
 use App\Server;
 use App\Warning;
 use Illuminate\Console\Command;
@@ -94,29 +93,17 @@ class Cronjobs extends Command
 
         $this->info(CLUSTER . " Running cronjobs...");
 
-        $start = microtime(true);
-        echo " - Getting log actions...";
-        CacheHelper::getLogActions(true);
+        $this->tryRun("Getting log actions", function () {
+            CacheHelper::getLogActions(true);
+        });
 
-        echo $this->stopTime($start);
+        $this->tryRun("Cleaning up log files", function () {
+            LoggingHelper::cleanup();
+        });
 
-        $start = microtime(true);
-        echo " - Cleaning up log files...";
-        LoggingHelper::cleanup();
-
-        echo $this->stopTime($start);
-
-        $start = microtime(true);
-        echo " - Cleaning up panel logs...";
-        PanelLog::cleanup();
-
-        echo $this->stopTime($start);
-
-        $start = microtime(true);
-        echo " - Cleaning up audit logs...";
-        AuditLog::cleanup();
-
-        echo $this->stopTime($start);
+        $this->tryRun("Cleaning up audit logs", function () {
+            AuditLog::cleanup();
+        });
 
         $start = microtime(true);
         echo " - Removing scheduled bans...";
@@ -238,6 +225,21 @@ class Cronjobs extends Command
         system("chmod -R ug+rwx storage");
 
         echo $this->stopTime($start);
+    }
+
+    private function tryRun(string $label, callable $cb)
+    {
+        $start = microtime(true);
+
+        printf(" - %s...", $label);
+
+        try {
+            $cb();
+        } catch (\Throwable $t) {
+            echo "failed...";
+        } finally {
+            echo $this->stopTime($start);
+        }
     }
 
     private function dumpBanLogs(string $category, string $type, array $logs)
