@@ -105,143 +105,152 @@ class Cronjobs extends Command
             AuditLog::cleanup();
         });
 
-        $start = microtime(true);
-        echo " - Removing scheduled bans...";
-        $time = time();
-
-        $bans = Ban::query()
-            ->where('scheduled_unban', '<=', $time)
-            ->select(["user_id", "ban_hash", "identifier", "reason"])
-            ->leftJoin("users", "license_identifier", "=", "identifier")
-            ->whereNotNull("ban_hash")
-            ->get();
-
-        $logs        = [];
-        $toBeDeleted = [];
-
-        foreach ($bans as $ban) {
-            $id = $ban->user_id;
-
-            if (! empty($id)) {
-                Warning::query()->create([
-                    'player_id'      => $id,
-                    'warning_type'   => 'system',
-                    'can_be_deleted' => 0,
-                    'message'        => 'I removed this players ban. (Scheduled unban)',
-                ]);
-            }
-
-            $reason = preg_replace('/\s+/', ' ', $ban->reason);
-            $logs[] = sprintf('[%s] %s: %s - "%s"', date('Y-m-d H:i:s'), $ban->ban_hash, $ban->identifier, $reason);
-
-            $toBeDeleted[] = $ban->ban_hash;
-        }
-
-        if (! empty($toBeDeleted)) {
-            Ban::query()->whereIn("ban_hash", $toBeDeleted)->delete();
-
-            $this->dumpBanLogs("bans", "sch", $logs);
-        }
-
-        echo $this->stopTime($start);
-
-        // Auto-delete non-locked bans after 2+ years
-        if (env('AUTO_EXPIRE_BANS')) {
-            $start = microtime(true);
-            echo " - Auto-removing old bans...";
-
+        $this->tryRun("Removing scheduled bans", function () {
             $bans = Ban::query()
-                ->where('locked', '=', 0)
-                ->whereNull('expire')
-                ->where('timestamp', '<', time() - (60 * 60 * 24 * 365 * 2))
-                ->select(["ban_hash", "identifier", "reason"])
-                ->get()->toArray();
+                ->where('scheduled_unban', '<=', time())
+                ->select(["user_id", "ban_hash", "identifier", "reason"])
+                ->leftJoin("users", "license_identifier", "=", "identifier")
+                ->whereNotNull("ban_hash")
+                ->get();
 
             $logs        = [];
             $toBeDeleted = [];
 
             foreach ($bans as $ban) {
-                $hash       = $ban['ban_hash'];
-                $identifier = $ban['identifier'];
-
-                if (Str::startsWith($identifier, "steam:") || Str::startsWith($identifier, "license:")) {
-                    $reason = preg_replace('/\s+/', ' ', $ban['reason']);
-
-                    $logs[] = sprintf('[%s] %s: %s - "%s"', date('Y-m-d H:i:s'), $hash, $identifier, $reason);
+                if (! empty($ban->user_id)) {
+                    Warning::query()->create([
+                        'player_id'      => $ban->user_id,
+                        'warning_type'   => 'system',
+                        'can_be_deleted' => 0,
+                        'message'        => 'I removed this players ban. (Scheduled unban)',
+                    ]);
                 }
 
-                if (! in_array($hash, $toBeDeleted)) {
-                    $toBeDeleted[] = $hash;
-                }
+                $reason = preg_replace('/\s+/', ' ', $ban->reason);
+
+                $logs[] = sprintf(
+                    '[%s] %s: %s - "%s"',
+                    date('Y-m-d H:i:s'),
+                    $ban->ban_hash,
+                    $ban->identifier,
+                    $reason
+                );
+
+                $toBeDeleted[] = $ban->ban_hash;
             }
 
             if (! empty($toBeDeleted)) {
-                Ban::query()->whereIn("ban_hash", $toBeDeleted)->delete();
+                Ban::query()
+                    ->whereIn("ban_hash", $toBeDeleted)
+                    ->delete();
 
-                $this->dumpBanLogs("bans", "exp", $logs);
+                $this->dumpBanLogs("bans", "sch", $logs);
             }
+        });
 
-            echo $this->stopTime($start);
+        // Auto-delete non-locked bans after 2+ years
+        if (env('AUTO_EXPIRE_BANS')) {
+            $this->tryRun("Auto-removing old bans", function () {
+                $bans = Ban::query()
+                    ->where('locked', 0)
+                    ->whereNull('expire')
+                    ->where('timestamp', '<', time() - (60 * 60 * 24 * 365 * 2))
+                    ->select(["ban_hash", "identifier", "reason"])
+                    ->get()
+                    ->toArray();
+
+                $logs        = [];
+                $toBeDeleted = [];
+
+                foreach ($bans as $ban) {
+                    $hash       = $ban['ban_hash'];
+                    $identifier = $ban['identifier'];
+
+                    if (
+                        Str::startsWith($identifier, "steam:")
+                        || Str::startsWith($identifier, "license:")
+                    ) {
+                        $reason = preg_replace('/\s+/', ' ', $ban['reason']);
+
+                        $logs[] = sprintf(
+                            '[%s] %s: %s - "%s"',
+                            date('Y-m-d H:i:s'),
+                            $hash,
+                            $identifier,
+                            $reason
+                        );
+                    }
+
+                    if (! in_array($hash, $toBeDeleted)) {
+                        $toBeDeleted[] = $hash;
+                    }
+                }
+
+                if (! empty($toBeDeleted)) {
+                    Ban::query()
+                        ->whereIn("ban_hash", $toBeDeleted)
+                        ->delete();
+
+                    $this->dumpBanLogs("bans", "exp", $logs);
+                }
+            });
         }
 
-        // Refresh static json APIs
-        $start = microtime(true);
-        echo " - Checking if FiveM server is reachable...";
-
-        $reachable = ! empty(ServerAPI::getVariables());
-
-        echo $this->stopTime($start);
+        // Refresh static JSON APIs
+        $reachable = (bool) $this->tryRun("Checking if FiveM server is reachable", function () {
+            return ! empty(ServerAPI::getVariables());
+        });
 
         if ($reachable) {
-            echo " - Refreshing static json APIs:" . PHP_EOL;
+            echo " - Refreshing static JSON APIs:\n";
 
-            ServerAPI::forceRefresh();
+            $this->tryRun("Forcing static JSON API refresh", function () {
+                ServerAPI::forceRefresh();
+            });
 
             foreach (self::StaticJsonAPIs as $api) {
-                $start = microtime(true) * 1000;
+                $this->tryRun(sprintf("Refreshing %s", $api[1]), function () use ($api) {
+                    $result = call_user_func($api);
 
-                $result = call_user_func($api);
-
-                if (! $result || empty($result)) {
-                    $this->warn(sprintf(" - Failed to refresh %s (empty)", $api[1]));
-                } else {
-                    $taken = round(microtime(true) * 1000 - $start);
-
-                    $this->info(sprintf(" - Refreshed %s in %dms: %s", $api[1], $taken, self::string($result)));
-                }
+                    if (empty($result)) {
+                        throw new \RuntimeException("empty result");
+                    }
+                }, 1);
             }
 
-            Server::getConnectUrl(true);
+            $this->tryRun("Refreshing server connect URL", function () {
+                Server::getConnectUrl(true);
+            });
         } else {
-            echo " - FiveM server is not reachable, skipping static json API refresh." . PHP_EOL;
+            echo " - FiveM server is not reachable, skipping static json API refresh.\n";
         }
 
-        // Fix broken permissions
-        $start = microtime(true);
-        echo " - Repairing file permissions...";
-
-        system("chown -R www-data:www-data storage");
-        system("chgrp -R www-data storage");
-        system("chmod -R ug+rwx storage");
-
-        echo $this->stopTime($start);
+        $this->tryRun("Repairing file permissions", function () {
+            system("chown -R www-data:www-data storage");
+            system("chgrp -R www-data storage");
+            system("chmod -R ug+rwx storage");
+        });
     }
 
-    private function tryRun(string $label, callable $cb)
+    private function tryRun(string $label, callable $cb, int $indent = 0)
     {
         $start = microtime(true);
 
-        printf(" - %s...", $label);
+        printf(" %s- %s...", str_repeat("  ", $indent), $label);
 
         try {
-            $cb();
+            $result = $cb();
 
-            echo "\033[32mokay\033[0m...";
+            echo "\033[32mokay";
+
+            return $result;
         } catch (\Throwable $t) {
-            echo "\033[31mfail\033[0m...";
+            echo "\033[31mfail";
         } finally {
-            echo $this->stopTime($start);
+            printf(" \033[90m%s\033[0m\n", $this->stopTime($start));
         }
+
+        return null;
     }
 
     private function dumpBanLogs(string $category, string $type, array $logs)
@@ -262,7 +271,7 @@ class Cronjobs extends Command
 
     private function stopTime($time): string
     {
-        return round(microtime(true) - $time, 2) . "s" . PHP_EOL;
+        return round(microtime(true) - $time, 2) . "s";
     }
 
     private function string($value): string

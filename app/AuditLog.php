@@ -103,8 +103,13 @@ class AuditLog extends Model
      * @param array|null         $metadata    Optional structured context (before/after, reason, etc.).
      * @return self
      */
-    public static function log(string $license, string $action, ?string $targetType = null, $targetId = null, string $details = '', ?array $metadata = null): self
+    public static function log(string $license, string $action, ?string $targetType = null, $targetId = null, string $details = '', ?array $metadata = null): ?self
     {
+        // TODO: wait for the fivem server to be updated, smh
+        if (true) {
+            return null;
+        }
+
         return self::create([
             'license'     => $license,
             'action'      => $action,
