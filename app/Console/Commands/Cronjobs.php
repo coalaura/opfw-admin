@@ -235,8 +235,10 @@ class Cronjobs extends Command
 
         try {
             $cb();
+
+            echo "\033[32mokay\033[0m...";
         } catch (\Throwable $t) {
-            echo "failed...";
+            echo "\033[31mfail\033[0m...";
         } finally {
             echo $this->stopTime($start);
         }
