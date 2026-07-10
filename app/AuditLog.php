@@ -1,6 +1,7 @@
 <?php
 namespace App;
 
+use App\Helpers\LoggingHelper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -105,20 +106,21 @@ class AuditLog extends Model
      */
     public static function log(string $license, string $action, ?string $targetType = null, $targetId = null, string $details = '', ?array $metadata = null): ?self
     {
-        // TODO: wait for the fivem server to be updated, smh
-        if (true) {
-            return null;
+        try {
+            return self::create([
+                'license'     => $license,
+                'action'      => $action,
+                'target_type' => $targetType,
+                'target_id'   => $targetId !== null ? (string) $targetId : null,
+                'details'     => $details,
+                'metadata'    => $metadata,
+                'timestamp'   => Carbon::now(),
+            ]);
+        } catch (\Throwable $t) {
+            LoggingHelper::log(sprintf("Failed to create audit log: %s", $t->getMessage()));
         }
 
-        return self::create([
-            'license'     => $license,
-            'action'      => $action,
-            'target_type' => $targetType,
-            'target_id'   => $targetId !== null ? (string) $targetId : null,
-            'details'     => $details,
-            'metadata'    => $metadata,
-            'timestamp'   => Carbon::now(),
-        ]);
+        return null;
     }
 
     /**
