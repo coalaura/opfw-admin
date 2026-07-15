@@ -33,6 +33,28 @@ class StocksController extends Controller
             ->leftJoin("characters", "character_id", "=", "property_renter_cid")
             ->orderBy('property_address')->get();
 
+        $propertyAccess = [];
+
+        if (PermissionHelper::hasPermission(PermissionHelper::PERM_REALTY_EDIT)) {
+            $dbPropertyAccess = DB::table('stocks_company_property_access')
+                ->select(
+                    'stocks_company_property_access.property_id',
+                    'stocks_company_property_access.character_id as cid',
+                    'stocks_company_property_access.access_level as level',
+                    DB::raw("CONCAT(first_name, ' ', last_name) as name")
+                )
+                ->leftJoin('characters', 'characters.character_id', '=', 'stocks_company_property_access.character_id')
+                ->get();
+
+            foreach ($dbPropertyAccess as $access) {
+                $propertyAccess[$access->property_id][] = [
+                    'cid'   => intval($access->cid),
+                    'name'  => $access->name,
+                    'level' => intval($access->level),
+                ];
+            }
+        }
+
         $companies = [];
 
         foreach ($dbCompanies as $company) {
@@ -61,23 +83,6 @@ class StocksController extends Controller
                 continue;
             }
 
-            $sharedKeys = false;
-
-            if (PermissionHelper::hasPermission(PermissionHelper::PERM_REALTY_EDIT)) {
-                $keys = explode(';', $property->shared_keys ?? '');
-                $keys = array_values(array_filter($keys));
-
-                $sharedKeys = array_map(function ($key) {
-                    $key = explode('-', $key);
-
-                    return [
-                        'cid'   => intval($key[2]),
-                        'name'  => $key[0],
-                        'level' => intval($key[1]),
-                    ];
-                }, $keys);
-            }
-
             $companies[$companyId]['properties'][$propertyId] = [
                 'type'       => $property->property_type,
                 'address'    => $property->property_address,
@@ -85,7 +90,7 @@ class StocksController extends Controller
                 'renter_cid' => $property->property_renter_cid,
                 'renter'     => $property->property_renter,
                 'last_pay'   => $property->property_last_pay,
-                'keys'       => $sharedKeys,
+                'keys'       => $propertyAccess[$propertyId] ?? false,
             ];
 
             if ($property->property_renter) {
@@ -122,7 +127,18 @@ class StocksController extends Controller
             abort(401);
         }
 
-        $property = DB::table('stocks_company_properties')->where('property_id', $propertyId)->first();
+        $property = DB::table('stocks_company_properties')
+            ->select(
+                'stocks_company_properties.*',
+                'users.player_name as renter_player_name',
+                'characters.character_id as renter_character_id',
+                'characters.license_identifier as renter_license_identifier',
+                DB::raw("CONCAT(characters.first_name, ' ', characters.last_name) as renter_full_name")
+            )
+            ->leftJoin('characters', 'characters.character_id', '=', 'stocks_company_properties.property_renter_cid')
+            ->leftJoin('users', 'users.license_identifier', '=', 'characters.license_identifier')
+            ->where('stocks_company_properties.property_id', $propertyId)
+            ->first();
 
         if (! $property) {
             return $this->json(false, null, "property not found");
@@ -134,38 +150,46 @@ class StocksController extends Controller
             return $this->json(false, null, "property not rented");
         }
 
-        $sharedKeys = explode(";", $property->shared_keys ?? "");
+        $access = [];
 
-        $access = [$renter];
-        $levels = [];
-
-        foreach ($sharedKeys as $key) {
-            $part = explode("-", $key);
-
-            if (sizeof($part) !== 3) {
-                continue;
-            }
-
-            $cid   = intval($part[2]);
-            $level = intval($part[1]);
-
-            if ($cid) {
-                $levels[$cid] = $level;
-                $access[]     = $cid;
-            }
+        if ($property->renter_character_id) {
+            $access[$property->renter_character_id] = [
+                'player_name'         => $property->renter_player_name,
+                'full_name'           => $property->renter_full_name,
+                'character_id'        => $property->renter_character_id,
+                'license_identifier'  => $property->renter_license_identifier,
+                'level'               => -1,
+            ];
         }
 
-        $access = Character::select(["player_name", DB::raw("CONCAT(first_name, ' ', last_name) as full_name"), "character_id", "characters.license_identifier"])
-            ->leftJoin("users", "characters.license_identifier", "=", "users.license_identifier")
-            ->whereIn("character_id", $access)
-            ->orderBy("full_name")
-            ->get()->toArray();
+        $propertyAccess = DB::table('stocks_company_property_access as property_access')
+            ->select(
+                'users.player_name',
+                'characters.character_id',
+                'characters.license_identifier',
+                'property_access.access_level as level',
+                DB::raw("CONCAT(characters.first_name, ' ', characters.last_name) as full_name")
+            )
+            ->join('characters', 'characters.character_id', '=', 'property_access.character_id')
+            ->leftJoin('users', 'users.license_identifier', '=', 'characters.license_identifier')
+            ->where('property_access.property_id', $propertyId)
+            ->get();
 
-        $access = array_map(function ($entry) use ($levels) {
-            $entry['level'] = $levels[$entry['character_id']] ?? -1;
+        foreach ($propertyAccess as $accessEntry) {
+            $access[$accessEntry->character_id] = [
+                'player_name'        => $accessEntry->player_name,
+                'full_name'          => $accessEntry->full_name,
+                'character_id'       => $accessEntry->character_id,
+                'license_identifier' => $accessEntry->license_identifier,
+                'level'              => intval($accessEntry->level),
+            ];
+        }
 
-            return $entry;
-        }, $access);
+        $access = array_values($access);
+
+        usort($access, function ($first, $second) {
+            return strcmp($first['full_name'], $second['full_name']);
+        });
 
         return $this->json(true, [
             'id'      => $property->property_id,
@@ -206,13 +230,7 @@ class StocksController extends Controller
             return backWith('error', 'Invalid shared keys');
         }
 
-        $character = Character::find($renter);
-
-        if (! $character) {
-            return backWith('error', 'Property Renter CID is invalid');
-        }
-
-        $sharedKeys = '';
+        $propertyAccess = [];
 
         foreach ($keys as $key) {
             $cid   = intval($key['cid']);
@@ -228,25 +246,41 @@ class StocksController extends Controller
                 return backWith('error', 'Invalid shared key (level)');
             }
 
-            $keyCharacter = Character::find($cid);
-
-            // Invalid character
-            if (! $keyCharacter) {
-                return backWith('error', 'Invalid shared key (character not found)');
-            }
-
-            $name = str_replace('-', ' ', $keyCharacter->name);
-
-            $sharedKeys .= sprintf('%s-%s-%s;', $name, $level, $cid);
+            $propertyAccess[$cid] = [
+                'property_id'  => $propertyId,
+                'character_id' => $cid,
+                'access_level' => $level,
+            ];
         }
 
-        DB::table('stocks_company_properties')->where('property_id', $propertyId)->update([
-            'property_renter'     => $character->name,
-            'property_renter_cid' => $character->character_id,
-            'property_income'     => $income,
-            'property_last_pay'   => $lastPay,
-            'shared_keys'         => $sharedKeys,
-        ]);
+        $characters = Character::whereIn('character_id', array_merge([$renter], array_keys($propertyAccess)))
+            ->get()
+            ->keyBy('character_id');
+
+        $character = $characters->get($renter);
+
+        if (! $character) {
+            return backWith('error', 'Property Renter CID is invalid');
+        }
+
+        if ($characters->only(array_keys($propertyAccess))->count() !== count($propertyAccess)) {
+            return backWith('error', 'Invalid shared key (character not found)');
+        }
+
+        DB::transaction(function () use ($propertyId, $character, $income, $lastPay, $propertyAccess) {
+            DB::table('stocks_company_properties')->where('property_id', $propertyId)->update([
+                'property_renter'     => $character->name,
+                'property_renter_cid' => $character->character_id,
+                'property_income'     => $income,
+                'property_last_pay'   => $lastPay,
+            ]);
+
+            DB::table('stocks_company_property_access')->where('property_id', $propertyId)->delete();
+
+            if ($propertyAccess) {
+                DB::table('stocks_company_property_access')->insert(array_values($propertyAccess));
+            }
+        });
 
         return backWith('success', 'Property updated');
     }

@@ -16,20 +16,11 @@ class PropertyResource extends JsonResource
      */
     public function toArray($request)
     {
-		$keys = [];
+        $keys = [];
 
-        if (user()->isSeniorStaff()) {
-            $sharedKeys = $this->shared_keys ? explode(';', $this->shared_keys) : [];
-
-            foreach ($sharedKeys as $key) {
-                $data = explode('-', $key);
-
-                if (sizeof($data) >= 3) {
-                    $level = intval($data[1]);
-                    $cid = intval($data[2]);
-
-                    $keys["c_" . $cid] = $level;
-                }
+        if (user()->isSeniorStaff() && $this->resource->relationLoaded('access')) {
+            foreach ($this->access as $access) {
+                $keys['c_' . $access->character_id] = intval($access->access_level);
             }
         }
 

@@ -60,7 +60,6 @@ class Property extends Model
         'property_renter_cid',
         'property_income',
         'property_last_pay',
-        'shared_keys',
         'company_id'
     ];
 
@@ -74,6 +73,11 @@ class Property extends Model
         'property_income'     => 'integer',
         'property_renter_cid' => 'integer',
     ];
+
+    public function access(): HasMany
+    {
+        return $this->hasMany(PropertyAccess::class, 'property_id');
+    }
 
     public function companyName(): string
     {

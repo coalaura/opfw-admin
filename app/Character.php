@@ -205,7 +205,11 @@ class Character extends Model
      */
     public function accessProperties()
     {
-        return Property::query()->select()->where("shared_keys", "LIKE", "%-" . $this->character_id . ";%")->get();
+        return Property::query()
+            ->select('stocks_company_properties.*')
+            ->join('stocks_company_property_access', 'stocks_company_property_access.property_id', '=', 'stocks_company_properties.property_id')
+            ->where('stocks_company_property_access.character_id', $this->character_id)
+            ->get();
     }
 
     /**
