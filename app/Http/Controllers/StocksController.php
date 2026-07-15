@@ -1,9 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\AuditLog;
 use App\Character;
 use App\Helpers\PermissionHelper;
-use App\AuditLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -18,9 +18,20 @@ class StocksController extends Controller
      */
     public function companies(Request $request): Response
     {
-        $dbCompanies  = DB::table('stocks_companies')->orderBy('company_name')->get();
-        $dbEmployees  = DB::table('stocks_company_employees')->orderByDesc('permissions')->get();
-        $dbProperties = DB::table('stocks_company_properties')->orderBy('property_address')->get();
+        $dbCompanies = DB::table('stocks_companies')
+            ->select("stocks_companies.*", DB::raw("CONCAT(first_name, ' ', last_name) as owner_name"))
+            ->leftJoin("characters", "character_id", "=", "owner_cid")
+            ->orderBy('company_name')->get();
+
+        $dbEmployees = DB::table('stocks_company_employees')
+            ->select("stocks_company_employees.*", DB::raw("CONCAT(first_name, ' ', last_name) as employee_name"))
+            ->leftJoin("characters", "character_id", "=", "employee_cid")
+            ->orderByDesc('permissions')->get();
+
+        $dbProperties = DB::table('stocks_company_properties')
+            ->select("stocks_company_properties.*", DB::raw("CONCAT(first_name, ' ', last_name) as property_renter"))
+            ->leftJoin("characters", "character_id", "=", "property_renter_cid")
+            ->orderBy('property_address')->get();
 
         $companies = [];
 
@@ -92,6 +103,7 @@ class StocksController extends Controller
             }
 
             $companies[$companyId]['employees'][] = [
+                'cid'         => $employee->employee_cid,
                 'name'        => $employee->employee_name,
                 'position'    => $employee->position,
                 'salary'      => $employee->salary,
