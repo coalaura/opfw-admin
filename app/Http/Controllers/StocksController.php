@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 use App\AuditLog;
 use App\Character;
 use App\Helpers\PermissionHelper;
+use App\Property;
+use App\PropertyAccess;
+use App\StockCompany;
+use App\StockCompanyEmployee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -18,17 +22,17 @@ class StocksController extends Controller
      */
     public function companies(Request $request): Response
     {
-        $dbCompanies = DB::table('stocks_companies')
+        $dbCompanies = StockCompany::query()
             ->select("stocks_companies.*", DB::raw("CONCAT(first_name, ' ', last_name) as owner_name"))
             ->leftJoin("characters", "character_id", "=", "owner_cid")
             ->orderBy('company_name')->get();
 
-        $dbEmployees = DB::table('stocks_company_employees')
+        $dbEmployees = StockCompanyEmployee::query()
             ->select("stocks_company_employees.*", DB::raw("CONCAT(first_name, ' ', last_name) as employee_name"))
             ->leftJoin("characters", "character_id", "=", "employee_cid")
             ->orderByDesc('permissions')->get();
 
-        $dbProperties = DB::table('stocks_company_properties')
+        $dbProperties = Property::query()
             ->select("stocks_company_properties.*", DB::raw("CONCAT(first_name, ' ', last_name) as property_renter"))
             ->leftJoin("characters", "character_id", "=", "property_renter_cid")
             ->orderBy('property_address')->get();
@@ -36,7 +40,7 @@ class StocksController extends Controller
         $propertyAccess = [];
 
         if (PermissionHelper::hasPermission(PermissionHelper::PERM_REALTY_EDIT)) {
-            $dbPropertyAccess = DB::table('stocks_company_property_access')
+            $dbPropertyAccess = PropertyAccess::query()
                 ->select(
                     'stocks_company_property_access.property_id',
                     'stocks_company_property_access.character_id as cid',
@@ -127,7 +131,7 @@ class StocksController extends Controller
             abort(401);
         }
 
-        $property = DB::table('stocks_company_properties')
+        $property = Property::query()
             ->select(
                 'stocks_company_properties.*',
                 'users.player_name as renter_player_name',
@@ -162,7 +166,8 @@ class StocksController extends Controller
             ];
         }
 
-        $propertyAccess = DB::table('stocks_company_property_access as property_access')
+        $propertyAccess = PropertyAccess::query()
+            ->from('stocks_company_property_access as property_access')
             ->select(
                 'users.player_name',
                 'characters.character_id',
@@ -205,7 +210,7 @@ class StocksController extends Controller
             abort(401);
         }
 
-        $property = DB::table('stocks_company_properties')->where('property_id', $propertyId)->first();
+        $property = Property::query()->where('property_id', $propertyId)->first();
 
         if (! $property) {
             return backWith('error', 'Property not found');
@@ -268,17 +273,17 @@ class StocksController extends Controller
         }
 
         DB::transaction(function () use ($propertyId, $character, $income, $lastPay, $propertyAccess) {
-            DB::table('stocks_company_properties')->where('property_id', $propertyId)->update([
+            Property::query()->where('property_id', $propertyId)->update([
                 'property_renter'     => $character->name,
                 'property_renter_cid' => $character->character_id,
                 'property_income'     => $income,
                 'property_last_pay'   => $lastPay,
             ]);
 
-            DB::table('stocks_company_property_access')->where('property_id', $propertyId)->delete();
+            PropertyAccess::query()->where('property_id', $propertyId)->delete();
 
             if ($propertyAccess) {
-                DB::table('stocks_company_property_access')->insert(array_values($propertyAccess));
+                PropertyAccess::query()->insert(array_values($propertyAccess));
             }
         });
 
@@ -291,7 +296,7 @@ class StocksController extends Controller
             return self::json(false, null, 'You do not have permission to edit company balances.');
         }
 
-        $company = DB::table('stocks_companies')
+        $company = StockCompany::query()
             ->select('company_id', 'company_name', 'company_balance')
             ->where('company_id', '=', $id)
             ->first();
@@ -303,7 +308,7 @@ class StocksController extends Controller
         $balance = intval($request->post('balance'));
         $user    = user();
 
-        DB::table('stocks_companies')
+        StockCompany::query()
             ->where('company_id', '=', $id)
             ->update(['company_balance' => $balance]);
 
