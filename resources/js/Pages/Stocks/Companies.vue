@@ -213,7 +213,9 @@
                     <div class="text-sm bg-gray-200 dark:bg-gray-700 flex" v-for="(key, index) in editingProperty.keys" :key="index">
                         <input class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-32 border-r-0 focus:outline-none" placeholder="12345" min="1" v-model="key.cid" @change="updateCharacterName(key)" />
 
-                        <input class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-32 border-r-0 focus:outline-none" placeholder="John Doe" :value="key.name" readonly />
+                        <span class="px-1 py-0.5 flex items-center bg-gray-200 dark:bg-gray-800 text-sm w-32 border-r-0" :title="key.name">
+                            {{ key.name }}
+                        </span>
 
                         <select v-model="key.level" class="px-1 py-0.5 block bg-gray-200 dark:bg-gray-800 text-sm w-full">
                             <option value="1">{{ t('stocks.level_1') }}</option>
