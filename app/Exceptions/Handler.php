@@ -41,7 +41,11 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
-        if (!$this->shouldIgnoreException($exception)) {
+        if ($this->shouldReport($exception) && app()->bound('sentry')) {
+            app('sentry')->captureException($exception);
+        }
+
+        if (! $this->shouldIgnoreException($exception)) {
             $this->dump($exception);
         }
 
@@ -89,7 +93,7 @@ class Handler extends ExceptionHandler
 
             $item['file'] = str_replace($base, '', $item['file']);
 
-            if (!$skipCleanup && (Str::startsWith($item['file'], '/vendor/') || Str::startsWith($item['file'], '\\vendor\\'))) {
+            if (! $skipCleanup && (Str::startsWith($item['file'], '/vendor/') || Str::startsWith($item['file'], '\\vendor\\'))) {
                 if (empty($stack) || $stack[sizeof($stack) - 1] !== '[...]') {
                     $stack[] = '[...]';
                 }
@@ -101,7 +105,7 @@ class Handler extends ExceptionHandler
                 $type = gettype($arg);
                 switch ($type) {
                     case 'object' :
-                        $type = get_class($arg);
+                        $type  = get_class($arg);
                         break;
                     case 'array':
                         $type .= '[' . sizeof($arg) . ']';
@@ -126,7 +130,7 @@ class Handler extends ExceptionHandler
             }
             $line .= $item['function'] . '(' . implode(', ', $args) . ')';
 
-            $stack[] = $line;
+            $stack[]  = $line;
         }
 
         $timestamp = date(\DateTimeInterface::RFC3339);
