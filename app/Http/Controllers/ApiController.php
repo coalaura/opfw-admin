@@ -82,6 +82,7 @@ class ApiController extends Controller
             ['database_version', $dbVersion ?? '-'],
             ['api_variables', $serverTime],
             ['server_version', $api ? $api['frameworkVersion'] : '-'],
+            ['game_build', $api ? $api['gameVersion'] : '-'],
             ['server_host', $api ? $api['serverHost'] : '-'],
 
             [], // separator
