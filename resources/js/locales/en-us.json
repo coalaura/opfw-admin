@@ -652,6 +652,7 @@
 		"debug_database_version": "MariaDB Version",
 		"debug_api_variables": "FiveM Server API Time",
 		"debug_server_version": "FiveM Server Version",
+		"debug_game_build": "GTA Build Version",
 		"debug_server_host": "FiveM Server Host",
 		"debug_request_ip": "Request IP",
 		"debug_user_agent": "User-Agent",

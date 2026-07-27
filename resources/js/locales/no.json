@@ -658,6 +658,7 @@
         "debug_collecting": "Samler inn feilsøkingsinformasjon...",
         "debug_database_check": "MariaDB-spørringstid",
         "debug_database_version": "MariaDB-versjon",
+        "debug_game_build": "GTA byggversjon",
         "debug_info": "Feilsøkingsinformasjon",
         "debug_info_failed": "Klarte ikke å hente feilsøkingsinformasjonen.",
         "debug_php_version": "PHP-versjon",

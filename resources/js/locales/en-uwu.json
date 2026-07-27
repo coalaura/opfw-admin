@@ -658,6 +658,7 @@
         "debug_collecting": "Cowwecting debug info...",
         "debug_database_check": "MawiaDB Query Time",
         "debug_database_version": "MawiaDB Vewsiwon",
+        "debug_game_build": "GTA Build Vewsion uwu",
         "debug_info": "Dewbug Info",
         "debug_info_failed": "Faiwed to fweach dewbug info.",
         "debug_php_version": "PHP Vewsion",

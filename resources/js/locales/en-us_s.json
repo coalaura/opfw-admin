@@ -658,6 +658,7 @@
         "debug_collecting": "Collectin' debug info...",
         "debug_database_check": "MariaDB Query Time",
         "debug_database_version": "MariaDB Version",
+        "debug_game_build": "GTA Build Version",
         "debug_info": "Debug Info",
         "debug_info_failed": "Couldn’t fetch the debug info.",
         "debug_php_version": "PHP Version",

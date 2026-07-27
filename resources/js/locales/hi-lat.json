@@ -658,6 +658,7 @@
         "debug_collecting": "Debug jankari jama ki ja rahi hai...",
         "debug_database_check": "MariaDB Query Samay",
         "debug_database_version": "MariaDB Sanskaran",
+        "debug_game_build": "GTA Banāī Version",
         "debug_info": "Debug Jankari",
         "debug_info_failed": "Debug jankari prapt karne mein asafalta.",
         "debug_php_version": "PHP Version",
