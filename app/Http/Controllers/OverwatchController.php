@@ -411,7 +411,7 @@ class OverwatchController extends Controller
         $spectator  = false;
 
         foreach ($spectators as $id => $spec) {
-            if ($spec['license'] === $license) {
+            if (isset($spec['license']) && $spec['license'] === $license) {
                 $spectator = $spec;
 
                 $spectator['id']     = $id + 1;
