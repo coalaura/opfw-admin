@@ -55,10 +55,6 @@ class PlayerBanController extends Controller
 
     public function indexExceptions(Request $request): Response
     {
-        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_BAN_EXCEPTION)) {
-            abort(401);
-        }
-
         $license     = trim((string) $request->input('license', ''));
         $name        = trim((string) $request->input('name', ''));
         $twitchInput = trim((string) $request->input('twitch', ''));
