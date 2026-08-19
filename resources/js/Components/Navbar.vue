@@ -3,7 +3,7 @@
         <!-- Branding / Logo -->
         <div class="flex-shrink-0 px-8 py-3 text-center text-white mobile:hidden w-72">
             <inertia-link href="/" class="flex gap-2 relative">
-                <img :src="serverLogo ? serverLogo : '/images/op-logo.png'" class="block w-logo h-logo object-cover" :class="{ 'drop-shadow': banner }" v-handle-error />
+                <img :src="serverLogo ? serverLogo : '/images/op-logo.png'" class="block w-logo h-logo object-cover" :class="{ 'drop-shadow': banner }" v-handle-error="'/images/op-logo.png'" />
 
                 <h1 class="text-lg px-4 flex flex-col text-left justify-center">
                     <span class="block leading-5 drop-shadow">OP-FW</span>
