@@ -336,21 +336,32 @@ h4 {
  * Scrollbars
  */
 
+:root {
+    --scrollbar-track: hsl(220, 13.565%, 91.049%);    /* gray-200 */
+    --scrollbar-thumb: hsl(220.03, 10.264%, 46.298%); /* gray-500 */
+}
+
+html.dark {
+    --scrollbar-track: hsl(216.94, 21.105%, 26.812%); /* gray-700 */
+    --scrollbar-thumb: hsl(217.9, 11.922%, 64.262%);  /* gray-400 */
+}
+
 *::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
 }
 
 * {
     scrollbar-width: thin;
-    scrollbar-color: #666666 #e2e2e2;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
 *::-webkit-scrollbar-track {
-    background: #e2e2e2;
+    background: var(--scrollbar-track);
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: #666666;
+    background-color: var(--scrollbar-thumb);
 }
 
 pre.lines {

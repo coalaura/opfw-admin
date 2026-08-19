@@ -80,12 +80,15 @@ const Style = {
 			// Input and placeholder colors.
 			style.push(`[type="text"],[type="url"],[type="number"],[type="date"],[type="time"],input,select,textarea,.border-input{border-color:hsl(${h},${s}%,45%)}input::placeholder,textarea::placeholder{color:hsl(${h},${s}%,50%)}`);
 
-			// Link colors.
-			const ls = s === 0 ? 0 : 70;
+		// Link colors.
+		const ls = s === 0 ? 0 : 70;
 
-			style.push(`a[class*="text-indigo-"],a[class*="text-blue-"]{color:hsl(${h},${ls}%,40%)!important}.dark a[class*="text-indigo-"],.dark a[class*="text-blue-"]{color:hsl(${h},${ls}%,80%)!important}`);
+		style.push(`a[class*="text-indigo-"],a[class*="text-blue-"]{color:hsl(${h},${ls}%,40%)!important}.dark a[class*="text-indigo-"],.dark a[class*="text-blue-"]{color:hsl(${h},${ls}%,80%)!important}`);
 
-			// Actual banner styles.
+		// Scrollbars — tint the panel scrollbar variables with the theme hue
+		style.push(`:root{--scrollbar-thumb:hsl(${h},${s}%,46%);--scrollbar-track:hsl(${h},${s}%,91%)}html.dark{--scrollbar-thumb:hsl(${h},${s}%,64%);--scrollbar-track:hsl(${h},${s}%,27%)}`);
+
+		// Actual banner styles.
 			style.push(`.banner-bg{background-image:url(${url});background-size:cover;background-position:center;background-repeat:no-repeat}.sidebar,.navbar{background-color:transparent!important}`);
 
 			// Backdrop blur.
