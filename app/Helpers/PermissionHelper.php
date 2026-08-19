@@ -23,7 +23,7 @@ class PermissionHelper
         self::PERM_MONEY_LOGS           => ['money_logs', self::LEVEL_STAFF],
         self::PERM_ANTI_CHEAT           => ['anti_cheat', self::LEVEL_STAFF],
         self::PERM_DARK_CHAT            => ['dark_chat', self::LEVEL_SENIOR],
-        self::PERM_BAN_EXCEPTION        => ['ban_exception', self::LEVEL_SUPERADMIN],
+        self::PERM_BAN_EXCEPTION        => ['ban_exception', self::LEVEL_SENIOR],
         self::PERM_WHITELIST            => ['whitelist', self::LEVEL_SUPERADMIN],
         self::PERM_API_TOKENS           => ['api_tokens', self::LEVEL_SUPERADMIN],
         self::PERM_REALTY_EDIT          => ['realty_edit', self::LEVEL_SUPERADMIN],
