@@ -9,7 +9,51 @@
             </p>
         </portal>
 
-        <div class="mb-10 rounded-lg shadow bg-secondary dark:bg-dark-secondary max-w-6xl" v-for="(company, id) in companies" :key="id">
+        <v-section :noFooter="true">
+            <template #header>
+                <h2>{{ t('global.filter') }}</h2>
+            </template>
+
+            <template>
+                <form @submit.prevent="applyCompanyFilters">
+                    <div class="flex flex-wrap mb-4">
+                        <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
+                            <label class="block mb-2" for="company_name">{{ t('stocks.company_name') }}</label>
+                            <input type="search" class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="company_name" v-model="filters.name" :placeholder="t('global.search_placeholder')" />
+                        </div>
+
+                        <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
+                            <label class="block mb-2" for="property_address">{{ t('stocks.property_address') }}</label>
+                            <input type="search" class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="property_address" v-model="filters.address" :placeholder="t('global.search_placeholder')" />
+                        </div>
+
+                        <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
+                            <label class="block mb-2" for="company_employee">{{ t('stocks.company_employee') }}</label>
+                            <input type="search" class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="company_employee" v-model="filters.employee" :placeholder="t('global.search_placeholder')" />
+                        </div>
+
+                        <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
+                            <label class="block mb-2" for="property_renter">{{ t('stocks.property_renter') }}</label>
+                            <input type="search" class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600" id="property_renter" v-model="filters.renter" :placeholder="t('global.search_placeholder')" />
+                        </div>
+                    </div>
+
+                    <div class="w-full px-3 mt-3 flex flex-wrap gap-3">
+                        <button type="submit" class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg">
+                            <i class="fas fa-search"></i>
+                            {{ t('global.do_search') }}
+                        </button>
+                        <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600" @click="clearCompanyFilters">
+                            {{ t('stocks.clear_filters') }}
+                        </button>
+                    </div>
+                </form>
+            </template>
+        </v-section>
+
+        <p class="mb-6 italic" v-if="Object.keys(filteredCompanies).length === 0">{{ t('stocks.no_companies') }}</p>
+
+        <div class="mb-10 rounded-lg shadow bg-secondary dark:bg-dark-secondary max-w-6xl" v-for="(company, id) in filteredCompanies" :key="id">
             <header class="flex items-center gap-6 border-b-2 border-gray-500 bg-gray-300 dark:bg-gray-600 relative">
                 <img :src="company.logo" class="w-32 h-32 rounded-tl-lg" v-handle-error="'/images/realty_image_broken.png'" />
 
@@ -73,46 +117,7 @@
                     <sup v-else-if="company.empty_properties > 0 && company.filled_properties > 0" class="text-sm">{{ Math.round(company.filled_properties / (company.filled_properties + company.empty_properties) * 100) }}%</sup>
                 </h3>
 
-                <div class="max-h-48 overflow-y-auto">
-                    <table class="w-full bg-gray-300 dark:bg-gray-600 text-sm">
-                        <tr class="border-b-2 border-gray-500 text-left">
-                            <th class="px-1 pl-3" v-if="hasActions">&nbsp;</th>
-
-                            <th class="px-1 py-1" :class="{ 'pl-3': !hasActions }">{{ t('stocks.interior') }}</th>
-                            <th class="px-1 py-1">{{ t('stocks.address') }}</th>
-                            <th class="px-2 py-1">{{ t('stocks.renter') }}</th>
-                            <th class="px-2 py-1">{{ t('stocks.rent') }}</th>
-                            <th class="px-2 py-1 pr-3">{{ t('stocks.last_pay') }}</th>
-                        </tr>
-
-                        <tr v-for="(property, id) in company.properties" :key="id" class="border-t border-gray-500" :class="{ 'text-lime-800 dark:text-lime-200': !property.renter }">
-                            <th class="px-1 pl-3" v-if="hasActions">
-                                <div class="flex gap-2">
-                                    <i class="fas fa-key cursor-pointer" @click="showProperty(id)" v-if="$page.auth.player.isSeniorStaff"></i>
-                                    <i class="fas fa-tools cursor-pointer" @click="editProperty(id, property)" v-if="canEdit"></i>
-                                </div>
-                            </th>
-
-                            <td class="px-1 py-1" :class="{ 'pl-3': !hasActions }">{{ t('stocks.type_' + property.type) }}</td>
-                            <td class="px-1 py-1">{{ property.address }}</td>
-
-                            <template v-if="property.renter">
-                                <td class="px-2 py-1">{{ property.renter }}</td>
-                                <td class="px-2 py-1">{{ numberFormat(property.income, 0, true) }}</td>
-                                <td class="px-2 py-1 pr-3">{{ property.last_pay * 1000 | formatTime(false) }}</td>
-                            </template>
-                            <template v-else>
-                                <td class="px-2 py-1 italic">{{ t('stocks.empty') }}</td>
-                                <td class="px-2 py-1 italic">{{ t('stocks.empty') }}</td>
-                                <td class="px-2 py-1 pr-3 italic">{{ t('stocks.empty') }}</td>
-                            </template>
-                        </tr>
-
-                        <tr v-if="Object.keys(company.properties).length === 0" class="text-center">
-                            <td class="px-3 py-1 italic" :colspan="hasActions ? 6 : 5">{{ t('stocks.empty') }}</td>
-                        </tr>
-                    </table>
-                </div>
+                <realty-properties :company="company" :can-edit="canEdit" :can-view="$page.auth.player.isSeniorStaff" @show="showProperty" @edit="editProperty" />
             </div>
         </div>
 
@@ -288,12 +293,14 @@
 import Layout from './../../Layouts/App.vue';
 import VSection from './../../Components/Section.vue';
 import Modal from './../../Components/Modal.vue';
+import RealtyProperties from './../../Components/RealtyProperties.vue';
 
 export default {
     layout: Layout,
     components: {
         VSection,
-        Modal
+        Modal,
+        RealtyProperties: RealtyProperties
     },
     props: {
         companies: {
@@ -302,20 +309,49 @@ export default {
         }
     },
     computed: {
+        filteredCompanies() {
+            const filters = this.appliedCompanyFilters;
+
+            if (!filters.name && !filters.address && !filters.employee && !filters.renter) {
+                return this.companies;
+            }
+
+            const companies = {};
+
+            for (const companyId in this.companies) {
+                const company = this.companies[companyId];
+
+                if (this.matchesCompany(company, filters)) {
+                    companies[companyId] = company;
+                }
+            }
+
+            return companies;
+        },
+
         canEdit() {
             return this.perm.check(this.perm.PERM_REALTY_EDIT);
         },
 
         maxDate() {
             return dayjs().add(1, 'year').format('YYYY-MM-DD');
-        },
-
-        hasActions() {
-            return this.canEdit || this.$page.auth.player.isSeniorStaff;
         }
     },
     data() {
         return {
+            filters: {
+                name: '',
+                address: '',
+                employee: '',
+                renter: ''
+            },
+            appliedCompanyFilters: {
+                name: '',
+                address: '',
+                employee: '',
+                renter: ''
+            },
+
             isLoading: false,
 
             isEditingProperty: false,
@@ -334,6 +370,47 @@ export default {
         };
     },
     methods: {
+        applyCompanyFilters() {
+            this.appliedCompanyFilters = {
+                name: this.filters.name.trim().toLowerCase(),
+                address: this.filters.address.trim().toLowerCase(),
+                employee: this.filters.employee.trim().toLowerCase(),
+                renter: this.filters.renter.trim().toLowerCase()
+            };
+        },
+        clearCompanyFilters() {
+            for (const field in this.filters) {
+                this.filters[field] = '';
+            }
+
+            this.applyCompanyFilters();
+        },
+        matchesCompany(company, filters) {
+            if (filters.name && !(company.name || '').toLowerCase().includes(filters.name)) {
+                return false;
+            }
+
+            if (filters.employee && !company.employees.some(employee => (employee.name || '').toLowerCase().includes(filters.employee))) {
+                return false;
+            }
+
+            return this.matchesCompanyProperty(company, 'address', filters.address) && this.matchesCompanyProperty(company, 'renter', filters.renter);
+        },
+        matchesCompanyProperty(company, field, query) {
+            if (!query) {
+                return true;
+            }
+
+            for (const propertyId in company.properties) {
+                const property = company.properties[propertyId];
+
+                if ((property[field] || '').toLowerCase().includes(query)) {
+                    return true;
+                }
+            }
+
+            return false;
+        },
         editProperty(propertyId, property) {
             this.isEditingProperty = true;
 
