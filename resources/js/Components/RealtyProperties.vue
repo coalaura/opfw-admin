@@ -21,11 +21,12 @@
 
             <label>
                 <span class="block mb-1 font-semibold">{{ t('stocks.status') }}</span>
-                <select class="w-full px-2 py-1 bg-gray-200 dark:bg-gray-600 border rounded" v-model="status" :title="t('stocks.late_description')">
+                <select class="w-full px-2 py-1 bg-gray-200 dark:bg-gray-600 border rounded" v-model="status" :title="t('stocks.status_description')">
                     <option value="">{{ t('global.all') }}</option>
-                    <option value="rented">{{ t('stocks.rented') }}</option>
                     <option value="empty">{{ t('stocks.empty') }}</option>
+                    <option value="paid">{{ t('stocks.paid') }}</option>
                     <option value="late">{{ t('stocks.late') }}</option>
+                    <option value="evictable">{{ t('stocks.evictable') }}</option>
                 </select>
             </label>
         </div>
@@ -46,7 +47,17 @@
                     <th class="px-2 py-1 pr-3">{{ t('stocks.last_pay') }}</th>
                 </tr>
 
-                <tr v-for="(property, id) in filteredProperties" :key="id" class="border-t border-gray-500" :class="{ 'text-lime-800 dark:text-lime-200': !property.renter }">
+                <tr
+                    v-for="(property, id) in filteredProperties"
+                    :key="id"
+                    class="border-t border-gray-500"
+                    :class="{
+                        'text-lime-800 dark:text-lime-200': propertyStatuses[id] === 'empty',
+                        'text-yellow-800 dark:text-yellow-200': propertyStatuses[id] === 'late',
+                        'text-red-800 dark:text-red-200': propertyStatuses[id] === 'evictable'
+                    }"
+                    :title="t(`stocks.${propertyStatuses[id]}`)"
+                >
                     <th class="px-1 pl-3" v-if="hasActions">
                         <div class="flex gap-2">
                             <i class="fas fa-key cursor-pointer" @click="$emit('show', id)" v-if="canView"></i>
@@ -108,6 +119,28 @@ export default {
 
             return Array.from(types).sort((first, second) => Number(first) - Number(second));
         },
+        propertyStatuses() {
+            const statuses = {};
+            const now = Date.now() / 1000;
+            const lateBefore = now - 7 * 24 * 60 * 60;
+            const evictableBefore = now - 14 * 24 * 60 * 60;
+
+            for (const propertyId in this.company.properties) {
+                const property = this.company.properties[propertyId];
+
+                if (!property.renter) {
+                    statuses[propertyId] = 'empty';
+                } else if (property.last_pay < evictableBefore) {
+                    statuses[propertyId] = 'evictable';
+                } else if (property.last_pay < lateBefore) {
+                    statuses[propertyId] = 'late';
+                } else {
+                    statuses[propertyId] = 'paid';
+                }
+            }
+
+            return statuses;
+        },
         filteredProperties() {
             const address = this.address.trim().toLowerCase();
             const renter = this.renter.trim().toLowerCase();
@@ -117,7 +150,6 @@ export default {
             }
 
             const properties = {};
-            const lateBefore = Date.now() / 1000 + 14 * 24 * 60 * 60;
 
             for (const propertyId in this.company.properties) {
                 const property = this.company.properties[propertyId];
@@ -134,15 +166,7 @@ export default {
                     continue;
                 }
 
-                if (this.status === 'empty' && property.renter) {
-                    continue;
-                }
-
-                if ((this.status === 'rented' || this.status === 'late') && !property.renter) {
-                    continue;
-                }
-
-                if (this.status === 'late' && !(property.last_pay < lateBefore)) {
+                if (this.status && this.propertyStatuses[propertyId] !== this.status) {
                     continue;
                 }
 

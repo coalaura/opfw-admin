@@ -15,7 +15,7 @@
             </template>
 
             <template>
-                <form @submit.prevent="applyCompanyFilters">
+                <div>
                     <div class="flex flex-wrap mb-4">
                         <div class="w-1/4 px-3 mobile:w-full mobile:mb-3">
                             <label class="block mb-2" for="company_name">{{ t('stocks.company_name') }}</label>
@@ -39,15 +39,11 @@
                     </div>
 
                     <div class="w-full px-3 mt-3 flex flex-wrap gap-3">
-                        <button type="submit" class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg">
-                            <i class="fas fa-search"></i>
-                            {{ t('global.do_search') }}
-                        </button>
                         <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600" @click="clearCompanyFilters">
                             {{ t('stocks.clear_filters') }}
                         </button>
                     </div>
-                </form>
+                </div>
             </template>
         </v-section>
 
@@ -242,6 +238,9 @@
                 <button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="isEditingProperty = false">
                     {{ t('global.cancel') }}
                 </button>
+                <button type="button" class="px-5 py-2 text-white bg-red-600 rounded dark:bg-red-500" v-if="editingProperty.last_pay > editingPropertyEvictableDate" :disabled="isLoading" @click="setPropertyEvictable">
+                    {{ t('stocks.set_evictable') }}
+                </button>
                 <button type="submit" class="px-5 py-2 text-white bg-indigo-600 rounded dark:bg-indigo-400" @click="updateProperty">
                     <span v-if="!isLoading">
                         <i class="mr-1 fa fa-pencil-alt"></i>
@@ -310,7 +309,12 @@ export default {
     },
     computed: {
         filteredCompanies() {
-            const filters = this.appliedCompanyFilters;
+            const filters = {
+                name: this.filters.name.trim().toLowerCase(),
+                address: this.filters.address.trim().toLowerCase(),
+                employee: this.filters.employee.trim().toLowerCase(),
+                renter: this.filters.renter.trim().toLowerCase()
+            };
 
             if (!filters.name && !filters.address && !filters.employee && !filters.renter) {
                 return this.companies;
@@ -333,6 +337,10 @@ export default {
             return this.perm.check(this.perm.PERM_REALTY_EDIT);
         },
 
+        editingPropertyMinDate() {
+            return this.editingProperty.last_pay === this.editingPropertyEvictableDate ? this.editingPropertyEvictableDate : this.editingPropertyToday;
+        },
+
         maxDate() {
             return dayjs().add(1, 'year').format('YYYY-MM-DD');
         }
@@ -345,19 +353,14 @@ export default {
                 employee: '',
                 renter: ''
             },
-            appliedCompanyFilters: {
-                name: '',
-                address: '',
-                employee: '',
-                renter: ''
-            },
 
             isLoading: false,
 
             isEditingProperty: false,
             editingPropertyId: false,
             editingProperty: false,
-            editingPropertyMinDate: false,
+            editingPropertyToday: false,
+            editingPropertyEvictableDate: false,
 
             isShowingProperty: false,
             isLoadingProperty: false,
@@ -370,20 +373,10 @@ export default {
         };
     },
     methods: {
-        applyCompanyFilters() {
-            this.appliedCompanyFilters = {
-                name: this.filters.name.trim().toLowerCase(),
-                address: this.filters.address.trim().toLowerCase(),
-                employee: this.filters.employee.trim().toLowerCase(),
-                renter: this.filters.renter.trim().toLowerCase()
-            };
-        },
         clearCompanyFilters() {
             for (const field in this.filters) {
                 this.filters[field] = '';
             }
-
-            this.applyCompanyFilters();
         },
         matchesCompany(company, filters) {
             if (filters.name && !(company.name || '').toLowerCase().includes(filters.name)) {
@@ -414,7 +407,8 @@ export default {
         editProperty(propertyId, property) {
             this.isEditingProperty = true;
 
-            const lastPay = dayjs(property.last_pay * 1000).format('YYYY-MM-DD');
+            const today = dayjs.utc();
+            const lastPay = dayjs.utc(property.last_pay * 1000).format('YYYY-MM-DD');
 
             this.editingPropertyId = propertyId;
             this.editingProperty = {
@@ -423,9 +417,13 @@ export default {
                 last_pay: lastPay,
                 keys: property.keys || []
             };
-            this.editingPropertyMinDate = lastPay;
+            this.editingPropertyToday = today.format('YYYY-MM-DD');
+            this.editingPropertyEvictableDate = today.subtract(2, 'weeks').format('YYYY-MM-DD');
 
             this.addSharedKey();
+        },
+        setPropertyEvictable() {
+            this.editingProperty.last_pay = this.editingPropertyEvictableDate;
         },
         async showProperty(propertyId) {
             if (this.isShowingProperty) return;

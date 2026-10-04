@@ -216,14 +216,16 @@ class StocksController extends Controller
             return backWith('error', 'Property not found');
         }
 
-        $propertyLastPay = $property->property_last_pay;
-
         $renter  = $request->input('renter');
         $income  = $request->input('income') ?? $property->property_cost;
         $lastPay = strtotime($request->input('last_pay'));
         $keys    = $request->input('keys');
 
-        if (! $lastPay || $lastPay < $propertyLastPay) {
+        $today         = strtotime('today');
+        $evictableDate = strtotime('-2 weeks', $today);
+
+        // Set Evictable is the only supported date before today.
+        if (! $lastPay || ($lastPay < $today && $lastPay !== $evictableDate)) {
             return backWith('error', 'Invalid last pay date');
         }
 
@@ -231,7 +233,7 @@ class StocksController extends Controller
             return backWith('error', 'Invalid rent amount');
         }
 
-        if (! $keys || ! is_array($keys)) {
+        if (! is_array($keys)) {
             return backWith('error', 'Invalid shared keys');
         }
 
