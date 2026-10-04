@@ -33,7 +33,7 @@ class LogExport
     ];
 
     private const HEADERS = [
-        'server' => ['id', 'timestamp_utc', 'license_identifier', 'player_name', 'server', 'server_id', 'action', 'details', 'minigame', 'metadata'],
+        'server' => ['timestamp', 'server_id', 'license', 'character_id', 'player_name', 'action', 'details', 'minigame'],
         'damage' => ['id', 'timestamp_utc', 'attacker_identifier', 'attacker_name', 'victim_identifier', 'victim_name', 'entity_type', 'vehicle_id', 'network_id', 'health_before', 'damage', 'bonus_damage', 'distance', 'hit_component', 'weapon', 'damage_flags', 'silenced', 'tire_index', 'suspension_index', 'canceled', 'minigame'],
         'money'  => ['id', 'timestamp_utc', 'license_identifier', 'player_name', 'character_id', 'character_name', 'type', 'balance_before', 'amount', 'balance_after', 'details'],
     ];
@@ -99,16 +99,14 @@ class LogExport
         $metadata = $log->metadata;
 
         return [
-            $log->id,
             $log->timestamp->copy()->utc()->format('Y-m-d\TH:i:s.v\Z'),
-            $log->identifier,
-            $playerNames[$log->identifier] ?? null,
-            $metadata['serverId'] ?? null,
             $metadata['playerServerId'] ?? null,
+            $log->identifier,
+            $metadata['characterId'] ?? null,
+            $playerNames[$log->identifier] ?? null,
             $log->action,
             $log->details,
             $metadata['minigame'] ?? null,
-            $metadata === null ? null : json_encode($metadata, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE),
         ];
     }
 
