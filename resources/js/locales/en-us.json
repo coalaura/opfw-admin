@@ -1525,6 +1525,23 @@
 	},
 	"logs": {
 		"title": "Server Logs",
+		"export": {
+			"button": "Export CSV",
+			"title": "Export Logs",
+			"description": "Download matching logs using the filters copied below.",
+			"filters": "Current Filters",
+			"no_filters": "No filters selected. All accessible logs will be considered.",
+			"limit": "Maximum Rows (1–500)",
+			"sort": "Sort By",
+			"order": "Order",
+			"ascending": "Ascending",
+			"descending": "Descending",
+			"hint": "Exports start with the first matching row in the selected order, regardless of the current page. CSV timestamps use UTC.",
+			"download": "Download CSV",
+			"exporting": "Exporting...",
+			"invalid_limit": "Enter a whole number between 1 and 500.",
+			"error": "The export failed. Please try again."
+		},
 		"description": "On this page you can view and filter the server logs.",
 		"logs": "Logs",
 		"refresh": "Refresh",

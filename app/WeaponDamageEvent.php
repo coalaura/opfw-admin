@@ -1,8 +1,6 @@
 <?php
-
 namespace App;
 
-use App\Helpers\OPFWHelper;
 use App\Helpers\ServerAPI;
 use Illuminate\Database\Eloquent\Model;
 
@@ -85,9 +83,9 @@ class WeaponDamageEvent extends Model
         return "unknown ($component)";
     }
 
-    public static function getDamageWeapon($hash)
+    public static function getDamageWeapon($hash, ?array $list = null)
     {
-        $list = self::getWeaponList();
+        $list = $list ?? self::getWeaponList();
 
         if ($hash > 2147483647) {
             $hash -= 4294967296;

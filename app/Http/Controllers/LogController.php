@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\CacheHelper;
+use App\Helpers\LogExport;
 use App\Helpers\PermissionHelper;
 use App\Http\Resources\LogResource;
 use App\Http\Resources\MoneyLogResource;
@@ -10,12 +11,14 @@ use App\Log;
 use App\MoneyLog;
 use App\Player;
 use App\WeaponDamageEvent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class LogController extends Controller
 {
@@ -35,56 +38,10 @@ class LogController extends Controller
 
         $skipped = [];
 
-        $query = Log::query()->orderByDesc('timestamp');
+        $query = $this->serverLogsQuery($request)->orderByDesc('timestamp');
 
         if (! $this->isSeniorStaff($request)) {
-            $query->whereNotIn('action', self::RestrictedLogs);
-
             $skipped = ['action is "' . implode('", "', self::RestrictedLogs) . '"'];
-        }
-
-        // Filtering by identifier.
-        $this->searchQuery($request, $query, 'identifier', 'identifier');
-
-        // Filtering by action.
-        $this->searchQuery($request, $query, 'action', 'action');
-
-        // Filtering by details.
-        $this->searchQuery($request, $query, 'details', 'details');
-
-        // Filtering by server.
-        $this->searchQuery($request, $query, 'server', DB::raw("JSON_EXTRACT(metadata, '$.playerServerId')"));
-
-        // Filtering by minigame.
-        $minigame = $request->input('minigame');
-
-        if ($minigame && $minigame !== 'any') {
-            // The only actions where we even use minigame are Player Died, Player Killed and Killed Player.
-            $minigameActions = ['Player Died', 'Player Killed', 'Killed Player'];
-
-            if ($minigame === 'none') {
-                $query->where(function ($subQuery) use ($minigameActions) {
-                    $subQuery->whereNotIn('action', $minigameActions);
-
-                    // If the action is Player Died or Player Killed, we have to check.
-                    $subQuery->orWhereNull(DB::raw("JSON_UNQUOTE(JSON_EXTRACT(metadata, '$.minigame'))"));
-                });
-            } elseif (in_array($minigame, ['arena', 'battle_royale', 'zombie_pill', 'training'], true)) {
-                $query->where(function ($subQuery) use ($minigameActions, $minigame) {
-                    $subQuery->whereIn('action', $minigameActions);
-                    $subQuery->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(metadata, '$.minigame')) = ?", [$minigame]);
-                });
-            }
-        }
-
-        // Filtering by before.
-        if ($before = intval($request->input('before'))) {
-            $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '<', $before);
-        }
-
-        // Filtering by after.
-        if ($after = intval($request->input('after'))) {
-            $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '>', $after);
         }
 
         $actionInput     = $request->input('action');
@@ -116,7 +73,6 @@ class LogController extends Controller
                 ->delete();
         }
 
-        $query->select(['id', 'identifier', 'action', 'details', 'metadata', 'timestamp']);
         $query->limit(30)->offset(($page - 1) * 30);
 
         $logs = $query->get();
@@ -126,8 +82,8 @@ class LogController extends Controller
         $end = round(microtime(true) * 1000);
 
         return Inertia::render('Logs/Index', [
-            'logs'      => $logs,
-            'filters'   => $request->all(
+            'logs'        => $logs,
+            'filters'     => $request->all(
                 'identifier',
                 'server',
                 'action',
@@ -136,12 +92,13 @@ class LogController extends Controller
                 'after',
                 'before'
             ),
-            'links'     => $this->getPageUrls($page),
-            'time'      => $end - $start,
-            'playerMap' => Player::fetchLicensePlayerNameMap($logs->toArray($request), 'licenseIdentifier'),
-            'page'      => $page,
-            'actions'   => CacheHelper::getLogActions(),
-            'skipped'   => $skipped,
+            'links'       => $this->getPageUrls($page),
+            'time'        => $end - $start,
+            'playerMap'   => Player::fetchLicensePlayerNameMap($logs->toArray($request), 'licenseIdentifier'),
+            'page'        => $page,
+            'actions'     => CacheHelper::getLogActions(),
+            'skipped'     => $skipped,
+            'exportSorts' => array_keys(LogExport::SORT_COLUMNS['server']),
         ]);
     }
 
@@ -153,54 +110,9 @@ class LogController extends Controller
      */
     public function moneyLogs(Request $request): Response
     {
-        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_MONEY_LOGS)) {
-            abort(403);
-        }
-
         $start = round(microtime(true) * 1000);
 
-        $query = MoneyLog::query()->orderByDesc('timestamp');
-
-        // Filtering by identifier.
-        $this->searchQuery($request, $query, 'identifier', 'money_logs.license_identifier');
-
-        // Filtering by character id.
-        $this->searchQuery($request, $query, 'character_id', 'money_logs.character_id');
-
-        // Filtering by details.
-        $this->searchQuery($request, $query, 'details', 'details');
-
-        // Filtering by amount.
-        $this->searchQuery($request, $query, 'amount', 'amount');
-
-        // Filtering by before.
-        if ($before = $request->input('before')) {
-            $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '<', $before);
-        }
-
-        // Filtering by after.
-        if ($after = $request->input('after')) {
-            $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '>', $after);
-        }
-
-        // Filtering by type.
-        if ($type = $request->input('typ')) {
-            $query->where('type', $type);
-        }
-
-        // Filtering by direction.
-        if ($direction = $request->input('direction')) {
-            if ($direction === "in") {
-                $query->where('amount', '>', '0');
-            } else if ($direction === "out") {
-                $query->where('amount', '<', '0');
-            }
-        }
-
-        $query->leftJoin('users', 'users.license_identifier', '=', 'money_logs.license_identifier');
-        $query->leftJoin('characters', 'characters.character_id', '=', 'money_logs.character_id');
-
-        $query->select(['id', 'type', 'money_logs.license_identifier', 'money_logs.character_id', 'amount', 'balance_after', 'details', 'timestamp', 'player_name', DB::raw('CONCAT(first_name, " ", last_name) AS character_name')]);
+        $query = $this->moneyLogsQuery($request)->orderByDesc('timestamp');
 
         $page = Paginator::resolveCurrentPage('page');
         $query->limit(30)->offset(($page - 1) * 30);
@@ -212,8 +124,8 @@ class LogController extends Controller
         $end = round(microtime(true) * 1000);
 
         return Inertia::render('Logs/MoneyLogs', [
-            'logs'    => $logs,
-            'filters' => [
+            'logs'        => $logs,
+            'filters'     => [
                 'typ'          => $request->input('typ') ?? '',
                 'direction'    => $request->input('direction') ?? '',
                 'amount'       => $request->input('amount'),
@@ -223,9 +135,10 @@ class LogController extends Controller
                 'after'        => $request->input('after'),
                 'before'       => $request->input('before'),
             ],
-            'links'   => $this->getPageUrls($page),
-            'time'    => $end - $start,
-            'page'    => $page,
+            'links'       => $this->getPageUrls($page),
+            'time'        => $end - $start,
+            'page'        => $page,
+            'exportSorts' => array_keys(LogExport::SORT_COLUMNS['money']),
         ]);
     }
 
@@ -560,15 +473,151 @@ class LogController extends Controller
 
     public function damageLogs(Request $request)
     {
+        $start = round(microtime(true) * 1000);
+
+        $query = $this->damageLogsQuery($request)->orderByDesc('timestamp');
+        $page  = Paginator::resolveCurrentPage('page');
+        $query->limit(30)->offset(($page - 1) * 30);
+
+        $logs = WeaponDamageEventResource::collection($query->get());
+
+        $end = round(microtime(true) * 1000);
+
+        return Inertia::render('Logs/Damage', [
+            'logs'        => $logs,
+            'filters'     => $request->all(
+                'attacker',
+                'victim',
+                'damage',
+                'weapon',
+                'entity',
+                'minigame',
+                'after',
+                'before'
+            ),
+            'links'       => $this->getPageUrls($page),
+            'time'        => $end - $start,
+            'playerMap'   => Player::fetchLicensePlayerNameMap($logs->toArray($request), ['licenseIdentifier', 'hitLicense']),
+            'page'        => $page,
+            'weapons'     => array_values(WeaponDamageEvent::getWeaponListFlat()),
+            'exportSorts' => array_keys(LogExport::SORT_COLUMNS['damage']),
+        ]);
+    }
+
+    public function export(Request $request, string $type): StreamedResponse
+    {
+        abort_unless(isset(LogExport::SORT_COLUMNS[$type]), 404);
+
+        $options = $request->validate(LogExport::rules($type));
+
+        $query = match ($type) {
+            'server' => $this->serverLogsQuery($request),
+            'damage' => $this->damageLogsQuery($request),
+            'money'  => $this->moneyLogsQuery($request),
+        };
+
+        $query->orderBy(LogExport::SORT_COLUMNS[$type][$options['sort']], $options['order']);
+        $query->orderBy($query->getModel()->qualifyColumn('id'), $options['order']);
+        $logs = $query->limit($options['limit'])->get();
+
+        $playerNames = match ($type) {
+            'server' => Player::fetchLicensePlayerNameMap($logs->all(), 'identifier'),
+            'damage' => Player::fetchLicensePlayerNameMap($logs->all(), ['license_identifier', 'hit_player']),
+            'money'  => [],
+        };
+
+        return LogExport::download($type, $logs, $playerNames);
+    }
+
+    protected function serverLogsQuery(Request $request): Builder
+    {
+        $query = Log::query();
+
+        if (! $this->isSeniorStaff($request)) {
+            $query->whereNotIn('action', self::RestrictedLogs);
+        }
+
+        $this->searchQuery($request, $query, 'identifier', 'identifier');
+        $this->searchQuery($request, $query, 'action', 'action');
+        $this->searchQuery($request, $query, 'details', 'details');
+        $this->searchQuery($request, $query, 'server', DB::raw("JSON_EXTRACT(metadata, '$.playerServerId')"));
+
+        $minigame = $request->input('minigame');
+
+        if ($minigame && $minigame !== 'any') {
+            // Only these actions store a minigame in their metadata.
+            $minigameActions = ['Player Died', 'Player Killed', 'Killed Player'];
+
+            if ($minigame === 'none') {
+                $query->where(function ($subQuery) use ($minigameActions) {
+                    $subQuery->whereNotIn('action', $minigameActions);
+                    $subQuery->orWhereNull(DB::raw("JSON_UNQUOTE(JSON_EXTRACT(metadata, '$.minigame'))"));
+                });
+            } elseif (in_array($minigame, ['arena', 'battle_royale', 'zombie_pill', 'training'], true)) {
+                $query->where(function ($subQuery) use ($minigameActions, $minigame) {
+                    $subQuery->whereIn('action', $minigameActions);
+                    $subQuery->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(metadata, '$.minigame')) = ?", [$minigame]);
+                });
+            }
+        }
+
+        if ($before = intval($request->input('before'))) {
+            $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '<', $before);
+        }
+
+        if ($after = intval($request->input('after'))) {
+            $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '>', $after);
+        }
+
+        return $query->select(['id', 'identifier', 'action', 'details', 'metadata', 'timestamp']);
+    }
+
+    protected function moneyLogsQuery(Request $request): Builder
+    {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_MONEY_LOGS)) {
+            abort(403);
+        }
+
+        $query = MoneyLog::query();
+
+        $this->searchQuery($request, $query, 'identifier', 'money_logs.license_identifier');
+        $this->searchQuery($request, $query, 'character_id', 'money_logs.character_id');
+        $this->searchQuery($request, $query, 'details', 'details');
+        $this->searchQuery($request, $query, 'amount', 'amount');
+
+        if ($before = $request->input('before')) {
+            $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '<', $before);
+        }
+
+        if ($after = $request->input('after')) {
+            $query->where(DB::raw('UNIX_TIMESTAMP(`timestamp`)'), '>', $after);
+        }
+
+        if ($type = $request->input('typ')) {
+            $query->where('type', $type);
+        }
+
+        if ($direction = $request->input('direction')) {
+            if ($direction === 'in') {
+                $query->where('amount', '>', '0');
+            } elseif ($direction === 'out') {
+                $query->where('amount', '<', '0');
+            }
+        }
+
+        $query->leftJoin('users', 'users.license_identifier', '=', 'money_logs.license_identifier');
+        $query->leftJoin('characters', 'characters.character_id', '=', 'money_logs.character_id');
+
+        return $query->select(['money_logs.id', 'type', 'money_logs.license_identifier', 'money_logs.character_id', 'amount', 'balance_after', 'details', 'timestamp', 'player_name', DB::raw('CONCAT(first_name, " ", last_name) AS character_name')]);
+    }
+
+    protected function damageLogsQuery(Request $request): Builder
+    {
         if (! PermissionHelper::hasPermission(PermissionHelper::PERM_DAMAGE_LOGS)) {
             abort(401);
         }
 
-        $start = round(microtime(true) * 1000);
-
-        $query = WeaponDamageEvent::query()
-            ->orderByDesc('timestamp')
-            ->where('is_parent_self', '=', '1');
+        $query = WeaponDamageEvent::query()->where('is_parent_self', '=', '1');
 
         // Filtering by attacker identifier.
         $this->searchQuery($request, $query, 'attacker', 'license_identifier');
@@ -647,33 +696,7 @@ class LogController extends Controller
             $query->where('timestamp', '>', $after * 1000);
         }
 
-        $page = Paginator::resolveCurrentPage('page');
-        $query->limit(30)->offset(($page - 1) * 30);
-
-        $query->select(['id', 'license_identifier', 'timestamp', 'hit_player', 'hit_health', 'distance', 'hit_vehicle_id', 'hit_global_id', 'hit_entity_type', 'hit_component', 'damage_flags', 'silenced', 'tyre_index', 'suspension_index', 'weapon_damage', 'weapon_type', 'bonus_damage', 'canceled']);
-
-        $logs = WeaponDamageEventResource::collection($query->get());
-
-        $end = round(microtime(true) * 1000);
-
-        return Inertia::render('Logs/Damage', [
-            'logs'      => $logs,
-            'filters'   => $request->all(
-                'attacker',
-                'victim',
-                'damage',
-                'weapon',
-                'entity',
-                'minigame',
-                'after',
-                'before'
-            ),
-            'links'     => $this->getPageUrls($page),
-            'time'      => $end - $start,
-            'playerMap' => Player::fetchLicensePlayerNameMap($logs->toArray($request), ['licenseIdentifier', 'hitLicense']),
-            'page'      => $page,
-            'weapons'   => array_values(WeaponDamageEvent::getWeaponListFlat()),
-        ]);
+        return $query->select(['id', 'license_identifier', 'timestamp', 'hit_player', 'hit_health', 'distance', 'hit_vehicle_id', 'hit_global_id', 'hit_entity_type', 'hit_component', 'damage_flags', 'silenced', 'tyre_index', 'suspension_index', 'weapon_damage', 'weapon_type', 'bonus_damage', 'canceled', 'minigame']);
     }
 
     private function multiValues(?string $val): ?array

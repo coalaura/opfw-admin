@@ -13,6 +13,7 @@
 		</portal>
 
 		<portal to="actions">
+			<log-export type="money" :get-filters="getLogFilters" :sort-options="exportSorts" />
 			<button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
 				<i class="mr-1 fa fa-redo-alt"></i>
 				{{ t('logs.refresh') }}
@@ -230,14 +231,18 @@
 import Layout from './../../Layouts/App.vue';
 import VSection from './../../Components/Section.vue';
 import Pagination from './../../Components/Pagination.vue';
+import LogExport from './../../Components/LogExport.vue';
+import { readLogFilters, fillLogDates } from './filters.js';
 
 export default {
 	layout: Layout,
 	components: {
+		LogExport: LogExport,
 		Pagination,
 		VSection
 	},
 	props: {
+		exportSorts: { type: Array, required: true },
 		logs: {
 			type: Array,
 			required: true,
@@ -287,6 +292,9 @@ export default {
 		formatRawTimestamp(timestamp) {
 			return dayjs(timestamp).unix();
 		},
+		getLogFilters() {
+			return readLogFilters(this.filters, this.$el);
+		},
 		async refresh() {
 			if (this.isLoading) {
 				return;
@@ -294,26 +302,7 @@ export default {
 
 			this.isLoading = true;
 			try {
-				const beforeDate = $('#before-date').val();
-				const beforeTime = $('#before-time').val();
-				const afterDate = $('#after-date').val();
-				const afterTime = $('#after-time').val();
-
-				if (beforeDate && beforeTime) {
-					this.filters.before = Math.round((new Date(`${beforeDate} ${beforeTime}`)).getTime() / 1000);
-
-					if (Number.isNaN(this.filters.before)) {
-						this.filters.before = null;
-					}
-				}
-
-				if (afterDate && afterTime) {
-					this.filters.after = Math.round((new Date(`${afterDate} ${afterTime}`)).getTime() / 1000);
-
-					if (Number.isNaN(this.filters.after)) {
-						this.filters.after = null;
-					}
-				}
+				Object.assign(this.filters, this.getLogFilters());
 
 				await this.$inertia.replace('/money_logs', {
 					data: this.filters,
@@ -330,19 +319,7 @@ export default {
 		},
 	},
 	mounted() {
-		if (this.filters.before) {
-			const d = new Date(this.filters.before * 1000);
-
-			$('#before-date').val(`${d.getFullYear()}-${(`${d.getMonth() + 1}`).padStart(2, '0')}-${(`${d.getDate()}`).padStart(2, '0')}`);
-			$('#before-time').val(`${d.getHours()}:${d.getMinutes()}`);
-		}
-
-		if (this.filters.after) {
-			const d = new Date(this.filters.after * 1000);
-
-			$('#after-date').val(`${d.getFullYear()}-${(`${d.getMonth() + 1}`).padStart(2, '0')}-${(`${d.getDate()}`).padStart(2, '0')}`);
-			$('#after-time').val(`${d.getHours()}:${d.getMinutes()}`);
-		}
+		fillLogDates(this.filters, this.$el);
 	}
 };
 </script>

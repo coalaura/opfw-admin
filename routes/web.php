@@ -13,7 +13,9 @@
 
 use App\Ban;
 use App\Http\Controllers\AdvancedSearchController;
+use App\Http\Controllers\AntiCheatController;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\Auth\DiscordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -21,34 +23,32 @@ use App\Http\Controllers\BlacklistController;
 use App\Http\Controllers\CasinoLogController;
 use App\Http\Controllers\ContainerController;
 use App\Http\Controllers\DocumentationController;
+use App\Http\Controllers\FindController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\LoadingScreenController;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\LookupController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\OverwatchController;
 use App\Http\Controllers\PanelLogController;
 use App\Http\Controllers\PlayerBanController;
 use App\Http\Controllers\PlayerCharacterController;
 use App\Http\Controllers\PlayerController;
-use App\Http\Controllers\PlayerRouteController;
 use App\Http\Controllers\PlayerDataController;
+use App\Http\Controllers\PlayerRouteController;
 use App\Http\Controllers\PlayerWarningController;
-use App\Http\Controllers\AntiCheatController;
-use App\Http\Controllers\StocksController;
-use App\Http\Controllers\AuditLogController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StaffChatController;
 use App\Http\Controllers\StatisticsController;
-use App\Http\Controllers\FindController;
-use App\Http\Controllers\LookupController;
-use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StocksController;
 use App\Http\Controllers\SuspiciousController;
 use App\Http\Controllers\TestController;
-use App\Http\Controllers\YController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\ToolController;
+use App\Http\Controllers\YController;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
@@ -71,7 +71,7 @@ Route::group(['middleware' => ['session']], function () {
     Route::get('/sso/{token}/{license}', [LoginController::class, 'sso']);
 });
 
-Route::group(['middleware' => ['session']], function() {
+Route::group(['middleware' => ['session']], function () {
     Route::get('/meow', function (Request $request) {
         $state = user() ? 200 : 401;
 
@@ -322,6 +322,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::put('/settings/{key}', [SettingsController::class, 'updateSetting']);
 
     // Exports.
+    Route::get('/export/logs/{type}', [LogController::class, 'export'])->where('type', 'server|damage|money');
     Route::get('/export/character/{character}', [PlayerCharacterController::class, 'export']);
 
     // Tools
@@ -394,7 +395,7 @@ Route::group(['prefix' => 'debug', 'middleware' => ['session']], function () {
 
         $error = $request->json('entry');
         $href  = $request->json('href');
-        if (!$error || !is_string($error) || !$href || !is_string($href)) {
+        if (! $error || ! is_string($error) || ! $href || ! is_string($href)) {
             abort(400);
         }
 
@@ -421,6 +422,6 @@ Route::get('hash/{hash}', function (string $hash) {
     }
 
     return (new Response([
-        'valid' => !!$identifier,
+        'valid' => ! ! $identifier,
     ], 200))->header('Content-Type', 'application/json');
 });

@@ -11,6 +11,7 @@
 		</portal>
 
 		<portal to="actions">
+			<log-export type="server" :get-filters="getLogFilters" :sort-options="exportSorts" />
 			<button class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" type="button" @click="refresh">
 				<i class="mr-1 fa fa-redo-alt"></i>
 				{{ t('logs.refresh') }}
@@ -296,6 +297,8 @@ import VSection from './../../Components/Section.vue';
 import Pagination from './../../Components/Pagination.vue';
 import Modal from './../../Components/Modal.vue';
 import MetadataViewer from './../../Components/MetadataViewer.vue';
+import LogExport from './../../Components/LogExport.vue';
+import { readLogFilters, fillLogDates } from './filters.js';
 
 const MoneyTransferActions = [
 	'Bank Transfer',
@@ -320,12 +323,14 @@ const ConnectActions = [
 export default {
 	layout: Layout,
 	components: {
+		LogExport: LogExport,
 		Pagination,
 		Modal,
 		VSection,
 		MetadataViewer
 	},
 	props: {
+		exportSorts: { type: Array, required: true },
 		logs: {
 			type: Array,
 			required: true,
@@ -518,6 +523,9 @@ export default {
 
 			return null;
 		},
+		getLogFilters() {
+			return readLogFilters(this.filters, this.$el);
+		},
 		async refresh() {
 			if (this.isLoading) {
 				return;
@@ -525,26 +533,7 @@ export default {
 
 			this.isLoading = true;
 			try {
-				const beforeDate = $('#before-date').val();
-				const beforeTime = $('#before-time').val() || '00:00';
-				const afterDate = $('#after-date').val();
-				const afterTime = $('#after-time').val() || '23:59';
-
-				if (beforeDate && beforeTime) {
-					this.filters.before = Math.round((new Date(`${beforeDate} ${beforeTime}`)).getTime() / 1000);
-
-					if (Number.isNaN(this.filters.before)) {
-						this.filters.before = null;
-					}
-				}
-
-				if (afterDate && afterTime) {
-					this.filters.after = Math.round((new Date(`${afterDate} ${afterTime}`)).getTime() / 1000);
-
-					if (Number.isNaN(this.filters.after)) {
-						this.filters.after = null;
-					}
-				}
+				Object.assign(this.filters, this.getLogFilters());
 
 				await this.$inertia.replace('/logs', {
 					data: this.filters,
@@ -712,18 +701,7 @@ export default {
 			window.open(`/players/${license}`, '_blank');
 		});
 
-		if (this.filters.before) {
-			const d = new Date(this.filters.before * 1000);
-
-			$('#before-date').val(`${d.getFullYear()}-${(`${d.getMonth() + 1}`).padStart(2, '0')}-${(`${d.getDate()}`).padStart(2, '0')}`);
-			$('#before-time').val(`${d.getHours()}:${d.getMinutes()}`);
-		}
-		if (this.filters.after) {
-			const d = new Date(this.filters.after * 1000);
-
-			$('#after-date').val(`${d.getFullYear()}-${(`${d.getMonth() + 1}`).padStart(2, '0')}-${(`${d.getDate()}`).padStart(2, '0')}`);
-			$('#after-time').val(`${d.getHours()}:${d.getMinutes()}`);
-		}
+		fillLogDates(this.filters, this.$el);
 	}
 };
 </script>
