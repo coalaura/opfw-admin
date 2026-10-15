@@ -214,6 +214,14 @@
         "after": "At ow Aftwe",
         "before": "At ow Befowe",
         "canceled": "Cancwewd",
+        "categories": {
+            "common": "Comwon",
+            "dangerous": "Dangewous",
+            "hide_common": "Hide comwon and usually ignowable",
+            "hide_ignorable": "Hide usually ignowable",
+            "ignorable": "Usually ignowable",
+            "other": "Othew / unknown"
+        },
         "damage_scale": "Damagwe Scawe",
         "description": "Bwowse and filtew wecorded expwosion wevents. Dates and times use youw wocaw timezone.",
         "details": "Event Detaiws",
@@ -226,6 +234,17 @@
         "no_damage": "No Damage",
         "no_logs": "No expwosion events match these filtews.",
         "position": "Expwosion Position",
+        "quick_filters": {
+            "all": "All events",
+            "all_description": "Show all explosion types.",
+            "dangerous": "Dangewous only",
+            "dangerous_description": "Show only explosion types mawked as dangewous.",
+            "hide_common": "Hide comwon",
+            "hide_common_description": "Also hide petwol pumps, caws, twucks, fiweworks, and bikes.",
+            "hide_ignorable": "Hide ignowable",
+            "hide_ignorable_description": "Hide watew hydwants, snowballs, bidw, dwoppings, and flawes.",
+            "title": "Quick fiwtters"
+        },
         "title": "Expwosion Events",
         "type": "Expwosion Type ID",
         "weapon_hash": "Weapon Hash"

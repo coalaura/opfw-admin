@@ -214,6 +214,14 @@
         "after": "After or on",
         "before": "Before or on",
         "canceled": "No go",
+        "categories": {
+            "common": "Same stuff",
+            "dangerous": "Danger",
+            "hide_common": "Hide same stuff, easy ignore",
+            "hide_ignorable": "Hide easy to ignore",
+            "ignorable": "Easy ignore",
+            "other": "Other or unknown"
+        },
         "damage_scale": "Damage scale",
         "description": "Look at explode events. Pick filters. Dates use your time.",
         "details": "Event details",
@@ -226,6 +234,17 @@
         "no_damage": "No hurt",
         "no_logs": "No explode events fit filters.",
         "position": "Boom place",
+        "quick_filters": {
+            "all": "All events",
+            "all_description": "Show all boom types.",
+            "dangerous": "Only danger",
+            "dangerous_description": "Only danger boom types.",
+            "hide_common": "Hide common",
+            "hide_common_description": "Hide gas pumps, cars, trucks, fireworks, bikes.",
+            "hide_ignorable": "Hide easy ignore",
+            "hide_ignorable_description": "Hide water hydrants, snow balls, bird poop, flares.",
+            "title": "Fast filters"
+        },
         "title": "Boom events",
         "type": "Boom type ID",
         "weapon_hash": "Weapon hash"

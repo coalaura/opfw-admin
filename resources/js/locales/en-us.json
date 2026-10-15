@@ -2,7 +2,26 @@
 	"explosion_events": {
 		"title": "Explosion Events",
 		"description": "Browse and filter recorded explosion events. Dates and times use your local timezone.",
-		"type": "Explosion Type ID",
+		"type": "Explosion Type",
+		"quick_filters": {
+			"title": "Quick filters",
+			"all": "All events",
+			"all_description": "Show all explosion types.",
+			"hide_ignorable": "Hide ignorable",
+			"hide_ignorable_description": "Hide water hydrants, snowballs, bird droppings, and flares.",
+			"hide_common": "Hide common",
+			"hide_common_description": "Also hide petrol pumps, cars, trucks, fireworks, and bikes.",
+			"dangerous": "Dangerous only",
+			"dangerous_description": "Show only explosion types marked as dangerous."
+		},
+		"categories": {
+			"hide_ignorable": "Hide usually ignorable",
+			"hide_common": "Hide common and usually ignorable",
+			"dangerous": "Dangerous",
+			"common": "Common",
+			"ignorable": "Usually ignorable",
+			"other": "Other / unknown"
+		},
 		"canceled": "Canceled",
 		"no_damage": "No Damage",
 		"damage_scale": "Damage Scale",

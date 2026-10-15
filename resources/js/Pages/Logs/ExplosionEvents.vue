@@ -21,36 +21,73 @@
             </template>
 
             <form @submit.prevent="refresh" autocomplete="off">
-                <div class="flex flex-wrap mb-4">
-                    <div v-for="field in fields" :key="field.key" class="w-1/4 px-3 mb-3 mobile:w-full">
-                        <label class="block mb-2" :for="field.key">{{ t(field.label) }}</label>
-                        <input class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" :id="field.key" v-model="form[field.key]" :type="field.type" :min="field.min" :step="field.step" :maxlength="field.maxlength" :placeholder="field.placeholder" />
+                <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-12 items-end gap-x-6 gap-y-4 mb-4">
+                    <div class="min-w-0 sm:col-span-2 xl:col-span-5">
+                        <label class="block mb-2" for="license">{{ t('suspicious.license_identifier') }}</label>
+                        <input class="w-full h-12 px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="license" v-model="form.license" type="text" maxlength="50" placeholder="license:..." />
                     </div>
 
-                    <div v-for="key in ['canceled', 'no_damage']" :key="key" class="w-1/4 px-3 mb-3 mobile:w-full">
+                    <div class="min-w-0 sm:col-span-2 xl:col-span-3">
+                        <label class="block mb-2" for="explosion_type">{{ t('explosion_events.type') }}</label>
+                        <select class="w-full h-12 px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="explosion_type" v-model="form.explosion_type">
+                            <option value="">{{ t('global.any') }}</option>
+                            <option v-if="form.explosion_type !== '' && !explosionTypes[form.explosion_type]" :value="form.explosion_type">{{ typeLabel(form.explosion_type) }}</option>
+                            <option v-for="type in typeOptions" :key="type.id" :value="type.id">{{ type.name }} ({{ type.id }})</option>
+                        </select>
+                    </div>
+
+                    <div class="min-w-0 xl:col-span-2">
+                        <label class="block mb-2" for="minigame">{{ t('explosion_events.minigame') }}</label>
+                        <select class="w-full h-12 px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="minigame" v-model="form.minigame">
+                            <option value="">{{ t('global.any') }}</option>
+                            <option value="none">{{ t('logs.minigame_none') }}</option>
+                            <option v-for="minigame in minigames" :key="minigame" :value="minigame">{{ t(`logs.minigame_${minigame}`) }}</option>
+                        </select>
+                    </div>
+
+                    <div class="min-w-0 xl:col-span-2">
+                        <label class="block mb-2" for="weapon_hash">{{ t('explosion_events.weapon_hash') }}</label>
+                        <input class="w-full h-12 px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="weapon_hash" v-model="form.weapon_hash" type="number" step="1" />
+                    </div>
+
+                    <div class="min-w-0 xl:col-span-4">
+                        <label class="block mb-2" for="after">{{ t('explosion_events.after') }}</label>
+                        <input class="w-full min-w-0 h-12 px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="after" type="datetime-local" step="0.001" v-model="after" />
+                    </div>
+                    <div class="min-w-0 xl:col-span-4">
+                        <label class="block mb-2" for="before">{{ t('explosion_events.before') }}</label>
+                        <input class="w-full min-w-0 h-12 px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="before" type="datetime-local" step="0.001" v-model="before" />
+                    </div>
+
+                    <div v-for="key in ['min_distance', 'max_distance']" :key="key" class="min-w-0 xl:col-span-2">
                         <label class="block mb-2" :for="key">{{ t(`explosion_events.${key}`) }}</label>
-                        <select class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" :id="key" v-model="form[key]">
+                        <input class="w-full h-12 px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" :id="key" v-model="form[key]" type="number" min="0" step="any" />
+                    </div>
+
+                    <div v-for="key in ['canceled', 'no_damage']" :key="key" class="min-w-0 xl:col-span-2">
+                        <label class="block mb-2" :for="key">{{ t(`explosion_events.${key}`) }}</label>
+                        <select class="w-full h-12 px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" :id="key" v-model="form[key]">
                             <option value="">{{ t('global.any') }}</option>
                             <option value="1">{{ t('global.yes') }}</option>
                             <option value="0">{{ t('global.no') }}</option>
                         </select>
                     </div>
 
-                    <div class="w-1/2 px-3 mb-3 mobile:w-full">
-                        <label class="block mb-2" for="after">{{ t('explosion_events.after') }}</label>
-                        <input class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="after" type="datetime-local" step="0.001" v-model="after" />
-                    </div>
-                    <div class="w-1/2 px-3 mb-3 mobile:w-full">
-                        <label class="block mb-2" for="before">{{ t('explosion_events.before') }}</label>
-                        <input class="w-full px-4 py-3 bg-gray-200 dark:bg-gray-600 border rounded" id="before" type="datetime-local" step="0.001" v-model="before" />
-                    </div>
+                    <fieldset class="min-w-0 sm:col-span-2 xl:col-span-8">
+                        <legend class="mb-2">{{ t('explosion_events.quick_filters.title') }}</legend>
+                        <div class="flex flex-wrap gap-2">
+                            <button v-for="filter in quickFilters" :key="filter" type="button" class="flex-1 h-12 px-3 text-sm font-semibold border rounded whitespace-nowrap" :class="form.category === filter ? 'bg-indigo-600 border-indigo-600 text-white dark:bg-indigo-400 dark:border-indigo-400' : 'bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500'" :aria-pressed="form.category === filter" :title="t(`explosion_events.quick_filters.${filter || 'all'}_description`)" @click="form.category = form.category === filter ? '' : filter">
+                                {{ t(`explosion_events.quick_filters.${filter || 'all'}`) }}
+                            </button>
+                        </div>
+                    </fieldset>
 
-                    <div v-if="Object.keys(errors).length" class="w-full px-3 mb-3 text-red-600 dark:text-red-400" role="alert">
+                    <div v-if="Object.keys(errors).length" class="col-span-full text-red-600 dark:text-red-400" role="alert">
                         <p v-for="(messages, key) in errors" :key="key">{{ messages.join(' ') }}</p>
                     </div>
-                    <p v-if="requestError" class="w-full px-3 mb-3 text-red-600 dark:text-red-400" role="alert">{{ requestError }}</p>
+                    <p v-if="requestError" class="col-span-full text-red-600 dark:text-red-400" role="alert">{{ requestError }}</p>
 
-                    <div class="w-full px-3 mt-1">
+                    <div class="col-span-full">
                         <button type="submit" class="px-5 py-2 font-semibold text-white bg-success dark:bg-dark-success rounded hover:shadow-lg" :disabled="isLoading">
                             <i :class="isLoading ? 'fas fa-cog animate-spin' : 'fas fa-search'"></i>
                             {{ t(isLoading ? 'global.loading' : 'global.do_search') }}
@@ -73,30 +110,41 @@
                         <th class="p-3">{{ t('explosion_events.type') }}</th>
                         <th class="p-3">{{ t('explosion_events.canceled') }}</th>
                         <th class="p-3">{{ t('suspicious.distance') }}</th>
-                        <th class="p-3">{{ t('explosion_events.damage_scale') }}</th>
                         <th class="p-3">{{ t('explosion_events.position') }}</th>
-                        <th class="p-3">{{ t('explosion_events.minigame') }}</th>
                         <th class="p-3">{{ t('suspicious.time') }}</th>
                         <th class="p-3 pr-8">{{ t('explosion_events.details') }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="log in logs" :key="log.id" class="border-t border-gray-300 dark:border-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600">
-                        <td class="p-3 pl-8 font-mono">{{ log.id }}</td>
+                    <tr v-for="log in logs" :key="log.id" class="border-t border-gray-300 dark:border-gray-500" :class="rowClass(log)">
+                        <td class="p-3 pl-8 font-mono whitespace-nowrap">
+                            <i v-if="log.minigame" class="mr-2 text-purple-800 dark:text-purple-200 fas fa-gamepad" :title="log.minigame" :aria-label="`${t('explosion_events.minigame')}: ${log.minigame}`"></i>
+                            {{ log.id }}
+                        </td>
                         <td class="p-3 max-w-56">
                             <inertia-link v-if="log.license_identifier" class="block px-4 py-2 font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400 truncate" :href="`/players/${log.license_identifier}`" :title="log.license_identifier">
                                 {{ playerMap[log.license_identifier] || log.license_identifier }}
                             </inertia-link>
                             <span v-else>{{ t('global.unknown') }}</span>
                         </td>
-                        <td class="p-3">{{ log.explosion_type == null ? '?' : log.explosion_type }}</td>
-                        <td class="p-3">{{ booleanLabel(log.canceled) }}</td>
+                        <td class="p-3">
+                            <div class="font-mono text-sm">{{ typeLabel(log.explosion_type) }}</div>
+                            <span v-if="typeCategory(log.explosion_type) !== 'other'" class="inline-block px-2 py-1 mt-1 text-xs font-semibold rounded whitespace-nowrap" :class="categoryClass(log.explosion_type)">
+                                <i v-if="typeCategory(log.explosion_type) === 'dangerous'" class="mr-1 fas fa-exclamation-triangle" aria-hidden="true"></i>
+                                {{ t(`explosion_events.categories.${typeCategory(log.explosion_type)}`) }}
+                            </span>
+                        </td>
+                        <td class="p-3">
+                            <span v-if="log.canceled" class="inline-block px-2 py-1 text-xs font-semibold rounded whitespace-nowrap bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+                                <i class="mr-1 fas fa-ban" aria-hidden="true"></i>
+                                {{ t('explosion_events.canceled') }}
+                            </span>
+                            <span v-else>{{ booleanLabel(log.canceled) }}</span>
+                        </td>
                         <td class="p-3 whitespace-nowrap">{{ formatNumber(log.distance) }} m</td>
-                        <td class="p-3">{{ formatNumber(log.damage_scale) }}</td>
                         <td class="p-3 whitespace-nowrap font-mono text-sm">
                             {{ formatNumber(log.explosion_pos_x) }}, {{ formatNumber(log.explosion_pos_y) }}, {{ formatNumber(log.explosion_pos_z) }}
                         </td>
-                        <td class="p-3">{{ log.minigame == null ? t('global.unknown') : (log.minigame || t('global.none')) }}</td>
                         <td class="p-3 whitespace-nowrap text-sm">{{ formatTimestamp(log.timestamp) }}</td>
                         <td class="p-3 pr-8">
                             <button class="px-4 py-2 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400 whitespace-nowrap" @click="showDetails(log)">
@@ -105,7 +153,7 @@
                         </td>
                     </tr>
                     <tr v-if="logs.length === 0" class="border-t border-gray-300 dark:border-gray-500">
-                        <td class="px-8 py-3 text-center" colspan="10">{{ t('explosion_events.no_logs') }}</td>
+                        <td class="px-8 py-3 text-center" colspan="8">{{ t('explosion_events.no_logs') }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -131,6 +179,7 @@
             <template #header>
                 <h2 class="dark:text-white">{{ t('explosion_events.details') }} #{{ selectedEvent ? selectedEvent.id : '' }}</h2>
             </template>
+            <p v-if="selectedEvent" class="mb-3 font-mono text-sm">{{ typeLabel(selectedEvent.explosion_type) }}</p>
             <pre class="text-sm whitespace-pre-wrap break-words">{{ eventDetails }}</pre>
             <template #actions>
                 <button class="px-4 py-2 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" @click="detailsOpen = false">{{ t('global.close') }}</button>
@@ -158,6 +207,7 @@ export default {
         links: { type: Object, required: true },
         page: { type: Number, required: true },
         playerMap: { type: Object, required: true },
+        explosionTypes: { type: Object, required: true },
     },
     data() {
         return {
@@ -168,17 +218,14 @@ export default {
             requestError: '',
             detailsOpen: false,
             selectedEvent: null,
-            fields: [
-                { key: 'license', label: 'suspicious.license_identifier', type: 'text', maxlength: 50, placeholder: 'license:...' },
-                { key: 'explosion_type', label: 'explosion_events.type', type: 'number', step: 1 },
-                { key: 'minigame', label: 'explosion_events.minigame', type: 'text', maxlength: 32 },
-                { key: 'weapon_hash', label: 'explosion_events.weapon_hash', type: 'number', step: 1 },
-                { key: 'min_distance', label: 'explosion_events.min_distance', type: 'number', min: 0, step: 'any' },
-                { key: 'max_distance', label: 'explosion_events.max_distance', type: 'number', min: 0, step: 'any' },
-            ],
+            quickFilters: ['', 'hide_ignorable', 'hide_common', 'dangerous'],
+            minigames: ['arena', 'battle_royale', 'zombie_pill', 'training'],
         };
     },
     computed: {
+        typeOptions() {
+            return Object.entries(this.explosionTypes).map(([id, type]) => ({ id: Number(id), name: type.name })).sort((first, second) => first.id - second.id);
+        },
         eventDetails() {
             return this.selectedEvent ? JSON.stringify(this.selectedEvent, null, 2) : '';
         },
@@ -190,6 +237,7 @@ export default {
                 this.form = {
                     license: filters.license ?? '',
                     explosion_type: filters.explosion_type ?? '',
+                    category: filters.category ?? '',
                     minigame: filters.minigame ?? '',
                     weapon_hash: filters.weapon_hash ?? '',
                     min_distance: filters.min_distance ?? '',
@@ -203,6 +251,39 @@ export default {
         },
     },
     methods: {
+        typeLabel(id) {
+            const name = this.explosionTypes[id]?.name ?? this.t('global.unknown');
+
+            return id == null ? name : `${name} (${id})`;
+        },
+        typeCategory(id) {
+            return this.explosionTypes[id]?.category ?? 'other';
+        },
+        categoryClass(id) {
+            switch (this.typeCategory(id)) {
+                case 'dangerous':
+                    return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200';
+                case 'common':
+                    return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
+                default:
+                    return 'bg-gray-200 text-gray-700 dark:bg-gray-600 dark:text-gray-200';
+            }
+        },
+        rowClass(log) {
+            if (log.minigame) {
+                return 'bg-purple-500 !bg-opacity-20 hover:!bg-opacity-40';
+            }
+
+            if (this.typeCategory(log.explosion_type) === 'dangerous') {
+                return 'bg-red-500 !bg-opacity-20 hover:!bg-opacity-40';
+            }
+
+            if (log.canceled) {
+                return 'bg-yellow-500 !bg-opacity-20 hover:!bg-opacity-40';
+            }
+
+            return 'hover:bg-gray-200 dark:hover:bg-gray-600';
+        },
         localDate(timestamp) {
             return timestamp == null || timestamp === '' ? '' : dayjs(Number(timestamp)).format('YYYY-MM-DDTHH:mm:ss.SSS');
         },

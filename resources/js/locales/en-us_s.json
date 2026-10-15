@@ -214,6 +214,14 @@
         "after": "At or after",
         "before": "At or before",
         "canceled": "Canceled",
+        "categories": {
+            "common": "Common",
+            "dangerous": "Dangerous",
+            "hide_common": "Hide the common stuff and what y'all usually can ignore.",
+            "hide_ignorable": "Hide what's usually ignorable.",
+            "ignorable": "Usually ignorable",
+            "other": "Other or unknown"
+        },
         "damage_scale": "Damage Scale",
         "description": "Browse and filter the recorded explosion events. Dates and times use your local timezone.",
         "details": "Event Details",
@@ -226,6 +234,17 @@
         "no_damage": "No Damage",
         "no_logs": "No explosion events match these filters.",
         "position": "Explosion Position",
+        "quick_filters": {
+            "all": "All events",
+            "all_description": "Show all explosion types.",
+            "dangerous": "Only dangerous.",
+            "dangerous_description": "Show only the explosion types marked as dangerous.",
+            "hide_common": "Hide the common stuff.",
+            "hide_common_description": "Also hide gas pumps, cars, trucks, fireworks, and bikes.",
+            "hide_ignorable": "Hide what's ignorable.",
+            "hide_ignorable_description": "Hide water hydrants, snowballs, bird droppings, and flares.",
+            "title": "Quick filters"
+        },
         "title": "Explosion Events",
         "type": "Explosion Type ID",
         "weapon_hash": "Weapon Hash"

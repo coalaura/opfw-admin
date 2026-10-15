@@ -214,6 +214,14 @@
         "after": "På eller etter",
         "before": "På eller før",
         "canceled": "Avlyst",
+        "categories": {
+            "common": "Vanlig",
+            "dangerous": "Farlig",
+            "hide_common": "Skjul vanlig og vanligvis ignorerbare",
+            "hide_ignorable": "Skjul vanligvis ignorerbare",
+            "ignorable": "Vanligvis ignorerbare",
+            "other": "Annet / ukjent"
+        },
         "damage_scale": "Skadeomfang",
         "description": "Bla gjennom og filtrer registrerte eksplosjonshendelser. Datoer og tider bruker din lokale tidssone.",
         "details": "Hendelsesdetaljer",
@@ -226,6 +234,17 @@
         "no_damage": "Ingen skade",
         "no_logs": "Ingen eksplosjonshendelser samsvarer med disse filtrene.",
         "position": "Eksplosjonsposisjon",
+        "quick_filters": {
+            "all": "Alle hendelser",
+            "all_description": "Vis alle eksplosjonstyper.",
+            "dangerous": "Bare farlige",
+            "dangerous_description": "Vis bare eksplosjonstyper merket som farlige.",
+            "hide_common": "Skjul vanlige",
+            "hide_common_description": "Skjul også bensinpumper, biler, lastebiler, fyrverkeri og sykler.",
+            "hide_ignorable": "Skjul ignorerbare",
+            "hide_ignorable_description": "Skjul vannhydranter, snøballer, fugleavføring og fakler.",
+            "title": "Raskfiltre"
+        },
         "title": "Eksplosjonshendelser",
         "type": "Eksplosjonstype-ID",
         "weapon_hash": "Våpenhash"

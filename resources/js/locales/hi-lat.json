@@ -214,6 +214,14 @@
         "after": "Shuruaat ya baad",
         "before": "Ant ya uske pehle",
         "canceled": "Radd kiya gaya",
+        "categories": {
+            "common": "Samanya",
+            "dangerous": "Khatarnak",
+            "hide_common": "Samanya chizon ko chhupayein aur aam taur par nazarandaz kiye ja sakne ko chhupayein",
+            "hide_ignorable": "Aam taur par nazarandaz kiye ja sakne ko chhupayein",
+            "ignorable": "Aam taur par nazarandaz kiya ja sakta hai",
+            "other": "Anya / Anjaana"
+        },
         "damage_scale": "Nuksan ki maap",
         "description": "Record kiye gaye visphot ghatnaon ko browse aur filter karein. Tareekh aur samay aapke sthaniya timezone ka upyog karte hain.",
         "details": "Ghatna ki jankari",
@@ -226,6 +234,17 @@
         "no_damage": "Koi nuksan nahi",
         "no_logs": "In filters se koi visphot ghatnayein milti nahi.",
         "position": "Visphot ki sthiti",
+        "quick_filters": {
+            "all": "Sabhi ghatnayein",
+            "all_description": "Sabhi visphot prakaar dikhayein",
+            "dangerous": "Sirf khatarnak",
+            "dangerous_description": "Keval un visphot prakaar ko dikhayein jo khatarnak ke roop me chinhit hain",
+            "hide_common": "Samanya ko chhupayein",
+            "hide_common_description": "Petrol pumps, gaadiyaan, trucks, patakhon, aur bikes ko bhi chhupayein",
+            "hide_ignorable": "Nazarandaz kiye ja sakne ko chhupayein",
+            "hide_ignorable_description": "Paani ke hydrants, snowballs, pakshi ki gobar, aur flares ko bhi chhupayein",
+            "title": "Jaldi filters"
+        },
         "title": "Visphot ghatnayein",
         "type": "Visphot Prakar ID",
         "weapon_hash": "Hathiyaar Hash"
