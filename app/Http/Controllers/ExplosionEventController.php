@@ -1,0 +1,111 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\ExplosionEvent;
+use App\Helpers\PermissionHelper;
+use App\Player;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Inertia\Inertia;
+
+class ExplosionEventController extends Controller
+{
+    public function index(Request $request)
+    {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_EXPLOSION_EVENTS)) {
+            abort(401);
+        }
+
+        $validator = Validator::make($request->only([
+            'license',
+            'explosion_type',
+            'canceled',
+            'minigame',
+            'weapon_hash',
+            'no_damage',
+            'min_distance',
+            'max_distance',
+            'after',
+            'before',
+            'page',
+        ]), [
+            'license' => 'nullable|string|max:50',
+            'explosion_type' => 'nullable|integer',
+            'canceled' => 'nullable|boolean',
+            'minigame' => 'nullable|string|max:32',
+            'weapon_hash' => 'nullable|integer',
+            'no_damage' => 'nullable|boolean',
+            'min_distance' => 'nullable|numeric|min:0',
+            'max_distance' => 'nullable|numeric|min:0',
+            'after' => 'nullable|integer|min:0',
+            'before' => 'nullable|integer|min:0',
+            'page' => 'nullable|integer|min:1',
+        ]);
+
+        if ($validator->fails()) {
+            $filters = $validator->getData();
+            unset($filters['page']);
+
+            return Inertia::render('Logs/ExplosionEvents', [
+                'logs' => [],
+                'filters' => (object) $filters,
+                'errors' => (object) $validator->errors()->messages(),
+                'links' => ['prev' => null, 'next' => null],
+                'page' => 1,
+                'playerMap' => (object) [],
+            ]);
+        }
+
+        $filters = $validator->validated();
+        unset($filters['page']);
+
+        $query = ExplosionEvent::query()->orderByDesc('timestamp')->orderByDesc('id');
+
+        $columns = [
+            'license' => 'license_identifier',
+            'explosion_type' => 'explosion_type',
+            'canceled' => 'canceled',
+            'minigame' => 'minigame',
+            'weapon_hash' => 'weapon_hash',
+            'no_damage' => 'no_damage',
+        ];
+
+        foreach ($columns as $filter => $column) {
+            if ($request->filled($filter)) {
+                $query->where($column, $filters[$filter]);
+            }
+        }
+
+        if ($request->filled('min_distance')) {
+            $query->where('distance', '>=', $filters['min_distance']);
+        }
+
+        if ($request->filled('max_distance')) {
+            $query->where('distance', '<=', $filters['max_distance']);
+        }
+
+        if ($request->filled('after')) {
+            $query->where('timestamp', '>=', $filters['after']);
+        }
+
+        if ($request->filled('before')) {
+            $query->where('timestamp', '<=', $filters['before']);
+        }
+
+        $page = $query->simplePaginate(25)->appends($filters);
+        $logs = $page->items();
+
+        return Inertia::render('Logs/ExplosionEvents', [
+            'logs' => $logs,
+            'filters' => (object) $filters,
+            'errors' => (object) [],
+            'links' => [
+                'prev' => $page->previousPageUrl(),
+                'next' => $page->nextPageUrl(),
+            ],
+            'page' => $page->currentPage(),
+            'playerMap' => Player::fetchLicensePlayerNameMap($logs, 'license_identifier'),
+        ]);
+    }
+}

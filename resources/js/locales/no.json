@@ -210,6 +210,26 @@
         "search": "Søk",
         "title": "Discord"
     },
+    "explosion_events": {
+        "after": "På eller etter",
+        "before": "På eller før",
+        "canceled": "Avlyst",
+        "damage_scale": "Skadeomfang",
+        "description": "Bla gjennom og filtrer registrerte eksplosjonshendelser. Datoer og tider bruker din lokale tidssone.",
+        "details": "Hendelsesdetaljer",
+        "invalid_dates": "Oppgi en gyldig datoperiode der start er lik eller før slutten.",
+        "invalid_distance": "Minimumsavstanden må ikke overstige maksimal avstand.",
+        "load_failed": "Kunne ikke laste eksplosjonshendelsene. Vennligst prøv igjen.",
+        "max_distance": "Maksimal avstand (m)",
+        "min_distance": "Minimum avstand (m)",
+        "minigame": "Minispill",
+        "no_damage": "Ingen skade",
+        "no_logs": "Ingen eksplosjonshendelser samsvarer med disse filtrene.",
+        "position": "Eksplosjonsposisjon",
+        "title": "Eksplosjonshendelser",
+        "type": "Eksplosjonstype-ID",
+        "weapon_hash": "Våpenhash"
+    },
     "global": {
         "ai_generated": "Mest sannsynlig generert av AI.",
         "all": "Alle",

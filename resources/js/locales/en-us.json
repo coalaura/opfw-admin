@@ -1,4 +1,24 @@
 {
+	"explosion_events": {
+		"title": "Explosion Events",
+		"description": "Browse and filter recorded explosion events. Dates and times use your local timezone.",
+		"type": "Explosion Type ID",
+		"canceled": "Canceled",
+		"no_damage": "No Damage",
+		"damage_scale": "Damage Scale",
+		"position": "Explosion Position",
+		"minigame": "Minigame",
+		"weapon_hash": "Weapon Hash",
+		"min_distance": "Minimum Distance (m)",
+		"max_distance": "Maximum Distance (m)",
+		"after": "At or After",
+		"before": "At or Before",
+		"details": "Event Details",
+		"no_logs": "No explosion events match these filters.",
+		"invalid_dates": "Enter a valid date range with the start at or before the end.",
+		"invalid_distance": "The minimum distance must not exceed the maximum distance.",
+		"load_failed": "Could not load explosion events. Please try again."
+	},
 	"global": {
 		"male": "Male",
 		"female": "Female",

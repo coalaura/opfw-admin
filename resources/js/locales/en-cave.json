@@ -210,6 +210,26 @@
         "search": "Search",
         "title": "Discord"
     },
+    "explosion_events": {
+        "after": "After or on",
+        "before": "Before or on",
+        "canceled": "No go",
+        "damage_scale": "Damage scale",
+        "description": "Look at explode events. Pick filters. Dates use your time.",
+        "details": "Event details",
+        "invalid_dates": "Put valid date range. start before end.",
+        "invalid_distance": "Min distance no more than max.",
+        "load_failed": "Can't load explode events. Try again.",
+        "max_distance": "Max Distance (m)",
+        "min_distance": "Min Distance (m)",
+        "minigame": "Little game",
+        "no_damage": "No hurt",
+        "no_logs": "No explode events fit filters.",
+        "position": "Boom place",
+        "title": "Boom events",
+        "type": "Boom type ID",
+        "weapon_hash": "Weapon hash"
+    },
     "global": {
         "ai_generated": "Most likely AI made.",
         "all": "All",

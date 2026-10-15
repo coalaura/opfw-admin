@@ -23,6 +23,7 @@ use App\Http\Controllers\BlacklistController;
 use App\Http\Controllers\CasinoLogController;
 use App\Http\Controllers\ContainerController;
 use App\Http\Controllers\DocumentationController;
+use App\Http\Controllers\ExplosionEventController;
 use App\Http\Controllers\FindController;
 use App\Http\Controllers\GraphController;
 use App\Http\Controllers\HomeController;
@@ -176,6 +177,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
 
     // Damage logs.
     Route::get('/damage', [LogController::class, 'damageLogs']);
+    Route::get('/explosions', [ExplosionEventController::class, 'index']);
     Route::get('/who_damaged/{license}', [PlayerRouteController::class, 'whoDamaged']);
     Route::get('/who_was_damaged/{license}', [PlayerRouteController::class, 'whoWasDamagedBy']);
 

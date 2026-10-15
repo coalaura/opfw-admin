@@ -138,6 +138,12 @@ export default {
                 hidden: !this.perm.check(this.perm.PERM_DAMAGE_LOGS),
             },
             {
+                label: "explosion_events.title",
+                icon: "fas fa-bomb",
+                url: "/explosions",
+                hidden: !this.perm.check(this.perm.PERM_EXPLOSION_EVENTS),
+            },
+            {
                 label: "damages.title",
                 icon: "fas fa-user-injured",
                 url: "/damages",
@@ -360,6 +366,7 @@ export default {
                 children: [
                     "/logs",
                     "/damage",
+                    "/explosions",
                     "/phone_call",
                     "/phone_msg",
                     "/money_logs",

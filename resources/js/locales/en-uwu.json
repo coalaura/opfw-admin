@@ -210,6 +210,26 @@
         "search": "Sewarch",
         "title": "Discowd"
     },
+    "explosion_events": {
+        "after": "At ow Aftwe",
+        "before": "At ow Befowe",
+        "canceled": "Cancwewd",
+        "damage_scale": "Damagwe Scawe",
+        "description": "Bwowse and filtew wecorded expwosion wevents. Dates and times use youw wocaw timezone.",
+        "details": "Event Detaiws",
+        "invalid_dates": "Entew a valid date wange with the stawt at ow befowe the end.",
+        "invalid_distance": "The minimum distanwe must not exceed the maximum distanwe.",
+        "load_failed": "Could not woad expwosion events. Pwease twy again.",
+        "max_distance": "Maximum Distanwe (m)",
+        "min_distance": "Minimum Distanwe (m)",
+        "minigame": "Minigame",
+        "no_damage": "No Damage",
+        "no_logs": "No expwosion events match these filtews.",
+        "position": "Expwosion Position",
+        "title": "Expwosion Events",
+        "type": "Expwosion Type ID",
+        "weapon_hash": "Weapon Hash"
+    },
     "global": {
         "ai_generated": "Most wikewy AI genewated.",
         "all": "Awl",

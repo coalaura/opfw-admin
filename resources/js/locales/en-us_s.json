@@ -210,6 +210,26 @@
         "search": "Search",
         "title": "Discord"
     },
+    "explosion_events": {
+        "after": "At or after",
+        "before": "At or before",
+        "canceled": "Canceled",
+        "damage_scale": "Damage Scale",
+        "description": "Browse and filter the recorded explosion events. Dates and times use your local timezone.",
+        "details": "Event Details",
+        "invalid_dates": "Enter a valid date range with the start at or before the end.",
+        "invalid_distance": "The minimum distance can’t be more than the maximum distance.",
+        "load_failed": "Couldn’t load explosion events. Please try again.",
+        "max_distance": "Maximum Distance (m)",
+        "min_distance": "Minimum Distance (m)",
+        "minigame": "Minigame",
+        "no_damage": "No Damage",
+        "no_logs": "No explosion events match these filters.",
+        "position": "Explosion Position",
+        "title": "Explosion Events",
+        "type": "Explosion Type ID",
+        "weapon_hash": "Weapon Hash"
+    },
     "global": {
         "ai_generated": "Most likely AI-generated.",
         "all": "All",

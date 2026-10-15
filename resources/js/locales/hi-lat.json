@@ -210,6 +210,26 @@
         "search": "Khoj",
         "title": "Discord"
     },
+    "explosion_events": {
+        "after": "Shuruaat ya baad",
+        "before": "Ant ya uske pehle",
+        "canceled": "Radd kiya gaya",
+        "damage_scale": "Nuksan ki maap",
+        "description": "Record kiye gaye visphot ghatnaon ko browse aur filter karein. Tareekh aur samay aapke sthaniya timezone ka upyog karte hain.",
+        "details": "Ghatna ki jankari",
+        "invalid_dates": "Shuru ki tareekh ant se pehle ya uske barabar ho, ek sahi tareekh ki range dalein.",
+        "invalid_distance": "Minimum distance maximum distance se adhik nahi ho sakta.",
+        "load_failed": "Visphot ghatnayein load nahi ho paayi. Kripya phir se prayas karein.",
+        "max_distance": "Adhiktam Distance (m)",
+        "min_distance": "Niyuntam Distance (m)",
+        "minigame": "Chhota khel",
+        "no_damage": "Koi nuksan nahi",
+        "no_logs": "In filters se koi visphot ghatnayein milti nahi.",
+        "position": "Visphot ki sthiti",
+        "title": "Visphot ghatnayein",
+        "type": "Visphot Prakar ID",
+        "weapon_hash": "Hathiyaar Hash"
+    },
     "global": {
         "ai_generated": "Sabse zyada AI dwara utpann.",
         "all": "Sabhi",

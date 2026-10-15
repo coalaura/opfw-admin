@@ -37,6 +37,7 @@ const Permissions = {
             PERM_LINKED: 'linked',
             PERM_ANNOUNCEMENT: 'announcement',
             PERM_DAMAGE_LOGS: 'damage_logs',
+            PERM_EXPLOSION_EVENTS: 'explosion_events',
             PERM_CRAFTING: 'crafting',
             PERM_PHONE_LOGS: 'phone_logs',
             PERM_MONEY_LOGS: 'money_logs',

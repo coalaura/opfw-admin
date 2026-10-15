@@ -18,6 +18,7 @@ class PermissionHelper
         self::PERM_LINKED               => ['linked', self::LEVEL_ROOT],
         self::PERM_ANNOUNCEMENT         => ['announcement', self::LEVEL_SUPERADMIN],
         self::PERM_DAMAGE_LOGS          => ['damage_logs', self::LEVEL_SENIOR],
+        self::PERM_EXPLOSION_EVENTS     => ['explosion_events', self::LEVEL_STAFF],
         self::PERM_CRAFTING             => ['crafting', self::LEVEL_SUPERADMIN],
         self::PERM_PHONE_LOGS           => ['phone_logs', self::LEVEL_SUPERADMIN],
         self::PERM_MONEY_LOGS           => ['money_logs', self::LEVEL_STAFF],
@@ -50,6 +51,7 @@ class PermissionHelper
     const PERM_LINKED               = 'P_LINKED';
     const PERM_ANNOUNCEMENT         = 'P_ANNOUNCEMENT';
     const PERM_DAMAGE_LOGS          = 'P_DAMAGE_LOGS';
+    const PERM_EXPLOSION_EVENTS     = 'P_EXPLOSION_EVENTS';
     const PERM_CRAFTING             = 'P_CRAFTING';
     const PERM_PHONE_LOGS           = 'P_PHONE_LOGS';
     const PERM_MONEY_LOGS           = 'P_MONEY_LOGS';
