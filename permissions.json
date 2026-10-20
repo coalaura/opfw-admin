@@ -1,0 +1,224 @@
+[
+	{
+		"key": "P_SCREENSHOT",
+		"title": "Screenshots",
+		"description": "Capture player screenshots and recordings, and access Overwatch monitoring tools.",
+		"default": "staff"
+	},
+	{
+		"key": "P_SUSPICIOUS",
+		"title": "Suspicious players",
+		"description": "View players flagged for suspicious activity and review their details.",
+		"default": "senior"
+	},
+	{
+		"key": "P_ADVANCED",
+		"title": "Advanced tools",
+		"description": "Use advanced player and weapon searches, and view search and screenshot logs.",
+		"default": "senior"
+	},
+	{
+		"key": "P_LIVEMAP",
+		"title": "Live map",
+		"description": "View the live server map with player locations and details.",
+		"default": "staff"
+	},
+	{
+		"key": "P_LOCK_BAN",
+		"title": "Lock bans",
+		"description": "Lock and unlock bans, and edit or remove locked bans.",
+		"default": "senior"
+	},
+	{
+		"key": "P_EDIT_TAG",
+		"title": "Edit player tags",
+		"description": "Change the tags displayed on player profiles.",
+		"default": "root"
+	},
+	{
+		"key": "P_LOADING_SCREEN",
+		"title": "Loading screen",
+		"description": "Add, edit, and remove loading screen images, including their descriptions and inclusion settings.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_VIEW_QUEUE",
+		"title": "View queue",
+		"description": "View players waiting in the server queue.",
+		"default": "senior"
+	},
+	{
+		"key": "P_Y",
+		"title": "View Y",
+		"description": "Delete posts from the in-game Y social feed.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_Y_VERIFY",
+		"title": "Verify Y users",
+		"description": "Add or remove verification status for Y users.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_Y_EDIT",
+		"title": "Edit Y",
+		"description": "Edit the text and like count of Y posts.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_LINKED",
+		"title": "Linked accounts",
+		"description": "Investigate accounts linked through shared IP addresses, identifiers, or devices.",
+		"default": "root"
+	},
+	{
+		"key": "P_ANNOUNCEMENT",
+		"title": "Announcements",
+		"description": "Send in-game server announcements from the panel.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_DAMAGE_LOGS",
+		"title": "Damage logs",
+		"description": "View damage logs and use damage analysis tools.",
+		"default": "senior"
+	},
+	{
+		"key": "P_EXPLOSION_EVENTS",
+		"title": "Explosion events",
+		"description": "View recorded explosion events and their details.",
+		"default": "staff"
+	},
+	{
+		"key": "P_CRAFTING",
+		"title": "Crafting logs",
+		"description": "View crafting and item-combining recipes.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_PHONE_LOGS",
+		"title": "Phone logs",
+		"description": "View in-game phone messages and call history.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_MONEY_LOGS",
+		"title": "Money logs",
+		"description": "View records of in-game money activity.",
+		"default": "staff"
+	},
+	{
+		"key": "P_ANTI_CHEAT",
+		"title": "Anti-cheat",
+		"description": "View anti-cheat events, player detections, and detection statistics.",
+		"default": "staff"
+	},
+	{
+		"key": "P_DARK_CHAT",
+		"title": "Dark chat",
+		"description": "Read messages from the in-game dark chat.",
+		"default": "senior"
+	},
+	{
+		"key": "P_BAN_EXCEPTION",
+		"title": "Ban exceptions",
+		"description": "Enable or disable ban exceptions for individual players.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_WHITELIST",
+		"title": "Whitelist",
+		"description": "Add or remove a player's whitelist status.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_API_TOKENS",
+		"title": "API tokens",
+		"description": "Create, edit, and delete API tokens, and view their usage and request logs.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_REALTY_EDIT",
+		"title": "Edit realty",
+		"description": "Edit property renters, rent amounts, payment dates, and key holders.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_SAVINGS_LOGS",
+		"title": "Savings logs",
+		"description": "View savings account details and transaction history.",
+		"default": "senior"
+	},
+	{
+		"key": "P_BULK_DELETE",
+		"title": "Bulk delete",
+		"description": "Delete multiple player warnings in one action.",
+		"default": "root"
+	},
+	{
+		"key": "P_VIEW_INVENTORY",
+		"title": "View inventories",
+		"description": "View inventory contents, including item quantities and metadata.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_EDIT_INVENTORY",
+		"title": "Edit inventories",
+		"description": "Add, edit, move, and delete inventory items, including their metadata. View inventories is also needed to see the items in the editor.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_DIVORCE_CHARACTERS",
+		"title": "Divorce characters",
+		"description": "End a character's marriage and clear the matching spouse's marriage record.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_REVIVE_OFFLINE",
+		"title": "Revive offline characters",
+		"description": "Clear an offline character's dead status so they are alive when next loaded.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_MANAGE_VEHICLES",
+		"title": "Manage vehicles",
+		"description": "Add vehicles to characters, edit vehicle details and ownership, and delete vehicles.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_EDIT_PED_MODEL",
+		"title": "Edit ped model",
+		"description": "Change the ped model used by a character.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_RESET_VEHICLE_GARAGE",
+		"title": "Reset vehicle garage",
+		"description": "Move a vehicle back to Garage C or fully reset its garage state, clearing impound status.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_SUSPICIOUS_ENTITIES",
+		"title": "Suspicious entities",
+		"description": "View suspicious entity spawn records and their details.",
+		"default": "senior"
+	},
+	{
+		"key": "P_EDIT_COMPANY_BALANCE",
+		"title": "Edit company balances",
+		"description": "Change a company's bank balance.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_EDIT_SAVINGS_BALANCE",
+		"title": "Edit savings balances",
+		"description": "Change a savings account's balance.",
+		"default": "superadmin"
+	},
+	{
+		"key": "P_VIEW_AUDIT_LOGS",
+		"title": "View audit logs",
+		"description": "View and filter the audit trail of actions performed through the panel.",
+		"default": "senior"
+	}
+]
