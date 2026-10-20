@@ -302,8 +302,8 @@ class PlayerCharacterController extends Controller
      */
     public function destroy(Request $request, Player $player, Character $character): RedirectResponse
     {
-        if (! $this->isSuperAdmin($request)) {
-            return backWith('error', 'Only super admins can delete characters.');
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_DELETE_CHARACTERS)) {
+            return backWith('error', 'You do not have permission to delete characters.');
         }
 
         $user = user();
@@ -535,8 +535,8 @@ class PlayerCharacterController extends Controller
         $bank   = intval($request->post("bank"));
         $stocks = intval($request->post("stocks"));
 
-        if (! $this->isSuperAdmin($request)) {
-            return backWith('error', 'Only super admins can edit a characters balance.');
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_EDIT_CHARACTER_BALANCE)) {
+            return backWith('error', 'You do not have permission to edit character balances.');
         }
 
         $changed = [

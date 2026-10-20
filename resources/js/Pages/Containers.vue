@@ -40,7 +40,7 @@
                         <a href="#" @click.prevent="copyLocation(container.container_id)" class="text-indigo-700 dark:text-indigo-200" :title="t('containers.copy_loc')">
                             <i class="fas fa-map-marked-alt"></i>
                         </a>
-                        <a href="#" @click.prevent="viewContainer(container)" class="text-indigo-700 dark:text-indigo-200 ml-2" :title="t('containers.view_access')" v-if="$page.auth.player.isSeniorStaff">
+                        <a href="#" @click.prevent="viewContainer(container)" class="text-indigo-700 dark:text-indigo-200 ml-2" :title="t('containers.view_access')" v-if="perm.check(perm.PERM_CONTAINER_ACCESS)">
                             <i class="fas fa-key"></i>
                         </a>
                     </td>

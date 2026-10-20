@@ -196,19 +196,17 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     // Advanced search.
     Route::get('/advanced', [AdvancedSearchController::class, 'index']);
 
-    Route::group(['middleware' => ['super-admin']], function () {
-        // Blacklisted Identifiers.
-        Route::get('/blacklist', [BlacklistController::class, 'index']);
-        Route::post('/blacklist', [BlacklistController::class, 'store']);
-        Route::delete('/blacklist/{identifier}', [BlacklistController::class, 'destroy']);
-        Route::post('/blacklist/import', [BlacklistController::class, 'import']);
+    // Blacklisted Identifiers.
+    Route::get('/blacklist', [BlacklistController::class, 'index']);
+    Route::post('/blacklist', [BlacklistController::class, 'store']);
+    Route::delete('/blacklist/{identifier}', [BlacklistController::class, 'destroy']);
+    Route::post('/blacklist/import', [BlacklistController::class, 'import']);
 
-        // Loading screen pictures
-        Route::get('/loading_screen', [LoadingScreenController::class, 'index']);
-        Route::delete('/loading_screen/{id}', [LoadingScreenController::class, 'delete']);
-        Route::post('/loading_screen', [LoadingScreenController::class, 'add']);
-        Route::put('/loading_screen/{id}', [LoadingScreenController::class, 'edit']);
-    });
+    // Loading screen pictures
+    Route::get('/loading_screen', [LoadingScreenController::class, 'index']);
+    Route::delete('/loading_screen/{id}', [LoadingScreenController::class, 'delete']);
+    Route::post('/loading_screen', [LoadingScreenController::class, 'add']);
+    Route::put('/loading_screen/{id}', [LoadingScreenController::class, 'edit']);
 
     // Suspicious.
     Route::get('/suspicious', [SuspiciousController::class, 'index']);

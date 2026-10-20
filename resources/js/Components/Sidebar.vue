@@ -236,7 +236,7 @@ const navigation = {
             {
                 label: "blacklist.title",
                 icon: "fas fa-user-slash",
-                hidden: !this.$page.auth.player.isSuperAdmin,
+                hidden: !this.perm.check(this.perm.PERM_BLACKLIST),
                 url: "/blacklist",
             },
             {

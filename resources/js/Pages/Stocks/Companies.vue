@@ -113,11 +113,11 @@
                     <sup v-else-if="company.empty_properties > 0 && company.filled_properties > 0" class="text-sm">{{ Math.round(company.filled_properties / (company.filled_properties + company.empty_properties) * 100) }}%</sup>
                 </h3>
 
-                <realty-properties :company="company" :can-edit="canEdit" :can-view="$page.auth.player.isSeniorStaff" @show="showProperty" @edit="editProperty" />
+                <realty-properties :company="company" :can-edit="canEdit" :can-view="canView" @show="showProperty" @edit="editProperty" />
             </div>
         </div>
 
-        <modal :show="isShowingProperty">
+        <modal :show="isShowingProperty && canView">
             <template #header>
                 <h1 class="dark:text-white" v-if="propertyData">
                     {{ propertyData.address }} #{{ propertyData.id }}
@@ -173,7 +173,7 @@
             </template>
         </modal>
 
-        <modal :show.sync="isEditingProperty">
+        <modal :show.sync="isEditingProperty" v-if="canEdit">
             <template #header>
                 <h1 class="dark:text-white">
                     {{ t('stocks.property_edit') }}
@@ -335,6 +335,10 @@ export default {
 
         canEdit() {
             return this.perm.check(this.perm.PERM_REALTY_EDIT);
+        },
+
+        canView() {
+            return this.perm.check(this.perm.PERM_REALTY_VIEW);
         },
 
         editingPropertyMinDate() {

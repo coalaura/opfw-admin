@@ -119,7 +119,7 @@ export default {
             return this.perm.check(this.perm.PERM_Y_EDIT);
         },
         canSeeDelete() {
-            return this.perm.check(this.perm.PERM_Y);
+            return this.perm.check(this.perm.PERM_Y_DELETE);
         },
         hasEdited(field) {
             return this.edit[field] !== this.post[field];

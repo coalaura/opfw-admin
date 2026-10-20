@@ -25,7 +25,7 @@ class PlayerRoleResource extends JsonResource
             'is_staff'        => $this->is_staff,
             'is_trusted'      => $this->is_trusted,
             'is_debugger'     => $this->is_debugger,
-            'panel_permissions' => $this->panel_permissions ?? [],
+            'panel_permissions' => PermissionHelper::getPlayerPermissions($this->resource),
             'permission_level' => PermissionHelper::getPlayerLevel($this->resource),
         ];
     }

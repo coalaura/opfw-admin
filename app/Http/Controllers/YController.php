@@ -217,7 +217,7 @@ class YController extends Controller
      */
     public function deleteYells(Request $request): RedirectResponse
     {
-        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_Y)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_Y_DELETE)) {
             abort(401);
         }
 

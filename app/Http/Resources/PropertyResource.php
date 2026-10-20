@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\PermissionHelper;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,8 +18,9 @@ class PropertyResource extends JsonResource
     public function toArray($request)
     {
         $keys = [];
+        $canView = PermissionHelper::hasPermission(PermissionHelper::PERM_REALTY_VIEW);
 
-        if (user()->isSeniorStaff() && $this->resource->relationLoaded('access')) {
+        if ($canView && $this->resource->relationLoaded('access')) {
             foreach ($this->access as $access) {
                 $keys['c_' . $access->character_id] = intval($access->access_level);
             }

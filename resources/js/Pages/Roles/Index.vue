@@ -65,7 +65,7 @@
                     </tr>
                 </table>
             </div>
-            <PanelPermissions v-if="canEditPermissions && permissionPlayer" :key="permissionPlayer.license" :player="permissionPlayer" :permissions="panelPermissions" :grantable="grantablePermissions" @saving="permissionSaving = $event" @saved="permissionsSaved" @close="permissionPlayer = null" />
+            <PanelPermissions v-if="canEditPermissions && permissionPlayer" :key="permissionPlayer.license" :player="permissionPlayer" :permissions="panelPermissions" :inheritance="permissionInheritance" :grantable="grantablePermissions" @saving="permissionSaving = $event" @saved="permissionsSaved" @close="permissionPlayer = null" />
         </template>
 
     </div>
@@ -94,6 +94,10 @@ export default {
             required: true
         },
         panelPermissions: {
+            type: Object,
+            required: true
+        },
+        permissionInheritance: {
             type: Object,
             required: true
         },

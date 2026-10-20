@@ -46,7 +46,7 @@ class ApiController extends Controller
     {
         $debugStart = microtime(true);
 
-        if (! $this->isRoot($request)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_DIAGNOSTICS)) {
             abort(401);
         }
 

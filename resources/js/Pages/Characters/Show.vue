@@ -241,7 +241,7 @@
                             <div>
                                 <label class="block mb-2 font-semibold text-lime-700 dark:text-lime-400">{{ t('players.characters.edit_cash') }}</label>
                                 <div class="relative">
-                                    <template v-if="$page.auth.player.isSuperAdmin">
+                                    <template v-if="perm.check(perm.PERM_EDIT_CHARACTER_BALANCE)">
                                         <input type="number" class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 font-mono" v-model="balanceForm.cash" />
                                         <span class="absolute right-3 top-3.5 font-mono text-sm italic text-gray-500 dark:text-gray-400 pointer-events-none" v-if="balanceForm.cash !== 0">{{ numberFormat(balanceForm.cash, 0, true) }}</span>
                                     </template>
@@ -254,7 +254,7 @@
                             <div>
                                 <label class="block mb-2 font-semibold text-indigo-700 dark:text-indigo-400">{{ t('players.characters.edit_bank') }}</label>
                                 <div class="relative">
-                                    <template v-if="$page.auth.player.isSuperAdmin">
+                                    <template v-if="perm.check(perm.PERM_EDIT_CHARACTER_BALANCE)">
                                         <input type="number" class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 font-mono" v-model="balanceForm.bank" />
                                         <span class="absolute right-3 top-3.5 font-mono text-sm italic text-gray-500 dark:text-gray-400 pointer-events-none" v-if="balanceForm.bank !== 0">{{ numberFormat(balanceForm.bank, 0, true) }}</span>
                                     </template>
@@ -267,7 +267,7 @@
                             <div>
                                 <label class="block mb-2 font-semibold text-purple-700 dark:text-purple-400">{{ t('players.characters.edit_stocks') }}</label>
                                 <div class="relative">
-                                    <template v-if="$page.auth.player.isSuperAdmin">
+                                    <template v-if="perm.check(perm.PERM_EDIT_CHARACTER_BALANCE)">
                                         <input type="number" class="block w-full px-4 py-3 bg-gray-200 border rounded dark:bg-gray-600 font-mono" v-model="balanceForm.stocks" />
                                         <span class="absolute right-3 top-3.5 font-mono text-sm italic text-gray-500 dark:text-gray-400 pointer-events-none" v-if="balanceForm.stocks !== 0">{{ numberFormat(balanceForm.stocks, 0, true) }}</span>
                                     </template>
@@ -277,7 +277,7 @@
                                 </div>
                             </div>
 
-                            <div v-if="$page.auth.player.isSuperAdmin && balanceEdited">
+                            <div v-if="perm.check(perm.PERM_EDIT_CHARACTER_BALANCE) && balanceEdited">
                                 <button type="button" class="block w-full px-5 py-2.5 mt-1 hover:shadow-xl font-semibold text-white rounded bg-green-600 dark:bg-green-500 transition-colors" @click="editBalance">
                                     <i class="fas fa-save mr-1"></i> {{ t('players.characters.save_changes') }}
                                 </button>
@@ -815,11 +815,11 @@
 
                         <template #footer>
                             <div class="flex gap-3">
-                                <inertia-link class="block px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/resolve/property-' + property.property_id" :class="$page.auth.player.isSeniorStaff ? 'w-1/2' : 'w-full'">
+                                <inertia-link class="block px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/resolve/property-' + property.property_id" :class="canViewProperties ? 'w-1/2' : 'w-full'">
                                     <i class="fas fa-briefcase mr-1"></i>
                                     {{ t('inventories.show_inv') }}
                                 </inertia-link>
-                                <button class="block w-1/2 px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" @click="showProperty(property.property_id)" v-if="$page.auth.player.isSeniorStaff">
+                                <button class="block w-1/2 px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" @click="showProperty(property.property_id)" v-if="canViewProperties">
                                     <i class="fas fa-home mr-1"></i>
                                     {{ t('players.properties.show') }}
                                 </button>
@@ -832,7 +832,7 @@
                 </p>
             </template>
 
-            <template v-if="$page.auth.player.isSeniorStaff">
+            <template v-if="canViewProperties">
                 <h2 class="mb-4 mt-5 pt-5 border-t-2 border-dashed border-gray-500">
                     {{ t('players.properties.properties_shared') }}
                 </h2>
@@ -852,11 +852,11 @@
 
                         <template #footer>
                             <div class="flex gap-3">
-                                <inertia-link class="block px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/resolve/property-' + property.property_id" :class="$page.auth.player.isSeniorStaff ? 'w-1/2' : 'w-full'">
+                                <inertia-link class="block px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" :href="'/inventory/resolve/property-' + property.property_id" :class="canViewProperties ? 'w-1/2' : 'w-full'">
                                     <i class="fas fa-briefcase mr-1"></i>
                                     {{ t('inventories.show_inv') }}
                                 </inertia-link>
-                                <button class="block w-1/2 px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" @click="showProperty(property.property_id)" v-if="$page.auth.player.isSeniorStaff">
+                                <button class="block w-1/2 px-3 py-2 mt-3 text-center text-white bg-blue-600 dark:bg-blue-400 rounded" @click="showProperty(property.property_id)" v-if="canViewProperties">
                                     <i class="fas fa-home mr-1"></i>
                                     {{ t('players.properties.show') }}
                                 </button>
@@ -950,7 +950,7 @@
             </template>
         </v-section>
 
-        <modal :show="isShowingProperty">
+        <modal :show="isShowingProperty && canViewProperties">
             <template #header>
                 <h1 class="dark:text-white" v-if="propertyData">
                     {{ propertyData.address }} #{{ propertyData.id }}
@@ -1339,6 +1339,9 @@ export default {
         };
     },
     computed: {
+        canViewProperties() {
+            return this.perm.check(this.perm.PERM_REALTY_VIEW);
+        },
         licensesChanged() {
             const licenses = this.character.licenses.sort();
             const formLicenses = this.licenseForm.licenses.sort();

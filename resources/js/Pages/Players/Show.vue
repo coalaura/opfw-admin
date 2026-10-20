@@ -239,7 +239,7 @@
                     Idf
                 </a>
 
-                <template v-if="this.$page.auth.player.isSeniorStaff">
+                <template v-if="perm.check(perm.PERM_USER_VARIABLES)">
                     <div class="w-px bg-white bg-opacity-30 h-full separator">&nbsp;</div>
 
                     <!-- User Variables -->
@@ -374,7 +374,7 @@
             </template>
         </modal>
 
-        <metadataViewer :title="t('players.show.user_variables')" :metadata="player.variables" :show.sync="showingUserVariables"></metadataViewer>
+        <metadataViewer :title="t('players.show.user_variables')" :metadata="player.variables" :show.sync="showingUserVariables" v-if="perm.check(perm.PERM_USER_VARIABLES)"></metadataViewer>
 
         <!-- System Ban Info -->
         <modal :show.sync="isShowingSystemInfo">
@@ -1302,7 +1302,7 @@
                                         {{ t('global.view') }}
                                     </inertia-link>
 
-                                    <inertia-link class="block w-full px-3 py-2 text-center text-white bg-red-600 dark:bg-red-400 rounded" href="#" @click="deleteCharacter($event, character.id)" v-if="!character.characterDeleted && $page.auth.player.isSuperAdmin">
+                                    <inertia-link class="block w-full px-3 py-2 text-center text-white bg-red-600 dark:bg-red-400 rounded" href="#" @click="deleteCharacter($event, character.id)" v-if="!character.characterDeleted && perm.check(perm.PERM_DELETE_CHARACTERS)">
                                         <i class="fas fa-trash-alt mr-1"></i>
                                         {{ t('players.characters.delete') }}
                                     </inertia-link>
@@ -1529,7 +1529,7 @@
                                     <i class="fas fa-sticky-note mr-0.5"></i>
                                     {{ t('players.warning.note') }}
                                 </button>
-                                <button class="px-2.5 py-0.5 text-white bg-pink-400 dark:bg-pink-500 rounded hover:!bg-pink-600" @click="form.warning.warning_type = 'hidden'" v-if="$page.auth.player.isSeniorStaff">
+                                <button class="px-2.5 py-0.5 text-white bg-pink-400 dark:bg-pink-500 rounded hover:!bg-pink-600" @click="form.warning.warning_type = 'hidden'" v-if="perm.check(perm.PERM_HIDDEN_NOTES)">
                                     <i class="fas fa-eye-slash mr-0.5"></i>
                                     {{ t('players.warning.hidden') }}
                                 </button>

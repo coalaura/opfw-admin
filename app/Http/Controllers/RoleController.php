@@ -46,6 +46,7 @@ class RoleController extends Controller
             'roles'    => self::AllowedRoles,
             'readonly' => !env('ALLOW_ROLE_EDITING', false) || !$this->isSuperAdmin($request),
             'panelPermissions' => PermissionHelper::getFrontendPermissions(),
+            'permissionInheritance' => PermissionHelper::getFrontendInheritance(),
             'grantablePermissions' => PermissionHelper::getGrantablePermissions(user()),
             'canEditPermissions' => $this->isSuperAdmin($request),
         ]);
@@ -72,7 +73,7 @@ class RoleController extends Controller
             return $this->json(false, null, $validator->errors()->first());
         }
 
-        $before = $player->panel_permissions ?? [];
+        $before = PermissionHelper::getPlayerPermissions($player);
         $after = array_values($validator->validated()['panel_permissions']);
         $added = array_diff($after, $before);
         $removed = array_diff($before, $after);

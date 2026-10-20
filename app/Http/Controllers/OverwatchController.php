@@ -356,8 +356,14 @@ class OverwatchController extends Controller
 
         $players = StatusHelper::all();
 
-        $players = array_filter($players, function ($player) {
-            return $player && $player['character'] && ! RootHelper::isUserRoot($player['license']) && ! in_array('in_shell', $player["characterData"]) && ! $player['fakeDisconnected'] && ! $player['inQueue'];
+        $canCaptureShells = PermissionHelper::hasPermission(PermissionHelper::PERM_SCREENSHOT_SHELL);
+
+        $players = array_filter($players, function ($player) use ($canCaptureShells) {
+            if (!$player || !$player['character'] || RootHelper::isUserRoot($player['license']) || $player['fakeDisconnected'] || $player['inQueue']) {
+                return false;
+            }
+
+            return $canCaptureShells || !in_array('in_shell', $player['characterData']);
         });
 
         if (! empty($players)) {

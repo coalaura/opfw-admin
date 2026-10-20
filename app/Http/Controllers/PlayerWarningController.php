@@ -34,9 +34,7 @@ class PlayerWarningController extends Controller
 			return backWith('error', 'Something went wrong.');
 		}
 
-        $isSenior = $this->isSeniorStaff($request);
-
-        if (!$isSenior && $data['warning_type'] === Warning::TypeHidden) {
+        if ($data['warning_type'] === Warning::TypeHidden && !PermissionHelper::hasPermission(PermissionHelper::PERM_HIDDEN_NOTES)) {
             abort(401);
         }
 
@@ -70,6 +68,13 @@ class PlayerWarningController extends Controller
      */
     public function update(Player $player, Warning $warning, WarningStoreRequest $request): RedirectResponse
     {
+        $data = $request->validated();
+        $isHidden = $warning->warning_type === Warning::TypeHidden || $data['warning_type'] === Warning::TypeHidden;
+
+        if ($isHidden && !PermissionHelper::hasPermission(PermissionHelper::PERM_HIDDEN_NOTES)) {
+            abort(401);
+        }
+
         if (!$warning->can_be_deleted) {
             abort(401);
         }
@@ -83,7 +88,7 @@ class PlayerWarningController extends Controller
 
         $messageBefore = $warning->message;
 
-        $warning->update($request->validated());
+        $warning->update($data);
 
         DiscordAttachmentHelper::garbageCollectAttachments($messageBefore, $warning->message);
         DiscordAttachmentHelper::ensureMessageAttachments($warning);
@@ -109,6 +114,8 @@ class PlayerWarningController extends Controller
      */
     public function refresh(Player $player, Warning $warning): RedirectResponse
     {
+        $this->authorizeHiddenNote($warning);
+
         if (!RootHelper::isCurrentUserRoot()) {
             abort(401);
         }
@@ -135,6 +142,8 @@ class PlayerWarningController extends Controller
      */
     public function destroy(Request $request, Player $player, Warning $warning): RedirectResponse
     {
+        $this->authorizeHiddenNote($warning);
+
         $isSenior = $this->isSeniorStaff($request);
 
         if (!$warning->can_be_deleted && !$isSenior) {
@@ -173,6 +182,10 @@ class PlayerWarningController extends Controller
 
         $warnings = Warning::query()->where('player_id', $player->user_id)->whereIn('id', $ids)->get();
 
+        foreach ($warnings as $warning) {
+            $this->authorizeHiddenNote($warning);
+        }
+
         $user = user();
 
         $warningIds = $warnings->pluck('id')->toArray();
@@ -200,6 +213,8 @@ class PlayerWarningController extends Controller
      */
     public function react(Request $request, Player $player, Warning $warning)
     {
+        $this->authorizeHiddenNote($warning);
+
         $emoji = $request->input('emoji');
 
         if (!$emoji || !in_array($emoji, Warning::Reactions)) {
@@ -254,8 +269,17 @@ class PlayerWarningController extends Controller
      */
     public function reactions(Request $request, Player $player, Warning $warning)
     {
+        $this->authorizeHiddenNote($warning);
+
         $license = license();
 
         return $this->json(true, $warning->getReactionsResolved($license));
+    }
+
+    private function authorizeHiddenNote(Warning $warning): void
+    {
+        if ($warning->warning_type === Warning::TypeHidden && !PermissionHelper::hasPermission(PermissionHelper::PERM_HIDDEN_NOTES)) {
+            abort(401);
+        }
     }
 }

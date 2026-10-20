@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Resources;
 
-use App\Helpers\RootHelper;
+use App\Helpers\PermissionHelper;
 use App\Warning;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -21,9 +21,10 @@ class PlayerResource extends JsonResource
 
         $bans = BanResource::collection($this->uniqueBans());
 
-        $variables = $this->getUserVariables();
+        $variables = [];
 
-        if (RootHelper::isCurrentUserRoot()) {
+        if (PermissionHelper::hasPermission(PermissionHelper::PERM_USER_VARIABLES)) {
+            $variables = $this->getUserVariables() ?? [];
             $variables['media_device_ids'] = $this->media_device_ids;
             $variables['media_devices']    = $this->media_devices;
         }

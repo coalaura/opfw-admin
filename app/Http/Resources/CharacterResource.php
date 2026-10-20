@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Character;
 use App\Helpers\GeneralHelper;
+use App\Helpers\PermissionHelper;
 use App\Helpers\ServerAPI;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -51,7 +52,7 @@ class CharacterResource extends JsonResource
             'backstory'                  => $this->backstory,
             'vehicles'                   => VehicleResource::collection($this->vehicles),
             'properties'                 => PropertyResource::collection($this->properties()->with('access')->get()),
-            'accessProperties'           => PropertyResource::collection($this->accessProperties()->load('access')),
+            'accessProperties'           => PermissionHelper::hasPermission(PermissionHelper::PERM_REALTY_VIEW) ? PropertyResource::collection($this->accessProperties()->load('access')) : [],
             'characterDeleted'           => $this->character_deleted,
             'characterDeletionTimestamp' => $this->character_deletion_timestamp,
             'characterCreationTimestamp' => $this->character_creation_timestamp,

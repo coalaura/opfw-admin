@@ -320,7 +320,7 @@ class PlayerRouteController extends Controller
 
         $status = Player::getOnlineStatus($license, true);
 
-        if (!$this->isSeniorStaff($request) && $status->isInShell()) {
+        if ($status->isInShell() && !PermissionHelper::hasPermission(PermissionHelper::PERM_SCREENSHOT_SHELL)) {
             return self::json(false, null, 'Player is inside a house');
         }
 
@@ -365,7 +365,7 @@ class PlayerRouteController extends Controller
     public function capture(string $server, int $id, int $duration, Request $request): Response
     {
         if (!PermissionHelper::hasPermission(PermissionHelper::PERM_SCREENSHOT)) {
-            return self::json(false, null, 'Only trusted Panel users can use screenshot functionality');
+            return self::json(false, null, 'You can not use the screenshot functionality');
         }
 
         $api = Server::getServerURL($server);
@@ -384,7 +384,7 @@ class PlayerRouteController extends Controller
 
         $status = Player::getOnlineStatus($license, true);
 
-        if (!$this->isSeniorStaff($request) && $status->isInShell()) {
+        if ($status->isInShell() && !PermissionHelper::hasPermission(PermissionHelper::PERM_SCREENSHOT_SHELL)) {
             return self::json(false, null, 'Player is inside a house');
         }
 

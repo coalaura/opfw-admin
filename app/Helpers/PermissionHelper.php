@@ -7,6 +7,7 @@ class PermissionHelper
 {
     const PERMISSIONS = [
         self::PERM_SCREENSHOT           => ['screenshot', self::LEVEL_STAFF],
+        self::PERM_SCREENSHOT_SHELL     => ['screenshot_shell', self::LEVEL_SENIOR],
         self::PERM_SUSPICIOUS           => ['suspicious', self::LEVEL_SENIOR],
         self::PERM_ADVANCED             => ['advanced', self::LEVEL_SENIOR],
         self::PERM_LIVEMAP              => ['livemap', self::LEVEL_STAFF],
@@ -14,10 +15,11 @@ class PermissionHelper
         self::PERM_EDIT_TAG             => ['edit_tag', self::LEVEL_ROOT],
         self::PERM_LOADING_SCREEN       => ['loading_screen', self::LEVEL_SUPERADMIN],
         self::PERM_VIEW_QUEUE           => ['view_queue', self::LEVEL_SENIOR],
-        self::PERM_Y                    => ['y', self::LEVEL_SUPERADMIN],
+        self::PERM_Y_DELETE             => ['y_delete', self::LEVEL_SUPERADMIN],
         self::PERM_Y_VERIFY             => ['y_verify', self::LEVEL_SUPERADMIN],
         self::PERM_Y_EDIT               => ['y_edit', self::LEVEL_SUPERADMIN],
         self::PERM_LINKED               => ['linked', self::LEVEL_ROOT],
+        self::PERM_LINKED_VALUES        => ['linked_values', self::LEVEL_ROOT],
         self::PERM_ANNOUNCEMENT         => ['announcement', self::LEVEL_SUPERADMIN],
         self::PERM_DAMAGE_LOGS          => ['damage_logs', self::LEVEL_SENIOR],
         self::PERM_EXPLOSION_EVENTS     => ['explosion_events', self::LEVEL_STAFF],
@@ -30,6 +32,7 @@ class PermissionHelper
         self::PERM_WHITELIST            => ['whitelist', self::LEVEL_SUPERADMIN],
         self::PERM_API_TOKENS           => ['api_tokens', self::LEVEL_SUPERADMIN],
         self::PERM_REALTY_EDIT          => ['realty_edit', self::LEVEL_SUPERADMIN],
+        self::PERM_REALTY_VIEW          => ['realty_view', self::LEVEL_SENIOR],
         self::PERM_SAVINGS_LOGS         => ['savings_logs', self::LEVEL_SENIOR],
         self::PERM_BULK_DELETE          => ['bulk_delete', self::LEVEL_ROOT],
         self::PERM_VIEW_INVENTORY       => ['view_inventory', self::LEVEL_SUPERADMIN],
@@ -43,9 +46,18 @@ class PermissionHelper
         self::PERM_EDIT_COMPANY_BALANCE => ['edit_company_balance', self::LEVEL_SUPERADMIN],
         self::PERM_EDIT_SAVINGS_BALANCE => ['edit_savings_balance', self::LEVEL_SUPERADMIN],
         self::PERM_VIEW_AUDIT_LOGS      => ['view_audit_logs', self::LEVEL_SENIOR],
+        self::PERM_CONTAINER_ACCESS    => ['container_access', self::LEVEL_SENIOR],
+        self::PERM_HIDDEN_NOTES        => ['hidden_notes', self::LEVEL_SENIOR],
+        self::PERM_RESTRICTED_LOGS     => ['restricted_logs', self::LEVEL_SENIOR],
+        self::PERM_USER_VARIABLES      => ['user_variables', self::LEVEL_SENIOR],
+        self::PERM_BLACKLIST           => ['blacklist', self::LEVEL_SUPERADMIN],
+        self::PERM_DELETE_CHARACTERS   => ['delete_characters', self::LEVEL_SUPERADMIN],
+        self::PERM_EDIT_CHARACTER_BALANCE => ['edit_character_balance', self::LEVEL_SUPERADMIN],
+        self::PERM_DIAGNOSTICS         => ['diagnostics', self::LEVEL_ROOT],
     ];
 
     const PERM_SCREENSHOT           = 'P_SCREENSHOT';
+    const PERM_SCREENSHOT_SHELL     = 'P_SCREENSHOT_SHELL';
     const PERM_SUSPICIOUS           = 'P_SUSPICIOUS';
     const PERM_ADVANCED             = 'P_ADVANCED';
     const PERM_LIVEMAP              = 'P_LIVEMAP';
@@ -53,10 +65,11 @@ class PermissionHelper
     const PERM_EDIT_TAG             = 'P_EDIT_TAG';
     const PERM_LOADING_SCREEN       = 'P_LOADING_SCREEN';
     const PERM_VIEW_QUEUE           = 'P_VIEW_QUEUE';
-    const PERM_Y                    = 'P_Y';
+    const PERM_Y_DELETE             = 'P_Y_DELETE';
     const PERM_Y_VERIFY             = 'P_Y_VERIFY';
     const PERM_Y_EDIT               = 'P_Y_EDIT';
     const PERM_LINKED               = 'P_LINKED';
+    const PERM_LINKED_VALUES        = 'P_LINKED_VALUES';
     const PERM_ANNOUNCEMENT         = 'P_ANNOUNCEMENT';
     const PERM_DAMAGE_LOGS          = 'P_DAMAGE_LOGS';
     const PERM_EXPLOSION_EVENTS     = 'P_EXPLOSION_EVENTS';
@@ -69,6 +82,7 @@ class PermissionHelper
     const PERM_WHITELIST            = 'P_WHITELIST';
     const PERM_API_TOKENS           = 'P_API_TOKENS';
     const PERM_REALTY_EDIT          = 'P_REALTY_EDIT';
+    const PERM_REALTY_VIEW          = 'P_REALTY_VIEW';
     const PERM_SAVINGS_LOGS         = 'P_SAVINGS_LOGS';
     const PERM_BULK_DELETE          = 'P_BULK_DELETE';
     const PERM_VIEW_INVENTORY       = 'P_VIEW_INVENTORY';
@@ -82,6 +96,22 @@ class PermissionHelper
     const PERM_EDIT_COMPANY_BALANCE = 'P_EDIT_COMPANY_BALANCE';
     const PERM_EDIT_SAVINGS_BALANCE = 'P_EDIT_SAVINGS_BALANCE';
     const PERM_VIEW_AUDIT_LOGS      = 'P_VIEW_AUDIT_LOGS';
+    const PERM_CONTAINER_ACCESS    = 'P_CONTAINER_ACCESS';
+    const PERM_HIDDEN_NOTES        = 'P_HIDDEN_NOTES';
+    const PERM_RESTRICTED_LOGS     = 'P_RESTRICTED_LOGS';
+    const PERM_USER_VARIABLES      = 'P_USER_VARIABLES';
+    const PERM_BLACKLIST           = 'P_BLACKLIST';
+    const PERM_DELETE_CHARACTERS   = 'P_DELETE_CHARACTERS';
+    const PERM_EDIT_CHARACTER_BALANCE = 'P_EDIT_CHARACTER_BALANCE';
+    const PERM_DIAGNOSTICS         = 'P_DIAGNOSTICS';
+
+    // Access to a stronger permission also grants its base permission.
+    const INHERITED_FROM = [
+        self::PERM_SCREENSHOT => [self::PERM_SCREENSHOT_SHELL],
+        self::PERM_Y_DELETE => [self::PERM_Y_EDIT],
+        self::PERM_REALTY_VIEW => [self::PERM_REALTY_EDIT],
+        self::PERM_VIEW_INVENTORY => [self::PERM_EDIT_INVENTORY],
+    ];
 
     const LEVEL_STAFF      = 1;
     const LEVEL_SENIOR     = 2;
@@ -148,7 +178,35 @@ class PermissionHelper
             return true;
         }
 
-        return in_array(self::PERMISSIONS[$key][0], $player->panel_permissions ?? [], true);
+        if (in_array(self::PERMISSIONS[$key][0], self::getPlayerPermissions($player), true)) {
+            return true;
+        }
+
+        foreach (self::INHERITED_FROM[$key] ?? [] as $source) {
+            if (self::playerHasPermission($player, $source)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static function getPlayerPermissions(Player $player): array
+    {
+        $permissions = $player->panel_permissions ?? [];
+
+        // Normalize grants saved before the Y deletion permission was renamed.
+        if (in_array('y', $permissions, true)) {
+            foreach ($permissions as $index => $permission) {
+                if ($permission === 'y') {
+                    $permissions[$index] = 'y_delete';
+                }
+            }
+
+            $permissions = array_values(array_unique($permissions));
+        }
+
+        return $permissions;
     }
 
     public static function getPlayerLevel(Player $player): int
@@ -190,5 +248,18 @@ class PermissionHelper
         }
 
         return $access;
+    }
+
+    public static function getFrontendInheritance(): array
+    {
+        $inheritance = [];
+
+        foreach (self::INHERITED_FROM as $key => $sources) {
+            $inheritance[self::PERMISSIONS[$key][0]] = array_map(function ($source) {
+                return self::PERMISSIONS[$source][0];
+            }, $sources);
+        }
+
+        return $inheritance;
     }
 }

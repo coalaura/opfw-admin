@@ -39,7 +39,7 @@ class StocksController extends Controller
 
         $propertyAccess = [];
 
-        if (PermissionHelper::hasPermission(PermissionHelper::PERM_REALTY_EDIT)) {
+        if (PermissionHelper::hasPermission(PermissionHelper::PERM_REALTY_VIEW)) {
             $dbPropertyAccess = PropertyAccess::query()
                 ->select(
                     'stocks_company_property_access.property_id',
@@ -127,7 +127,7 @@ class StocksController extends Controller
 
     public function property(Request $request, int $propertyId)
     {
-        if (! $this->isSeniorStaff($request)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_REALTY_VIEW)) {
             abort(401);
         }
 

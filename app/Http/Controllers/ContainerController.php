@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Container;
+use App\Helpers\PermissionHelper;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -26,7 +27,7 @@ class ContainerController extends Controller
 
     public function access(Request $request, Container $container)
     {
-        if (! $this->isSeniorStaff($request)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_CONTAINER_ACCESS)) {
             abort(401);
         }
 

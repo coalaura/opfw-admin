@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\BlacklistedIdentifier;
 use App\Character;
 use App\Helpers\GeneralHelper;
+use App\Helpers\PermissionHelper;
 use App\Helpers\ServerAPI;
 use App\Helpers\StatisticsHelper;
 use App\Helpers\StatusHelper;
@@ -266,12 +267,12 @@ class PlayerController extends Controller
             ->whereIn('identifier', $identifiers)
             ->first() : false;
 
-        $isSenior = $this->isSeniorStaff($request);
+        $canViewHiddenNotes = PermissionHelper::hasPermission(PermissionHelper::PERM_HIDDEN_NOTES);
 
         return Inertia::render('Players/Show', [
             'player'      => new PlayerResource($player),
             'characters'  => CharacterSlimResource::collection($player->characters),
-            'warnings'    => $player->fasterWarnings($isSenior),
+            'warnings'    => $player->fasterWarnings($canViewHiddenNotes),
             'reactions'   => Warning::Reactions,
             'animated'    => Warning::AnimatedReactions,
             'kickReason'  => trim($request->query('kick')) ?? '',

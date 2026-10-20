@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\AuditLog;
 use App\BlacklistedIdentifier;
+use App\Helpers\PermissionHelper;
 use App\Http\Requests\BlacklistedIdentifierStoreRequest;
 use App\Http\Resources\BlacklistedIdentifierResource;
 use App\Player;
@@ -25,6 +26,10 @@ class BlacklistController extends Controller
      */
     public function index(Request $request): Response
     {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_BLACKLIST)) {
+            abort(401);
+        }
+
         $start = round(microtime(true) * 1000);
 
         $query = BlacklistedIdentifier::query();
@@ -76,6 +81,10 @@ class BlacklistController extends Controller
      */
     public function store(BlacklistedIdentifierStoreRequest $request): RedirectResponse
     {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_BLACKLIST)) {
+            abort(401);
+        }
+
         $user = user();
 
         $identifier = $request->validated();
@@ -105,6 +114,10 @@ class BlacklistController extends Controller
 
     public function import(Request $request): RedirectResponse
     {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_BLACKLIST)) {
+            abort(401);
+        }
+
         $user = user();
 
         $text = str_replace("\r\n", "\n", $request->input('text', ''));
@@ -174,6 +187,10 @@ class BlacklistController extends Controller
      */
     public function destroy(BlacklistedIdentifier $identifier): RedirectResponse
     {
+        if (!PermissionHelper::hasPermission(PermissionHelper::PERM_BLACKLIST)) {
+            abort(401);
+        }
+
         $identifierString = $identifier->identifier;
 
         $identifier->forceDelete();

@@ -956,6 +956,7 @@ class PlayerBanController extends Controller
     protected function drawLinked(string $title, Player $player, string $where, array $values)
     {
         $request = request();
+        $canViewValues = PermissionHelper::hasPermission(PermissionHelper::PERM_LINKED_VALUES);
 
         $license = $player->license_identifier;
 
@@ -995,12 +996,13 @@ class PlayerBanController extends Controller
                     $count,
                     $countIps,
                     $countIdentifiers,
-                    implode("\n", $matchingDevices),
+                    $canViewValues ? implode("\n", $matchingDevices) : '',
                     $devicesOverlap
                 );
 
                 $playtime = "Playtime is about " . GeneralHelper::formatSeconds($found->playtime);
-                $webgl    = $gpuOverlap ? sprintf('<span style="color:#8fe17f" title="WebGL fingerprint matches exactly: %s">webgl</span>', $gpuMediaDevice) : '<span style="color:#e17f7f;text-decoration:line-through" title="WebGL fingerprint does not match">webgl</span>';
+                $gpuMatchTitle = $canViewValues ? sprintf('WebGL fingerprint matches exactly: %s', $gpuMediaDevice) : 'WebGL fingerprint matches exactly';
+                $webgl    = $gpuOverlap ? sprintf('<span style="color:#8fe17f" title="%s">webgl</span>', $gpuMatchTitle) : '<span style="color:#e17f7f;text-decoration:line-through" title="WebGL fingerprint does not match">webgl</span>';
 
                 $raw[] = [
                     'label'      => sprintf('[%s] %s - %s - <a href="/players/%s" target="_blank" title="%s">%s</a>', $counts, $webgl, GeneralHelper::formatTimestamp($found->last_connection), $found->license_identifier, $playtime, $found->player_name),
@@ -1050,7 +1052,7 @@ class PlayerBanController extends Controller
             $counts,
             implode("\n", $linked),
             implode("\n", $banned),
-            $this->isRoot($request) ? sprintf("<div style=\"color:#b0b0b0;font-style:italic\">- Values\n%s", implode("\n", $values)) : '',
+            $canViewValues ? sprintf("<div style=\"color:#b0b0b0;font-style:italic\">- Values\n%s", implode("\n", $values)) : '',
             '<script>(()=>{const a=document.getElementById("fresh");if(a){function b(){return c-=1,a.innerText=`${c}s`,0>=c?void window.location.reload():void setTimeout(b,1e3)}let c=60;b()}})()</script>'
         ));
     }

@@ -40,7 +40,7 @@ class LogController extends Controller
 
         $query = $this->serverLogsQuery($request)->orderByDesc('timestamp');
 
-        if (! $this->isSeniorStaff($request)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_RESTRICTED_LOGS)) {
             $skipped = ['action is "' . implode('", "', self::RestrictedLogs) . '"'];
         }
 
@@ -533,7 +533,7 @@ class LogController extends Controller
     {
         $query = Log::query();
 
-        if (! $this->isSeniorStaff($request)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_RESTRICTED_LOGS)) {
             $query->whereNotIn('action', self::RestrictedLogs);
         }
 

@@ -28,7 +28,7 @@
                     {{ t("nav.light") }}
                 </button>
 
-                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-yellow-700 bg-warning rounded dark:bg-dark-warning" :title="t('global.permission')" @click="showPermissions" :class="{ 'cursor-pointer': $page.auth.player.isSuperAdmin, 'shadow-sm': banner }">
+                <span class="px-4 py-1 ml-3 font-semibold text-black text-sm not-italic border-2 border-yellow-700 bg-warning rounded dark:bg-dark-warning" :title="t('global.permission')" @click="showPermissions" :class="{ 'cursor-pointer': $page.auth.player.isSeniorStaff, 'shadow-sm': banner }">
                     <i class="fas fa-tools mr-1"></i>
                     <span v-if="$page.auth.player.isRoot">{{ t('global.root') }}</span>
                     <span v-else-if="$page.auth.player.isSuperAdmin">{{ t('global.super') }}</span>
@@ -91,12 +91,12 @@
                             {{ t('nav.world_time') }}
                         </button>
 
-                        <button @click="showDebugInfo" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" v-if="$page.auth.player.isRoot">
+                        <button @click="showDebugInfo" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" v-if="perm.check(perm.PERM_DIAGNOSTICS)">
                             <i class="fas fa-wrench mr-1"></i>
                             {{ t('nav.debug_info') }}
                         </button>
 
-                        <button @click="showSocketInfo" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" v-if="$page.auth.player.isRoot">
+                        <button @click="showSocketInfo" class="px-2 py-1 text-left block w-full hover:bg-gray-600 border-t border-gray-500" v-if="perm.check(perm.PERM_DIAGNOSTICS)">
                             <i class="fas fa-socks mr-1"></i>
                             {{ t('nav.socket_info') }}
                         </button>
@@ -154,7 +154,7 @@
             </template>
         </modal>
 
-        <modal :show.sync="showingDebugInfo" class="relative">
+        <modal :show.sync="showingDebugInfo" class="relative" v-if="perm.check(perm.PERM_DIAGNOSTICS)">
             <template #header>
                 <h1 class="dark:text-white">
                     {{ t('nav.debug_info') }}
@@ -199,7 +199,7 @@
             </template>
         </modal>
 
-        <modal :show.sync="showingSocketInfo" class="relative" extraClass="max-w-large">
+        <modal :show.sync="showingSocketInfo" class="relative" extraClass="max-w-large" v-if="perm.check(perm.PERM_DIAGNOSTICS)">
             <template #header>
                 <h1 class="dark:text-white">
                     {{ t('nav.socket_info') }}
@@ -582,7 +582,9 @@ export default {
             this.showingContext = false;
         },
         showPermissions() {
-            if (!this.$page.auth.player.isSuperAdmin) return;
+            if (!this.$page.auth.player.isSeniorStaff) {
+                return;
+            }
 
             this.showingPermissions = true;
         },
@@ -647,7 +649,9 @@ export default {
             this.gotoPlayer = false;
         },
         async showDebugInfo() {
-            if (this.loadingDebug) return;
+            if (this.loadingDebug || !this.perm.check(this.perm.PERM_DIAGNOSTICS)) {
+                return;
+            }
 
             this.hideContext();
 
@@ -677,7 +681,9 @@ export default {
             this.loadingDebug = false;
         },
         async showSocketInfo() {
-            if (this.loadingSocket) return;
+            if (this.loadingSocket || !this.perm.check(this.perm.PERM_DIAGNOSTICS)) {
+                return;
+            }
 
             this.hideContext();
 
