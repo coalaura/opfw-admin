@@ -6,7 +6,7 @@
             </h1>
             <p>
                 {{ t('roles.description') }}
-                <span v-if="readonly">({{ t('roles.readonly') }})</span>
+                <span v-if="readonly && !canEditPermissions">({{ t('roles.readonly') }})</span>
             </p>
         </portal>
 
@@ -16,7 +16,7 @@
                     <tr class="bg-gray-400 dark:bg-gray-800 no-alpha">
                         <th class="font-bold px-4 py-1.5 text-left cursor-pointer" @click="sortBy('name')">{{ t('roles.player') }}</th>
                         <th class="font-bold px-4 py-1.5 text-left cursor-pointer" @click="sortBy(role)" v-for="role in roleList" :key="role">{{ t('roles.' + role) }}</th>
-                        <th class="font-bold px-4 py-1.5 text-left" v-if="!readonly">&nbsp;</th>
+                        <th class="font-bold px-4 py-1.5 text-left" v-if="!readonly || canEditPermissions">&nbsp;</th>
                     </tr>
 
                     <tr v-for="player in playerList" :key="player.license" class="odd:bg-gray-200 dark:odd:bg-gray-500 hover:bg-gray-300 dark:hover:bg-gray-700">
@@ -32,19 +32,22 @@
                             <i class="fas fa-toggle-off cursor-pointer text-red-600 dark:text-red-400" :class="{'cursor-not-allowed': !canEditRole(role)}" v-else @click="toggleOverride(player, role)"></i>
                         </td>
 
-                        <td class="italic px-4 py-1.5 w-24" v-if="!readonly">
-                            <button class="px-2 py-0.5 rounded bg-danger dark:bg-dark-danger mr-1" @click="resetOverrides(player)" :title="t('roles.reset')" :disabled="!player.hasOverrides">
+                        <td class="italic px-4 py-1.5 w-24" v-if="!readonly || canEditPermissions">
+                            <button class="px-2 py-0.5 rounded bg-danger dark:bg-dark-danger mr-1" v-if="!readonly" @click="resetOverrides(player)" :title="t('roles.reset')" :disabled="!player.hasOverrides">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
 
-                            <button class="px-2 py-0.5 rounded bg-success dark:bg-dark-success" @click="saveOverrides(player)" :title="t('roles.save')" :disabled="!player.hasOverrides">
+                            <button class="px-2 py-0.5 rounded bg-success dark:bg-dark-success" v-if="!readonly" @click="saveOverrides(player)" :title="t('roles.save')" :disabled="!player.hasOverrides">
                                 <i class="fas fa-save"></i>
+                            </button>
+                            <button class="px-2 py-0.5 rounded bg-primary dark:bg-dark-primary" :class="{ 'ml-1': !readonly }" v-if="canEditPermissions" @click="permissionPlayer = player" :title="t('roles.panel_permissions')" :aria-label="t('roles.panel_permissions')" :disabled="permissionSaving">
+                                <i class="fas fa-user-shield" aria-hidden="true"></i>
                             </button>
                         </td>
                     </tr>
 
-                    <tr class="odd:bg-gray-200 dark:odd:bg-gray-500 border-t-4 border-gray-300" v-if="!readonly">
-                        <td class="italic px-4 py-1.5" colspan="6">
+                    <tr class="odd:bg-gray-200 dark:odd:bg-gray-500 border-t-4 border-gray-300" v-if="!readonly || canEditPermissions">
+                        <td class="italic px-4 py-1.5" :colspan="roleList.length + 1">
                             <input class="block w-full text-sm bg-transparent py-1 px-2 border-0 border-b-2 border-red-600 dark:border-red-400" :class="{ '!border-lime-600 !dark:border-lime-400': addedLicenseValid }" v-model="adding" placeholder="license:2ced2cabd90f1208e..." />
                         </td>
 
@@ -62,6 +65,7 @@
                     </tr>
                 </table>
             </div>
+            <PanelPermissions v-if="canEditPermissions && permissionPlayer" :key="permissionPlayer.license" :player="permissionPlayer" :permissions="panelPermissions" :grantable="grantablePermissions" @saving="permissionSaving = $event" @saved="permissionsSaved" @close="permissionPlayer = null" />
         </template>
 
     </div>
@@ -69,9 +73,13 @@
 
 <script>
 import Layout from './../../Layouts/App.vue';
+import PanelPermissions from './PanelPermissions.vue';
 
 export default {
     layout: Layout,
+    components: {
+        PanelPermissions: PanelPermissions
+    },
     props: {
         players: {
             type: Array,
@@ -82,6 +90,18 @@ export default {
             required: true
         },
         readonly: {
+            type: Boolean,
+            required: true
+        },
+        panelPermissions: {
+            type: Object,
+            required: true
+        },
+        grantablePermissions: {
+            type: Array,
+            required: true
+        },
+        canEditPermissions: {
             type: Boolean,
             required: true
         }
@@ -96,6 +116,8 @@ export default {
         return {
             isAdding: false,
             adding: "",
+            permissionPlayer: null,
+            permissionSaving: false,
 
             roleList: roles,
             playerList: players
@@ -109,6 +131,10 @@ export default {
         }
     },
     methods: {
+        permissionsSaved(permissions) {
+            this.permissionPlayer.panel_permissions = permissions;
+            this.$inertia.reload({ only: ['auth'] });
+        },
         createPlayer(player) {
             const overrides = {};
 
@@ -200,6 +226,7 @@ export default {
                     }
 
                     player.hasOverrides = false;
+                    player.permission_level = data.data.permission_level;
                 }
             } catch (error) {
                 console.error(error);

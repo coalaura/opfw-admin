@@ -219,6 +219,7 @@ class AppServiceProvider extends ServiceProvider
                     'player'      => $player ? new LoggedInPlayerResource($player) : null,
                     'settings'    => $player ? $player->getPanelSettings() : null,
                     'permissions' => PermissionHelper::getFrontendPermissions(),
+                    'permissionAccess' => PermissionHelper::getFrontendAccess(),
                     'cluster'     => CLUSTER,
                     'socket'      => DOCKER || SocketAPI::isUp(),
                 ];

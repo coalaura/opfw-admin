@@ -1,6 +1,8 @@
 <?php
 namespace App\Helpers;
 
+use App\Player;
+
 class PermissionHelper
 {
     const PERMISSIONS = [
@@ -115,22 +117,66 @@ class PermissionHelper
             return false;
         }
 
-        if (! isset(self::PERMISSIONS[$key])) {
+        return self::playerHasPermission($player, $key);
+    }
+
+    public static function playerHasPermission(Player $player, string $key): bool
+    {
+        if (!isset(self::PERMISSIONS[$key]) || !$player->isStaff()) {
+            return false;
+        }
+
+        $requiredLevel = self::getPermissionLevel($key);
+
+        if ($requiredLevel === self::LEVEL_DISABLED) {
+            return false;
+        }
+
+        if ($requiredLevel <= self::getPlayerLevel($player)) {
             return true;
         }
 
-        $level = 0;
+        return in_array(self::PERMISSIONS[$key][0], $player->panel_permissions ?? [], true);
+    }
 
+    public static function getPlayerLevel(Player $player): int
+    {
         if ($player->isRoot()) {
-            $level = self::LEVEL_ROOT;
-        } else if ($player->isSuperAdmin()) {
-            $level = self::LEVEL_SUPERADMIN;
-        } else if ($player->isSeniorStaff()) {
-            $level = self::LEVEL_SENIOR;
-        } else if ($player->isStaff()) {
-            $level = self::LEVEL_STAFF;
+            return self::LEVEL_ROOT;
         }
 
-        return self::getPermissionLevel($key) <= $level;
+        if ($player->isSuperAdmin()) {
+            return self::LEVEL_SUPERADMIN;
+        }
+
+        if ($player->isSeniorStaff()) {
+            return self::LEVEL_SENIOR;
+        }
+
+        return $player->isStaff() ? self::LEVEL_STAFF : 0;
+    }
+
+    public static function getGrantablePermissions(Player $player): array
+    {
+        if (!$player->isSuperAdmin()) {
+            return [];
+        }
+
+        $level = self::getPlayerLevel($player);
+
+        return array_keys(array_filter(self::getFrontendPermissions(), function ($requiredLevel) use ($level) {
+            return $requiredLevel <= $level;
+        }));
+    }
+
+    public static function getFrontendAccess(): array
+    {
+        $access = [];
+
+        foreach (self::PERMISSIONS as $key => $permission) {
+            $access[$permission[0]] = self::hasPermission($key);
+        }
+
+        return $access;
     }
 }

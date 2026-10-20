@@ -318,6 +318,7 @@ Route::group(['middleware' => ['log', 'staff', 'session']], function () {
     Route::get('/roles', [RoleController::class, 'index']);
     Route::get('/roles/{player}', [RoleController::class, 'get']);
     Route::post('/roles/{player}', [RoleController::class, 'update']);
+    Route::put('/roles/{player}/permissions', [RoleController::class, 'updatePermissions']);
 
     // Settings.
     Route::get('/settings', [SettingsController::class, 'index']);

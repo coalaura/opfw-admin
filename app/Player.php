@@ -111,6 +111,7 @@ class Player extends Model
         'total_joins'           => 'integer',
         'priority_level'        => 'integer',
         'panel_settings'        => 'array',
+        'panel_permissions'     => 'array',
         'weekly_playtime'       => 'array',
         'media_devices'         => 'array',
         'media_device_ids'      => 'array',

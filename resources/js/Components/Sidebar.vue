@@ -21,7 +21,7 @@
                         <i class="w-4 h-4 mr-3 fill-current" :class="link.icon"></i>
                         {{ getLinkLabel(link) }}
                     </inertia-link>
-                    <a href="#" class="flex flex-wrap items-center px-5 py-2 mb-2 -mt-1 rounded hover:bg-gray-700v hover:text-white overflow-hidden" :class="height(link.children, $page.auth.player.isSuperAdmin)" v-if="link.children && height(link.children, $page.auth.player.isSuperAdmin)" @click="$event.preventDefault()">
+                    <a href="#" class="side-item flex flex-wrap items-center px-5 py-2 mb-2 -mt-1 rounded hover:bg-gray-700v hover:text-white overflow-hidden" :class="{ hidden: !link.children.some(child => matchesSearch(child)) }" :style="{ '--sidebar-items': link.children.filter(child => matchesSearch(child)).length }" v-if="link.children" @click="$event.preventDefault()">
                         <span class="block w-full mb-2 whitespace-nowrap drop-shadow">
                             <i class="w-4 h-4 mr-3 fill-current" :class="link.icon"></i>
                             {{ getLinkLabel(link) }}
@@ -67,8 +67,8 @@
 </template>
 
 <script>
-export default {
-    data() {
+const navigation = {
+    links() {
         const urls = [
             {
                 label: "home.title",
@@ -461,9 +461,15 @@ export default {
             }
         }
 
+        return links;
+    }
+};
+
+export default {
+    computed: navigation,
+    data() {
         return {
             url: this.$page.url,
-            links: links,
             collapsed: false,
             search: "",
             heights: {},
@@ -482,13 +488,6 @@ export default {
                 against = this.url.replace(/[?#].+$/m, "");
 
             return test === against;
-        },
-        height(children) {
-            const length = children.filter(l => !l.hidden && this.matchesSearch(l)).length;
-
-            if (length === 0) return 'hidden';
-
-            return `side-item side-${length}`;
         },
         isMobile() {
             return window.outerWidth <= 640;
@@ -513,42 +512,18 @@ export default {
         setInterval(() => {
             this.time = dayjs().format("h:mm A");
         }, 10000);
-    },
-    beforeMount() {
-        let max = 0;
-
-        for (const link of this.links) {
-            if (!link.children) continue;
-
-            const length = link.children.filter(l => !l.hidden).length;
-
-            if (length > max) {
-                max = length;
-            }
-        }
-
-        const styles = document.createElement("style");
-
-        // Closed
-        styles.innerHTML += ".side-item { height: 37px; transition: height 0.3s ease; will-change: height; }";
-
-        for (let i = 1; i <= max; i++) {
-            // 37px = height of closed sidebar item
-            let height = 37;
-
-            // Each entry is 37.5px
-            height += i * 37.5;
-
-            // plus 0.25rem margin top (for each entry)
-            height += (0.25 * 16) * i;
-
-            // and 0.5rem padding bottom
-            height += 0.5 * 16;
-
-            styles.innerHTML += `.side-${i}:hover { height: ${height}px; }`;
-        }
-
-        document.head.appendChild(styles);
     }
 };
 </script>
+
+<style scoped>
+.side-item {
+    height: 37px;
+    transition: height 0.3s ease;
+    will-change: height;
+}
+
+.side-item:hover {
+    height: calc(45px + var(--sidebar-items) * 41.5px);
+}
+</style>
