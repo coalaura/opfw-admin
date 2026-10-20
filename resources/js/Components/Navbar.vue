@@ -136,9 +136,13 @@
                         <td class="py-2 px-1">{{ t('nav.perm_level') }}</td>
                     </tr>
 
-                    <tr class="text-left hover:bg-gray-100 dark:hover:bg-gray-600" v-for="value in perm" v-if="typeof value === 'string'">
-                        <td class="font-semibold py-2 px-1 border-t">{{ t("nav.perms." + value) }}</td>
-                        <td class="py-2 px-1 italic border-t">{{ t("nav.level_" + perm.level(value)) }}</td>
+                    <tr class="text-left hover:bg-gray-100 dark:hover:bg-gray-600" v-for="(level, permission) in $page.auth.permissions" :key="permission">
+                        <td class="py-2 px-1 border-t">
+                            <span class="block font-semibold">{{ t(`roles.permissions.${permission}`) }}</span>
+                            <code class="block font-mono text-[10px] leading-tight text-gray-500 dark:text-gray-400 break-all">{{ `P_${permission.toUpperCase()}` }}</code>
+                            <span class="block mt-2 text-xs leading-tight text-gray-600 dark:text-gray-300">{{ t(`roles.permission_descriptions.${permission}`) }}</span>
+                        </td>
+                        <td class="py-2 px-1 italic border-t whitespace-nowrap">{{ t(level === 99 ? 'roles.permission_disabled' : `nav.level_${level}`) }}</td>
                     </tr>
                 </table>
             </template>

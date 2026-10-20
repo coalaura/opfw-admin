@@ -11,7 +11,8 @@
 				<input type="checkbox" class="form-checkbox flex-shrink-0 w-5 h-5 mt-0.5 rounded border-2 border-gray-400 bg-white text-primary dark:border-gray-500 dark:bg-gray-900 dark:text-dark-primary checked:bg-primary dark:checked:bg-dark-primary checked:border-transparent dark:checked:border-transparent focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-gray-100 dark:focus:ring-offset-gray-800 cursor-pointer disabled:cursor-not-allowed" :value="permission" v-model="selected" :disabled="saving || !canEdit(permission)" />
 				<span>
 					<span class="block font-bold">{{ t(`roles.permissions.${permission}`) }}</span>
-					<span class="block mt-1 mb-2 text-xs leading-tight text-gray-600 dark:text-gray-300">{{ t(`roles.permission_descriptions.${permission}`) }}</span>
+					<code class="block font-mono text-[10px] leading-tight text-gray-500 dark:text-gray-400 break-all">{{ `P_${permission.toUpperCase()}` }}</code>
+					<span class="block mt-2 mb-2 text-xs leading-tight text-gray-600 dark:text-gray-300">{{ t(`roles.permission_descriptions.${permission}`) }}</span>
 					<small class="block">{{ perm.restriction(permission) }}</small>
 					<small class="block text-success" v-if="level <= player.permission_level">{{ t('roles.permission_inherited') }}</small>
 				</span>
