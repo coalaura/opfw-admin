@@ -25,7 +25,7 @@
                                 <th class="font-semibold py-0.5 px-1">{{ t('players.characters.ped_model') }}:</th>
                                 <td class="py-0.5 px-1 text-gray-700 dark:text-gray-300 font-mono">{{ character.pedModelName ? character.pedModelName : character.pedModelHash }}</td>
                                 <td class="py-0.5 px-1">
-                                    <i class="fas fa-pencil-alt cursor-pointer" @click="editingPedModel = true" v-if="$page.auth.player.isSuperAdmin"></i>
+                                    <i class="fas fa-pencil-alt cursor-pointer" @click="editingPedModel = true" v-if="perm.check(perm.PERM_EDIT_PED_MODEL)"></i>
                                 </td>
                             </tr>
 
@@ -345,7 +345,7 @@
         </v-section>
 
         <!-- Vehicle Editing -->
-        <modal :show.sync="isVehicleEdit">
+        <modal :show.sync="isVehicleEdit" v-if="perm.check(perm.PERM_MANAGE_VEHICLES)">
             <template #header>
                 <h1 class="dark:text-white">
                     {{ t('players.characters.vehicle.edit') }}
@@ -588,7 +588,7 @@
         </modal>
 
         <!-- Vehicle Adding -->
-        <modal :show.sync="isVehicleAdd">
+        <modal :show.sync="isVehicleAdd" v-if="perm.check(perm.PERM_MANAGE_VEHICLES)">
             <template #header>
                 <h1 class="dark:text-white">
                     {{ t('players.characters.vehicle.add') }}
@@ -617,7 +617,7 @@
         </modal>
 
         <!-- Ped Model -->
-        <modal :show.sync="editingPedModel">
+        <modal :show.sync="editingPedModel" v-if="perm.check(perm.PERM_EDIT_PED_MODEL)">
             <template #header>
                 <h1 class="dark:text-white">
                     {{ t('players.characters.ped.edit') }}
@@ -709,7 +709,7 @@
                     </h2>
 
                     <!-- Add Vehicle -->
-                    <button class="block py-1 px-3 font-semibold text-center text-white rounded text-lg" @click="isVehicleAdd = true" v-if="$page.auth.player.isSuperAdmin" :title="t('players.characters.vehicle.add')">
+                    <button class="block py-1 px-3 font-semibold text-center text-white rounded text-lg" @click="isVehicleAdd = true" v-if="perm.check(perm.PERM_MANAGE_VEHICLES)" :title="t('players.characters.vehicle.add')">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
@@ -745,7 +745,7 @@
                                 {{ t('inventories.show_trunk') }}
                             </inertia-link>
 
-                            <div class="flex justify-between gap-2 w-full" v-if="$page.auth.player.isSuperAdmin">
+                            <div class="flex justify-between gap-2 w-full" v-if="perm.check(perm.PERM_MANAGE_VEHICLES)">
                                 <inertia-link class="block w-full px-3 py-2 text-center text-white mt-3 bg-warning dark:bg-dark-warning rounded" @click="startEditVehicle($event, vehicle)" href="#">
                                     <i class="fas fa-wrench mr-1"></i>
                                     {{ t('players.characters.vehicle.confirm') }}
@@ -757,10 +757,10 @@
                                 </inertia-link>
                             </div>
 
-                            <button class="block px-2 w-ch-button py-1 text-center text-white absolute top-1 left-1 bg-yellow-400 dark:bg-yellow-400 rounded cursor-pointer" :title="t('players.characters.vehicle.reset_last_garage')" v-if="$page.auth.player.isSuperAdmin" @click="resetLastGarage(vehicle.id, false)">
+                            <button class="block px-2 w-ch-button py-1 text-center text-white absolute top-1 left-1 bg-yellow-400 dark:bg-yellow-400 rounded cursor-pointer" :title="t('players.characters.vehicle.reset_last_garage')" v-if="perm.check(perm.PERM_RESET_VEHICLE_GARAGE)" @click="resetLastGarage(vehicle.id, false)">
                                 <i class="fas fa-parking"></i>
                             </button>
-                            <button class="block px-2 w-ch-button py-1 text-center text-white absolute top-1 left-10 bg-red-400 dark:bg-red-400 rounded cursor-pointer" :title="t('players.characters.vehicle.reset_garage_state')" v-if="$page.auth.player.isSuperAdmin" @click="resetLastGarage(vehicle.id, true)">
+                            <button class="block px-2 w-ch-button py-1 text-center text-white absolute top-1 left-10 bg-red-400 dark:bg-red-400 rounded cursor-pointer" :title="t('players.characters.vehicle.reset_garage_state')" v-if="perm.check(perm.PERM_RESET_VEHICLE_GARAGE)" @click="resetLastGarage(vehicle.id, true)">
                                 <i class="fas fa-unlink"></i>
                             </button>
 

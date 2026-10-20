@@ -57,7 +57,7 @@
             </template>
         </v-section>
 
-        <modal :show="isEditing">
+        <modal :show="isEditing && canEditItems">
             <template #header>
                 <h1 class="dark:text-white">
                     {{ t('inventories.show.editing_slot', editingSlot) }}
@@ -130,7 +130,7 @@
             </template>
         </modal>
 
-        <modal :show="isMoving">
+        <modal :show="isMoving && canEditItems">
             <template #header>
                 <h1 class="dark:text-white">
                     {{ t('inventories.show.moving_slot', movingSlot) }}
@@ -186,7 +186,7 @@ export default {
     },
     computed: {
         canEditItems() {
-            return this.$page.auth.player.isSuperAdmin;
+            return this.perm.check(this.perm.PERM_EDIT_INVENTORY);
         },
         totalWeight() {
             let weight = 0;

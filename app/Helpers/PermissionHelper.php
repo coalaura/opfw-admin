@@ -33,6 +33,12 @@ class PermissionHelper
         self::PERM_SAVINGS_LOGS         => ['savings_logs', self::LEVEL_SENIOR],
         self::PERM_BULK_DELETE          => ['bulk_delete', self::LEVEL_ROOT],
         self::PERM_VIEW_INVENTORY       => ['view_inventory', self::LEVEL_SUPERADMIN],
+        self::PERM_EDIT_INVENTORY       => ['edit_inventory', self::LEVEL_SUPERADMIN],
+        self::PERM_DIVORCE_CHARACTERS   => ['divorce_characters', self::LEVEL_SUPERADMIN],
+        self::PERM_REVIVE_OFFLINE       => ['revive_offline', self::LEVEL_SUPERADMIN],
+        self::PERM_MANAGE_VEHICLES      => ['manage_vehicles', self::LEVEL_SUPERADMIN],
+        self::PERM_EDIT_PED_MODEL       => ['edit_ped_model', self::LEVEL_SUPERADMIN],
+        self::PERM_RESET_VEHICLE_GARAGE => ['reset_vehicle_garage', self::LEVEL_SUPERADMIN],
         self::PERM_SUSPICIOUS_ENTITIES  => ['suspicious_entities', self::LEVEL_SENIOR],
         self::PERM_EDIT_COMPANY_BALANCE => ['edit_company_balance', self::LEVEL_SUPERADMIN],
         self::PERM_EDIT_SAVINGS_BALANCE => ['edit_savings_balance', self::LEVEL_SUPERADMIN],
@@ -66,6 +72,12 @@ class PermissionHelper
     const PERM_SAVINGS_LOGS         = 'P_SAVINGS_LOGS';
     const PERM_BULK_DELETE          = 'P_BULK_DELETE';
     const PERM_VIEW_INVENTORY       = 'P_VIEW_INVENTORY';
+    const PERM_EDIT_INVENTORY       = 'P_EDIT_INVENTORY';
+    const PERM_DIVORCE_CHARACTERS   = 'P_DIVORCE_CHARACTERS';
+    const PERM_REVIVE_OFFLINE       = 'P_REVIVE_OFFLINE';
+    const PERM_MANAGE_VEHICLES      = 'P_MANAGE_VEHICLES';
+    const PERM_EDIT_PED_MODEL       = 'P_EDIT_PED_MODEL';
+    const PERM_RESET_VEHICLE_GARAGE = 'P_RESET_VEHICLE_GARAGE';
     const PERM_SUSPICIOUS_ENTITIES  = 'P_SUSPICIOUS_ENTITIES';
     const PERM_EDIT_COMPANY_BALANCE = 'P_EDIT_COMPANY_BALANCE';
     const PERM_EDIT_SAVINGS_BALANCE = 'P_EDIT_SAVINGS_BALANCE';

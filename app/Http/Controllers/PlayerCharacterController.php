@@ -450,8 +450,8 @@ class PlayerCharacterController extends Controller
      */
     public function divorce(Player $player, Character $character, Request $request): RedirectResponse
     {
-        if (! $this->isSuperAdmin($request)) {
-            return backWith('error', 'Only super admins can divorce characters.');
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_DIVORCE_CHARACTERS)) {
+            return backWith('error', 'You do not have permission to divorce characters.');
         }
 
         $user = user();
@@ -498,8 +498,8 @@ class PlayerCharacterController extends Controller
      */
     public function reviveOffline(Player $player, Character $character, Request $request): RedirectResponse
     {
-        if (! $this->isSuperAdmin($request)) {
-            return backWith('error', 'Only super admins can revive offline characters.');
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_REVIVE_OFFLINE)) {
+            return backWith('error', 'You do not have permission to revive offline characters.');
         }
 
         $user = user();
@@ -580,8 +580,8 @@ class PlayerCharacterController extends Controller
      */
     public function deleteVehicle(Request $request, Vehicle $vehicle): RedirectResponse
     {
-        if (! $this->isSuperAdmin($request)) {
-            return backWith('error', 'Only super admins can delete vehicles.');
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_MANAGE_VEHICLES)) {
+            return backWith('error', 'You do not have permission to manage vehicles.');
         }
 
         $user = user();
@@ -613,8 +613,8 @@ class PlayerCharacterController extends Controller
     {
         $model = $request->post('model');
 
-        if (! $this->isSuperAdmin($request)) {
-            return backWith('error', 'Only super admins can add vehicles.');
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_MANAGE_VEHICLES)) {
+            return backWith('error', 'You do not have permission to manage vehicles.');
         }
 
         $user = user();
@@ -689,8 +689,8 @@ class PlayerCharacterController extends Controller
     {
         $model = $request->post('model');
 
-        if (! $this->isSuperAdmin($request)) {
-            return backWith('error', 'Only super admins can edit ped models.');
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_EDIT_PED_MODEL)) {
+            return backWith('error', 'You do not have permission to edit ped models.');
         }
 
         $user = user();
@@ -781,8 +781,8 @@ class PlayerCharacterController extends Controller
      */
     public function resetGarage(Request $request, Vehicle $vehicle, bool $fullReset): RedirectResponse
     {
-        if (! $this->isSuperAdmin($request)) {
-            return backWith('error', 'Only super admins can reset vehicles garages.');
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_RESET_VEHICLE_GARAGE)) {
+            return backWith('error', 'You do not have permission to reset vehicle garages.');
         }
 
         $data = [];
@@ -813,8 +813,8 @@ class PlayerCharacterController extends Controller
      */
     public function editVehicle(Request $request, Vehicle $vehicle): \Illuminate\Http\Response
     {
-        if (! $this->isSuperAdmin($request)) {
-            return self::json(false, null, 'Only super admins can edit vehicles.');
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_MANAGE_VEHICLES)) {
+            return self::json(false, null, 'You do not have permission to manage vehicles.');
         }
 
         $plate = trim(strtoupper($request->post('plate')));

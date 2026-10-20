@@ -258,7 +258,7 @@ class InventoryController extends Controller
      */
     public function update(string $inventory, int $slot, Request $request)
     {
-        if (! $this->isSuperAdmin($request)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_EDIT_INVENTORY)) {
             abort(403);
         }
 
@@ -353,7 +353,7 @@ class InventoryController extends Controller
      */
     public function move(string $inventory, int $slot, Request $request)
     {
-        if (! $this->isSuperAdmin($request)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_EDIT_INVENTORY)) {
             abort(403);
         }
 
@@ -412,7 +412,7 @@ class InventoryController extends Controller
      */
     public function delete(string $inventory, int $slot, Request $request)
     {
-        if (! $this->isSuperAdmin($request)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_EDIT_INVENTORY)) {
             abort(403);
         }
 
@@ -434,7 +434,7 @@ class InventoryController extends Controller
 
     public function attachIdentity(Request $request, Character $character)
     {
-        if (! $this->isSuperAdmin($request)) {
+        if (! PermissionHelper::hasPermission(PermissionHelper::PERM_EDIT_INVENTORY)) {
             abort(403);
         }
 

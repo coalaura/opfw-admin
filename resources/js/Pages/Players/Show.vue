@@ -1274,7 +1274,7 @@
                                                     <i class="fas fa-user-astronaut ml-1 cursor-pointer" @click="loadMarriedTo(character)" :title="t('players.characters.who_married')"></i>
                                                 </template>
 
-                                                <i class="fas fa-ring ml-2 cursor-pointer text-red-600 dark:text-red-400" :title="t('players.characters.divorce')" @click="divorceCharacter(character.id)" v-if="$page.auth.player.isSuperAdmin"></i>
+                                                <i class="fas fa-ring ml-2 cursor-pointer text-red-600 dark:text-red-400" :title="t('players.characters.divorce')" @click="divorceCharacter(character.id)" v-if="perm.check(perm.PERM_DIVORCE_CHARACTERS)"></i>
                                             </td>
                                         </tr>
                                     </table>
@@ -2018,7 +2018,7 @@ export default {
             this.isLoading = false;
         },
         canReviveCharacter(characterId) {
-            if (!this.$page.auth.player.isSuperAdmin) {
+            if (!this.perm.check(this.perm.PERM_REVIVE_OFFLINE)) {
                 return false;
             }
 
@@ -2029,7 +2029,7 @@ export default {
             return true;
         },
         async reviveCharacter(characterId) {
-            if (this.isLoading) {
+            if (this.isLoading || !this.canReviveCharacter(characterId)) {
                 return;
             }
 
