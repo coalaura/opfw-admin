@@ -2,7 +2,7 @@
     <div>
         <portal to="title">
             <h1 class="dark:text-white">
-                <i class="mr-3 fas fa-bomb" :title="perm.restriction(perm.PERM_EXPLOSION_EVENTS)"></i>
+                <i class="mr-3 fas fa-unlock-alt" :title="perm.restriction(perm.PERM_EXPLOSION_EVENTS)"></i>
                 {{ t('explosion_events.title') }}
             </h1>
             <p>{{ t('explosion_events.description') }}</p>
