@@ -35,6 +35,7 @@ class WeaponDamageEventResource extends JsonResource
             'suspensionIndex'   => $this->suspension_index,
             'flags'             => $this->damage_flags,
             'canceled'          => ! ! $this->canceled,
+            'metadata'          => $this->resource->getRawOriginal(),
         ];
     }
 

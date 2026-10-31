@@ -696,7 +696,7 @@ class LogController extends Controller
             $query->where('timestamp', '>', $after * 1000);
         }
 
-        return $query->select(['id', 'license_identifier', 'timestamp', 'hit_player', 'hit_health', 'distance', 'hit_vehicle_id', 'hit_global_id', 'hit_entity_type', 'hit_component', 'damage_flags', 'silenced', 'tyre_index', 'suspension_index', 'weapon_damage', 'weapon_type', 'bonus_damage', 'canceled', 'minigame']);
+        return $query;
     }
 
     private function multiValues(?string $val): ?array

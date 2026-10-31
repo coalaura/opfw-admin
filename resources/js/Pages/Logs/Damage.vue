@@ -190,6 +190,10 @@
 						<td class="p-3 pl-8 mobile:block max-w-56">
 							<div class="absolute top-1 left-1 text-sm leading-3 font-semibold italic" v-html="getDamageTag(log)"></div>
 
+							<button type="button" @click="showMetadata(log)" class="absolute bottom-1 left-1 text-sm leading-3 text-blue-700 dark:text-blue-300" :title="t('logs.metadata.show')" :aria-label="t('logs.metadata.show')">
+								<i class="fas fa-code" aria-hidden="true"></i>
+							</button>
+
 							<inertia-link class="block px-4 py-2 truncate font-semibold text-center text-white bg-indigo-600 rounded dark:bg-indigo-400" :href="'/players/' + log.licenseIdentifier">
 								{{ playerName(log.licenseIdentifier) }}
 							</inertia-link>
@@ -288,6 +292,20 @@
 			</template>
 		</v-section>
 
+		<modal :show.sync="showLogMetadata">
+			<template #header>
+				<h1 class="dark:text-white">{{ t('logs.metadata.show') }}</h1>
+			</template>
+			<template #default>
+				<pre class="text-xs whitespace-pre-wrap break-words py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm">{{ logMetadata }}</pre>
+			</template>
+			<template #actions>
+				<button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showLogMetadata = false">
+					{{ t('global.close') }}
+				</button>
+			</template>
+		</modal>
+
 	</div>
 </template>
 
@@ -297,6 +315,7 @@ import VSection from './../../Components/Section.vue';
 import Pagination from './../../Components/Pagination.vue';
 import HashResolver from './../../Components/HashResolver.vue';
 import LogExport from './../../Components/LogExport.vue';
+import Modal from './../../Components/Modal.vue';
 import { readLogFilters, fillLogDates } from './filters.js';
 
 import Vue from 'vue';
@@ -304,6 +323,7 @@ import Vue from 'vue';
 export default {
 	layout: Layout,
 	components: {
+		Modal: Modal,
 		LogExport: LogExport,
 		Pagination,
 		VSection,
@@ -348,6 +368,8 @@ export default {
 	data() {
 		return {
 			isLoading: false,
+			showLogMetadata: false,
+			logMetadata: '',
 			showLogTimeDifference: false,
 			resolvedHashes: {}
 		};
@@ -379,6 +401,10 @@ export default {
 		}
 	},
 	methods: {
+		showMetadata(log) {
+			this.logMetadata = JSON.stringify(log.metadata, null, 2);
+			this.showLogMetadata = true;
+		},
 		formatMilliSecondDiff(ms) {
 			if (ms <= 5000) {
 				const seconds = Math.floor(ms / 1000);
