@@ -111,13 +111,15 @@
                         <th class="p-3">{{ t('explosion_events.canceled') }}</th>
                         <th class="p-3">{{ t('suspicious.distance') }}</th>
                         <th class="p-3">{{ t('explosion_events.position') }}</th>
-                        <th class="p-3">{{ t('suspicious.time') }}</th>
-                        <th class="p-3 pr-8">{{ t('explosion_events.details') }}</th>
+                        <th class="p-3 pr-8">{{ t('suspicious.time') }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="log in logs" :key="log.id" class="border-t border-gray-300 dark:border-gray-500" :class="rowClass(log)">
+                    <tr v-for="log in logs" :key="log.id" class="border-t border-gray-300 dark:border-gray-500 relative" :class="rowClass(log)">
                         <td class="p-3 pl-8 font-mono whitespace-nowrap">
+                            <button type="button" @click="showDetails(log)" class="absolute bottom-1 left-1 text-sm leading-3 text-blue-700 dark:text-blue-300" :title="t('logs.metadata.show')" :aria-label="t('logs.metadata.show')">
+                                <i class="fas fa-code" aria-hidden="true"></i>
+                            </button>
                             <i v-if="log.minigame" class="mr-2 text-purple-800 dark:text-purple-200 fas fa-gamepad" :title="log.minigame" :aria-label="`${t('explosion_events.minigame')}: ${log.minigame}`"></i>
                             {{ log.id }}
                         </td>
@@ -145,15 +147,10 @@
                         <td class="p-3 whitespace-nowrap font-mono text-sm">
                             {{ formatNumber(log.explosion_pos_x) }}, {{ formatNumber(log.explosion_pos_y) }}, {{ formatNumber(log.explosion_pos_z) }}
                         </td>
-                        <td class="p-3 whitespace-nowrap text-sm">{{ formatTimestamp(log.timestamp) }}</td>
-                        <td class="p-3 pr-8">
-                            <button class="px-4 py-2 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400 whitespace-nowrap" @click="showDetails(log)">
-                                {{ t('logs.metadata.show') }}
-                            </button>
-                        </td>
+                        <td class="p-3 pr-8 whitespace-nowrap text-sm">{{ formatTimestamp(log.timestamp) }}</td>
                     </tr>
                     <tr v-if="logs.length === 0" class="border-t border-gray-300 dark:border-gray-500">
-                        <td class="px-8 py-3 text-center" colspan="8">{{ t('explosion_events.no_logs') }}</td>
+                        <td class="px-8 py-3 text-center" colspan="7">{{ t('explosion_events.no_logs') }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -180,7 +177,7 @@
                 <h2 class="dark:text-white">{{ t('explosion_events.details') }} #{{ selectedEvent ? selectedEvent.id : '' }}</h2>
             </template>
             <p v-if="selectedEvent" class="mb-3 font-mono text-sm">{{ typeLabel(selectedEvent.explosion_type) }}</p>
-            <pre class="text-sm whitespace-pre-wrap break-words">{{ eventDetails }}</pre>
+            <code-block :code="eventDetails" language="json" />
             <template #actions>
                 <button class="px-4 py-2 font-semibold text-white bg-indigo-600 rounded dark:bg-indigo-400" @click="detailsOpen = false">{{ t('global.close') }}</button>
             </template>
@@ -193,10 +190,12 @@ import dayjs from 'dayjs';
 import Layout from './../../Layouts/App.vue';
 import VSection from './../../Components/Section.vue';
 import Modal from './../../Components/Modal.vue';
+import CodeBlock from './../../Components/CodeBlock.vue';
 
 export default {
     layout: Layout,
     components: {
+        CodeBlock: CodeBlock,
         VSection: VSection,
         Modal: Modal,
     },
@@ -227,7 +226,7 @@ export default {
             return Object.entries(this.explosionTypes).map(([id, type]) => ({ id: Number(id), name: type.name })).sort((first, second) => first.id - second.id);
         },
         eventDetails() {
-            return this.selectedEvent ? JSON.stringify(this.selectedEvent, null, 2) : '';
+            return this.selectedEvent ? JSON.stringify(this.selectedEvent.metadata, null, 2) : '';
         },
     },
     watch: {

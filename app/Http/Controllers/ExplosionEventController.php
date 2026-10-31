@@ -105,7 +105,9 @@ class ExplosionEventController extends Controller
         }
 
         $page = $query->simplePaginate(25)->appends($filters);
-        $logs = $page->items();
+        $logs = array_map(function (ExplosionEvent $log) {
+            return array_merge($log->toArray(), ['metadata' => $log->getRawOriginal()]);
+        }, $page->items());
 
         return Inertia::render('Logs/ExplosionEvents', [
             'logs' => $logs,
