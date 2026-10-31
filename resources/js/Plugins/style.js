@@ -1,7 +1,7 @@
 import ColorThief from 'colorthief';
 
 // Rebuild style on version change
-const Iteration = 15;
+const Iteration = 16;
 
 const colors = {
 	'white': { l: 99 },
@@ -68,6 +68,7 @@ const Style = {
 					border = `border-color:hsl(${h},${hue.s || s}%,${hue.l}%)`;
 
 				return [
+					`:root{--panel-background-${name}:hsla(${h},${hue.s || s}%,${hue.l}%,${useAlpha ? 0.6 : 1});--panel-color-${name}:hsl(${h},${hue.s || s}%,${hue.l}%)}`,
 					`.bg-${name}{${background}}.dark .dark\\:bg-${name}{${background}}.hover\\:bg-${name}:hover{${background}!important}.dark .dark\\:hover\\:bg-${name}:hover{${background}!important}`,
 					`.dark .dark\\:odd\\:bg-${name}:nth-child(odd){${background}} .odd\\:bg-${name}:nth-child(odd){${background}}`,
 					`.border-${name}{${border}}.dark .dark\\:border-${name}{${border}}.hover\\:border-${name}:hover{${border}!important}.dark .dark\\:hover\\:border-${name}:hover{${border}!important}`,

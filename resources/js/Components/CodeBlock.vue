@@ -24,33 +24,35 @@ export default {
 
 <style>
 [data-syntax-theme="opfw-admin"] {
-	--syntax-background: light-dark(theme('colors.gray.100'), theme('colors.gray.800'));
-	--syntax-foreground: light-dark(theme('colors.gray.800'), theme('colors.gray.200'));
-	--syntax-comment: light-dark(theme('colors.gray.600'), theme('colors.gray.400'));
-	--syntax-keyword: light-dark(theme('colors.primary'), theme('colors.dark-primary'));
-	--syntax-operator: light-dark(theme('colors.gray.700'), theme('colors.gray.300'));
-	--syntax-punctuation: var(--syntax-comment);
-	--syntax-string: light-dark(theme('colors.green.700'), theme('colors.green.300'));
-	--syntax-numeric: light-dark(theme('colors.orange.700'), theme('colors.orange.300'));
-	--syntax-boolean: light-dark(theme('colors.purple.700'), theme('colors.purple.300'));
-	--syntax-constant: light-dark(theme('colors.violet.700'), theme('colors.violet.300'));
-	--syntax-function: var(--syntax-keyword);
-	--syntax-type: light-dark(theme('colors.teal.700'), theme('colors.teal.300'));
-	--syntax-variable: var(--syntax-foreground);
-	--syntax-property: light-dark(theme('colors.blue.700'), theme('colors.blue.300'));
-	--syntax-tag: light-dark(theme('colors.rose.700'), theme('colors.rose.300'));
-	--syntax-selector: var(--syntax-type);
-	--syntax-inserted: var(--syntax-string);
-	--syntax-deleted: light-dark(theme('colors.red.700'), theme('colors.red.300'));
-	--syntax-border: light-dark(theme('colors.gray.300'), theme('colors.gray.600'));
-	--syntax-control-background: light-dark(theme('colors.gray.200'), theme('colors.gray.700'));
+	--syntax-background: light-dark(var(--panel-background-gray-200, theme('colors.gray.200')), var(--panel-background-gray-800, theme('colors.gray.800')));
+	/* GitHub-inspired tokens with darker equivalents for light mode. */
+	--syntax-foreground: light-dark(#24292e, #adbac7);
+	--syntax-comment: light-dark(#6a737d, #768390);
+	--syntax-keyword: light-dark(#d73a49, #f47067);
+	--syntax-constant: light-dark(#005cc5, #6cb6ff);
+	--syntax-operator: var(--syntax-constant);
+	--syntax-punctuation: var(--syntax-foreground);
+	--syntax-string: light-dark(#032f62, #96d0ff);
+	--syntax-numeric: light-dark(theme('colors.blue.700'), theme('colors.blue.400'));
+	--syntax-boolean: var(--syntax-keyword);
+	--syntax-function: light-dark(#6f42c1, #dcbdfb);
+	--syntax-type: var(--syntax-function);
+	--syntax-variable: var(--syntax-constant);
+	--syntax-property: var(--syntax-constant);
+	--syntax-key: light-dark(#52677d, #b0c2d4);
+	--syntax-tag: light-dark(#22863a, #8ddb8c);
+	--syntax-selector: var(--syntax-tag);
+	--syntax-inserted: light-dark(#22863a, #b4f1b4);
+	--syntax-deleted: light-dark(#b31d28, #ffd8d3);
+	--syntax-border: light-dark(var(--panel-color-gray-300, theme('colors.gray.300')), var(--panel-color-gray-600, theme('colors.gray.600')));
+	--syntax-control-background: light-dark(var(--panel-color-gray-200, theme('colors.gray.200')), var(--panel-color-gray-700, theme('colors.gray.700')));
 	background-color: var(--syntax-background);
 	color: var(--syntax-foreground);
 	color-scheme: light;
 }
 
 [data-syntax-theme="opfw-admin"] pre:has(code) {
-	background-color: var(--syntax-background);
+	background-color: transparent;
 	color: var(--syntax-foreground);
 }
 
@@ -88,11 +90,11 @@ export default {
 	color: var(--syntax-numeric);
 }
 
-[data-syntax-theme="opfw-admin"] ::highlight(boolean) {
+[data-syntax-theme="opfw-admin"] ::highlight(boolean),
+[data-syntax-theme="opfw-admin"] ::highlight(constant) {
 	color: var(--syntax-boolean);
 }
 
-[data-syntax-theme="opfw-admin"] ::highlight(constant),
 [data-syntax-theme="opfw-admin"] ::highlight(symbol),
 [data-syntax-theme="opfw-admin"] ::highlight(character-entity),
 [data-syntax-theme="opfw-admin"] ::highlight(anchor),
@@ -117,9 +119,12 @@ export default {
 }
 
 [data-syntax-theme="opfw-admin"] ::highlight(property),
-[data-syntax-theme="opfw-admin"] ::highlight(key),
 [data-syntax-theme="opfw-admin"] ::highlight(attribute-name) {
 	color: var(--syntax-property);
+}
+
+[data-syntax-theme="opfw-admin"] ::highlight(key) {
+	color: var(--syntax-key);
 }
 
 [data-syntax-theme="opfw-admin"] ::highlight(tag) {
@@ -144,6 +149,7 @@ export default {
 }
 
 .code-block::part(line-numbers) {
+	background-color: transparent;
 	border-right: 1px solid var(--syntax-border);
 	font-size: 0.75rem;
 }
@@ -152,11 +158,12 @@ export default {
 	background-color: var(--syntax-control-background);
 	border-color: var(--syntax-border);
 	color: var(--syntax-foreground);
+	transition: background-color 120ms ease, border-color 120ms ease;
 }
 
 .code-block::part(copy-button):hover {
-	border-color: var(--syntax-keyword);
-	color: var(--syntax-keyword);
+	background-color: color-mix(in srgb, var(--syntax-control-background) 94%, var(--syntax-foreground));
+	border-color: color-mix(in srgb, var(--syntax-border) 80%, var(--syntax-foreground));
 }
 
 .code-block::part(copy-button):focus-visible {

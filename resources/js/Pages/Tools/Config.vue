@@ -11,7 +11,7 @@
 
         <div class="rounded-lg shadow bg-secondary dark:bg-dark-secondary max-w-6xl px-8 py-6 mt-14">
             <div class="flex flex-col gap-3 mb-4 pb-4 border-b-2 border-dashed border-gray-400">
-                <pre class="text-xs whitespace-pre-wrap py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm text-gray-400 font-mono select-all">{{ code || " " }}</pre>
+                <code-block :code="code" language="text" />
             </div>
 
             <div class="flex flex-col gap-3 mb-4 pb-4 border-b-2 border-dashed border-gray-400">
@@ -63,11 +63,13 @@
 <script>
 import Layout from "./../../Layouts/App.vue";
 import ConfigValue from "./../../Components/ConfigValue.vue";
+import CodeBlock from "./../../Components/CodeBlock.vue";
 import ServerConfig from "./ServerConfig.js";
 
 export default {
     layout: Layout,
     components: {
+        CodeBlock: CodeBlock,
         ConfigValue,
     },
     props: {

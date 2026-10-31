@@ -114,7 +114,7 @@
                                 <div class="cursor-pointer text-blue-600 dark:text-blue-400 col-show">{{ t('advanced.show') }}</div>
                                 <div class="col-data overflow-hidden h-0">
                                     <a href="#" class="block mb-2 text-blue-600 dark:text-blue-400">{{ t('advanced.hide') }}</a>
-                                    <pre class="whitespace-pre-wrap text-xs" v-html="entry.pre"></pre>
+                                    <code-block :code="entry.pre" language="json" />
                                 </div>
                             </div>
                             <span v-else-if="typeof entry === 'object' && 'time' in entry">
@@ -163,10 +163,12 @@
 <script>
 import Layout from './../../Layouts/App.vue';
 import VSection from './../../Components/Section.vue';
+import CodeBlock from './../../Components/CodeBlock.vue';
 
 export default {
     layout: Layout,
     components: {
+        CodeBlock: CodeBlock,
         VSection,
     },
     props: {

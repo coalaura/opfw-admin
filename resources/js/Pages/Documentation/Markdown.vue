@@ -43,11 +43,7 @@
                 </p>
 
                 <div class="mb-3">
-                    <pre class="max-w-2xl py-1 px-2 bg-gray-200 dark:bg-gray-800 rounded-sm leading-5 whitespace-pre-wrap break-words"><code>```
-code block
-that can have
-multiple lines
-```</code></pre>
+                    <code-block :code="codeExample" language="markdown" class="max-w-2xl" />
                 </div>
 
                 <p class="mb-3">
@@ -97,12 +93,19 @@ multiple lines
 import Layout from './../../Layouts/App.vue';
 import VSection from './../../Components/Section.vue';
 import TextToSpeech from './../../Components/TextToSpeech.vue';
+import CodeBlock from './../../Components/CodeBlock.vue';
 
 export default {
     layout: Layout,
     components: {
+        CodeBlock: CodeBlock,
         VSection,
         TextToSpeech,
+    },
+    data() {
+        return {
+            codeExample: '```\ncode block\nthat can have\nmultiple lines\n```'
+        };
     },
 }
 </script>
