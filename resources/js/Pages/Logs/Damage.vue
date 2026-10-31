@@ -297,7 +297,7 @@
 				<h1 class="dark:text-white">{{ t('logs.metadata.show') }}</h1>
 			</template>
 			<template #default>
-				<pre class="text-xs whitespace-pre-wrap break-words py-2 px-3 bg-gray-200 dark:bg-gray-800 rounded-sm">{{ logMetadata }}</pre>
+				<code-block :code="logMetadata" language="json" />
 			</template>
 			<template #actions>
 				<button type="button" class="px-5 py-2 rounded hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-400" @click="showLogMetadata = false">
@@ -316,6 +316,7 @@ import Pagination from './../../Components/Pagination.vue';
 import HashResolver from './../../Components/HashResolver.vue';
 import LogExport from './../../Components/LogExport.vue';
 import Modal from './../../Components/Modal.vue';
+import CodeBlock from './../../Components/CodeBlock.vue';
 import { readLogFilters, fillLogDates } from './filters.js';
 
 import Vue from 'vue';
@@ -323,6 +324,7 @@ import Vue from 'vue';
 export default {
 	layout: Layout,
 	components: {
+		CodeBlock: CodeBlock,
 		Modal: Modal,
 		LogExport: LogExport,
 		Pagination,

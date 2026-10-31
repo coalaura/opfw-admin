@@ -54,7 +54,14 @@ export default defineConfig({
 	define: {
 		global: "window",
 	},
+	optimizeDeps: {
+		exclude: ["microlighter"],
+	},
 	build: {
+		// Bundle Microlighter's dynamically imported language grammars.
+		dynamicImportVarsOptions: {
+			exclude: [/node_modules\/(?!microlighter\/)/],
+		},
 		chunkSizeWarningLimit: 1024,
 		manifest: "manifest.json",
 		minify: isDev ? false : "esbuild",
