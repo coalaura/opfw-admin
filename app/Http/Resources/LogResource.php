@@ -23,7 +23,7 @@ class LogResource extends JsonResource
             'details'           => $this->details,
             'metadata'          => $this->metadata,
             'timestamp'         => $this->timestamp,
-            'server'            => $this->metadata['serverId'],
+            'server'            => isset($this->metadata['serverId']) ? $this->metadata['serverId'] : false,
             'licenseIdentifier' => $this->identifier,
             'playerName'        => $this->player_name,
             'status'            => $this->identifier ? Player::getOnlineStatus($this->identifier, true) : false,
