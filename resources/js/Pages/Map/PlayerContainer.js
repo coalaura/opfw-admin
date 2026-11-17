@@ -107,6 +107,8 @@ class PlayerContainer {
         const flags = Player.getPlayerFlags(rawPlayer);
 
         if (flags.fakeDisconnected) {
+            this.remove(source);
+
             return;
         }
 
@@ -126,6 +128,8 @@ class PlayerContainer {
         const characterFlags = Character.getCharacterFlags(rawPlayer.character);
 
         if (!characterFlags.spawned) {
+            this.remove(source);
+
             return;
         }
 
@@ -138,6 +142,8 @@ class PlayerContainer {
         }
 
         if (instance !== selectedInstance) {
+            this.remove(source);
+
             return;
         }
 
